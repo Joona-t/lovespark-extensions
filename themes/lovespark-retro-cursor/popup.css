@@ -1,0 +1,132 @@
+:root {
+  color-scheme: light;
+  --pink-a: #ffb6c1;
+  --pink-b: #ff69b4;
+  --pink-c: #ffe4f1;
+  --ink: #6c1f54;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 320px;
+  min-height: 180px;
+  font-family: "Trebuchet MS", "Verdana", sans-serif;
+}
+
+body {
+  background: linear-gradient(145deg, var(--pink-a), var(--pink-b), var(--pink-c));
+}
+
+.shell {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+}
+
+.card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.93);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 24px rgba(255, 80, 160, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+h1 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+
+.subtitle {
+  margin: 8px 0 14px;
+  color: #8c4470;
+  font-size: 12px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  user-select: none;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.toggle-wrap {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  display: inline-block;
+}
+
+.toggle-wrap input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background: #f8bbd6;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+  box-shadow: inset 0 0 0 1px rgba(171, 54, 123, 0.25);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 4px;
+  top: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(200, 60, 130, 0.28);
+  transition: transform 0.2s ease;
+}
+
+.toggle-wrap input:checked + .slider {
+  background: linear-gradient(135deg, #ff7abf, #ff4da6);
+}
+
+.toggle-wrap input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+.pack-row {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.pack-row select {
+  flex: 1;
+  max-width: 190px;
+  border-radius: 10px;
+  border: 1px solid rgba(171, 54, 123, 0.35);
+  background: #fff6fb;
+  color: #7a2f60;
+  font-weight: 700;
+  padding: 6px 10px;
+  outline: none;
+}
+
+.pack-row select:focus {
+  box-shadow: 0 0 0 3px rgba(255, 100, 180, 0.22);
+}

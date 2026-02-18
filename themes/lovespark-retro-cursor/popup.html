@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoveSpark Retro Cursor Pack</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="card">
+        <h1>LoveSpark Retro Cursor Pack</h1>
+        <p class="subtitle">Cute pink cursors with soft glow and sparkle vibes ✨</p>
+
+        <label class="toggle-row" for="cursorToggle">
+          <span id="statusText">Cursors: ON</span>
+          <span class="toggle-wrap">
+            <input id="cursorToggle" type="checkbox" checked />
+            <span class="slider"></span>
+          </span>
+        </label>
+
+        <label class="pack-row" for="packSelect">
+          <span>Cursor Pack</span>
+          <select id="packSelect">
+            <option value="retro-pink">Retro Pink</option>
+            <option value="sakura-peach">Sakura Peach</option>
+            <option value="starlight-purple">Starlight Purple</option>
+          </select>
+        </label>
+      </section>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
