@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dopamine Control</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- ===================== TIMER VIEW ===================== -->
+  <div id="view-timer" class="view">
+
+    <header class="popup-header">
+      <div id="dopa" class="dopa">😊</div>
+      <div class="header-titles">
+        <div class="app-title">DOPAMINE</div>
+        <div class="app-sub">CONTROL</div>
+      </div>
+    </header>
+
+    <main class="popup-main">
+
+      <div class="time-remaining-wrap">
+        <div class="time-remaining" id="time-remaining">--</div>
+        <div class="time-label" id="time-label">remaining today</div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+        <span class="progress-pct" id="progress-pct">0%</span>
+      </div>
+
+      <div class="stats-block">
+        <div class="stat-row">
+          Today: <span id="time-used">0m</span> used of <span id="time-limit">2h</span>
+        </div>
+        <div class="stat-row whitelist-row" id="whitelist-row" style="display:none">
+          📚 <span id="whitelist-time">0m</span> on whitelisted channels
+        </div>
+      </div>
+
+      <div class="gamification-card">
+        <div class="streak-display">🔥 Streak: <span id="streak-count">0</span> days</div>
+        <div class="level-display">⭐ Level <span id="level-num">1</span></div>
+      </div>
+
+      <div id="override-bar" class="override-bar" style="display:none">
+        ⚠️ Override ends in <span id="override-time">15:00</span>
+      </div>
+
+      <div id="blocked-bar" class="blocked-bar" style="display:none">
+        😴 Limit reached — well done for stopping!
+      </div>
+
+    </main>
+
+    <nav class="popup-nav">
+      <button class="nav-btn" id="btn-stats">📊 Stats</button>
+      <button class="nav-btn" id="btn-settings">⚙ Settings</button>
+    </nav>
+
+    <footer class="popup-footer">Part of the LoveSpark Suite 💕</footer>
+
+  </div>
+
+  <!-- ===================== SETTINGS VIEW ===================== -->
+  <div id="view-settings" class="view" style="display:none">
+
+    <header class="settings-header">
+      <button class="back-btn" id="btn-back">← Back</button>
+      <div class="settings-title">SETTINGS</div>
+    </header>
+
+    <div class="settings-scroll">
+
+      <section class="settings-section">
+        <div class="section-label">DAILY LIMIT</div>
+
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-name">Weekdays</span>
+            <span class="slider-val" id="weekday-label">2h 00m</span>
+          </div>
+          <input type="range" id="weekday-slider" min="900" max="28800" step="900" value="7200" class="dc-slider">
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-name">Weekends</span>
+            <span class="slider-val" id="weekend-label">3h 00m</span>
+          </div>
+          <input type="range" id="weekend-slider" min="900" max="28800" step="900" value="10800" class="dc-slider">
+        </div>
+
+        <div class="presets-row">
+          <span class="presets-label">Quick set:</span>
+          <button class="preset-btn" data-seconds="1800">30m</button>
+          <button class="preset-btn" data-seconds="3600">1h</button>
+          <button class="preset-btn" data-seconds="7200">2h</button>
+          <button class="preset-btn" data-seconds="10800">3h</button>
+        </div>
+        <div class="preset-hint" id="preset-hint">Tap a slider above, then pick a preset</div>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-label">DISPLAY</div>
+
+        <div class="toggle-row">
+          <span class="toggle-name">Show floating timer on YouTube</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-floating" checked>
+            <span class="toggle-knob"></span>
+          </label>
+        </div>
+      </section>
+
+      <section class="settings-section danger-section">
+        <div class="section-label">DANGER ZONE</div>
+        <button class="danger-btn" id="btn-reset">Reset All Data</button>
+      </section>
+
+      <div class="settings-about">
+        Dopamine Control v1.0.0 · LoveSpark Suite 💕
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../shared/utils.js"></script>
+  <script src="../shared/constants.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

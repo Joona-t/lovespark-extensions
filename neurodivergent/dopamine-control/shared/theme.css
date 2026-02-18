@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Nunito:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* Primary */
+  --pink-soft:       #FFE4E1;
+  --pink-medium:     #FFB6C1;
+  --pink-hot:        #FF69B4;
+  --pink-deep:       #E8408F;
+
+  /* Semantic */
+  --safe:            #7ECFA0;
+  --caution:         #FFD166;
+  --danger:          #FF6B6B;
+  --danger-deep:     #D63031;
+
+  /* Neutrals */
+  --text-primary:    #3D2C2E;
+  --text-secondary:  #8B7072;
+  --text-on-pink:    #FFFFFF;
+  --surface-white:   #FFF9FA;
+  --surface-glass:   rgba(255, 228, 225, 0.7);
+
+  /* XP */
+  --xp-fill:         #FF69B4;
+  --xp-track:        #FFE4E1;
+  --level-glow:      rgba(255, 105, 180, 0.4);
+
+  /* Shadows */
+  --shadow-soft:     0 2px 12px rgba(255, 105, 180, 0.15);
+  --shadow-card:     0 4px 20px rgba(255, 105, 180, 0.12);
+  --shadow-elevated: 0 8px 32px rgba(255, 105, 180, 0.2);
+
+  /* Animation */
+  --ease-bounce:     cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:     cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:   200ms;
+  --duration-normal: 350ms;
+  --duration-slow:   600ms;
+
+  /* Fonts */
+  --font-display:    'Silkscreen', cursive;
+  --font-body:       'Nunito', sans-serif;
+  --font-mono:       'Space Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
