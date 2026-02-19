@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Are You Cooked?</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 300px;
+      min-height: 200px;
+      font-family: 'DM Mono', monospace;
+      background-color: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.4s ease;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ff69b4;
+      opacity: 0.5;
+    }
+
+    .count-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .tab-count {
+      font-size: 64px;
+      font-weight: 500;
+      line-height: 1;
+      color: #ff69b4;
+      text-shadow:
+        0 0 20px rgba(255, 105, 180, 0.6),
+        0 0 40px rgba(255, 105, 180, 0.3);
+      transition: text-shadow 0.4s ease, color 0.4s ease;
+    }
+
+    .tabs-label {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: #ff69b4;
+      opacity: 0.6;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #ff69b4, transparent);
+      opacity: 0.4;
+    }
+
+    .verdict {
+      font-size: 13px;
+      font-weight: 400;
+      font-style: italic;
+      color: #ff69b4;
+      line-height: 1.5;
+      text-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+      transition: color 0.4s ease;
+      min-height: 20px;
+    }
+
+    /* State: fine */
+    body.state-fine .tab-count,
+    body.state-fine .verdict,
+    body.state-fine .tabs-label,
+    body.state-fine .title,
+    body.state-fine .divider {
+      color: #a8e6a3;
+      background: unset;
+    }
+    body.state-fine .tab-count {
+      text-shadow:
+        0 0 20px rgba(168, 230, 163, 0.5),
+        0 0 40px rgba(168, 230, 163, 0.2);
+      color: #a8e6a3;
+    }
+    body.state-fine .verdict {
+      color: #a8e6a3;
+      text-shadow: 0 0 12px rgba(168, 230, 163, 0.35);
+    }
+    body.state-fine .divider {
+      background: linear-gradient(90deg, transparent, #a8e6a3, transparent);
+    }
+
+    /* State: spicy */
+    body.state-spicy .tab-count,
+    body.state-spicy .verdict,
+    body.state-spicy .tabs-label,
+    body.state-spicy .title {
+      color: #ffb347;
+    }
+    body.state-spicy .tab-count {
+      text-shadow:
+        0 0 20px rgba(255, 179, 71, 0.55),
+        0 0 40px rgba(255, 179, 71, 0.25);
+      color: #ffb347;
+    }
+    body.state-spicy .verdict {
+      color: #ffb347;
+      text-shadow: 0 0 12px rgba(255, 179, 71, 0.4);
+    }
+    body.state-spicy .divider {
+      background: linear-gradient(90deg, transparent, #ffb347, transparent);
+    }
+
+    /* State: cooked */
+    body.state-cooked .tab-count,
+    body.state-cooked .verdict,
+    body.state-cooked .tabs-label,
+    body.state-cooked .title {
+      color: #ff6b6b;
+    }
+    body.state-cooked .tab-count {
+      text-shadow:
+        0 0 20px rgba(255, 107, 107, 0.6),
+        0 0 40px rgba(255, 107, 107, 0.3);
+      color: #ff6b6b;
+    }
+    body.state-cooked .verdict {
+      color: #ff6b6b;
+      text-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
+    }
+    body.state-cooked .divider {
+      background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+    }
+
+    /* State: 911 */
+    body.state-911 .tab-count,
+    body.state-911 .verdict,
+    body.state-911 .tabs-label,
+    body.state-911 .title {
+      color: #ff2d55;
+    }
+    body.state-911 .tab-count {
+      text-shadow:
+        0 0 20px rgba(255, 45, 85, 0.7),
+        0 0 50px rgba(255, 45, 85, 0.35),
+        0 0 80px rgba(255, 45, 85, 0.15);
+      color: #ff2d55;
+    }
+    body.state-911 .verdict {
+      color: #ff2d55;
+      text-shadow: 0 0 12px rgba(255, 45, 85, 0.5);
+    }
+    body.state-911 .divider {
+      background: linear-gradient(90deg, transparent, #ff2d55, transparent);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="title">are you cooked?</span>
+    <div class="count-wrapper">
+      <div class="tab-count" id="tabCount">—</div>
+      <div class="tabs-label">tabs open</div>
+    </div>
+    <div class="divider"></div>
+    <div class="verdict" id="verdict">counting...</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
