@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Don't Want Cookies — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+<header>
+  <h1 class="header-title">🍪 I Don't Want Cookies</h1>
+  <span class="header-sub">Settings</span>
+</header>
+
+<div id="app">
+
+  <!-- Protection -->
+  <section class="card">
+    <h2 class="card-title">🛡️ Protection</h2>
+
+    <div class="row-between">
+      <div>
+        <div class="setting-label">Enable banner hiding</div>
+        <div class="setting-desc">Hide all cookie consent banners</div>
+      </div>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="toggle-enabled" checked>
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="row-between">
+      <div>
+        <div class="setting-label">Auto-decline cookies</div>
+        <div class="setting-desc">Automatically clicks "Reject All" when found. Sends your actual preference to sites — off by default.</div>
+      </div>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="toggle-auto-decline">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="card">
+    <h2 class="card-title">📊 Stats</h2>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div id="stat-today" class="stat-big">0</div>
+        <div class="stat-lbl">Today</div>
+      </div>
+      <div class="stat-cell">
+        <div id="stat-total" class="stat-big">0</div>
+        <div class="stat-lbl">All time</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">Top sites by banners hidden</h3>
+    <table id="domain-table" class="domain-table">
+      <thead>
+        <tr><th>Domain</th><th>Hidden</th></tr>
+      </thead>
+      <tbody id="domain-tbody">
+        <tr><td colspan="2" class="empty-row">No data yet 🌸</td></tr>
+      </tbody>
+    </table>
+
+    <div class="btn-row" style="margin-top:14px">
+      <button id="export-csv" class="btn btn-secondary">📥 Export CSV</button>
+      <button id="reset-stats" class="btn btn-danger">🗑️ Reset Stats</button>
+    </div>
+  </section>
+
+  <!-- Whitelist -->
+  <section class="card">
+    <h2 class="card-title">✅ Whitelist</h2>
+    <p class="setting-desc" style="margin-bottom:10px">Banners are <em>not</em> hidden on these domains:</p>
+
+    <div class="add-row">
+      <input id="wl-input" type="text" class="text-input" placeholder="example.com" autocomplete="off">
+      <button id="wl-add" class="btn btn-primary">Add</button>
+    </div>
+
+    <ul id="wl-list" class="wl-list"></ul>
+
+    <div class="btn-row" style="margin-top:10px">
+      <button id="wl-import" class="btn btn-secondary">📂 Import</button>
+      <button id="wl-export" class="btn btn-secondary">📤 Export</button>
+    </div>
+    <input id="wl-file" type="file" accept=".txt,.json" style="display:none">
+  </section>
+
+  <!-- Appearance -->
+  <section class="card">
+    <h2 class="card-title">🎨 Appearance</h2>
+    <div class="row-between">
+      <div>
+        <div class="setting-label">Dark mode</div>
+        <div class="setting-desc">Dark theme for popup and settings</div>
+      </div>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="toggle-dark">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Suite links -->
+  <section class="card">
+    <h2 class="card-title">🩷 LoveSpark Suite</h2>
+    <div class="suite-links">
+      <a href="#" class="suite-link">🛡️ LoveSpark AdBlock</a>
+      <a href="#" class="suite-link">✨ Anti Brainrot</a>
+      <a href="#" class="suite-link">🌸 Dreamy Garden</a>
+    </div>
+  </section>
+
+</div>
+
+<footer><span>🍪 I Don't Want Cookies v1.0.0 — Part of LoveSpark Suite 💕</span></footer>
+
+<script src="settings.js"></script>
+</body>
+</html>
