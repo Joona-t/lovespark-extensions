@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LoveSpark Reader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <header class="header">
+    <img src="icons/icon-48.png" alt="" class="logo" width="28" height="28">
+    <div class="header-text">
+      <span class="title">LoveSpark</span>
+      <span class="subtitle">Reader</span>
+    </div>
+  </header>
+
+  <!-- Mode pills -->
+  <div class="modes" role="radiogroup" aria-label="Color mode">
+
+    <button class="mode-pill" data-mode="sakura" aria-pressed="false">
+      <span class="mode-icon" aria-hidden="true">🌸</span>
+      <div class="mode-text">
+        <span class="mode-name">Sakura</span>
+        <span class="mode-desc">soft blush tones</span>
+      </div>
+      <span class="mode-check" aria-hidden="true">✦</span>
+    </button>
+
+    <button class="mode-pill" data-mode="hotpink" aria-pressed="false">
+      <span class="mode-icon" aria-hidden="true">💖</span>
+      <div class="mode-text">
+        <span class="mode-name">Hot Pink</span>
+        <span class="mode-desc">bold bubblegum</span>
+      </div>
+      <span class="mode-check" aria-hidden="true">✦</span>
+    </button>
+
+    <button class="mode-pill" data-mode="starlight" aria-pressed="false">
+      <span class="mode-icon" aria-hidden="true">✨</span>
+      <div class="mode-text">
+        <span class="mode-name">Starlight</span>
+        <span class="mode-desc">dreamy iridescent</span>
+      </div>
+      <span class="mode-check" aria-hidden="true">✦</span>
+    </button>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Toggle row -->
+  <div class="toggle-row">
+    <label class="toggle-wrap" aria-label="Enable or disable LoveSpark Reader">
+      <input type="checkbox" id="toggle-enabled" checked>
+      <span class="toggle-track">
+        <span class="toggle-thumb"></span>
+      </span>
+    </label>
+    <p class="status-text" id="status-text">pinkifying the internet</p>
+  </div>
+
+  <!-- Disable on site -->
+  <button class="site-toggle" id="site-toggle">Disable on this site</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

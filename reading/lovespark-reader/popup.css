@@ -1,0 +1,261 @@
+/* LoveSpark Reader — popup.css */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #1a0a10;
+  --bg-card:    #260d18;
+  --hot-pink:   #FF69B4;
+  --text:       #FFB6C1;
+  --muted:      #7a3a58;
+  --cream:      #fff5f9;
+  --glow:       rgba(255, 105, 180, 0.45);
+
+  /* Mode accents */
+  --sakura-accent:   #f8bbd0;
+  --hotpink-accent:  #ff1493;
+  --starlight-accent:#c084fc;
+}
+
+html, body {
+  width: 300px;
+  background: var(--bg);
+  font-family: 'DM Mono', 'Courier New', monospace;
+  color: var(--text);
+  overflow: hidden;
+  font-size: 13px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid rgba(255,105,180,0.12);
+}
+
+.logo {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px var(--glow));
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--hot-pink);
+  text-shadow: 0 0 10px var(--glow);
+  letter-spacing: 0.03em;
+}
+
+.subtitle {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Mode pills ──────────────────────────────────────────────────────────── */
+
+.modes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+}
+
+.mode-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,105,180,0.12);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  color: var(--text);
+  font-family: inherit;
+}
+
+.mode-pill:hover {
+  border-color: rgba(255,105,180,0.3);
+  background: rgba(255,105,180,0.06);
+}
+
+.mode-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.mode-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mode-name {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+}
+
+.mode-desc {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.mode-check {
+  font-size: 10px;
+  color: var(--hot-pink);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+
+/* ── Active mode pill (per-mode accent) ─────────────────────────────────── */
+
+.mode-pill[aria-pressed="true"] {
+  border-color: var(--pill-accent, var(--hot-pink));
+  box-shadow: 0 0 14px rgba(255,105,180,0.3), inset 0 0 12px rgba(255,105,180,0.05);
+  background: rgba(255,105,180,0.09);
+}
+
+.mode-pill[aria-pressed="true"] .mode-check {
+  opacity: 1;
+  text-shadow: 0 0 6px var(--hot-pink);
+}
+
+.mode-pill[aria-pressed="true"] .mode-name { color: #fff; }
+
+/* Mode-specific accent glow */
+.mode-pill[data-mode="sakura"][aria-pressed="true"] {
+  --pill-accent: var(--sakura-accent);
+  box-shadow: 0 0 14px rgba(248,187,208,0.35), inset 0 0 12px rgba(248,187,208,0.06);
+}
+
+.mode-pill[data-mode="hotpink"][aria-pressed="true"] {
+  --pill-accent: var(--hotpink-accent);
+  box-shadow: 0 0 14px rgba(255,20,147,0.4), inset 0 0 12px rgba(255,20,147,0.07);
+}
+
+.mode-pill[data-mode="starlight"][aria-pressed="true"] {
+  --pill-accent: var(--starlight-accent);
+  box-shadow: 0 0 14px rgba(192,132,252,0.4), inset 0 0 12px rgba(192,132,252,0.07);
+}
+
+/* ── Disabled state: dim pills ──────────────────────────────────────────── */
+
+body.disabled .mode-pill {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+body.disabled .mode-pill[aria-pressed="true"] {
+  box-shadow: none;
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+
+.divider {
+  height: 1px;
+  margin: 0 14px;
+  background: linear-gradient(to right, transparent, rgba(255,105,180,0.2), transparent);
+}
+
+/* ── Toggle row ──────────────────────────────────────────────────────────── */
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px 8px;
+}
+
+.toggle-wrap {
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle-wrap input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  display: block;
+  position: relative;
+  width: 34px;
+  height: 19px;
+  background: var(--muted);
+  border-radius: 10px;
+  transition: background 0.22s ease, box-shadow 0.22s ease;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2.5px;
+  left: 2.5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.22s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+
+input[type="checkbox"]:checked + .toggle-track {
+  background: var(--hot-pink);
+  box-shadow: 0 0 8px var(--glow);
+}
+
+input[type="checkbox"]:checked + .toggle-track .toggle-thumb {
+  transform: translateX(15px);
+}
+
+.status-text {
+  font-size: 10px;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+/* ── Site toggle ─────────────────────────────────────────────────────────── */
+
+.site-toggle {
+  display: block;
+  width: calc(100% - 28px);
+  margin: 0 14px 12px;
+  padding: 6px 0;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255,105,180,0.1);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-align: center;
+  transition: color 0.15s ease;
+}
+
+.site-toggle:hover { color: var(--hot-pink); }
+
+.site-toggle.site-disabled {
+  color: var(--hot-pink);
+}

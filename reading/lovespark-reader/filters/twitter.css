@@ -1,0 +1,103 @@
+/*
+  LoveSpark Reader — twitter.css  (X / Twitter)
+  Twitter/X uses CSS custom properties on :root that control
+  background, text, border, and accent colours throughout the SPA.
+*/
+
+/* ── Sakura ──────────────────────────────────────────────────────────────── */
+
+html.lovespark-sakura {
+  --background-color:                  #fff0f5 !important;
+  --color-text-primary:                #1a0a12 !important;
+  --color-text-secondary:              #6d2540 !important;
+  --color-border-primary:              rgba(240, 98, 146, 0.2) !important;
+  --color-border-secondary:            rgba(240, 98, 146, 0.12) !important;
+  --ring-color:                        rgba(233, 30, 99, 0.3) !important;
+  /* X's internal palette vars */
+  --color-background-primary:          #fff0f5 !important;
+  --color-background-secondary:        #fce4ec !important;
+  --color-background-secondary-hover:  #f8bbd0 !important;
+}
+
+/* ── Hot Pink ────────────────────────────────────────────────────────────── */
+
+html.lovespark-hotpink {
+  --background-color:                  #ffb3d9 !important;
+  --color-text-primary:                #2d0020 !important;
+  --color-text-secondary:              #7b003d !important;
+  --color-border-primary:              rgba(255, 20, 147, 0.25) !important;
+  --color-border-secondary:            rgba(255, 20, 147, 0.15) !important;
+  --ring-color:                        rgba(255, 20, 147, 0.4) !important;
+  --color-background-primary:          #ffb3d9 !important;
+  --color-background-secondary:        #f8bbd0 !important;
+  --color-background-secondary-hover:  #f48fb1 !important;
+}
+
+/* ── Starlight ───────────────────────────────────────────────────────────── */
+
+html.lovespark-starlight {
+  --background-color:                  #fce4f2 !important;
+  --color-text-primary:                #1a0025 !important;
+  --color-text-secondary:              #4a1060 !important;
+  --color-border-primary:              rgba(192, 132, 252, 0.2) !important;
+  --color-border-secondary:            rgba(192, 132, 252, 0.12) !important;
+  --ring-color:                        rgba(192, 132, 252, 0.4) !important;
+  --color-background-primary:          #fce4f2 !important;
+  --color-background-secondary:        #f3e5f5 !important;
+  --color-background-secondary-hover:  #e1bee7 !important;
+}
+
+/* ── Structural overrides ────────────────────────────────────────────────── */
+
+/* Main columns */
+html.lovespark-sakura    [data-testid="primaryColumn"],
+html.lovespark-sakura    main[role="main"] {
+  background-color: #fff0f5 !important;
+}
+html.lovespark-hotpink   [data-testid="primaryColumn"],
+html.lovespark-hotpink   main[role="main"] {
+  background-color: #ffb3d9 !important;
+}
+html.lovespark-starlight [data-testid="primaryColumn"],
+html.lovespark-starlight main[role="main"] {
+  background-color: #fce4f2 !important;
+}
+
+/* Tweet cards */
+html.lovespark-sakura    article[data-testid="tweet"] {
+  background-color: #fff0f5 !important;
+  border-color: rgba(240, 98, 146, 0.2) !important;
+}
+html.lovespark-hotpink   article[data-testid="tweet"] {
+  background-color: #ffe0f0 !important;
+  border-color: rgba(255, 20, 147, 0.3) !important;
+}
+html.lovespark-starlight article[data-testid="tweet"] {
+  background-color: #fce4f2 !important;
+  border-color: rgba(192, 132, 252, 0.25) !important;
+}
+
+/* Sidebar */
+html.lovespark-sakura    [data-testid="sidebarColumn"] {
+  background-color: #fce4ec !important;
+}
+html.lovespark-hotpink   [data-testid="sidebarColumn"] {
+  background-color: #f8bbd0 !important;
+}
+html.lovespark-starlight [data-testid="sidebarColumn"] {
+  background-color: #f3e5f5 !important;
+}
+
+/* ── Profile/header images: restore ─────────────────────────────────────── */
+
+html.lovespark-sakura    [data-testid="UserAvatar-Container"] img,
+html.lovespark-hotpink   [data-testid="UserAvatar-Container"] img,
+html.lovespark-starlight [data-testid="UserAvatar-Container"] img,
+html.lovespark-sakura    [data-testid="tweetPhoto"] img,
+html.lovespark-hotpink   [data-testid="tweetPhoto"] img,
+html.lovespark-starlight [data-testid="tweetPhoto"] img,
+html.lovespark-sakura    [data-testid="tweetVideo"],
+html.lovespark-hotpink   [data-testid="tweetVideo"],
+html.lovespark-starlight [data-testid="tweetVideo"] {
+  filter: none !important;
+}
