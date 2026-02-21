@@ -14,7 +14,6 @@ html,
 body {
   margin: 0;
   width: 320px;
-  min-height: 180px;
   font-family: "Trebuchet MS", "Verdana", sans-serif;
 }
 
@@ -23,7 +22,6 @@ body {
 }
 
 .shell {
-  min-height: 180px;
   display: grid;
   place-items: center;
   padding: 12px;
@@ -50,6 +48,8 @@ h1 {
   color: #8c4470;
   font-size: 12px;
 }
+
+/* ── Toggle ── */
 
 .toggle-row {
   display: flex;
@@ -105,28 +105,67 @@ h1 {
   transform: translateX(22px);
 }
 
-.pack-row {
+/* ── Theme swatch list ── */
+
+.theme-section {
   margin-top: 14px;
+}
+
+.theme-group-label {
+  margin: 10px 0 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #b06898;
+}
+
+.theme-group-label:first-child {
+  margin-top: 0;
+}
+
+.theme-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theme-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--ink);
-  font-weight: 700;
-}
-
-.pack-row select {
-  flex: 1;
-  max-width: 190px;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1.5px solid transparent;
   border-radius: 10px;
-  border: 1px solid rgba(171, 54, 123, 0.35);
-  background: #fff6fb;
-  color: #7a2f60;
-  font-weight: 700;
-  padding: 6px 10px;
-  outline: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.pack-row select:focus {
-  box-shadow: 0 0 0 3px rgba(255, 100, 180, 0.22);
+.theme-item:hover {
+  background: rgba(255, 105, 180, 0.08);
+  border-color: rgba(255, 105, 180, 0.22);
+}
+
+.theme-item.selected {
+  background: rgba(255, 105, 180, 0.12);
+  border-color: #ff69b4;
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+}
+
+.swatch {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.theme-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
 }

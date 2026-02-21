@@ -8,7 +8,16 @@
   const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
   const STORAGE_KEY_PACK = "lovesparkCursorPack";
   const DEFAULT_PACK = "retro-pink";
-  const ALLOWED_PACKS = new Set(["retro-pink", "sakura-peach", "starlight-purple"]);
+  const ALLOWED_PACKS = new Set([
+    "retro-pink", "sakura-peach", "starlight-purple",
+    "moonlight-rose", "candy-floss", "cyber-cherry",
+    "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
+  ]);
+  // New themes use SVG cursors (default.svg, pointer.svg, text.svg, wait.svg)
+  const SVG_PACKS = new Set([
+    "moonlight-rose", "candy-floss", "cyber-cherry",
+    "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
+  ]);
 
   function sanitizePack(pack) {
     if (typeof pack === "string" && ALLOWED_PACKS.has(pack)) {
@@ -22,6 +31,27 @@
   }
 
   function buildCursorCSS(pack) {
+    if (SVG_PACKS.has(pack)) {
+      const def = cursorURL(pack, "default.svg");
+      const ptr = cursorURL(pack, "pointer.svg");
+      const txt = cursorURL(pack, "text.svg");
+      const wait = cursorURL(pack, "wait.svg");
+      return `
+html, body, body *, body *::before, body *::after {
+  cursor: url("${def}") 3 1, auto !important;
+}
+a, area, button, summary, label[for], [role="button"], [role="link"], input[type="submit"], input[type="button"], .clickable, [onclick], [tabindex]:not([tabindex="-1"]) {
+  cursor: url("${ptr}") 3 1, pointer !important;
+}
+input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"] {
+  cursor: url("${txt}") 8 8, text !important;
+}
+.loading, [aria-busy="true"] {
+  cursor: url("${wait}") 16 16, wait !important;
+}
+`;
+    }
+
     const defaultCursor = cursorURL(pack, "cursor_default_32.png");
     const linkCursor = cursorURL(pack, "cursor_link_32.png");
     const textCursor = cursorURL(pack, "cursor_text_32.png");

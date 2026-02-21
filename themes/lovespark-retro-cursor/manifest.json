@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Retro Cursor Pack",
-  "version": "1.0.0",
-  "description": "Retro pink LoveSpark cursors with soft glow and sparkles for most webpages.",
+  "version": "1.1.0",
+  "description": "10 cursor themes — retro pinks, pastels, cyber, mint, golden, holo, obsidian.",
   "permissions": ["storage", "scripting", "tabs"],
   "host_permissions": ["<all_urls>"],
   "background": {
@@ -21,7 +21,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["cursors/*.png", "cursors/*/*.png"],
+      "resources": ["cursors/*.png", "cursors/*/*.png", "cursors/*/*.svg"],
       "matches": ["<all_urls>"]
     }
   ]

@@ -1,11 +1,15 @@
 const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
 const STORAGE_KEY_PACK = "lovesparkCursorPack";
 const DEFAULT_PACK = "retro-pink";
-const ALLOWED_PACKS = new Set(["retro-pink", "sakura-peach", "starlight-purple"]);
+const ALLOWED_PACKS = new Set([
+  "retro-pink", "sakura-peach", "starlight-purple",
+  "moonlight-rose", "candy-floss", "cyber-cherry",
+  "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
+]);
 
 const toggle = document.getElementById("cursorToggle");
 const statusText = document.getElementById("statusText");
-const packSelect = document.getElementById("packSelect");
+const themeItems = document.querySelectorAll(".theme-item");
 
 function sanitizePack(pack) {
   if (typeof pack === "string" && ALLOWED_PACKS.has(pack)) {
@@ -16,20 +20,19 @@ function sanitizePack(pack) {
 
 function render(enabled, pack) {
   toggle.checked = enabled;
-  packSelect.value = sanitizePack(pack);
   statusText.textContent = `Cursors: ${enabled ? "ON" : "OFF"}`;
+  const safe = sanitizePack(pack);
+  themeItems.forEach((item) => {
+    item.classList.toggle("selected", item.dataset.pack === safe);
+  });
 }
 
-async function saveAndBroadcast() {
-  const enabled = toggle.checked;
-  const pack = sanitizePack(packSelect.value);
-
+async function saveAndBroadcast(enabled, pack) {
   render(enabled, pack);
-
   await chrome.runtime.sendMessage({
     type: "lovespark:set-settings",
     enabled,
-    pack
+    pack: sanitizePack(pack)
   });
 }
 
@@ -41,11 +44,18 @@ async function loadState() {
 }
 
 toggle.addEventListener("change", () => {
-  void saveAndBroadcast();
+  void saveAndBroadcast(toggle.checked, getCurrentPack());
 });
 
-packSelect.addEventListener("change", () => {
-  void saveAndBroadcast();
+themeItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    void saveAndBroadcast(toggle.checked, item.dataset.pack);
+  });
 });
+
+function getCurrentPack() {
+  const selected = document.querySelector(".theme-item.selected");
+  return selected ? selected.dataset.pack : DEFAULT_PACK;
+}
 
 void loadState();

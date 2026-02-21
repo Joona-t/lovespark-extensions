@@ -10,7 +10,7 @@
     <main class="shell">
       <section class="card">
         <h1>LoveSpark Retro Cursor Pack</h1>
-        <p class="subtitle">Cute pink cursors with soft glow and sparkle vibes ✨</p>
+        <p class="subtitle">Cute cursors with soft glow and sparkle vibes ✨</p>
 
         <label class="toggle-row" for="cursorToggle">
           <span id="statusText">Cursors: ON</span>
@@ -20,14 +20,55 @@
           </span>
         </label>
 
-        <label class="pack-row" for="packSelect">
-          <span>Cursor Pack</span>
-          <select id="packSelect">
-            <option value="retro-pink">Retro Pink</option>
-            <option value="sakura-peach">Sakura Peach</option>
-            <option value="starlight-purple">Starlight Purple</option>
-          </select>
-        </label>
+        <div class="theme-section">
+          <p class="theme-group-label">Originals</p>
+          <div class="theme-list" id="themeList">
+            <button class="theme-item" data-pack="retro-pink" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#ffb6c1,#ff69b4)"></span>
+              <span class="theme-name">🌸 Retro Pink</span>
+            </button>
+            <button class="theme-item" data-pack="sakura-peach" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#ffd7b0,#ffb6c1)"></span>
+              <span class="theme-name">🌺 Sakura Peach</span>
+            </button>
+            <button class="theme-item" data-pack="starlight-purple" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#c39bd3,#9b59b6)"></span>
+              <span class="theme-name">⭐ Starlight Purple</span>
+            </button>
+          </div>
+
+          <p class="theme-group-label">New Collection</p>
+          <div class="theme-list">
+            <button class="theme-item" data-pack="moonlight-rose" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#c2185b,#f48fb1)"></span>
+              <span class="theme-name">🌙 Moonlight Rose</span>
+            </button>
+            <button class="theme-item" data-pack="candy-floss" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#ffb6c1,#e1bee7,#bbdefb,#c8e6c9)"></span>
+              <span class="theme-name">🍬 Candy Floss</span>
+            </button>
+            <button class="theme-item" data-pack="cyber-cherry" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#d50000,#ff69b4)"></span>
+              <span class="theme-name">🍒 Cyber Cherry</span>
+            </button>
+            <button class="theme-item" data-pack="mint-blossom" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#a5d6a7,#80cbc4)"></span>
+              <span class="theme-name">🌿 Mint Blossom</span>
+            </button>
+            <button class="theme-item" data-pack="golden-hour" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#ffab91,#ffd54f)"></span>
+              <span class="theme-name">🌅 Golden Hour</span>
+            </button>
+            <button class="theme-item" data-pack="holographic" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#ff6eb4,#c084fc,#818cf8,#5eead4)"></span>
+              <span class="theme-name">🌈 Holographic</span>
+            </button>
+            <button class="theme-item" data-pack="obsidian-heart" type="button">
+              <span class="swatch" style="background:linear-gradient(135deg,#1a1a1a,#c2185b)"></span>
+              <span class="theme-name">🖤 Obsidian Heart</span>
+            </button>
+          </div>
+        </div>
       </section>
     </main>
     <script src="popup.js"></script>
