@@ -3,7 +3,10 @@
   "name": "Are You Cooked?",
   "version": "1.0",
   "description": "counts your tabs and roasts you accordingly 🔥",
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

@@ -90,6 +90,86 @@
       min-height: 20px;
     }
 
+    /* ── Mascot ── */
+    .mascot-wrap {
+      width: 110px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mascot {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 16px;
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    /* panic-0: calm — no effect */
+
+    /* panic-1: slightly concerned (5–9 tabs) */
+    .mascot.panic-1 {
+      animation: mascot-wobble 2.5s ease-in-out infinite;
+    }
+
+    /* panic-2: worried (10–14 tabs) */
+    .mascot.panic-2 {
+      animation: mascot-wobble 1.2s ease-in-out infinite;
+      filter: brightness(1.08) saturate(1.1);
+    }
+
+    /* panic-3: deeply concerned (15–19 tabs) */
+    .mascot.panic-3 {
+      animation: mascot-wobble 0.7s ease-in-out infinite;
+      filter: brightness(1.15) saturate(1.2) hue-rotate(8deg);
+    }
+
+    /* panic-4: panicking (20–24 tabs) */
+    .mascot.panic-4 {
+      animation: mascot-shake 0.4s ease-in-out infinite;
+      filter: brightness(1.2) saturate(1.35) hue-rotate(15deg);
+    }
+
+    /* panic-5: screaming (25–29 tabs) */
+    .mascot.panic-5 {
+      animation: mascot-shake 0.25s linear infinite;
+      filter: brightness(1.3) saturate(1.5) hue-rotate(22deg);
+      transform-origin: center;
+    }
+
+    /* panic-6: fully cooked (30+ tabs) */
+    .mascot.panic-6 {
+      animation: mascot-chaos 0.18s linear infinite;
+      filter: brightness(1.5) saturate(2) hue-rotate(35deg) contrast(1.1);
+    }
+
+    @keyframes mascot-wobble {
+      0%, 100% { transform: rotate(0deg); }
+      25%       { transform: rotate(-4deg); }
+      75%       { transform: rotate(4deg); }
+    }
+
+    @keyframes mascot-shake {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      25%       { transform: translateX(-4px) rotate(-3deg); }
+      75%       { transform: translateX(4px) rotate(3deg); }
+    }
+
+    @keyframes mascot-chaos {
+      0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+      20%  { transform: translate(-3px, -2px) rotate(-4deg) scale(1.04); }
+      40%  { transform: translate(3px, 1px) rotate(4deg) scale(0.97); }
+      60%  { transform: translate(-2px, 2px) rotate(-2deg) scale(1.02); }
+      80%  { transform: translate(2px, -1px) rotate(3deg) scale(0.98); }
+      100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mascot { animation: none !important; }
+    }
+
     /* State: fine */
     body.state-fine .tab-count,
     body.state-fine .verdict,
@@ -181,6 +261,9 @@
 <body>
   <div class="container">
     <span class="title">are you cooked?</span>
+    <div class="mascot-wrap">
+      <img class="mascot panic-0" id="mascot" src="cooked_mascot.png" alt="mascot" />
+    </div>
     <div class="count-wrapper">
       <div class="tab-count" id="tabCount">—</div>
       <div class="tabs-label">tabs open</div>
