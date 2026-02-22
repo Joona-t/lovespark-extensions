@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "I Don't Want Cookies",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hides cookie consent banners and GDPR notices automatically. Part of the LoveSpark Suite 💕",
   "icons": {
     "48": "icons/icon-48.png",
@@ -21,8 +21,7 @@
   "permissions": [
     "storage",
     "tabs",
-    "alarms",
-    "scripting"
+    "alarms"
   ],
   "host_permissions": ["<all_urls>"],
   "content_scripts": [
