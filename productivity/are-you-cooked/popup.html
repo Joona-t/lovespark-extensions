@@ -19,7 +19,7 @@
       width: 300px;
       min-height: 200px;
       font-family: 'DM Mono', monospace;
-      background-color: #0d0d0d;
+      background-color: #fce4ec;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,11 +29,11 @@
 
     .container {
       width: 100%;
-      padding: 32px 24px;
+      padding: 24px 24px 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       text-align: center;
     }
 
@@ -42,68 +42,23 @@
       font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #ff69b4;
-      opacity: 0.5;
-    }
-
-    .count-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-    }
-
-    .tab-count {
-      font-size: 64px;
-      font-weight: 500;
-      line-height: 1;
-      color: #ff69b4;
-      text-shadow:
-        0 0 20px rgba(255, 105, 180, 0.6),
-        0 0 40px rgba(255, 105, 180, 0.3);
-      transition: text-shadow 0.4s ease, color 0.4s ease;
-    }
-
-    .tabs-label {
-      font-size: 11px;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      color: #ff69b4;
+      color: #c2185b;
       opacity: 0.6;
-    }
-
-    .divider {
-      width: 40px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #ff69b4, transparent);
-      opacity: 0.4;
-    }
-
-    .verdict {
-      font-size: 13px;
-      font-weight: 400;
-      font-style: italic;
-      color: #ff69b4;
-      line-height: 1.5;
-      text-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
-      transition: color 0.4s ease;
-      min-height: 20px;
     }
 
     /* ── Mascot ── */
     .mascot-wrap {
-      width: 110px;
-      height: 110px;
+      width: 130px;
+      height: 130px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .mascot {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       object-fit: contain;
-      border-radius: 16px;
       transition: filter 0.4s ease, transform 0.4s ease;
     }
 
@@ -117,52 +72,51 @@
     /* panic-2: worried (10–14 tabs) */
     .mascot.panic-2 {
       animation: mascot-wobble 1.2s ease-in-out infinite;
-      filter: brightness(1.08) saturate(1.1);
+      filter: saturate(1.15);
     }
 
     /* panic-3: deeply concerned (15–19 tabs) */
     .mascot.panic-3 {
       animation: mascot-wobble 0.7s ease-in-out infinite;
-      filter: brightness(1.15) saturate(1.2) hue-rotate(8deg);
+      filter: saturate(1.3) hue-rotate(8deg);
     }
 
     /* panic-4: panicking (20–24 tabs) */
     .mascot.panic-4 {
       animation: mascot-shake 0.4s ease-in-out infinite;
-      filter: brightness(1.2) saturate(1.35) hue-rotate(15deg);
+      filter: saturate(1.5) hue-rotate(15deg);
     }
 
     /* panic-5: screaming (25–29 tabs) */
     .mascot.panic-5 {
-      animation: mascot-shake 0.25s linear infinite;
-      filter: brightness(1.3) saturate(1.5) hue-rotate(22deg);
-      transform-origin: center;
+      animation: mascot-shake 0.22s linear infinite;
+      filter: saturate(1.8) hue-rotate(22deg) brightness(1.15);
     }
 
     /* panic-6: fully cooked (30+ tabs) */
     .mascot.panic-6 {
       animation: mascot-chaos 0.18s linear infinite;
-      filter: brightness(1.5) saturate(2) hue-rotate(35deg) contrast(1.1);
+      filter: saturate(2.2) hue-rotate(35deg) brightness(1.25) contrast(1.1);
     }
 
     @keyframes mascot-wobble {
       0%, 100% { transform: rotate(0deg); }
-      25%       { transform: rotate(-4deg); }
-      75%       { transform: rotate(4deg); }
+      25%       { transform: rotate(-5deg); }
+      75%       { transform: rotate(5deg); }
     }
 
     @keyframes mascot-shake {
       0%, 100% { transform: translateX(0) rotate(0deg); }
-      25%       { transform: translateX(-4px) rotate(-3deg); }
-      75%       { transform: translateX(4px) rotate(3deg); }
+      25%       { transform: translateX(-5px) rotate(-4deg); }
+      75%       { transform: translateX(5px) rotate(4deg); }
     }
 
     @keyframes mascot-chaos {
       0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
-      20%  { transform: translate(-3px, -2px) rotate(-4deg) scale(1.04); }
-      40%  { transform: translate(3px, 1px) rotate(4deg) scale(0.97); }
-      60%  { transform: translate(-2px, 2px) rotate(-2deg) scale(1.02); }
-      80%  { transform: translate(2px, -1px) rotate(3deg) scale(0.98); }
+      20%  { transform: translate(-4px, -2px) rotate(-5deg) scale(1.05); }
+      40%  { transform: translate(4px, 1px) rotate(5deg) scale(0.96); }
+      60%  { transform: translate(-3px, 2px) rotate(-3deg) scale(1.03); }
+      80%  { transform: translate(3px, -1px) rotate(4deg) scale(0.97); }
       100% { transform: translate(0, 0) rotate(0deg) scale(1); }
     }
 
@@ -170,99 +124,96 @@
       .mascot { animation: none !important; }
     }
 
-    /* State: fine */
-    body.state-fine .tab-count,
-    body.state-fine .verdict,
-    body.state-fine .tabs-label,
-    body.state-fine .title,
-    body.state-fine .divider {
-      color: #a8e6a3;
-      background: unset;
+    /* ── Count ── */
+    .count-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
     }
+
+    .tab-count {
+      font-size: 64px;
+      font-weight: 500;
+      line-height: 1;
+      color: #c2185b;
+      text-shadow:
+        0 2px 8px rgba(194, 24, 91, 0.25),
+        0 0 24px rgba(194, 24, 91, 0.12);
+      transition: color 0.4s ease, text-shadow 0.4s ease;
+    }
+
+    .tabs-label {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: #1a0a12;
+      opacity: 0.45;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c2185b, transparent);
+      opacity: 0.3;
+    }
+
+    .verdict {
+      font-size: 13px;
+      font-weight: 400;
+      font-style: italic;
+      color: #1a0a12;
+      line-height: 1.5;
+      transition: color 0.4s ease;
+      min-height: 20px;
+    }
+
+    /* ── State: fine ── */
+    body.state-fine { background-color: #e8f5e9; }
+    body.state-fine .title  { color: #2e7d32; }
     body.state-fine .tab-count {
-      text-shadow:
-        0 0 20px rgba(168, 230, 163, 0.5),
-        0 0 40px rgba(168, 230, 163, 0.2);
-      color: #a8e6a3;
+      color: #2e7d32;
+      text-shadow: 0 2px 8px rgba(46,125,50,0.2), 0 0 24px rgba(46,125,50,0.1);
     }
-    body.state-fine .verdict {
-      color: #a8e6a3;
-      text-shadow: 0 0 12px rgba(168, 230, 163, 0.35);
-    }
-    body.state-fine .divider {
-      background: linear-gradient(90deg, transparent, #a8e6a3, transparent);
-    }
+    body.state-fine .divider { background: linear-gradient(90deg, transparent, #2e7d32, transparent); }
+    body.state-fine .verdict { color: #1b5e20; }
 
-    /* State: spicy */
-    body.state-spicy .tab-count,
-    body.state-spicy .verdict,
-    body.state-spicy .tabs-label,
-    body.state-spicy .title {
-      color: #ffb347;
-    }
+    /* ── State: spicy ── */
+    body.state-spicy { background-color: #fff8e1; }
+    body.state-spicy .title { color: #e65100; }
     body.state-spicy .tab-count {
-      text-shadow:
-        0 0 20px rgba(255, 179, 71, 0.55),
-        0 0 40px rgba(255, 179, 71, 0.25);
-      color: #ffb347;
+      color: #e65100;
+      text-shadow: 0 2px 8px rgba(230,81,0,0.2), 0 0 24px rgba(230,81,0,0.1);
     }
-    body.state-spicy .verdict {
-      color: #ffb347;
-      text-shadow: 0 0 12px rgba(255, 179, 71, 0.4);
-    }
-    body.state-spicy .divider {
-      background: linear-gradient(90deg, transparent, #ffb347, transparent);
-    }
+    body.state-spicy .divider { background: linear-gradient(90deg, transparent, #e65100, transparent); }
+    body.state-spicy .verdict { color: #bf360c; }
 
-    /* State: cooked */
-    body.state-cooked .tab-count,
-    body.state-cooked .verdict,
-    body.state-cooked .tabs-label,
-    body.state-cooked .title {
-      color: #ff6b6b;
-    }
+    /* ── State: cooked ── */
+    body.state-cooked { background-color: #fce4ec; }
+    body.state-cooked .title { color: #ad1457; }
     body.state-cooked .tab-count {
-      text-shadow:
-        0 0 20px rgba(255, 107, 107, 0.6),
-        0 0 40px rgba(255, 107, 107, 0.3);
-      color: #ff6b6b;
+      color: #ad1457;
+      text-shadow: 0 2px 8px rgba(173,20,87,0.25), 0 0 24px rgba(173,20,87,0.12);
     }
-    body.state-cooked .verdict {
-      color: #ff6b6b;
-      text-shadow: 0 0 12px rgba(255, 107, 107, 0.4);
-    }
-    body.state-cooked .divider {
-      background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
-    }
+    body.state-cooked .divider { background: linear-gradient(90deg, transparent, #ad1457, transparent); }
+    body.state-cooked .verdict { color: #880e4f; }
 
-    /* State: 911 */
-    body.state-911 .tab-count,
-    body.state-911 .verdict,
-    body.state-911 .tabs-label,
-    body.state-911 .title {
-      color: #ff2d55;
-    }
+    /* ── State: 911 ── */
+    body.state-911 { background-color: #f8bbd0; }
+    body.state-911 .title { color: #b71c1c; }
     body.state-911 .tab-count {
-      text-shadow:
-        0 0 20px rgba(255, 45, 85, 0.7),
-        0 0 50px rgba(255, 45, 85, 0.35),
-        0 0 80px rgba(255, 45, 85, 0.15);
-      color: #ff2d55;
+      color: #b71c1c;
+      text-shadow: 0 2px 8px rgba(183,28,28,0.3), 0 0 28px rgba(183,28,28,0.15);
     }
-    body.state-911 .verdict {
-      color: #ff2d55;
-      text-shadow: 0 0 12px rgba(255, 45, 85, 0.5);
-    }
-    body.state-911 .divider {
-      background: linear-gradient(90deg, transparent, #ff2d55, transparent);
-    }
+    body.state-911 .divider { background: linear-gradient(90deg, transparent, #b71c1c, transparent); }
+    body.state-911 .verdict { color: #7f0000; }
   </style>
 </head>
 <body>
   <div class="container">
     <span class="title">are you cooked?</span>
     <div class="mascot-wrap">
-      <img class="mascot panic-0" id="mascot" src="cooked_mascot.png" alt="mascot" />
+      <img class="mascot panic-0" id="mascot" src="Mascot.png" alt="bestie" />
     </div>
     <div class="count-wrapper">
       <div class="tab-count" id="tabCount">—</div>

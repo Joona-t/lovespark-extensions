@@ -26,7 +26,7 @@ chrome.tabs.onCreated.addListener(() => {
 
     chrome.notifications.create(`cooked-${count}-${Date.now()}`, {
       type:     'basic',
-      iconUrl:  'cooked_mascot.png',
+      iconUrl:  'Mascot.png',
       title:    'are you cooked? 🔥',
       message:  message,
       priority: 1,
