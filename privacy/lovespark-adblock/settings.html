@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveSpark AdBlock — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+<header>
+  <h1 class="header-title">💕 LoveSpark AdBlock</h1>
+  <span class="header-sub">Settings</span>
+</header>
+
+<div id="app">
+
+  <!-- ── Enable/Disable ── -->
+  <section class="card">
+    <h2 class="card-title">🛡️ Protection</h2>
+    <div class="row-between">
+      <div>
+        <div class="setting-label">Enable ad blocking</div>
+        <div class="setting-desc">Turn off to browse without blocking</div>
+      </div>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="toggle-enabled" checked>
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ── Filter Intensity ── -->
+  <section class="card">
+    <h2 class="card-title">⚡ Filter Intensity</h2>
+    <div class="intensity-grid">
+      <label class="intensity-opt" data-level="light">
+        <input type="radio" name="intensity" value="light">
+        <span class="opt-card">
+          <span class="opt-icon">🌸</span>
+          <span class="opt-name">Light</span>
+          <span class="opt-desc">Ads only</span>
+        </span>
+      </label>
+      <label class="intensity-opt" data-level="medium">
+        <input type="radio" name="intensity" value="medium" checked>
+        <span class="opt-card">
+          <span class="opt-icon">💕</span>
+          <span class="opt-name">Medium</span>
+          <span class="opt-desc">Ads + trackers</span>
+        </span>
+      </label>
+      <label class="intensity-opt" data-level="strong">
+        <input type="radio" name="intensity" value="strong">
+        <span class="opt-card">
+          <span class="opt-icon">💪</span>
+          <span class="opt-name">Strong</span>
+          <span class="opt-desc">Everything</span>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ── Stats Dashboard ── -->
+  <section class="card">
+    <h2 class="card-title">📊 Stats</h2>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div id="stat-today" class="stat-big">0</div>
+        <div class="stat-lbl">Today</div>
+      </div>
+      <div class="stat-cell">
+        <div id="stat-total" class="stat-big">0</div>
+        <div class="stat-lbl">All time</div>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:14px">
+      <button id="export-csv" class="btn btn-secondary">📥 Export CSV</button>
+      <button id="reset-stats" class="btn btn-danger">🗑️ Reset Stats</button>
+    </div>
+  </section>
+
+  <!-- ── Whitelist ── -->
+  <section class="card">
+    <h2 class="card-title">✅ Whitelist</h2>
+    <p class="setting-desc" style="margin-bottom:10px">Domains where ads are <em>not</em> blocked:</p>
+
+    <div class="add-row">
+      <input id="wl-input" type="text" class="text-input" placeholder="example.com" autocomplete="off">
+      <button id="wl-add" class="btn btn-primary">Add</button>
+    </div>
+
+    <ul id="wl-list" class="wl-list"></ul>
+
+    <div class="btn-row" style="margin-top:10px">
+      <button id="wl-import" class="btn btn-secondary">📂 Import</button>
+      <button id="wl-export" class="btn btn-secondary">📤 Export</button>
+    </div>
+    <input id="wl-file" type="file" accept=".txt,.json" style="display:none">
+  </section>
+
+  <!-- ── Suite links ── -->
+  <section class="card suite-card">
+    <h2 class="card-title">🩷 LoveSpark Suite</h2>
+    <div class="suite-links">
+      <a href="#" class="suite-link">✨ Anti Brainrot</a>
+      <a href="#" class="suite-link">🌸 Dreamy Garden</a>
+      <a href="#" class="suite-link">💕 LoveSpark Cards</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span>💕 LoveSpark AdBlock v1.0.0 — Made with love</span>
+</footer>
+
+<script src="settings.js"></script>
+</body>
+</html>

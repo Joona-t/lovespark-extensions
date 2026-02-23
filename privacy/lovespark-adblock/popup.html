@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveSpark AdBlock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<div id="root">
+
+  <!-- Header -->
+  <header>
+    <span class="logo-text">💕 LoveSpark<br><span class="logo-sub">AdBlock</span></span>
+    <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">⚙️</button>
+  </header>
+
+  <!-- Shield Status -->
+  <section class="shield-section">
+    <div id="shield-icon" class="shield" aria-live="polite">🛡️</div>
+    <div id="status-text" class="status-text">Protected! ✨</div>
+    <p id="cute-msg" class="cute-msg">Keeping your internet sparkly! ✨</p>
+    <label class="toggle-wrap" aria-label="Enable or disable ad blocking">
+      <input type="checkbox" id="main-toggle" checked>
+      <span class="toggle-track">
+        <span class="toggle-thumb"></span>
+      </span>
+    </label>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="stat-box">
+      <div id="stat-today" class="stat-num">0</div>
+      <div class="stat-label">blocked today</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-box">
+      <div id="stat-total" class="stat-num">0</div>
+      <div class="stat-label">blocked total</div>
+    </div>
+  </section>
+
+  <!-- Current Site -->
+  <section class="site-section">
+    <div class="site-row">
+      <span class="site-icon">📍</span>
+      <span id="site-domain" class="site-domain">—</span>
+      <button id="whitelist-btn" class="wl-btn" title="Toggle whitelist for this site">☆ Allow</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <button id="board-btn" class="footer-link">⚙️ Settings</button>
+    <span class="footer-brand">LoveSpark Suite 💕</span>
+  </footer>
+
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
