@@ -122,12 +122,6 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
     applyCursorStyle(enabled, pack);
   }
 
-  chrome.runtime.onMessage.addListener((message) => {
-    if (message && message.type === "lovespark:apply-settings") {
-      applyCursorStyle(Boolean(message.enabled), sanitizePack(message.pack));
-    }
-  });
-
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName !== "sync") {
       return;

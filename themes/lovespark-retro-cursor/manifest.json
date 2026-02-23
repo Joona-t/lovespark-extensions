@@ -3,8 +3,7 @@
   "name": "LoveSpark Retro Cursor Pack",
   "version": "1.1.0",
   "description": "10 cursor themes — retro pinks, pastels, cyber, mint, golden, holo, obsidian.",
-  "permissions": ["storage", "scripting", "tabs"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage"],
   "background": {
     "service_worker": "background.js"
   },
