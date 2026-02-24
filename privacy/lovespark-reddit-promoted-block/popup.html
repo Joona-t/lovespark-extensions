@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Reddit Ad Blocker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <span class="popup-icon">🛡️</span>
+      <span>Reddit Ad Blocker</span>
+    </header>
+    <main class="popup-content">
+      <div class="stats-card">
+        <div class="stats-row">
+          <span class="stats-label">Ads hidden today</span>
+          <span class="stats-value" id="today-count">0</span>
+        </div>
+        <div class="stats-row">
+          <span class="stats-label">Total hidden</span>
+          <span class="stats-value" id="total-count">0</span>
+        </div>
+      </div>
+      <p class="message" id="message"></p>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite 💕</footer>
+  </div>
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
