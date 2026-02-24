@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Twitch AdBlock — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <span class="header-icon">🛡️</span>
+      <div>
+        <h1 class="header-title">LoveSpark Twitch AdBlock</h1>
+        <p class="header-sub">Block Twitch ads with love 💕</p>
+      </div>
+    </header>
+
+    <!-- Protection -->
+    <section class="card">
+      <h2 class="card-title">🛡️ Protection</h2>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Enable ad blocking</div>
+          <div class="setting-desc">Strip and block Twitch ads automatically</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-enabled" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="card">
+      <h2 class="card-title">📊 Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="stat-today">0</div>
+          <div class="stat-label">Today</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">All time</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-time">0s</div>
+          <div class="stat-label">Time saved</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-pink" id="btn-export">Export CSV</button>
+        <button class="btn-outline" id="btn-reset">Reset Stats</button>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="card">
+      <h2 class="card-title">💕 About</h2>
+      <p class="about-text">
+        LoveSpark Twitch AdBlock strips ad segments from Twitch's HLS stream
+        before the player sees them. If any ads slip through, they're automatically
+        muted with a pretty overlay until the stream resumes.
+      </p>
+      <p class="about-text about-text--muted">
+        Two layers of protection: stream-level ad stripping + DOM-based mute fallback.
+        Part of the LoveSpark Suite.
+      </p>
+      <p class="about-text about-text--muted">
+        No data collection. No tracking. Ever. 💕
+      </p>
+    </section>
+
+    <footer class="settings-footer">
+      LoveSpark Suite — Made with 💕 by Joona Tyrninoksa
+    </footer>
+  </div>
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
