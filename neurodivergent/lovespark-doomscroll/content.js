@@ -42,6 +42,7 @@ let tintEl = null;
 let whisperEl = null;
 let gaugeEl = null;
 let gaugeFillEl = null;
+let mascotEl = null;
 
 let lastScrollY = 0;
 let lastScrollTs = 0;
@@ -74,6 +75,7 @@ function ensureOverlay() {
     whisperEl = overlayContainer.querySelector('.ls-doomscroll-whisper');
     gaugeEl = overlayContainer.querySelector('.ls-doomscroll-gauge');
     gaugeFillEl = overlayContainer.querySelector('.ls-doomscroll-gauge-fill');
+    mascotEl = overlayContainer.querySelector('.ls-doomscroll-mascot');
     return;
   }
 
@@ -92,9 +94,15 @@ function ensureOverlay() {
   gaugeFillEl = document.createElement('div');
   gaugeFillEl.className = 'ls-doomscroll-gauge-fill';
 
+  mascotEl = document.createElement('img');
+  mascotEl.className = 'ls-doomscroll-mascot';
+  mascotEl.src = browser.runtime.getURL('media/mascot.png');
+  mascotEl.alt = '';
+
   gaugeEl.appendChild(gaugeFillEl);
   overlayContainer.appendChild(tintEl);
   overlayContainer.appendChild(whisperEl);
+  overlayContainer.appendChild(mascotEl);
   overlayContainer.appendChild(gaugeEl);
 
   document.documentElement.appendChild(overlayContainer);
@@ -108,6 +116,7 @@ function showOverlay() {
   tintEl.style.opacity = state.tintOpacity;
   whisperEl.textContent = WHISPERS[Math.floor(Math.random() * WHISPERS.length)];
   whisperEl.style.opacity = '1';
+  mascotEl.classList.add('visible');
   startDecayLoop();
 }
 
@@ -123,6 +132,8 @@ function hideOverlay() {
   continuousScrollingMs = 0;
   tintEl.style.opacity = '0';
   whisperEl.style.opacity = '0';
+  mascotEl.classList.remove('visible');
+  mascotEl.style.opacity = '';
   gaugeEl.style.opacity = '0';
   gaugeFillEl.style.width = '0%';
 }
@@ -189,6 +200,7 @@ function decayTick() {
       const ratio = Math.min(continuousScrollingMs / state.continuousScrollMs, 1);
       tintEl.style.opacity = (state.tintOpacity * ratio).toFixed(4);
       whisperEl.style.opacity = ratio.toFixed(4);
+      mascotEl.style.opacity = ratio.toFixed(4);
     }
 
     // Update gauge fill during decay
