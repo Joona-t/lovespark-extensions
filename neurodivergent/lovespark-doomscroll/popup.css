@@ -1,0 +1,257 @@
+/* Pink Anti-Doomscroll — popup.css
+   LoveSpark retro pink gradient aesthetic */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Background gradient */
+  --ls-bg-pink-light: #FDCFE1;
+  --ls-bg-pink: #F9A8C9;
+  --ls-bg-pink-deep: #F48CAF;
+  --ls-bg-gradient: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+
+  /* Frosted glass surfaces */
+  --ls-glass: rgba(255, 255, 255, 0.45);
+  --ls-glass-light: rgba(255, 255, 255, 0.25);
+  --ls-glass-border: rgba(255, 255, 255, 0.4);
+  --ls-glass-strong: rgba(255, 255, 255, 0.6);
+
+  /* Accents */
+  --ls-pink-accent: #E8457C;
+  --ls-pink-deep: #D63466;
+  --ls-white: #FFFFFF;
+
+  /* Text */
+  --ls-text-dark: #5C1A36;
+  --ls-text-muted: #9E4D6E;
+  --ls-text-white: #FFFFFF;
+
+  /* Effects */
+  --ls-glow: 0 0 16px rgba(232, 69, 124, 0.3);
+  --ls-glow-strong: 0 0 24px rgba(232, 69, 124, 0.45);
+
+  /* Layout */
+  --ls-radius: 14px;
+  --ls-radius-sm: 10px;
+  --ls-font-body: 'DM Mono', monospace;
+  --ls-font-display: 'Press Start 2P', cursive;
+}
+
+html, body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+  overflow: hidden;
+}
+
+/* ── Container ─────────────────────────────────────────────────────────────── */
+
+.popup-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.header-icon {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 0 6px rgba(232, 69, 124, 0.4));
+}
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  letter-spacing: 0.5px;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.card-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Rows ──────────────────────────────────────────────────────────────────── */
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.row + .row {
+  border-top: 1px solid var(--ls-glass-border);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+.row-label {
+  font-size: 13px;
+  color: var(--ls-text-dark);
+}
+
+/* ── Toggle switch ─────────────────────────────────────────────────────────── */
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  display: block;
+  width: 44px;
+  height: 24px;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 12px;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.toggle-thumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  margin-top: 1px;
+  margin-left: 1px;
+  transition: transform 0.2s ease;
+}
+
+.toggle-switch input:checked + .toggle-track {
+  background: var(--ls-pink-accent);
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+.toggle-switch input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ── Mode selector ─────────────────────────────────────────────────────────── */
+
+.mode-row {
+  display: flex;
+  gap: 6px;
+}
+
+.mode-option {
+  flex: 1;
+  cursor: pointer;
+}
+
+.mode-option input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.mode-label {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-family: var(--ls-font-body);
+  padding: 7px 4px;
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  color: var(--ls-text-dark);
+  transition: all 0.2s ease;
+}
+
+.mode-option input:checked + .mode-label {
+  background: var(--ls-pink-accent);
+  color: var(--ls-text-white);
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+.mode-option:hover .mode-label {
+  box-shadow: var(--ls-glow);
+}
+
+/* ── Snooze button ─────────────────────────────────────────────────────────── */
+
+.btn-snooze {
+  width: 100%;
+  background: var(--ls-pink-accent);
+  color: white;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  padding: 10px 16px;
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--ls-glow);
+}
+
+.btn-snooze:hover {
+  background: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow-strong);
+}
+
+.btn-snooze:disabled {
+  background: var(--ls-glass-light);
+  color: var(--ls-text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+
+.popup-footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  margin-top: 4px;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,94 @@
+/* Pink Anti-Doomscroll — styles.css
+   Injected at document_start. All overlay visuals. */
+
+[data-lovespark="doomscroll-overlay"] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2147483640;
+  pointer-events: none !important;
+  transition: opacity 0.5s ease;
+}
+
+/* ── Tint ──────────────────────────────────────────────────────────────────── */
+
+.ls-doomscroll-tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(255, 105, 180, 0.03) 0%, rgba(255, 105, 180, 0.08) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* ── Whisper text ──────────────────────────────────────────────────────────── */
+
+.ls-doomscroll-whisper {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  color: rgba(255, 182, 193, 0.7);
+  letter-spacing: 2px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+  text-shadow: 0 0 8px rgba(255, 105, 180, 0.3);
+  white-space: nowrap;
+}
+
+/* ── Focus Bloom gauge ─────────────────────────────────────────────────────── */
+
+.ls-doomscroll-gauge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(26, 10, 18, 0.3);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.ls-doomscroll-gauge-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #FF69B4, #C084FC);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.3s ease;
+}
+
+/* ── Sparkles ──────────────────────────────────────────────────────────────── */
+
+.ls-doomscroll-sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #FF69B4;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: ls-sparkle-float 1.5s ease-out forwards;
+}
+
+@keyframes ls-sparkle-float {
+  0%   { opacity: 0.8; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-40px) scale(0.3); }
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-lovespark="doomscroll-overlay"] * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

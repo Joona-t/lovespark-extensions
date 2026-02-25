@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pink Anti-Doomscroll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+
+    <!-- Header -->
+    <header class="popup-header">
+      <img src="icons/icon-48.png" alt="" class="header-icon">
+      <span class="header-title">Anti-Doomscroll</span>
+    </header>
+
+    <!-- Master toggle -->
+    <div class="card">
+      <div class="row">
+        <span class="row-label">Enabled</span>
+        <label class="toggle-switch" id="toggle-enabled">
+          <input type="checkbox" id="cb-enabled">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Site toggles -->
+    <div class="card">
+      <div class="card-title">Sites</div>
+      <div class="row">
+        <span class="row-label">x.com / twitter.com</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-site-x">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row">
+        <span class="row-label">reddit.com</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-site-reddit">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Mode selector -->
+    <div class="card">
+      <div class="card-title">Mode</div>
+      <div class="mode-row">
+        <label class="mode-option">
+          <input type="radio" name="mode" value="gentle">
+          <span class="mode-label">Gentle</span>
+        </label>
+        <label class="mode-option">
+          <input type="radio" name="mode" value="standard">
+          <span class="mode-label">Standard</span>
+        </label>
+        <label class="mode-option">
+          <input type="radio" name="mode" value="firm">
+          <span class="mode-label">Firm</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sparkles toggle -->
+    <div class="card">
+      <div class="row">
+        <span class="row-label">Sparkles enabled</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-sparkle">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Snooze -->
+    <button class="btn-snooze" id="btn-snooze">Snooze 10 min</button>
+
+    <!-- Footer -->
+    <footer class="popup-footer">LoveSpark Suite 💕</footer>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

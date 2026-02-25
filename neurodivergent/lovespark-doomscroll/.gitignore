@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+._*
+node_modules/
+*.crx
+*.pem
+*.zip
+*.log
+.vscode/
+.idea/
