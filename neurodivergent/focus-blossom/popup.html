@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Blossom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="header-title">Focus Blossom</span>
+    </header>
+
+    <!-- Garden Grid -->
+    <div class="garden-grid" id="gardenGrid"></div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="empty-emoji">🌱</div>
+      <div class="empty-text">No gardens yet!<br>Add a site to start growing.</div>
+    </div>
+
+    <!-- Add site -->
+    <div class="add-site-row">
+      <input type="text" id="siteInput" class="site-input" placeholder="e.g. reddit.com" spellcheck="false" autocomplete="off">
+      <button class="btn-add" id="addBtn">+ Add</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-card" id="statsCard">
+      <div class="stats-row">
+        <span class="stats-label">🌱 Gardens growing</span>
+        <span class="stats-value" id="statGrowing">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">🔥 Longest streak</span>
+        <span class="stats-value" id="statStreak">0d</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">⏱️ Total blocked</span>
+        <span class="stats-value" id="statBlocked">0h</span>
+      </div>
+    </div>
+
+    <!-- Affirmation -->
+    <div class="affirmation" id="affirmation"></div>
+
+    <footer class="popup-footer">
+      LoveSpark Suite 💕
+    </footer>
+  </div>
+
+  <script src="garden-sprites.js"></script>
+  <script src="affirmations.js"></script>
+  <script src="garden.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

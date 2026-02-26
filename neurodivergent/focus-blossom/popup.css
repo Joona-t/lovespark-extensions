@@ -1,0 +1,302 @@
+:root {
+  --ls-bg-pink-light: #FDCFE1;
+  --ls-bg-pink: #F9A8C9;
+  --ls-bg-pink-deep: #F48CAF;
+  --ls-bg-gradient: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+  --ls-glass: rgba(255, 255, 255, 0.45);
+  --ls-glass-light: rgba(255, 255, 255, 0.25);
+  --ls-glass-border: rgba(255, 255, 255, 0.4);
+  --ls-glass-strong: rgba(255, 255, 255, 0.6);
+  --ls-pink-accent: #E8457C;
+  --ls-pink-deep: #D63466;
+  --ls-white: #FFFFFF;
+  --ls-text-dark: #5C1A36;
+  --ls-text-muted: #9E4D6E;
+  --ls-text-white: #FFFFFF;
+  --ls-glow: 0 0 16px rgba(232, 69, 124, 0.3);
+  --ls-glow-strong: 0 0 24px rgba(232, 69, 124, 0.45);
+  --ls-radius: 14px;
+  --ls-radius-sm: 10px;
+  --ls-font-body: 'DM Mono', monospace;
+  --ls-font-display: 'Press Start 2P', cursive;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 360px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 16px; }
+
+/* --- Header --- */
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.mascot {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 11px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+}
+
+/* --- Garden Grid --- */
+
+.garden-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.garden-card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(8px);
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.garden-card:hover {
+  box-shadow: var(--ls-glow);
+}
+
+.garden-card canvas {
+  width: 100%;
+  height: 80px;
+  border-radius: var(--ls-radius-sm);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.garden-card-domain {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ls-text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.garden-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3px;
+}
+
+.garden-card-stage {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
+
+.garden-card-emoji { font-size: 14px; }
+
+/* Expanded card */
+
+.garden-card.expanded {
+  grid-column: 1 / -1;
+}
+
+.garden-card-details {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ls-glass-border);
+  display: none;
+}
+
+.garden-card.expanded .garden-card-details { display: block; }
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 3px 0;
+}
+
+.detail-label { color: var(--ls-text-muted); }
+.detail-value { color: var(--ls-text-dark); font-weight: 500; }
+
+.garden-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-unblock-small, .btn-remove-small {
+  flex: 1;
+  padding: 6px;
+  font-family: var(--ls-font-body);
+  font-size: 11px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-unblock-small {
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+}
+
+.btn-unblock-small:hover { background: var(--ls-glass-strong); }
+
+.btn-remove-small {
+  background: rgba(200, 50, 50, 0.15);
+  color: #a33;
+  border-color: rgba(200, 50, 50, 0.3);
+}
+
+.btn-remove-small:hover { background: rgba(200, 50, 50, 0.25); }
+
+.btn-reblock-small {
+  flex: 1;
+  padding: 6px;
+  font-family: var(--ls-font-body);
+  font-size: 11px;
+  background: var(--ls-pink-accent);
+  color: white;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+  box-shadow: var(--ls-glow);
+  transition: all 0.2s;
+}
+
+.btn-reblock-small:hover {
+  background: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow-strong);
+}
+
+/* --- Empty State --- */
+
+.empty-state {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.empty-emoji { font-size: 32px; margin-bottom: 8px; }
+
+.empty-text {
+  font-size: 12px;
+  color: var(--ls-text-muted);
+  line-height: 1.5;
+}
+
+/* --- Add Site --- */
+
+.add-site-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.site-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  color: var(--ls-text-dark);
+  outline: none;
+}
+
+.site-input:focus {
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+.site-input::placeholder { color: var(--ls-text-muted); opacity: 0.6; }
+
+.btn-add {
+  padding: 8px 14px;
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  background: var(--ls-pink-accent);
+  color: white;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+  box-shadow: var(--ls-glow);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow-strong);
+}
+
+/* --- Stats --- */
+
+.stats-card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(8px);
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.stats-row + .stats-row { border-top: 1px solid var(--ls-glass-border); }
+.stats-label { font-size: 12px; color: var(--ls-text-dark); }
+
+.stats-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ls-pink-accent);
+  transition: all 0.3s ease;
+}
+
+/* --- Affirmation --- */
+
+.affirmation {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.5;
+  padding: 4px 8px;
+}
+
+/* --- Footer --- */
+
+.popup-footer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
+
+/* --- Reduced Motion --- */
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-value { transition: none; }
+  .garden-card { transition: none; }
+}

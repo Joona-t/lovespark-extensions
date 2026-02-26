@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Blossom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blocked.css">
+</head>
+<body>
+  <div class="loading-state" id="loadingState">Growing...</div>
+
+  <div class="container" id="mainContainer" style="display:none">
+    <div class="garden-canvas-wrap">
+      <canvas id="gardenCanvas"></canvas>
+    </div>
+
+    <div class="info-panel">
+      <div class="domain-row">
+        <span class="stage-emoji" id="stageEmoji"></span>
+        <span class="domain-name" id="domainName"></span>
+        <span class="day-count" id="dayCount"></span>
+      </div>
+
+      <div class="stage-label" id="stageLabel"></div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+        <span class="progress-text" id="progressText"></span>
+      </div>
+
+      <div class="affirmation" id="affirmation"></div>
+
+      <button class="back-btn" id="backBtn">&larr; Go Back</button>
+
+      <div class="unblock-link" id="unblockLink">I need to visit this site...</div>
+    </div>
+
+    <!-- Friction overlay -->
+    <div class="friction-overlay" id="frictionOverlay" style="display:none">
+      <div class="friction-card">
+        <div class="friction-title" id="frictionTitle">Are you sure?</div>
+        <div class="friction-body" id="frictionBody">
+          Unblocking will wilt your garden. Your flowers will lose half their growth.
+        </div>
+        <div class="friction-preview">
+          <canvas id="frictionCanvas" width="280" height="160"></canvas>
+        </div>
+        <div class="friction-timer" id="frictionTimer" style="display:none">
+          Wait <span id="timerCount">30</span>s...
+        </div>
+        <div class="friction-input-wrap" id="frictionInputWrap" style="display:none">
+          <label class="friction-input-label" id="frictionInputLabel">Type the domain to confirm:</label>
+          <input type="text" class="friction-input" id="frictionInput" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="friction-buttons">
+          <button class="btn-cancel" id="frictionCancel">Cancel</button>
+          <button class="btn-unblock" id="frictionConfirm" disabled>I understand, unblock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="garden-sprites.js"></script>
+  <script src="affirmations.js"></script>
+  <script src="garden.js"></script>
+  <script src="blocked.js"></script>
+</body>
+</html>

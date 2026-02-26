@@ -1,0 +1,6 @@
+__pycache__
+.DS_Store
+*.pyc
+node_modules
+focus-blossom-chrome.zip
+focus-blossom-firefox.zip
