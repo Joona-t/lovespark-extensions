@@ -1,6 +1,28 @@
 // GardenRenderer — shared Canvas rendering engine
 // Central cherry blossom tree with flowers blooming on branches
-// Sparky the mascot stands at the base as gardener
+// Sparky the mascot walks around and waters the garden
+
+// ============================================================
+// Tunable constants — adjust these to tweak the look
+// ============================================================
+
+// Cloud stamps (Part A)
+const CLOUD_STAMP_VARIANTS = 4;   // number of unique cloud shapes
+const CLOUD_PUFFS_MIN = 24;       // min puff circles per stamp
+const CLOUD_PUFFS_MAX = 38;       // max puff circles per stamp
+const CLOUD_STAMP_W = 200;        // offscreen stamp width (px)
+const CLOUD_STAMP_H = 120;        // offscreen stamp height (px)
+const CLOUD_BLUR_PX = 6;          // gaussian blur radius on stamps
+const CLOUD_WIND_SHEAR = 0.07;    // horizontal skew intensity
+
+// Sparky mascot (Part B)
+const MASCOT_HOP_AMP = 5;         // hop bounce height (px)
+const MASCOT_HOP_FREQ = 0.008;    // hop cycle speed
+const MASCOT_SQUASH = 0.10;       // squash/stretch intensity (0-1)
+const MASCOT_SHADOW_ALPHA = 0.18; // ground shadow opacity
+const MASCOT_WALK_SPEED = 0.00025;// walk speed (fraction of width/ms)
+const MASCOT_MAX_DROPS = 20;      // max concurrent water drops
+const MASCOT_MAX_SPLASHES = 12;   // max concurrent ground splashes
 
 class GardenRenderer {
   constructor(canvas, flowerTypeIndex, thumbnailMode = false) {
@@ -26,6 +48,101 @@ class GardenRenderer {
     this.mascotImg.src = 'mascot.png';
     this.mascotLoaded = false;
     this.mascotImg.onload = () => { this.mascotLoaded = true; };
+
+    // Mascot animation state machine
+    this.mascotState = "idle";
+    this.mascotX = 0.68;
+    this.mascotTargetX = 0.68;
+    this.mascotTimer = 3000 + Math.random() * 3000;
+    this.mascotWaterDrops = [];
+    this.mascotSplashes = [];
+    this.mascotFacing = 1;
+    this._lastTime = 0;
+
+    // Dynamic clouds — stamp cache + slot data
+    this.clouds = [];
+    this._cloudStamps = [];
+    this._generateClouds(flowerTypeIndex);
+    this._buildCloudStamps(flowerTypeIndex);
+  }
+
+  // --- Cloud stamp generation (offscreen, runs once) ---
+
+  _generateClouds(flowerTypeIndex) {
+    let seed = (flowerTypeIndex + 1) * 7919;
+    const sr = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed & 0x7fffffff) / 2147483647;
+    };
+    for (let i = 0; i < 5; i++) {
+      this.clouds.push({
+        xBase: sr(),
+        yBase: 0.08 + sr() * 0.28,
+        size: 28 + sr() * 30,
+        speed: 0.000012 + sr() * 0.000018,
+        vertSpeed: 0.0005 + sr() * 0.0008,
+        vertAmp: 3 + sr() * 5,
+        phase: sr() * Math.PI * 2,
+        opacity: 0.7 + sr() * 0.3,
+        stampIndex: Math.floor(sr() * CLOUD_STAMP_VARIANTS),
+      });
+    }
+  }
+
+  _buildCloudStamps(flowerTypeIndex) {
+    let seed = (flowerTypeIndex + 1) * 6271;
+    const sr = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed & 0x7fffffff) / 2147483647;
+    };
+
+    for (let v = 0; v < CLOUD_STAMP_VARIANTS; v++) {
+      // Draw puffs onto a temp canvas, then blur-copy to final stamp
+      const tmp = document.createElement('canvas');
+      tmp.width = CLOUD_STAMP_W;
+      tmp.height = CLOUD_STAMP_H;
+      const tctx = tmp.getContext('2d');
+
+      const puffCount = CLOUD_PUFFS_MIN + Math.floor(sr() * (CLOUD_PUFFS_MAX - CLOUD_PUFFS_MIN));
+      const cx = CLOUD_STAMP_W / 2;
+      const cy = CLOUD_STAMP_H / 2;
+
+      for (let p = 0; p < puffCount; p++) {
+        const angle = sr() * Math.PI * 2;
+        const distRaw = sr();
+        // Quadratic falloff clusters puffs toward center
+        const dist = distRaw * distRaw * 0.85;
+
+        const px = cx + Math.cos(angle) * dist * (CLOUD_STAMP_W * 0.42);
+        // Slight bottom bias for natural cloud shape
+        const py = cy + Math.sin(angle) * dist * (CLOUD_STAMP_H * 0.32) + (sr() - 0.35) * 8;
+        // Larger puffs toward center
+        const puffR = (16 + sr() * 26) * (1 - dist * 0.35);
+        const alpha = 0.13 + sr() * 0.14;
+
+        tctx.globalAlpha = alpha;
+        tctx.fillStyle = '#FFFFFF';
+        tctx.beginPath();
+        tctx.arc(px, py, puffR, 0, Math.PI * 2);
+        tctx.fill();
+      }
+
+      // Blur-copy: temp → final stamp for soft edges
+      const oc = document.createElement('canvas');
+      oc.width = CLOUD_STAMP_W;
+      oc.height = CLOUD_STAMP_H;
+      const octx = oc.getContext('2d');
+      try {
+        octx.filter = `blur(${CLOUD_BLUR_PX}px)`;
+        octx.drawImage(tmp, 0, 0);
+        octx.filter = 'none';
+      } catch (_) {
+        // Fallback: no blur (still looks decent from overlapping puffs)
+        octx.drawImage(tmp, 0, 0);
+      }
+
+      this._cloudStamps.push(oc);
+    }
   }
 
   get w() { return this.canvas.width / this.dpr; }
@@ -78,6 +195,11 @@ class GardenRenderer {
       cancelAnimationFrame(this.animFrame);
       this.animFrame = null;
     }
+  }
+
+  destroy() {
+    this.stop();
+    this._cloudStamps = [];
   }
 
   // --- Tree generation ---
@@ -184,10 +306,11 @@ class GardenRenderer {
 
     const desat = this.destroying ? this.destroyProgress : 0;
 
-    this._drawSky(desat);
+    this._drawSky(desat, stage);
     this._drawGround(desat);
     this._drawTree(desat);
     this._drawTreeFlowers(stage, stageProgress, desat);
+    this._updateMascot(stage);
     this._drawMascot(desat);
 
     if (!this.thumbnailMode) {
@@ -200,9 +323,9 @@ class GardenRenderer {
     }
   }
 
-  // --- Sky & Ground ---
+  // --- Sky & Clouds ---
 
-  _drawSky(desat) {
+  _drawSky(desat, stage) {
     const ctx = this.ctx;
     const w = this.w;
     const h = this.h;
@@ -220,26 +343,45 @@ class GardenRenderer {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, groundY);
 
-    if (!this.thumbnailMode && desat < 0.5) {
-      ctx.save();
-      ctx.globalAlpha = 0.3 * (1 - desat * 2);
-      const t = this.time * 0.00003;
-      this._drawCloud(w * 0.15 + Math.sin(t) * 20, groundY * 0.2, 35);
-      this._drawCloud(w * 0.78 + Math.cos(t * 0.7) * 15, groundY * 0.3, 28);
-      ctx.restore();
+    // Soft stamp-based clouds — count increases with garden stage
+    if (desat < 0.5 && this._cloudStamps.length > 0) {
+      const visibleClouds = this.thumbnailMode
+        ? Math.min(this.clouds.length, Math.max(1, stage))
+        : Math.min(this.clouds.length, stage + 1);
+      const baseAlpha = Math.min(1, (0.35 + stage * 0.08) * (1 - desat * 2));
+      const t = this.time;
+
+      for (let i = 0; i < visibleClouds; i++) {
+        const c = this.clouds[i];
+        const stamp = this._cloudStamps[c.stampIndex % this._cloudStamps.length];
+
+        const xRaw = this.thumbnailMode
+          ? c.xBase * w
+          : ((c.xBase + t * c.speed) % 1.2 - 0.1) * w;
+        const yRaw = this.thumbnailMode
+          ? c.yBase * groundY
+          : c.yBase * groundY + Math.sin(t * c.vertSpeed + c.phase) * c.vertAmp;
+
+        const drawW = c.size * 3.2;
+        const drawH = c.size * 1.9;
+
+        ctx.save();
+        ctx.globalAlpha = baseAlpha * c.opacity;
+        ctx.translate(xRaw, yRaw);
+
+        // Wind shear — top of cloud drifts ahead (slow sine wobble)
+        if (!this.thumbnailMode) {
+          const shear = CLOUD_WIND_SHEAR * Math.sin(t * 0.0002 + c.phase);
+          ctx.transform(1, 0, -shear, 1, 0, 0);
+        }
+
+        ctx.drawImage(stamp, -drawW / 2, -drawH / 2, drawW, drawH);
+        ctx.restore();
+      }
     }
   }
 
-  _drawCloud(x, y, size) {
-    const ctx = this.ctx;
-    ctx.fillStyle = "#FFFFFF";
-    ctx.beginPath();
-    ctx.arc(x, y, size * 0.5, 0, Math.PI * 2);
-    ctx.arc(x + size * 0.4, y - size * 0.1, size * 0.4, 0, Math.PI * 2);
-    ctx.arc(x - size * 0.35, y + size * 0.05, size * 0.35, 0, Math.PI * 2);
-    ctx.arc(x + size * 0.15, y + size * 0.15, size * 0.35, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  // --- Ground ---
 
   _drawGround(desat) {
     const ctx = this.ctx;
@@ -377,7 +519,83 @@ class GardenRenderer {
     }
   }
 
-  // --- Mascot ---
+  // --- Mascot animation ---
+
+  _updateMascot(stage) {
+    if (this.thumbnailMode || this.destroying) return;
+
+    // Delta time
+    const dt = this._lastTime > 0 ? Math.min(this.time - this._lastTime, 50) : 16;
+    this._lastTime = this.time;
+
+    this.mascotTimer -= dt;
+
+    if (this.mascotTimer <= 0) {
+      if (this.mascotState === "idle") {
+        this.mascotTargetX = 0.2 + Math.random() * 0.65;
+        this.mascotFacing = this.mascotTargetX > this.mascotX ? 1 : -1;
+        this.mascotState = "walking";
+      } else if (this.mascotState === "walking") {
+        this.mascotState = "watering";
+        this.mascotTimer = 2000 + Math.random() * 1500;
+      } else if (this.mascotState === "watering") {
+        this.mascotState = "idle";
+        this.mascotTimer = 4000 + Math.random() * 4000;
+      }
+    }
+
+    // Walking movement
+    if (this.mascotState === "walking") {
+      const dx = this.mascotTargetX - this.mascotX;
+      if (Math.abs(dx) < MASCOT_WALK_SPEED * dt) {
+        this.mascotX = this.mascotTargetX;
+        this.mascotTimer = 0; // trigger transition to watering
+      } else {
+        this.mascotX += Math.sign(dx) * MASCOT_WALK_SPEED * dt;
+      }
+    }
+
+    // Spawn water drops during watering (capped)
+    if (this.mascotState === "watering" && this.mascotWaterDrops.length < MASCOT_MAX_DROPS && Math.random() < 0.25) {
+      const groundY = this.h * 0.65;
+      const mascotH = this.h * 0.15;
+      this.mascotWaterDrops.push({
+        x: this.mascotX * this.w + (this.mascotFacing * 6) + (Math.random() - 0.5) * 10,
+        y: groundY - mascotH * 0.6,
+        vy: 0.5 + Math.random() * 0.8,
+        life: 1,
+      });
+    }
+
+    // Update water drops — spawn splashes on ground hit
+    const groundY = this.h * 0.65;
+    for (let i = this.mascotWaterDrops.length - 1; i >= 0; i--) {
+      const d = this.mascotWaterDrops[i];
+      d.y += d.vy;
+      d.vy += 0.08;
+      d.life -= 0.018;
+      if (d.life <= 0 || d.y >= groundY) {
+        // Ground splash on impact
+        if (d.y >= groundY && this.mascotSplashes.length < MASCOT_MAX_SPLASHES) {
+          this.mascotSplashes.push({
+            x: d.x,
+            y: groundY,
+            life: 1,
+            size: 1.5 + Math.random() * 1.5,
+          });
+        }
+        this.mascotWaterDrops.splice(i, 1);
+      }
+    }
+
+    // Update ground splashes — expanding ripple rings
+    for (let i = this.mascotSplashes.length - 1; i >= 0; i--) {
+      const s = this.mascotSplashes[i];
+      s.life -= 0.04;
+      s.size += 0.35;
+      if (s.life <= 0) this.mascotSplashes.splice(i, 1);
+    }
+  }
 
   _drawMascot(desat) {
     if (!this.mascotLoaded) return;
@@ -387,16 +605,106 @@ class GardenRenderer {
     const h = this.h;
     const groundY = h * 0.65;
 
-    // Sparky stands to the right of the tree, on the ground
     const mascotH = this.thumbnailMode ? h * 0.12 : h * 0.15;
     const mascotW = mascotH;
-    const mx = w * 0.68;
+    const mx = this.thumbnailMode ? w * 0.68 : this.mascotX * w;
     const my = groundY - mascotH * 0.88;
 
+    // Hop phase and squash/stretch (walking only)
+    let bobY = 0;
+    let scaleX = 1;
+    let scaleY = 1;
+    let hopHeight = 0; // 0=ground, 1=peak — used for shadow
+
+    if (!this.thumbnailMode) {
+      if (this.mascotState === "idle") {
+        bobY = Math.sin(this.time * 0.002) * 1.5;
+      } else if (this.mascotState === "walking") {
+        const hopSin = Math.sin(this.time * MASCOT_HOP_FREQ);
+        hopHeight = Math.abs(hopSin);
+        bobY = -hopHeight * MASCOT_HOP_AMP;
+        // Squash at ground (hopHeight~0), stretch at peak (hopHeight~1)
+        scaleY = 1 + (hopHeight * 2 - 1) * MASCOT_SQUASH;
+        scaleX = 1 + (1 - scaleY) * 0.6; // approximate volume preservation
+      } else if (this.mascotState === "watering") {
+        bobY = Math.sin(this.time * 0.003) * 1;
+      }
+    }
+
+    // --- Shadow ellipse ---
+    if (!this.thumbnailMode) {
+      const shadowW = mascotW * (0.65 + (1 - hopHeight) * 0.2);
+      const shadowH = mascotW * 0.12;
+      const shadowAlpha = MASCOT_SHADOW_ALPHA * (1 - hopHeight * 0.5) * (1 - desat * 0.6);
+      ctx.save();
+      ctx.globalAlpha = shadowAlpha;
+      ctx.fillStyle = 'rgba(30, 15, 10, 1)';
+      ctx.beginPath();
+      ctx.ellipse(mx + mascotW / 2, groundY - 1, shadowW / 2, shadowH / 2, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // --- Draw mascot sprite ---
     ctx.save();
     if (desat > 0) ctx.globalAlpha = 1 - desat * 0.6;
-    ctx.drawImage(this.mascotImg, mx, my, mascotW, mascotH);
+
+    // Flip horizontally when facing left
+    if (!this.thumbnailMode && this.mascotFacing === -1) {
+      ctx.translate(mx + mascotW / 2, 0);
+      ctx.scale(-1, 1);
+      ctx.translate(-(mx + mascotW / 2), 0);
+    }
+
+    // Lean forward during watering
+    if (!this.thumbnailMode && this.mascotState === "watering") {
+      const pivotX = mx + mascotW / 2;
+      const pivotY = my + mascotH;
+      ctx.translate(pivotX, pivotY);
+      ctx.rotate(-0.12);
+      ctx.translate(-pivotX, -pivotY);
+    }
+
+    // Squash/stretch transform (pivot at feet)
+    if (!this.thumbnailMode && (scaleX !== 1 || scaleY !== 1)) {
+      const pivotX = mx + mascotW / 2;
+      const pivotY = my + mascotH;
+      ctx.translate(pivotX, pivotY);
+      ctx.scale(scaleX, scaleY);
+      ctx.translate(-pivotX, -pivotY);
+    }
+
+    ctx.drawImage(this.mascotImg, mx, my + bobY, mascotW, mascotH);
     ctx.restore();
+
+    // --- Water drops (teardrop shapes) ---
+    if (!this.thumbnailMode && this.mascotWaterDrops.length > 0) {
+      ctx.save();
+      for (const d of this.mascotWaterDrops) {
+        ctx.globalAlpha = d.life * 0.7;
+        ctx.fillStyle = "#87CEEB";
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y - 3);
+        ctx.quadraticCurveTo(d.x + 2.5, d.y, d.x, d.y + 3);
+        ctx.quadraticCurveTo(d.x - 2.5, d.y, d.x, d.y - 3);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // --- Ground splash ripples ---
+    if (!this.thumbnailMode && this.mascotSplashes.length > 0) {
+      ctx.save();
+      for (const s of this.mascotSplashes) {
+        ctx.globalAlpha = s.life * 0.4;
+        ctx.strokeStyle = "#87CEEB";
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.ellipse(s.x, s.y, s.size, s.size * 0.3, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
   }
 
   // --- Flower parts ---
