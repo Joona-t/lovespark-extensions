@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Dashboard",
+  "version": "1.0.0",
+  "description": "Beautiful Y2K extension manager dashboard — manage all your extensions with style ✨",
+  "permissions": ["management"],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_title": "Open LoveSpark Dashboard"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dashboard@lovespark.suite",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data."
+      }
+    }
+  }
+}
