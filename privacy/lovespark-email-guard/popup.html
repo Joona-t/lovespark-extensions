@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Email Guard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <div class="header-text">
+        <span class="header-title">LoveSpark</span>
+        <span class="header-sub">Email Guard</span>
+      </div>
+    </header>
+
+    <section class="status-section">
+      <div id="status-icon" class="status-icon">💌</div>
+      <div id="status-text" class="status-text">Inbox protected!</div>
+      <p id="cute-msg" class="cute-msg">Your inbox, your business ✨</p>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="main-toggle" checked>
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </section>
+
+    <section class="stats-section">
+      <div class="stat-box">
+        <div id="stat-today" class="stat-num">0</div>
+        <div class="stat-label">blocked today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box">
+        <div id="stat-total" class="stat-num">0</div>
+        <div class="stat-label">blocked total</div>
+      </div>
+    </section>
+
+    <p class="explain-text">Blocks invisible tracking pixels in emails that report when you open them, how many times, and your location.</p>
+
+    <footer class="popup-footer">
+      <span class="footer-brand">LoveSpark Suite 💕</span>
+    </footer>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
