@@ -1,0 +1,303 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Background gradient */
+  --ls-bg-pink-light: #FDCFE1;
+  --ls-bg-pink: #F9A8C9;
+  --ls-bg-pink-deep: #F48CAF;
+  --ls-bg-gradient: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+
+  /* Frosted glass surfaces */
+  --ls-glass: rgba(255, 255, 255, 0.45);
+  --ls-glass-light: rgba(255, 255, 255, 0.25);
+  --ls-glass-border: rgba(255, 255, 255, 0.4);
+  --ls-glass-strong: rgba(255, 255, 255, 0.6);
+
+  /* Accents */
+  --ls-pink-accent: #E8457C;
+  --ls-pink-deep: #D63466;
+  --ls-white: #FFFFFF;
+  --ls-purple: #7C3AED;
+  --ls-teal: #0D9488;
+  --ls-blue: #818CF8;
+
+  /* Text */
+  --ls-text-dark: #5C1A36;
+  --ls-text-muted: #9E4D6E;
+  --ls-text-white: #FFFFFF;
+
+  /* Effects */
+  --ls-glow: 0 0 16px rgba(232, 69, 124, 0.3);
+  --ls-glow-strong: 0 0 24px rgba(232, 69, 124, 0.45);
+  --ls-glow-white: 0 0 16px rgba(255, 255, 255, 0.5);
+
+  /* Layout */
+  --ls-radius: 14px;
+  --ls-radius-sm: 10px;
+  --ls-font-body: 'DM Mono', monospace;
+  --ls-font-display: 'Press Start 2P', cursive;
+}
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+
+.popup-container { padding: 16px; }
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.header-icon { font-size: 22px; }
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 11px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Mode Selector ── */
+
+.mode-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.mode-option { cursor: pointer; display: block; }
+.mode-option input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.mode-card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  padding: 10px 14px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.mode-option input:checked + .mode-card {
+  background: var(--ls-glass-strong);
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+.mode-card:hover {
+  background: var(--ls-glass-strong);
+}
+
+.mode-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ls-text-dark);
+  margin-bottom: 2px;
+}
+
+.mode-desc {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
+
+.mode-option input:checked + .mode-card .mode-title {
+  color: var(--ls-pink-accent);
+}
+
+/* ── Stats Card ── */
+
+.stats-card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(8px);
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.stats-row + .stats-row {
+  border-top: 1px solid var(--ls-glass-border);
+}
+
+.stats-label {
+  font-size: 12px;
+  color: var(--ls-text-dark);
+}
+
+.stats-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ls-pink-accent);
+}
+
+.stats-value.off {
+  color: var(--ls-text-muted);
+}
+
+/* ── Cute Message ── */
+
+.cute-msg {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  margin-bottom: 14px;
+  min-height: 16px;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Whitelist ── */
+
+.whitelist-section {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 14px;
+  backdrop-filter: blur(8px);
+  margin-bottom: 14px;
+}
+
+.whitelist-header {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ls-text-dark);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.whitelist-list {
+  list-style: none;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.whitelist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 12px;
+  color: var(--ls-text-dark);
+}
+
+.whitelist-item + .whitelist-item {
+  border-top: 1px solid var(--ls-glass-border);
+}
+
+.whitelist-item .domain-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.wl-remove-btn {
+  background: none;
+  border: none;
+  color: var(--ls-text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.wl-remove-btn:hover {
+  color: var(--ls-pink-accent);
+}
+
+.whitelist-empty {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  text-align: center;
+  padding: 6px 0;
+}
+
+.whitelist-add {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.wl-input {
+  flex: 1;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  padding: 7px 10px;
+  font-family: var(--ls-font-body);
+  font-size: 12px;
+  color: var(--ls-text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.wl-input::placeholder { color: var(--ls-text-muted); opacity: 0.7; }
+.wl-input:focus { border-color: var(--ls-pink-accent); }
+
+/* ── Buttons ── */
+
+.btn-pink {
+  background: var(--ls-pink-accent);
+  color: white;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  padding: 8px 16px;
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--ls-glow);
+  white-space: nowrap;
+}
+
+.btn-pink:hover {
+  background: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow-strong);
+}
+
+.btn-sm { padding: 7px 12px; font-size: 11px; }
+
+/* ── Footer ── */
+
+.popup-footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Scrollbar ── */
+
+.whitelist-list::-webkit-scrollbar { width: 4px; }
+.whitelist-list::-webkit-scrollbar-track { background: transparent; }
+.whitelist-list::-webkit-scrollbar-thumb {
+  background: var(--ls-glass-border);
+  border-radius: 2px;
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

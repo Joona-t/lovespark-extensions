@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Referrer Shield",
+  "version": "1.0.0",
+  "description": "Control or strip the Referer header so sites don't know where you came from 🌸",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_title": "LoveSpark Referrer Shield"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "referrer-shield@lovespark.suite",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data."
+      }
+    }
+  }
+}
