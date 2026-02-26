@@ -23,6 +23,18 @@
   "declarative_net_request": {
     "rule_resources": []
   },
+  "web_accessible_resources": [{
+    "resources": [
+      "blocked.html",
+      "blocked.css",
+      "blocked.js",
+      "garden.js",
+      "garden-sprites.js",
+      "affirmations.js",
+      "mascot.png"
+    ],
+    "matches": ["<all_urls>"]
+  }],
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
