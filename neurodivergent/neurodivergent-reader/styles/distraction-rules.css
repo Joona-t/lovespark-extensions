@@ -1,0 +1,73 @@
+/**
+ * Distraction removal CSS — gated on per-type data attributes.
+ *
+ * Attributes set by DistractionAgent:
+ *   data-nr-hide-sidebars   → sidebar/aside elements
+ *   data-nr-hide-ads        → ad containers, iframes
+ *   data-nr-hide-cookies    → cookie/consent banners
+ *   data-nr-hide-floating   → popups, chat widgets, newsletter modals
+ *
+ * Each sub-toggle controls its own section independently.
+ * Removing an attribute instantly restores those elements.
+ *
+ * Rule: only use display:none !important — never layout properties.
+ * Preserve primary navigation (<nav role="navigation">) always.
+ */
+
+/* ── Sidebars ────────────────────────────────────────────────────────────────── */
+
+html[data-nr-hide-sidebars] aside,
+html[data-nr-hide-sidebars] [role="complementary"],
+html[data-nr-hide-sidebars] .sidebar,
+html[data-nr-hide-sidebars] #sidebar,
+html[data-nr-hide-sidebars] [class*="sidebar"]:not(nav):not([role="navigation"]),
+html[data-nr-hide-sidebars] [id*="sidebar"]:not(nav):not([role="navigation"]) {
+  display: none !important;
+}
+
+/* Expand main content when sidebar is removed */
+html[data-nr-hide-sidebars] [role="main"],
+html[data-nr-hide-sidebars] main {
+  max-width: 100% !important;
+}
+
+/* ── Ads ─────────────────────────────────────────────────────────────────────── */
+
+html[data-nr-hide-ads] [class*="ad-container"],
+html[data-nr-hide-ads] [class*="ad-wrapper"],
+html[data-nr-hide-ads] [class*="ad-slot"],
+html[data-nr-hide-ads] [id*="ad-container"],
+html[data-nr-hide-ads] [id*="ad-wrapper"],
+html[data-nr-hide-ads] ins.adsbygoogle,
+html[data-nr-hide-ads] [data-ad],
+html[data-nr-hide-ads] [data-ad-slot],
+html[data-nr-hide-ads] iframe[src*="doubleclick"],
+html[data-nr-hide-ads] iframe[src*="googlesyndication"] {
+  display: none !important;
+}
+
+/* ── Cookie banners ──────────────────────────────────────────────────────────── */
+
+html[data-nr-hide-cookies] [class*="cookie"],
+html[data-nr-hide-cookies] [id*="cookie"],
+html[data-nr-hide-cookies] [class*="consent"],
+html[data-nr-hide-cookies] [class*="gdpr"],
+html[data-nr-hide-cookies] [id*="consent"],
+html[data-nr-hide-cookies] [aria-label*="cookie" i],
+html[data-nr-hide-cookies] #CybotCookiebotDialog,
+html[data-nr-hide-cookies] #onetrust-consent-sdk,
+html[data-nr-hide-cookies] .cc-window,
+html[data-nr-hide-cookies] .cc-banner {
+  display: none !important;
+}
+
+/* ── Floating / sticky elements (newsletter popups, chat widgets) ──────────── */
+
+html[data-nr-hide-floating] [class*="popup"]:not([role="dialog"]),
+html[data-nr-hide-floating] [class*="newsletter"],
+html[data-nr-hide-floating] [class*="subscribe-modal"],
+html[data-nr-hide-floating] [class*="chat-widget"],
+html[data-nr-hide-floating] [class*="intercom"],
+html[data-nr-hide-floating] [id*="intercom"] {
+  display: none !important;
+}

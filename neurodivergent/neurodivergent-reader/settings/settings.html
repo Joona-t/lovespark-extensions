@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neurodivergent Reader — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+
+    <header class="settings-header">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="60" height="60">
+      <div>
+        <h1 class="header-title">Neurodivergent Reader</h1>
+        <span class="header-sub">Settings</span>
+      </div>
+    </header>
+
+    <!-- Master toggle -->
+    <section class="card">
+      <h2 class="card-title">&#x2728; General</h2>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Enable extension</div>
+          <div class="setting-desc">Turn off to disable all features</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-enabled" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Font settings -->
+    <section class="card">
+      <h2 class="card-title">&#x1F524; Reading Font</h2>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Enable font override</div>
+          <div class="setting-desc">Replace page fonts with a reading-friendly font</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-font">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">Font family</label>
+        <select id="font-family" class="font-select">
+          <option value="OpenDyslexic">OpenDyslexic — heavy-bottomed, dyslexia-focused</option>
+          <option value="Lexend">Lexend — research-backed, improves reading speed</option>
+          <option value="Atkinson Hyperlegible">Atkinson Hyperlegible — max letter distinction</option>
+          <option value="system">System Default</option>
+        </select>
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Font size: <span id="font-size-val">18</span>px
+        </label>
+        <input type="range" id="font-size" class="slider" min="12" max="32" step="1" value="18">
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Line height: <span id="line-height-val">1.8</span>
+        </label>
+        <input type="range" id="line-height" class="slider" min="1.0" max="3.0" step="0.1" value="1.8">
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Letter spacing: <span id="letter-spacing-val">0.05</span>em
+        </label>
+        <input type="range" id="letter-spacing" class="slider" min="0" max="0.2" step="0.01" value="0.05">
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Word spacing: <span id="word-spacing-val">0.1</span>em
+        </label>
+        <input type="range" id="word-spacing" class="slider" min="0" max="0.5" step="0.05" value="0.1">
+      </div>
+    </section>
+
+    <!-- Ruler settings -->
+    <section class="card">
+      <h2 class="card-title">&#x1F4CF; Reading Ruler</h2>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Enable reading ruler</div>
+          <div class="setting-desc">Transparent line follows your cursor</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-ruler">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Gap height: <span id="ruler-height-val">80</span>px
+        </label>
+        <input type="range" id="ruler-height" class="slider" min="40" max="200" step="10" value="80">
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Shade opacity: <span id="ruler-opacity-val">0.5</span>
+        </label>
+        <input type="range" id="ruler-opacity" class="slider" min="0.1" max="0.9" step="0.05" value="0.5">
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">Shade color</label>
+        <input type="color" id="ruler-color" class="color-input" value="#000000">
+      </div>
+    </section>
+
+    <!-- Focus settings -->
+    <section class="card">
+      <h2 class="card-title">&#x1F50D; Paragraph Focus</h2>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Enable paragraph focus</div>
+          <div class="setting-desc">Dims everything except the focused paragraph</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-focus">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="slider-group">
+        <label class="slider-label">
+          Dim level: <span id="focus-dim-val">0.7</span>
+        </label>
+        <input type="range" id="focus-dim" class="slider" min="0.3" max="0.9" step="0.05" value="0.7">
+      </div>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Click to lock</div>
+          <div class="setting-desc">Click a paragraph to pin focus</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-lock" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Distraction settings -->
+    <section class="card">
+      <h2 class="card-title">&#x1F6E1;&#xFE0F; Distractions</h2>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Enable distraction removal</div>
+          <div class="setting-desc">Hide sidebars, ads, and overlays</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-distractions">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row-between sub-toggle">
+        <span class="setting-label">Hide sidebars</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-sidebars" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row-between sub-toggle">
+        <span class="setting-label">Hide ads</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-ads" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row-between sub-toggle">
+        <span class="setting-label">Hide cookie banners</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-cookies" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row-between sub-toggle">
+        <span class="setting-label">Hide floating elements</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-floating" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Disabled sites -->
+    <section class="card">
+      <h2 class="card-title">&#x1F6AB; Disabled Sites</h2>
+      <div class="add-row">
+        <input id="site-input" type="text" class="text-input" placeholder="example.com">
+        <button id="site-add" class="btn-pink">Add</button>
+      </div>
+      <ul id="site-list" class="site-list"></ul>
+    </section>
+
+    <!-- About -->
+    <section class="card about-card">
+      <h2 class="card-title">&#x1F495; About</h2>
+      <p class="about-text">
+        Neurodivergent Reader by <strong>LoveSpark</strong><br>
+        Free, open-source, privacy-first.<br>
+        No data collection. No ads. Ever.
+      </p>
+      <p class="about-text muted">
+        Keyboard shortcuts: Shift+Arrow keys (ruler), j/k (paragraph nav), Escape (unlock/disable)
+      </p>
+    </section>
+
+    <footer class="settings-footer">
+      <span>LoveSpark Suite &#x1F495;</span>
+    </footer>
+
+  </div>
+  <script src="settings.js"></script>
+</body>
+</html>
