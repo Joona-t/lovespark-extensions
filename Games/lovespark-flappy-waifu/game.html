@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="description" content="Flappy Waifu — kawaii neon Flappy Bird with progressive difficulty. Free, no ads, open source.">
+<meta name="theme-color" content="#ff6eb4">
+<title>Flappy Waifu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<div id="game-wrapper">
+  <div id="title">Flappy <span>Waifu</span></div>
+
+  <div id="canvas-container">
+    <canvas id="canvas"></canvas>
+
+    <div id="hud">
+      <div>
+        <div id="score-label">Score</div>
+        <div id="score-display">0</div>
+      </div>
+      <div id="best-display">
+        <div id="best-label">Best</div>
+        <div id="best-num">0</div>
+      </div>
+    </div>
+
+    <div id="overlay">
+      <div id="start-content">
+        <div class="overlay-title">FLAPPY<br>WAIFU</div>
+        <div class="overlay-sub">Kawaii Edition</div>
+      </div>
+
+      <div id="death-content" style="display:none">
+        <div class="overlay-title">GAME OVER</div>
+        <div id="medal-badge"></div>
+        <div id="final-label">SCORE</div>
+        <div id="final-score">0</div>
+        <div id="score-delta"></div>
+        <div class="death-stats">
+          <div class="death-stat">
+            <span class="death-stat-label">COMBO</span>
+            <span class="death-stat-value" id="death-combo">0</span>
+          </div>
+          <div class="death-stat">
+            <span class="death-stat-label">CLOSE CALLS</span>
+            <span class="death-stat-value" id="death-near-misses">0</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn" id="start-btn">START GAME</button>
+      <div class="hint">Click or Space to flap</div>
+    </div>
+  </div>
+
+  <div id="controls-hint">Space / Click to Flap</div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

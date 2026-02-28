@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flappy Waifu — Stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <div>
+        <h1>Flappy Waifu</h1>
+        <p class="subtitle">Stats & Settings</p>
+      </div>
+    </header>
+
+    <div class="stats-card">
+      <h2 class="card-title">Lifetime Stats</h2>
+      <div class="stats-row">
+        <span class="stats-label">Best Score</span>
+        <span class="stats-value" id="stat-best">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Games Played</span>
+        <span class="stats-value" id="stat-games">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Average Score</span>
+        <span class="stats-value" id="stat-avg">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Total Pipes</span>
+        <span class="stats-value" id="stat-pipes">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Best Combo</span>
+        <span class="stats-value" id="stat-combo">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Total Close Calls</span>
+        <span class="stats-value" id="stat-near">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Highest Medal</span>
+        <span class="stats-value" id="stat-medal">—</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Last Played</span>
+        <span class="stats-value stats-date" id="stat-date">—</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-play" id="play-btn">Play Now</button>
+      <button class="btn-reset" id="reset-btn">Reset Stats</button>
+    </div>
+
+    <div id="confirm-dialog" class="confirm-dialog" style="display:none">
+      <div class="confirm-card">
+        <p>Reset all stats? This cannot be undone.</p>
+        <div class="confirm-actions">
+          <button class="btn-confirm" id="confirm-yes">Reset</button>
+          <button class="btn-cancel" id="confirm-no">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="settings-footer">
+      <span>LoveSpark Suite</span>
+    </footer>
+  </div>
+  <script src="settings.js"></script>
+</body>
+</html>

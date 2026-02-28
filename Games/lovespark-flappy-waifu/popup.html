@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flappy Waifu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <div>
+        <h1>Flappy Waifu</h1>
+        <p class="tagline">Kawaii Neon Edition</p>
+      </div>
+    </header>
+
+    <button class="play-btn" id="play-btn">Play Now</button>
+
+    <div class="stats-card">
+      <div class="stats-row">
+        <span class="stats-label">Best Score</span>
+        <span class="stats-value" id="stat-best">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Games Played</span>
+        <span class="stats-value" id="stat-games">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Best Combo</span>
+        <span class="stats-value" id="stat-combo">0</span>
+      </div>
+    </div>
+
+    <footer class="popup-footer">
+      <a href="#" id="settings-link">Stats & Settings</a>
+      <span class="suite-tag">LoveSpark Suite</span>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

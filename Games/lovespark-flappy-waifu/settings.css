@@ -1,0 +1,208 @@
+:root {
+  --ls-bg-gradient: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+  --ls-glass: rgba(255, 255, 255, 0.45);
+  --ls-glass-light: rgba(255, 255, 255, 0.25);
+  --ls-glass-border: rgba(255, 255, 255, 0.4);
+  --ls-pink-accent: #E8457C;
+  --ls-pink-deep: #D63466;
+  --ls-text-dark: #5C1A36;
+  --ls-text-muted: #9E4D6E;
+  --ls-text-white: #FFFFFF;
+  --ls-glow: 0 0 16px rgba(232, 69, 124, 0.3);
+  --ls-glow-strong: 0 0 24px rgba(232, 69, 124, 0.45);
+  --ls-radius: 14px;
+  --ls-radius-sm: 10px;
+  --ls-font-body: 'DM Mono', monospace;
+  --ls-font-display: 'Press Start 2P', cursive;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.settings-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.mascot {
+  width: 64px;
+  height: auto;
+}
+
+h1 {
+  font-family: var(--ls-font-display);
+  font-size: 12px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  line-height: 1.4;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--ls-text-muted);
+  margin-top: 4px;
+}
+
+.stats-card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.card-title {
+  font-family: var(--ls-font-display);
+  font-size: 9px;
+  color: var(--ls-text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.stats-row + .stats-row {
+  border-top: 1px solid var(--ls-glass-border);
+}
+
+.stats-label {
+  font-size: 13px;
+  color: var(--ls-text-dark);
+}
+
+.stats-value {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ls-pink-accent);
+}
+
+.stats-date {
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-play {
+  flex: 1;
+  font-family: var(--ls-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 11px 0;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-pink-accent);
+  color: var(--ls-text-white);
+  cursor: pointer;
+  box-shadow: var(--ls-glow);
+  transition: all 0.15s;
+}
+
+.btn-play:hover {
+  background: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow-strong);
+}
+
+.btn-reset {
+  font-family: var(--ls-font-body);
+  font-size: 12px;
+  padding: 11px 16px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-glass-light);
+  color: var(--ls-text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-reset:hover {
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+}
+
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.confirm-card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  max-width: 300px;
+}
+
+.confirm-card p {
+  font-size: 14px;
+  color: var(--ls-text-dark);
+  margin-bottom: 16px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-confirm {
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-pink-accent);
+  color: var(--ls-text-white);
+  cursor: pointer;
+  box-shadow: var(--ls-glow);
+}
+
+.btn-cancel {
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  padding: 8px 20px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-glass-light);
+  color: var(--ls-text-muted);
+  cursor: pointer;
+}
+
+.settings-footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
