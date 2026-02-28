@@ -36,6 +36,7 @@ class DistractionAgent {
     };
     this._observer = null;
     this._debounceTimer = null;
+    this._epoch = 0;
   }
 
   init() {
@@ -71,6 +72,7 @@ class DistractionAgent {
   disable() {
     if (!this._enabled) return;
     this._enabled = false;
+    this._epoch++;
 
     this._stopObserver();
     this._clearAttributes();
@@ -133,8 +135,13 @@ class DistractionAgent {
 
       if (hasNewMedia) {
         clearTimeout(this._debounceTimer);
+        const epoch = this._epoch;
         this._debounceTimer = setTimeout(() => {
-          requestAnimationFrame(() => this._pauseAutoplayMedia());
+          if (this._epoch !== epoch) return;
+          requestAnimationFrame(() => {
+            if (this._epoch !== epoch) return;
+            this._pauseAutoplayMedia();
+          });
         }, 150);
       }
     });

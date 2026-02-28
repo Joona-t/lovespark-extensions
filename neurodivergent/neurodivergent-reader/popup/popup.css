@@ -32,8 +32,8 @@
   /* Layout */
   --ls-radius: 14px;
   --ls-radius-sm: 10px;
-  --ls-font-body: 'DM Mono', monospace;
-  --ls-font-display: 'Press Start 2P', cursive;
+  --ls-font-body: 'DM Mono', 'Courier New', 'Courier', monospace;
+  --ls-font-display: 'Press Start 2P', 'Impact', 'Arial Black', cursive;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -303,6 +303,29 @@ body {
 .popup-container.disabled .site-section {
   opacity: 0.5;
   pointer-events: none;
+}
+
+/* ── Focus states (keyboard accessibility) ───────────────────────────────────── */
+
+.toggle-wrap input:focus-visible + .toggle-track {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+}
+
+.site-btn:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+  box-shadow: var(--ls-glow-strong);
+}
+
+.font-select:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
 }
 
 /* ── Accessibility ───────────────────────────────────────────────────────────── */

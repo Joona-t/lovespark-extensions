@@ -165,8 +165,11 @@ class FocusAgent {
       this._pendingHover = null;
       if (this._locked || !this._enabled) return;
 
-      const paragraph = this._findParagraph(e.target);
-      if (paragraph && paragraph !== this._focusedEl) {
+      const target = e.target;
+      if (!target || !target.isConnected) return;
+
+      const paragraph = this._findParagraph(target);
+      if (paragraph && paragraph.isConnected && paragraph !== this._focusedEl) {
         this._setFocus(paragraph);
       }
     });

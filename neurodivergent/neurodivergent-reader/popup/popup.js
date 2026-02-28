@@ -31,6 +31,7 @@ const popupContainer = document.querySelector('.popup-container');
 
 let currentDomain = null;
 let settings = null;
+let msgIntervalId = null;
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 
@@ -51,13 +52,20 @@ async function init() {
 
         const isDisabled = (settings.disabledSites || []).includes(currentDomain);
         updateSiteBtn(isDisabled);
-      } catch (_) { /* non-URL tab */ }
+      } catch (_) { /* non-URL tab (chrome://, etc.) */ }
     }
   } catch (_) {}
 
+  // Disable site button on non-injectable tabs
+  if (!currentDomain) {
+    siteDisableBtn.disabled = true;
+    siteDisableBtn.textContent = 'N/A';
+    siteDisableBtn.title = 'Cannot modify this page';
+  }
+
   // Rotate cute messages
   let msgIdx = 0;
-  setInterval(() => {
+  msgIntervalId = setInterval(() => {
     msgIdx = (msgIdx + 1) % CUTE_MSGS.length;
     cuteMsgEl.style.opacity = '0';
     setTimeout(() => {
@@ -66,6 +74,11 @@ async function init() {
     }, 200);
   }, 3500);
 }
+
+// Clean up interval on popup close
+window.addEventListener('beforeunload', () => {
+  clearInterval(msgIntervalId);
+});
 
 function mergeDefaults(stored) {
   const defaults = {
@@ -120,24 +133,27 @@ function applyToggles(s) {
 // ── Save + inject ─────────────────────────────────────────────────────────────
 
 let saveTimer = null;
+let lastWriteTime = 0;
+const MIN_WRITE_GAP = 500;
 
 function saveSettings() {
   clearTimeout(saveTimer);
+  const now = Date.now();
+  const delay = Math.max(200, MIN_WRITE_GAP - (now - lastWriteTime));
   saveTimer = setTimeout(async () => {
+    lastWriteTime = Date.now();
     await chrome.storage.sync.set({ settings });
-    // Ensure content scripts are injected
     await ensureInjected();
-  }, 200);
+  }, delay);
 }
 
 async function ensureInjected() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (!tab || !tab.id) return;
+    if (!tab?.id) return;
 
-    // Check if already injected
     const resp = await chrome.runtime.sendMessage({ type: 'IS_INJECTED', tabId: tab.id });
-    if (!resp.injected) {
+    if (!resp?.injected) {
       await chrome.runtime.sendMessage({ type: 'INJECT_TAB', tabId: tab.id });
     }
   } catch (_) {}

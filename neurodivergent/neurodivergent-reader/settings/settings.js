@@ -8,6 +8,8 @@
 
 let settings = null;
 let saveTimer = null;
+let lastWriteTime = 0;
+const MIN_WRITE_GAP = 500;
 
 // ── Elements ──────────────────────────────────────────────────────────────────
 
@@ -136,9 +138,12 @@ function applyState(s) {
 
 function save() {
   clearTimeout(saveTimer);
+  const now = Date.now();
+  const delay = Math.max(300, MIN_WRITE_GAP - (now - lastWriteTime));
   saveTimer = setTimeout(async () => {
+    lastWriteTime = Date.now();
     await chrome.storage.sync.set({ settings });
-  }, 300);
+  }, delay);
 }
 
 // ── Bind events ───────────────────────────────────────────────────────────────
@@ -213,28 +218,33 @@ function addSite() {
 
 function renderSiteList() {
   const list = settings.disabledSites || [];
-  els.siteList.innerHTML = '';
+  els.siteList.textContent = '';
 
   if (!list.length) {
-    els.siteList.innerHTML = '<li class="site-empty">No disabled sites</li>';
+    const empty = document.createElement('li');
+    empty.className = 'site-empty';
+    empty.textContent = 'No disabled sites';
+    els.siteList.appendChild(empty);
     return;
   }
 
   list.forEach((domain) => {
     const li = document.createElement('li');
     li.className = 'site-item';
-    li.innerHTML = `
-      <span>${escHtml(domain)}</span>
-      <button class="site-remove" data-domain="${escHtml(domain)}" title="Remove">\u2715</button>
-    `;
+
+    const span = document.createElement('span');
+    span.textContent = domain;
+
+    const btn = document.createElement('button');
+    btn.className = 'site-remove';
+    btn.dataset.domain = domain;
+    btn.title = 'Remove';
+    btn.textContent = '\u2715';
+
+    li.appendChild(span);
+    li.appendChild(btn);
     els.siteList.appendChild(li);
   });
-}
-
-function escHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
 }
 
 // ── Live sync from other contexts ─────────────────────────────────────────────

@@ -143,13 +143,10 @@ class ContentOrchestrator {
     // Check per-domain disable list
     const disabled = (this._settings.disabledSites || []).includes(this._hostname);
 
-    if (disabled || !this._settings.enabled) {
-      this._bus.emit(MSG.EXTENSION_DISABLED);
-      this._bus.emit(MSG.SETTINGS_UPDATED, { ...this._settings, enabled: false });
-    } else {
-      this._bus.emit(MSG.EXTENSION_ENABLED);
-      this._bus.emit(MSG.SETTINGS_UPDATED, this._settings);
-    }
+    const effective = (disabled || !this._settings.enabled)
+      ? { ...this._settings, enabled: false }
+      : this._settings;
+    this._bus.emit(MSG.SETTINGS_UPDATED, effective);
   }
 
   destroy() {
