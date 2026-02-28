@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Blossom Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <div>
+        <h1 class="header-title">Settings</h1>
+        <span class="header-subtitle">Focus Blossom</span>
+      </div>
+    </header>
+
+    <!-- Friction Level -->
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Unblock friction</span>
+          <span class="settings-desc">How hard it is to unblock a site</span>
+        </div>
+        <select id="frictionLevel" class="settings-select">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Toggles -->
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Show affirmations</span>
+          <span class="settings-desc">Daily self-compassion quotes</span>
+        </div>
+        <div class="toggle-switch" id="toggleAffirmations" tabindex="0" role="switch" aria-checked="true"></div>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Stage notifications</span>
+          <span class="settings-desc">Notify when your garden grows</span>
+        </div>
+        <div class="toggle-switch" id="toggleNotifications" tabindex="0" role="switch" aria-checked="true"></div>
+      </div>
+    </div>
+
+    <!-- Data -->
+    <div class="settings-card">
+      <h2 class="card-title">Data</h2>
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Export gardens</span>
+          <span class="settings-desc">Download all data as JSON</span>
+        </div>
+        <button class="btn-setting" id="exportBtn">Export</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Import gardens</span>
+          <span class="settings-desc">Restore from a backup file</span>
+        </div>
+        <button class="btn-setting" id="importBtn">Import</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="settings-card about-card">
+      <div class="about-text">
+        Focus Blossom v1.0.0<br>
+        Part of the LoveSpark Suite
+      </div>
+      <div class="about-links">
+        <a href="https://github.com/Joona-t/focus-blossom" target="_blank">GitHub</a>
+        <span class="about-dot">&middot;</span>
+        <a href="https://joona-t.github.io" target="_blank">Portfolio</a>
+      </div>
+    </div>
+
+    <div class="saved-toast" id="savedToast">Saved!</div>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>

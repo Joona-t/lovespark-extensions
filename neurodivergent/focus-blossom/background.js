@@ -48,6 +48,39 @@ async function getSettings() {
   return data.settings || { isEnabled: true, showAffirmations: true, unblockFriction: "high" };
 }
 
+// --- Notifications ---
+
+const STAGE_MESSAGES = [
+  "A seed has been planted!",
+  "Your garden is sprouting!",
+  "Buds are forming!",
+  "Your garden is in full bloom!",
+  "A thriving garden!"
+];
+
+const STAGE_EMOJIS = ["\ud83c\udf31", "\ud83c\udf3f", "\ud83c\udf37", "\ud83c\udf38", "\ud83c\udf3a"];
+
+async function notifyStageUp(domain, stage) {
+  const settings = await getSettings();
+  if (settings.showNotifications === false) return;
+
+  chrome.notifications.create(`stage-${domain}-${stage}`, {
+    type: "basic",
+    iconUrl: "icons/icon-128.png",
+    title: `${STAGE_EMOJIS[stage]} ${domain}`,
+    message: STAGE_MESSAGES[stage] || "Your garden is growing!"
+  });
+}
+
+// --- Badge ---
+
+async function updateBadge() {
+  const gardens = await getGardens();
+  const count = Object.values(gardens).filter(g => g.isBlocked).length;
+  chrome.action.setBadgeText({ text: count > 0 ? String(count) : "" });
+  chrome.action.setBadgeBackgroundColor({ color: "#E8457C" });
+}
+
 // --- Blocking ---
 
 async function blockSite(domain) {
@@ -90,6 +123,7 @@ async function blockSite(domain) {
   }
 
   await chrome.storage.local.set({ gardens });
+  updateBadge();
   return gardens[domain];
 }
 
@@ -113,6 +147,7 @@ async function unblockSite(domain) {
   garden.growthStage = calcStage(garden.totalBlockedMs);
 
   await chrome.storage.local.set({ gardens, stats });
+  updateBadge();
   return garden;
 }
 
@@ -129,6 +164,7 @@ async function removeSite(domain) {
 
   delete gardens[domain];
   await chrome.storage.local.set({ gardens });
+  updateBadge();
 }
 
 // --- Growth ---
@@ -153,6 +189,7 @@ async function creditGrowth() {
     if (newStage > garden.growthStage) {
       garden.growthStage = newStage;
       if (newStage === 4) stats.totalGardensGrown += 1;
+      notifyStageUp(domain, newStage);
     }
 
     stats.totalBlockedTimeMs += elapsed;
@@ -244,12 +281,14 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     });
   }
   await syncBlockingRules();
+  await updateBadge();
 });
 
 chrome.runtime.onStartup.addListener(async () => {
   await syncBlockingRules();
   await creditGrowth();
   await updateStreaks();
+  await updateBadge();
 });
 
 // --- Message handling from popup + blocked page ---

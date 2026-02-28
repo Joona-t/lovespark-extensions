@@ -315,6 +315,26 @@ body {
   background: #b33;
 }
 
+/* --- Focus Visible --- */
+
+.back-btn:focus-visible,
+.btn-cancel:focus-visible,
+.btn-unblock:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+}
+
+.unblock-link:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.friction-input:focus-visible {
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
 /* --- Reduced Motion --- */
 
 @media (prefers-reduced-motion: reduce) {

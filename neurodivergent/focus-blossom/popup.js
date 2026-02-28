@@ -179,6 +179,22 @@ async function addSite() {
   renderGardens();
 }
 
+// --- Preset buttons (empty state quick-add) ---
+
+document.addEventListener("click", async (e) => {
+  const preset = e.target.closest(".btn-preset[data-domain]");
+  if (!preset) return;
+  const domain = preset.dataset.domain;
+  await chrome.runtime.sendMessage({ type: "blockSite", domain });
+  renderGardens();
+});
+
+// --- Settings link ---
+
+document.getElementById("settingsLink").addEventListener("click", () => {
+  chrome.tabs.create({ url: chrome.runtime.getURL("settings.html") });
+});
+
 // --- Affirmation ---
 
 document.getElementById("affirmation").textContent = `\u201c${getDailyAffirmation()}\u201d`;

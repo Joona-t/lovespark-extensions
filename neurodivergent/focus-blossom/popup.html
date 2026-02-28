@@ -20,8 +20,15 @@
 
     <!-- Empty state -->
     <div class="empty-state" id="emptyState" style="display:none">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" style="width:64px;height:64px;margin-bottom:8px">
       <div class="empty-emoji">🌱</div>
-      <div class="empty-text">No gardens yet!<br>Add a site to start growing.</div>
+      <div class="empty-text">No gardens yet!<br>Block a site to start growing.</div>
+      <div class="preset-buttons">
+        <button class="btn-preset" data-domain="reddit.com">reddit.com</button>
+        <button class="btn-preset" data-domain="twitter.com">twitter.com</button>
+        <button class="btn-preset" data-domain="tiktok.com">tiktok.com</button>
+        <button class="btn-preset" data-domain="instagram.com">instagram.com</button>
+      </div>
     </div>
 
     <!-- Add site -->
@@ -50,7 +57,8 @@
     <div class="affirmation" id="affirmation"></div>
 
     <footer class="popup-footer">
-      LoveSpark Suite 💕
+      <span>LoveSpark Suite 💕</span>
+      <a class="settings-link" id="settingsLink" title="Settings" tabindex="0">⚙</a>
     </footer>
   </div>
 

@@ -88,8 +88,26 @@
   });
 
   // --- Unblock friction ---
-  document.getElementById("unblockLink").addEventListener("click", () => {
+  const unblockLink = document.getElementById("unblockLink");
+  function openFriction() {
     startFriction(domain, garden, settings.unblockFriction, stage, totalMs);
+  }
+  unblockLink.addEventListener("click", openFriction);
+  unblockLink.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openFriction();
+    }
+  });
+
+  // Escape key closes friction overlay
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const overlay = document.getElementById("frictionOverlay");
+      if (overlay.style.display !== "none") {
+        overlay.style.display = "none";
+      }
+    }
   });
 })();
 

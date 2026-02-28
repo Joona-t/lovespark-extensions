@@ -42,6 +42,7 @@ class GardenRenderer {
     this.branches = [];
     this.bloomSpots = [];
     this._treeBuilt = false;
+    this._lastRenderedStage = -1;
 
     // Mascot
     this.mascotImg = new Image();
@@ -155,6 +156,12 @@ class GardenRenderer {
     this.goldenShimmer = totalBlockedMs >= 30 * 24 * 60 * 60 * 1000;
     if (!this._treeBuilt) this._generateTree();
     const stageProgress = this._stageProgress(totalBlockedMs, stage);
+    // Stage-up celebration burst
+    if (!this.thumbnailMode && stage > this._lastRenderedStage && this._lastRenderedStage >= 0) {
+      this._spawnCelebration();
+    }
+    this._lastRenderedStage = stage;
+
     this._draw(stage, stageProgress, totalBlockedMs);
 
     if (!this.thumbnailMode && !this.destroying) {
@@ -555,13 +562,17 @@ class GardenRenderer {
       }
     }
 
-    // Spawn water drops during watering (capped)
+    // Spawn water drops from watering can spout tip (capped)
     if (this.mascotState === "watering" && this.mascotWaterDrops.length < MASCOT_MAX_DROPS && Math.random() < 0.25) {
       const groundY = this.h * 0.65;
       const mascotH = this.h * 0.15;
+      // Spout tip: offset from mascot center toward facing side
+      const centerX = this.mascotX * this.w + mascotH / 2;
+      const spoutX = centerX + this.mascotFacing * mascotH * 0.55;
+      const spoutY = groundY - mascotH * 0.48;
       this.mascotWaterDrops.push({
-        x: this.mascotX * this.w + (this.mascotFacing * 6) + (Math.random() - 0.5) * 10,
-        y: groundY - mascotH * 0.6,
+        x: spoutX + (Math.random() - 0.5) * 4,
+        y: spoutY,
         vy: 0.5 + Math.random() * 0.8,
         life: 1,
       });
@@ -675,6 +686,12 @@ class GardenRenderer {
     }
 
     ctx.drawImage(this.mascotImg, mx, my + bobY, mascotW, mascotH);
+
+    // Watering can — drawn inside transform context so it follows flip/lean/squash
+    if (!this.thumbnailMode) {
+      this._drawWateringCan(ctx, mx, my, mascotW, mascotH, bobY);
+    }
+
     ctx.restore();
 
     // --- Water drops (teardrop shapes) ---
@@ -705,6 +722,87 @@ class GardenRenderer {
       }
       ctx.restore();
     }
+  }
+
+  // --- Watering Can ---
+
+  _drawWateringCan(ctx, mx, my, mascotW, mascotH, bobY) {
+    const canW = mascotH * 0.18;
+    const canH = mascotH * 0.24;
+
+    // Position: right side of mascot at hand height
+    const baseX = mx + mascotW * 0.72;
+    const baseY = my + bobY + mascotH * 0.46;
+
+    ctx.save();
+
+    // Extra tilt during watering (pouring angle)
+    if (this.mascotState === "watering") {
+      const px = baseX + canW * 0.5;
+      const py = baseY + canH;
+      ctx.translate(px, py);
+      ctx.rotate(-0.4);
+      ctx.translate(-px, -py);
+    }
+
+    // Can body (rounded rect)
+    const r = canW * 0.18;
+    ctx.fillStyle = "#FFB7C5";
+    ctx.beginPath();
+    ctx.moveTo(baseX + r, baseY);
+    ctx.lineTo(baseX + canW - r, baseY);
+    ctx.arcTo(baseX + canW, baseY, baseX + canW, baseY + r, r);
+    ctx.lineTo(baseX + canW, baseY + canH - r);
+    ctx.arcTo(baseX + canW, baseY + canH, baseX + canW - r, baseY + canH, r);
+    ctx.lineTo(baseX + r, baseY + canH);
+    ctx.arcTo(baseX, baseY + canH, baseX, baseY + canH - r, r);
+    ctx.lineTo(baseX, baseY + r);
+    ctx.arcTo(baseX, baseY, baseX + r, baseY, r);
+    ctx.closePath();
+    ctx.fill();
+
+    // Bottom edge accent
+    ctx.fillStyle = "#E8A0C0";
+    ctx.beginPath();
+    ctx.moveTo(baseX + r, baseY + canH * 0.82);
+    ctx.lineTo(baseX + canW - r, baseY + canH * 0.82);
+    ctx.lineTo(baseX + canW - r, baseY + canH);
+    ctx.arcTo(baseX + canW, baseY + canH, baseX + canW - r, baseY + canH, r);
+    ctx.lineTo(baseX + r, baseY + canH);
+    ctx.arcTo(baseX, baseY + canH, baseX, baseY + canH - r, r);
+    ctx.closePath();
+    ctx.fill();
+
+    // Kawaii shine highlight
+    ctx.fillStyle = "rgba(255, 255, 255, 0.55)";
+    ctx.beginPath();
+    ctx.ellipse(baseX + canW * 0.32, baseY + canH * 0.28, canW * 0.1, canH * 0.14, -0.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Spout (tapered line from top-right)
+    ctx.strokeStyle = "#F0A0B8";
+    ctx.lineWidth = canW * 0.14;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(baseX + canW * 0.8, baseY + canH * 0.12);
+    ctx.lineTo(baseX + canW * 1.35, baseY - canH * 0.25);
+    ctx.stroke();
+
+    // Spout nozzle tip
+    ctx.fillStyle = "#E090A8";
+    ctx.beginPath();
+    ctx.arc(baseX + canW * 1.35, baseY - canH * 0.25, canW * 0.09, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Handle (arc on back side)
+    ctx.strokeStyle = "#E090A8";
+    ctx.lineWidth = canW * 0.1;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.arc(baseX + canW * 0.05, baseY + canH * 0.4, canH * 0.2, -Math.PI * 0.5, Math.PI * 0.5);
+    ctx.stroke();
+
+    ctx.restore();
   }
 
   // --- Flower parts ---
@@ -766,6 +864,30 @@ class GardenRenderer {
     ctx.arc(x, y, size * 0.25, 0, Math.PI * 2);
     ctx.fillStyle = this._desaturate(ft.centerColor, desat);
     ctx.fill();
+  }
+
+  // --- Celebration burst ---
+
+  _spawnCelebration() {
+    const cx = this.w * 0.5;
+    const cy = this.h * 0.35;
+    const colors = ["#FFB7C5", "#FFD700", "#FF69B4", "#FFFFFF", "#C084FC"];
+
+    for (let i = 0; i < 24; i++) {
+      const angle = (i / 24) * Math.PI * 2;
+      const speed = 1.5 + Math.random() * 2;
+      this.particles.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: 3 + Math.random() * 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 1,
+        decay: 0.008 + Math.random() * 0.006,
+        type: i % 3 === 0 ? "sparkle" : "petal"
+      });
+    }
   }
 
   // --- Particles ---

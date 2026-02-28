@@ -292,6 +292,78 @@ body {
   text-align: center;
   font-size: 11px;
   color: var(--ls-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* --- Settings Link --- */
+
+.settings-link {
+  color: var(--ls-text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.settings-link:hover { color: var(--ls-pink-accent); }
+
+/* --- Preset Buttons (empty state) --- */
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn-preset {
+  padding: 5px 10px;
+  font-family: var(--ls-font-body);
+  font-size: 11px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  color: var(--ls-text-dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-preset:hover {
+  background: var(--ls-pink-accent);
+  color: white;
+  box-shadow: var(--ls-glow);
+}
+
+/* --- Focus Visible --- */
+
+.btn-add:focus-visible,
+.btn-unblock-small:focus-visible,
+.btn-remove-small:focus-visible,
+.btn-reblock-small:focus-visible,
+.btn-preset:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+}
+
+.site-input:focus-visible {
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+.garden-card:focus-visible {
+  box-shadow: var(--ls-glow-strong);
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 1px;
+}
+
+.settings-link:focus-visible {
+  outline: 2px solid var(--ls-pink-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 
 /* --- Reduced Motion --- */

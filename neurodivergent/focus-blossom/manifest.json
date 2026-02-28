@@ -6,7 +6,8 @@
   "permissions": [
     "storage",
     "alarms",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "notifications"
   ],
   "host_permissions": ["<all_urls>"],
   "background": {
@@ -31,7 +32,10 @@
       "garden.js",
       "garden-sprites.js",
       "affirmations.js",
-      "mascot.png"
+      "mascot.png",
+      "settings.html",
+      "settings.css",
+      "settings.js"
     ],
     "matches": ["<all_urls>"]
   }],
