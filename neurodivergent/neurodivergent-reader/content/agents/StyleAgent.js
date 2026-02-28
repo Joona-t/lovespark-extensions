@@ -181,7 +181,7 @@ class StyleAgent {
 
     const family = FONT_FAMILIES[fontSettings.family] || FONT_FAMILIES['system'];
 
-    // Exclude icon fonts, code blocks, emoji, math, and SVG text
+    // Exclude icon fonts, code blocks, emoji, math, and SVG elements
     const exclude = [
       ':not([class*="fa"])',
       ':not([class*="icon"])',
@@ -196,7 +196,7 @@ class StyleAgent {
       ':not(pre)',
       ':not(kbd)',
       ':not(samp)',
-      ':not(svg *)',
+      ':not(svg)',
     ].join('');
 
     style.textContent = `
@@ -231,7 +231,7 @@ class StyleAgent {
     const ls = typeof fontSettings.letterSpacing === 'number' ? fontSettings.letterSpacing : 0.05;
     const ws = typeof fontSettings.wordSpacing === 'number' ? fontSettings.wordSpacing : 0.1;
 
-    const exclude = ':not([class*="fa"]):not([class*="icon"]):not([class*="material"]):not([class*="glyphicon"]):not([class*="emoji"]):not([class*="math"]):not([class*="katex"]):not([class*="MathJax"]):not([data-lovespark-agent]):not(code):not(pre):not(kbd):not(samp):not(svg *)';
+    const exclude = ':not([class*="fa"]):not([class*="icon"]):not([class*="material"]):not([class*="glyphicon"]):not([class*="emoji"]):not([class*="math"]):not([class*="katex"]):not([class*="MathJax"]):not([data-lovespark-agent]):not(code):not(pre):not(kbd):not(samp):not(svg)';
 
     this._cssVarsEl.textContent = `
       html[data-nr-active] {
