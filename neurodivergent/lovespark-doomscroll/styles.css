@@ -110,7 +110,12 @@
 /* ── Reduced motion ────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  [data-lovespark="doomscroll-overlay"] * {
+  .ls-doomscroll-tint,
+  .ls-doomscroll-whisper,
+  .ls-doomscroll-gauge,
+  .ls-doomscroll-gauge-fill,
+  .ls-doomscroll-sparkle,
+  .ls-doomscroll-mascot {
     animation: none !important;
     transition-duration: 0.01ms !important;
   }

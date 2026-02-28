@@ -2,6 +2,7 @@
 // NEVER write per-scroll metrics or timestamps to browser.storage.sync.
 // Sync storage has a 100KB quota and write-rate limits.
 // All tracking state (continuousScrollingMs, idleMs, velocity) stays in JS variables only.
+// Only write discrete event counts (nudges, pauses) on state transitions.
 'use strict';
 
 // ── Default state & helpers ─────────────────────────────────────────────────
@@ -23,6 +24,8 @@ async function getState() {
   return { ...DEFAULT_STATE, ...stored };
 }
 
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+
 const rawHostname = location.hostname.replace(/^www\./, '');
 
 // ── Whisper messages ────────────────────────────────────────────────────────
@@ -32,6 +35,10 @@ const WHISPERS = [
   'Is this still serving you?',
   'Return when you choose.',
   "You're allowed to stop. \u{1F338}",
+  'Take a gentle break. \u{2728}',
+  'Your eyes deserve a rest.',
+  'The feed will wait for you.',
+  'One deep breath. \u{1F495}',
 ];
 
 // ── State ───────────────────────────────────────────────────────────────────
@@ -53,9 +60,11 @@ let liveSparkles = 0;
 let ticking = false;
 let decayLoopId = 0;
 let lastDecayTs = 0;
+let overlayCooldownUntil = 0;
 
 const SLOW_THRESHOLD_PX_PER_SEC = 120;
 const MAX_SPARKLES = 12;
+const MAX_SCROLL_DELTA_MS = 200;
 
 // ── Guard ───────────────────────────────────────────────────────────────────
 
@@ -108,15 +117,47 @@ function ensureOverlay() {
   document.documentElement.appendChild(overlayContainer);
 }
 
+// ── Stats ───────────────────────────────────────────────────────────────────
+
+async function checkDailyReset() {
+  const data = await browser.storage.sync.get(['lastResetDate']);
+  const today = todayStr();
+  if (data.lastResetDate !== today) {
+    await browser.storage.sync.set({
+      nudgesToday: 0,
+      pausesToday: 0,
+      lastResetDate: today,
+    });
+  }
+}
+
+async function bumpNudge() {
+  const data = await browser.storage.sync.get(['nudgesToday', 'nudgesTotal']);
+  await browser.storage.sync.set({
+    nudgesToday: (data.nudgesToday || 0) + 1,
+    nudgesTotal: (data.nudgesTotal || 0) + 1,
+  });
+}
+
+async function bumpPause() {
+  const data = await browser.storage.sync.get(['pausesToday', 'pausesTotal']);
+  await browser.storage.sync.set({
+    pausesToday: (data.pausesToday || 0) + 1,
+    pausesTotal: (data.pausesTotal || 0) + 1,
+  });
+}
+
 // ── Show / hide ─────────────────────────────────────────────────────────────
 
 function showOverlay() {
   if (overlayVisible) return;
+  if (Date.now() < overlayCooldownUntil) return;
   overlayVisible = true;
   tintEl.style.opacity = state.tintOpacity;
   whisperEl.textContent = WHISPERS[Math.floor(Math.random() * WHISPERS.length)];
   whisperEl.style.opacity = '1';
   mascotEl.classList.add('visible');
+  bumpNudge();
   startDecayLoop();
 }
 
@@ -126,20 +167,29 @@ function showGauge() {
   gaugeEl.style.opacity = '1';
 }
 
-function hideOverlay() {
+function hideOverlay(fromDecay) {
+  if (!overlayVisible) return;
+  overlayCooldownUntil = Date.now() + 600;
   overlayVisible = false;
   gaugeVisible = false;
-  continuousScrollingMs = 0;
   tintEl.style.opacity = '0';
   whisperEl.style.opacity = '0';
   mascotEl.classList.remove('visible');
   mascotEl.style.opacity = '';
   gaugeEl.style.opacity = '0';
   gaugeFillEl.style.width = '0%';
+
+  if (fromDecay && state.sparkleEnabled) {
+    for (let i = 0; i < 6; i++) {
+      setTimeout(() => spawnSparkle(), i * 80);
+    }
+    bumpPause();
+  }
 }
 
 function resetTracking() {
-  hideOverlay();
+  hideOverlay(false);
+  continuousScrollingMs = 0;
   lastScrollY = window.scrollY;
   lastScrollTs = Date.now();
   stopDecayLoop();
@@ -148,7 +198,7 @@ function resetTracking() {
 // ── Sparkles ────────────────────────────────────────────────────────────────
 
 function spawnSparkle() {
-  if (liveSparkles >= MAX_SPARKLES) return;
+  if (liveSparkles >= MAX_SPARKLES || !overlayContainer) return;
   liveSparkles++;
 
   const sparkle = document.createElement('div');
@@ -156,15 +206,21 @@ function spawnSparkle() {
   sparkle.style.left = (Math.random() * 90 + 5) + '%';
   sparkle.style.top = (Math.random() * 60 + 20) + '%';
 
-  sparkle.addEventListener('animationend', () => {
+  let cleaned = false;
+  const cleanup = () => {
+    if (cleaned) return;
+    cleaned = true;
     sparkle.remove();
     liveSparkles--;
-  });
+  };
+
+  sparkle.addEventListener('animationend', cleanup);
+  setTimeout(cleanup, 2000);
 
   overlayContainer.appendChild(sparkle);
 }
 
-// ── rAF decay loop (fix #1) ────────────────────────────────────────────────
+// ── rAF decay loop ──────────────────────────────────────────────────────────
 
 function startDecayLoop() {
   if (decayLoopId) return;
@@ -189,13 +245,12 @@ function decayTick() {
 
   const now = Date.now();
   const idleMs = now - lastScrollTs;
-  const decayDelta = now - lastDecayTs;
+  const decayDelta = Math.min(now - lastDecayTs, 100);
   lastDecayTs = now;
 
   if (idleMs >= state.softenAfterIdleMs) {
     continuousScrollingMs = Math.max(0, continuousScrollingMs - decayDelta);
 
-    // Fade tint proportionally as continuousScrollingMs decays
     if (continuousScrollingMs > 0 && state.continuousScrollMs > 0) {
       const ratio = Math.min(continuousScrollingMs / state.continuousScrollMs, 1);
       tintEl.style.opacity = (state.tintOpacity * ratio).toFixed(4);
@@ -203,15 +258,13 @@ function decayTick() {
       mascotEl.style.opacity = ratio.toFixed(4);
     }
 
-    // Update gauge fill during decay
     if (gaugeVisible && state.escalateMs > 0) {
       const fill = Math.min((continuousScrollingMs / state.escalateMs) * 100, 100);
       gaugeFillEl.style.width = fill + '%';
     }
 
     if (continuousScrollingMs <= 0) {
-      hideOverlay();
-      // Don't request another frame — loop stops
+      hideOverlay(true);
       return;
     }
   }
@@ -229,7 +282,6 @@ function onScroll() {
     const now = Date.now();
     const dy = Math.abs(window.scrollY - lastScrollY);
 
-    // Fix #3: ignore tiny scroll jitter
     if (dy < 4) {
       lastScrollTs = now;
       ticking = false;
@@ -238,13 +290,16 @@ function onScroll() {
 
     const dtMs = now - lastScrollTs;
 
-    // Fix #2: velocity in px/s
     const velocityPxPerSec = dtMs > 0 ? (dy / dtMs) * 1000 : 0;
 
-    // Accumulate continuous scrolling time
-    continuousScrollingMs += dtMs;
+    // 1.1 fix: cap scroll contribution, decay idle gaps
+    const scrollDelta = Math.min(dtMs, MAX_SCROLL_DELTA_MS);
+    const idleGap = dtMs - scrollDelta;
+    if (idleGap > 0) {
+      continuousScrollingMs = Math.max(0, continuousScrollingMs - idleGap);
+    }
+    continuousScrollingMs += scrollDelta;
 
-    // Update overlay state based on thresholds
     if (continuousScrollingMs >= state.continuousScrollMs && !overlayVisible) {
       showOverlay();
     }
@@ -253,15 +308,9 @@ function onScroll() {
       showGauge();
     }
 
-    // Update gauge fill
     if (gaugeVisible && state.escalateMs > 0) {
       const fill = Math.min((continuousScrollingMs / state.escalateMs) * 100, 100);
       gaugeFillEl.style.width = fill + '%';
-    }
-
-    // Sparkles on slow scroll while overlay visible
-    if (overlayVisible && state.sparkleEnabled && velocityPxPerSec < SLOW_THRESHOLD_PX_PER_SEC) {
-      spawnSparkle();
     }
 
     lastScrollY = window.scrollY;
@@ -283,17 +332,39 @@ function onStorageChanged(changes, area) {
   if (!shouldBeActive(state)) {
     resetTracking();
     window.removeEventListener('scroll', onScroll);
-  } else if (!ticking) {
-    // Re-attach scroll listener if it was removed
+  } else {
     window.removeEventListener('scroll', onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
+  }
+}
+
+// ── SPA navigation ──────────────────────────────────────────────────────────
+
+function reinit() {
+  continuousScrollingMs = 0;
+  overlayVisible = false;
+  gaugeVisible = false;
+  lastScrollY = window.scrollY;
+  lastScrollTs = Date.now();
+  stopDecayLoop();
+
+  const existing = document.querySelector('[data-lovespark="doomscroll-overlay"]');
+  if (!existing) {
+    overlayContainer = null;
+    ensureOverlay();
+  } else {
+    tintEl.style.opacity = '0';
+    whisperEl.style.opacity = '0';
+    mascotEl.classList.remove('visible');
+    mascotEl.style.opacity = '';
+    gaugeEl.style.opacity = '0';
+    gaugeFillEl.style.width = '0%';
   }
 }
 
 // ── Init ────────────────────────────────────────────────────────────────────
 
 function init() {
-  // Fix #3: initialize from current scroll position
   lastScrollY = window.scrollY;
   lastScrollTs = Date.now();
 
@@ -302,13 +373,26 @@ function init() {
 
     if (!shouldBeActive(state)) return;
 
+    checkDailyReset();
     ensureOverlay();
     window.addEventListener('scroll', onScroll, { passive: true });
     browser.storage.onChanged.addListener(onStorageChanged);
+
+    // SPA navigation support
+    window.addEventListener('popstate', reinit);
+    const _pushState = history.pushState;
+    history.pushState = function() {
+      _pushState.apply(this, arguments);
+      reinit();
+    };
+    const _replaceState = history.replaceState;
+    history.replaceState = function() {
+      _replaceState.apply(this, arguments);
+      reinit();
+    };
   });
 }
 
-// Fix #6b: handle document_idle timing
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init, { once: true });
 } else {

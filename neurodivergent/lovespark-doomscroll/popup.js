@@ -35,6 +35,57 @@ const cbSparkle    = document.getElementById('cb-sparkle');
 const modeRadios   = document.querySelectorAll('input[name="mode"]');
 const btnSnooze    = document.getElementById('btn-snooze');
 
+const statNudgesToday  = document.getElementById('stat-nudges-today');
+const statPausesToday  = document.getElementById('stat-pauses-today');
+const statNudgesTotal  = document.getElementById('stat-nudges-total');
+const statPausesTotal  = document.getElementById('stat-pauses-total');
+const cuteMsgEl        = document.getElementById('cute-msg');
+
+// ── Cute messages ───────────────────────────────────────────────────────────
+
+const CUTE_MESSAGES = [
+  'Stay mindful, bestie! 💕',
+  'Your brain deserves a break ✨',
+  'Scrolling less, living more 🌸',
+  'You got this! 💖',
+  'Breathe in, breathe out 🌙',
+  'The feed can wait for you ✨',
+  'Choose calm over chaos 💕',
+];
+
+let cuteMsgIndex = 0;
+let cuteMsgIntervalId = 0;
+
+function rotateCuteMessage() {
+  cuteMsgEl.style.opacity = '0';
+  setTimeout(() => {
+    cuteMsgIndex = (cuteMsgIndex + 1) % CUTE_MESSAGES.length;
+    cuteMsgEl.textContent = CUTE_MESSAGES[cuteMsgIndex];
+    cuteMsgEl.style.opacity = '1';
+  }, 400);
+}
+
+function startCuteMessages() {
+  cuteMsgEl.textContent = CUTE_MESSAGES[0];
+  cuteMsgIntervalId = setInterval(rotateCuteMessage, 3500);
+}
+
+// ── Stats animation ─────────────────────────────────────────────────────────
+
+function animateCount(el, newValue) {
+  const current = parseInt(el.textContent, 10) || 0;
+  if (current === newValue) return;
+  el.textContent = newValue;
+  popEl(el);
+}
+
+function popEl(el) {
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 300);
+}
+
 // ── Render ──────────────────────────────────────────────────────────────────
 
 let currentState = null;
@@ -52,20 +103,47 @@ function render(state) {
   });
 
   updateSnoozeButton(state.snoozeUntilTs);
+  renderStats(state);
 }
 
+function renderStats(state) {
+  animateCount(statNudgesToday, state.nudgesToday || 0);
+  animateCount(statPausesToday, state.pausesToday || 0);
+  animateCount(statNudgesTotal, state.nudgesTotal || 0);
+  animateCount(statPausesTotal, state.pausesTotal || 0);
+}
+
+// ── Snooze countdown ────────────────────────────────────────────────────────
+
+let snoozeIntervalId = 0;
+
 function updateSnoozeButton(snoozeUntilTs) {
-  const now = Date.now();
-  if (snoozeUntilTs > now) {
-    const until = new Date(snoozeUntilTs);
-    const hh = String(until.getHours()).padStart(2, '0');
-    const mm = String(until.getMinutes()).padStart(2, '0');
-    btnSnooze.textContent = `Snoozed until ${hh}:${mm}`;
+  clearInterval(snoozeIntervalId);
+  snoozeIntervalId = 0;
+
+  const remaining = snoozeUntilTs - Date.now();
+  if (remaining > 0) {
     btnSnooze.disabled = true;
+    tickSnooze(snoozeUntilTs);
+    snoozeIntervalId = setInterval(() => tickSnooze(snoozeUntilTs), 1000);
   } else {
     btnSnooze.textContent = 'Snooze 10 min';
     btnSnooze.disabled = false;
   }
+}
+
+function tickSnooze(snoozeUntilTs) {
+  const remaining = snoozeUntilTs - Date.now();
+  if (remaining <= 0) {
+    clearInterval(snoozeIntervalId);
+    snoozeIntervalId = 0;
+    btnSnooze.textContent = 'Snooze 10 min';
+    btnSnooze.disabled = false;
+    return;
+  }
+  const mins = Math.floor(remaining / 60000);
+  const secs = Math.floor((remaining % 60000) / 1000);
+  btnSnooze.textContent = `Snoozed ${mins}m ${String(secs).padStart(2, '0')}s`;
 }
 
 // ── Event handlers ──────────────────────────────────────────────────────────
@@ -110,7 +188,7 @@ btnSnooze.addEventListener('click', () => {
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== 'sync') return;
   for (const key of Object.keys(changes)) {
-    if (key in DEFAULT_STATE) {
+    if (key in DEFAULT_STATE || key.endsWith('Today') || key.endsWith('Total') || key === 'lastResetDate') {
       currentState[key] = changes[key].newValue;
     }
   }
@@ -119,4 +197,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
 // ── Init ────────────────────────────────────────────────────────────────────
 
-getState().then(render);
+getState().then(state => {
+  render(state);
+  startCuteMessages();
+});
