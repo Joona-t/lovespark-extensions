@@ -193,12 +193,34 @@ const Game = (() => {
 
   // ─── Sound ───
   let audioCtx = null;
+  let milestoneBuffer = null;
 
   function initAudio() {
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === 'suspended') audioCtx.resume();
+      loadMilestoneSound();
     } catch (_) {}
+  }
+
+  function loadMilestoneSound() {
+    if (!audioCtx || milestoneBuffer) return;
+    fetch('milestone.mp3')
+      .then(r => r.arrayBuffer())
+      .then(buf => audioCtx.decodeAudioData(buf))
+      .then(decoded => { milestoneBuffer = decoded; })
+      .catch(() => {});
+  }
+
+  function sfxMilestoneMP3() {
+    if (!audioCtx || audioCtx.state !== 'running' || !milestoneBuffer) return;
+    const src = audioCtx.createBufferSource();
+    const gain = audioCtx.createGain();
+    src.buffer = milestoneBuffer;
+    gain.gain.value = 0.35;
+    src.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start(0);
   }
 
   function playTone(freq, dur, vol, type, freqEnd) {
@@ -832,10 +854,10 @@ const Game = (() => {
           emitMilestoneBurst(C.playerX + C.playerW / 2, state.y);
           sfxMilestone();
         } else if (state.score > 0 && state.score % 10 === 0 && state.score !== lastMilestoneScore) {
-          // Every-10 celebration (burst + sound, no text)
+          // Every-10 celebration (burst + mp3 sound)
           lastMilestoneScore = state.score;
           emitMilestoneBurst(C.playerX + C.playerW / 2, state.y);
-          sfxMilestone();
+          sfxMilestoneMP3();
         }
       }
 
