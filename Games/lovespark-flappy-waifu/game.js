@@ -241,12 +241,44 @@ const Game = (() => {
 
   function sfxFlap() { playTone(380, 0.07, 0.08, 'sine', 520); }
 
-  function sfxScore(comboCount) {
-    const pitch = Math.min(660 + (comboCount - 1) * 40, 1200);
-    playTone(pitch, 0.10, 0.10, 'sine', Math.min(pitch * 1.33, 1600));
+  function sfxScore(comboCount, absScore) {
+    const scorePitch = 523 + Math.min((absScore || 0) * 8, 800);
+    const comboPitch = (comboCount - 1) * 30;
+    const pitch = Math.min(scorePitch + comboPitch, 2200);
+    playTone(pitch, 0.10, 0.10, 'sine', Math.min(pitch * 1.33, 2800));
   }
 
-  function sfxDeath() { playTone(200, 0.25, 0.15, 'triangle', 80); }
+  function sfxDeath() {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    const now = audioCtx.currentTime;
+    // Diminished chord: 3 triangle oscillators
+    const freqs = [200, 240, 284];
+    for (const f of freqs) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(f, now);
+      osc.frequency.exponentialRampToValueAtTime(f * 0.4, now + 0.4);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.45);
+    }
+    // Sub-bass thump
+    const sub = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    sub.type = 'sine';
+    sub.frequency.setValueAtTime(60, now);
+    sub.frequency.exponentialRampToValueAtTime(30, now + 0.2);
+    subGain.gain.setValueAtTime(0.15, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    sub.connect(subGain);
+    subGain.connect(audioCtx.destination);
+    sub.start(now);
+    sub.stop(now + 0.25);
+  }
 
   function sfxNearMiss() {
     playTone(900, 0.06, 0.07, 'sine', 1300);
@@ -292,6 +324,36 @@ const Game = (() => {
   let deathTimer = 0;
   let overlayShown = false;
   let pendingRestart = false;
+
+  // V2: Game feel
+  let freezeTimer = 0;
+  let freezeActive = false;
+  let slowMoTimer = 0;
+  let deathTimeScale = 1;
+  let squashX = 1;
+  let squashY = 1;
+  let speedLines = [];
+  const MAX_SPEED_LINES = 15;
+  let trail = [];
+  let trailIdx = 0;
+  const TRAIL_SIZE = 5;
+
+  // V2: Audio
+  let pulseGain = null;
+  let pulseInterval = null;
+  let pulseBPM = 80;
+  let audioLayers = { hihat: false, arp: false, bassDouble: false };
+  let tensionOsc = null;
+  let tensionGain = null;
+
+  // V2: Flow & variety
+  let pipesSinceRelief = 0;
+  let nextReliefAt = 5 + ((Math.random() * 3) | 0);
+  let zoneIntensity = 0;
+  let zoneTime = 0;
+  let pipesUntilBonus = 15 + ((Math.random() * 6) | 0);
+  let sessionRuns = 0;
+  let grazeStreak = 0;
 
   // Feedback systems
   let combo = 0;
@@ -463,6 +525,9 @@ const Game = (() => {
         // Graze hearts
         const grazeH = runGrazeClose * 3 + runGrazeGraze * 7 + runGrazePerfect * 15;
         if (grazeH > 0) { runHeartsBreakdown.graze = grazeH; runHearts += grazeH; }
+        // V2: Golden pipe bonus hearts (count scored golden pipes × 2 extra)
+        const goldenCount = state.pipes.filter(p => p.golden && p.scored).length;
+        if (goldenCount > 0) { const gh = goldenCount * 2; runHeartsBreakdown.golden = gh; runHearts += gh; }
         // Combo bonus
         if (runBestCombo >= 20) { runHeartsBreakdown.combo = HEART_REWARDS.comboBonus20; runHearts += HEART_REWARDS.comboBonus20; }
         else if (runBestCombo >= 10) { runHeartsBreakdown.combo = HEART_REWARDS.comboBonus10; runHearts += HEART_REWARDS.comboBonus10; }
@@ -543,16 +608,44 @@ const Game = (() => {
 
   loadStats();
 
-  // ─── Cached background gradient (anime sky) ───
-  const bgGrad = (() => {
+  // ─── Dynamic sky gradient (escalates with score) ───
+  const SKY_STAGES = [
+    { score: 0,   stops: [[91,163,230],[120,190,250],[168,216,255],[224,240,255],[200,230,201]] },
+    { score: 40,  stops: [[230,140,80],[250,170,100],[255,200,140],[255,225,180],[220,210,170]] },
+    { score: 70,  stops: [[150,60,180],[180,80,200],[200,110,220],[220,160,230],[180,140,200]] },
+    { score: 100, stops: [[180,40,120],[200,60,150],[220,90,170],[230,130,190],[200,120,170]] },
+  ];
+  let skyCache = null;
+  let skyCacheScore = -999;
+
+  function lerpColor(a, b, t) {
+    return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  }
+
+  function rgbStr(c) { return 'rgb(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ')'; }
+
+  function getSkyGradient(score) {
+    const rounded = Math.min(100, (score / 5 | 0) * 5);
+    if (rounded === skyCacheScore && skyCache) return skyCache;
+    let lo = SKY_STAGES[0], hi = SKY_STAGES[SKY_STAGES.length - 1];
+    for (let i = 0; i < SKY_STAGES.length - 1; i++) {
+      if (score >= SKY_STAGES[i].score && score < SKY_STAGES[i + 1].score) {
+        lo = SKY_STAGES[i]; hi = SKY_STAGES[i + 1]; break;
+      }
+    }
+    const s = lo.score === hi.score ? 1 : Math.min(1, (score - lo.score) / (hi.score - lo.score));
     const g = ctx.createLinearGradient(0, 0, 0, C.H);
-    g.addColorStop(0, '#5BA3E6');
-    g.addColorStop(0.35, '#78BEFA');
-    g.addColorStop(0.7, '#A8D8FF');
-    g.addColorStop(0.88, '#E0F0FF');
-    g.addColorStop(1.0, '#C8E6C9');
+    const positions = [0, 0.35, 0.7, 0.88, 1.0];
+    for (let i = 0; i < 5; i++) {
+      g.addColorStop(positions[i], rgbStr(lerpColor(lo.stops[i], hi.stops[i], s)));
+    }
+    skyCache = g;
+    skyCacheScore = rounded;
     return g;
-  })();
+  }
+
+  // Static sky for menu (score 0)
+  const bgGrad = getSkyGradient(0);
 
   // ─── Cloud system ───
   const CLOUD_CONF = {
@@ -656,6 +749,270 @@ const Game = (() => {
     ctx.globalAlpha = 1;
   }
 
+  // ─── V2: Speed lines ───
+  function updateSpeedLines(t, score) {
+    if (REDUCED_MOTION || score < 25) return;
+    const density = Math.min(MAX_SPEED_LINES, ((score - 25) / 50 * MAX_SPEED_LINES) | 0);
+    while (speedLines.length < density && Math.random() < 0.3) {
+      speedLines.push({
+        x: C.W + Math.random() * 40,
+        y: 20 + Math.random() * (C.H - 40),
+        len: 30 + Math.random() * 60,
+        speed: 6 + Math.random() * 8,
+        alpha: 0.08 + Math.random() * 0.12,
+      });
+    }
+    for (let i = speedLines.length - 1; i >= 0; i--) {
+      speedLines[i].x -= speedLines[i].speed * t;
+      if (speedLines[i].x + speedLines[i].len < 0) speedLines.splice(i, 1);
+    }
+  }
+
+  function drawSpeedLines() {
+    if (speedLines.length === 0) return;
+    ctx.save();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1;
+    for (const l of speedLines) {
+      ctx.globalAlpha = l.alpha;
+      ctx.beginPath();
+      ctx.moveTo(l.x, l.y);
+      ctx.lineTo(l.x + l.len, l.y);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  // ─── V2: Player trail ───
+  function recordTrail() {
+    if (REDUCED_MOTION || state.score < 15) return;
+    trail[trailIdx % TRAIL_SIZE] = { x: C.playerX, y: state.y, vel: state.vel };
+    trailIdx++;
+  }
+
+  function drawTrail() {
+    if (trail.length === 0 || state.score < 15) return;
+    const count = Math.min(trail.length, TRAIL_SIZE);
+    const alphaBase = Math.min(0.15, 0.02 + state.score * 0.002);
+    for (let i = 0; i < count; i++) {
+      const idx = ((trailIdx - count + i) % TRAIL_SIZE + TRAIL_SIZE) % TRAIL_SIZE;
+      const t = trail[idx];
+      if (!t) continue;
+      const age = (count - i) / count;
+      ctx.save();
+      ctx.globalAlpha = alphaBase * (1 - age);
+      const tilt = Math.max(-0.55, Math.min(0.38, t.vel * 0.042));
+      ctx.translate(t.x + C.playerW / 2, t.y + C.playerH / 2);
+      ctx.rotate(tilt);
+      if (spriteLoaded) {
+        ctx.drawImage(playerImg, -C.playerW * 0.95, -C.playerH * 1.05, C.playerW * 1.9, C.playerH * 2.1);
+      }
+      ctx.restore();
+    }
+  }
+
+  // ─── V2: Enhanced flap particles ───
+  function emitFlapParticles(x, y) {
+    if (REDUCED_MOTION) return;
+    const colors = [C.pink, C.pinkBright, '#fff', '#ffb3d9'];
+    // Downward feathers
+    for (let i = 0; i < 4; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      particles.push({
+        x: x - 8 + Math.random() * 16, y: y + 10 + Math.random() * 10,
+        vx: -1 + Math.random() * 2,
+        vy: 1 + Math.random() * 2,
+        life: 1, decay: 0.015 + Math.random() * 0.01,
+        size: 3 + Math.random() * 4,
+        color: colors[(Math.random() * colors.length) | 0],
+      });
+    }
+    // Upward sparkles
+    for (let i = 0; i < 4; i++) {
+      if (particles.length >= MAX_PARTICLES) break;
+      const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+      const speed = 2 + Math.random() * 3;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1, decay: 0.025 + Math.random() * 0.02,
+        size: 2 + Math.random() * 3,
+        color: colors[(Math.random() * colors.length) | 0],
+      });
+    }
+  }
+
+  // ─── V2: Zone vignette ───
+  function updateZone(t) {
+    if (combo >= 8) {
+      zoneTime += t;
+      if (zoneTime > 180 && zoneIntensity < 1) zoneIntensity = Math.min(1, zoneIntensity + 0.003 * t);
+    } else {
+      zoneTime = 0;
+      if (zoneIntensity > 0) zoneIntensity = Math.max(0, zoneIntensity - 0.01 * t);
+    }
+  }
+
+  function drawZoneVignette() {
+    if (REDUCED_MOTION || zoneIntensity <= 0) return;
+    const alpha = 0.04 + zoneIntensity * 0.08;
+    const pulse = 1 + Math.sin(gameTime / 400) * 0.15;
+    const r = Math.min(C.W, C.H) * 0.6 * pulse;
+    const grad = ctx.createRadialGradient(C.W / 2, C.H / 2, r, C.W / 2, C.H / 2, C.W * 0.9);
+    grad.addColorStop(0, 'rgba(255,110,180,0)');
+    grad.addColorStop(0.6, 'rgba(180,40,120,' + (alpha * 0.3) + ')');
+    grad.addColorStop(1, 'rgba(180,40,120,' + alpha + ')');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, C.W, C.H);
+  }
+
+  // ─── V2: Ambient pulse + audio layers ───
+  let pulseTimeout = null;
+
+  function startPulse() {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    pulseBPM = 80;
+    audioLayers = { hihat: false, arp: false, bassDouble: false };
+    pulseGain = audioCtx.createGain();
+    pulseGain.gain.value = 0.06;
+    pulseGain.connect(audioCtx.destination);
+    scheduleBeat();
+  }
+
+  function scheduleBeat() {
+    if (!audioCtx || !pulseGain) return;
+    const now = audioCtx.currentTime;
+    // Bass pulse
+    const osc = audioCtx.createOscillator();
+    const env = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 55;
+    env.gain.setValueAtTime(0.06, now);
+    env.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+    osc.connect(env);
+    env.connect(pulseGain);
+    osc.start(now);
+    osc.stop(now + 0.05);
+    // Hi-hat layer
+    if (audioLayers.hihat) {
+      const halfBeat = 60 / pulseBPM / 2;
+      setTimeout(() => {
+        if (!audioCtx || !pulseGain) return;
+        const t = audioCtx.currentTime;
+        const noise = audioCtx.createOscillator();
+        const nEnv = audioCtx.createGain();
+        noise.type = 'square';
+        noise.frequency.value = 6000 + Math.random() * 2000;
+        nEnv.gain.setValueAtTime(0.015, t);
+        nEnv.gain.exponentialRampToValueAtTime(0.001, t + 0.02);
+        noise.connect(nEnv);
+        nEnv.connect(pulseGain);
+        noise.start(t);
+        noise.stop(t + 0.025);
+      }, halfBeat * 1000);
+    }
+    // Arp layer
+    if (audioLayers.arp) {
+      const arpNotes = [220, 330, 440, 330];
+      const arpNote = arpNotes[(Math.random() * arpNotes.length) | 0];
+      const aOsc = audioCtx.createOscillator();
+      const aEnv = audioCtx.createGain();
+      aOsc.type = 'triangle';
+      aOsc.frequency.value = arpNote;
+      aEnv.gain.setValueAtTime(0.02, now);
+      aEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      aOsc.connect(aEnv);
+      aEnv.connect(pulseGain);
+      aOsc.start(now);
+      aOsc.stop(now + 0.1);
+    }
+    // Bass doubling layer
+    if (audioLayers.bassDouble) {
+      const bOsc = audioCtx.createOscillator();
+      const bEnv = audioCtx.createGain();
+      bOsc.type = 'sine';
+      bOsc.frequency.value = 27.5;
+      bEnv.gain.setValueAtTime(0.04, now);
+      bEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+      bOsc.connect(bEnv);
+      bEnv.connect(pulseGain);
+      bOsc.start(now);
+      bOsc.stop(now + 0.07);
+    }
+    const interval = 60000 / pulseBPM;
+    pulseTimeout = setTimeout(scheduleBeat, interval);
+  }
+
+  function updatePulseTempo(score) {
+    pulseBPM = Math.min(160, 80 + score * (80 / 60));
+  }
+
+  function updateAudioLayers(score) {
+    if (score >= 10 && !audioLayers.hihat) audioLayers.hihat = true;
+    if (score >= 25 && !audioLayers.arp) audioLayers.arp = true;
+    if (score >= 50 && !audioLayers.bassDouble) audioLayers.bassDouble = true;
+  }
+
+  function stopPulse() {
+    if (pulseTimeout) { clearTimeout(pulseTimeout); pulseTimeout = null; }
+    if (pulseGain) {
+      try { pulseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3); } catch (_) {}
+      setTimeout(() => { try { pulseGain.disconnect(); } catch (_) {} pulseGain = null; }, 400);
+    }
+  }
+
+  // ─── V2: Proximity tension audio ───
+  function updateTensionAudio() {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    let inDanger = false;
+    let closeness = 0;
+    for (const p of state.pipes) {
+      const pRight = p.x + C.pipeWidth;
+      const hDist = Math.min(Math.abs(C.playerX - pRight), Math.abs(C.playerX + C.playerW - p.x));
+      const inHSpan = C.playerX + C.playerW > p.x - 80 && C.playerX < pRight + 80;
+      if (!inHSpan) continue;
+      const topClear = (state.y + 8) - p.topH;
+      const botClear = (p.topH + p.gap) - (state.y + C.playerH - 8);
+      const minClear = Math.min(topClear, botClear);
+      if (minClear < 40 && minClear > -5) {
+        inDanger = true;
+        closeness = Math.max(closeness, 1 - Math.max(0, minClear) / 40);
+        break;
+      }
+    }
+    if (inDanger && closeness > 0.1) {
+      if (!tensionOsc) {
+        tensionOsc = audioCtx.createOscillator();
+        tensionGain = audioCtx.createGain();
+        tensionOsc.type = 'sine';
+        tensionOsc.frequency.value = 800;
+        tensionGain.gain.value = 0;
+        tensionOsc.connect(tensionGain);
+        tensionGain.connect(audioCtx.destination);
+        tensionOsc.start();
+      }
+      const pitch = 800 + closeness * 600;
+      const vol = Math.min(0.04, closeness * 0.04);
+      tensionOsc.frequency.setTargetAtTime(pitch, audioCtx.currentTime, 0.05);
+      tensionGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.03);
+    } else if (tensionGain) {
+      tensionGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
+    }
+  }
+
+  function stopTensionAudio() {
+    if (tensionOsc) {
+      try { tensionOsc.stop(); } catch (_) {}
+      tensionOsc = null;
+    }
+    if (tensionGain) {
+      try { tensionGain.disconnect(); } catch (_) {}
+      tensionGain = null;
+    }
+  }
+
   // ─── Reset ───
   function reset() {
     state = {
@@ -686,6 +1043,24 @@ const Game = (() => {
     runHeartsBreakdown = {};
     luckyRun = false;
     newMedalFlag = false;
+    // V2 resets
+    freezeTimer = 0;
+    freezeActive = false;
+    slowMoTimer = 0;
+    deathTimeScale = 1;
+    squashX = 1;
+    squashY = 1;
+    speedLines = [];
+    trail = [];
+    trailIdx = 0;
+    pipesSinceRelief = 0;
+    nextReliefAt = 5 + ((Math.random() * 3) | 0);
+    zoneIntensity = 0;
+    zoneTime = 0;
+    pipesUntilBonus = 15 + ((Math.random() * 6) | 0);
+    grazeStreak = 0;
+    skyCache = null;
+    skyCacheScore = -999;
     initClouds();
     if (!REDUCED_MOTION) initBgSparkles();
     else bgSparkles = [];
@@ -702,10 +1077,30 @@ const Game = (() => {
     if (state.pipes.length < 3 && totalGamesLoaded < 4) {
       gap += Math.max(0, 40 - totalGamesLoaded * 10);
     }
+    // V2: Breathing room — every 5-7 pipes, one wider gap (after score 10)
+    let isRelief = false;
+    if (state.score >= 10) {
+      pipesSinceRelief++;
+      if (pipesSinceRelief >= nextReliefAt) {
+        gap += 35;
+        pipesSinceRelief = 0;
+        nextReliefAt = 5 + ((Math.random() * 3) | 0);
+        isRelief = true;
+      }
+    }
+    // V2: Golden bonus pipe — every 15-20 pipes (after score 8)
+    let golden = false;
+    if (state.score >= 8) {
+      pipesUntilBonus--;
+      if (pipesUntilBonus <= 0) {
+        golden = true;
+        pipesUntilBonus = 15 + ((Math.random() * 6) | 0);
+      }
+    }
     const minTop = 55;
     const maxTop = C.H - gap - 55;
     const topH = minTop + Math.random() * (maxTop - minTop);
-    state.pipes.push({ x: C.W + 10, topH, gap, scored: false });
+    state.pipes.push({ x: C.W + 10, topH, gap, scored: false, golden });
   }
 
   // ─── Particles ───
@@ -761,26 +1156,66 @@ const Game = (() => {
 
     // Death animation phase
     if (state.gameOver) {
-      if (screenShake > 0.5) screenShake *= Math.pow(0.85, t);
+      // V2: Freeze frame — everything stops for 120ms
+      if (freezeActive) {
+        freezeTimer -= dt;
+        if (freezeTimer <= 0) {
+          freezeActive = false;
+          slowMoTimer = REDUCED_MOTION ? 0 : 350;
+          deathTimeScale = REDUCED_MOTION ? 1 : 0.3;
+          deathTimer = 200;
+        }
+        // Still draw but don't animate anything
+        return;
+      }
+      // V2: Slow-mo death fall with gravity
+      const effectiveDt = dt * deathTimeScale;
+      const et = effectiveDt / FRAME_MS;
+      if (slowMoTimer > 0) {
+        slowMoTimer -= dt;
+        if (slowMoTimer <= 0) deathTimeScale = 1;
+      }
+      // Apply gravity during death (player falls)
+      state.vel += GRAVITY * et;
+      state.vel = Math.min(state.vel, TERMINAL_VEL);
+      state.y += state.vel * et;
+      if (state.y + C.playerH >= C.H) state.y = C.H - C.playerH;
+      if (screenShake > 0.5) screenShake *= Math.pow(0.85, et);
       else screenShake = 0;
-      updateParticles(t);
-      updateFloatingTexts(t);
-      if (nearMissFlash > 0) nearMissFlash -= dt;
+      updateParticles(et);
+      updateFloatingTexts(et);
+      if (nearMissFlash > 0) nearMissFlash -= effectiveDt;
       if (milestone) {
-        milestone.y -= 0.8 * t;
-        milestone.alpha -= 0.008 * t;
+        milestone.y -= 0.8 * et;
+        milestone.alpha -= 0.008 * et;
         if (milestone.alpha <= 0) milestone = null;
       }
-      if (!REDUCED_MOTION) { updateClouds(t, 1); updateBgSparkles(t); }
+      if (!REDUCED_MOTION) { updateClouds(et, 1); updateBgSparkles(et); }
       deathTimer -= dt;
       if (deathTimer <= 0 && !overlayShown) showGameOverOverlay();
       return;
     }
 
+    // V2: Record trail before physics
+    if (!REDUCED_MOTION) recordTrail();
+
     // Physics
     state.vel += GRAVITY * t;
     state.vel = Math.min(state.vel, TERMINAL_VEL);
     state.y += state.vel * t;
+
+    // V2: Squash & stretch lerp
+    if (!REDUCED_MOTION) {
+      const decay = Math.pow(0.88, t);
+      squashX = 1 + (squashX - 1) * decay;
+      squashY = 1 + (squashY - 1) * decay;
+      // Velocity-driven stretch during fast fall
+      if (state.vel > 3) {
+        const str = Math.min((state.vel - 3) * 0.03, 0.15);
+        squashX = Math.min(squashX, 1 - str * 0.5);
+        squashY = Math.max(squashY, 1 + str);
+      }
+    }
 
     // Ceiling: hard stop
     if (state.y < 0) { state.y = 0; state.vel = 0; }
@@ -798,7 +1233,7 @@ const Game = (() => {
         combo++;
         if (combo > runBestCombo) runBestCombo = combo;
         scoreDisplay.textContent = state.score;
-        sfxScore(combo);
+        sfxScore(combo, state.score);
         // First-ever pipe: heart particles + "Yay!" reaction
         if (firstEverPipe && state.score === 1) {
           firstEverPipe = false;
@@ -811,14 +1246,26 @@ const Game = (() => {
           emitParticles(C.playerX + C.playerW / 2, state.y + C.playerH / 2, 8, null);
         }
 
+        // V2: Golden pipe bonus scoring
+        if (p.golden) {
+          floatingTexts.push({
+            text: 'BONUS! \u00D73', x: C.W / 2, y: state.y - 20,
+            alpha: 1, vy: -1.5, size: 22, color: '#FFD700', centered: true,
+          });
+          emitParticles(C.playerX + C.playerW / 2, state.y + C.playerH / 2, 15, '#FFD700');
+          playTone(880, 0.12, 0.12, 'sine', 1320);
+        }
+
         // 3-tier graze detection
         const topClearance = (state.y + 8) - p.topH;
         const botClearance = (p.topH + p.gap) - (state.y + C.playerH - 8);
         const minClearance = Math.min(topClearance, botClearance);
+        let wasGraze = false;
         if (minClearance >= 0) {
           for (const tier of GRAZE_TIERS) {
             if (minClearance < tier.threshold) {
               nearMissCount++;
+              wasGraze = true;
               if (tier.name === 'Close') runGrazeClose++;
               else if (tier.name === 'Graze') runGrazeGraze++;
               else if (tier.name === 'Perfect') runGrazePerfect++;
@@ -832,6 +1279,20 @@ const Game = (() => {
               break; // only trigger best tier
             }
           }
+        }
+        // V2: Graze streak reward
+        if (wasGraze) {
+          grazeStreak++;
+          if (grazeStreak === 3) {
+            floatingTexts.push({
+              text: 'GRAZE STREAK!', x: C.W / 2, y: C.H / 2 - 50,
+              alpha: 1, vy: -1.2, size: 20, color: '#FFD700', centered: true,
+            });
+            emitParticles(C.playerX + C.playerW / 2, state.y, 15, '#FFD700');
+            if (!REDUCED_MOTION) screenShake = 5;
+          }
+        } else {
+          grazeStreak = 0;
         }
 
         // Combo milestone celebrations
@@ -897,6 +1358,13 @@ const Game = (() => {
       updateBgSparkles(t);
     }
 
+    // V2: Speed lines, zone vignette, tension audio, pulse tempo
+    if (!REDUCED_MOTION) updateSpeedLines(t, state.score);
+    updateZone(t);
+    updateTensionAudio();
+    updatePulseTempo(state.score);
+    updateAudioLayers(state.score);
+
     // Shake decay
     if (screenShake > 0.5) screenShake *= Math.pow(0.85, t);
     else screenShake = 0;
@@ -904,7 +1372,7 @@ const Game = (() => {
 
   // ─── Draw ───
   function drawBackground() {
-    ctx.fillStyle = bgGrad;
+    ctx.fillStyle = !loopActive && !state.gameOver ? bgGrad : getSkyGradient(state.score);
     ctx.fillRect(0, 0, C.W, C.H);
   }
 
@@ -920,19 +1388,29 @@ const Game = (() => {
 
   function drawPipe(p) {
     const pw = C.pipeWidth;
-    const intensity = Math.min(1, state.score / 60);
-    const r = (180 + intensity * 30) | 0;
-    const g = (60 + intensity * 20) | 0;
-    const b = (100 + intensity * 20) | 0;
     const grad = ctx.createLinearGradient(p.x, 0, p.x + pw, 0);
-    grad.addColorStop(0, 'rgb(' + (r - 30) + ',' + (g - 15) + ',' + (b - 10) + ')');
-    grad.addColorStop(0.3, 'rgb(' + r + ',' + g + ',' + b + ')');
-    grad.addColorStop(0.5, 'rgb(' + (r + 20) + ',' + (g + 10) + ',' + (b + 15) + ')');
-    grad.addColorStop(0.7, 'rgb(' + r + ',' + g + ',' + b + ')');
-    grad.addColorStop(1, 'rgb(' + (r - 30) + ',' + (g - 15) + ',' + (b - 10) + ')');
+    if (p.golden) {
+      // V2: Golden bonus pipe
+      grad.addColorStop(0, '#8B6914');
+      grad.addColorStop(0.25, '#DAA520');
+      grad.addColorStop(0.5, '#FFFACD');
+      grad.addColorStop(0.75, '#DAA520');
+      grad.addColorStop(1, '#8B6914');
+    } else {
+      const intensity = Math.min(1, state.score / 60);
+      const r = (180 + intensity * 30) | 0;
+      const g = (60 + intensity * 20) | 0;
+      const b = (100 + intensity * 20) | 0;
+      grad.addColorStop(0, 'rgb(' + (r - 30) + ',' + (g - 15) + ',' + (b - 10) + ')');
+      grad.addColorStop(0.3, 'rgb(' + r + ',' + g + ',' + b + ')');
+      grad.addColorStop(0.5, 'rgb(' + (r + 20) + ',' + (g + 10) + ',' + (b + 15) + ')');
+      grad.addColorStop(0.7, 'rgb(' + r + ',' + g + ',' + b + ')');
+      grad.addColorStop(1, 'rgb(' + (r - 30) + ',' + (g - 15) + ',' + (b - 10) + ')');
+    }
     ctx.save();
-    ctx.shadowColor = '#E8457C';
-    ctx.shadowBlur = 6 + intensity * 3;
+    ctx.shadowColor = p.golden ? '#FFD700' : '#E8457C';
+    const intensity = Math.min(1, state.score / 60);
+    ctx.shadowBlur = p.golden ? 12 : 6 + intensity * 3;
     ctx.fillStyle = grad;
     ctx.fillRect(p.x, 0, pw, p.topH);
     const botY = p.topH + p.gap;
@@ -956,11 +1434,15 @@ const Game = (() => {
   }
 
   function drawPlayer() {
+    // V2: Draw trail ghosts first
+    if (!REDUCED_MOTION) drawTrail();
     const x = C.playerX, y = state.y, w = C.playerW, h = C.playerH;
     const tilt = Math.max(-0.55, Math.min(0.38, state.vel * 0.042));
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2);
     ctx.rotate(tilt);
+    // V2: Squash & stretch
+    if (!REDUCED_MOTION) ctx.scale(squashX, squashY);
     const glowPulse = 28 + Math.sin(gameTime / 300) * 4 + Math.min(state.score, 50) * 0.3;
     ctx.shadowColor = C.pink;
     ctx.shadowBlur = glowPulse;
@@ -1063,6 +1545,7 @@ const Game = (() => {
     drawGround();
     for (const c of clouds) { if (c.layer === 'far') drawCloud(c); }
     if (!REDUCED_MOTION) drawBgSparkles();
+    if (!REDUCED_MOTION) drawSpeedLines();
     for (const p of state.pipes) drawPipe(p);
     for (const c of clouds) { if (c.layer === 'near') drawCloud(c); }
     drawParticles();
@@ -1072,6 +1555,7 @@ const Game = (() => {
     drawCombo();
     drawDifficultyIndicator();
     drawNearMissFlash();
+    drawZoneVignette();
     ctx.restore();
   }
 
@@ -1091,7 +1575,10 @@ const Game = (() => {
   function flap() {
     state.vel = JUMP_FORCE;
     sfxFlap();
-    emitParticles(C.playerX, state.y + C.playerH / 2, 5, null);
+    // V2: Squash on flap
+    if (!REDUCED_MOTION) { squashX = 1.25; squashY = 0.75; }
+    // V2: Enhanced flap particles (feathers + sparkles)
+    emitFlapParticles(C.playerX, state.y + C.playerH / 2);
   }
 
   function handleInput() {
@@ -1106,8 +1593,18 @@ const Game = (() => {
   function triggerGameOver() {
     state.gameOver = true;
     if (!REDUCED_MOTION) screenShake = 14;
-    deathTimer = 400;
+    // V2: Freeze frame instead of immediate death timer
+    if (!REDUCED_MOTION) {
+      freezeActive = true;
+      freezeTimer = 120;
+      deathTimer = 0; // will be set after freeze ends
+    } else {
+      deathTimer = 200;
+    }
     sfxDeath();
+    // V2: Stop audio systems
+    stopPulse();
+    stopTensionAudio();
     newBestFlag = false;
     if (state.score > bestScore) {
       bestScore = state.score;
@@ -1193,6 +1690,7 @@ const Game = (() => {
       let html = '';
       if (runHeartsBreakdown.pipes) html += '<div class="hearts-row"><span>Pipes ' + state.score + '</span><span>+' + runHeartsBreakdown.pipes + ' \u{1F496}</span></div>';
       if (runHeartsBreakdown.graze) html += '<div class="hearts-row"><span>Grazes</span><span>+' + runHeartsBreakdown.graze + ' \u{1F496}</span></div>';
+      if (runHeartsBreakdown.golden) html += '<div class="hearts-row hearts-bonus"><span>Golden Pipes</span><span>+' + runHeartsBreakdown.golden + ' \u{1F496}</span></div>';
       if (runHeartsBreakdown.combo) html += '<div class="hearts-row"><span>Combo</span><span>+' + runHeartsBreakdown.combo + ' \u{1F496}</span></div>';
       if (runHeartsBreakdown.newBest) html += '<div class="hearts-row hearts-bonus"><span>New Best!</span><span>+' + runHeartsBreakdown.newBest + ' \u{1F496}</span></div>';
       if (runHeartsBreakdown.newMedal) html += '<div class="hearts-row hearts-bonus"><span>New Medal!</span><span>+' + runHeartsBreakdown.newMedal + ' \u{1F496}</span></div>';
@@ -1217,6 +1715,10 @@ const Game = (() => {
       dailyEl.style.display = 'none';
     }
 
+    // V2: Session counter
+    const runCountEl = document.getElementById('death-run-count');
+    if (runCountEl) runCountEl.textContent = 'Run #' + sessionRuns;
+
     // Waifu speech bubble
     const speechEl = document.getElementById('death-speech');
     if (speechEl) speechEl.textContent = waifuSpeech;
@@ -1230,6 +1732,8 @@ const Game = (() => {
   // ─── Start ───
   function startGame() {
     if (!audioCtx) initAudio();
+    // V2: Session counter
+    sessionRuns++;
     // Show comeback bonus on first game of the session
     if (comebackMsg && comebackHearts > 0) {
       const speechEl = document.getElementById('start-speech');
@@ -1245,6 +1749,8 @@ const Game = (() => {
     gameTime = lastTime;
     rafId = requestAnimationFrame(loop);
     spawnPipe();
+    // V2: Start ambient pulse
+    startPulse();
   }
 
   // ─── Events ───
