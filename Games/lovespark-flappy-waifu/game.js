@@ -360,13 +360,8 @@ const Game = (() => {
   let trailIdx = 0;
   const TRAIL_SIZE = 5;
 
-  // V2: Audio
-  let pulseGain = null;
-  let pulseInterval = null;
-  let pulseBPM = 80;
-  let audioLayers = { hihat: false, arp: false, bassDouble: false };
-  let tensionOsc = null;
-  let tensionGain = null;
+  // V2: Audio (stubs — music/tension removed)
+
 
   // V2: Flow & variety
   let pipesSinceRelief = 0;
@@ -890,106 +885,9 @@ const Game = (() => {
     ctx.fillRect(0, 0, C.W, C.H);
   }
 
-  // ─── V2: Lofi background music ───
-  let lofiPlaying = false;
-  let lofiMaster = null;
-  let lofiChordTimeout = null;
-  let lofiBeatTimeout = null;
-  let lofiChordIdx = 0;
-  const LOFI_BPM = 72;
-  const LOFI_BEAT_MS = 60000 / LOFI_BPM;
-  // Jazz chord progression: Cmaj7 → Am7 → Fmaj7 → G7 (all low octave for warmth)
-  const LOFI_CHORDS = [
-    [130.8, 164.8, 196.0, 246.9],  // Cmaj7
-    [110.0, 130.8, 164.8, 196.0],  // Am7
-    [87.3, 110.0, 130.8, 164.8],   // Fmaj7
-    [98.0, 123.5, 146.8, 174.6],   // G7
-  ];
-
-  function startLofi() {
-    if (!audioCtx || audioCtx.state !== 'running' || lofiPlaying) return;
-    lofiPlaying = true;
-    lofiChordIdx = 0;
-    // Master bus with low-pass filter for warmth
-    lofiMaster = audioCtx.createGain();
-    lofiMaster.gain.value = 0.07;
-    const lpf = audioCtx.createBiquadFilter();
-    lpf.type = 'lowpass';
-    lpf.frequency.value = 900;
-    lpf.Q.value = 0.7;
-    lofiMaster.connect(lpf);
-    lpf.connect(audioCtx.destination);
-    scheduleLofiChord();
-    scheduleLofiBeat();
-  }
-
-  function scheduleLofiChord() {
-    if (!audioCtx || !lofiPlaying || !lofiMaster) return;
-    const now = audioCtx.currentTime;
-    const chord = LOFI_CHORDS[lofiChordIdx % LOFI_CHORDS.length];
-    const chordDur = LOFI_BEAT_MS * 4 / 1000; // 4 beats per chord
-    for (const freq of chord) {
-      const osc = audioCtx.createOscillator();
-      const env = audioCtx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.value = freq * (0.998 + Math.random() * 0.004); // slight detune for warmth
-      env.gain.setValueAtTime(0, now);
-      env.gain.linearRampToValueAtTime(0.04, now + 0.15);
-      env.gain.setValueAtTime(0.04, now + chordDur - 0.3);
-      env.gain.exponentialRampToValueAtTime(0.001, now + chordDur);
-      osc.connect(env);
-      env.connect(lofiMaster);
-      osc.start(now);
-      osc.stop(now + chordDur + 0.05);
-    }
-    lofiChordIdx++;
-    lofiChordTimeout = setTimeout(scheduleLofiChord, LOFI_BEAT_MS * 4);
-  }
-
-  function scheduleLofiBeat() {
-    if (!audioCtx || !lofiPlaying || !lofiMaster) return;
-    const now = audioCtx.currentTime;
-    // Kick (low sine thump)
-    const kick = audioCtx.createOscillator();
-    const kickEnv = audioCtx.createGain();
-    kick.type = 'sine';
-    kick.frequency.setValueAtTime(100, now);
-    kick.frequency.exponentialRampToValueAtTime(40, now + 0.08);
-    kickEnv.gain.setValueAtTime(0.12, now);
-    kickEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-    kick.connect(kickEnv);
-    kickEnv.connect(lofiMaster);
-    kick.start(now);
-    kick.stop(now + 0.12);
-    // Hi-hat on off-beat (soft)
-    const hatTime = LOFI_BEAT_MS / 2 / 1000;
-    const hat = audioCtx.createOscillator();
-    const hatEnv = audioCtx.createGain();
-    hat.type = 'square';
-    hat.frequency.value = 7000 + Math.random() * 3000;
-    hatEnv.gain.setValueAtTime(0, now + hatTime);
-    hatEnv.gain.linearRampToValueAtTime(0.008, now + hatTime + 0.002);
-    hatEnv.gain.exponentialRampToValueAtTime(0.001, now + hatTime + 0.03);
-    hat.connect(hatEnv);
-    hatEnv.connect(lofiMaster);
-    hat.start(now + hatTime);
-    hat.stop(now + hatTime + 0.04);
-    lofiBeatTimeout = setTimeout(scheduleLofiBeat, LOFI_BEAT_MS);
-  }
-
-  function stopLofi() {
-    lofiPlaying = false;
-    if (lofiChordTimeout) { clearTimeout(lofiChordTimeout); lofiChordTimeout = null; }
-    if (lofiBeatTimeout) { clearTimeout(lofiBeatTimeout); lofiBeatTimeout = null; }
-    if (lofiMaster) {
-      try { lofiMaster.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5); } catch (_) {}
-      setTimeout(() => { try { lofiMaster.disconnect(); } catch (_) {} lofiMaster = null; }, 600);
-    }
-  }
-
-  // Stubs for removed pulse/layer system (keep update calls from crashing)
-  function startPulse() { startLofi(); }
-  function stopPulse() { stopLofi(); }
+  // Background music removed — stubs keep update calls from crashing
+  function startPulse() {}
+  function stopPulse() {}
   function updatePulseTempo() {}
   function updateAudioLayers() {}
 
