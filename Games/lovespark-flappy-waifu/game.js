@@ -194,12 +194,14 @@ const Game = (() => {
   // ─── Sound ───
   let audioCtx = null;
   let milestoneBuffer = null;
+  let uwuBuffer = null;
 
   function initAudio() {
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === 'suspended') audioCtx.resume();
       loadMilestoneSound();
+      loadUwuSound();
     } catch (_) {}
   }
 
@@ -212,12 +214,32 @@ const Game = (() => {
       .catch(() => {});
   }
 
+  function loadUwuSound() {
+    if (!audioCtx || uwuBuffer) return;
+    fetch('uwu.mp3')
+      .then(r => r.arrayBuffer())
+      .then(buf => audioCtx.decodeAudioData(buf))
+      .then(decoded => { uwuBuffer = decoded; })
+      .catch(() => {});
+  }
+
   function sfxMilestoneMP3() {
     if (!audioCtx || audioCtx.state !== 'running' || !milestoneBuffer) return;
     const src = audioCtx.createBufferSource();
     const gain = audioCtx.createGain();
     src.buffer = milestoneBuffer;
     gain.gain.value = 0.35;
+    src.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start(0);
+  }
+
+  function sfxUwu() {
+    if (!audioCtx || audioCtx.state !== 'running' || !uwuBuffer) return;
+    const src = audioCtx.createBufferSource();
+    const gain = audioCtx.createGain();
+    src.buffer = uwuBuffer;
+    gain.gain.value = 0.4;
     src.connect(gain);
     gain.connect(audioCtx.destination);
     src.start(0);
@@ -868,150 +890,112 @@ const Game = (() => {
     ctx.fillRect(0, 0, C.W, C.H);
   }
 
-  // ─── V2: Ambient pulse + audio layers ───
-  let pulseTimeout = null;
+  // ─── V2: Lofi background music ───
+  let lofiPlaying = false;
+  let lofiMaster = null;
+  let lofiChordTimeout = null;
+  let lofiBeatTimeout = null;
+  let lofiChordIdx = 0;
+  const LOFI_BPM = 72;
+  const LOFI_BEAT_MS = 60000 / LOFI_BPM;
+  // Jazz chord progression: Cmaj7 → Am7 → Fmaj7 → G7 (all low octave for warmth)
+  const LOFI_CHORDS = [
+    [130.8, 164.8, 196.0, 246.9],  // Cmaj7
+    [110.0, 130.8, 164.8, 196.0],  // Am7
+    [87.3, 110.0, 130.8, 164.8],   // Fmaj7
+    [98.0, 123.5, 146.8, 174.6],   // G7
+  ];
 
-  function startPulse() {
-    if (!audioCtx || audioCtx.state !== 'running') return;
-    pulseBPM = 80;
-    audioLayers = { hihat: false, arp: false, bassDouble: false };
-    pulseGain = audioCtx.createGain();
-    pulseGain.gain.value = 0.06;
-    pulseGain.connect(audioCtx.destination);
-    scheduleBeat();
+  function startLofi() {
+    if (!audioCtx || audioCtx.state !== 'running' || lofiPlaying) return;
+    lofiPlaying = true;
+    lofiChordIdx = 0;
+    // Master bus with low-pass filter for warmth
+    lofiMaster = audioCtx.createGain();
+    lofiMaster.gain.value = 0.07;
+    const lpf = audioCtx.createBiquadFilter();
+    lpf.type = 'lowpass';
+    lpf.frequency.value = 900;
+    lpf.Q.value = 0.7;
+    lofiMaster.connect(lpf);
+    lpf.connect(audioCtx.destination);
+    scheduleLofiChord();
+    scheduleLofiBeat();
   }
 
-  function scheduleBeat() {
-    if (!audioCtx || !pulseGain) return;
+  function scheduleLofiChord() {
+    if (!audioCtx || !lofiPlaying || !lofiMaster) return;
     const now = audioCtx.currentTime;
-    // Bass pulse
-    const osc = audioCtx.createOscillator();
-    const env = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = 55;
-    env.gain.setValueAtTime(0.06, now);
-    env.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-    osc.connect(env);
-    env.connect(pulseGain);
-    osc.start(now);
-    osc.stop(now + 0.05);
-    // Hi-hat layer
-    if (audioLayers.hihat) {
-      const halfBeat = 60 / pulseBPM / 2;
-      setTimeout(() => {
-        if (!audioCtx || !pulseGain) return;
-        const t = audioCtx.currentTime;
-        const noise = audioCtx.createOscillator();
-        const nEnv = audioCtx.createGain();
-        noise.type = 'square';
-        noise.frequency.value = 6000 + Math.random() * 2000;
-        nEnv.gain.setValueAtTime(0.015, t);
-        nEnv.gain.exponentialRampToValueAtTime(0.001, t + 0.02);
-        noise.connect(nEnv);
-        nEnv.connect(pulseGain);
-        noise.start(t);
-        noise.stop(t + 0.025);
-      }, halfBeat * 1000);
+    const chord = LOFI_CHORDS[lofiChordIdx % LOFI_CHORDS.length];
+    const chordDur = LOFI_BEAT_MS * 4 / 1000; // 4 beats per chord
+    for (const freq of chord) {
+      const osc = audioCtx.createOscillator();
+      const env = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = freq * (0.998 + Math.random() * 0.004); // slight detune for warmth
+      env.gain.setValueAtTime(0, now);
+      env.gain.linearRampToValueAtTime(0.04, now + 0.15);
+      env.gain.setValueAtTime(0.04, now + chordDur - 0.3);
+      env.gain.exponentialRampToValueAtTime(0.001, now + chordDur);
+      osc.connect(env);
+      env.connect(lofiMaster);
+      osc.start(now);
+      osc.stop(now + chordDur + 0.05);
     }
-    // Arp layer
-    if (audioLayers.arp) {
-      const arpNotes = [220, 330, 440, 330];
-      const arpNote = arpNotes[(Math.random() * arpNotes.length) | 0];
-      const aOsc = audioCtx.createOscillator();
-      const aEnv = audioCtx.createGain();
-      aOsc.type = 'triangle';
-      aOsc.frequency.value = arpNote;
-      aEnv.gain.setValueAtTime(0.02, now);
-      aEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-      aOsc.connect(aEnv);
-      aEnv.connect(pulseGain);
-      aOsc.start(now);
-      aOsc.stop(now + 0.1);
-    }
-    // Bass doubling layer
-    if (audioLayers.bassDouble) {
-      const bOsc = audioCtx.createOscillator();
-      const bEnv = audioCtx.createGain();
-      bOsc.type = 'sine';
-      bOsc.frequency.value = 27.5;
-      bEnv.gain.setValueAtTime(0.04, now);
-      bEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-      bOsc.connect(bEnv);
-      bEnv.connect(pulseGain);
-      bOsc.start(now);
-      bOsc.stop(now + 0.07);
-    }
-    const interval = 60000 / pulseBPM;
-    pulseTimeout = setTimeout(scheduleBeat, interval);
+    lofiChordIdx++;
+    lofiChordTimeout = setTimeout(scheduleLofiChord, LOFI_BEAT_MS * 4);
   }
 
-  function updatePulseTempo(score) {
-    pulseBPM = Math.min(160, 80 + score * (80 / 60));
+  function scheduleLofiBeat() {
+    if (!audioCtx || !lofiPlaying || !lofiMaster) return;
+    const now = audioCtx.currentTime;
+    // Kick (low sine thump)
+    const kick = audioCtx.createOscillator();
+    const kickEnv = audioCtx.createGain();
+    kick.type = 'sine';
+    kick.frequency.setValueAtTime(100, now);
+    kick.frequency.exponentialRampToValueAtTime(40, now + 0.08);
+    kickEnv.gain.setValueAtTime(0.12, now);
+    kickEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    kick.connect(kickEnv);
+    kickEnv.connect(lofiMaster);
+    kick.start(now);
+    kick.stop(now + 0.12);
+    // Hi-hat on off-beat (soft)
+    const hatTime = LOFI_BEAT_MS / 2 / 1000;
+    const hat = audioCtx.createOscillator();
+    const hatEnv = audioCtx.createGain();
+    hat.type = 'square';
+    hat.frequency.value = 7000 + Math.random() * 3000;
+    hatEnv.gain.setValueAtTime(0, now + hatTime);
+    hatEnv.gain.linearRampToValueAtTime(0.008, now + hatTime + 0.002);
+    hatEnv.gain.exponentialRampToValueAtTime(0.001, now + hatTime + 0.03);
+    hat.connect(hatEnv);
+    hatEnv.connect(lofiMaster);
+    hat.start(now + hatTime);
+    hat.stop(now + hatTime + 0.04);
+    lofiBeatTimeout = setTimeout(scheduleLofiBeat, LOFI_BEAT_MS);
   }
 
-  function updateAudioLayers(score) {
-    if (score >= 10 && !audioLayers.hihat) audioLayers.hihat = true;
-    if (score >= 25 && !audioLayers.arp) audioLayers.arp = true;
-    if (score >= 50 && !audioLayers.bassDouble) audioLayers.bassDouble = true;
-  }
-
-  function stopPulse() {
-    if (pulseTimeout) { clearTimeout(pulseTimeout); pulseTimeout = null; }
-    if (pulseGain) {
-      try { pulseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3); } catch (_) {}
-      setTimeout(() => { try { pulseGain.disconnect(); } catch (_) {} pulseGain = null; }, 400);
+  function stopLofi() {
+    lofiPlaying = false;
+    if (lofiChordTimeout) { clearTimeout(lofiChordTimeout); lofiChordTimeout = null; }
+    if (lofiBeatTimeout) { clearTimeout(lofiBeatTimeout); lofiBeatTimeout = null; }
+    if (lofiMaster) {
+      try { lofiMaster.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5); } catch (_) {}
+      setTimeout(() => { try { lofiMaster.disconnect(); } catch (_) {} lofiMaster = null; }, 600);
     }
   }
 
-  // ─── V2: Proximity tension audio ───
-  function updateTensionAudio() {
-    if (!audioCtx || audioCtx.state !== 'running') return;
-    let inDanger = false;
-    let closeness = 0;
-    for (const p of state.pipes) {
-      const pRight = p.x + C.pipeWidth;
-      const hDist = Math.min(Math.abs(C.playerX - pRight), Math.abs(C.playerX + C.playerW - p.x));
-      const inHSpan = C.playerX + C.playerW > p.x - 80 && C.playerX < pRight + 80;
-      if (!inHSpan) continue;
-      const topClear = (state.y + 8) - p.topH;
-      const botClear = (p.topH + p.gap) - (state.y + C.playerH - 8);
-      const minClear = Math.min(topClear, botClear);
-      if (minClear < 40 && minClear > -5) {
-        inDanger = true;
-        closeness = Math.max(closeness, 1 - Math.max(0, minClear) / 40);
-        break;
-      }
-    }
-    if (inDanger && closeness > 0.1) {
-      if (!tensionOsc) {
-        tensionOsc = audioCtx.createOscillator();
-        tensionGain = audioCtx.createGain();
-        tensionOsc.type = 'sine';
-        tensionOsc.frequency.value = 800;
-        tensionGain.gain.value = 0;
-        tensionOsc.connect(tensionGain);
-        tensionGain.connect(audioCtx.destination);
-        tensionOsc.start();
-      }
-      const pitch = 800 + closeness * 600;
-      const vol = Math.min(0.04, closeness * 0.04);
-      tensionOsc.frequency.setTargetAtTime(pitch, audioCtx.currentTime, 0.05);
-      tensionGain.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.03);
-    } else if (tensionGain) {
-      tensionGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.05);
-    }
-  }
+  // Stubs for removed pulse/layer system (keep update calls from crashing)
+  function startPulse() { startLofi(); }
+  function stopPulse() { stopLofi(); }
+  function updatePulseTempo() {}
+  function updateAudioLayers() {}
 
-  function stopTensionAudio() {
-    if (tensionOsc) {
-      try { tensionOsc.stop(); } catch (_) {}
-      tensionOsc = null;
-    }
-    if (tensionGain) {
-      try { tensionGain.disconnect(); } catch (_) {}
-      tensionGain = null;
-    }
-  }
+  // Tension audio removed (was annoying whistling) — keep stubs
+  function updateTensionAudio() {}
+  function stopTensionAudio() {}
 
   // ─── Reset ───
   function reset() {
@@ -1314,11 +1298,14 @@ const Game = (() => {
           milestone = { text: MILESTONES[state.score], alpha: 1, y: C.H / 2 - 60 };
           emitMilestoneBurst(C.playerX + C.playerW / 2, state.y);
           sfxMilestone();
-        } else if (state.score > 0 && state.score % 10 === 0 && state.score !== lastMilestoneScore) {
-          // Every-10 celebration (burst + mp3 sound)
-          lastMilestoneScore = state.score;
-          emitMilestoneBurst(C.playerX + C.playerW / 2, state.y);
-          sfxMilestoneMP3();
+        }
+        // UWU sound every 5 points
+        if (state.score > 0 && state.score % 5 === 0) {
+          sfxUwu();
+          if (!MILESTONES[state.score] && state.score !== lastMilestoneScore) {
+            emitMilestoneBurst(C.playerX + C.playerW / 2, state.y);
+            lastMilestoneScore = state.score;
+          }
         }
       }
 
