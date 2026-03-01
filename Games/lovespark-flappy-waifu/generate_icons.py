@@ -1,11 +1,12 @@
-"""Generate Flappy Waifu extension icons at 16, 48, 128px."""
+"""Generate Flappy Waifu extension icons from sprite.png at 16, 48, 128px."""
 from PIL import Image, ImageDraw
 
 SIZES = [16, 48, 128]
-BG_COLOR = (255, 110, 180)       # #ff6eb4
-HEART_COLOR = (255, 255, 255)    # white heart
+BG_COLOR = (255, 110, 180)  # #ff6eb4
 
-def draw_icon(size):
+sprite = Image.open('sprite.png').convert('RGBA')
+
+for size in SIZES:
     img = Image.new('RGBA', (size, size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
@@ -13,28 +14,18 @@ def draw_icon(size):
     pad = max(1, size // 16)
     draw.ellipse([pad, pad, size - pad - 1, size - pad - 1], fill=BG_COLOR)
 
-    # White heart in center
-    cx, cy = size / 2, size / 2 + size * 0.04
-    r = size * 0.22
+    # Resize sprite to fit inside the circle with slight padding
+    sprite_size = int(size * 0.82)
+    resized = sprite.resize((sprite_size, sprite_size), Image.LANCZOS)
 
-    # Heart = two circles + triangle
-    lx, ly = cx - r * 0.55, cy - r * 0.3
-    rx, ry = cx + r * 0.55, cy - r * 0.3
-    cr = r * 0.55
+    # Center the sprite on the icon
+    offset_x = (size - sprite_size) // 2
+    offset_y = (size - sprite_size) // 2
 
-    draw.ellipse([lx - cr, ly - cr, lx + cr, ly + cr], fill=HEART_COLOR)
-    draw.ellipse([rx - cr, ry - cr, rx + cr, ry + cr], fill=HEART_COLOR)
-    draw.polygon([
-        (cx - r * 1.1, cy - r * 0.1),
-        (cx + r * 1.1, cy - r * 0.1),
-        (cx, cy + r * 1.1),
-    ], fill=HEART_COLOR)
+    # Paste sprite over the pink circle (sprite has transparency)
+    img.paste(resized, (offset_x, offset_y), resized)
 
-    return img
+    img.save(f'icons/icon{size}.png')
+    print(f'  icons/icon{size}.png ({size}x{size})')
 
-for s in SIZES:
-    icon = draw_icon(s)
-    icon.save(f'icons/icon{s}.png')
-    print(f'  icons/icon{s}.png')
-
-print('Done.')
+print('Done — sprite icons generated!')
