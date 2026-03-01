@@ -1,5 +1,5 @@
 // Pink Anti-Doomscroll — content.js
-// NEVER write per-scroll metrics or timestamps to browser.storage.sync.
+// NEVER write per-scroll metrics or timestamps to chrome.storage.sync.
 // Sync storage has a 100KB quota and write-rate limits.
 // All tracking state (continuousScrollingMs, idleMs, velocity) stays in JS variables only.
 // Only write discrete event counts (nudges, pauses) on state transitions.
@@ -20,8 +20,9 @@ const DEFAULT_STATE = {
 };
 
 async function getState() {
-  const stored = await browser.storage.sync.get(null);
-  return { ...DEFAULT_STATE, ...stored };
+  const stored = await chrome.storage.sync.get(null);
+  const sites = { ...DEFAULT_STATE.sites, ...(stored.sites || {}) };
+  return { ...DEFAULT_STATE, ...stored, sites };
 }
 
 function todayStr() { return new Date().toISOString().slice(0, 10); }
@@ -61,10 +62,11 @@ let ticking = false;
 let decayLoopId = 0;
 let lastDecayTs = 0;
 let overlayCooldownUntil = 0;
+let didInit = false;
 
 const SLOW_THRESHOLD_PX_PER_SEC = 120;
 const MAX_SPARKLES = 12;
-const MAX_SCROLL_DELTA_MS = 200;
+const MAX_SCROLL_DELTA_MS = 500;
 
 // ── Guard ───────────────────────────────────────────────────────────────────
 
@@ -105,7 +107,7 @@ function ensureOverlay() {
 
   mascotEl = document.createElement('img');
   mascotEl.className = 'ls-doomscroll-mascot';
-  mascotEl.src = browser.runtime.getURL('media/mascot.png');
+  mascotEl.src = chrome.runtime.getURL('media/mascot.png');
   mascotEl.alt = '';
 
   gaugeEl.appendChild(gaugeFillEl);
@@ -120,10 +122,10 @@ function ensureOverlay() {
 // ── Stats ───────────────────────────────────────────────────────────────────
 
 async function checkDailyReset() {
-  const data = await browser.storage.sync.get(['lastResetDate']);
+  const data = await chrome.storage.sync.get(['lastResetDate']);
   const today = todayStr();
   if (data.lastResetDate !== today) {
-    await browser.storage.sync.set({
+    await chrome.storage.sync.set({
       nudgesToday: 0,
       pausesToday: 0,
       lastResetDate: today,
@@ -132,16 +134,16 @@ async function checkDailyReset() {
 }
 
 async function bumpNudge() {
-  const data = await browser.storage.sync.get(['nudgesToday', 'nudgesTotal']);
-  await browser.storage.sync.set({
+  const data = await chrome.storage.sync.get(['nudgesToday', 'nudgesTotal']);
+  await chrome.storage.sync.set({
     nudgesToday: (data.nudgesToday || 0) + 1,
     nudgesTotal: (data.nudgesTotal || 0) + 1,
   });
 }
 
 async function bumpPause() {
-  const data = await browser.storage.sync.get(['pausesToday', 'pausesTotal']);
-  await browser.storage.sync.set({
+  const data = await chrome.storage.sync.get(['pausesToday', 'pausesTotal']);
+  await chrome.storage.sync.set({
     pausesToday: (data.pausesToday || 0) + 1,
     pausesTotal: (data.pausesTotal || 0) + 1,
   });
@@ -365,6 +367,9 @@ function reinit() {
 // ── Init ────────────────────────────────────────────────────────────────────
 
 function init() {
+  if (didInit) return;
+  didInit = true;
+
   lastScrollY = window.scrollY;
   lastScrollTs = Date.now();
 
@@ -376,7 +381,7 @@ function init() {
     checkDailyReset();
     ensureOverlay();
     window.addEventListener('scroll', onScroll, { passive: true });
-    browser.storage.onChanged.addListener(onStorageChanged);
+    chrome.storage.onChanged.addListener(onStorageChanged);
 
     // SPA navigation support
     window.addEventListener('popstate', reinit);

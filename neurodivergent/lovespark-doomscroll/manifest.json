@@ -22,7 +22,7 @@
         "https://www.reddit.com/*",
         "https://www.facebook.com/*"
       ],
-      "js": ["lib/browser-polyfill.min.js", "content.js"],
+      "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],

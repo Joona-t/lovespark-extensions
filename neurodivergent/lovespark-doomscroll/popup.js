@@ -23,7 +23,8 @@ const MODE_PRESETS = {
 
 async function getState() {
   const stored = await chrome.storage.sync.get(null);
-  return { ...DEFAULT_STATE, ...stored };
+  const sites = { ...DEFAULT_STATE.sites, ...(stored.sites || {}) };
+  return { ...DEFAULT_STATE, ...stored, sites };
 }
 
 // ── DOM refs ────────────────────────────────────────────────────────────────
