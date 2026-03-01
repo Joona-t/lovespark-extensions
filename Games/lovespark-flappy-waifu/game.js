@@ -245,13 +245,118 @@ const Game = (() => {
 
   loadStats();
 
-  // ─── Cached background gradient ───
+  // ─── Cached background gradient (anime sky) ───
   const bgGrad = (() => {
     const g = ctx.createLinearGradient(0, 0, 0, C.H);
-    g.addColorStop(0, '#0d0a12');
-    g.addColorStop(1, '#1a0828');
+    g.addColorStop(0, '#5BA3E6');
+    g.addColorStop(0.35, '#78BEFA');
+    g.addColorStop(0.7, '#A8D8FF');
+    g.addColorStop(0.88, '#E0F0FF');
+    g.addColorStop(1.0, '#C8E6C9');
     return g;
   })();
+
+  // ─── Cloud system ───
+  const CLOUD_CONF = {
+    far:  { count: 5, speedMin: 0.15, speedMax: 0.35, yMin: 20,  yMax: 280, scaleMin: 0.5,  scaleMax: 0.8,  alpha: 0.4 },
+    near: { count: 4, speedMin: 0.5,  speedMax: 0.9,  yMin: 40,  yMax: 320, scaleMin: 0.8,  scaleMax: 1.3,  alpha: 0.85 },
+  };
+  let clouds = [];
+
+  function spawnCloud(layer, conf, spread) {
+    return {
+      x: spread ? Math.random() * (C.W + 200) : C.W + 80 + Math.random() * 120,
+      y: conf.yMin + Math.random() * (conf.yMax - conf.yMin),
+      speed: conf.speedMin + Math.random() * (conf.speedMax - conf.speedMin),
+      scale: conf.scaleMin + Math.random() * (conf.scaleMax - conf.scaleMin),
+      alpha: conf.alpha * (0.7 + Math.random() * 0.3),
+      layer, seed: Math.random(),
+    };
+  }
+
+  function initClouds() {
+    clouds = [];
+    for (const [layer, conf] of Object.entries(CLOUD_CONF)) {
+      for (let i = 0; i < conf.count; i++) clouds.push(spawnCloud(layer, conf, true));
+    }
+  }
+
+  function updateClouds(t, pipeSpeedRatio) {
+    const speedMult = 0.6 + pipeSpeedRatio * 0.4;
+    for (let i = 0; i < clouds.length; i++) {
+      const c = clouds[i];
+      c.x -= c.speed * speedMult * t;
+      if (c.x + 120 * c.scale < -20) {
+        clouds[i] = spawnCloud(c.layer, CLOUD_CONF[c.layer], false);
+      }
+    }
+  }
+
+  function drawCloud(cloud) {
+    ctx.save();
+    ctx.globalAlpha = cloud.alpha;
+    const s = cloud.scale, cx = cloud.x, cy = cloud.y;
+    if (cloud.layer === 'near') {
+      ctx.globalAlpha = cloud.alpha * 0.08;
+      ctx.fillStyle = '#4A6FA5';
+      ctx.beginPath();
+      ctx.ellipse(cx + 4 * s, cy + 12 * s, 58 * s, 18 * s, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = cloud.alpha;
+    }
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath(); ctx.ellipse(cx, cy, 60 * s, 28 * s, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx - 32 * s, cy - 8 * s, 28 * s, 22 * s, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx + 30 * s, cy - 6 * s, 26 * s, 20 * s, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx - 2 * s, cy - 18 * s, 30 * s, 24 * s, 0, 0, Math.PI * 2); ctx.fill();
+    if (cloud.seed > 0.4) {
+      ctx.beginPath(); ctx.ellipse(cx + 18 * s, cy - 14 * s, 18 * s, 16 * s, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // ─── Kawaii sparkle motes ───
+  let bgSparkles = [];
+
+  function initBgSparkles() {
+    bgSparkles = [];
+    for (let i = 0; i < 12; i++) {
+      bgSparkles.push({
+        x: Math.random() * C.W, y: Math.random() * C.H,
+        size: 1 + Math.random() * 2, alpha: 0.15 + Math.random() * 0.25,
+        phase: Math.random() * Math.PI * 2, speed: 0.05 + Math.random() * 0.1,
+      });
+    }
+  }
+
+  function updateBgSparkles(t) {
+    for (const s of bgSparkles) {
+      s.y -= s.speed * t;
+      s.phase += 0.03 * t;
+      if (s.y < -10) { s.y = C.H + 10; s.x = Math.random() * C.W; }
+    }
+  }
+
+  function drawBgSparkles() {
+    for (const s of bgSparkles) {
+      const twinkle = 0.5 + 0.5 * Math.sin(s.phase);
+      ctx.globalAlpha = s.alpha * twinkle;
+      ctx.fillStyle = '#FFB6D9';
+      const sz = s.size;
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y - sz * 2);
+      ctx.lineTo(s.x + sz * 0.5, s.y - sz * 0.5);
+      ctx.lineTo(s.x + sz * 2, s.y);
+      ctx.lineTo(s.x + sz * 0.5, s.y + sz * 0.5);
+      ctx.lineTo(s.x, s.y + sz * 2);
+      ctx.lineTo(s.x - sz * 0.5, s.y + sz * 0.5);
+      ctx.lineTo(s.x - sz * 2, s.y);
+      ctx.lineTo(s.x - sz * 0.5, s.y - sz * 0.5);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
 
   // ─── Reset ───
   function reset() {
@@ -275,6 +380,9 @@ const Game = (() => {
     runBestCombo = 0;
     nearMissCount = 0;
     nearMissFlash = 0;
+    initClouds();
+    if (!REDUCED_MOTION) initBgSparkles();
+    else bgSparkles = [];
     floatingTexts = [];
     newBestFlag = false;
     scoreDisplay.textContent = '0';
@@ -353,6 +461,7 @@ const Game = (() => {
         milestone.alpha -= 0.008 * t;
         if (milestone.alpha <= 0) milestone = null;
       }
+      if (!REDUCED_MOTION) { updateClouds(t, 1); updateBgSparkles(t); }
       deathTimer -= dt;
       if (deathTimer <= 0 && !overlayShown) showGameOverOverlay();
       return;
@@ -452,6 +561,13 @@ const Game = (() => {
       if (milestone.alpha <= 0) milestone = null;
     }
 
+    // Cloud + sparkle updates
+    if (!REDUCED_MOTION) {
+      const psr = d.pipeSpeed / getDifficulty(0).pipeSpeed;
+      updateClouds(t, psr);
+      updateBgSparkles(t);
+    }
+
     // Shake decay
     if (screenShake > 0.5) screenShake *= Math.pow(0.85, t);
     else screenShake = 0;
@@ -461,41 +577,52 @@ const Game = (() => {
   function drawBackground() {
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, C.W, C.H);
-    const gridAlpha = 0.04 + Math.min(state.score / 200, 0.06);
-    ctx.strokeStyle = 'rgba(255,110,180,' + gridAlpha + ')';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < C.W; x += 40) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, C.H); ctx.stroke();
-    }
-    for (let y = 0; y < C.H; y += 40) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(C.W, y); ctx.stroke();
-    }
+  }
+
+  function drawGround() {
+    const hazeGrad = ctx.createLinearGradient(0, C.H - 40, 0, C.H);
+    hazeGrad.addColorStop(0, 'rgba(200,230,201,0)');
+    hazeGrad.addColorStop(1, 'rgba(200,230,201,0.3)');
+    ctx.fillStyle = hazeGrad;
+    ctx.fillRect(0, C.H - 40, C.W, 40);
+    ctx.fillStyle = '#7BC67E';
+    ctx.fillRect(0, C.H - 4, C.W, 4);
   }
 
   function drawPipe(p) {
     const pw = C.pipeWidth;
     const intensity = Math.min(1, state.score / 60);
-    const pipeR = (26 + intensity * 40) | 0;
+    const r = (180 + intensity * 30) | 0;
+    const g = (60 + intensity * 20) | 0;
+    const b = (100 + intensity * 20) | 0;
     const grad = ctx.createLinearGradient(p.x, 0, p.x + pw, 0);
-    grad.addColorStop(0, 'rgb(' + pipeR + ',15,46)');
-    grad.addColorStop(0.5, 'rgb(' + (pipeR + 14) + ',16,64)');
-    grad.addColorStop(1, 'rgb(' + pipeR + ',15,46)');
+    grad.addColorStop(0, 'rgb(' + (r - 30) + ',' + (g - 15) + ',' + (b - 10) + ')');
+    grad.addColorStop(0.3, 'rgb(' + r + ',' + g + ',' + b + ')');
+    grad.addColorStop(0.5, 'rgb(' + (r + 20) + ',' + (g + 10) + ',' + (b + 15) + ')');
+    grad.addColorStop(0.7, 'rgb(' + r + ',' + g + ',' + b + ')');
+    grad.addColorStop(1, 'rgb(' + (r - 30) + ',' + (g - 15) + ',' + (b - 10) + ')');
     ctx.save();
-    ctx.shadowColor = C.pink;
-    ctx.shadowBlur = 8 + intensity * 4;
+    ctx.shadowColor = '#E8457C';
+    ctx.shadowBlur = 6 + intensity * 3;
     ctx.fillStyle = grad;
     ctx.fillRect(p.x, 0, pw, p.topH);
     const botY = p.topH + p.gap;
     ctx.fillRect(p.x, botY, pw, C.H - botY);
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
-    ctx.fillStyle = '#ff6eb455';
+    ctx.fillStyle = 'rgba(232,69,124,0.5)';
     ctx.fillRect(p.x - 4, p.topH - 22, pw + 8, 22);
     ctx.fillRect(p.x - 4, botY, pw + 8, 22);
-    ctx.strokeStyle = '#ff6eb488';
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = 'rgba(232,69,124,0.55)';
+    ctx.lineWidth = 2;
     ctx.strokeRect(p.x, 0, pw, p.topH);
     ctx.strokeRect(p.x, botY, pw, C.H - botY);
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(p.x + 8, 0); ctx.lineTo(p.x + 8, p.topH);
+    ctx.moveTo(p.x + 8, botY); ctx.lineTo(p.x + 8, C.H);
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -604,7 +731,11 @@ const Game = (() => {
     ctx.save();
     ctx.translate(shakeX, shakeY);
     drawBackground();
+    drawGround();
+    for (const c of clouds) { if (c.layer === 'far') drawCloud(c); }
+    if (!REDUCED_MOTION) drawBgSparkles();
     for (const p of state.pipes) drawPipe(p);
+    for (const c of clouds) { if (c.layer === 'near') drawCloud(c); }
     drawParticles();
     drawPlayer();
     drawMilestone();

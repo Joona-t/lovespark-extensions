@@ -4,8 +4,8 @@
   --pink: #ff6eb4;
   --pink-bright: #ff9fd3;
   --pink-dark: #c2185b;
-  --bg: #0d0a12;
-  --bg2: #130e1c;
+  --bg: #3A8FD6;
+  --bg2: #78BEFA;
   --glow: 0 0 20px #ff6eb4, 0 0 40px #ff6eb488, 0 0 80px #ff6eb433;
 }
 
@@ -29,14 +29,11 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(1px 1px at 10% 20%, #ffffff44 0%, transparent 100%),
-    radial-gradient(1px 1px at 30% 70%, #ff6eb422 0%, transparent 100%),
-    radial-gradient(1px 1px at 60% 10%, #ffffff33 0%, transparent 100%),
-    radial-gradient(1px 1px at 80% 50%, #ff9fd322 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 80%, #ffffff22 0%, transparent 100%),
-    radial-gradient(2px 2px at 20% 40%, #ff6eb433 0%, transparent 100%),
-    radial-gradient(1px 1px at 50% 90%, #ffffff22 0%, transparent 100%),
-    radial-gradient(1px 1px at 70% 30%, #ff9fd322 0%, transparent 100%);
+    radial-gradient(2px 2px at 10% 20%, #ffffff55 0%, transparent 100%),
+    radial-gradient(2px 2px at 30% 70%, #ffffff33 0%, transparent 100%),
+    radial-gradient(2px 2px at 60% 10%, #ffffff44 0%, transparent 100%),
+    radial-gradient(2px 2px at 80% 50%, #ffffff33 0%, transparent 100%),
+    radial-gradient(2px 2px at 90% 80%, #ffffff22 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -75,8 +72,8 @@ body::before {
   aspect-ratio: 3 / 4;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 60px #ff6eb430, 0 0 120px #ff6eb415, inset 0 0 60px #0005;
-  border: 1px solid #ff6eb433;
+  box-shadow: 0 0 60px rgba(120,190,250,0.3), 0 0 120px rgba(120,190,250,0.15), inset 0 0 60px rgba(0,0,0,0.05);
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
 canvas {
@@ -143,7 +140,7 @@ canvas {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: linear-gradient(135deg, #0d0a1288, #130e1ccc);
+  background: linear-gradient(135deg, rgba(58,143,214,0.55), rgba(120,190,250,0.7));
   backdrop-filter: blur(4px);
   transition: opacity 0.3s;
   cursor: pointer;
