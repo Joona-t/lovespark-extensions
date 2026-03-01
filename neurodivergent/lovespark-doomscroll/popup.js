@@ -5,7 +5,7 @@
 
 const DEFAULT_STATE = {
   enabled: true,
-  sites: { 'x.com': true, 'twitter.com': true, 'reddit.com': true },
+  sites: { 'x.com': true, 'twitter.com': true, 'reddit.com': true, 'facebook.com': true },
   mode: 'standard',
   sparkleEnabled: true,
   snoozeUntilTs: 0,
@@ -29,8 +29,9 @@ async function getState() {
 // ── DOM refs ────────────────────────────────────────────────────────────────
 
 const cbEnabled    = document.getElementById('cb-enabled');
-const cbSiteX      = document.getElementById('cb-site-x');
-const cbSiteReddit = document.getElementById('cb-site-reddit');
+const cbSiteX        = document.getElementById('cb-site-x');
+const cbSiteReddit   = document.getElementById('cb-site-reddit');
+const cbSiteFacebook = document.getElementById('cb-site-facebook');
 const cbSparkle    = document.getElementById('cb-sparkle');
 const modeRadios   = document.querySelectorAll('input[name="mode"]');
 const btnSnooze    = document.getElementById('btn-snooze');
@@ -96,6 +97,7 @@ function render(state) {
   cbEnabled.checked = state.enabled;
   cbSiteX.checked = state.sites['x.com'] && state.sites['twitter.com'];
   cbSiteReddit.checked = state.sites['reddit.com'];
+  cbSiteFacebook.checked = state.sites['facebook.com'];
   cbSparkle.checked = state.sparkleEnabled;
 
   modeRadios.forEach(r => {
@@ -161,6 +163,12 @@ cbSiteX.addEventListener('change', () => {
 
 cbSiteReddit.addEventListener('change', () => {
   const sites = { ...currentState.sites, 'reddit.com': cbSiteReddit.checked };
+  chrome.storage.sync.set({ sites });
+  currentState.sites = sites;
+});
+
+cbSiteFacebook.addEventListener('change', () => {
+  const sites = { ...currentState.sites, 'facebook.com': cbSiteFacebook.checked };
   chrome.storage.sync.set({ sites });
   currentState.sites = sites;
 });

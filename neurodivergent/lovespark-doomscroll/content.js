@@ -9,7 +9,7 @@
 
 const DEFAULT_STATE = {
   enabled: true,
-  sites: { 'x.com': true, 'twitter.com': true, 'reddit.com': true },
+  sites: { 'x.com': true, 'twitter.com': true, 'reddit.com': true, 'facebook.com': true },
   mode: 'standard',
   sparkleEnabled: true,
   snoozeUntilTs: 0,
