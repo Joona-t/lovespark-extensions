@@ -34,14 +34,21 @@
       <div id="start-content">
         <div class="overlay-title">FLAPPY<br>WAIFU</div>
         <div class="overlay-sub">Kawaii Edition</div>
+        <div id="start-speech" class="waifu-speech"></div>
       </div>
 
       <div id="death-content" style="display:none">
-        <div class="overlay-title">GAME OVER</div>
+        <div class="overlay-title" id="death-title">GAME OVER</div>
         <div id="medal-badge"></div>
-        <div id="final-label">SCORE</div>
-        <div id="final-score">0</div>
+        <div class="death-score-row">
+          <div id="death-grade" class="death-grade">D</div>
+          <div>
+            <div id="final-label">SCORE</div>
+            <div id="final-score">0</div>
+          </div>
+        </div>
         <div id="score-delta"></div>
+
         <div class="death-stats">
           <div class="death-stat">
             <span class="death-stat-label">COMBO</span>
@@ -52,6 +59,14 @@
             <span class="death-stat-value" id="death-near-misses">0</span>
           </div>
         </div>
+
+        <div id="death-hearts" class="hearts-breakdown"></div>
+
+        <div id="death-daily" class="daily-progress" style="display:none"></div>
+
+        <div id="death-balance" class="hearts-balance"></div>
+
+        <div id="death-speech" class="waifu-speech"></div>
       </div>
 
       <button class="btn" id="start-btn">START GAME</button>

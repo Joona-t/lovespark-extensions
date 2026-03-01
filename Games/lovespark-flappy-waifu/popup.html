@@ -13,11 +13,38 @@
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
       <div>
         <h1>Flappy Waifu</h1>
-        <p class="tagline">Kawaii Neon Edition</p>
+        <p class="tagline" id="mastery-tag"></p>
       </div>
+      <div class="hearts-badge" id="hearts-badge">0 <span class="heart-icon">&hearts;</span></div>
     </header>
 
+    <div id="waifu-mood" class="waifu-mood-card">
+      <span id="mood-text"></span>
+    </div>
+
     <button class="play-btn" id="play-btn">Play Now</button>
+
+    <div id="daily-card" class="daily-card">
+      <div class="daily-header">
+        <span class="daily-title">Daily Challenge</span>
+        <span class="daily-reward" id="daily-reward"></span>
+      </div>
+      <div class="daily-desc" id="daily-desc"></div>
+      <div class="daily-bar-wrap">
+        <div class="daily-bar">
+          <div class="daily-fill" id="daily-fill"></div>
+        </div>
+        <span class="daily-pct" id="daily-pct"></span>
+      </div>
+    </div>
+
+    <div class="streak-card" id="streak-card">
+      <div class="streak-header">
+        <span class="streak-label">Streak</span>
+        <span class="streak-count" id="streak-count">0</span>
+      </div>
+      <div class="streak-stamps" id="streak-stamps"></div>
+    </div>
 
     <div class="stats-card">
       <div class="stats-row">

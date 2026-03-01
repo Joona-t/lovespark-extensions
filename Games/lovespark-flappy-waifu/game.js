@@ -115,6 +115,82 @@ const Game = (() => {
     100: '\u{1FAB7} ULTRA WAIFU!',
   };
 
+  // ─── Graze tiers (expanded near-miss) ───
+  const GRAZE_TIERS = [
+    { name: 'Perfect', threshold: 3,  hearts: 15, text: 'PERFECT!', color: '#FF69B4', sfxPitch: 1100 },
+    { name: 'Graze',   threshold: 6,  hearts: 7,  text: 'GRAZE!',   color: '#FFD700', sfxPitch: 1000 },
+    { name: 'Close',   threshold: 12, hearts: 3,  text: 'CLOSE!',   color: '#ffffff', sfxPitch: 900 },
+  ];
+
+  // ─── Hearts economy ───
+  const HEART_REWARDS = {
+    perPipe: 1, comboBonus5: 5, comboBonus10: 15, comboBonus20: 30,
+    dailyChallenge: 50, streakDay3: 25, streakDay7: 75, streakDay14: 150, streakDay30: 300,
+    newMedal: 100, newBest: 25,
+  };
+
+  // ─── Run grades ───
+  const RUN_GRADES = [
+    { grade: 'S', ratio: 0.95, color: '#FFD700' },
+    { grade: 'A', ratio: 0.75, color: '#FF69B4' },
+    { grade: 'B', ratio: 0.50, color: '#ff9fd3' },
+    { grade: 'C', ratio: 0.25, color: '#A8D8FF' },
+    { grade: 'D', ratio: 0,    color: '#ffffff' },
+  ];
+
+  // ─── Daily challenge pool ───
+  const CHALLENGE_POOL = [
+    { type: 'score',    target: 5,  desc: 'Score 5 in one run',          hearts: 40,  diff: 'easy' },
+    { type: 'games',    target: 3,  desc: 'Play 3 games',                hearts: 30,  diff: 'easy' },
+    { type: 'pipes',    target: 15, desc: 'Clear 15 pipes today',        hearts: 35,  diff: 'easy' },
+    { type: 'score',    target: 15, desc: 'Score 15 in one run',         hearts: 60,  diff: 'medium' },
+    { type: 'nearMiss', target: 3,  desc: 'Get 3 close calls in one run',hearts: 55,  diff: 'medium' },
+    { type: 'combo',    target: 8,  desc: 'Reach an 8-combo',            hearts: 65,  diff: 'medium' },
+    { type: 'score',    target: 30, desc: 'Score 30 in one run',         hearts: 100, diff: 'hard' },
+    { type: 'graze',    target: 2,  desc: 'Get 2 Perfect grazes',        hearts: 90,  diff: 'hard' },
+    { type: 'combo',    target: 15, desc: 'Reach a 15-combo',            hearts: 100, diff: 'hard' },
+    { type: 'medal',    target: 'Gold', desc: 'Earn Gold medal or higher',hearts: 80, diff: 'hard' },
+  ];
+
+  // ─── Mastery tiers ───
+  const MASTERY_TIERS = [
+    { name: 'Novice',      icon: '\u{1F331}', totalPipes: 0 },
+    { name: 'Fledgling',   icon: '\u{1F423}', totalPipes: 100 },
+    { name: 'Flapper',     icon: '\u{1F98B}', totalPipes: 500 },
+    { name: 'Ace',         icon: '\u2B50',    totalPipes: 1500 },
+    { name: 'Veteran',     icon: '\u{1F396}', totalPipes: 3000 },
+    { name: 'Master',      icon: '\u{1F451}', totalPipes: 6000 },
+    { name: 'Legend',       icon: '\u{1F31F}', totalPipes: 10000 },
+    { name: 'Waifu Queen', icon: '\u{1F48E}', totalPipes: 20000 },
+  ];
+
+  // ─── Streak config ───
+  const STREAK_CONFIG = {
+    stamps: ['\u{1F338}', '\u2728', '\u{1F496}', '\u2B50', '\u{1F319}', '\u{1F98B}', '\u{1F451}'],
+    shieldThreshold: 7, shieldMax: 3, comebackWindowHours: 48,
+  };
+
+  // ─── Waifu speech lines ───
+  const WAIFU_SPEECH = {
+    start: ["Let's fly together! \u{1F495}", "Tap to flap, bestie! \u2728", "I believe in you! \u{1F338}", "Ready when you are! \u{1F496}"],
+    firstDeath: ["Great first try! \u{1F495}", "One more try? I know you can do it! \u2728"],
+    score0to2: ["We can do better! \u{1F4AA}", "Shake it off! \u2728", "Try again, bestie! \u{1F338}"],
+    score3to9: ["Not bad! Let's go again! \u2728", "Getting warmer! \u{1F496}", "Nice effort! \u{1F338}"],
+    score10to19: ["That was great! \u{1F495}", "You're flying! \u2728", "So good! \u{1F496}"],
+    score20plus: ["Amazing run!! \u{1F338}", "Incredible! \u{1F496}\u{1F496}", "You're a star! \u{1F31F}"],
+    newBest: ["NEW RECORD! I'm so proud! \u{1F496}\u{1F496}", "That's your BEST! \u2728\u{1F496}"],
+    nearMissHeavy: ["Living on the edge! \u{1F62E}", "So close so many times! \u{1F496}"],
+    comeback2: ["Welcome back! Here's a little gift \u{1F495}"],
+    comeback7: ["I missed you! \u{1F496}"],
+    comeback30: ["You're back!! I'm so happy! \u{1F338}\u{1F496}\u2728"],
+  };
+
+  const COMEBACK_BONUSES = [
+    { daysAway: 30, hearts: 100, speechKey: 'comeback30' },
+    { daysAway: 7,  hearts: 50,  speechKey: 'comeback7' },
+    { daysAway: 2,  hearts: 20,  speechKey: 'comeback2' },
+  ];
+
   // ─── Sound ───
   let audioCtx = null;
 
@@ -195,7 +271,7 @@ const Game = (() => {
   let overlayShown = false;
   let pendingRestart = false;
 
-  // New feedback systems
+  // Feedback systems
   let combo = 0;
   let runBestCombo = 0;
   let nearMissCount = 0;
@@ -203,43 +279,243 @@ const Game = (() => {
   let floatingTexts = [];
   let newBestFlag = false;
 
+  // Hearts & graze tracking (per-run)
+  let runHearts = 0;
+  let runGrazeClose = 0;
+  let runGrazeGraze = 0;
+  let runGrazePerfect = 0;
+  let runGrade = 'D';
+  let runHeartsBreakdown = {};
+  let luckyRun = false;
+
+  // Persistent state (loaded from storage)
+  let hearts = 0;
+  let heartsLifetime = 0;
+  let streak = 0;
+  let streakBest = 0;
+  let streakShields = 0;
+  let streakLastDate = '';
+  let totalGamesLoaded = 0;
+  let totalPipesLoaded = 0;
+  let firstEverPipe = false;
+  let dailyChallenge = null;
+  let dailyChallengeProgress = 0;
+  let dailyChallengeComplete = false;
+  let comebackMsg = null;
+  let comebackHearts = 0;
+  let waifuSpeech = '';
+  let newMedalFlag = false;
+
   // ─── Storage ───
   const useChrome = typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local;
+  const STORAGE_KEYS = [
+    'bestScore', 'totalGames', 'totalScore', 'totalPipes', 'bestCombo', 'totalNearMisses',
+    'highestMedal', 'lastPlayed', 'hearts', 'heartsLifetime',
+    'streak', 'streakBest', 'streakShields', 'streakLastDate',
+    'dailyChallengeDate', 'dailyChallengeIdx', 'dailyChallengeProgress', 'dailyChallengeComplete',
+    'totalGrazeClose', 'totalGrazeGraze', 'totalGrazePerfect',
+  ];
+
+  function hashDate(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+    return Math.abs(h);
+  }
+
+  function getTodayStr() { return new Date().toISOString().slice(0, 10); }
+
+  function pickDailyChallenge(dateStr, playerBest) {
+    const pool = CHALLENGE_POOL.filter(c => {
+      if (playerBest < 10) return c.diff === 'easy';
+      if (playerBest < 30) return c.diff !== 'hard';
+      return true;
+    });
+    const idx = hashDate(dateStr + 'flappywaifu') % pool.length;
+    return pool[idx];
+  }
+
+  function getMastery(pipes) {
+    let tier = MASTERY_TIERS[0];
+    for (const t of MASTERY_TIERS) { if (pipes >= t.totalPipes) tier = t; }
+    return tier;
+  }
+
+  function getRunGrade(score, best) {
+    if (best <= 0) return score >= 5 ? RUN_GRADES[1] : RUN_GRADES[3];
+    const ratio = score / best;
+    for (const g of RUN_GRADES) { if (ratio >= g.ratio) return g; }
+    return RUN_GRADES[RUN_GRADES.length - 1];
+  }
+
+  function pickRandom(arr) { return arr[(Math.random() * arr.length) | 0]; }
+
+  function updateStreak(data) {
+    const today = getTodayStr();
+    const lastDate = data.streakLastDate || '';
+    if (lastDate === today) return; // already counted today
+    const last = lastDate ? new Date(lastDate + 'T12:00:00') : null;
+    const now = new Date(today + 'T12:00:00');
+    const diffHours = last ? (now - last) / 3600000 : 9999;
+    if (diffHours <= STREAK_CONFIG.comebackWindowHours) {
+      streak = (data.streak || 0) + 1;
+    } else if ((data.streakShields || 0) > 0 && diffHours <= 96) {
+      streak = (data.streak || 0) + 1;
+      streakShields = (data.streakShields || 0) - 1;
+    } else {
+      streak = 1;
+    }
+    if (streak >= STREAK_CONFIG.shieldThreshold && streak % STREAK_CONFIG.shieldThreshold === 0) {
+      streakShields = Math.min((streakShields || data.streakShields || 0) + 1, STREAK_CONFIG.shieldMax);
+    }
+    streakBest = Math.max(data.streakBest || 0, streak);
+    streakLastDate = today;
+  }
+
+  function checkComeback(data) {
+    const today = getTodayStr();
+    const lastPlayed = data.lastPlayed || '';
+    if (!lastPlayed) return;
+    const last = new Date(lastPlayed + 'T12:00:00');
+    const now = new Date(today + 'T12:00:00');
+    const daysAway = Math.floor((now - last) / 86400000);
+    for (const cb of COMEBACK_BONUSES) {
+      if (daysAway >= cb.daysAway) {
+        comebackHearts = cb.hearts;
+        comebackMsg = pickRandom(WAIFU_SPEECH[cb.speechKey]);
+        return;
+      }
+    }
+  }
 
   function loadStats() {
     if (useChrome) {
-      chrome.storage.local.get(['bestScore'], (data) => {
+      chrome.storage.local.get(STORAGE_KEYS, (data) => {
         bestScore = data.bestScore || 0;
         bestNum.textContent = bestScore;
+        hearts = data.hearts || 0;
+        heartsLifetime = data.heartsLifetime || 0;
+        totalGamesLoaded = data.totalGames || 0;
+        totalPipesLoaded = data.totalPipes || 0;
+        firstEverPipe = (data.totalPipes || 0) === 0;
+        streak = data.streak || 0;
+        streakBest = data.streakBest || 0;
+        streakShields = data.streakShields || 0;
+        streakLastDate = data.streakLastDate || '';
+        // Daily challenge
+        const today = getTodayStr();
+        if (data.dailyChallengeDate === today) {
+          dailyChallenge = CHALLENGE_POOL[data.dailyChallengeIdx] || pickDailyChallenge(today, bestScore);
+          dailyChallengeProgress = data.dailyChallengeProgress || 0;
+          dailyChallengeComplete = data.dailyChallengeComplete || false;
+        } else {
+          dailyChallenge = pickDailyChallenge(today, bestScore);
+          dailyChallengeProgress = 0;
+          dailyChallengeComplete = false;
+        }
+        // Streak + comeback
+        updateStreak(data);
+        checkComeback(data);
+        // Persist streak update
+        chrome.storage.local.set({ streak, streakBest, streakShields, streakLastDate });
       });
     } else {
       bestScore = parseInt(localStorage.getItem('flappyWaifuBest')) || 0;
       bestNum.textContent = bestScore;
+      dailyChallenge = pickDailyChallenge(getTodayStr(), bestScore);
     }
   }
 
   function saveStats() {
     const medal = getMedal(state.score);
     if (useChrome) {
-      chrome.storage.local.get(
-        ['bestScore', 'totalGames', 'totalScore', 'totalPipes', 'bestCombo', 'totalNearMisses', 'highestMedal'],
-        (data) => {
-          const highMedal = getMedalByName(data.highestMedal);
-          const updated = {
-            bestScore: bestScore,
-            totalGames: (data.totalGames || 0) + 1,
-            totalScore: (data.totalScore || 0) + state.score,
-            totalPipes: (data.totalPipes || 0) + state.score,
-            bestCombo: Math.max(data.bestCombo || 0, runBestCombo),
-            totalNearMisses: (data.totalNearMisses || 0) + nearMissCount,
-            highestMedal: medal && (!highMedal || medal.threshold > highMedal.threshold) ? medal.name : (data.highestMedal || ''),
-            lastPlayed: new Date().toISOString().slice(0, 10),
-          };
-          chrome.storage.local.set(updated);
+      chrome.storage.local.get(STORAGE_KEYS, (data) => {
+        const highMedal = getMedalByName(data.highestMedal);
+        newMedalFlag = medal && (!highMedal || medal.threshold > highMedal.threshold);
+        const newTotalPipes = (data.totalPipes || 0) + state.score;
+        const newTotalGames = (data.totalGames || 0) + 1;
+        totalGamesLoaded = newTotalGames;
+        totalPipesLoaded = newTotalPipes;
+        // Calculate hearts
+        runHeartsBreakdown = { pipes: state.score * HEART_REWARDS.perPipe };
+        runHearts = runHeartsBreakdown.pipes;
+        // Graze hearts
+        const grazeH = runGrazeClose * 3 + runGrazeGraze * 7 + runGrazePerfect * 15;
+        if (grazeH > 0) { runHeartsBreakdown.graze = grazeH; runHearts += grazeH; }
+        // Combo bonus
+        if (runBestCombo >= 20) { runHeartsBreakdown.combo = HEART_REWARDS.comboBonus20; runHearts += HEART_REWARDS.comboBonus20; }
+        else if (runBestCombo >= 10) { runHeartsBreakdown.combo = HEART_REWARDS.comboBonus10; runHearts += HEART_REWARDS.comboBonus10; }
+        else if (runBestCombo >= 5) { runHeartsBreakdown.combo = HEART_REWARDS.comboBonus5; runHearts += HEART_REWARDS.comboBonus5; }
+        // New best bonus
+        if (newBestFlag) { runHeartsBreakdown.newBest = HEART_REWARDS.newBest; runHearts += HEART_REWARDS.newBest; }
+        // New medal bonus
+        if (newMedalFlag) { runHeartsBreakdown.newMedal = HEART_REWARDS.newMedal; runHearts += HEART_REWARDS.newMedal; }
+        // Lucky run (1 in 10)
+        luckyRun = Math.random() < 0.1;
+        if (luckyRun) { runHeartsBreakdown.lucky = runHearts; runHearts *= 2; }
+        // Daily challenge progress
+        updateDailyChallenge(data, state.score, runBestCombo, nearMissCount, runGrazePerfect, medal);
+        // Streak hearts
+        let streakH = 0;
+        if (streak === 3) streakH = HEART_REWARDS.streakDay3;
+        else if (streak === 7) streakH = HEART_REWARDS.streakDay7;
+        else if (streak === 14) streakH = HEART_REWARDS.streakDay14;
+        else if (streak === 30) streakH = HEART_REWARDS.streakDay30;
+        if (streakH > 0 && newTotalGames > (data.totalGames || 0)) {
+          runHeartsBreakdown.streak = streakH; runHearts += streakH;
         }
-      );
+        // Run grade
+        const gradeObj = getRunGrade(state.score, bestScore);
+        runGrade = gradeObj.grade;
+        // Persist
+        const totalHearts = (data.hearts || 0) + runHearts + comebackHearts;
+        hearts = totalHearts;
+        const updated = {
+          bestScore, lastPlayed: getTodayStr(),
+          totalGames: newTotalGames,
+          totalScore: (data.totalScore || 0) + state.score,
+          totalPipes: newTotalPipes,
+          bestCombo: Math.max(data.bestCombo || 0, runBestCombo),
+          totalNearMisses: (data.totalNearMisses || 0) + nearMissCount,
+          highestMedal: newMedalFlag ? medal.name : (data.highestMedal || ''),
+          hearts: totalHearts,
+          heartsLifetime: (data.heartsLifetime || 0) + runHearts + comebackHearts,
+          totalGrazeClose: (data.totalGrazeClose || 0) + runGrazeClose,
+          totalGrazeGraze: (data.totalGrazeGraze || 0) + runGrazeGraze,
+          totalGrazePerfect: (data.totalGrazePerfect || 0) + runGrazePerfect,
+          dailyChallengeDate: getTodayStr(),
+          dailyChallengeIdx: CHALLENGE_POOL.indexOf(dailyChallenge),
+          dailyChallengeProgress,
+          dailyChallengeComplete,
+          streak, streakBest, streakShields, streakLastDate,
+        };
+        chrome.storage.local.set(updated);
+      });
     } else {
       try { localStorage.setItem('flappyWaifuBest', bestScore); } catch (_) {}
+      // Minimal hearts calc for non-extension mode
+      runHearts = state.score;
+      runGrade = getRunGrade(state.score, bestScore).grade;
+    }
+  }
+
+  function updateDailyChallenge(data, score, bestCombo, nearMisses, perfectGrazes, medal) {
+    if (!dailyChallenge || dailyChallengeComplete) return;
+    const c = dailyChallenge;
+    let progress = dailyChallengeProgress;
+    if (c.type === 'score' && score >= c.target) progress = c.target;
+    else if (c.type === 'games') progress = Math.min((data.totalGames || 0) + 1 - (data._dcStartGames || data.totalGames || 0), c.target);
+    else if (c.type === 'pipes') progress = Math.min(dailyChallengeProgress + score, c.target);
+    else if (c.type === 'nearMiss' && nearMisses >= c.target) progress = c.target;
+    else if (c.type === 'combo' && bestCombo >= c.target) progress = c.target;
+    else if (c.type === 'graze' && perfectGrazes >= c.target) progress = c.target;
+    else if (c.type === 'medal' && medal && medal.name === c.target) progress = 1;
+    if (c.type === 'games') progress = Math.min(dailyChallengeProgress + 1, c.target);
+    if (c.type === 'pipes') progress = Math.min(dailyChallengeProgress + score, c.target);
+    dailyChallengeProgress = progress;
+    if (progress >= c.target && !dailyChallengeComplete) {
+      dailyChallengeComplete = true;
+      runHeartsBreakdown.daily = c.hearts;
+      runHearts += c.hearts;
     }
   }
 
@@ -380,6 +656,14 @@ const Game = (() => {
     runBestCombo = 0;
     nearMissCount = 0;
     nearMissFlash = 0;
+    runHearts = 0;
+    runGrazeClose = 0;
+    runGrazeGraze = 0;
+    runGrazePerfect = 0;
+    runGrade = 'D';
+    runHeartsBreakdown = {};
+    luckyRun = false;
+    newMedalFlag = false;
     initClouds();
     if (!REDUCED_MOTION) initBgSparkles();
     else bgSparkles = [];
@@ -391,7 +675,11 @@ const Game = (() => {
   // ─── Spawn ───
   function spawnPipe() {
     const d = getDifficulty(state.score);
-    const gap = d.gapMin + Math.random() * (d.gapMax - d.gapMin);
+    let gap = d.gapMin + Math.random() * (d.gapMax - d.gapMin);
+    // First-session hook: widen gaps for new players' first 3 pipes
+    if (state.pipes.length < 3 && totalGamesLoaded < 4) {
+      gap += Math.max(0, 40 - totalGamesLoaded * 10);
+    }
     const minTop = 55;
     const maxTop = C.H - gap - 55;
     const topH = minTop + Math.random() * (maxTop - minTop);
@@ -489,20 +777,39 @@ const Game = (() => {
         if (combo > runBestCombo) runBestCombo = combo;
         scoreDisplay.textContent = state.score;
         sfxScore(combo);
-        emitParticles(C.playerX + C.playerW / 2, state.y + C.playerH / 2, 8, null);
+        // First-ever pipe: heart particles + "Yay!" reaction
+        if (firstEverPipe && state.score === 1) {
+          firstEverPipe = false;
+          emitParticles(C.playerX + C.playerW / 2, state.y + C.playerH / 2, 8, '#FF69B4');
+          floatingTexts.push({
+            text: 'Yay! \u{1F496}', x: C.playerX + C.playerW + 10,
+            y: state.y, alpha: 1, vy: -1.2, size: 18, color: '#FF69B4', centered: false,
+          });
+        } else {
+          emitParticles(C.playerX + C.playerW / 2, state.y + C.playerH / 2, 8, null);
+        }
 
-        // Near-miss detection
+        // 3-tier graze detection
         const topClearance = (state.y + 8) - p.topH;
         const botClearance = (p.topH + p.gap) - (state.y + C.playerH - 8);
         const minClearance = Math.min(topClearance, botClearance);
-        if (minClearance >= 0 && minClearance < 12) {
-          nearMissCount++;
-          nearMissFlash = 80;
-          floatingTexts.push({
-            text: 'CLOSE!', x: C.playerX + C.playerW + 10,
-            y: state.y + C.playerH / 2, alpha: 1, vy: -1.5, size: 16, color: '#fff',
-          });
-          sfxNearMiss();
+        if (minClearance >= 0) {
+          for (const tier of GRAZE_TIERS) {
+            if (minClearance < tier.threshold) {
+              nearMissCount++;
+              if (tier.name === 'Close') runGrazeClose++;
+              else if (tier.name === 'Graze') runGrazeGraze++;
+              else if (tier.name === 'Perfect') runGrazePerfect++;
+              nearMissFlash = tier.name === 'Perfect' ? 120 : tier.name === 'Graze' ? 100 : 80;
+              floatingTexts.push({
+                text: tier.text, x: C.playerX + C.playerW + 10,
+                y: state.y + C.playerH / 2, alpha: 1, vy: -1.5, size: tier.name === 'Perfect' ? 20 : 16, color: tier.color,
+              });
+              playTone(tier.sfxPitch, 0.06, tier.name === 'Perfect' ? 0.12 : 0.07, 'sine', tier.sfxPitch + 400);
+              if (tier.name === 'Perfect') emitParticles(C.playerX + C.playerW / 2, state.y + C.playerH / 2, 12, '#FF69B4');
+              break; // only trigger best tier
+            }
+          }
         }
 
         // Combo milestone celebrations
@@ -785,6 +1092,22 @@ const Game = (() => {
       bestNum.textContent = bestScore;
       newBestFlag = true;
     }
+    // Pick waifu speech
+    if (totalGamesLoaded === 0) {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.firstDeath);
+    } else if (newBestFlag) {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.newBest);
+    } else if (nearMissCount >= 3) {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.nearMissHeavy);
+    } else if (state.score >= 20) {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.score20plus);
+    } else if (state.score >= 10) {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.score10to19);
+    } else if (state.score >= 3) {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.score3to9);
+    } else {
+      waifuSpeech = pickRandom(WAIFU_SPEECH.score0to2);
+    }
     saveStats();
   }
 
@@ -797,6 +1120,10 @@ const Game = (() => {
     startContent.style.display = 'none';
     deathContent.style.display = 'flex';
 
+    // Title: softer for first game
+    const deathTitle = document.getElementById('death-title');
+    if (deathTitle) deathTitle.textContent = totalGamesLoaded <= 1 ? 'NICE TRY!' : 'GAME OVER';
+
     finalScore.textContent = state.score;
 
     const medal = getMedal(state.score);
@@ -807,17 +1134,70 @@ const Game = (() => {
       medalBadge.style.display = 'none';
     }
 
+    // Score delta + micro-goal
     if (newBestFlag) {
       scoreDelta.textContent = 'NEW BEST!';
       scoreDelta.className = 'score-delta new-best';
+    } else if (totalGamesLoaded <= 1) {
+      // First game: show micro-goal
+      const nextMedal = MEDALS.find(m => m.threshold > state.score);
+      scoreDelta.textContent = nextMedal ? ('Next: Score ' + nextMedal.threshold + ' for ' + nextMedal.emoji) : '';
+      scoreDelta.className = 'score-delta';
     } else {
       const delta = bestScore - state.score;
-      scoreDelta.textContent = delta > 0 ? (delta + ' away from best') : '';
+      const nextMedal = MEDALS.find(m => m.threshold > state.score && m.threshold <= state.score * 1.4);
+      if (nextMedal) {
+        scoreDelta.textContent = (nextMedal.threshold - state.score) + ' away from ' + nextMedal.emoji + ' ' + nextMedal.name + '!';
+      } else {
+        scoreDelta.textContent = delta > 0 ? (delta + ' away from best') : '';
+      }
       scoreDelta.className = 'score-delta';
     }
 
     deathCombo.textContent = runBestCombo;
     deathNearMisses.textContent = nearMissCount;
+
+    // Run grade
+    const gradeEl = document.getElementById('death-grade');
+    if (gradeEl) {
+      const gradeObj = getRunGrade(state.score, bestScore);
+      gradeEl.textContent = gradeObj.grade;
+      gradeEl.style.color = gradeObj.color;
+    }
+
+    // Hearts breakdown
+    const heartsEl = document.getElementById('death-hearts');
+    if (heartsEl) {
+      let html = '';
+      if (runHeartsBreakdown.pipes) html += '<div class="hearts-row"><span>Pipes ' + state.score + '</span><span>+' + runHeartsBreakdown.pipes + ' \u{1F496}</span></div>';
+      if (runHeartsBreakdown.graze) html += '<div class="hearts-row"><span>Grazes</span><span>+' + runHeartsBreakdown.graze + ' \u{1F496}</span></div>';
+      if (runHeartsBreakdown.combo) html += '<div class="hearts-row"><span>Combo</span><span>+' + runHeartsBreakdown.combo + ' \u{1F496}</span></div>';
+      if (runHeartsBreakdown.newBest) html += '<div class="hearts-row hearts-bonus"><span>New Best!</span><span>+' + runHeartsBreakdown.newBest + ' \u{1F496}</span></div>';
+      if (runHeartsBreakdown.newMedal) html += '<div class="hearts-row hearts-bonus"><span>New Medal!</span><span>+' + runHeartsBreakdown.newMedal + ' \u{1F496}</span></div>';
+      if (runHeartsBreakdown.daily) html += '<div class="hearts-row hearts-bonus"><span>Daily \u2713</span><span>+' + runHeartsBreakdown.daily + ' \u{1F496}</span></div>';
+      if (luckyRun) html += '<div class="hearts-row hearts-lucky"><span>LUCKY! 2x</span><span>+' + runHeartsBreakdown.lucky + ' \u{1F496}</span></div>';
+      html += '<div class="hearts-total"><span>Total</span><span>' + runHearts + ' \u{1F496}</span></div>';
+      heartsEl.innerHTML = html;
+    }
+
+    // Hearts balance
+    const balanceEl = document.getElementById('death-balance');
+    if (balanceEl) balanceEl.textContent = hearts + ' \u{1F496}';
+
+    // Daily challenge progress
+    const dailyEl = document.getElementById('death-daily');
+    if (dailyEl && dailyChallenge) {
+      const pct = Math.min(100, (dailyChallengeProgress / dailyChallenge.target) * 100);
+      dailyEl.innerHTML = '<div class="daily-label">' + (dailyChallengeComplete ? '\u2713 ' : '') + dailyChallenge.desc + '</div>' +
+        '<div class="daily-bar"><div class="daily-fill" style="width:' + pct + '%"></div></div>';
+      dailyEl.style.display = 'block';
+    } else if (dailyEl) {
+      dailyEl.style.display = 'none';
+    }
+
+    // Waifu speech bubble
+    const speechEl = document.getElementById('death-speech');
+    if (speechEl) speechEl.textContent = waifuSpeech;
 
     startBtn.textContent = 'TRY AGAIN';
     overlay.classList.remove('hidden');
@@ -828,6 +1208,12 @@ const Game = (() => {
   // ─── Start ───
   function startGame() {
     if (!audioCtx) initAudio();
+    // Show comeback bonus on first game of the session
+    if (comebackMsg && comebackHearts > 0) {
+      const speechEl = document.getElementById('start-speech');
+      if (speechEl) speechEl.textContent = comebackMsg + ' (+' + comebackHearts + ' \u{1F496})';
+      comebackMsg = null; comebackHearts = 0;
+    }
     reset();
     startContent.style.display = 'block';
     deathContent.style.display = 'none';

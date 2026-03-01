@@ -201,6 +201,64 @@ h1 {
   cursor: pointer;
 }
 
+/* Mastery card */
+.mastery-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.mastery-icon { font-size: 32px; line-height: 1; }
+
+.mastery-info { flex: 1; }
+
+.mastery-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ls-text-dark);
+  margin-bottom: 6px;
+}
+
+.mastery-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mastery-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mastery-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ls-pink-accent), #FF69B4);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+.mastery-pct {
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  white-space: nowrap;
+}
+
+.mastery-hearts {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ls-pink-accent);
+  white-space: nowrap;
+}
+
 .settings-footer {
   text-align: center;
   font-size: 11px;

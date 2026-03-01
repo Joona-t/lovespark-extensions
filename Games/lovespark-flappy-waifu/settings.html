@@ -18,6 +18,18 @@
       </div>
     </header>
 
+    <div class="mastery-card" id="mastery-card">
+      <div class="mastery-icon" id="mastery-icon"></div>
+      <div class="mastery-info">
+        <div class="mastery-name" id="mastery-name"></div>
+        <div class="mastery-bar-wrap">
+          <div class="mastery-bar"><div class="mastery-fill" id="mastery-fill"></div></div>
+          <span class="mastery-pct" id="mastery-pct"></span>
+        </div>
+      </div>
+      <div class="mastery-hearts" id="mastery-hearts"></div>
+    </div>
+
     <div class="stats-card">
       <h2 class="card-title">Lifetime Stats</h2>
       <div class="stats-row">
@@ -46,11 +58,51 @@
       </div>
       <div class="stats-row">
         <span class="stats-label">Highest Medal</span>
-        <span class="stats-value" id="stat-medal">—</span>
+        <span class="stats-value" id="stat-medal">&mdash;</span>
       </div>
       <div class="stats-row">
         <span class="stats-label">Last Played</span>
-        <span class="stats-value stats-date" id="stat-date">—</span>
+        <span class="stats-value stats-date" id="stat-date">&mdash;</span>
+      </div>
+    </div>
+
+    <div class="stats-card">
+      <h2 class="card-title">Graze Stats</h2>
+      <div class="stats-row">
+        <span class="stats-label">Close (6-12px)</span>
+        <span class="stats-value" id="stat-graze-close">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Graze (3-6px)</span>
+        <span class="stats-value" id="stat-graze-graze">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Perfect (&lt;3px)</span>
+        <span class="stats-value" id="stat-graze-perfect">0</span>
+      </div>
+    </div>
+
+    <div class="stats-card">
+      <h2 class="card-title">Streaks & Economy</h2>
+      <div class="stats-row">
+        <span class="stats-label">Current Streak</span>
+        <span class="stats-value" id="stat-streak">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Best Streak</span>
+        <span class="stats-value" id="stat-streak-best">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Streak Shields</span>
+        <span class="stats-value" id="stat-shields">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Hearts Balance</span>
+        <span class="stats-value" id="stat-hearts">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Lifetime Hearts</span>
+        <span class="stats-value" id="stat-hearts-life">0</span>
       </div>
     </div>
 
