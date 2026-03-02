@@ -1,27 +1,11 @@
 // Are You Cooked? — background.js
-// Two-tier escalation: mild (5 tabs) and strict (10+ tabs).
-// Milestone notifications at 15, 20, 25, 30+.
+// Two-tier escalation: mild once at 5, strict on every tab at 10+.
 'use strict';
 
 const MILD_THRESHOLD   = 5;
 const STRICT_THRESHOLD = 10;
 
-let hasWarnedAt5  = false;
-let hasWarnedAt10 = false;
-
-const MILESTONE_MESSAGES = {
-  15: "ok we need to talk. this is getting concerning 🤨",
-  20: "you're getting cooked bestie. close some tabs pls 🔥",
-  25: "BESTIE. PUT THE TABS DOWN. 💀",
-};
-
-const MSG_30_PLUS = "call 911. we are fully cooked. there is no saving us. 💀🔥";
-
-function getMilestoneMessage(count) {
-  if (count < 15 || count % 5 !== 0) return null;
-  if (count >= 30) return MSG_30_PLUS;
-  return MILESTONE_MESSAGES[count] || null;
-}
+let hasWarnedAt5 = false;
 
 function fireWarning(count, tabId, level) {
   chrome.notifications.create(`cooked-warn-${Date.now()}`, {
@@ -50,36 +34,24 @@ chrome.tabs.onCreated.addListener(async (tab) => {
   const tabs  = await chrome.tabs.query({});
   const count = tabs.length;
 
-  if (count >= STRICT_THRESHOLD && !hasWarnedAt10) {
-    hasWarnedAt10 = true;
-    hasWarnedAt5  = true;
+  // 10+ tabs: strict popup on EVERY new tab
+  if (count >= STRICT_THRESHOLD) {
+    hasWarnedAt5 = true;
     fireWarning(count, tab.id, 'strict');
     return;
   }
 
+  // 5 tabs: mild popup once
   if (count >= MILD_THRESHOLD && !hasWarnedAt5) {
     hasWarnedAt5 = true;
     fireWarning(count, null, 'mild');
     return;
   }
-
-  const message = getMilestoneMessage(count);
-  if (message) {
-    chrome.notifications.create(`cooked-${count}-${Date.now()}`, {
-      type:    'basic',
-      iconUrl: 'mascot.png',
-      title:   'are you cooked? 🔥',
-      message,
-      priority: 1,
-    });
-  }
 });
 
 chrome.tabs.onRemoved.addListener(async () => {
-  const tabs  = await chrome.tabs.query({});
-  const count = tabs.length;
-  if (count < MILD_THRESHOLD)   hasWarnedAt5  = false;
-  if (count < STRICT_THRESHOLD) hasWarnedAt10 = false;
+  const tabs = await chrome.tabs.query({});
+  if (tabs.length < MILD_THRESHOLD) hasWarnedAt5 = false;
 });
 
 chrome.runtime.onMessage.addListener((msg) => {
