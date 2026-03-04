@@ -85,7 +85,7 @@ function cacheDom() {
   dom.btnDaily = $('btnDaily');
   dom.btnExportAll = $('btnExportAll');
   dom.btnImport = $('btnImport');
-  dom.btnDarkMode = $('btnDarkMode');
+  dom.themeTab = $('themeTab');
   dom.btnHelp = $('btnHelp');
   dom.btnGuideLink = $('btnGuideLink');
   dom.guideOverlay = $('guideOverlay');
@@ -113,9 +113,11 @@ async function init() {
   index = await storage.loadIndex();
   prefs = await storage.loadPrefs();
   contentFont = prefs.contentFont || 'dm-mono';
-  darkMode = prefs.darkMode || false;
+  // Theme: migrate old darkMode pref to new theme system
+  let theme = prefs.theme || null;
+  if (!theme && prefs.darkMode) theme = 'dark';
+  applyTheme(theme || 'retro');
   typingSoundEnabled = prefs.typingSound || false;
-  applyDarkMode(darkMode);
 
   // Determine initial note
   let initialNoteId = null;
@@ -1009,20 +1011,25 @@ async function renderBacklinks() {
   }
 }
 
-// ── Dark Mode ─────────────────────────────────────────────────
+// ── Theme System ──────────────────────────────────────────────
 
-function applyDarkMode(enabled) {
-  document.documentElement.setAttribute('data-theme', enabled ? 'dark' : 'light');
-  if (dom.btnDarkMode) {
-    dom.btnDarkMode.textContent = enabled ? '☀️' : '🌙';
-    dom.btnDarkMode.classList.toggle('active', enabled);
-  }
+const THEMES = ['dark', 'retro', 'beige', 'slate'];
+let currentTheme = 'retro';
+
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  currentTheme = t;
+  const btn = document.getElementById('themeTab');
+  if (btn) btn.textContent = t;
+  // Keep darkMode state in sync for any code that reads it
+  darkMode = (t === 'dark');
 }
 
-function toggleDarkMode() {
-  darkMode = !darkMode;
-  applyDarkMode(darkMode);
-  getStorage().setPref('darkMode', darkMode);
+function cycleTheme() {
+  const next = THEMES[(THEMES.indexOf(currentTheme) + 1) % THEMES.length];
+  applyTheme(next);
+  getStorage().setPref('theme', next);
 }
 
 // ── Mini Calendar ────────────────────────────────────────────
@@ -1175,7 +1182,7 @@ const COMMANDS = [
   { id: 'daily',        emoji: '📋', label: 'Daily Brain Dump',  shortcut: 'Cmd+D',       action: () => handleDaily() },
   { id: 'preview',      emoji: '👁', label: 'Toggle Preview',    shortcut: 'Cmd+P',       action: () => { if (activeNoteId) togglePreview(); } },
   { id: 'focus',        emoji: '🧘', label: 'Distraction Free',  shortcut: 'Cmd+Shift+F', action: () => { if (activeNoteId) toggleDistractionFree(); } },
-  { id: 'dark-mode',    emoji: '🌙', label: 'Toggle Dark Mode',  shortcut: '',             action: () => toggleDarkMode() },
+  { id: 'cycle-theme',  emoji: '🎨', label: 'Cycle Theme',        shortcut: '',             action: () => cycleTheme() },
   { id: 'export-note',  emoji: '📄', label: 'Export Note',       shortcut: 'Cmd+E',       action: () => handleExportNote() },
   { id: 'export-all',   emoji: '📦', label: 'Export All as ZIP', shortcut: '',             action: () => handleExportAll() },
   { id: 'import',       emoji: '📥', label: 'Import Notes',      shortcut: '',             action: () => dom.importInput.click() },
@@ -1416,8 +1423,8 @@ function bindEvents() {
     }
   });
 
-  // Dark mode
-  dom.btnDarkMode.addEventListener('click', toggleDarkMode);
+  // Theme cycle
+  dom.themeTab.addEventListener('click', cycleTheme);
 
   // Guide
   dom.btnHelp.addEventListener('click', openGuide);

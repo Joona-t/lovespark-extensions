@@ -6,6 +6,26 @@ import { createNote, updateNote, loadNoteContent } from '../shared/notes-core.js
 import { autoTitle } from '../shared/formatters.js';
 import { CATEGORIES, DEBOUNCE_LOCAL, DEFAULT_CATEGORY } from '../shared/constants.js';
 
+// ── Theme System ──────────────────────────────────────────────
+const THEMES = ['dark', 'retro', 'beige', 'slate'];
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('themeTab');
+  if (btn) btn.textContent = t;
+}
+function cycleTheme() {
+  const cur = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+  chrome.storage.local.set({ theme: next });
+}
+chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
+  if (!theme && darkMode) theme = 'dark';
+  applyTheme(theme || 'retro');
+});
+document.getElementById('themeTab').addEventListener('click', cycleTheme);
+
 // ── State ──────────────────────────────────────────────────────
 
 let currentNoteId = null;
@@ -25,8 +45,7 @@ async function init() {
   prefs = await storage.loadPrefs();
   selectedCategory = prefs.lastCategory || DEFAULT_CATEGORY;
 
-  // Apply dark mode
-  document.documentElement.setAttribute('data-theme', prefs.darkMode ? 'dark' : 'light');
+  // Theme is applied by the top-level theme system code
 
   renderCategoryPills();
 

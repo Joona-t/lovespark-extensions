@@ -71,20 +71,20 @@
   --ls-font-display: 'Press Start 2P', cursive;
 }
 
-/* ── Dark Mode (Dark Rose) ── */
-:root[data-theme="dark"] {
-  --ls-bg-pink-light: #1a0f2e;
+/* ── Theme: Dark (LoveSpark Noir) ─────────────────────── */
+body.theme-dark {
+  --ls-bg-pink-light: #1a1128;
   --ls-bg-pink: #110d1a;
-  --ls-bg-pink-deep: #0d0a12;
-  --ls-bg-gradient: linear-gradient(165deg, #1a0f2e 0%, #110d1a 40%, #0d0a12 100%);
+  --ls-bg-pink-deep: #0a0812;
+  --ls-bg-gradient: linear-gradient(165deg, #1a1128 0%, #110d1a 40%, #0a0812 100%);
   --ls-glass: rgba(26, 15, 46, 0.85);
   --ls-glass-light: rgba(26, 15, 46, 0.5);
   --ls-glass-border: rgba(255, 110, 180, 0.13);
   --ls-glass-strong: rgba(26, 15, 46, 0.95);
   --ls-pink-accent: #ff6eb4;
   --ls-pink-deep: #c2185b;
-  --ls-white: #f0e0e8;
-  --ls-text-dark: #f0e0e8;
+  --ls-white: #f0e6f6;
+  --ls-text-dark: #f0e6f6;
   --ls-text-muted: #9b7aac;
   --ls-text-white: #ffffff;
   --ls-glow: 0 0 20px rgba(255, 110, 180, 0.35), 0 0 60px rgba(255, 110, 180, 0.15);
@@ -93,7 +93,7 @@
 }
 
 /* Starfield texture for dark mode */
-:root[data-theme="dark"] body::before {
+body.theme-dark::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -112,9 +112,76 @@
   z-index: 0;
 }
 
-:root[data-theme="dark"] body > * { position: relative; z-index: 1; }
+body.theme-dark > * { position: relative; z-index: 1; }
 
-/* Dark mode transitions */
+/* ── Theme: Beige ─────────────────────────────────────── */
+body.theme-beige {
+  --ls-bg-pink-light: #f5efe0;
+  --ls-bg-pink: #f5efe0;
+  --ls-bg-pink-deep: #ede4ce;
+  --ls-bg-gradient: #f5efe0;
+  --ls-glass: #ede4ce;
+  --ls-glass-light: rgba(237, 228, 206, 0.6);
+  --ls-glass-border: #d4c4a0;
+  --ls-glass-strong: #e5dbc4;
+  --ls-pink-accent: #c4806a;
+  --ls-pink-deep: #a86c56;
+  --ls-white: #5c4a2a;
+  --ls-text-dark: #5c4a2a;
+  --ls-text-muted: #8b6f47;
+  --ls-text-white: #f5efe0;
+  --ls-glow: 0 3px 12px rgba(139, 111, 71, 0.25);
+  --ls-glow-strong: 0 3px 12px rgba(139, 111, 71, 0.4);
+  --ls-glow-white: 0 3px 12px rgba(139, 111, 71, 0.15);
+  --ls-radius: 2px;
+  --ls-radius-sm: 2px;
+  --ls-font-body: 'Lora', Georgia, serif;
+}
+
+/* ── Theme: Slate ─────────────────────────────────────── */
+body.theme-slate {
+  --ls-bg-pink-light: #1e1e1e;
+  --ls-bg-pink: #1e1e1e;
+  --ls-bg-pink-deep: #252525;
+  --ls-bg-gradient: #1e1e1e;
+  --ls-glass: #252525;
+  --ls-glass-light: #2d2d2d;
+  --ls-glass-border: #4a4a4a;
+  --ls-glass-strong: #383838;
+  --ls-pink-accent: #d4714e;
+  --ls-pink-deep: #e8926e;
+  --ls-white: #ececec;
+  --ls-text-dark: #ececec;
+  --ls-text-muted: #9a9a9a;
+  --ls-text-white: #ececec;
+  --ls-glow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --ls-glow-strong: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --ls-glow-white: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --ls-radius: 5px;
+  --ls-radius-sm: 4px;
+}
+
+/* ── Theme Tab ────────────────────────────────────────── */
+.theme-tab {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  border: none;
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  color: inherit;
+  transition: background 0.2s;
+  font-family: inherit;
+  z-index: 10;
+}
+.theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
+
+/* Theme transitions */
 body, .header, .sidebar, .editor-pane, .editor-toolbar, .editor-footer,
 .note-item, .cat-item, .guide-card, .version-drawer, .toast {
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -128,17 +195,17 @@ body, .header, .sidebar, .editor-pane, .editor-toolbar, .editor-footer,
 }
 
 /* Dark mode scrollbar */
-:root[data-theme="dark"] * {
+body.theme-dark * {
   scrollbar-color: rgba(255, 110, 180, 0.2) transparent;
 }
 
 /* Dark mode code blocks */
-:root[data-theme="dark"] .markdown-preview pre {
+body.theme-dark .markdown-preview pre {
   background: #130e1c;
   border-color: rgba(255, 110, 180, 0.13);
 }
 
-:root[data-theme="dark"] .markdown-preview code {
+body.theme-dark .markdown-preview code {
   background: rgba(26, 15, 46, 0.85);
 }
 
@@ -909,10 +976,10 @@ body {
 .hl-comment { color: #9E4D6E; font-style: italic; }
 .hl-number { color: #7C3AED; }
 
-:root[data-theme="dark"] .hl-keyword { color: #ff6eb4; }
-:root[data-theme="dark"] .hl-string { color: #7af8f8; }
-:root[data-theme="dark"] .hl-comment { color: #9b7aac; }
-:root[data-theme="dark"] .hl-number { color: #c084fc; }
+body.theme-dark .hl-keyword { color: #ff6eb4; }
+body.theme-dark .hl-string { color: #7af8f8; }
+body.theme-dark .hl-comment { color: #9b7aac; }
+body.theme-dark .hl-number { color: #c084fc; }
 
 /* ── Wiki Links ── */
 .wiki-link {
@@ -1223,7 +1290,7 @@ body.distraction-free::after {
   z-index: 0;
 }
 
-:root[data-theme="dark"] body.distraction-free::after {
+body.theme-dark.distraction-free::after {
   background: radial-gradient(ellipse at center, transparent 50%, rgba(255, 110, 180, 0.08) 100%);
 }
 
