@@ -8,7 +8,7 @@
  *   OrchestratorAgent — routes messages from popup, updates badge
  *   InjectionAgent    — chrome.scripting.executeScript / insertCSS calls
  *
- * All state lives in chrome.storage.sync. Service worker variables are transient.
+ * All state lives in chrome.storage.local. Service worker variables are transient.
  */
 
 // ── SettingsAgent ─────────────────────────────────────────────────────────────
@@ -73,12 +73,12 @@ function deepMerge(target, source) {
 }
 
 async function getSettings() {
-  const { settings = {} } = await chrome.storage.sync.get('settings');
+  const { settings = {} } = await chrome.storage.local.get('settings');
   return deepMerge(DEFAULT_SETTINGS, settings);
 }
 
 async function saveSettings(settings) {
-  await chrome.storage.sync.set({ settings });
+  await chrome.storage.local.set({ settings });
 }
 
 // Init defaults on install, merge on update

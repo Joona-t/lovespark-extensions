@@ -20,7 +20,7 @@ chrome.storage.local.get(['theme'], ({ theme }) => {
 document.getElementById('themeTab').addEventListener('click', cycleTheme);
 
 /**
- * Popup — reads/writes settings to chrome.storage.sync.
+ * Popup — reads/writes settings to chrome.storage.local.
  * Content scripts react via storage.onChanged — no direct message passing needed.
  * Requests injection of content scripts via service worker on first toggle.
  */
@@ -56,7 +56,7 @@ let msgIntervalId = null;
 
 async function init() {
   // Load settings
-  const { settings: stored = {} } = await chrome.storage.sync.get('settings');
+  const { settings: stored = {} } = await chrome.storage.local.get('settings');
   settings = mergeDefaults(stored);
 
   applyToggles(settings);
@@ -161,7 +161,7 @@ function saveSettings() {
   const delay = Math.max(200, MIN_WRITE_GAP - (now - lastWriteTime));
   saveTimer = setTimeout(async () => {
     lastWriteTime = Date.now();
-    await chrome.storage.sync.set({ settings });
+    await chrome.storage.local.set({ settings });
     await ensureInjected();
   }, delay);
 }

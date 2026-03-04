@@ -2,7 +2,7 @@
 
 /**
  * Settings page — full control over all Neurodivergent Reader features.
- * Writes to chrome.storage.sync, content scripts react via storage.onChanged.
+ * Writes to chrome.storage.local, content scripts react via storage.onChanged.
  * Debounces slider changes at 300ms to stay within sync write rate limits.
  */
 
@@ -48,7 +48,7 @@ const els = {
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 async function init() {
-  const { settings: stored = {} } = await chrome.storage.sync.get('settings');
+  const { settings: stored = {} } = await chrome.storage.local.get('settings');
   settings = mergeDefaults(stored);
   applyState(settings);
   bindEvents();
@@ -142,7 +142,7 @@ function save() {
   const delay = Math.max(300, MIN_WRITE_GAP - (now - lastWriteTime));
   saveTimer = setTimeout(async () => {
     lastWriteTime = Date.now();
-    await chrome.storage.sync.set({ settings });
+    await chrome.storage.local.set({ settings });
   }, delay);
 }
 
