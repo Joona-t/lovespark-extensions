@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "LoveSpark Dashboard",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Beautiful Y2K extension manager dashboard — manage all your extensions with style ✨",
-  "permissions": ["management"],
+  "description": "__MSG_extDescription__",
+  "permissions": [
+    "management"
+  ],
   "action": {
     "default_icon": {
       "16": "icons/icon-16.png",
@@ -29,5 +31,6 @@
         "justification": "This extension does not collect, transmit, or store any user data."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }
