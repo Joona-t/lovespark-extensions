@@ -7,11 +7,32 @@ const newMedSlots = new Set(['morning']);
 
 // ── Init ─────────────────────────────────────────────────
 
+const THEMES = ['dark', 'retro', 'beige', 'slate'];
+
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('themeTab');
+  if (btn) btn.textContent = t;
+}
+
+function cycleTheme() {
+  const cur = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+  chrome.storage.local.set({ theme: next });
+}
+
 async function init() {
   settings = await getSettings();
   medications = await getMedications();
 
-  document.documentElement.setAttribute('data-theme', settings.darkMode ? 'dark' : 'light');
+  const themeData = await new Promise(r => chrome.storage.local.get(['theme'], r));
+  let theme = themeData.theme;
+  if (!theme && settings.darkMode) theme = 'dark';
+  applyTheme(theme || 'retro');
+
+  document.getElementById('themeTab').addEventListener('click', cycleTheme);
 
   renderMedList();
   populateAddForm();
@@ -219,13 +240,16 @@ function bindEvents() {
     document.getElementById('reminderTimes').style.display = settings.remindersEnabled ? '' : 'none';
   });
 
-  // Dark mode
-  document.getElementById('darkToggle').addEventListener('change', async (e) => {
-    settings.darkMode = e.target.checked;
-    document.documentElement.setAttribute('data-theme', settings.darkMode ? 'dark' : 'light');
-    await updateSettings({ darkMode: settings.darkMode });
+  // Dark mode toggle — syncs with theme system
+  const darkToggle = document.getElementById('darkToggle');
+  const currentTheme = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';
+  darkToggle.checked = currentTheme === 'dark';
+  darkToggle.addEventListener('change', async (e) => {
+    const newTheme = e.target.checked ? 'dark' : 'retro';
+    applyTheme(newTheme);
+    chrome.storage.local.set({ theme: newTheme });
+    await updateSettings({ darkMode: e.target.checked });
   });
-  document.getElementById('darkToggle').checked = settings.darkMode;
 
   // Export
   document.getElementById('exportBtn').addEventListener('click', async () => {

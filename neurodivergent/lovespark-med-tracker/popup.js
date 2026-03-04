@@ -16,7 +16,10 @@ let calYear, calMonth;
 async function init() {
   // Apply theme before render
   settings = await getSettings();
-  applyTheme(settings.darkMode);
+  const themeData = await new Promise(r => chrome.storage.local.get(['theme'], r));
+  let theme = themeData.theme;
+  if (!theme && settings.darkMode) theme = 'dark';
+  applyTheme(theme || 'retro');
 
   if (!settings.onboardingComplete) {
     document.getElementById('emptyState').style.display = '';
@@ -65,19 +68,24 @@ async function init() {
 
 // ── Theme ────────────────────────────────────────────────
 
-function applyTheme(isDark) {
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+const THEMES = ['dark', 'retro', 'beige', 'slate'];
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('themeTab');
+  if (btn) btn.textContent = t;
 }
 
 // ── Header Actions ───────────────────────────────────────
 
 function bindHeaderActions() {
-  document.getElementById('themeToggle').addEventListener('click', async () => {
-    settings.darkMode = !settings.darkMode;
-    applyTheme(settings.darkMode);
-    await updateSettings({ darkMode: settings.darkMode });
-  });
+  function cycleTheme() {
+    const cur = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';
+    const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+    applyTheme(next);
+    chrome.storage.local.set({ theme: next });
+  }
+  document.getElementById('themeTab').addEventListener('click', cycleTheme);
 
   document.getElementById('settingsBtn').addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') });
