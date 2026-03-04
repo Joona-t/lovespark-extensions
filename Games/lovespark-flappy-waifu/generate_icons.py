@@ -1,31 +1,30 @@
-"""Generate Flappy Waifu extension icons from sprite.png at 16, 48, 128px."""
-from PIL import Image, ImageDraw
+"""Generate Flappy Waifu extension icons from Sparky mascot at 16, 48, 128px."""
+from PIL import Image
 
 SIZES = [16, 48, 128]
-BG_COLOR = (255, 110, 180)  # #ff6eb4
 
-sprite = Image.open('sprite.png').convert('RGBA')
+mascot = Image.open('mascot.png').convert('RGBA')
+
+# Crop to tight bounding box (remove whitespace around Sparky)
+bbox = mascot.getbbox()
+if bbox:
+    mascot = mascot.crop(bbox)
 
 for size in SIZES:
     img = Image.new('RGBA', (size, size), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
 
-    # Pink circle background
-    pad = max(1, size // 16)
-    draw.ellipse([pad, pad, size - pad - 1, size - pad - 1], fill=BG_COLOR)
+    # Fit Sparky into the square, preserving aspect ratio
+    ratio = min(size / mascot.width, size / mascot.height)
+    new_w = int(mascot.width * ratio)
+    new_h = int(mascot.height * ratio)
+    resized = mascot.resize((new_w, new_h), Image.LANCZOS)
 
-    # Resize sprite to fit inside the circle with slight padding
-    sprite_size = int(size * 0.82)
-    resized = sprite.resize((sprite_size, sprite_size), Image.LANCZOS)
-
-    # Center the sprite on the icon
-    offset_x = (size - sprite_size) // 2
-    offset_y = (size - sprite_size) // 2
-
-    # Paste sprite over the pink circle (sprite has transparency)
+    # Center on transparent canvas
+    offset_x = (size - new_w) // 2
+    offset_y = (size - new_h) // 2
     img.paste(resized, (offset_x, offset_y), resized)
 
     img.save(f'icons/icon{size}.png')
     print(f'  icons/icon{size}.png ({size}x{size})')
 
-print('Done — sprite icons generated!')
+print('Done — Sparky icons generated!')
