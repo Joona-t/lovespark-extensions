@@ -116,7 +116,7 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
   }
 
   async function loadAndApplyState() {
-    const result = await chrome.storage.sync.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
+    const result = await chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
     const enabled = typeof result[STORAGE_KEY_ENABLED] === "boolean" ? result[STORAGE_KEY_ENABLED] : true;
     const pack = sanitizePack(result[STORAGE_KEY_PACK]);
     applyCursorStyle(enabled, pack);
@@ -131,7 +131,7 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
       return;
     }
 
-    chrome.storage.sync.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK], (next) => {
+    chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK], (next) => {
       const enabled = typeof next[STORAGE_KEY_ENABLED] === "boolean" ? next[STORAGE_KEY_ENABLED] : true;
       const pack = sanitizePack(next[STORAGE_KEY_PACK]);
       applyCursorStyle(enabled, pack);

@@ -3,7 +3,7 @@ const STORAGE_KEY_PACK = "lovesparkCursorPack";
 const DEFAULT_PACK = "retro-pink";
 
 async function ensureDefaults() {
-  const current = await chrome.storage.sync.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
+  const current = await chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
   const patch = {};
 
   if (typeof current[STORAGE_KEY_ENABLED] !== "boolean") {
@@ -14,7 +14,7 @@ async function ensureDefaults() {
   }
 
   if (Object.keys(patch).length > 0) {
-    await chrome.storage.sync.set(patch);
+    await chrome.storage.local.set(patch);
   }
 }
 
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   const enabled = Boolean(message.enabled);
   const pack = typeof message.pack === "string" ? message.pack : DEFAULT_PACK;
 
-  chrome.storage.sync
+  chrome.storage.local
     .set({ [STORAGE_KEY_ENABLED]: enabled, [STORAGE_KEY_PACK]: pack })
     .then(() => sendResponse({ ok: true, enabled, pack }))
     .catch((error) => sendResponse({ ok: false, error: String(error) }));

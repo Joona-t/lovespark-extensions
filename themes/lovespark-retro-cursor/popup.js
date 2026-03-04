@@ -57,7 +57,7 @@ async function saveAndBroadcast(enabled, pack) {
 }
 
 async function loadState() {
-  const result = await chrome.storage.sync.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
+  const result = await chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
   const enabled = typeof result[STORAGE_KEY_ENABLED] === "boolean" ? result[STORAGE_KEY_ENABLED] : true;
   const pack = sanitizePack(result[STORAGE_KEY_PACK]);
   render(enabled, pack);
