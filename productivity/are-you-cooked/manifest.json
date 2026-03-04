@@ -1,11 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "Are You Cooked?",
+  "name": "__MSG_extName__",
   "version": "2.1.0",
-  "description": "counts your tabs and roasts you accordingly 🔥",
+  "description": "__MSG_extDescription__",
   "minimum_chrome_version": "102",
   "homepage_url": "https://github.com/Joona-t/are-you-cooked",
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -30,5 +32,6 @@
         "justification": "This extension does not collect, transmit, or store any user data."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }
