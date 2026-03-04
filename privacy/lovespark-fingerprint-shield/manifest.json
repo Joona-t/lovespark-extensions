@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "__MSG_extDescription__",
   "permissions": [
     "storage"
@@ -41,6 +41,15 @@
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "fingerprint-shield@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data."
+      }
+    }
   },
   "default_locale": "en"
 }
