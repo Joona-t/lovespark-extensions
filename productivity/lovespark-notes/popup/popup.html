@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveSpark Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<div class="popup-container">
+  <header class="popup-header">
+    <div class="header-left">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="title"><span class="love">Love</span>Spark Notes</span>
+    </div>
+    <button class="btn-open" id="btnOpen" title="Open full app (CMD+Shift+L)">Open app →</button>
+  </header>
+
+  <div class="category-pills" id="categoryPills"></div>
+
+  <div class="editor-card">
+    <textarea id="noteContent" placeholder="What's on your mind? 💕" autofocus></textarea>
+  </div>
+
+  <div class="footer-row">
+    <button class="btn-title" id="btnTitle">+ Add title</button>
+    <input type="text" id="noteTitle" class="title-input" placeholder="Note title..." style="display:none" autocomplete="off">
+    <span class="save-status" id="saveStatus"></span>
+  </div>
+</div>
+
+<script src="popup.js" type="module"></script>
+</body>
+</html>

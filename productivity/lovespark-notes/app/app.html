@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveSpark Notes 💖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div class="app" id="app">
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="logo-mascot">
+      <span class="logo-text"><span class="logo-love">Love</span>Spark <span class="logo-sub">Notes</span></span>
+    </div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search notes..." autocomplete="off">
+    </div>
+    <div class="header-actions">
+      <div class="btn-new-wrap">
+        <button class="btn-new" id="btnNew" title="CMD+N">✦ New Note</button>
+        <button class="btn-new-dropdown" id="btnNewDropdown" title="Templates">▾</button>
+        <div class="template-dropdown" id="templateDropdown" style="display:none"></div>
+      </div>
+      <button class="btn-icon" id="btnDaily" title="CMD+D">📋</button>
+      <button class="btn-icon" id="btnExportAll" title="Export all">📦</button>
+      <button class="btn-icon" id="btnImport" title="Import">📥</button>
+      <button class="btn-icon" id="btnDarkMode" title="Toggle dark mode">🌙</button>
+      <button class="btn-icon" id="btnHelp" title="Guide">❓</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-label">Categories</div>
+        <div class="category-nav" id="categoryNav"></div>
+      </div>
+      <div class="sidebar-tags" id="sidebarTags" style="display:none">
+        <div class="sidebar-label">Tags</div>
+        <div class="tag-filter-list" id="tagFilterList"></div>
+      </div>
+      <div class="calendar-wrap" id="calendarWrap" style="display:none">
+        <div class="sidebar-label">Calendar</div>
+        <div class="mini-calendar" id="miniCalendar"></div>
+      </div>
+      <div class="notes-list" id="notesList"></div>
+    </aside>
+
+    <!-- Editor Pane -->
+    <div class="editor-pane" id="editorPane">
+      <!-- No Selection State -->
+      <div class="no-selection" id="noSelection">
+        <img src="../mascot.png" alt="Sparky" class="no-selection-mascot">
+        <h2>No note selected</h2>
+        <p>Create a new note or select one to start writing</p>
+        <div class="shortcut-hints">
+          <span>CMD+N new</span>
+          <span>CMD+D daily</span>
+          <span>CMD+P preview</span>
+        </div>
+        <button class="guide-link" id="btnGuideLink">Show guide ❓</button>
+      </div>
+
+      <!-- Editor -->
+      <div id="editorWrap" style="display:none">
+        <div class="editor-toolbar" id="editorToolbar">
+          <input type="text" id="noteTitle" class="title-input" placeholder="Untitled note..." autocomplete="off">
+          <div class="toolbar-row">
+            <div class="category-pills" id="categoryPills"></div>
+            <div class="tag-input-wrap">
+              <div class="current-tags" id="currentTags"></div>
+              <input type="text" id="tagInput" placeholder="+ tag" autocomplete="off">
+            </div>
+            <div class="toolbar-right">
+              <div class="font-switcher" id="fontSwitcher"></div>
+              <button class="btn-icon-sm" id="btnPin" title="Pin note">💖</button>
+              <button class="btn-icon-sm" id="btnVersions" title="Version history">🕐 <span id="versionCount"></span></button>
+              <button class="btn-icon-sm" id="btnPreview" title="CMD+P">👁</button>
+              <button class="btn-icon-sm" id="btnExport" title="CMD+E">📄</button>
+              <button class="btn-icon-sm" id="btnDistraction" title="CMD+Shift+F">🧘</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-content-area">
+          <textarea id="noteContent" placeholder="Start writing... 💕&#10;&#10;Your ideas live here, safe and sound."></textarea>
+          <div id="markdownPreview" class="markdown-preview" style="display:none"></div>
+        </div>
+
+        <!-- Version History Drawer -->
+        <div class="version-drawer" id="versionDrawer" style="display:none">
+          <div class="version-drawer-header">
+            <span class="version-drawer-title">Version History</span>
+            <button class="btn-close" id="btnCloseVersions">×</button>
+          </div>
+          <div class="version-list" id="versionList"></div>
+          <div class="version-footer">✦ Last 20 versions kept automatically</div>
+        </div>
+
+        <div class="editor-footer" id="editorFooter">
+          <span class="word-count" id="wordCount">0 words</span>
+          <span class="save-covenant" id="saveCovenant">✦ all notes saved locally</span>
+          <span class="save-indicator" id="saveIndicator">✦ saved</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guide Overlay -->
+  <div class="guide-overlay" id="guideOverlay" style="display:none">
+    <div class="guide-card">
+      <div class="guide-header">
+        <span class="guide-esc">press ESC to close</span>
+        <button class="btn-close" id="btnCloseGuide">×</button>
+      </div>
+
+      <div class="guide-body">
+        <div class="guide-intro">
+          <h2>Welcome to LoveSpark Notes</h2>
+          <p>Here's everything you need to know.<br>Take your time — no rush, bestie 💕</p>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-section-label">Writing</div>
+          <div class="guide-row"><span class="guide-icon">✦</span><span><strong>New Note</strong> — click "✦ New Note" or CMD+N</span></div>
+          <div class="guide-row"><span class="guide-icon">📋</span><span><strong>Daily Dump</strong> — CMD+D creates a dated journal entry</span></div>
+          <div class="guide-row"><span class="guide-icon">💖</span><span><strong>Pin</strong> — pin important notes so they stay at the top</span></div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-section-label">Organizing</div>
+          <div class="guide-row"><span class="guide-icon">💡🛠🌙📋</span><span><strong>Categories</strong> — pick one per note to keep things tidy</span></div>
+          <div class="guide-row"><span class="guide-icon">🏷</span><span><strong>Tags</strong> — type a tag name and press Enter to add</span></div>
+          <div class="guide-row"><span class="guide-icon">🔍</span><span><strong>Search</strong> — filters by title, content, and tags</span></div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-section-label">Tools</div>
+          <div class="guide-row"><span class="guide-icon">👁</span><span><strong>Preview</strong> — CMD+P to see your markdown rendered</span></div>
+          <div class="guide-row"><span class="guide-icon">🧘</span><span><strong>Focus Mode</strong> — CMD+Shift+F hides everything but your writing</span></div>
+          <div class="guide-row"><span class="guide-icon">🕐</span><span><strong>Versions</strong> — auto-saved every 2 minutes, last 20 kept</span></div>
+          <div class="guide-row"><span class="guide-icon">Aa</span><span><strong>Fonts</strong> — switch between DM Mono, Atkinson, or OpenDyslexic</span></div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-section-label">Saving</div>
+          <div class="guide-row-text">Everything saves automatically, locally.<br>No account. No tracking. No ads. Ever.</div>
+          <div class="guide-row"><span class="guide-icon">📦</span><span><strong>Export All</strong> — back up all your notes as a JSON file</span></div>
+          <div class="guide-row"><span class="guide-icon">📥</span><span><strong>Import</strong> — restore notes from a backup file</span></div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-section-label">Keyboard Shortcuts</div>
+          <div class="guide-shortcut"><kbd>CMD+N</kbd><span>New note</span></div>
+          <div class="guide-shortcut"><kbd>CMD+D</kbd><span>Daily brain dump</span></div>
+          <div class="guide-shortcut"><kbd>CMD+P</kbd><span>Toggle preview</span></div>
+          <div class="guide-shortcut"><kbd>CMD+Shift+F</kbd><span>Distraction-free mode</span></div>
+          <div class="guide-shortcut"><kbd>CMD+S</kbd><span>Force save</span></div>
+          <div class="guide-shortcut"><kbd>CMD+E</kbd><span>Export current note</span></div>
+          <div class="guide-shortcut"><kbd>ESC</kbd><span>Close any overlay</span></div>
+        </div>
+
+        <div class="guide-section">
+          <div class="guide-section-label">Your Stats</div>
+          <div class="guide-stats" id="guideStats">Loading...</div>
+        </div>
+
+        <div class="guide-footer">
+          <p>Stay sparkly, bestie ✨</p>
+          <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="guide-mascot">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Palette -->
+  <div class="command-palette-overlay" id="commandPalette" style="display:none">
+    <div class="command-palette">
+      <input type="text" id="commandSearch" placeholder="Type a command..." autocomplete="off">
+      <div class="command-list" id="commandList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden file input for import -->
+<input type="file" id="importInput" accept=".json,.md" style="display:none">
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
