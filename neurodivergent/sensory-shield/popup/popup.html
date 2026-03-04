@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensory Shield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="sparky">
+      <div class="header-text">
+        <h1>Sensory Shield</h1>
+        <span class="subtitle">by LoveSpark</span>
+      </div>
+    </header>
+
+    <div class="domain-bar">
+      <span class="domain-label">Site:</span>
+      <span id="current-domain" class="domain-name">—</span>
+    </div>
+
+    <div class="presets-card">
+      <div class="presets-label">Presets</div>
+      <div class="presets-row">
+        <button class="preset-btn" data-preset="calm">Calm</button>
+        <button class="preset-btn" data-preset="focus">Focus</button>
+        <button class="preset-btn" data-preset="full">Full Shield</button>
+        <button class="preset-btn" data-preset="custom">Custom</button>
+      </div>
+    </div>
+
+    <div class="features-card">
+      <div class="feature-row">
+        <span class="feature-label">Reduce Motion</span>
+        <div class="toggle-switch" id="toggle-reduce-motion" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Colour Tint</span>
+        <div class="toggle-switch" id="toggle-tint" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="tint-controls hidden" id="tint-controls">
+        <div class="tint-row">
+          <label for="tint-color">Colour</label>
+          <input type="color" id="tint-color" value="#FDCFE1">
+        </div>
+        <div class="tint-row">
+          <label for="tint-opacity">Opacity</label>
+          <input type="range" id="tint-opacity" min="1" max="50" value="10" class="range-slider">
+          <span id="tint-opacity-label" class="range-value">10%</span>
+        </div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Hide Flashing/GIFs</span>
+        <div class="toggle-switch" id="toggle-gifs" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Focus Ruler</span>
+        <div class="toggle-switch" id="toggle-ruler" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Increase Cursor</span>
+        <div class="toggle-switch" id="toggle-cursor" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Font Comfort</span>
+        <div class="toggle-switch" id="toggle-font" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+    </div>
+
+    <button class="btn-pink save-btn" id="save-preset-btn">Save as my preset for this site</button>
+
+    <div id="cute-msg" class="cute-msg">Your brain deserves calm. 💕</div>
+
+    <footer class="popup-footer">
+      <span>LoveSpark Suite</span> · <a href="#" id="settings-link">Settings</a>
+    </footer>
+  </div>
+
+  <div class="sparkle-container" id="sparkle-container"></div>
+
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
