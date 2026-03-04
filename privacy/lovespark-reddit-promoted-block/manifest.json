@@ -32,7 +32,11 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "reddit-adblock@lovespark.suite"
+      "id": "reddit-adblock@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data."
+      }
     }
   }
 }
