@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "LoveSpark Fingerprint Shield"
+  },
+  "extDescription": {
+    "message": "Protects against browser fingerprinting by adding imperceptible noise to tracking APIs. No data collection."
+  }
+}

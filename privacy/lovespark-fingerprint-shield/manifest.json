@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LoveSpark Fingerprint Shield",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Protects against browser fingerprinting by adding imperceptible noise to tracking APIs. No data collection.",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "storage"
   ],
@@ -41,5 +41,6 @@
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
-  }
+  },
+  "default_locale": "en"
 }
