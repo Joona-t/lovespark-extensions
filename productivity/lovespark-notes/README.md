@@ -14,7 +14,7 @@ A calm, beautiful notes app for neurodivergent coders. Part of the [LoveSpark Su
 - **Accessibility Fonts** — DM Mono (default), Atkinson Hyperlegible, OpenDyslexic — bundled locally
 - **Pin/Favourite** — Pin up to 10 notes to the top of the sidebar
 - **Export/Import** — Export as .md or full JSON backup, import from JSON
-- **Cross-Device Sync** — Note metadata syncs via chrome.storage.sync (extension only)
+- **Local Storage** — All data stored locally via chrome.storage.local
 - **Zero Data Collection** — Everything stays local. No ads, no tracking, no accounts.
 
 ## Keyboard Shortcuts
@@ -32,9 +32,8 @@ A calm, beautiful notes app for neurodivergent coders. Part of the [LoveSpark Su
 
 ## Storage Architecture
 
-**Chrome Extension (hybrid sync):**
-- `chrome.storage.sync` — Note index (metadata) + preferences (~200 bytes/note, supports ~500 notes)
-- `chrome.storage.local` — Note content + version history (unlimited with `unlimitedStorage`)
+**Chrome Extension:**
+- `chrome.storage.local` — Note index, content, preferences, and version history (unlimited with `unlimitedStorage`)
 
 **Standalone Web App:**
 - `localStorage` — All data stored locally in the browser
@@ -43,7 +42,7 @@ A calm, beautiful notes app for neurodivergent coders. Part of the [LoveSpark Su
 
 | Permission | Justification |
 |---|---|
-| `storage` | chrome.storage.sync + chrome.storage.local for notes |
+| `storage` | chrome.storage.local for all note data |
 | `unlimitedStorage` | Version history can exceed 10MB default |
 | `alarms` | 2-minute version snapshot timer |
 

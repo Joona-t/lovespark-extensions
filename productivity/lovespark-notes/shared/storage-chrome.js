@@ -10,7 +10,7 @@ import {
 /** Helper: promisify chrome.storage calls */
 function syncGet(keys) {
   return new Promise((resolve, reject) => {
-    chrome.storage.sync.get(keys, (result) => {
+    chrome.storage.local.get(keys, (result) => {
       if (chrome.runtime.lastError) reject(new Error(chrome.runtime.lastError.message));
       else resolve(result);
     });
@@ -19,7 +19,7 @@ function syncGet(keys) {
 
 function syncSet(data) {
   return new Promise((resolve, reject) => {
-    chrome.storage.sync.set(data, () => {
+    chrome.storage.local.set(data, () => {
       if (chrome.runtime.lastError) reject(new Error(chrome.runtime.lastError.message));
       else resolve();
     });
@@ -82,7 +82,7 @@ function sessionRemove(keys) {
 
 /**
  * StorageChrome — chrome.storage backend for the extension.
- * Index + prefs in chrome.storage.sync (cross-device).
+ * Index + prefs in chrome.storage.local (cross-device).
  * Content + versions in chrome.storage.local (unlimited with permission).
  */
 export const StorageChrome = {

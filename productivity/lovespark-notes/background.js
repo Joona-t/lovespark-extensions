@@ -57,10 +57,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
 
   if (msg.type === 'open-app-with-note') {
-    chrome.storage.sync.get('ls_prefs', (result) => {
+    chrome.storage.local.get('ls_prefs', (result) => {
       const prefs = result.ls_prefs || {};
       prefs.pendingFocusId = msg.noteId;
-      chrome.storage.sync.set({ ls_prefs: prefs }, () => {
+      chrome.storage.local.set({ ls_prefs: prefs }, () => {
         openOrFocusApp().then(() => sendResponse({ ok: true }));
       });
     });
@@ -148,10 +148,10 @@ chrome.contextMenus.onClicked.addListener(async (info) => {
     await chrome.storage.local.set({ [contentKey]: { id, content } });
 
     // Update index
-    const result = await chrome.storage.sync.get('ls_notes_index');
+    const result = await chrome.storage.local.get('ls_notes_index');
     const index = result.ls_notes_index || { notes: [], version: 1 };
     index.notes.unshift(noteEntry);
-    await chrome.storage.sync.set({ ls_notes_index: index });
+    await chrome.storage.local.set({ ls_notes_index: index });
   } catch (err) {
     console.error('LoveSpark Notes: web clip failed', err);
   }
