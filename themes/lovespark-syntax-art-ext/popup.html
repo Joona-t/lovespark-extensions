@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Syntax Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <span class="header-icon">🌸</span>
+      <span class="header-title">Syntax Art</span>
+      <button class="btn-dark-toggle" id="btnDarkMode" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    </header>
+
+    <!-- How to use -->
+    <div class="hint-card">
+      <div class="hint-text">Right-click any image and choose<br><strong>"Convert to Syntax Art"</strong></div>
+    </div>
+
+    <!-- Theme selector -->
+    <div class="settings-section">
+      <div class="setting-label">Theme</div>
+      <div class="pill-selector" id="themeSelector">
+        <button class="pill" data-value="dracula">Dracula</button>
+        <button class="pill" data-value="monokai">Monokai</button>
+        <button class="pill" data-value="lovespark">LoveSpark</button>
+        <button class="pill" data-value="github-light">GitHub Light</button>
+      </div>
+    </div>
+
+    <!-- Width slider -->
+    <div class="settings-section">
+      <div class="setting-row">
+        <span class="setting-label">Width</span>
+        <span class="setting-value" id="widthValue">120 chars</span>
+      </div>
+      <input type="range" id="widthSlider" min="60" max="200" value="120" step="10" class="range-slider">
+    </div>
+
+    <!-- Font size -->
+    <div class="settings-section">
+      <div class="setting-label">Font size</div>
+      <div class="pill-selector" id="fontSizeSelector">
+        <button class="pill" data-value="6">6px</button>
+        <button class="pill" data-value="8">8px</button>
+        <button class="pill" data-value="10">10px</button>
+        <button class="pill" data-value="12">12px</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-card">
+      <div class="stats-row">
+        <span class="stats-label">Converted today</span>
+        <span class="stats-value" id="todayCount">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Total converted</span>
+        <span class="stats-value" id="totalCount">0</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span id="motivational" class="motivational"></span>
+      <span class="suite-branding">LoveSpark Suite 💕</span>
+    </footer>
+  </div>
+
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

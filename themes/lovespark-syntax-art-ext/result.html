@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Syntax Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: #1a1a2e;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: rgba(26, 26, 46, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 13px;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-title {
+      color: #FF79C6;
+      font-weight: 500;
+    }
+
+    .toolbar-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f0f0f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .toolbar-btn:hover {
+      background: rgba(232, 69, 124, 0.3);
+      border-color: rgba(232, 69, 124, 0.5);
+    }
+
+    /* Art frame */
+    .art-frame {
+      width: 100%;
+      min-height: 100vh;
+      border: none;
+      padding-top: 40px;
+    }
+
+    /* Error state */
+    .error-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .error-icon { font-size: 48px; margin-bottom: 16px; }
+
+    .error-msg {
+      color: #FF6B9D;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .error-hint {
+      color: #9CA3AF;
+      font-size: 13px;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 16px;
+    }
+
+    .loading-text {
+      color: #FF79C6;
+      font-size: 14px;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(255, 121, 198, 0.2);
+      border-top-color: #FF79C6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .spinner { animation: none; opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar" id="toolbar" style="display: none;">
+    <div class="toolbar-left">
+      <span class="toolbar-title">LoveSpark Syntax Art</span>
+    </div>
+    <div>
+      <button class="toolbar-btn" id="saveBtn">Save HTML</button>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Loading art...</div>
+  </div>
+
+  <iframe class="art-frame" id="artFrame" style="display: none;" sandbox="allow-same-origin"></iframe>
+
+  <div class="error-container" id="errorContainer" style="display: none;">
+    <div class="error-icon">😿</div>
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="error-hint">The image might be blocked by CORS, or it may no longer be accessible. Try right-clicking a different image.</div>
+  </div>
+
+  <script src="result.js"></script>
+</body>
+</html>
