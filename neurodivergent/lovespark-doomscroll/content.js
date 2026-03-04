@@ -1,5 +1,5 @@
 // Pink Anti-Doomscroll — content.js
-// NEVER write per-scroll metrics or timestamps to chrome.storage.sync.
+// NEVER write per-scroll metrics or timestamps to chrome.storage.local.
 // Sync storage has a 100KB quota and write-rate limits.
 // All tracking state (continuousScrollingMs, idleMs, velocity) stays in JS variables only.
 // Only write discrete event counts (nudges, pauses) on state transitions.
@@ -20,7 +20,7 @@ const DEFAULT_STATE = {
 };
 
 async function getState() {
-  const stored = await chrome.storage.sync.get(null);
+  const stored = await chrome.storage.local.get(null);
   const sites = { ...DEFAULT_STATE.sites, ...(stored.sites || {}) };
   return { ...DEFAULT_STATE, ...stored, sites };
 }
@@ -122,10 +122,10 @@ function ensureOverlay() {
 // ── Stats ───────────────────────────────────────────────────────────────────
 
 async function checkDailyReset() {
-  const data = await chrome.storage.sync.get(['lastResetDate']);
+  const data = await chrome.storage.local.get(['lastResetDate']);
   const today = todayStr();
   if (data.lastResetDate !== today) {
-    await chrome.storage.sync.set({
+    await chrome.storage.local.set({
       nudgesToday: 0,
       pausesToday: 0,
       lastResetDate: today,
@@ -134,16 +134,16 @@ async function checkDailyReset() {
 }
 
 async function bumpNudge() {
-  const data = await chrome.storage.sync.get(['nudgesToday', 'nudgesTotal']);
-  await chrome.storage.sync.set({
+  const data = await chrome.storage.local.get(['nudgesToday', 'nudgesTotal']);
+  await chrome.storage.local.set({
     nudgesToday: (data.nudgesToday || 0) + 1,
     nudgesTotal: (data.nudgesTotal || 0) + 1,
   });
 }
 
 async function bumpPause() {
-  const data = await chrome.storage.sync.get(['pausesToday', 'pausesTotal']);
-  await chrome.storage.sync.set({
+  const data = await chrome.storage.local.get(['pausesToday', 'pausesTotal']);
+  await chrome.storage.local.set({
     pausesToday: (data.pausesToday || 0) + 1,
     pausesTotal: (data.pausesTotal || 0) + 1,
   });

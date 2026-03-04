@@ -42,7 +42,7 @@ const MODE_PRESETS = {
 };
 
 async function getState() {
-  const stored = await chrome.storage.sync.get(null);
+  const stored = await chrome.storage.local.get(null);
   const sites = { ...DEFAULT_STATE.sites, ...(stored.sites || {}) };
   return { ...DEFAULT_STATE, ...stored, sites };
 }
@@ -172,25 +172,25 @@ function tickSnooze(snoozeUntilTs) {
 // ── Event handlers ──────────────────────────────────────────────────────────
 
 cbEnabled.addEventListener('change', () => {
-  chrome.storage.sync.set({ enabled: cbEnabled.checked });
+  chrome.storage.local.set({ enabled: cbEnabled.checked });
 });
 
 cbSiteX.addEventListener('change', () => {
   const val = cbSiteX.checked;
   const sites = { ...currentState.sites, 'x.com': val, 'twitter.com': val };
-  chrome.storage.sync.set({ sites });
+  chrome.storage.local.set({ sites });
   currentState.sites = sites;
 });
 
 cbSiteReddit.addEventListener('change', () => {
   const sites = { ...currentState.sites, 'reddit.com': cbSiteReddit.checked };
-  chrome.storage.sync.set({ sites });
+  chrome.storage.local.set({ sites });
   currentState.sites = sites;
 });
 
 cbSiteFacebook.addEventListener('change', () => {
   const sites = { ...currentState.sites, 'facebook.com': cbSiteFacebook.checked };
-  chrome.storage.sync.set({ sites });
+  chrome.storage.local.set({ sites });
   currentState.sites = sites;
 });
 
@@ -198,17 +198,17 @@ modeRadios.forEach(radio => {
   radio.addEventListener('change', () => {
     const mode = radio.value;
     const preset = MODE_PRESETS[mode];
-    chrome.storage.sync.set({ mode, ...preset });
+    chrome.storage.local.set({ mode, ...preset });
   });
 });
 
 cbSparkle.addEventListener('change', () => {
-  chrome.storage.sync.set({ sparkleEnabled: cbSparkle.checked });
+  chrome.storage.local.set({ sparkleEnabled: cbSparkle.checked });
 });
 
 btnSnooze.addEventListener('click', () => {
   const snoozeUntilTs = Date.now() + 600000; // 10 minutes
-  chrome.storage.sync.set({ snoozeUntilTs });
+  chrome.storage.local.set({ snoozeUntilTs });
   updateSnoozeButton(snoozeUntilTs);
 });
 
