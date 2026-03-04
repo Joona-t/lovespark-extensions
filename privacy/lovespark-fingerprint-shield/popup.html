@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Fingerprint Shield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <img src="icons/icon-48.png" alt="Shield" class="header-icon">
+      <h1>Fingerprint Shield</h1>
+      <button class="btn-dark-toggle" id="btnDarkMode" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    </header>
+
+    <div class="status-card" id="statusCard">
+      <span class="status-icon" id="statusIcon">🛡️</span>
+      <span class="status-text" id="statusText">Shield Active</span>
+      <button class="toggle-switch active" id="toggleBtn" aria-label="Toggle shield"></button>
+    </div>
+
+    <div class="stats-card">
+      <div class="stats-row">
+        <span class="stats-label">Spoofed today</span>
+        <span class="stats-value" id="todayCount">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Total spoofed</span>
+        <span class="stats-value" id="totalCount">0</span>
+      </div>
+    </div>
+
+    <div class="protected-card">
+      <span class="protected-label">Protected surfaces</span>
+      <span class="protected-list">Canvas · WebGL · Audio · Fonts · Screen · Hardware · Battery · Media · Timing</span>
+    </div>
+
+    <footer class="popup-footer">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="footer-text">invisible to trackers ✨</span>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
