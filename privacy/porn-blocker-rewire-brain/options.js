@@ -12,8 +12,8 @@ chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
 
   renderDomainTags(data.userDomains || []);
   renderSubTags(data.userSubreddits || []);
-  document.getElementById('redirectInput').value = data.redirectUrl || '';
-  document.getElementById('cooldownInput').value = data.bypassCooldownSec || 30;
+  document.getElementById('redirectUrl').value = data.redirectUrl || '';
+  document.getElementById('cooldownSec').value = data.bypassCooldownSec || 30;
   renderBypassLog(data.bypassLog || []);
   renderReportedSites(data.reportedSites || []);
 });
@@ -21,7 +21,7 @@ chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
 // ═══ Custom Domains ═══
 
 function renderDomainTags(domains) {
-  const container = document.getElementById('domainTags');
+  const container = document.getElementById('domainList');
   if (domains.length === 0) {
     container.innerHTML = '<span class="empty-state">No custom domains added yet</span>';
     return;
@@ -65,7 +65,7 @@ function addDomain() {
 // ═══ Custom Subreddits ═══
 
 function renderSubTags(subs) {
-  const container = document.getElementById('subTags');
+  const container = document.getElementById('subList');
   if (subs.length === 0) {
     container.innerHTML = '<span class="empty-state">No custom subreddits added yet</span>';
     return;
@@ -109,8 +109,8 @@ function addSub() {
 // ═══ Redirect URL ═══
 
 document.getElementById('saveRedirect').addEventListener('click', () => {
-  const url = document.getElementById('redirectInput').value.trim();
-  const feedback = document.getElementById('redirectFeedback');
+  const url = document.getElementById('redirectUrl').value.trim();
+  const feedback = document.getElementById('redirectSaved');
   chrome.runtime.sendMessage({ type: 'SET_REDIRECT', url }, () => {
     feedback.textContent = url ? '\u2713 Redirect saved' : '\u2713 Redirect cleared';
     setTimeout(() => { feedback.textContent = ''; }, 2000);
@@ -120,10 +120,10 @@ document.getElementById('saveRedirect').addEventListener('click', () => {
 // ═══ Bypass Cooldown ═══
 
 document.getElementById('saveCooldown').addEventListener('click', () => {
-  const sec = parseInt(document.getElementById('cooldownInput').value) || 30;
-  const feedback = document.getElementById('cooldownFeedback');
+  const sec = parseInt(document.getElementById('cooldownSec').value) || 30;
+  const feedback = document.getElementById('cooldownSaved');
   chrome.runtime.sendMessage({ type: 'SET_BYPASS_COOLDOWN', seconds: sec }, (res) => {
-    document.getElementById('cooldownInput').value = res?.bypassCooldownSec || sec;
+    document.getElementById('cooldownSec').value = res?.bypassCooldownSec || sec;
     feedback.textContent = `\u2713 Set to ${res?.bypassCooldownSec || sec} seconds`;
     setTimeout(() => { feedback.textContent = ''; }, 2000);
   });
@@ -132,7 +132,7 @@ document.getElementById('saveCooldown').addEventListener('click', () => {
 // ═══ Reset Stats ═══
 
 document.getElementById('resetStats').addEventListener('click', () => {
-  const feedback = document.getElementById('resetFeedback');
+  const feedback = document.getElementById('resetSaved');
   if (!confirm('Are you sure you want to reset all stats? This cannot be undone.')) return;
   chrome.runtime.sendMessage({ type: 'RESET_STATS' }, () => {
     document.getElementById('statBlocked').textContent = '0';
@@ -147,7 +147,7 @@ document.getElementById('resetStats').addEventListener('click', () => {
 // ═══ Bypass Log ═══
 
 function renderBypassLog(log) {
-  const container = document.getElementById('bypassLogContainer');
+  const container = document.getElementById('bypassLog');
   if (log.length === 0) {
     container.innerHTML = '<div class="log-empty">No bypasses recorded. Keep it up! \uD83D\uDCAA</div>';
     return;
@@ -172,7 +172,7 @@ function renderBypassLog(log) {
 // ═══ Reported Sites ═══
 
 function renderReportedSites(reports) {
-  const container = document.getElementById('reportedContainer');
+  const container = document.getElementById('reportedLog');
   if (reports.length === 0) {
     container.innerHTML = '<div class="log-empty">No reported sites yet</div>';
     return;
