@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LoveSpark Metadata Scrubber",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Strip EXIF, GPS, and hidden metadata from images before uploading. Your photos, your privacy \ud83c\udf38",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "contextMenus",
     "offscreen",
@@ -32,5 +32,6 @@
         "justification": "This extension does not collect, transmit, or store any user data."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }

@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "LoveSpark Metadata Scrubber"
+  },
+  "extDescription": {
+    "message": "Strip EXIF, GPS, and hidden metadata from images before uploading. Your photos, your privacy 🌸"
+  }
+}
