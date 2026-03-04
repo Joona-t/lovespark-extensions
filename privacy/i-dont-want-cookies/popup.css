@@ -339,3 +339,11 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   100% { transform: scale(1); }
 }
 .popping { animation: pop 0.3s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms \!important;
+    animation-iteration-count: 1 \!important;
+    transition-duration: 0.01ms \!important;
+  }
+}

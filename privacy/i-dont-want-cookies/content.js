@@ -279,19 +279,32 @@ function flushBadge() {
   pendingCount = 0;
 }
 
-// ── Message listener (from popup/settings) ────────────────────────────────────
+// ── Settings change listener (storage-based, no tabs permission needed) ───────
 
-browser.runtime.onMessage.addListener((msg) => {
-  if (msg.type === 'SETTINGS_UPDATED') {
-    settings = { ...settings, ...msg.settings };
+chrome.storage.onChanged.addListener((changes) => {
+  const hostname = location.hostname.replace(/^www\./, '');
+  let changed = false;
 
-    if (!settings.isEnabled || settings.whitelisted) {
-      // Disconnect observer — no longer blocking on this site
-      if (observer) { observer.disconnect(); observer = null; }
-    } else if (!observer && initialized) {
-      startObserver();
-      hideExisting();
-    }
+  if ('isEnabled' in changes) {
+    settings.isEnabled = changes.isEnabled.newValue !== false;
+    changed = true;
+  }
+  if ('autoDecline' in changes) {
+    settings.autoDecline = !!changes.autoDecline.newValue;
+    changed = true;
+  }
+  if ('whitelistedDomains' in changes) {
+    settings.whitelisted = (changes.whitelistedDomains.newValue || []).includes(hostname);
+    changed = true;
+  }
+
+  if (!changed) return;
+
+  if (!settings.isEnabled || settings.whitelisted) {
+    if (observer) { observer.disconnect(); observer = null; }
+  } else if (!observer && initialized) {
+    startObserver();
+    hideExisting();
   }
 });
 

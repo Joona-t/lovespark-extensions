@@ -119,14 +119,11 @@ async function handle(msg, sender) {
 
     case 'SET_ENABLED': {
       await chrome.storage.local.set({ isEnabled: msg.enabled });
-      // Notify all active tabs
-      broadcastSettings();
       return { ok: true };
     }
 
     case 'SET_AUTO_DECLINE': {
       await chrome.storage.local.set({ autoDecline: msg.autoDecline });
-      broadcastSettings();
       return { ok: true };
     }
 
@@ -135,7 +132,6 @@ async function handle(msg, sender) {
       const list = whitelistedDomains || [];
       if (!list.includes(msg.domain)) list.push(msg.domain);
       await chrome.storage.local.set({ whitelistedDomains: list });
-      notifyTab(sender.tab?.id, { isEnabled: true, whitelisted: true });
       return { ok: true };
     }
 
@@ -143,13 +139,11 @@ async function handle(msg, sender) {
       const { whitelistedDomains } = await chrome.storage.local.get('whitelistedDomains');
       const list = (whitelistedDomains || []).filter((d) => d !== msg.domain);
       await chrome.storage.local.set({ whitelistedDomains: list });
-      notifyTab(sender.tab?.id, { isEnabled: true, whitelisted: false });
       return { ok: true };
     }
 
     case 'SET_WHITELIST': {
       await chrome.storage.local.set({ whitelistedDomains: msg.domains });
-      broadcastSettings();
       return { ok: true };
     }
 
@@ -174,22 +168,4 @@ async function handle(msg, sender) {
   }
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-async function broadcastSettings() {
-  const data = await chrome.storage.local.get(['isEnabled', 'autoDecline', 'whitelistedDomains']);
-  const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
-  for (const tab of tabs) {
-    const domain = tab.url ? new URL(tab.url).hostname.replace(/^www\./, '') : '';
-    const whitelisted = (data.whitelistedDomains || []).includes(domain);
-    chrome.tabs.sendMessage(tab.id, {
-      type: 'SETTINGS_UPDATED',
-      settings: { isEnabled: data.isEnabled !== false, autoDecline: !!data.autoDecline, whitelisted },
-    }).catch(() => {}); // ignore tabs where content script isn't loaded
-  }
-}
-
-function notifyTab(tabId, settingsPatch) {
-  if (!tabId) return;
-  chrome.tabs.sendMessage(tabId, { type: 'SETTINGS_UPDATED', settings: settingsPatch }).catch(() => {});
-}
+// Settings propagation handled via chrome.storage.onChanged in content scripts
