@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Pink Anti-Doomscroll",
+  "name": "__MSG_extName__",
   "version": "0.1.0",
-  "description": "Gentle doomscroll awareness for Twitter/X, Reddit, and Facebook — pink tint, whisper nudges, and sparkles 🌸",
-  "permissions": ["storage"],
+  "description": "__MSG_extDescription__",
+  "permissions": [
+    "storage"
+  ],
   "content_scripts": [
     {
       "matches": [
@@ -12,7 +14,9 @@
         "https://www.reddit.com/*",
         "https://www.facebook.com/*"
       ],
-      "css": ["styles.css"],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_start"
     },
     {
@@ -22,7 +26,9 @@
         "https://www.reddit.com/*",
         "https://www.facebook.com/*"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],
@@ -40,8 +46,16 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["media/mascot.png"],
-      "matches": ["https://x.com/*", "https://twitter.com/*", "https://www.reddit.com/*", "https://www.facebook.com/*"]
+      "resources": [
+        "media/mascot.png"
+      ],
+      "matches": [
+        "https://x.com/*",
+        "https://twitter.com/*",
+        "https://www.reddit.com/*",
+        "https://www.facebook.com/*"
+      ]
     }
-  ]
+  ],
+  "default_locale": "en"
 }
