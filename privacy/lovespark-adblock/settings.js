@@ -1,5 +1,20 @@
 'use strict';
 
+// Dark mode
+chrome.storage.local.get(['darkMode'], ({ darkMode }) => {
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  const btn = document.getElementById('btnDarkMode');
+  if (btn) btn.textContent = darkMode ? '☀️' : '🌙';
+});
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  chrome.storage.local.set({ darkMode: !isDark });
+  const btn = document.getElementById('btnDarkMode');
+  if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+}
+document.getElementById('btnDarkMode').addEventListener('click', toggleTheme);
+
 // ── DOM refs ──────────────────────────────────────────────────────────────────
 
 const toggleEnabled  = document.getElementById('toggle-enabled');
@@ -66,7 +81,7 @@ function highlightIntensity(level) {
   document.querySelectorAll('.intensity-opt').forEach((el) => {
     const active = el.dataset.level === level;
     el.querySelector('.opt-card').style.setProperty(
-      'border-color', active ? 'var(--pink-hot)' : ''
+      'border-color', active ? 'var(--ls-pink-accent)' : ''
     );
   });
 }
