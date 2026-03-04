@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LoveSpark Syntax Art",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Right-click any image to convert it into syntax-highlighted code art 🌸",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "contextMenus",
     "offscreen",
@@ -31,5 +31,6 @@
         "justification": "This extension does not collect, transmit, or store any user data."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }
