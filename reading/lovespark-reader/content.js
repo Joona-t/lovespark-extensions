@@ -1,52 +1,50 @@
-// LoveSpark Reader — content.js
-// Injected into every page by background.js via chrome.scripting.executeScript().
-// Sole responsibility: manage the lovespark-* class on <html>.
-// CSS does all the visual work — this just flips the switch.
+/**
+ * LoveSpark Reader — content.js
+ * Storage-driven class toggler. No message passing to background.
+ * CSS does all visual work — this just manages the class on <html>.
+ */
 'use strict';
 
-(function () {
-  // Guard: don't initialise twice in the same window
-  if (window.__loveSparkReader) return;
-  window.__loveSparkReader = true;
+const CLASSES = ['lovespark-sakura', 'lovespark-hotpink', 'lovespark-starlight'];
+const DEFAULT_STATE = { enabled: true, mode: 'sakura', disabledSites: [] };
 
-  const HTML    = document.documentElement;
-  const CLASSES = ['lovespark-sakura', 'lovespark-hotpink', 'lovespark-starlight'];
+let state = { ...DEFAULT_STATE };
 
-  // ── Class helpers ──────────────────────────────────────────────────────────
+function applyState() {
+  const html = document.documentElement;
+  CLASSES.forEach(c => html.classList.remove(c));
 
-  function applyMode(mode) {
-    CLASSES.forEach(c => HTML.classList.remove(c));
-    if (mode) HTML.classList.add(`lovespark-${mode}`);
+  if (!state.enabled) return;
+  if ((state.disabledSites || []).includes(location.hostname)) return;
+
+  html.classList.add('lovespark-' + state.mode);
+}
+
+// ── Init: read storage, apply immediately ───────────────────────────────────
+
+browser.storage.local.get(Object.keys(DEFAULT_STATE)).then(data => {
+  state = { ...DEFAULT_STATE, ...data };
+  applyState();
+}).catch(() => {
+  applyState();
+});
+
+// ── Live updates: storage.onChanged fires when popup writes settings ────────
+
+browser.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName !== 'local') return;
+
+  for (const key of Object.keys(changes)) {
+    if (key in state) state[key] = changes[key].newValue;
   }
 
-  function removeAll() {
-    CLASSES.forEach(c => HTML.classList.remove(c));
+  applyState();
+});
+
+// ── Hostname message: popup asks for active tab's hostname ──────────────────
+
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'getHostname') {
+    sendResponse({ hostname: location.hostname });
   }
-
-  // ── Initial state ──────────────────────────────────────────────────────────
-
-  chrome.runtime.sendMessage({ action: 'getState' }, (response) => {
-    if (chrome.runtime.lastError || !response) return;
-
-    const { enabled, mode, disabledSites } = response;
-    const hostname = location.hostname;
-
-    if (enabled && !(disabledSites || []).includes(hostname)) {
-      applyMode(mode);
-    }
-  });
-
-  // ── Live message listener ──────────────────────────────────────────────────
-  // background.js and popup.js both send messages here for instant updates.
-
-  chrome.runtime.onMessage.addListener((message) => {
-    switch (message.action) {
-      case 'apply':
-        applyMode(message.mode);
-        break;
-      case 'remove':
-        removeAll();
-        break;
-    }
-  });
-})();
+});

@@ -71,6 +71,17 @@ html.lovespark-starlight [style*="background-image"] {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   ACCESSIBILITY — disable Starlight shimmer for reduced-motion users
+════════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  html.lovespark-starlight {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    HARD EXCLUSIONS — never filter these regardless of mode
    Applied across all modes with a specificity boost.
 ════════════════════════════════════════════════════════════════════════════ */
