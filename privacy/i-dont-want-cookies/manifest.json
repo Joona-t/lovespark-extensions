@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "I Don't Want Cookies",
+  "name": "__MSG_extName__",
   "version": "1.0.1",
-  "description": "Hides cookie consent banners and GDPR notices automatically. Part of the LoveSpark Suite 💕",
+  "description": "__MSG_extDescription__",
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
@@ -23,16 +23,27 @@
     "tabs",
     "alarms"
   ],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "css": ["content-styles.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "content-styles.css"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["<all_urls>"],
-      "js": ["lib/browser-polyfill.min.js", "content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/browser-polyfill.min.js",
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],
@@ -45,5 +56,6 @@
       "id": "cookies@lovespark.suite",
       "strict_min_version": "109.0"
     }
-  }
+  },
+  "default_locale": "en"
 }
