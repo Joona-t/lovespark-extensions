@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porn Blocker Rewire Brain 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: #fff0f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* ── Animated background blobs ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+      animation: float 8s ease-in-out infinite;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #ffb3d1; top: -100px; left: -100px; animation-delay: 0s; }
+    .blob-2 { width: 400px; height: 400px; background: #ffd6e7; bottom: -80px; right: -80px; animation-delay: -3s; }
+    .blob-3 { width: 300px; height: 300px; background: #ffe4f0; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -6s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* ── Floating hearts ── */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: riseUp linear infinite;
+      opacity: 0;
+    }
+    @keyframes riseUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateY(-20px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Main card ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 2px solid rgba(255, 182, 213, 0.5);
+      border-radius: 28px;
+      padding: 44px 40px 36px;
+      max-width: 580px;
+      width: 100%;
+      text-align: center;
+      box-shadow:
+        0 20px 60px rgba(255, 100, 160, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+        0 1px 0 rgba(255, 200, 220, 0.6) inset;
+      animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.92); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── Streak badge ── */
+    .streak {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 0.72rem;
+      color: #e91e8c;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffe0ee, #ffd0e0);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 179, 208, 0.5);
+    }
+
+    /* ── Blocked count badge ── */
+    .blocked-badge {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-size: 0.72rem;
+      color: #c2185b;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffe0ee, #ffd0e0);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 179, 208, 0.5);
+    }
+
+    .brand {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ff80b0;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .emoji-big {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: 12px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      color: #c2185b;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .message {
+      font-size: 0.95rem;
+      color: #7a4060;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Breathing exercise ── */
+    .breathe-box {
+      background: linear-gradient(135deg, #fff0f7, #ffe0ee);
+      border: 1.5px solid #ffb3d0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .breathe-label {
+      font-size: 0.78rem;
+      color: #e91e8c;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .breathe-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffb3d1, #ff80b0);
+      margin: 0 auto;
+      animation: breathe 7s ease-in-out infinite;
+      box-shadow: 0 0 0 0 rgba(255, 128, 176, 0.4);
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(255,128,176,0.4); }
+      35% { transform: scale(1.5); box-shadow: 0 0 0 16px rgba(255,128,176,0.0); }
+      50% { transform: scale(1.5); }
+      85% { transform: scale(1); }
+    }
+    .breathe-text {
+      font-size: 0.72rem;
+      color: #b06080;
+      margin-top: 8px;
+    }
+    .breathe-phase {
+      font-weight: 700;
+      color: #e91e8c;
+    }
+
+    /* ── Buttons ── */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 50px;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+      text-align: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      box-shadow: 0 4px 15px rgba(233, 30, 140, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233, 30, 140, 0.4); }
+
+    .btn-secondary {
+      background: transparent;
+      color: #c2185b;
+      border: 2px solid #ffb3d0;
+    }
+    .btn-secondary:hover { background: #fff0f7; transform: translateY(-1px); }
+
+    .btn-redirect {
+      background: linear-gradient(135deg, #ffd0e0, #ffb3d0);
+      color: #8b1a4a;
+      box-shadow: 0 2px 10px rgba(255, 100, 160, 0.15);
+    }
+    .btn-redirect:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(255, 100, 160, 0.25); }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* ── Report form ── */
+    .report-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .report-toggle {
+      font-size: 0.75rem;
+      color: #c08090;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      font-family: 'Comfortaa', cursive;
+    }
+    .report-toggle:hover { color: #e91e8c; }
+
+    .report-form {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      background: #fff5f9;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 179, 208, 0.4);
+    }
+    .report-form.visible { display: block; animation: cardIn 0.3s ease; }
+
+    .report-form input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'Comfortaa', cursive;
+      font-size: 0.82rem;
+      background: white;
+      color: #4a1a30;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .report-form input:focus { border-color: #e91e8c; }
+    .report-form input::placeholder { color: #d0a0b8; }
+
+    .report-submit {
+      margin-top: 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(135deg, #ffb3d0, #e91e8c);
+      color: white;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .report-submit:hover { transform: translateY(-1px); }
+
+    .report-msg {
+      font-size: 0.72rem;
+      color: #e91e8c;
+      margin-top: 8px;
+      display: none;
+    }
+    .report-msg.visible { display: block; }
+
+    /* ── LoveSpark apps section ── */
+    .apps-section {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .apps-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .app-chip {
+      background: #fff0f7;
+      border: 1.5px solid #ffd0e8;
+      border-radius: 10px;
+      padding: 8px 10px;
+      text-decoration: none;
+      color: #b02060;
+      font-size: 0.72rem;
+      font-weight: 700;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .app-chip:hover {
+      background: #ffe0f0;
+      border-color: #ffb3d0;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(255, 100, 160, 0.12);
+    }
+
+    /* ── Bypass section ── */
+    .bypass-section {
+      margin-top: 16px;
+    }
+    .dismiss {
+      display: inline-block;
+      font-size: 0.7rem;
+      color: #c8a8b8;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      font-family: 'Comfortaa', cursive;
+      transition: color 0.2s;
+    }
+    .dismiss:hover { color: #c2185b; }
+    .dismiss:disabled { cursor: not-allowed; opacity: 0.5; }
+
+    .bypass-countdown {
+      display: none;
+      margin-top: 10px;
+      padding: 14px;
+      background: linear-gradient(135deg, #fff5f9, #ffe8f0);
+      border-radius: 14px;
+      border: 1.5px solid #ffc8d8;
+    }
+    .bypass-countdown.visible { display: block; animation: cardIn 0.3s ease; }
+
+    .countdown-text {
+      font-size: 0.82rem;
+      color: #8a3060;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .countdown-timer {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #e91e8c;
+      font-weight: 700;
+    }
+    .countdown-bar {
+      width: 100%;
+      height: 4px;
+      background: #ffe0ee;
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .countdown-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff80b0, #e91e8c);
+      border-radius: 4px;
+      transition: width 1s linear;
+    }
+    .bypass-confirm {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 24px;
+      border-radius: 20px;
+      border: 2px solid #e08090;
+      background: transparent;
+      color: #a04060;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .bypass-confirm.visible { display: inline-block; }
+    .bypass-confirm:hover { background: #fff0f5; }
+
+    .bypass-reason {
+      display: none;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'Comfortaa', cursive;
+      font-size: 0.78rem;
+      background: white;
+      color: #4a1a30;
+      margin-top: 8px;
+      outline: none;
+    }
+    .bypass-reason.visible { display: block; }
+    .bypass-reason::placeholder { color: #d0a0b8; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 32px 24px 28px; }
+      h1 { font-size: 1.5rem; }
+      .apps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="card">
+    <div class="blocked-badge" id="blockedBadge">🛡 0 blocked</div>
+    <div class="streak" id="streakBadge">🔥 0 days</div>
+    <div class="brand">Porn Blocker Rewire Brain 🌸</div>
+
+    <span class="emoji-big" id="emoji">🌸</span>
+    <h1 id="title">Pause &amp; Breathe</h1>
+    <p class="message" id="messageText">You are more than your impulses. Take three deep breaths and return to what truly matters.</p>
+
+    <div class="breathe-box">
+      <div class="breathe-label">✿ Breathe with me</div>
+      <div class="breathe-circle" id="breatheCircle"></div>
+      <div class="breathe-text"><span class="breathe-phase" id="breathePhase">Breathe in…</span></div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" id="btnBack">↩ Take Me Back to Safety</button>
+      <button class="btn btn-redirect" id="btnRedirect" style="display:none;">🎯 Go to My Focus Page</button>
+      <a href="https://joona-t.github.io" class="btn btn-secondary" target="_blank">🌸 Visit LoveSpark Portfolio</a>
+    </div>
+
+    <!-- Report a missed site -->
+    <div class="report-section">
+      <button class="report-toggle" id="reportToggle">🚩 Report a site that should be blocked</button>
+      <div class="report-form" id="reportForm">
+        <input type="text" id="reportUrl" placeholder="e.g. example.com or r/subredditname">
+        <button class="report-submit" id="reportSubmit">Submit Report</button>
+        <div class="report-msg" id="reportMsg">Thanks! We've logged this for review.</div>
+      </div>
+    </div>
+
+    <!-- LoveSpark Ecosystem -->
+    <div class="apps-section">
+      <div class="apps-label">✦ More LoveSpark Tools</div>
+      <div class="apps-grid">
+        <a href="https://joona-t.github.io" target="_blank" class="app-chip">🌸 Portfolio</a>
+        <a href="https://chromewebstore.google.com/search/LoveSpark" target="_blank" class="app-chip">🧠 Anti Brainrot</a>
+        <a href="https://chromewebstore.google.com/search/LoveSpark%20tab%20counter" target="_blank" class="app-chip">📑 Are You Cooked?</a>
+        <a href="https://chromewebstore.google.com/search/I%20Dont%20Want%20Cookies%20LoveSpark" target="_blank" class="app-chip">🍪 Cookie Blocker</a>
+        <a href="https://ko-fi.com/joona_t" target="_blank" class="app-chip">☕ Support Us</a>
+        <a href="https://chromewebstore.google.com/search/LoveSpark" target="_blank" class="app-chip">🧩 All Extensions</a>
+      </div>
+    </div>
+
+    <!-- Bypass with friction -->
+    <div class="bypass-section">
+      <button class="dismiss" id="dismissBtn">I understand the risks, proceed anyway</button>
+      <div class="bypass-countdown" id="bypassCountdown">
+        <div class="countdown-text">Take a moment to reflect. Are you sure this is what you want right now?</div>
+        <div class="countdown-timer" id="countdownTimer">30</div>
+        <div class="countdown-bar"><div class="countdown-fill" id="countdownFill"></div></div>
+        <input type="text" class="bypass-reason" id="bypassReason" placeholder="Why are you proceeding? (optional, for your own reflection)">
+        <button class="bypass-confirm" id="bypassConfirm">I've reflected, proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Mindful messages ──
+    const MESSAGES = [
+      { emoji: '🌸', title: "Pause & Breathe", message: "You are more than your impulses. Take three deep breaths and return to what truly matters." },
+      { emoji: '✨', title: "You've Got This", message: "Every moment is a fresh start. Your goals are waiting for you — and they're worth it." },
+      { emoji: '🌿', title: "Check In With Yourself", message: "What are you really looking for right now? Rest, connection, or excitement? There are better ways to find it." },
+      { emoji: '💖', title: "Be Kind to Future You", message: "The version of you an hour from now will thank you for choosing differently today." },
+      { emoji: '🦋', title: "Growth Happens Here", message: "Discomfort is temporary. The strength you build by redirecting your attention is permanent." },
+      { emoji: '🌙', title: "You Deserve Better", message: "Your mind and your time are precious. Spend them on things that build you up." },
+      { emoji: '⭐', title: "Stay on Track", message: "Whatever you're building, whatever you're dreaming — that's where your energy belongs right now." },
+      { emoji: '🕊️', title: "Freedom Feels Good", message: "True freedom isn't doing whatever feels good in the moment. It's building the life you actually want." },
+      { emoji: '🧠', title: "Rewire Your Brain", message: "Every time you choose differently, you're literally building new neural pathways. This moment is rewiring your brain for the better." },
+      { emoji: '🌊', title: "Ride the Wave", message: "Urges are like waves — they rise, peak, and fall. You don't have to act on them. Just wait." },
+      { emoji: '🔥', title: "Protect Your Streak", message: "You've been doing so well. Don't trade a streak you're proud of for a moment you'll regret." },
+      { emoji: '💪', title: "You Are Stronger", message: "You are stronger than the habit. Every time you resist, you prove it to yourself." },
+    ];
+
+    // ── Initialize ──
+    const msg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+    document.getElementById('emoji').textContent = msg.emoji;
+    document.getElementById('title').textContent = msg.title;
+    document.getElementById('messageText').textContent = msg.message;
+
+    // Get the blocked URL from query params
+    const params = new URLSearchParams(window.location.search);
+    const blockedUrl = params.get('url') || '';
+
+    // ── Floating hearts ──
+    const heartEmojis = ['💕', '🌸', '✨', '💖', '🦋', '🧠', '⭐'];
+    const heartsContainer = document.getElementById('hearts');
+    for (let i = 0; i < 14; i++) {
+      const span = document.createElement('span');
+      span.className = 'heart';
+      span.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      span.style.left = (Math.random() * 100) + '%';
+      span.style.animationDuration = (6 + Math.random() * 8) + 's';
+      span.style.animationDelay = '-' + (Math.random() * 8) + 's';
+      heartsContainer.appendChild(span);
+    }
+
+    // ── Breathing phase text ──
+    const breathePhase = document.getElementById('breathePhase');
+    const phases = ['Breathe in…', 'Hold…', 'Breathe out…', 'Rest…'];
+    const phaseDurations = [2450, 2450, 2450, 0]; // Approximate to match 7s animation
+    let phaseIdx = 0;
+    function cycleBreathing() {
+      breathePhase.textContent = phases[phaseIdx];
+      const dur = phaseDurations[phaseIdx] || 1750;
+      phaseIdx = (phaseIdx + 1) % phases.length;
+      setTimeout(cycleBreathing, dur);
+    }
+    cycleBreathing();
+
+    // ── Load stats ──
+    let cooldownSec = 30;
+
+    chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
+      if (chrome.runtime.lastError || !data) return;
+
+      const streak = data.streakDays || 0;
+      const blocked = data.blockedCount || 0;
+      cooldownSec = data.bypassCooldownSec || 30;
+
+      document.getElementById('streakBadge').textContent = `🔥 ${streak} day${streak !== 1 ? 's' : ''}`;
+      document.getElementById('blockedBadge').textContent = `🛡 ${blocked} blocked`;
+
+      // Show redirect button if custom URL is set
+      const redirectUrl = data.redirectUrl;
+      if (redirectUrl) {
+        const btn = document.getElementById('btnRedirect');
+        btn.style.display = 'block';
+        btn.addEventListener('click', () => {
+          window.location.href = redirectUrl;
+        });
+      }
+    });
+
+    // ── Back button ──
+    document.getElementById('btnBack').addEventListener('click', () => {
+      if (window.history.length > 2) {
+        window.history.go(-2);
+      } else {
+        window.location.href = 'https://joona-t.github.io';
+      }
+    });
+
+    // ── Report a site ──
+    document.getElementById('reportToggle').addEventListener('click', () => {
+      document.getElementById('reportForm').classList.toggle('visible');
+    });
+
+    document.getElementById('reportSubmit').addEventListener('click', () => {
+      const url = document.getElementById('reportUrl').value.trim();
+      if (!url) return;
+      chrome.runtime.sendMessage({ type: 'REPORT_SITE', url }, () => {
+        document.getElementById('reportMsg').classList.add('visible');
+        document.getElementById('reportUrl').value = '';
+        setTimeout(() => {
+          document.getElementById('reportMsg').classList.remove('visible');
+          document.getElementById('reportForm').classList.remove('visible');
+        }, 3000);
+      });
+    });
+
+    // ── Bypass with timed cooldown ──
+    let countdownInterval = null;
+
+    document.getElementById('dismissBtn').addEventListener('click', () => {
+      const countdown = document.getElementById('bypassCountdown');
+      const reason = document.getElementById('bypassReason');
+
+      if (countdown.classList.contains('visible')) {
+        // Already showing — hide it
+        countdown.classList.remove('visible');
+        if (countdownInterval) clearInterval(countdownInterval);
+        return;
+      }
+
+      countdown.classList.add('visible');
+      reason.classList.add('visible');
+
+      let remaining = cooldownSec;
+      const timerEl = document.getElementById('countdownTimer');
+      const fillEl = document.getElementById('countdownFill');
+      const confirmBtn = document.getElementById('bypassConfirm');
+
+      timerEl.textContent = remaining;
+      fillEl.style.width = '0%';
+      confirmBtn.classList.remove('visible');
+
+      countdownInterval = setInterval(() => {
+        remaining--;
+        timerEl.textContent = remaining;
+        fillEl.style.width = ((cooldownSec - remaining) / cooldownSec * 100) + '%';
+
+        if (remaining <= 0) {
+          clearInterval(countdownInterval);
+          timerEl.textContent = '✓';
+          confirmBtn.classList.add('visible');
+        }
+      }, 1000);
+    });
+
+    document.getElementById('bypassConfirm').addEventListener('click', () => {
+      const reason = document.getElementById('bypassReason').value.trim();
+
+      // Log the bypass
+      chrome.runtime.sendMessage({
+        type: 'LOG_BYPASS',
+        url: blockedUrl,
+        reason: reason
+      });
+
+      // Navigate to the original URL
+      if (blockedUrl) {
+        window.location.href = blockedUrl;
+      } else {
+        window.history.back();
+      }
+    });
+  </script>
+</body>
+</html>
