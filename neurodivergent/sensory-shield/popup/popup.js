@@ -1,5 +1,24 @@
 'use strict';
 
+// Theme system
+const THEMES = ['dark', 'retro', 'beige', 'slate'];
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('themeTab');
+  if (btn) btn.textContent = t;
+}
+function cycleTheme() {
+  const cur = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+  browser.storage.local.set({ theme: next });
+}
+browser.storage.local.get(['theme']).then(({ theme }) => {
+  applyTheme(theme || 'retro');
+});
+document.getElementById('themeTab').addEventListener('click', cycleTheme);
+
 /**
  * Sensory Shield — Popup
  *
