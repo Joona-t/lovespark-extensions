@@ -1,5 +1,20 @@
 // Focus Blossom — Popup Dashboard
 
+// Dark mode
+chrome.storage.local.get(['darkMode'], ({ darkMode }) => {
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  const btn = document.getElementById('btnDarkMode');
+  if (btn) btn.textContent = darkMode ? '☀️' : '🌙';
+});
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  chrome.storage.local.set({ darkMode: !isDark });
+  const btn = document.getElementById('btnDarkMode');
+  if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+}
+document.getElementById('btnDarkMode').addEventListener('click', toggleTheme);
+
 const STAGE_EMOJIS = ["\ud83c\udf31", "\ud83c\udf3f", "\ud83c\udf37", "\ud83c\udf38", "\ud83c\udf3a"];
 
 let expandedDomain = null;
