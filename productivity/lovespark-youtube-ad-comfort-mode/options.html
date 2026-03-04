@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LoveSpark Comfort Mode Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main class="panel">
+      <header class="hero">
+        <p class="eyebrow">LoveSpark</p>
+        <h1>YouTube Ad Comfort Mode</h1>
+        <p class="subtitle">
+          Comfort adjustments only. Ads are never blocked, hidden, or bypassed.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Behavior</h2>
+
+        <label class="row">
+          <span>
+            <strong>Enable Comfort Mode by default</strong>
+            <small>Applied when a new YouTube tab loads.</small>
+          </span>
+          <input id="comfortModeDefaultEnabled" type="checkbox" />
+        </label>
+
+        <label class="row">
+          <span>
+            <strong>Auto-mute during ads</strong>
+            <small>Mutes ad playback while an ad is active.</small>
+          </span>
+          <input id="autoMuteEnabled" type="checkbox" />
+        </label>
+
+        <label class="row">
+          <span>
+            <strong>Low-volume mode during ads</strong>
+            <small>
+              Uses a target volume instead of mute. Takes precedence over
+              auto-mute.
+            </small>
+          </span>
+          <input id="lowVolumeEnabled" type="checkbox" />
+        </label>
+
+        <div class="slider-row">
+          <label for="lowVolumePercent">
+            Ad low-volume level:
+            <span id="lowVolumeValue">10%</span>
+          </label>
+          <input
+            id="lowVolumePercent"
+            type="range"
+            min="0"
+            max="30"
+            step="1"
+            value="10"
+          />
+        </div>
+
+        <label class="row">
+          <span>
+            <strong>Dim player during ads</strong>
+            <small>Shows a subtle retro-pink overlay and badge.</small>
+          </span>
+          <input id="dimOverlayEnabled" type="checkbox" />
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Hotkey</h2>
+        <p class="hotkey-line">
+          Toggle Comfort Mode on the current tab:
+          <code id="shortcutValue">Loading…</code>
+        </p>
+        <a class="link" href="chrome://extensions/shortcuts" target="_blank">
+          Open Chrome shortcut settings
+        </a>
+      </section>
+
+      <p id="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="options.js"></script>
+  </body>
+</html>

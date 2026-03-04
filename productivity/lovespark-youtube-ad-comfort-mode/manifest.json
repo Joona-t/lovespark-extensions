@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark — YouTube Ad Comfort Mode",
+  "description": "Comfort-focused YouTube ad handling: adjusts volume and optional overlay during ads without blocking or bypassing ads.",
+  "version": "1.0.0",
+  "permissions": ["storage", "scripting", "activeTab"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-comfort-mode": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Toggle LoveSpark Comfort Mode for the current tab"
+    }
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_title": "LoveSpark — YouTube Ad Comfort Mode"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
