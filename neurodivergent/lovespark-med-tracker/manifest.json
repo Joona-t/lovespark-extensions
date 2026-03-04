@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LoveSpark Med Tracker",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Privacy-first medication tracking with one-click dose logging. Never wonder \"did I take my meds?\" again 💊💕",
+  "description": "__MSG_extDescription__",
   "minimum_chrome_version": "102",
   "homepage_url": "https://github.com/Joona-t/lovespark-med-tracker",
   "permissions": [
@@ -35,5 +35,6 @@
         "justification": "This extension does not collect, transmit, or store any user data. All medication data is stored locally on the user's device only."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }
