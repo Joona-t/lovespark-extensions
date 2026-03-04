@@ -26,13 +26,13 @@ const dataStatus = document.getElementById("dataStatus");
 // ── State helpers ─────────────────────────────────────────────────────────────
 
 async function getState() {
-  const stored = await browser.storage.sync.get(null);
+  const stored = await browser.storage.local.get(null);
   if (!stored || !stored.schemaVersion) return structuredClone(DEFAULT_STATE);
   return stored;
 }
 
 async function writeState(state) {
-  await browser.storage.sync.set(state);
+  await browser.storage.local.set(state);
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────

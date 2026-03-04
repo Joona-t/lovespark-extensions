@@ -13,9 +13,9 @@ const DEFAULT_STATE = {
   }
 };
 
-browser.runtime.onInstalled.addListener(async () => {
-  const stored = await browser.storage.sync.get("schemaVersion");
+chrome.runtime.onInstalled.addListener(async () => {
+  const stored = await chrome.storage.local.get("schemaVersion");
   if (!stored.schemaVersion) {
-    await browser.storage.sync.set(DEFAULT_STATE);
+    await chrome.storage.local.set(DEFAULT_STATE);
   }
 });

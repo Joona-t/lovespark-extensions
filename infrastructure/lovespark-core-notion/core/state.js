@@ -19,7 +19,7 @@ globalThis.__lovespark.state = {
   DEFAULT_STATE,
 
   async getState() {
-    const stored = await browser.storage.sync.get(null);
+    const stored = await browser.storage.local.get(null);
     if (!stored || !stored.schemaVersion) return structuredClone(DEFAULT_STATE);
     return stored;
   },
@@ -46,7 +46,7 @@ globalThis.__lovespark.state = {
         current[key] = patch[key];
       }
     }
-    await browser.storage.sync.set(current);
+    await browser.storage.local.set(current);
     return current;
   }
 };
