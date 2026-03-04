@@ -223,3 +223,11 @@ body {
   .adherence-pct.good { color: #0D9488; }
   .report-footer { color: #999; border-color: #ddd; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms \!important;
+    animation-iteration-count: 1 \!important;
+    transition-duration: 0.01ms \!important;
+  }
+}
