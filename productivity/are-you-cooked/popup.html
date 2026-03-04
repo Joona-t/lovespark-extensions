@@ -4,24 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Are You Cooked?</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
-    rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
-    <span class="title">are you cooked?</span>
-    <div class="mascot-wrap">
-      <img class="mascot panic-0" id="mascot" src="mascot.png" alt="bestie" />
-    </div>
-    <div class="count-wrapper">
-      <div class="tab-count" id="tabCount">—</div>
-      <div class="tabs-label">tabs open</div>
-    </div>
-    <div class="divider"></div>
-    <div class="verdict" id="verdict">counting...</div>
+  <div class="popup-container">
+    <header class="popup-header">
+      <img class="header-mascot" src="mascot.png" alt="Sparky — LoveSpark mascot" />
+      <span class="header-title">Are You Cooked?</span>
+      <button id="themeTab" class="theme-tab" title="Cycle theme" aria-label="Cycle theme">retro</button>
+    </header>
+
+    <main class="popup-content">
+      <div class="stats-card">
+        <div class="mascot-wrap">
+          <img class="mascot panic-0" id="mascot" src="mascot.png" alt="Sparky — LoveSpark mascot" />
+        </div>
+        <div class="count-wrapper">
+          <div class="tab-count" id="tabCount" role="status">—</div>
+          <div class="tabs-label">tabs open</div>
+        </div>
+        <div class="divider"></div>
+        <div class="verdict" id="verdict" aria-live="polite">counting...</div>
+      </div>
+    </main>
+
+    <footer class="popup-footer">
+      Part of LoveSpark Suite 💕
+    </footer>
   </div>
   <script src="popup.js"></script>
 </body>
