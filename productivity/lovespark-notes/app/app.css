@@ -162,36 +162,7 @@ body.theme-slate {
 }
 
 /* ── Theme Tab ────────────────────────────────────────── */
-.theme-tab {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(0, 0, 0, 0.08);
-  border: none;
-  border-radius: 999px;
-  padding: 3px 12px;
-  font-size: 10px;
-  font-style: italic;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  color: inherit;
-  transition: background 0.2s;
-  font-family: inherit;
-  z-index: 10;
-}
-.theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
-
-.btn-icon.theme-tab {
-  position: static;
-  width: auto;
-  border-radius: var(--ls-radius-sm);
-  padding: 0 10px;
-  font-size: 10px;
-  font-style: italic;
-  letter-spacing: 0.05em;
-}
-
-/* Theme transitions */
+.btn-icon/* Theme transitions */
 body, .header, .sidebar, .editor-pane, .editor-toolbar, .editor-footer,
 .note-item, .cat-item, .guide-card, .version-drawer, .toast {
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;

@@ -127,21 +127,6 @@ body.theme-slate {
   gap: 6px;
 }
 
-.theme-tab {
-  background: rgba(0, 0, 0, 0.08);
-  border: none;
-  border-radius: 999px;
-  padding: 3px 12px;
-  font-size: 10px;
-  font-style: italic;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  color: inherit;
-  transition: background 0.2s;
-  font-family: inherit;
-}
-.theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
-
 body { transition: background 0.3s ease, color 0.3s ease; }
 
 /* ── Reset ── */

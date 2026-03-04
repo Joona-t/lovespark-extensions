@@ -85,7 +85,7 @@ function cacheDom() {
   dom.btnDaily = $('btnDaily');
   dom.btnExportAll = $('btnExportAll');
   dom.btnImport = $('btnImport');
-  dom.themeTab = $('themeTab');
+  dom.themeToggle = $('themeToggle');
   dom.btnHelp = $('btnHelp');
   dom.btnGuideLink = $('btnGuideLink');
   dom.guideOverlay = $('guideOverlay');
@@ -1011,26 +1011,38 @@ async function renderBacklinks() {
   }
 }
 
-// ── Theme System ──────────────────────────────────────────────
-
-const THEMES = ['dark', 'retro', 'beige', 'slate'];
-let currentTheme = 'retro';
-
+// Theme dropdown
+const THEMES = ['retro', 'dark', 'beige', 'slate'];
+const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
 function applyTheme(t) {
   THEMES.forEach(n => document.body.classList.remove('theme-' + n));
   document.body.classList.add('theme-' + t);
-  currentTheme = t;
-  const btn = document.getElementById('themeTab');
-  if (btn) btn.textContent = 'Toggle: ' + t;
-  // Keep darkMode state in sync for any code that reads it
-  darkMode = (t === 'dark');
+  const label = document.getElementById('themeLabel');
+  if (label) label.textContent = THEME_NAMES[t] || t;
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === t);
+  });
 }
-
-function cycleTheme() {
-  const next = THEMES[(THEMES.indexOf(currentTheme) + 1) % THEMES.length];
-  applyTheme(next);
-  getStorage().setPref('theme', next);
-}
+(function initThemeDropdown() {
+  const toggle = document.getElementById('themeToggle');
+  const menu = document.getElementById('themeMenu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    menu.addEventListener('click', (e) => {
+      const opt = e.target.closest('.theme-option');
+      if (!opt) return;
+      const theme = opt.dataset.theme;
+      applyTheme(theme);
+      chrome.storage.local.set({ theme });
+      menu.classList.remove('open');
+    });
+    document.addEventListener('click', () => menu.classList.remove('open'));
+  }
+  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
+    if (!theme && darkMode) theme = 'dark';
+    applyTheme(theme || 'retro');
+  });
+})();
 
 // ── Mini Calendar ────────────────────────────────────────────
 
@@ -1182,7 +1194,7 @@ const COMMANDS = [
   { id: 'daily',        emoji: '📋', label: 'Daily Brain Dump',  shortcut: 'Cmd+D',       action: () => handleDaily() },
   { id: 'preview',      emoji: '👁', label: 'Toggle Preview',    shortcut: 'Cmd+P',       action: () => { if (activeNoteId) togglePreview(); } },
   { id: 'focus',        emoji: '🧘', label: 'Distraction Free',  shortcut: 'Cmd+Shift+F', action: () => { if (activeNoteId) toggleDistractionFree(); } },
-  { id: 'cycle-theme',  emoji: '🎨', label: 'Cycle Theme',        shortcut: '',             action: () => cycleTheme() },
+  { id: 'cycle-theme',  emoji: '🎨', label: 'Change Theme',        shortcut: '',             action: () => { const m = document.getElementById('themeMenu'); if (m) m.classList.toggle('open'); } },
   { id: 'export-note',  emoji: '📄', label: 'Export Note',       shortcut: 'Cmd+E',       action: () => handleExportNote() },
   { id: 'export-all',   emoji: '📦', label: 'Export All as ZIP', shortcut: '',             action: () => handleExportAll() },
   { id: 'import',       emoji: '📥', label: 'Import Notes',      shortcut: '',             action: () => dom.importInput.click() },
@@ -1423,8 +1435,7 @@ function bindEvents() {
     }
   });
 
-  // Theme cycle
-  dom.themeTab.addEventListener('click', cycleTheme);
+  // Theme dropdown is handled by initThemeDropdown() IIFE above
 
   // Guide
   dom.btnHelp.addEventListener('click', openGuide);
