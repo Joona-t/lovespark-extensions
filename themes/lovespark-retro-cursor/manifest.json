@@ -1,15 +1,24 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Retro Cursor Pack",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "10 cursor themes — retro pinks, pastels, cyber, mint, golden, holo, obsidian.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "permissions": ["storage"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "LoveSpark Retro Cursor Pack"
+    "default_title": "LoveSpark Retro Cursor Pack",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
   },
   "content_scripts": [
     {
