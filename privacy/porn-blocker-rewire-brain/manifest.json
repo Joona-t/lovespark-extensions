@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Porn Blocker Rewire Brain 🌸",
+  "name": "__MSG_extName__",
   "version": "2.0.0",
-  "description": "Rewire your brain with LoveSpark's mindful adult content blocker. Block sites, build streaks, and redirect your energy toward what truly matters.",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
     "declarativeNetRequest",
@@ -19,8 +19,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_start",
       "all_frames": false
     }
@@ -53,8 +57,13 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "blocked.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
-  ]
+  ],
+  "default_locale": "en"
 }
