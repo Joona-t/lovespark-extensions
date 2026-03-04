@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LoveSpark Notes",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "A calm, beautiful notes app for neurodivergent coders 💖",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
     "unlimitedStorage",
@@ -51,5 +51,6 @@
         "justification": "This extension does not collect, transmit, or store any user data."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }
