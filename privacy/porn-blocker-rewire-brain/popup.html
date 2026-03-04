@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Porn Blocker Rewire Brain</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -288,9 +288,124 @@
       font-family: 'Comfortaa', cursive;
     }
     .footer-settings:hover { color: #e91e8c; }
+
+    /* ── Theme Tab ── */
+    .theme-tab {
+      position: fixed;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.08);
+      border: none;
+      border-radius: 999px;
+      padding: 3px 12px;
+      font-size: 10px;
+      font-family: 'Comfortaa', cursive;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      color: inherit;
+      transition: background 0.2s;
+      z-index: 100;
+    }
+    .theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
+
+    /* ── Theme: Dark ── */
+    body.theme-dark {
+      background: linear-gradient(160deg, #1a1128 0%, #110d1a 100%);
+      color: #f0e6f6;
+    }
+    body.theme-dark .header { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .brand-name { color: #ff6eb4; }
+    body.theme-dark .tagline { color: #9b7aac; }
+    body.theme-dark .toggle-section { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .toggle-label { color: #f0e6f6; }
+    body.theme-dark .toggle-sub { color: #9b7aac; }
+    body.theme-dark .stats { background: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .stat { background: rgba(26, 15, 46, 0.85); }
+    body.theme-dark .stat-value { color: #ff6eb4; }
+    body.theme-dark .stat-label { color: #9b7aac; }
+    body.theme-dark .affirmation { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .affirmation-label { color: #ff6eb4; }
+    body.theme-dark .affirmation-text { color: #f0e6f6; }
+    body.theme-dark .quick-add { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .quick-add-label { color: #ff6eb4; }
+    body.theme-dark .quick-add-input { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.2); color: #f0e6f6; }
+    body.theme-dark .quick-add-input::placeholder { color: #9b7aac; }
+    body.theme-dark .apps { background: transparent; }
+    body.theme-dark .apps-label { color: #ff6eb4; }
+    body.theme-dark .app-link { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.13); color: #f0e6f6; }
+    body.theme-dark .app-desc { color: #9b7aac; }
+    body.theme-dark .footer { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .footer a { color: #ff6eb4; }
+    body.theme-dark .pause-section { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .pause-btn { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.2); color: #f0e6f6; }
+    body.theme-dark .pause-btn:hover { background: rgba(26, 15, 46, 0.95); }
+
+    /* ── Theme: Beige ── */
+    body.theme-beige {
+      background: #f5efe0;
+      color: #5c4a2a;
+      font-family: 'Lora', Georgia, serif;
+    }
+    body.theme-beige .header { background: #ede4ce; border-color: #d4c4a0; }
+    body.theme-beige .brand-name { color: #c4806a; }
+    body.theme-beige .tagline { color: #8b6f47; }
+    body.theme-beige .toggle-section { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .toggle-label { color: #5c4a2a; }
+    body.theme-beige .toggle-sub { color: #8b6f47; }
+    body.theme-beige .stats { background: #d4c4a0; }
+    body.theme-beige .stat { background: #ede4ce; }
+    body.theme-beige .stat-value { color: #c4806a; }
+    body.theme-beige .stat-label { color: #8b6f47; }
+    body.theme-beige .affirmation { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .affirmation-label { color: #c4806a; }
+    body.theme-beige .affirmation-text { color: #5c4a2a; }
+    body.theme-beige .quick-add { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .quick-add-label { color: #c4806a; }
+    body.theme-beige .quick-add-input { background: #f5efe0; border-color: #d4c4a0; color: #5c4a2a; }
+    body.theme-beige .quick-add-btn { background: linear-gradient(135deg, #c4806a, #a86c56); }
+    body.theme-beige .app-link { background: #ede4ce; border-color: #d4c4a0; color: #5c4a2a; }
+    body.theme-beige .app-desc { color: #8b6f47; }
+    body.theme-beige .footer { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .footer a { color: #c4806a; }
+    body.theme-beige input:checked + .slider { background: linear-gradient(135deg, #c4806a, #a86c56); }
+
+    /* ── Theme: Slate ── */
+    body.theme-slate {
+      background: #1e1e1e;
+      color: #ececec;
+    }
+    body.theme-slate .header { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .brand-name { color: #d4714e; }
+    body.theme-slate .tagline { color: #9a9a9a; }
+    body.theme-slate .toggle-section { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .toggle-label { color: #ececec; }
+    body.theme-slate .toggle-sub { color: #9a9a9a; }
+    body.theme-slate .stats { background: #4a4a4a; }
+    body.theme-slate .stat { background: #252525; }
+    body.theme-slate .stat-value { color: #d4714e; }
+    body.theme-slate .stat-label { color: #9a9a9a; }
+    body.theme-slate .affirmation { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .affirmation-label { color: #d4714e; }
+    body.theme-slate .affirmation-text { color: #ececec; }
+    body.theme-slate .quick-add { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .quick-add-label { color: #d4714e; }
+    body.theme-slate .quick-add-input { background: #2d2d2d; border-color: #4a4a4a; color: #ececec; }
+    body.theme-slate .quick-add-btn { background: linear-gradient(135deg, #d4714e, #e8926e); }
+    body.theme-slate .app-link { background: #252525; border-color: #4a4a4a; color: #ececec; }
+    body.theme-slate .app-desc { color: #9a9a9a; }
+    body.theme-slate .footer { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .footer a { color: #d4714e; }
+    body.theme-slate input:checked + .slider { background: linear-gradient(135deg, #d4714e, #e8926e); }
+    body.theme-slate .pause-section { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .pause-btn { background: #2d2d2d; border-color: #4a4a4a; color: #ececec; }
+
+    body { transition: background 0.3s ease, color 0.3s ease; }
   </style>
 </head>
 <body>
+
+  <button id="themeTab" class="theme-tab" title="Cycle theme" aria-label="Cycle theme">retro</button>
 
   <div class="header">
     <div class="logo">🧠</div>
