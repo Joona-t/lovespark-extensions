@@ -1,5 +1,24 @@
 'use strict';
 
+// Theme system
+const THEMES = ['dark', 'retro', 'beige', 'slate'];
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('themeTab');
+  if (btn) btn.textContent = t;
+}
+function cycleTheme() {
+  const cur = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';
+  const next = THEMES[(THEMES.indexOf(cur) + 1) % THEMES.length];
+  applyTheme(next);
+  chrome.storage.local.set({ theme: next });
+}
+chrome.storage.local.get(['theme'], ({ theme }) => {
+  applyTheme(theme || 'retro');
+});
+document.getElementById('themeTab').addEventListener('click', cycleTheme);
+
 /**
  * Popup — reads/writes settings to chrome.storage.sync.
  * Content scripts react via storage.onChanged — no direct message passing needed.

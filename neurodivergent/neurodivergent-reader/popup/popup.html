@@ -5,21 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neurodivergent Reader</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="popup-container">
 
     <!-- Header -->
-    <header class="popup-header">
+    <header class="popup-header" style="position: relative;">
       <div class="header-left">
         <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="36" height="36">
         <div class="header-text">
           <span class="header-title">Neurodivergent<br>Reader</span>
         </div>
       </div>
-      <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">&#x2699;&#xFE0F;</button>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button id="themeTab" class="theme-tab" style="position:static;" title="Cycle theme" aria-label="Cycle theme">retro</button>
+        <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">&#x2699;&#xFE0F;</button>
+      </div>
     </header>
 
     <!-- Status -->
