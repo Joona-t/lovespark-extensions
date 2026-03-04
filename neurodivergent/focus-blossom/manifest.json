@@ -1,15 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Focus Blossom",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "Every blocked site grows a flower garden. The longer you resist, the more it blooms \ud83c\udf38",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
     "alarms",
     "declarativeNetRequest",
     "notifications"
   ],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -24,21 +26,25 @@
   "declarative_net_request": {
     "rule_resources": []
   },
-  "web_accessible_resources": [{
-    "resources": [
-      "blocked.html",
-      "blocked.css",
-      "blocked.js",
-      "garden.js",
-      "garden-sprites.js",
-      "affirmations.js",
-      "mascot.png",
-      "settings.html",
-      "settings.css",
-      "settings.js"
-    ],
-    "matches": ["<all_urls>"]
-  }],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "blocked.html",
+        "blocked.css",
+        "blocked.js",
+        "garden.js",
+        "garden-sprites.js",
+        "affirmations.js",
+        "mascot.png",
+        "settings.html",
+        "settings.css",
+        "settings.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
   "icons": {
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
@@ -51,5 +57,6 @@
         "justification": "This extension does not collect, transmit, or store any user data."
       }
     }
-  }
+  },
+  "default_locale": "en"
 }
