@@ -85,10 +85,10 @@ function bindEvents() {
 
 async function loadSettings() {
   try {
-    const stored = await chrome.storage.sync.get(STORAGE_KEY);
+    const stored = await chrome.storage.local.get(STORAGE_KEY);
     const normalized = normalizeSettings(stored?.[STORAGE_KEY]);
     if (!stored?.[STORAGE_KEY]) {
-      await chrome.storage.sync.set({ [STORAGE_KEY]: normalized });
+      await chrome.storage.local.set({ [STORAGE_KEY]: normalized });
     }
     return normalized;
   } catch (_error) {
@@ -114,7 +114,7 @@ function updateLowVolumeControlState() {
 
 async function saveSettings() {
   try {
-    await chrome.storage.sync.set({ [STORAGE_KEY]: normalizeSettings(settings) });
+    await chrome.storage.local.set({ [STORAGE_KEY]: normalizeSettings(settings) });
     showStatus("Saved.");
   } catch (_error) {
     showStatus("Save failed.");

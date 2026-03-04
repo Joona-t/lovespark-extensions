@@ -40,9 +40,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function ensureDefaultSettings() {
   try {
-    const stored = await chrome.storage.sync.get(STORAGE_KEY);
+    const stored = await chrome.storage.local.get(STORAGE_KEY);
     if (!stored?.[STORAGE_KEY]) {
-      await chrome.storage.sync.set({ [STORAGE_KEY]: DEFAULT_SETTINGS });
+      await chrome.storage.local.set({ [STORAGE_KEY]: DEFAULT_SETTINGS });
     }
   } catch (error) {
     console.warn("LoveSpark: failed to initialize default settings.", error);

@@ -93,7 +93,7 @@
 
     async loadSettings() {
       try {
-        const stored = await chrome.storage.sync.get(STORAGE_KEY);
+        const stored = await chrome.storage.local.get(STORAGE_KEY);
         this.settings = normalizeSettings(stored?.[STORAGE_KEY]);
       } catch (_error) {
         this.settings = { ...DEFAULT_SETTINGS };
