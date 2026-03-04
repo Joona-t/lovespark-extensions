@@ -1021,7 +1021,7 @@ function applyTheme(t) {
   document.body.classList.add('theme-' + t);
   currentTheme = t;
   const btn = document.getElementById('themeTab');
-  if (btn) btn.textContent = t;
+  if (btn) btn.textContent = 'Toggle: ' + t;
   // Keep darkMode state in sync for any code that reads it
   darkMode = (t === 'dark');
 }

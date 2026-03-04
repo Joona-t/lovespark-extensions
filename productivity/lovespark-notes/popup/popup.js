@@ -12,7 +12,7 @@ function applyTheme(t) {
   THEMES.forEach(n => document.body.classList.remove('theme-' + n));
   document.body.classList.add('theme-' + t);
   const btn = document.getElementById('themeTab');
-  if (btn) btn.textContent = t;
+  if (btn) btn.textContent = 'Toggle: ' + t;
 }
 function cycleTheme() {
   const cur = THEMES.find(t => document.body.classList.contains('theme-' + t)) || 'retro';

@@ -121,10 +121,13 @@ body.theme-slate {
 }
 
 /* ── Theme Tab ────────────────────────────────────────── */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .theme-tab {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background: rgba(0, 0, 0, 0.08);
   border: none;
   border-radius: 999px;
@@ -136,7 +139,6 @@ body.theme-slate {
   color: inherit;
   transition: background 0.2s;
   font-family: inherit;
-  z-index: 10;
 }
 .theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
 

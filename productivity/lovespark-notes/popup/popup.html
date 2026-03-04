@@ -11,13 +11,15 @@
 <body>
 
 <div class="popup-container">
-  <header class="popup-header" style="position:relative">
+  <header class="popup-header">
     <div class="header-left">
       <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
       <span class="title"><span class="love">Love</span>Spark Notes</span>
     </div>
-    <button id="themeTab" class="theme-tab" title="Cycle theme" aria-label="Cycle theme">retro</button>
-    <button class="btn-open" id="btnOpen" title="Open full app (CMD+Shift+L)">Open app →</button>
+    <div class="header-right">
+      <button id="themeTab" class="theme-tab" title="Cycle theme" aria-label="Cycle theme">Toggle: retro</button>
+      <button class="btn-open" id="btnOpen" title="Open full app (CMD+Shift+L)">Open app →</button>
+    </div>
   </header>
 
   <div class="category-pills" id="categoryPills"></div>

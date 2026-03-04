@@ -181,6 +181,16 @@ body.theme-slate {
 }
 .theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
 
+.btn-icon.theme-tab {
+  position: static;
+  width: auto;
+  border-radius: var(--ls-radius-sm);
+  padding: 0 10px;
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
 /* Theme transitions */
 body, .header, .sidebar, .editor-pane, .editor-toolbar, .editor-footer,
 .note-item, .cat-item, .guide-card, .version-drawer, .toast {
