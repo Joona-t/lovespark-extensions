@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Med Tracker — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+
+    <header class="settings-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="settings-mascot">
+      <div>
+        <h1 class="settings-title">Med Tracker</h1>
+        <span class="settings-sub">Settings</span>
+      </div>
+    </header>
+
+    <!-- Medications -->
+    <section class="card">
+      <h2 class="card-title">💊 Medications</h2>
+      <div id="medList"></div>
+      <button class="btn-pink" id="addMedToggle">+ Add Medication</button>
+
+      <!-- Inline add form (hidden by default) -->
+      <div class="add-form" id="addForm" style="display:none">
+        <div class="form-row">
+          <label class="form-label" for="newMedName">Name</label>
+          <input type="text" id="newMedName" class="form-input" placeholder="e.g. Vyvanse">
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="newMedDosage">Dosage</label>
+          <input type="text" id="newMedDosage" class="form-input" placeholder="e.g. 30mg">
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="newMedFreq">Frequency</label>
+          <select id="newMedFreq" class="form-select"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Time of day</label>
+          <div class="slot-checkboxes" id="newMedSlots"></div>
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="newMedType">Type</label>
+          <select id="newMedType" class="form-select"></select>
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="newMedSupply">Supply count (optional)</label>
+          <input type="number" id="newMedSupply" class="form-input" placeholder="e.g. 30" min="0">
+        </div>
+        <div class="form-actions">
+          <button class="btn-ghost" id="cancelAdd">Cancel</button>
+          <button class="btn-pink" id="saveNewMed">Save</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reminders -->
+    <section class="card">
+      <h2 class="card-title">🔔 Reminders</h2>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Enable reminders</div>
+          <div class="setting-desc">Get gentle notifications when it's time for your meds</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="remindersToggle">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div id="reminderTimes" style="display:none">
+        <div class="time-slots-grid" id="reminderTimesGrid"></div>
+      </div>
+    </section>
+
+    <!-- Appearance -->
+    <section class="card">
+      <h2 class="card-title">🎨 Appearance</h2>
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Dark Rose mode</div>
+          <div class="setting-desc">Deep space vibes with neon pink accents</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="darkToggle">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Data -->
+    <section class="card">
+      <h2 class="card-title">📦 Data</h2>
+      <div class="btn-row">
+        <button class="btn-secondary" id="exportBtn">📥 Export JSON</button>
+        <button class="btn-secondary" id="importBtn">📂 Import JSON</button>
+      </div>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn-secondary" id="reportBtn">🩺 Doctor Report</button>
+        <button class="btn-danger" id="clearBtn">🗑️ Clear All Data</button>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="card">
+      <h2 class="card-title">💕 About</h2>
+      <div class="about-content">
+        <div class="privacy-badge">🔒 Your data never leaves this device</div>
+        <p class="about-text">LoveSpark Med Tracker v1.0.0</p>
+        <p class="about-text">MIT License — Free & open source forever</p>
+        <p class="about-disclaimer">
+          This is a personal tracking tool, not a medical device. Effect timelines are rough estimates and vary by individual. Always follow your prescriber's guidance.
+        </p>
+      </div>
+    </section>
+
+    <footer class="settings-footer">
+      Made with love by LoveSpark 💕
+    </footer>
+  </div>
+
+  <script type="module" src="settings.js"></script>
+</body>
+</html>

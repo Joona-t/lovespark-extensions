@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Med Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="header-mascot">
+        <div class="header-title-block">
+          <span class="header-title">Med Tracker</span>
+          <span class="header-sub">LoveSpark</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+        <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <!-- Empty state (before onboarding) -->
+    <div id="emptyState" style="display:none">
+      <div class="empty-card">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="empty-mascot">
+        <p class="empty-text">Let's get you set up! 💊</p>
+        <button class="btn-pink" id="setupBtn">Add Your Medications</button>
+      </div>
+    </div>
+
+    <!-- Main content (after onboarding) -->
+    <div id="mainContent" style="display:none">
+
+      <!-- View tabs -->
+      <nav class="view-tabs" role="tablist">
+        <button class="view-tab active" data-view="today" role="tab" aria-selected="true">Today</button>
+        <button class="view-tab" data-view="calendar" role="tab" aria-selected="false">Calendar</button>
+      </nav>
+
+      <!-- Today View -->
+      <main id="todayView" class="view-panel" role="tabpanel">
+        <!-- Progress section -->
+        <div class="progress-section">
+          <div class="ring-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" aria-label="Medication progress" id="progressContainer">
+            <svg class="progress-ring" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="ring-bg" cx="50" cy="50" r="42" fill="none" stroke-width="7"/>
+              <circle class="ring-fill" id="progressRing" cx="50" cy="50" r="42" fill="none"
+                stroke-width="7" stroke-linecap="round"
+                stroke-dasharray="263.89" stroke-dashoffset="263.89"
+                transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="ring-text">
+              <span class="ring-fraction" id="ringFraction">0/0</span>
+            </div>
+          </div>
+          <div class="progress-right">
+            <div class="streak-badge" id="streakBadge">
+              <span class="streak-fire">🔥</span>
+              <span class="streak-count" id="streakCount">0</span>
+              <span class="streak-label">day streak</span>
+            </div>
+            <div class="motivation" id="motivation"></div>
+          </div>
+        </div>
+
+        <!-- Backfill prompt -->
+        <div class="backfill-prompt" id="backfillPrompt" style="display:none"></div>
+
+        <!-- Timeline (Tier 2 placeholder) -->
+        <div id="timelineSection" style="display:none"></div>
+
+        <!-- Med cards grouped by time slot -->
+        <div class="slot-groups" id="slotGroups"></div>
+      </main>
+
+      <!-- Calendar View -->
+      <section id="calendarView" class="view-panel" style="display:none" role="tabpanel">
+        <div class="calendar-nav">
+          <button class="cal-arrow" id="calPrev" aria-label="Previous month">&lsaquo;</button>
+          <span class="cal-month" id="calMonth"></span>
+          <button class="cal-arrow" id="calNext" aria-label="Next month">&rsaquo;</button>
+        </div>
+        <div class="calendar-weekdays">
+          <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+        </div>
+        <div class="calendar-grid" id="calendarGrid" role="grid" aria-label="Medication calendar"></div>
+        <div class="day-detail" id="dayDetail" style="display:none"></div>
+      </section>
+    </div>
+
+    <!-- Undo toast -->
+    <div class="undo-toast" id="undoToast" style="display:none" role="alert" aria-live="polite">
+      <span class="undo-msg" id="undoMsg">Dose logged! 💕</span>
+      <button class="undo-btn" id="undoBtn">Undo</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      Part of LoveSpark Suite 💕
+    </footer>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
