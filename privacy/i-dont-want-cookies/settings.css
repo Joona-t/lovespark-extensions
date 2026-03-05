@@ -210,3 +210,13 @@ footer { text-align: center; font-size: 11px; color: var(--text-mid); padding: 1
     transition-duration: 0.01ms \!important;
   }
 }
+
+/* ── Theme Title Visibility ── */
+body.theme-beige .title,
+body.theme-beige .header-title {
+  color: #4a7c59;
+}
+body.theme-slate .title,
+body.theme-slate .header-title {
+  color: #d4714e;
+}
