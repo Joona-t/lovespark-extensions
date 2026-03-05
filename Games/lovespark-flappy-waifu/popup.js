@@ -142,3 +142,6 @@ chrome.storage.local.get(null, (data) => {
   }
   stampsEl.innerHTML = stampsHtml;
 });
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
