@@ -59,3 +59,6 @@ function applyTheme(t) {
   const mascot = document.getElementById('mascot');
   mascot.className = `mascot panic-${tier.panic}`;
 })();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
