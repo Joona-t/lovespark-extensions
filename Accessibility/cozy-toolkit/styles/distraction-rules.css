@@ -1,0 +1,79 @@
+/* ── Sidebars ────────────────────────────────────────────────────────────────── */
+
+html[data-cozy-hide-sidebars] aside,
+html[data-cozy-hide-sidebars] [role="complementary"],
+html[data-cozy-hide-sidebars] .sidebar,
+html[data-cozy-hide-sidebars] #sidebar,
+html[data-cozy-hide-sidebars] [class*="sidebar"]:not(nav):not([role="navigation"]),
+html[data-cozy-hide-sidebars] [id*="sidebar"]:not(nav):not([role="navigation"]) {
+  display: none !important;
+}
+
+html[data-cozy-hide-sidebars] [role="main"],
+html[data-cozy-hide-sidebars] main {
+  max-width: 100% !important;
+}
+
+/* ── Ads ─────────────────────────────────────────────────────────────────────── */
+
+html[data-cozy-hide-ads] [class*="ad-container"],
+html[data-cozy-hide-ads] [class*="ad-wrapper"],
+html[data-cozy-hide-ads] [class*="ad-slot"],
+html[data-cozy-hide-ads] [id*="ad-container"],
+html[data-cozy-hide-ads] [id*="ad-wrapper"],
+html[data-cozy-hide-ads] ins.adsbygoogle,
+html[data-cozy-hide-ads] [data-ad],
+html[data-cozy-hide-ads] [data-ad-slot],
+html[data-cozy-hide-ads] iframe[src*="doubleclick"],
+html[data-cozy-hide-ads] iframe[src*="googlesyndication"] {
+  display: none !important;
+}
+
+/* ── Cookie banners ──────────────────────────────────────────────────────────── */
+
+html[data-cozy-hide-cookies] [class*="cookie"],
+html[data-cozy-hide-cookies] [id*="cookie"],
+html[data-cozy-hide-cookies] [class*="consent"],
+html[data-cozy-hide-cookies] [class*="gdpr"],
+html[data-cozy-hide-cookies] [id*="consent"],
+html[data-cozy-hide-cookies] [aria-label*="cookie" i],
+html[data-cozy-hide-cookies] #CybotCookiebotDialog,
+html[data-cozy-hide-cookies] #onetrust-consent-sdk,
+html[data-cozy-hide-cookies] .cc-window,
+html[data-cozy-hide-cookies] .cc-banner {
+  display: none !important;
+}
+
+/* ── Floating / sticky elements ──────────────────────────────────────────────── */
+
+html[data-cozy-hide-floating] [class*="popup"]:not([role="dialog"]),
+html[data-cozy-hide-floating] [class*="newsletter"],
+html[data-cozy-hide-floating] [class*="subscribe-modal"],
+html[data-cozy-hide-floating] [class*="chat-widget"],
+html[data-cozy-hide-floating] [class*="intercom"],
+html[data-cozy-hide-floating] [id*="intercom"] {
+  display: none !important;
+}
+
+/* ── Comments ────────────────────────────────────────────────────────────────── */
+
+html[data-cozy-hide-comments] [id*="comment"],
+html[data-cozy-hide-comments] [class*="comment"],
+html[data-cozy-hide-comments] [class*="Comment"],
+html[data-cozy-hide-comments] .disqus_thread,
+html[data-cozy-hide-comments] #disqus_thread,
+html[data-cozy-hide-comments] [data-testid*="comment"] {
+  display: none !important;
+}
+
+/* ── Social / share buttons ──────────────────────────────────────────────────── */
+
+html[data-cozy-hide-social] [class*="share"],
+html[data-cozy-hide-social] [class*="social"],
+html[data-cozy-hide-social] [class*="ShareButton"],
+html[data-cozy-hide-social] [aria-label*="share" i],
+html[data-cozy-hide-social] [aria-label*="Share"],
+html[data-cozy-hide-social] .social-buttons,
+html[data-cozy-hide-social] .share-buttons {
+  display: none !important;
+}

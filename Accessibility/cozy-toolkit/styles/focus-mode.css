@@ -1,0 +1,34 @@
+html[data-cozy-focus] p,
+html[data-cozy-focus] blockquote,
+html[data-cozy-focus] li,
+html[data-cozy-focus] h1,
+html[data-cozy-focus] h2,
+html[data-cozy-focus] h3,
+html[data-cozy-focus] h4,
+html[data-cozy-focus] h5,
+html[data-cozy-focus] h6,
+html[data-cozy-focus] pre {
+  transition: opacity 0.3s ease;
+}
+
+html[data-cozy-focus] p:hover,
+html[data-cozy-focus] blockquote:hover,
+html[data-cozy-focus] li:hover,
+html[data-cozy-focus] pre:hover {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-cozy-focus] p,
+  html[data-cozy-focus] blockquote,
+  html[data-cozy-focus] li,
+  html[data-cozy-focus] h1,
+  html[data-cozy-focus] h2,
+  html[data-cozy-focus] h3,
+  html[data-cozy-focus] h4,
+  html[data-cozy-focus] h5,
+  html[data-cozy-focus] h6,
+  html[data-cozy-focus] pre {
+    transition: none !important;
+  }
+}

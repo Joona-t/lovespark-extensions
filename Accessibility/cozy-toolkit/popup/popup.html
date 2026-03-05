@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Accessibility</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container">
+
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="header-left">
+        <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="36" height="36">
+        <div class="header-text">
+          <span class="header-title">Cozy<br>Accessibility</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+        <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">&#x2699;&#xFE0F;</button>
+      </div>
+    </header>
+
+    <!-- Status -->
+    <section class="status-section">
+      <p id="cute-msg" class="cute-msg">The internet, made cozy &#x1F495;</p>
+      <label class="toggle-row">
+        <span class="toggle-label">Enable Cozy</span>
+        <span class="toggle-wrap">
+          <input type="checkbox" id="master-toggle" aria-label="Enable Cozy" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+    </section>
+
+    <!-- Presets -->
+    <section class="preset-section">
+      <div class="preset-row">
+        <button class="preset-btn" data-preset="dyslexia" title="Dyslexia preset">&#x1F4D6; Dyslexia</button>
+        <button class="preset-btn" data-preset="adhd" title="ADHD preset">&#x26A1; ADHD</button>
+        <button class="preset-btn" data-preset="sensory" title="Sensory preset">&#x1F9D8; Sensory</button>
+        <button class="preset-btn" data-preset="lowvision" title="Low Vision preset">&#x1F441; Low Vision</button>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <nav class="tab-nav" role="tablist">
+      <button class="tab-btn active" data-tab="reading" role="tab" aria-selected="true">&#x1F4D6;</button>
+      <button class="tab-btn" data-tab="typography" role="tab">&#x1F524;</button>
+      <button class="tab-btn" data-tab="sensory" role="tab">&#x1F9D8;</button>
+      <button class="tab-btn" data-tab="focus" role="tab">&#x1F3AF;</button>
+      <button class="tab-btn" data-tab="tts" role="tab">&#x1F50A;</button>
+      <button class="tab-btn" data-tab="site" role="tab">&#x2699;</button>
+    </nav>
+
+    <!-- Tab: Reading -->
+    <section class="tab-panel active" data-panel="reading">
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F308; Color Tint</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="overlay-toggle" aria-label="Color Tint">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="overlay-controls">
+          <div class="slider-row">
+            <span class="slider-label">Tint Color</span>
+            <input type="color" id="tint-color" value="#FDCFE1" class="color-input">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Opacity</span>
+            <input type="range" id="tint-opacity" min="0" max="50" value="15" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Brightness</span>
+            <input type="range" id="brightness" min="50" max="150" value="100" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Contrast</span>
+            <input type="range" id="contrast" min="50" max="200" value="100" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Temperature</span>
+            <input type="range" id="temperature" min="-100" max="100" value="0" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Color Filter</span>
+            <select id="color-filter" class="font-select">
+              <option value="none">None</option>
+              <option value="protanopia">Protanopia</option>
+              <option value="deuteranopia">Deuteranopia</option>
+              <option value="tritanopia">Tritanopia</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F4A1; Bionic Reading</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="bionic-toggle" aria-label="Bionic Reading">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="bionic-controls">
+          <div class="slider-row">
+            <span class="slider-label">Intensity</span>
+            <select id="bionic-intensity" class="font-select">
+              <option value="1">Light</option>
+              <option value="2" selected>Medium</option>
+              <option value="3">Strong</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F4D6; Reading Mode</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="reading-mode-toggle" aria-label="Reading Mode">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="reading-controls">
+          <div class="slider-row">
+            <span class="slider-label">Max Width</span>
+            <input type="range" id="reading-width" min="480" max="960" value="680" step="20" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Background</span>
+            <input type="color" id="reading-bg" value="#FFF8F0" class="color-input">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: Typography -->
+    <section class="tab-panel" data-panel="typography">
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F524; Reading Font</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="font-toggle" aria-label="Reading Font">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="font-controls">
+          <div class="slider-row">
+            <span class="slider-label">Font</span>
+            <select id="font-select" class="font-select">
+              <option value="OpenDyslexic">OpenDyslexic</option>
+              <option value="Lexend">Lexend</option>
+              <option value="Atkinson Hyperlegible">Atkinson Hyperlegible</option>
+              <option value="system">System Default</option>
+            </select>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Size</span>
+            <input type="range" id="font-size" min="12" max="32" value="18" class="slider">
+            <span class="slider-value" id="font-size-val">18px</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Line Height</span>
+            <input type="range" id="line-height" min="10" max="30" value="18" class="slider">
+            <span class="slider-value" id="line-height-val">1.8</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Letter Spacing</span>
+            <input type="range" id="letter-spacing" min="0" max="30" value="5" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Word Spacing</span>
+            <input type="range" id="word-spacing" min="0" max="50" value="10" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Weight</span>
+            <select id="font-weight" class="font-select">
+              <option value="normal">Normal</option>
+              <option value="bold">Bold</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x270D;&#xFE0F; Writing Comfort</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="writing-toggle" aria-label="Writing Comfort">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="writing-controls">
+          <label class="toggle-row sub">
+            <span class="toggle-label">Font in forms</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="writing-font" checked aria-label="Font in forms">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Spacing in forms</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="writing-spacing" checked aria-label="Spacing in forms">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: Sensory -->
+    <section class="tab-panel" data-panel="sensory">
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F9D8; Sensory Controls</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="sensory-toggle" aria-label="Sensory Controls">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="sensory-controls">
+          <label class="toggle-row sub">
+            <span class="toggle-label">Freeze animations</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="freeze-animations" checked aria-label="Freeze animations">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Hide GIFs</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-gifs" checked aria-label="Hide GIFs">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Reduce motion</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="reduce-motion" checked aria-label="Reduce motion">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Pause autoplay</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="pause-autoplay" checked aria-label="Pause autoplay">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Large cursor</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="large-cursor" aria-label="Large cursor">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: Focus -->
+    <section class="tab-panel" data-panel="focus">
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F50D; Paragraph Focus</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="focus-toggle" aria-label="Paragraph Focus">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="focus-controls">
+          <div class="slider-row">
+            <span class="slider-label">Dim Level</span>
+            <input type="range" id="dim-level" min="30" max="90" value="70" class="slider">
+          </div>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Lock on click</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="lock-on-click" checked aria-label="Lock on click">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F4CF; Reading Ruler</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="ruler-toggle" aria-label="Reading Ruler">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="ruler-controls">
+          <div class="slider-row">
+            <span class="slider-label">Height</span>
+            <input type="range" id="ruler-height" min="40" max="200" value="80" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Opacity</span>
+            <input type="range" id="ruler-opacity" min="10" max="90" value="50" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Color</span>
+            <input type="color" id="ruler-color" value="#000000" class="color-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F6E1;&#xFE0F; Hide Distractions</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="distraction-toggle" aria-label="Hide Distractions">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="distraction-controls">
+          <label class="toggle-row sub">
+            <span class="toggle-label">Sidebars</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-sidebars" checked aria-label="Hide sidebars">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Ads</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-ads" checked aria-label="Hide ads">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Cookie banners</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-cookies" checked aria-label="Hide cookies">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Floating elements</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-floating" checked aria-label="Hide floating">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Comments</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-comments" aria-label="Hide comments">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+          <label class="toggle-row sub">
+            <span class="toggle-label">Social/share</span>
+            <span class="toggle-wrap">
+              <input type="checkbox" id="hide-social" aria-label="Hide social">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab: TTS -->
+    <section class="tab-panel" data-panel="tts">
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">&#x1F50A; Text-to-Speech</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="tts-toggle" aria-label="Text-to-Speech">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="tts-controls">
+          <div class="slider-row">
+            <span class="slider-label">Speed</span>
+            <input type="range" id="tts-speed" min="50" max="200" value="100" class="slider">
+            <span class="slider-value" id="tts-speed-val">1.0x</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Voice</span>
+            <select id="tts-voice" class="font-select">
+              <option value="">Default</option>
+            </select>
+          </div>
+        </div>
+        <p class="hint-text">Select text on any page, then click "Read aloud"</p>
+      </div>
+    </section>
+
+    <!-- Tab: Site/Settings -->
+    <section class="tab-panel" data-panel="site">
+      <div class="panel-card">
+        <div class="site-row">
+          <span class="site-icon">&#x1F4CD;</span>
+          <span id="site-domain" class="site-domain">&mdash;</span>
+          <button id="site-disable-btn" class="site-btn">&#x2716; Disable here</button>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <button id="reset-btn" class="action-btn">&#x1F504; Reset to Defaults</button>
+      </div>
+    </section>
+
+
+  </div>
+  <script src="../lib/lovespark-footer.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

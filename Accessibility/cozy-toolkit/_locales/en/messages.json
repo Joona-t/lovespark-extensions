@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Cozy Accessibility by LoveSpark",
+    "description": "Extension name shown in browser"
+  },
+  "extDescription": {
+    "message": "The internet, made cozy. Free accessibility toolkit for neurodivergent users — dyslexia fonts, reading ruler, bionic reading, sensory controls, TTS, and more. Free forever, zero data collection.",
+    "description": "Extension description for store listing"
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Accessibility — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+
+    <header class="settings-header">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="60" height="60">
+      <div>
+        <h1 class="header-title">Cozy Accessibility</h1>
+        <span class="header-sub">Settings</span>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+    </header>
+
+    <!-- General -->
+    <section class="card">
+      <h2 class="card-title">&#x2728; General</h2>
+      <div class="row-between">
+        <div>
+          <div class="setting-label">Enable extension</div>
+          <div class="setting-desc">Turn off to disable all features globally</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="toggle-enabled" aria-label="Enable extension" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Disabled Sites -->
+    <section class="card">
+      <h2 class="card-title">&#x1F6AB; Disabled Sites</h2>
+      <p class="setting-desc">Sites where Cozy is completely disabled. Remove a site to re-enable.</p>
+      <div id="disabled-sites-list" class="site-list"></div>
+      <p class="hint" id="no-disabled-hint">No disabled sites yet.</p>
+    </section>
+
+    <!-- Import/Export -->
+    <section class="card">
+      <h2 class="card-title">&#x1F4BE; Backup</h2>
+      <div class="btn-row">
+        <button id="export-btn" class="btn-pink">Export Settings</button>
+        <button id="import-btn" class="btn-pink">Import Settings</button>
+        <input type="file" id="import-file" accept=".json" style="display:none">
+      </div>
+    </section>
+
+    <!-- Reset -->
+    <section class="card">
+      <h2 class="card-title">&#x1F504; Reset</h2>
+      <button id="reset-btn" class="btn-danger">Reset All Settings to Defaults</button>
+    </section>
+
+    <!-- About -->
+    <section class="card">
+      <h2 class="card-title">&#x1F495; About</h2>
+      <p class="about-text">
+        <strong>Cozy Accessibility</strong> by LoveSpark<br>
+        The internet, made cozy. Free, forever.<br><br>
+        No ads. No data collection. No tracking. Ever.<br>
+        MIT Licensed &bull; Open Source<br><br>
+        Made with &#x1F495; by <a href="https://joona-t.github.io" target="_blank" rel="noopener">Joona</a>
+      </p>
+    </section>
+
+    <div class="settings-footer">
+      <span>Version <span id="version">1.0.0</span></span>
+    </div>
+
+  </div>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="../lib/lovespark-footer.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
