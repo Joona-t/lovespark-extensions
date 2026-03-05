@@ -1,0 +1,62 @@
+#sb-tooltip {
+  position: absolute;
+  z-index: 2147483646;
+  background: linear-gradient(135deg, #E8457C, #D63466);
+  color: #fff;
+  font-family: 'DM Mono', monospace, sans-serif;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(232, 69, 124, 0.4);
+  transform: translate(-50%, 0) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+#sb-tooltip.sb-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0) scale(1);
+}
+
+#sb-tooltip:hover {
+  box-shadow: 0 4px 24px rgba(232, 69, 124, 0.6);
+}
+
+#sb-tooltip:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.sb-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 2147483647;
+  background: linear-gradient(135deg, #E8457C, #D63466);
+  color: #fff;
+  font-family: 'DM Mono', monospace, sans-serif;
+  font-size: 13px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(232, 69, 124, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sb-toast.sb-toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sb-tooltip,
+  .sb-toast {
+    transition: none;
+  }
+}
