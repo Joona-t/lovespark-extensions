@@ -126,3 +126,6 @@ function initPills(containerId, activeValue, onChange) {
     });
   });
 }
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
