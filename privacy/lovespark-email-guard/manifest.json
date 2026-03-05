@@ -1,10 +1,13 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "permissions": ["declarativeNetRequest", "storage"],
+  "permissions": [
+    "declarativeNetRequest",
+    "storage"
+  ],
   "host_permissions": [
     "*://mail.google.com/*",
     "*://outlook.live.com/*",
@@ -30,8 +33,13 @@
         "*://outlook.office365.com/*",
         "*://mail.yahoo.com/*"
       ],
-      "js": ["lib/browser-polyfill.min.js", "content.js"],
-      "css": ["content-styles.css"],
+      "js": [
+        "lib/browser-polyfill.min.js",
+        "content.js"
+      ],
+      "css": [
+        "content-styles.css"
+      ],
       "run_at": "document_idle"
     }
   ],
