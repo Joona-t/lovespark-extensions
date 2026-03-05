@@ -235,3 +235,6 @@ document.getElementById("affirmation").textContent = `\u201c${getDailyAffirmatio
 // --- Init ---
 
 renderGardens();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
