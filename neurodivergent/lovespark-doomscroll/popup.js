@@ -243,3 +243,6 @@ getState().then(state => {
   render(state);
   startCuteMessages();
 });
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
