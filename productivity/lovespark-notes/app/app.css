@@ -1861,3 +1861,15 @@ body.distraction-free .word-count {
 
 /* ── Scrollbar ── */
 * { scrollbar-width: thin; scrollbar-color: var(--ls-glass-border) transparent; }
+
+/* ── Theme Title Visibility ── */
+body.theme-beige .title,
+body.theme-beige .header-title,
+body.theme-beige .logo-text {
+  color: #4a7c59;
+}
+body.theme-slate .title,
+body.theme-slate .header-title,
+body.theme-slate .logo-text {
+  color: #d4714e;
+}
