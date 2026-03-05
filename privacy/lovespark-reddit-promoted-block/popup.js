@@ -63,3 +63,6 @@ browser.storage.onChanged.addListener((changes) => {
 });
 
 msgEl.textContent = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
