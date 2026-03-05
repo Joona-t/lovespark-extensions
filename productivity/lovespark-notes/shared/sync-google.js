@@ -283,6 +283,10 @@ async function _getNoteFileId(noteId, state) {
 }
 
 // ── Sync Lock (with TTL + fencing) ───────────────────────────
+// Scope: single extension instance / SW restarts within one browser profile.
+// NOT a distributed lock across devices — each device has its own lock in
+// chrome.storage.local. Cross-device conflicts are handled by pull-merge-push
+// semantics, not by locking.
 
 async function _acquireLock() {
   const result = await chrome.storage.local.get(KEY_SYNC_LOCK);
@@ -338,6 +342,20 @@ export async function fullSync() {
     // ── Pull: download remote index ──
     const indexFileId = await _getOrCreateFile(DRIVE_INDEX_FILENAME, state);
     let remoteIndex = await _driveDownload(indexFileId);
+
+    // Capture Drive's server-assigned modifiedTime for clock-skew mitigation.
+    // This is the authoritative timestamp immune to client clock drift.
+    let driveModifiedTime = null;
+    try {
+      const metaRes = await _fetchWithAuth(
+        `https://www.googleapis.com/drive/v3/files/${indexFileId}?fields=modifiedTime`
+      );
+      if (metaRes.ok) {
+        const meta = await metaRes.json();
+        driveModifiedTime = meta.modifiedTime ? new Date(meta.modifiedTime).getTime() : null;
+      }
+    } catch {}
+
     const isFirstSync = !remoteIndex || !remoteIndex.notes;
     const remoteNotes = isFirstSync ? [] : remoteIndex.notes;
     const remoteTombstones = (remoteIndex && remoteIndex.tombstones) || [];
@@ -364,7 +382,11 @@ export async function fullSync() {
       const remote = remoteNotesById.get(noteId);
       const tombstone = tombstoneMap.get(noteId);
 
-      // Tombstone check: if tombstone is newer than the surviving copy, delete wins
+      // Tombstone check: tombstone wins ONLY if deletedAt > updatedAt (conditional).
+      // Design choice: if another device edits a note after deletion, the edit
+      // resurrects the note. This is intentional — an active edit signals user
+      // intent to keep the note. "Undo delete" is a new edit, not reuse of ID.
+      // Trade-off: clock skew can cause unexpected resurrection. Accepted for v1.
       if (tombstone) {
         if (local && !local.deletedAt && tombstone.deletedAt > local.updatedAt) {
           // Tombstone wins over local — soft-delete locally
@@ -387,9 +409,10 @@ export async function fullSync() {
 
         if (local.updatedAt === remote.updatedAt) {
           localWins = false; // Tie → remote wins (avoids unnecessary upload)
-        } else if (delta < SYNC_CLOCK_SKEW_THRESHOLD && remoteIndex && remoteIndex._driveModifiedTime) {
-          // Within clock skew range — use server timestamp if available
-          localWins = local.updatedAt > remote.updatedAt;
+        } else if (delta < SYNC_CLOCK_SKEW_THRESHOLD && driveModifiedTime) {
+          // Within clock skew range — use Drive's server timestamp as tiebreaker.
+          // If our local update is newer than Drive's last modification, local wins.
+          localWins = local.updatedAt > driveModifiedTime;
         } else {
           localWins = local.updatedAt > remote.updatedAt;
         }
@@ -483,10 +506,19 @@ export async function fullSync() {
     };
     await _driveUpdate(indexFileId, indexToUpload);
 
-    // ── Cleanup: orphaned Drive files ──
+    // ── Cleanup: orphaned Drive files (mark-and-sweep with grace period) ──
+    // A note's Drive file is an orphan if its ID is absent from the merged index
+    // AND it has a tombstone older than 24h (grace period prevents deleting files
+    // that another device just created but hasn't synced its index yet).
+    // Notes still in trash (soft-deleted but not permanently deleted) are NOT orphans.
     const mergedNoteIds = new Set(mergedNotes.map(n => n.id));
+    const ORPHAN_GRACE_MS = 86400000; // 24 hours
+    const now = Date.now();
     for (const [noteId, fileId] of Object.entries(state.noteFileIds)) {
-      if (!mergedNoteIds.has(noteId)) {
+      if (mergedNoteIds.has(noteId)) continue;
+      const tombstone = tombstoneMap.get(noteId);
+      // Only delete if tombstone exists AND is older than grace period
+      if (tombstone && (now - tombstone.deletedAt) > ORPHAN_GRACE_MS) {
         try {
           await _driveDelete(fileId);
           delete state.noteFileIds[noteId];
@@ -495,6 +527,8 @@ export async function fullSync() {
           console.error(`LoveSpark Notes: failed to delete orphan ${noteId}`, err);
         }
       }
+      // No tombstone and not in merged → stale cache entry from unknown source.
+      // Don't delete the Drive file; just leave it. Next sync will re-discover.
     }
 
     // ── Prune old tombstones ──

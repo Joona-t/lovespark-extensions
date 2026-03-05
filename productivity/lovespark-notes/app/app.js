@@ -1746,9 +1746,13 @@ async function handleDeleteNote(id) {
     // Already in trash — permanent delete
     if (!confirm('Permanently delete this note? This cannot be undone.')) return;
     await permanentlyDeleteNote(id);
+    // Register tombstone for sync
+    chrome.runtime.sendMessage({ type: 'sync.tombstone', noteIds: [id] }).catch(() => {});
   } else {
     // Soft delete to trash
     await deleteNote(id);
+    // Register tombstone for sync (soft-delete still needs tombstone to propagate)
+    chrome.runtime.sendMessage({ type: 'sync.tombstone', noteIds: [id] }).catch(() => {});
     toast('Moved to trash 🗑️');
   }
 
@@ -1771,7 +1775,13 @@ async function handleRestoreNote(id) {
 
 async function handleEmptyTrash() {
   if (!confirm('Permanently delete all trashed notes? This cannot be undone.')) return;
+  // Collect trashed note IDs before emptying (for tombstone registration)
+  const trashedIds = index.notes.filter(n => n.deletedAt).map(n => n.id);
   const count = await emptyTrash();
+  // Register tombstones for all emptied notes
+  if (trashedIds.length > 0) {
+    chrome.runtime.sendMessage({ type: 'sync.tombstone', noteIds: trashedIds }).catch(() => {});
+  }
   index = await getStorage().loadIndex();
   if (activeNoteId) {
     const still = index.notes.find(n => n.id === activeNoteId);

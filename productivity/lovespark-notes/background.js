@@ -105,6 +105,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     handleSyncSignOut().then(r => sendResponse(r));
     return true;
   }
+  if (msg.type === 'sync.tombstone') {
+    handleSyncTombstone(msg.noteIds).then(r => sendResponse(r));
+    return true;
+  }
 });
 
 // ── Alarms — Version Snapshots ────────────────────────────────
@@ -227,6 +231,20 @@ async function handleSyncSignOut() {
     const sync = await getSyncModule();
     if (!sync) return { ok: false };
     await sync.signOut();
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
+
+async function handleSyncTombstone(noteIds) {
+  try {
+    const sync = await getSyncModule();
+    if (!sync) return { ok: false };
+    const ids = Array.isArray(noteIds) ? noteIds : [noteIds];
+    for (const id of ids) {
+      await sync.addTombstone(id);
+    }
     return { ok: true };
   } catch (err) {
     return { ok: false, error: err.message };
