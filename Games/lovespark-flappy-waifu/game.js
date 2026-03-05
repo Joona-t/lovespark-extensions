@@ -1,5 +1,13 @@
 'use strict';
 
+// ─── Theme: apply stored theme to body background ───
+if (typeof chrome !== 'undefined' && chrome.storage) {
+  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
+    if (!theme && darkMode) theme = 'dark';
+    document.body.classList.add('theme-' + (theme || 'retro'));
+  });
+}
+
 const Game = (() => {
   // ─── Config ───
   const FRAME_MS = 16.667;

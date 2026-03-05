@@ -420,6 +420,52 @@ canvas {
   #controls-hint { display: none; }
 }
 
+/* ── Theme overrides for tab/fullscreen body background ── */
+body.theme-retro {
+  --bg: #3A8FD6;
+  --bg2: #78BEFA;
+  background: var(--bg);
+}
+
+body.theme-dark {
+  --bg: #1a1128;
+  --bg2: #110d1a;
+  background: linear-gradient(165deg, #1a1128 0%, #110d1a 40%, #0a0812 100%);
+}
+
+body.theme-dark::before {
+  background-image:
+    radial-gradient(1px 1px at 8% 15%, #ffffff55 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 60%, #ff6eb430 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 8%, #ffffff33 0%, transparent 100%),
+    radial-gradient(2px 2px at 75% 45%, #ff9fd325 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 78%, #ffffff22 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 88%, #ff6eb425 0%, transparent 100%);
+}
+
+body.theme-beige {
+  --bg: #f5efe0;
+  --bg2: #ede4ce;
+  background: #f5efe0;
+}
+
+body.theme-beige::before {
+  background-image: none;
+}
+
+body.theme-slate {
+  --bg: #1e1e1e;
+  --bg2: #252525;
+  background: #1e1e1e;
+}
+
+body.theme-slate::before {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, #ffffff22 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 50%, #ffffff11 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 70%, #ffffff15 0%, transparent 100%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
