@@ -90,3 +90,6 @@ toggleBtn.addEventListener('click', function() {
 
 // Initial load
 loadStats();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
