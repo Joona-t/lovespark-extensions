@@ -219,3 +219,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
 // Start
 init();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
