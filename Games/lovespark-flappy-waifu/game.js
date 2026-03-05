@@ -1,12 +1,42 @@
 'use strict';
 
-// ─── Theme: apply stored theme to body background ───
-if (typeof chrome !== 'undefined' && chrome.storage) {
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
-    document.body.classList.add('theme-' + (theme || 'retro'));
-  });
-}
+// ─── Theme: apply stored theme to body + title + dropdown ───
+(() => {
+  const THEMES = ['retro', 'dark', 'beige', 'slate'];
+  const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
+
+  function applyGameTheme(t) {
+    THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+    document.body.classList.add('theme-' + t);
+    const label = document.getElementById('gameThemeLabel');
+    if (label) label.textContent = THEME_NAMES[t] || t;
+    document.querySelectorAll('#gameThemeMenu .theme-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.theme === t);
+    });
+  }
+
+  const toggle = document.getElementById('gameThemeToggle');
+  const menu = document.getElementById('gameThemeMenu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    menu.addEventListener('click', (e) => {
+      const opt = e.target.closest('.theme-option');
+      if (!opt) return;
+      const theme = opt.dataset.theme;
+      applyGameTheme(theme);
+      chrome.storage.local.set({ theme });
+      menu.classList.remove('open');
+    });
+    document.addEventListener('click', () => menu.classList.remove('open'));
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+    chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
+      if (!theme && darkMode) theme = 'dark';
+      applyGameTheme(theme || 'retro');
+    });
+  }
+})();
 
 const Game = (() => {
   // ─── Config ───
@@ -1439,8 +1469,8 @@ const Game = (() => {
     for (const c of clouds) { if (c.layer === 'far') drawCloud(c); }
     if (!REDUCED_MOTION) drawBgSparkles();
     if (!REDUCED_MOTION) drawSpeedLines();
-    for (const p of state.pipes) drawPipe(p);
     for (const c of clouds) { if (c.layer === 'near') drawCloud(c); }
+    for (const p of state.pipes) drawPipe(p);
     drawParticles();
     drawPlayer();
     drawMilestone();

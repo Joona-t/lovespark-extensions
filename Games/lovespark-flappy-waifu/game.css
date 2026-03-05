@@ -50,6 +50,14 @@ body::before {
   max-width: 512px;
 }
 
+#title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 480px;
+}
+
 #title {
   font-family: 'Orbitron', monospace;
   font-size: clamp(18px, 3vw, 28px);
@@ -63,6 +71,79 @@ body::before {
 #title span {
   color: #ffffff;
   text-shadow: 0 0 10px #fff8;
+}
+
+/* ── Game page theme dropdown ── */
+.game-theme-dropdown {
+  position: relative;
+  z-index: 100;
+}
+
+.game-theme-trigger {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fffc;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.game-theme-trigger:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.game-theme-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: rgba(30,30,50,0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 130px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.game-theme-menu.open { display: block; }
+
+.game-theme-header {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff5;
+  padding: 6px 10px 4px;
+}
+
+.game-theme-menu .theme-option {
+  display: block;
+  width: 100%;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fffc;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.game-theme-menu .theme-option:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.game-theme-menu .theme-option.active {
+  color: var(--pink-bright);
+  background: rgba(255,110,180,0.15);
 }
 
 #canvas-container {
@@ -430,7 +511,26 @@ body.theme-retro {
 body.theme-dark {
   --bg: #1a1128;
   --bg2: #110d1a;
+  --pink-bright: #ff9fd3;
+  --pink: #ff6eb4;
+  --glow: 0 0 20px #ff6eb4, 0 0 40px #ff6eb488;
   background: linear-gradient(165deg, #1a1128 0%, #110d1a 40%, #0a0812 100%);
+}
+
+body.theme-dark #title {
+  color: #ff6eb4;
+  text-shadow: 0 0 20px #ff6eb4, 0 0 40px #ff6eb488;
+}
+
+body.theme-dark #title span {
+  color: #f0e6f6;
+  text-shadow: 0 0 10px #f0e6f688;
+}
+
+body.theme-dark .game-theme-trigger {
+  color: #f0e6f6cc;
+  background: rgba(255,110,180,0.1);
+  border-color: rgba(255,110,180,0.2);
 }
 
 body.theme-dark::before {
@@ -449,6 +549,42 @@ body.theme-beige {
   background: #f5efe0;
 }
 
+body.theme-beige #title {
+  color: #c4806a;
+  text-shadow: 0 3px 12px rgba(139,111,71,0.25);
+}
+
+body.theme-beige #title span {
+  color: #5c4a2a;
+  text-shadow: none;
+}
+
+body.theme-beige .game-theme-trigger {
+  color: #5c4a2acc;
+  background: rgba(92,74,42,0.08);
+  border-color: rgba(92,74,42,0.2);
+}
+
+body.theme-beige .game-theme-menu {
+  background: rgba(237,228,206,0.97);
+  border-color: #d4c4a0;
+}
+
+body.theme-beige .game-theme-header { color: #8b6f47; }
+
+body.theme-beige .game-theme-menu .theme-option {
+  color: #5c4a2a;
+}
+
+body.theme-beige .game-theme-menu .theme-option:hover {
+  background: rgba(92,74,42,0.1);
+}
+
+body.theme-beige .game-theme-menu .theme-option.active {
+  color: #c4806a;
+  background: rgba(196,128,106,0.12);
+}
+
 body.theme-beige::before {
   background-image: none;
 }
@@ -457,6 +593,22 @@ body.theme-slate {
   --bg: #1e1e1e;
   --bg2: #252525;
   background: #1e1e1e;
+}
+
+body.theme-slate #title {
+  color: #d4714e;
+  text-shadow: 0 0 12px rgba(212,113,78,0.4);
+}
+
+body.theme-slate #title span {
+  color: #ececec;
+  text-shadow: 0 0 8px rgba(236,236,236,0.2);
+}
+
+body.theme-slate .game-theme-trigger {
+  color: #ecececcc;
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.12);
 }
 
 body.theme-slate::before {

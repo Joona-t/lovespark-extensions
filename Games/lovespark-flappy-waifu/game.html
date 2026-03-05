@@ -14,7 +14,21 @@
 <body>
 
 <div id="game-wrapper">
-  <div id="title">Flappy <span>Waifu</span></div>
+  <div id="title-row">
+    <div id="title">Flappy <span>Waifu</span></div>
+    <div class="game-theme-dropdown" id="gameThemeDropdown">
+      <button class="game-theme-trigger" id="gameThemeToggle">
+        <span id="gameThemeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="game-theme-menu" id="gameThemeMenu">
+        <div class="game-theme-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+  </div>
 
   <div id="canvas-container">
     <canvas id="canvas"></canvas>
