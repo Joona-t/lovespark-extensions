@@ -181,3 +181,6 @@ function applyTheme(t) {
   applyTheme(theme || 'retro');
 });
 document.getElementById('themeToggle');
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
