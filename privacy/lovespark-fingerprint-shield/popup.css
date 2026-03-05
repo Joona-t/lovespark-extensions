@@ -399,3 +399,11 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   color: var(--ls-pink-accent);
   background: var(--ls-glass-light);
 }
+
+/* ── Theme Title Visibility ── */
+body.theme-beige .popup-header h1 {
+  color: #4a7c59;
+}
+body.theme-slate .popup-header h1 {
+  color: #d4714e;
+}
