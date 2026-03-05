@@ -291,3 +291,6 @@ scrubAnother.addEventListener('click', () => {
 // ── Start ──
 
 init();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
