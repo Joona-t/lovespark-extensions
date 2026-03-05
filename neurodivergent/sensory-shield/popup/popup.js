@@ -31,11 +31,8 @@ function applyTheme(t) {
     if (!theme && darkMode) theme = 'dark';
     applyTheme(theme || 'retro');
   });
-}).catch(() => {});
 })();
-  applyTheme(theme || 'retro');
-});
-document.getElementById('themeToggle');
+
 
 /**
  * Sensory Shield — Popup

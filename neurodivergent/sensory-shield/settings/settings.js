@@ -25,6 +25,9 @@ async function init() {
   globalToggle.setAttribute('aria-checked', String(enabled));
 
   renderWhitelist(data.whitelistedDomains || []);
+
+  const versionEl = document.getElementById('version-display');
+  if (versionEl) versionEl.textContent = 'v' + browser.runtime.getManifest().version;
 }
 
 // ── Global Toggle ───────────────────────────────────────────────────────────
