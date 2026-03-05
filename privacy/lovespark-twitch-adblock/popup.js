@@ -176,3 +176,6 @@ function sendMsg(msg) {
 
 cuteMsgEl.textContent = CUTE_MSGS[Math.floor(Math.random() * CUTE_MSGS.length)];
 init();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
