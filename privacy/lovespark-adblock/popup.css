@@ -484,3 +484,15 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   color: var(--ls-pink-accent);
   background: var(--ls-glass-light);
 }
+
+/* ── Theme Title Visibility ── */
+body.theme-beige .title,
+body.theme-beige .header-title,
+body.theme-beige .logo-text {
+  color: #4a7c59;
+}
+body.theme-slate .title,
+body.theme-slate .header-title,
+body.theme-slate .logo-text {
+  color: #d4714e;
+}
