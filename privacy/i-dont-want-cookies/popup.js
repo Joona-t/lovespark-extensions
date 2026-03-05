@@ -186,3 +186,6 @@ wlBtn.addEventListener('click', async () => {
 );
 
 init();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
