@@ -17,6 +17,21 @@
       <span class="title"><span class="love">Love</span>Spark Notes</span>
     </div>
     <div class="header-right">
+      <div class="sync-area" id="syncArea" style="display:none">
+        <button class="sync-signin-btn" id="syncSignIn" style="display:none">Sign in</button>
+        <div class="sync-user" id="syncUser" style="display:none">
+          <button class="sync-avatar-btn" id="syncAvatarBtn" aria-label="Sync account menu">
+            <span class="sync-avatar-initial" id="syncAvatarInitial" aria-hidden="true"></span>
+            <span class="sync-pulse" id="syncPulse"></span>
+          </button>
+          <div class="sync-dropdown" id="syncDropdown" style="display:none">
+            <div class="sync-email" id="syncEmail"></div>
+            <button class="sync-action" id="syncNowBtn">Sync now</button>
+            <div class="sync-last" id="syncLast">Never synced</div>
+            <button class="sync-action sync-signout" id="syncSignOutBtn">Sign out</button>
+          </div>
+        </div>
+      </div>
       <div class="theme-dropdown" id="themeDropdown">
       <button class="theme-dropdown-trigger" id="themeToggle">
         <span id="themeLabel">Retro Pink</span> ▾

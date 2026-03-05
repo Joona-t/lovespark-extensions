@@ -1,7 +1,24 @@
 // LoveSpark Notes — Service Worker (MV3)
 // Stateless. Handles: commands, alarms (version snapshots), tab registration, install.
 
-import { KEY_VERSIONS_PREFIX, MAX_VERSIONS } from './shared/constants.js';
+import { KEY_VERSIONS_PREFIX, MAX_VERSIONS, SYNC_INTERVAL_MINUTES, SYNC_DEBOUNCE_AFTER_SAVE } from './shared/constants.js';
+
+// ── Google Sync (lazy-loaded, Chrome-only) ────────────────────
+
+let _sync = null;
+let _syncDebounceTimer = null;
+
+async function getSyncModule() {
+  if (_sync) return _sync;
+  try {
+    const mod = await import('./shared/sync-google.js');
+    if (mod.isGoogleSyncSupported()) {
+      _sync = mod;
+      return _sync;
+    }
+  } catch {}
+  return null;
+}
 
 // ── Chrome Commands ───────────────────────────────────────────
 
@@ -66,13 +83,48 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     });
     return true; // async response
   }
+
+  // ── Sync Messages ──
+  if (msg.type === 'sync.trigger') {
+    handleSyncTrigger(msg).then(r => sendResponse(r));
+    return true;
+  }
+  if (msg.type === 'sync.now') {
+    handleSyncNow().then(r => sendResponse(r));
+    return true;
+  }
+  if (msg.type === 'sync.status') {
+    handleSyncStatus().then(r => sendResponse(r));
+    return true;
+  }
+  if (msg.type === 'sync.signin') {
+    handleSyncSignIn().then(r => sendResponse(r));
+    return true;
+  }
+  if (msg.type === 'sync.signout') {
+    handleSyncSignOut().then(r => sendResponse(r));
+    return true;
+  }
 });
 
 // ── Alarms — Version Snapshots ────────────────────────────────
 
 chrome.alarms.create('version-snapshot', { periodInMinutes: 2 });
+chrome.alarms.create('google-sync', { periodInMinutes: SYNC_INTERVAL_MINUTES });
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
+  if (alarm.name === 'google-sync') {
+    try {
+      const sync = await getSyncModule();
+      if (!sync) return;
+      const status = await sync.getSignInStatus();
+      if (status.signedIn) await sync.fullSync();
+    } catch (err) {
+      console.error('LoveSpark Notes: periodic sync failed', err);
+    }
+    return;
+  }
+
   if (alarm.name !== 'version-snapshot') return;
 
   try {
@@ -100,6 +152,86 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     console.error('LoveSpark Notes: version snapshot failed', err);
   }
 });
+
+// ── Sync Handlers ────────────────────────────────────────────
+
+async function handleSyncTrigger(msg) {
+  const sync = await getSyncModule();
+  if (!sync) return { ok: false };
+
+  if (msg.reason === 'manual') {
+    try { await sync.fullSync(); } catch {}
+    return { ok: true };
+  }
+
+  // Debounced trigger (30s) for post-save syncs
+  if (_syncDebounceTimer) clearTimeout(_syncDebounceTimer);
+  _syncDebounceTimer = setTimeout(async () => {
+    _syncDebounceTimer = null;
+    try {
+      const status = await sync.getSignInStatus();
+      if (status.signedIn) await sync.fullSync();
+    } catch (err) {
+      console.error('LoveSpark Notes: debounced sync failed', err);
+    }
+  }, SYNC_DEBOUNCE_AFTER_SAVE);
+
+  return { ok: true };
+}
+
+async function handleSyncNow() {
+  try {
+    const sync = await getSyncModule();
+    if (!sync) return { ok: false };
+    const result = await sync.fullSync();
+    return { ok: true, ...result };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
+
+async function handleSyncStatus() {
+  try {
+    const sync = await getSyncModule();
+    if (!sync) return { supported: false };
+
+    const status = await sync.getSignInStatus();
+    const stateResult = await chrome.storage.local.get('ls_sync_state');
+    const state = stateResult.ls_sync_state || {};
+
+    return {
+      supported: true,
+      signedIn: status.signedIn,
+      email: status.email || state.userEmail || null,
+      lastSyncTime: state.lastSyncTime || 0,
+      lastError: state.lastError || null,
+      syncing: false,
+    };
+  } catch {
+    return { supported: false };
+  }
+}
+
+async function handleSyncSignIn() {
+  try {
+    const sync = await getSyncModule();
+    if (!sync) return { signedIn: false };
+    return sync.signIn();
+  } catch (err) {
+    return { signedIn: false, error: err.message };
+  }
+}
+
+async function handleSyncSignOut() {
+  try {
+    const sync = await getSyncModule();
+    if (!sync) return { ok: false };
+    await sync.signOut();
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
 
 // ── Context Menu Web Clipper ──────────────────────────────────
 
@@ -164,8 +296,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   createContextMenu();
 
   if (details.reason === 'install') {
-    // Create initial alarm
+    // Create initial alarms
     chrome.alarms.create('version-snapshot', { periodInMinutes: 2 });
+    chrome.alarms.create('google-sync', { periodInMinutes: SYNC_INTERVAL_MINUTES });
 
     // Seed welcome note (deferred to first app/popup open via notes-core.seedWelcomeNote)
     // Migration from localStorage also happens on first page load

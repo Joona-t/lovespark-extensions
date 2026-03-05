@@ -21,6 +21,7 @@ import {
 import {
   CATEGORIES, FONTS, DEBOUNCE_LOCAL, DEBOUNCE_SYNC,
   DEBOUNCE_LOCALSTORAGE, DEBOUNCE_SEARCH, TEMPLATES,
+  KEY_SYNC_STATE,
 } from '../shared/constants.js';
 
 // ── State ──────────────────────────────────────────────────────
@@ -41,6 +42,7 @@ let darkMode = false;
 let backlinksCache = {};
 let prefs = {};
 let isChrome = false;
+let syncSignedIn = false;
 
 // Timers
 let saveContentTimer = null;
@@ -90,6 +92,17 @@ function cacheDom() {
   dom.btnGuideLink = $('btnGuideLink');
   dom.guideOverlay = $('guideOverlay');
   dom.btnCloseGuide = $('btnCloseGuide');
+  dom.syncArea = $('syncArea');
+  dom.syncSignIn = $('syncSignIn');
+  dom.syncUser = $('syncUser');
+  dom.syncAvatarBtn = $('syncAvatarBtn');
+  dom.syncAvatarInitial = $('syncAvatarInitial');
+  dom.syncPulse = $('syncPulse');
+  dom.syncDropdown = $('syncDropdown');
+  dom.syncEmail = $('syncEmail');
+  dom.syncNowBtn = $('syncNowBtn');
+  dom.syncLast = $('syncLast');
+  dom.syncSignOutBtn = $('syncSignOutBtn');
 }
 
 // ── Init ───────────────────────────────────────────────────────
@@ -143,6 +156,13 @@ async function init() {
   listenForChanges();
   startCovenantTimer();
   garbageCollect().catch(() => {});
+
+  // Sync UI init (Chrome only)
+  if (isChrome && typeof chrome.identity !== 'undefined' &&
+      typeof chrome.identity.getAuthToken === 'function') {
+    dom.syncArea.style.display = '';
+    initSyncUI();
+  }
 }
 
 // ── Rendering: Category Nav ────────────────────────────────────
@@ -452,6 +472,11 @@ function scheduleContentSave() {
     flashSaveIndicator();
     lastSaveTime = Date.now();
     markDirty();
+
+    // Trigger sync if signed in
+    if (syncSignedIn) {
+      chrome.runtime.sendMessage({ type: 'sync.trigger', reason: 'save', source: 'app' }).catch(() => {});
+    }
   }, delay);
 }
 
@@ -1897,19 +1922,143 @@ function listenForChanges() {
   const storage = getStorage();
   if (!storage.onChange) return;
 
-  storage.onChange((key, newValue, area) => {
+  storage.onChange(async (key, newValue, area) => {
     if (key === 'ls_notes_index' && newValue) {
       index = newValue;
       renderCategoryNav();
       renderTagFilters();
       renderNotesList();
+
+      // If active note was updated externally (sync pulled new data), refresh content
+      if (activeNoteId) {
+        const entry = index.notes.find(n => n.id === activeNoteId);
+        if (entry) {
+          const content = await loadNoteContent(activeNoteId);
+          if (content !== dom.noteContent.value && !saveContentTimer) {
+            dom.noteContent.value = content;
+            activeContent = content;
+          }
+        }
+      }
     }
 
     if (key === 'ls_prefs' && newValue && newValue.pendingFocusId) {
       selectNote(newValue.pendingFocusId);
       getStorage().setPref('pendingFocusId', null);
     }
+
+    // Sync state changes — update sync UI
+    if (key === KEY_SYNC_STATE && newValue) {
+      updateSyncPulse(newValue);
+      if (newValue.lastSyncTime && dom.syncLast) {
+        dom.syncLast.textContent = formatSyncTime(newValue.lastSyncTime);
+      }
+    }
   });
+}
+
+// ── Sync UI ───────────────────────────────────────────────────
+
+async function initSyncUI() {
+  try {
+    const status = await chrome.runtime.sendMessage({ type: 'sync.status' });
+    if (!status || !status.supported) {
+      dom.syncArea.style.display = 'none';
+      return;
+    }
+    updateSyncUIState(status);
+  } catch {
+    dom.syncArea.style.display = 'none';
+    return;
+  }
+
+  // Wire click handlers
+  dom.syncSignIn.addEventListener('click', async () => {
+    try {
+      const result = await chrome.runtime.sendMessage({ type: 'sync.signin' });
+      if (result.signedIn) {
+        syncSignedIn = true;
+        dom.syncSignIn.style.display = 'none';
+        dom.syncUser.style.display = '';
+        dom.syncAvatarInitial.textContent = (result.email || '?')[0].toUpperCase();
+        dom.syncEmail.textContent = result.email || '';
+        chrome.runtime.sendMessage({ type: 'sync.trigger', reason: 'manual', source: 'app' }).catch(() => {});
+      }
+    } catch {}
+  });
+
+  dom.syncAvatarBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dom.syncDropdown.classList.toggle('open');
+  });
+
+  document.addEventListener('click', () => {
+    dom.syncDropdown.classList.remove('open');
+  });
+
+  dom.syncNowBtn.addEventListener('click', async () => {
+    dom.syncPulse.className = 'sync-pulse syncing';
+    dom.syncDropdown.classList.remove('open');
+    try {
+      const result = await chrome.runtime.sendMessage({ type: 'sync.now' });
+      if (result.ok) {
+        dom.syncPulse.className = 'sync-pulse synced';
+        dom.syncLast.textContent = 'Just now';
+      } else {
+        dom.syncPulse.className = 'sync-pulse error';
+        dom.syncLast.textContent = result.error || 'Sync failed';
+      }
+    } catch {
+      dom.syncPulse.className = 'sync-pulse error';
+    }
+  });
+
+  dom.syncSignOutBtn.addEventListener('click', async () => {
+    dom.syncDropdown.classList.remove('open');
+    try {
+      await chrome.runtime.sendMessage({ type: 'sync.signout' });
+      syncSignedIn = false;
+      dom.syncUser.style.display = 'none';
+      dom.syncSignIn.style.display = '';
+      dom.syncPulse.className = 'sync-pulse';
+    } catch {}
+  });
+}
+
+function updateSyncUIState(status) {
+  syncSignedIn = status.signedIn;
+  if (status.signedIn) {
+    dom.syncSignIn.style.display = 'none';
+    dom.syncUser.style.display = '';
+    dom.syncAvatarInitial.textContent = (status.email || '?')[0].toUpperCase();
+    dom.syncEmail.textContent = status.email || '';
+    dom.syncLast.textContent = status.lastSyncTime ? formatSyncTime(status.lastSyncTime) : 'Never synced';
+    updateSyncPulse(status);
+  } else {
+    dom.syncSignIn.style.display = '';
+    dom.syncUser.style.display = 'none';
+  }
+}
+
+function updateSyncPulse(state) {
+  if (!dom.syncPulse) return;
+  if (state.syncing) {
+    dom.syncPulse.className = 'sync-pulse syncing';
+  } else if (state.lastError) {
+    dom.syncPulse.className = 'sync-pulse error';
+  } else if (state.lastSyncTime) {
+    dom.syncPulse.className = 'sync-pulse synced';
+  } else {
+    dom.syncPulse.className = 'sync-pulse';
+  }
+}
+
+function formatSyncTime(ts) {
+  const diff = Date.now() - ts;
+  if (diff < 60000) return 'Just now';
+  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+  if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+  return new Date(ts).toLocaleDateString();
 }
 
 // ── Start ──────────────────────────────────────────────────────

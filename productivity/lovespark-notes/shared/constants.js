@@ -58,6 +58,17 @@ export const TRASH_RETENTION_DAYS = 30;
 // Storage keys (additional)
 export const KEY_BACKLINKS = 'ls_backlinks';
 
+// Google Drive sync
+export const SYNC_INTERVAL_MINUTES = 5;
+export const SYNC_DEBOUNCE_AFTER_SAVE = 30000;
+export const SYNC_LOCK_TTL = 120000;
+export const SYNC_TOMBSTONE_RETENTION_DAYS = 30;
+export const SYNC_CLOCK_SKEW_THRESHOLD = 60000;
+export const DRIVE_INDEX_FILENAME = 'lovespark-notes-index.json';
+export const DRIVE_NOTE_PREFIX = 'lovespark-note-';
+export const KEY_SYNC_STATE = 'ls_sync_state';
+export const KEY_SYNC_LOCK = 'ls_sync_lock';
+
 // Default preferences
 export const DEFAULT_PREFS = {
   lastEditedId: null,

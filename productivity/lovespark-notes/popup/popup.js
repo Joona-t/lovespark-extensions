@@ -4,7 +4,7 @@
 import { initStorage, getStorage } from '../shared/storage-init.js';
 import { createNote, updateNote, loadNoteContent } from '../shared/notes-core.js';
 import { autoTitle } from '../shared/formatters.js';
-import { CATEGORIES, DEBOUNCE_LOCAL, DEFAULT_CATEGORY } from '../shared/constants.js';
+import { CATEGORIES, DEBOUNCE_LOCAL, DEFAULT_CATEGORY, KEY_SYNC_STATE } from '../shared/constants.js';
 
 // Theme dropdown
 const THEMES = ['retro', 'dark', 'beige', 'slate'];
@@ -38,10 +38,15 @@ function applyTheme(t) {
     applyTheme(theme || 'retro');
   });
 })();
-  if (!theme && darkMode) theme = 'dark';
-  applyTheme(theme || 'retro');
-});
-document.getElementById('themeToggle');
+
+// ── Sync Feature Detection ────────────────────────────────────
+
+function isSyncSupported() {
+  return typeof chrome !== 'undefined' && !!chrome.identity &&
+    typeof chrome.identity.getAuthToken === 'function';
+}
+
+let syncSignedIn = false;
 
 // ── State ──────────────────────────────────────────────────────
 
@@ -70,6 +75,12 @@ async function init() {
   await resumeOrCreate();
 
   bindEvents();
+
+  // Sync UI init
+  if (isSyncSupported()) {
+    $('syncArea').style.display = '';
+    initSyncUI();
+  }
 
   // Auto-focus textarea
   $('noteContent').focus();
@@ -133,6 +144,11 @@ function scheduleSave() {
     });
 
     showSaved();
+
+    // Trigger sync if signed in
+    if (syncSignedIn) {
+      chrome.runtime.sendMessage({ type: 'sync.trigger', reason: 'save', source: 'popup' }).catch(() => {});
+    }
   }, DEBOUNCE_LOCAL);
 }
 
@@ -240,6 +256,122 @@ async function openFullApp() {
   const url = chrome.runtime.getURL('app/app.html');
   chrome.tabs.create({ url });
   window.close();
+}
+
+// ── Sync UI ───────────────────────────────────────────────────
+
+async function initSyncUI() {
+  try {
+    const status = await chrome.runtime.sendMessage({ type: 'sync.status' });
+    if (!status || !status.supported) {
+      $('syncArea').style.display = 'none';
+      return;
+    }
+    updateSyncUI(status);
+  } catch {
+    $('syncArea').style.display = 'none';
+  }
+
+  // Wire click handlers
+  $('syncSignIn').addEventListener('click', async () => {
+    try {
+      const result = await chrome.runtime.sendMessage({ type: 'sync.signin' });
+      if (result.signedIn) {
+        syncSignedIn = true;
+        $('syncSignIn').style.display = 'none';
+        $('syncUser').style.display = '';
+        $('syncAvatarInitial').textContent = (result.email || '?')[0].toUpperCase();
+        $('syncEmail').textContent = result.email || '';
+        // Trigger initial sync
+        chrome.runtime.sendMessage({ type: 'sync.trigger', reason: 'manual', source: 'popup' }).catch(() => {});
+      }
+    } catch {}
+  });
+
+  $('syncAvatarBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    $('syncDropdown').classList.toggle('open');
+  });
+
+  document.addEventListener('click', () => {
+    $('syncDropdown').classList.remove('open');
+  });
+
+  $('syncNowBtn').addEventListener('click', async () => {
+    $('syncPulse').className = 'sync-pulse syncing';
+    $('syncDropdown').classList.remove('open');
+    try {
+      const result = await chrome.runtime.sendMessage({ type: 'sync.now' });
+      if (result.ok) {
+        $('syncPulse').className = 'sync-pulse synced';
+        $('syncLast').textContent = 'Just now';
+      } else {
+        $('syncPulse').className = 'sync-pulse error';
+        $('syncLast').textContent = result.error || 'Sync failed';
+      }
+    } catch {
+      $('syncPulse').className = 'sync-pulse error';
+    }
+  });
+
+  $('syncSignOutBtn').addEventListener('click', async () => {
+    $('syncDropdown').classList.remove('open');
+    try {
+      await chrome.runtime.sendMessage({ type: 'sync.signout' });
+      syncSignedIn = false;
+      $('syncUser').style.display = 'none';
+      $('syncSignIn').style.display = '';
+      $('syncPulse').className = 'sync-pulse';
+    } catch {}
+  });
+
+  // Listen for sync state changes
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local' || !changes[KEY_SYNC_STATE]) return;
+    const state = changes[KEY_SYNC_STATE].newValue || {};
+    updateSyncPulse(state);
+    if (state.lastSyncTime) {
+      $('syncLast').textContent = formatSyncTime(state.lastSyncTime);
+    }
+    if (state.lastError) {
+      $('syncPulse').className = 'sync-pulse error';
+    }
+  });
+}
+
+function updateSyncUI(status) {
+  syncSignedIn = status.signedIn;
+  if (status.signedIn) {
+    $('syncSignIn').style.display = 'none';
+    $('syncUser').style.display = '';
+    $('syncAvatarInitial').textContent = (status.email || '?')[0].toUpperCase();
+    $('syncEmail').textContent = status.email || '';
+    $('syncLast').textContent = status.lastSyncTime ? formatSyncTime(status.lastSyncTime) : 'Never synced';
+    updateSyncPulse(status);
+  } else {
+    $('syncSignIn').style.display = '';
+    $('syncUser').style.display = 'none';
+  }
+}
+
+function updateSyncPulse(state) {
+  if (state.syncing) {
+    $('syncPulse').className = 'sync-pulse syncing';
+  } else if (state.lastError) {
+    $('syncPulse').className = 'sync-pulse error';
+  } else if (state.lastSyncTime) {
+    $('syncPulse').className = 'sync-pulse synced';
+  } else {
+    $('syncPulse').className = 'sync-pulse';
+  }
+}
+
+function formatSyncTime(ts) {
+  const diff = Date.now() - ts;
+  if (diff < 60000) return 'Just now';
+  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+  if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+  return new Date(ts).toLocaleDateString();
 }
 
 // ── Start ──────────────────────────────────────────────────────
