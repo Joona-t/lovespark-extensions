@@ -60,11 +60,11 @@ let gaugeVisible = false;
 let liveSparkles = 0;
 let ticking = false;
 let decayLoopId = 0;
+let decayRunning = false;
 let lastDecayTs = 0;
 let overlayCooldownUntil = 0;
 let didInit = false;
 
-const SLOW_THRESHOLD_PX_PER_SEC = 120;
 const MAX_SPARKLES = 12;
 const MAX_SCROLL_DELTA_MS = 500;
 
@@ -181,9 +181,11 @@ function hideOverlay(fromDecay) {
   gaugeEl.style.opacity = '0';
   gaugeFillEl.style.width = '0%';
 
-  if (fromDecay && state.sparkleEnabled) {
-    for (let i = 0; i < 6; i++) {
-      setTimeout(() => spawnSparkle(), i * 80);
+  if (fromDecay) {
+    if (state.sparkleEnabled) {
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => spawnSparkle(), i * 80);
+      }
     }
     bumpPause();
   }
@@ -225,12 +227,14 @@ function spawnSparkle() {
 // ── rAF decay loop ──────────────────────────────────────────────────────────
 
 function startDecayLoop() {
-  if (decayLoopId) return;
+  if (decayRunning) return;
+  decayRunning = true;
   lastDecayTs = Date.now();
   decayLoopId = requestAnimationFrame(decayTick);
 }
 
 function stopDecayLoop() {
+  decayRunning = false;
   if (decayLoopId) {
     cancelAnimationFrame(decayLoopId);
     decayLoopId = 0;
@@ -239,6 +243,7 @@ function stopDecayLoop() {
 
 function decayTick() {
   decayLoopId = 0;
+  if (!decayRunning) return;
 
   if (!shouldBeActive(state)) {
     resetTracking();
@@ -292,8 +297,6 @@ function onScroll() {
 
     const dtMs = now - lastScrollTs;
 
-    const velocityPxPerSec = dtMs > 0 ? (dy / dtMs) * 1000 : 0;
-
     // 1.1 fix: cap scroll contribution, decay idle gaps
     const scrollDelta = Math.min(dtMs, MAX_SCROLL_DELTA_MS);
     const idleGap = dtMs - scrollDelta;
@@ -324,7 +327,7 @@ function onScroll() {
 // ── Storage change listener ─────────────────────────────────────────────────
 
 function onStorageChanged(changes, area) {
-  if (area !== 'sync') return;
+  if (area !== 'local') return;
   for (const key of Object.keys(changes)) {
     if (key in DEFAULT_STATE) {
       state[key] = changes[key].newValue;
@@ -343,6 +346,11 @@ function onStorageChanged(changes, area) {
 // ── SPA navigation ──────────────────────────────────────────────────────────
 
 function reinit() {
+  if (!shouldBeActive(state)) {
+    resetTracking();
+    return;
+  }
+
   continuousScrollingMs = 0;
   overlayVisible = false;
   gaugeVisible = false;

@@ -185,6 +185,7 @@ function tickSnooze(snoozeUntilTs) {
 // ── Event handlers ──────────────────────────────────────────────────────────
 
 cbEnabled.addEventListener('change', () => {
+  currentState.enabled = cbEnabled.checked;
   chrome.storage.local.set({ enabled: cbEnabled.checked });
 });
 
@@ -211,11 +212,13 @@ modeRadios.forEach(radio => {
   radio.addEventListener('change', () => {
     const mode = radio.value;
     const preset = MODE_PRESETS[mode];
+    Object.assign(currentState, { mode, ...preset });
     chrome.storage.local.set({ mode, ...preset });
   });
 });
 
 cbSparkle.addEventListener('change', () => {
+  currentState.sparkleEnabled = cbSparkle.checked;
   chrome.storage.local.set({ sparkleEnabled: cbSparkle.checked });
 });
 
@@ -228,7 +231,8 @@ btnSnooze.addEventListener('click', () => {
 // ── Storage change listener ─────────────────────────────────────────────────
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== 'sync') return;
+  if (area !== 'local') return;
+  if (!currentState) return;
   for (const key of Object.keys(changes)) {
     if (key in DEFAULT_STATE || key.endsWith('Today') || key.endsWith('Total') || key === 'lastResetDate') {
       currentState[key] = changes[key].newValue;
@@ -240,6 +244,11 @@ chrome.storage.onChanged.addListener((changes, area) => {
 // ── Init ────────────────────────────────────────────────────────────────────
 
 getState().then(state => {
+  const today = new Date().toISOString().slice(0, 10);
+  if (state.lastResetDate !== today) {
+    state.nudgesToday = 0;
+    state.pausesToday = 0;
+  }
   render(state);
   startCuteMessages();
 });
