@@ -29,12 +29,7 @@ function applyTheme(t) {
     if (!theme && darkMode) theme = 'dark';
     applyTheme(theme || 'retro');
   });
-}).catch(() => {});
 })();
-  if (!theme && darkMode) theme = 'dark';
-  applyTheme(theme || 'retro');
-});
-document.getElementById('themeToggle');
 
 const MESSAGES = [
   'No ads here, bestie! 💕',
