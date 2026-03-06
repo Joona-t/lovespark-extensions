@@ -447,6 +447,11 @@ $('reset-btn').addEventListener('click', async () => {
   applyToUI(settings);
 });
 
+// Guide page
+$('guide-btn').addEventListener('click', () => {
+  chrome.tabs.create({ url: chrome.runtime.getURL('guide/guide.html') });
+});
+
 // Settings page
 $('settings-btn').addEventListener('click', () => chrome.runtime.openOptionsPage());
 

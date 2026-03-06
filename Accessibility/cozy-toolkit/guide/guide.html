@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Accessibility — Feature Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+<body>
+  <div class="guide-container">
+
+    <!-- Header -->
+    <header class="guide-header">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="60" height="60">
+      <div>
+        <h1 class="header-title">Cozy Accessibility</h1>
+        <span class="header-sub">Feature Guide</span>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle">
+          <span id="themeLabel">Retro Pink</span> &#x25BE;
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" data-theme="dark">Dark</button>
+          <button class="theme-option" data-theme="beige">Beige</button>
+          <button class="theme-option" data-theme="slate">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Welcome -->
+    <section class="card">
+      <h2 class="card-title">&#x1F495; Welcome!</h2>
+      <p>This guide explains every feature in Cozy Accessibility in plain, simple language.</p>
+      <p>Click any section below to expand it and learn more.</p>
+      <p>You don't need to use everything. Start with a <strong>preset</strong> and explore from there!</p>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="card">
+      <h2 class="card-title">&#x1F680; Getting Started</h2>
+
+      <div class="feature-block">
+        <h3 class="feature-name">The Master Toggle</h3>
+        <p><strong>What it does:</strong> Turns the entire extension on or off.</p>
+        <p><strong>How to use it:</strong> Open the popup and flip the "Enable Cozy" switch at the top.</p>
+        <p class="tip">When off, Cozy won't change anything on any website.</p>
+      </div>
+
+      <div class="feature-block">
+        <h3 class="feature-name">Quick Presets</h3>
+        <p><strong>What they do:</strong> One-click setups that turn on the best features for common needs.</p>
+        <p><strong>How to use them:</strong> Open the popup and click one of the four preset buttons.</p>
+        <p>You can customize any preset after applying it. Your changes are saved automatically.</p>
+      </div>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F4D6; Dyslexia Preset</summary>
+        <div class="details-body">
+          <p>Turns on features that make reading easier for people with dyslexia.</p>
+          <ul>
+            <li><strong>OpenDyslexic font</strong> — a font designed to reduce letter confusion</li>
+            <li><strong>Reading ruler</strong> — a highlighted band that follows your cursor to help track lines</li>
+            <li><strong>Warm color tint</strong> — a gentle overlay that softens harsh white backgrounds</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x26A1; ADHD Preset</summary>
+        <div class="details-body">
+          <p>Reduces distractions and helps you stay focused on what you're reading.</p>
+          <ul>
+            <li><strong>Focus mode</strong> — dims everything except the paragraph you're looking at</li>
+            <li><strong>Hide distractions</strong> — removes ads, sidebars, popups, and cookie banners</li>
+            <li><strong>Bionic reading</strong> — bolds the start of each word so your eyes glide faster</li>
+            <li><strong>Freeze animations</strong> — stops moving elements that pull your attention</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F9D8; Sensory Preset</summary>
+        <div class="details-body">
+          <p>Calms down visually overwhelming pages.</p>
+          <ul>
+            <li><strong>Freeze animations</strong> — stops all moving elements</li>
+            <li><strong>Hide GIFs</strong> — removes animated images</li>
+            <li><strong>Reduce motion</strong> — disables smooth scrolling and transitions</li>
+            <li><strong>Warm overlay</strong> — softens bright colors</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F441; Low Vision Preset</summary>
+        <div class="details-body">
+          <p>Makes text bigger and easier to see.</p>
+          <ul>
+            <li><strong>Atkinson Hyperlegible font</strong> — designed for maximum clarity at any size</li>
+            <li><strong>Large text</strong> — 22px with extra line spacing</li>
+            <li><strong>High contrast</strong> — boosts contrast so text stands out more</li>
+            <li><strong>Large cursor</strong> — makes your mouse pointer bigger and pink</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <!-- Reading Features -->
+    <section class="card">
+      <h2 class="card-title">&#x1F4D6; Reading Features</h2>
+      <p class="card-intro">Find these in the first tab (book icon) of the popup.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F308; Color Tint</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Adds a colored overlay on top of the webpage. This can make reading easier if white backgrounds feel too harsh or cause eye strain.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Reading tab (book icon).</li>
+            <li>Turn on "Color Tint".</li>
+            <li>Pick a tint color. The default is a soft pink.</li>
+            <li>Adjust the opacity slider — higher means more color.</li>
+          </ol>
+          <p><strong>Extra controls:</strong></p>
+          <ul>
+            <li><strong>Brightness</strong> — makes the page brighter or darker</li>
+            <li><strong>Contrast</strong> — makes text stand out more (or less) from the background</li>
+            <li><strong>Temperature</strong> — slide left for cooler (blue) tones, right for warmer (yellow) tones</li>
+            <li><strong>Color Filter</strong> — simulates how the page looks with different types of color blindness (protanopia, deuteranopia, tritanopia). Useful for testing or personal comfort.</li>
+          </ul>
+          <p class="tip">Start with low opacity (10-15%) and a warm color. You can always increase it.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F4A1; Bionic Reading</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Bolds the first few letters of every word. This creates visual anchors that help your eyes move through text faster.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Reading tab.</li>
+            <li>Turn on "Bionic Reading".</li>
+            <li>Choose an intensity level.</li>
+          </ol>
+          <p><strong>Intensity levels:</strong></p>
+          <ul>
+            <li><strong>Light</strong> — bolds just the first 1-3 letters. Subtle effect.</li>
+            <li><strong>Medium</strong> — bolds about 40% of each word. Good balance.</li>
+            <li><strong>Strong</strong> — bolds about 60% of each word. Very noticeable.</li>
+          </ul>
+          <p class="tip">Try Medium first. It works well for most people.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F4D6; Reading Mode</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Strips away everything except the main article text and shows it in a clean, distraction-free overlay.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Reading tab.</li>
+            <li>Turn on "Reading Mode".</li>
+            <li>The page content will appear in a clean overlay.</li>
+            <li>Click the X button in the top-right corner to close it.</li>
+          </ol>
+          <p><strong>Controls:</strong></p>
+          <ul>
+            <li><strong>Max Width</strong> — how wide the text column is (480-960px). Narrower is often easier to read.</li>
+            <li><strong>Background</strong> — pick a background color. The default is a warm off-white.</li>
+          </ul>
+          <p class="tip">Works best on article pages and blog posts. Some pages with unusual layouts might not extract perfectly.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Typography Features -->
+    <section class="card">
+      <h2 class="card-title">&#x1F524; Typography Features</h2>
+      <p class="card-intro">Find these in the second tab (letter icon) of the popup.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F524; Reading Font</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Replaces the fonts on webpages with one that's easier for you to read.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Typography tab (letter icon).</li>
+            <li>Turn on "Reading Font".</li>
+            <li>Pick a font from the dropdown.</li>
+          </ol>
+          <p><strong>Font options:</strong></p>
+          <ul>
+            <li><strong>OpenDyslexic</strong> — designed for people with dyslexia. Letters are weighted at the bottom so they don't flip or rotate in your mind.</li>
+            <li><strong>Lexend</strong> — a clean sans-serif font designed to improve reading speed and comfort.</li>
+            <li><strong>Atkinson Hyperlegible</strong> — every letter looks clearly different from every other letter. Great for low vision.</li>
+            <li><strong>System Default</strong> — uses whatever font your computer normally shows.</li>
+          </ul>
+          <p><strong>Extra controls:</strong></p>
+          <ul>
+            <li><strong>Size</strong> — text size from 12px to 32px</li>
+            <li><strong>Line Height</strong> — space between lines. Higher = more breathing room.</li>
+            <li><strong>Letter Spacing</strong> — space between individual letters</li>
+            <li><strong>Word Spacing</strong> — space between words</li>
+            <li><strong>Weight</strong> — Normal or Bold</li>
+          </ul>
+          <p class="tip">If text feels cramped, try increasing line height and letter spacing before increasing font size.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x270D;&#xFE0F; Writing Comfort</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Applies your reading font and spacing settings to text boxes and form fields. So when you type in search bars, comment boxes, or forms, the text looks the same as the rest of the page.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Typography tab.</li>
+            <li>Turn on "Writing Comfort".</li>
+          </ol>
+          <p><strong>Sub-options:</strong></p>
+          <ul>
+            <li><strong>Font in forms</strong> — applies your chosen reading font to input fields</li>
+            <li><strong>Spacing in forms</strong> — applies your letter and word spacing to input fields</li>
+          </ul>
+          <p class="tip">Works best when you also have Reading Font turned on, since it uses those same font settings.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Sensory Features -->
+    <section class="card">
+      <h2 class="card-title">&#x1F9D8; Sensory Features</h2>
+      <p class="card-intro">Find these in the third tab (meditation icon) of the popup.</p>
+      <p>You need to turn on the main "Sensory Controls" toggle first. Then you can pick which sub-features you want.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Freeze Animations</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Stops all CSS animations on the page. Banners that slide, buttons that pulse, loading spinners that spin — all frozen.</p>
+          <p><strong>Why it helps:</strong> Constant motion can be distracting or overwhelming, especially if you have ADHD or sensory sensitivities.</p>
+          <p class="tip">This won't stop videos. Use "Pause Autoplay" for that.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Hide GIFs</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Makes animated GIF images invisible.</p>
+          <p><strong>Why it helps:</strong> GIFs loop endlessly and can pull your attention away from what you're reading.</p>
+          <p class="tip">The GIFs are hidden, not deleted. Turn this off and they come right back.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Reduce Motion</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Disables smooth scrolling and CSS transitions. Pages will scroll instantly instead of gliding.</p>
+          <p><strong>Why it helps:</strong> Smooth motion can cause dizziness or nausea for some people (vestibular sensitivity).</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Pause Autoplay</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Pauses videos and audio that start playing automatically when you open a page.</p>
+          <p><strong>Why it helps:</strong> Unexpected sound and video can be startling and distracting.</p>
+          <p class="tip">You can still play videos manually by clicking the play button.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Large Cursor</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Replaces your mouse cursor with a bigger pink one so it's easier to spot on the screen.</p>
+          <p><strong>Why it helps:</strong> Small cursors can be hard to track, especially on large monitors or for people with low vision.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Focus Features -->
+    <section class="card">
+      <h2 class="card-title">&#x1F3AF; Focus Features</h2>
+      <p class="card-intro">Find these in the fourth tab (target icon) of the popup.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F50D; Paragraph Focus</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Dims everything on the page except the paragraph you're hovering over. Only the text you're reading stays bright.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Focus tab (target icon).</li>
+            <li>Turn on "Paragraph Focus".</li>
+            <li>Move your mouse over any paragraph on the page.</li>
+          </ol>
+          <p><strong>Controls:</strong></p>
+          <ul>
+            <li><strong>Dim Level</strong> — how much the rest of the page is darkened (30-90%)</li>
+            <li><strong>Lock on Click</strong> — when on, clicking a paragraph locks the focus there. Click another paragraph to move the focus.</li>
+          </ul>
+          <p class="tip">Great for long articles. Lock on click is helpful if you read slowly and don't want the focus jumping around with your mouse.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F4CF; Reading Ruler</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Creates a horizontal highlight strip that follows your cursor. The areas above and below are dimmed, so you can focus on one line at a time.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Focus tab.</li>
+            <li>Turn on "Reading Ruler".</li>
+            <li>Move your mouse on the page — the ruler follows your cursor.</li>
+          </ol>
+          <p><strong>Controls:</strong></p>
+          <ul>
+            <li><strong>Height</strong> — how tall the visible strip is (40-200px). Taller = see more lines at once.</li>
+            <li><strong>Opacity</strong> — how dark the dimmed areas are (10-90%)</li>
+            <li><strong>Color</strong> — color of the dimmed overlay (default is black)</li>
+          </ul>
+          <p><strong>Keyboard shortcuts:</strong></p>
+          <ul>
+            <li><kbd>Shift</kbd> + <kbd>&#x2191;</kbd> — move the ruler up</li>
+            <li><kbd>Shift</kbd> + <kbd>&#x2193;</kbd> — move the ruler down</li>
+            <li><kbd>Escape</kbd> — hide the ruler</li>
+          </ul>
+          <p class="tip">If you lose track of lines while reading, try a height of 60-80px. That's usually one or two lines of text.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F6E1;&#xFE0F; Hide Distractions</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Hides common distracting elements from webpages so you can focus on the content.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the Focus tab.</li>
+            <li>Turn on "Hide Distractions".</li>
+            <li>Toggle each category on or off depending on what bothers you.</li>
+          </ol>
+          <p><strong>What each toggle hides:</strong></p>
+          <ul>
+            <li><strong>Sidebars</strong> — side panels, "related articles" columns, navigation drawers</li>
+            <li><strong>Ads</strong> — advertisement banners and ad containers</li>
+            <li><strong>Cookie banners</strong> — those "Accept cookies" popups that cover the bottom of the page</li>
+            <li><strong>Floating elements</strong> — newsletter popups, chat widgets, sticky bars that follow you while scrolling</li>
+            <li><strong>Comments</strong> — comment sections below articles</li>
+            <li><strong>Social/share</strong> — share buttons, social media widgets, "Follow us" panels</li>
+          </ul>
+          <p class="tip">Ads and cookie banners are on by default. Comments and social are off by default since some people want to keep those.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- TTS -->
+    <section class="card">
+      <h2 class="card-title">&#x1F50A; Text-to-Speech</h2>
+      <p class="card-intro">Find this in the fifth tab (speaker icon) of the popup.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">&#x1F50A; Read Aloud</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Reads selected text out loud using your computer's built-in voices.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup and go to the TTS tab (speaker icon).</li>
+            <li>Turn on "Text-to-Speech".</li>
+            <li>Go to any webpage.</li>
+            <li>Highlight the text you want to hear.</li>
+            <li>A pink "Read aloud" button will appear near your selection.</li>
+            <li>Click it to start listening.</li>
+          </ol>
+          <p><strong>Controls:</strong></p>
+          <ul>
+            <li><strong>Speed</strong> — how fast the voice reads (50-200%). 100% is normal speed.</li>
+            <li><strong>Voice</strong> — pick from the voices installed on your computer. The options depend on your operating system.</li>
+          </ul>
+          <p class="tip">You can pause and resume from the toolbar that appears at the bottom of the page while audio is playing.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Site Settings -->
+    <section class="card">
+      <h2 class="card-title">&#x2699; Site &amp; Settings</h2>
+      <p class="card-intro">Find these in the last tab (gear icon) of the popup.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Disable on a Specific Site</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Turns off all Cozy features on the current website only. Other sites are unaffected.</p>
+          <p><strong>How to use it:</strong></p>
+          <ol>
+            <li>Open the popup while you're on the site you want to disable.</li>
+            <li>Go to the Site tab (gear icon).</li>
+            <li>Click "Disable here".</li>
+          </ol>
+          <p><strong>To re-enable:</strong> Go back to the same tab and click "Enable here".</p>
+          <p class="tip">You can manage all disabled sites from the full Settings page (click the gear icon in the popup header).</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Reset to Defaults</summary>
+        <div class="details-body">
+          <p><strong>What it does:</strong> Resets all your settings back to how they were when you first installed the extension.</p>
+          <p><strong>How to use it:</strong> Go to the Site tab and click "Reset to Defaults". You'll be asked to confirm.</p>
+          <p class="tip">This can't be undone! If you want to keep your settings, export them first from the Settings page.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Settings Page -->
+    <section class="card">
+      <h2 class="card-title">&#x1F4BE; Settings Page</h2>
+      <p>The full Settings page has extra options you won't find in the popup.</p>
+      <p><strong>How to open it:</strong> Click the gear icon in the top-right corner of the popup.</p>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Export &amp; Import Settings</summary>
+        <div class="details-body">
+          <p><strong>Export</strong> saves all your settings as a JSON file on your computer. Use this as a backup.</p>
+          <p><strong>Import</strong> loads settings from a JSON file. Use this to restore a backup or copy settings to another browser.</p>
+          <p class="tip">Good idea to export before resetting or before a browser update.</p>
+        </div>
+      </details>
+
+      <details class="feature-details">
+        <summary class="feature-summary">Disabled Sites List</summary>
+        <div class="details-body">
+          <p>Shows every site where you've disabled Cozy. Click the X next to a site to re-enable Cozy there.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Themes -->
+    <section class="card">
+      <h2 class="card-title">&#x1F3A8; Themes</h2>
+      <p>Change how the extension itself looks. This only affects the popup and settings pages — not the features applied to websites.</p>
+      <p><strong>How to change:</strong> Click the theme dropdown in the top-right corner of the popup.</p>
+
+      <div class="theme-list">
+        <div class="theme-item">
+          <span class="theme-dot retro"></span>
+          <div>
+            <strong>Retro Pink</strong> — the default. Warm pink gradient with frosted glass cards.
+          </div>
+        </div>
+        <div class="theme-item">
+          <span class="theme-dot dark"></span>
+          <div>
+            <strong>Dark</strong> — deep purple with neon pink accents. Easy on the eyes at night.
+          </div>
+        </div>
+        <div class="theme-item">
+          <span class="theme-dot beige"></span>
+          <div>
+            <strong>Beige</strong> — warm earthy tones with a serif font. Calm and paper-like.
+          </div>
+        </div>
+        <div class="theme-item">
+          <span class="theme-dot slate"></span>
+          <div>
+            <strong>Slate</strong> — minimal cool grays with a rust accent. Clean and modern.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keyboard Shortcuts -->
+    <section class="card">
+      <h2 class="card-title">&#x2328;&#xFE0F; Keyboard Shortcuts</h2>
+      <table class="shortcuts-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Shortcut</th>
+            <th>What it does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Reading Ruler</td>
+            <td><kbd>Shift</kbd> + <kbd>&#x2191;</kbd></td>
+            <td>Move ruler up</td>
+          </tr>
+          <tr>
+            <td>Reading Ruler</td>
+            <td><kbd>Shift</kbd> + <kbd>&#x2193;</kbd></td>
+            <td>Move ruler down</td>
+          </tr>
+          <tr>
+            <td>Reading Ruler</td>
+            <td><kbd>Escape</kbd></td>
+            <td>Hide the ruler</td>
+          </tr>
+          <tr>
+            <td>Paragraph Focus</td>
+            <td>Click</td>
+            <td>Lock focus on a paragraph (when lock-on-click is enabled)</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Privacy -->
+    <section class="card">
+      <h2 class="card-title">&#x1F512; Privacy</h2>
+      <p>Cozy Accessibility <strong>never collects your data</strong>. Period.</p>
+      <ul class="privacy-list">
+        <li>All your settings are stored locally on your device.</li>
+        <li>Nothing is sent to any server, ever.</li>
+        <li>No ads. No tracking. No analytics.</li>
+        <li>No account required.</li>
+        <li>All fonts are bundled with the extension — no external downloads.</li>
+        <li>Open source and MIT licensed.</li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <div class="guide-footer">
+      <p>Made with &#x1F495; by <a href="https://joona-t.github.io" target="_blank" rel="noopener">Joona</a></p>
+    </div>
+
+  </div>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="../lib/lovespark-footer.js"></script>
+  <script src="guide.js"></script>
+</body>
+</html>
