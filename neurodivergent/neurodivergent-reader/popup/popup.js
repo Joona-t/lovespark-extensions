@@ -15,18 +15,70 @@ function applyTheme(t) {
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
-  if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
-    menu.addEventListener('click', (e) => {
-      const opt = e.target.closest('.theme-option');
-      if (!opt) return;
-      const theme = opt.dataset.theme;
-      applyTheme(theme);
-      chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
-    });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+  if (!toggle || !menu) return;
+
+  function openMenu() {
+    menu.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    const first = menu.querySelector('.theme-option');
+    if (first) first.focus();
   }
+
+  function closeMenu() {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function selectTheme(opt) {
+    const theme = opt.dataset.theme;
+    applyTheme(theme);
+    chrome.storage.local.set({ theme });
+    closeMenu();
+    toggle.focus();
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menu.classList.contains('open')) closeMenu();
+    else openMenu();
+  });
+
+  toggle.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openMenu();
+    }
+  });
+
+  menu.addEventListener('click', (e) => {
+    const opt = e.target.closest('.theme-option');
+    if (opt) selectTheme(opt);
+  });
+
+  menu.addEventListener('keydown', (e) => {
+    const opts = [...menu.querySelectorAll('.theme-option')];
+    const idx = opts.indexOf(document.activeElement);
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = opts[(idx + 1) % opts.length];
+      if (next) next.focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = opts[(idx - 1 + opts.length) % opts.length];
+      if (prev) prev.focus();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (opts[idx]) selectTheme(opts[idx]);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  document.addEventListener('click', () => closeMenu());
+
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
     applyTheme(theme || 'retro');
@@ -156,11 +208,17 @@ function applyToggles(s) {
   fontToggle.checked = s.fontOverride.enabled;
   fontSelect.value = s.fontOverride.family || 'OpenDyslexic';
   fontPickerRow.classList.toggle('hidden', !s.fontOverride.enabled);
+  fontPickerRow.setAttribute('aria-hidden', String(!s.fontOverride.enabled));
   rulerToggle.checked = s.ruler.enabled;
   focusToggle.checked = s.focus.enabled;
   distractionToggle.checked = s.distractions.enabled;
 
-  popupContainer.classList.toggle('disabled', !s.enabled);
+  const disabled = !s.enabled;
+  popupContainer.classList.toggle('disabled', disabled);
+  const featuresCard = popupContainer.querySelector('.features-card');
+  const siteSection = popupContainer.querySelector('.site-section');
+  if (featuresCard) featuresCard.setAttribute('aria-disabled', String(disabled));
+  if (siteSection) siteSection.setAttribute('aria-disabled', String(disabled));
 }
 
 // ── Save + inject ─────────────────────────────────────────────────────────────
@@ -203,6 +261,7 @@ masterToggle.addEventListener('change', () => {
 fontToggle.addEventListener('change', () => {
   settings.fontOverride.enabled = fontToggle.checked;
   fontPickerRow.classList.toggle('hidden', !fontToggle.checked);
+  fontPickerRow.setAttribute('aria-hidden', String(!fontToggle.checked));
   saveSettings();
 });
 
@@ -248,9 +307,11 @@ function updateSiteBtn(isDisabled) {
   if (isDisabled) {
     siteDisableBtn.textContent = '\u2714 Enable here';
     siteDisableBtn.classList.add('active');
+    siteDisableBtn.setAttribute('aria-label', 'Enable reader on this site');
   } else {
     siteDisableBtn.textContent = '\u2716 Disable here';
     siteDisableBtn.classList.remove('active');
+    siteDisableBtn.setAttribute('aria-label', 'Disable reader on this site');
   }
 }
 
@@ -261,7 +322,7 @@ settingsBtn.addEventListener('click', () => {
 // ── Storage change listener (sync with other tabs/windows) ────────────────────
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== 'sync' || !changes.settings) return;
+  if (area !== 'local' || !changes.settings) return;
   settings = mergeDefaults(changes.settings.newValue || {});
   applyToggles(settings);
 });

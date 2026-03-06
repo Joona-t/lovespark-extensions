@@ -60,25 +60,25 @@
         <label class="slider-label">
           Font size: <span id="font-size-val">18</span>px
         </label>
-        <input type="range" id="font-size" class="slider" min="12" max="32" step="1" value="18">
+        <input type="range" id="font-size" class="slider" min="12" max="32" step="1" value="18" aria-label="Font size">
       </div>
       <div class="slider-group">
         <label class="slider-label">
           Line height: <span id="line-height-val">1.8</span>
         </label>
-        <input type="range" id="line-height" class="slider" min="1.0" max="3.0" step="0.1" value="1.8">
+        <input type="range" id="line-height" class="slider" min="1.0" max="3.0" step="0.1" value="1.8" aria-label="Line height">
       </div>
       <div class="slider-group">
         <label class="slider-label">
           Letter spacing: <span id="letter-spacing-val">0.05</span>em
         </label>
-        <input type="range" id="letter-spacing" class="slider" min="0" max="0.2" step="0.01" value="0.05">
+        <input type="range" id="letter-spacing" class="slider" min="0" max="0.2" step="0.01" value="0.05" aria-label="Letter spacing">
       </div>
       <div class="slider-group">
         <label class="slider-label">
           Word spacing: <span id="word-spacing-val">0.1</span>em
         </label>
-        <input type="range" id="word-spacing" class="slider" min="0" max="0.5" step="0.05" value="0.1">
+        <input type="range" id="word-spacing" class="slider" min="0" max="0.5" step="0.05" value="0.1" aria-label="Word spacing">
       </div>
     </section>
 
@@ -99,13 +99,13 @@
         <label class="slider-label">
           Gap height: <span id="ruler-height-val">80</span>px
         </label>
-        <input type="range" id="ruler-height" class="slider" min="40" max="200" step="10" value="80">
+        <input type="range" id="ruler-height" class="slider" min="40" max="200" step="10" value="80" aria-label="Ruler gap height">
       </div>
       <div class="slider-group">
         <label class="slider-label">
           Shade opacity: <span id="ruler-opacity-val">0.5</span>
         </label>
-        <input type="range" id="ruler-opacity" class="slider" min="0.1" max="0.9" step="0.05" value="0.5">
+        <input type="range" id="ruler-opacity" class="slider" min="0.1" max="0.9" step="0.05" value="0.5" aria-label="Ruler shade opacity">
       </div>
       <div class="slider-group">
         <label class="slider-label">Shade color</label>
@@ -130,7 +130,7 @@
         <label class="slider-label">
           Dim level: <span id="focus-dim-val">0.7</span>
         </label>
-        <input type="range" id="focus-dim" class="slider" min="0.3" max="0.9" step="0.05" value="0.7">
+        <input type="range" id="focus-dim" class="slider" min="0.3" max="0.9" step="0.05" value="0.7" aria-label="Focus dim level">
       </div>
       <div class="row-between">
         <div>
@@ -191,7 +191,7 @@
     <section class="card">
       <h2 class="card-title">&#x1F6AB; Disabled Sites</h2>
       <div class="add-row">
-        <input id="site-input" type="text" class="text-input" placeholder="example.com">
+        <input id="site-input" type="text" class="text-input" placeholder="example.com" aria-label="Site domain to disable">
         <button id="site-add" class="btn-pink">Add</button>
       </div>
       <ul id="site-list" class="site-list"></ul>

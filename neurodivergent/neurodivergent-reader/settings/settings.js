@@ -238,7 +238,8 @@ function renderSiteList() {
     const btn = document.createElement('button');
     btn.className = 'site-remove';
     btn.dataset.domain = domain;
-    btn.title = 'Remove';
+    btn.title = 'Remove ' + domain;
+    btn.setAttribute('aria-label', 'Remove ' + domain);
     btn.textContent = '\u2715';
 
     li.appendChild(span);
@@ -250,7 +251,7 @@ function renderSiteList() {
 // ── Live sync from other contexts ─────────────────────────────────────────────
 
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== 'sync' || !changes.settings) return;
+  if (area !== 'local' || !changes.settings) return;
   settings = mergeDefaults(changes.settings.newValue || {});
   applyState(settings);
 });
