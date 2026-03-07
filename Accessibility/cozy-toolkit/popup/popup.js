@@ -494,7 +494,7 @@ $('guide-btn').addEventListener('click', () => {
   chrome.tabs.create({ url: chrome.runtime.getURL('guide/guide.html') });
 });
 $('bug-btn').addEventListener('click', () => {
-  chrome.tabs.create({ url: 'https://github.com/Joona-t/cozy-accessibility/issues' });
+  chrome.tabs.create({ url: 'mailto:joona@lovespark.love?subject=Bug Report — Cozy Accessibility' });
 });
 
 // ── Storage change listener ─────────────────────────────────────────────────────
