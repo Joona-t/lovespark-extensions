@@ -378,6 +378,10 @@ body {
 }
 .action-btn:hover { background: var(--ls-pink-accent); color: white; }
 
+/* ── Help card ───────────────────────────────── */
+.help-card { display: flex; flex-direction: column; gap: 6px; }
+.bug-btn { border-color: rgba(220, 53, 69, 0.33); }
+
 /* ── Footer ───────────────────────────────────── */
 .popup-footer { text-align: center; font-size: 10px; color: var(--ls-text-muted); margin-top: 8px; }
 

@@ -489,6 +489,14 @@ $('reset-btn').addEventListener('click', async () => {
 // Settings page
 $('settings-btn').addEventListener('click', () => chrome.runtime.openOptionsPage());
 
+// Guide & Bug Report
+$('guide-btn').addEventListener('click', () => {
+  chrome.tabs.create({ url: chrome.runtime.getURL('guide/guide.html') });
+});
+$('bug-btn').addEventListener('click', () => {
+  chrome.tabs.create({ url: 'https://github.com/Joona-t/cozy-accessibility/issues' });
+});
+
 // ── Storage change listener ─────────────────────────────────────────────────────
 
 chrome.storage.onChanged.addListener((changes, area) => {
