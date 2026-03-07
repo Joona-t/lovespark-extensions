@@ -16,7 +16,11 @@ function applyTheme(t) {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
@@ -24,8 +28,18 @@ function applyTheme(t) {
       applyTheme(theme);
       chrome.storage.local.set({ theme });
       menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -95,18 +109,43 @@ let siteSettings = {};
 
 // ── Tab switching ───────────────────────────────────────────────────────────────
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
-    });
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
 
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected', 'true');
-    const panel = document.querySelector(`[data-panel="${btn.dataset.tab}"]`);
-    if (panel) panel.classList.add('active');
+function activateTab(btn) {
+  tabBtns.forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+    b.setAttribute('tabindex', '-1');
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  btn.setAttribute('tabindex', '0');
+  btn.focus();
+  const panel = document.querySelector(`[data-panel="${btn.dataset.tab}"]`);
+  if (panel) panel.classList.add('active');
+}
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => activateTab(btn));
+  btn.addEventListener('keydown', (e) => {
+    const idx = tabBtns.indexOf(btn);
+    let next;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      next = tabBtns[(idx + 1) % tabBtns.length];
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      next = tabBtns[(idx - 1 + tabBtns.length) % tabBtns.length];
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      next = tabBtns[0];
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      next = tabBtns[tabBtns.length - 1];
+    }
+    if (next) activateTab(next);
   });
 });
 

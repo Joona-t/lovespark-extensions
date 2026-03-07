@@ -22,10 +22,10 @@
       </div>
       <div class="header-actions">
         <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
-      <div class="theme-dropdown-menu" id="themeMenu">
+      <div class="theme-dropdown-menu" id="themeMenu" role="menu">
         <div class="theme-dropdown-header">Change Theme</div>
         <button class="theme-option" data-theme="retro">Retro Pink</button>
         <button class="theme-option" data-theme="dark">Dark</button>
@@ -60,17 +60,17 @@
     </section>
 
     <!-- Tabs -->
-    <nav class="tab-nav" role="tablist">
-      <button class="tab-btn active" data-tab="reading" role="tab" aria-selected="true">&#x1F4D6;</button>
-      <button class="tab-btn" data-tab="typography" role="tab">&#x1F524;</button>
-      <button class="tab-btn" data-tab="sensory" role="tab">&#x1F9D8;</button>
-      <button class="tab-btn" data-tab="focus" role="tab">&#x1F3AF;</button>
-      <button class="tab-btn" data-tab="tts" role="tab">&#x1F50A;</button>
-      <button class="tab-btn" data-tab="site" role="tab">&#x2699;</button>
+    <nav class="tab-nav" role="tablist" aria-label="Settings categories">
+      <button class="tab-btn active" data-tab="reading" role="tab" id="tab-reading" aria-selected="true" aria-controls="panel-reading" tabindex="0" aria-label="Reading">&#x1F4D6;</button>
+      <button class="tab-btn" data-tab="typography" role="tab" id="tab-typography" aria-selected="false" aria-controls="panel-typography" tabindex="-1" aria-label="Typography">&#x1F524;</button>
+      <button class="tab-btn" data-tab="sensory" role="tab" id="tab-sensory" aria-selected="false" aria-controls="panel-sensory" tabindex="-1" aria-label="Sensory">&#x1F9D8;</button>
+      <button class="tab-btn" data-tab="focus" role="tab" id="tab-focus" aria-selected="false" aria-controls="panel-focus" tabindex="-1" aria-label="Focus">&#x1F3AF;</button>
+      <button class="tab-btn" data-tab="tts" role="tab" id="tab-tts" aria-selected="false" aria-controls="panel-tts" tabindex="-1" aria-label="Text to Speech">&#x1F50A;</button>
+      <button class="tab-btn" data-tab="site" role="tab" id="tab-site" aria-selected="false" aria-controls="panel-site" tabindex="-1" aria-label="Site Settings">&#x2699;</button>
     </nav>
 
     <!-- Tab: Reading -->
-    <section class="tab-panel active" data-panel="reading">
+    <section class="tab-panel active" data-panel="reading" role="tabpanel" id="panel-reading" aria-labelledby="tab-reading">
       <div class="panel-card">
         <label class="toggle-row">
           <span class="toggle-label">&#x1F308; Color Tint</span>
@@ -154,7 +154,7 @@
     </section>
 
     <!-- Tab: Typography -->
-    <section class="tab-panel" data-panel="typography">
+    <section class="tab-panel" data-panel="typography" role="tabpanel" id="panel-typography" aria-labelledby="tab-typography">
       <div class="panel-card">
         <label class="toggle-row">
           <span class="toggle-label">&#x1F524; Reading Font</span>
@@ -229,7 +229,7 @@
     </section>
 
     <!-- Tab: Sensory -->
-    <section class="tab-panel" data-panel="sensory">
+    <section class="tab-panel" data-panel="sensory" role="tabpanel" id="panel-sensory" aria-labelledby="tab-sensory">
       <div class="panel-card">
         <label class="toggle-row">
           <span class="toggle-label">&#x1F9D8; Sensory Controls</span>
@@ -279,7 +279,7 @@
     </section>
 
     <!-- Tab: Focus -->
-    <section class="tab-panel" data-panel="focus">
+    <section class="tab-panel" data-panel="focus" role="tabpanel" id="panel-focus" aria-labelledby="tab-focus">
       <div class="panel-card">
         <label class="toggle-row">
           <span class="toggle-label">&#x1F50D; Paragraph Focus</span>
@@ -383,7 +383,7 @@
     </section>
 
     <!-- Tab: TTS -->
-    <section class="tab-panel" data-panel="tts">
+    <section class="tab-panel" data-panel="tts" role="tabpanel" id="panel-tts" aria-labelledby="tab-tts">
       <div class="panel-card">
         <label class="toggle-row">
           <span class="toggle-label">&#x1F50A; Text-to-Speech</span>
@@ -410,7 +410,7 @@
     </section>
 
     <!-- Tab: Site/Settings -->
-    <section class="tab-panel" data-panel="site">
+    <section class="tab-panel" data-panel="site" role="tabpanel" id="panel-site" aria-labelledby="tab-site">
       <div class="panel-card">
         <div class="site-row">
           <span class="site-icon">&#x1F4CD;</span>
