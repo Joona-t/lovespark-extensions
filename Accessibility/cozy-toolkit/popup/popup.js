@@ -489,12 +489,9 @@ $('reset-btn').addEventListener('click', async () => {
 // Settings page
 $('settings-btn').addEventListener('click', () => chrome.runtime.openOptionsPage());
 
-// Guide & Bug Report
+// Guide
 $('guide-btn').addEventListener('click', () => {
   chrome.tabs.create({ url: chrome.runtime.getURL('guide/guide.html') });
-});
-$('bug-btn').addEventListener('click', () => {
-  chrome.tabs.create({ url: 'mailto:joona@lovespark.love?subject=Bug Report — Cozy Accessibility' });
 });
 
 // ── Storage change listener ─────────────────────────────────────────────────────
