@@ -16,7 +16,8 @@
 
 .ls-footer-suite {
   font-size: 11px;
-  color: var(--ls-text-muted, #783850);
+  color: var(--ls-text-muted, #9E4D6E);
+  opacity: 0.85;
 }
 
 .ls-kofi-btn {
@@ -39,5 +40,6 @@
 
 .ls-footer-credit {
   font-size: 10px;
-  color: var(--ls-text-muted, #783850);
+  color: var(--ls-text-muted, #9E4D6E);
+  opacity: 0.6;
 }
