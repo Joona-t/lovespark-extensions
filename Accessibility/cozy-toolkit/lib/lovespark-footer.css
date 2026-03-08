@@ -16,15 +16,16 @@
 
 .ls-footer-suite {
   font-size: 11px;
-  color: var(--ls-text-dark, #5C1A36);
+  color: var(--ls-text-muted, #9E4D6E);
+  opacity: 0.85;
 }
 
 .ls-kofi-btn {
   display: inline-block;
   font-size: 11px;
   font-family: inherit;
-  color: #fff;
-  background: #b92d5d;
+  color: var(--ls-text-white, #fff);
+  background: var(--ls-pink-deep, #B92D5D);
   border: none;
   border-radius: 999px;
   padding: 5px 14px;
@@ -57,5 +58,12 @@
 
 .ls-footer-credit {
   font-size: 10px;
-  color: var(--ls-text-dark, #5C1A36);
+  color: var(--ls-text-muted, #9E4D6E);
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-kofi-btn, .ls-bug-btn {
+    transition-duration: 0.01ms !important;
+  }
 }

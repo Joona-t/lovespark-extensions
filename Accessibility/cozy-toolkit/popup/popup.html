@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cozy Accessibility</title>
+  <title>Cozy: ADHD & Dyslexia Accessibility Toolkit</title>
   <link rel="stylesheet" href="../fonts/ui-fonts.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="../lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container" role="alertdialog" aria-labelledby="popup-title" aria-describedby="cute-msg">
+  <div class="popup-container" role="dialog" aria-labelledby="popup-title" aria-describedby="cute-msg">
 
     <!-- Header -->
     <header class="popup-header">
@@ -46,6 +46,10 @@
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
         </span>
       </label>
+      <div class="site-row status-site-row">
+        <span id="site-domain" class="site-domain">&mdash;</span>
+        <button id="site-disable-btn" class="site-btn">&#x2716; Disable here</button>
+      </div>
     </section>
 
     <!-- Presets -->
@@ -58,107 +62,21 @@
       </div>
     </section>
 
-    <!-- Tabs -->
+    <!-- Tabs: 3 text-labeled tabs -->
     <nav class="tab-nav" role="tablist" aria-label="Settings categories">
-      <button class="tab-btn active" data-tab="reading" role="tab" id="tab-reading" aria-selected="true" aria-controls="panel-reading" tabindex="0" aria-label="Reading">&#x1F4D6;</button>
-      <button class="tab-btn" data-tab="typography" role="tab" id="tab-typography" aria-selected="false" aria-controls="panel-typography" tabindex="-1" aria-label="Typography">&#x1F524;</button>
-      <button class="tab-btn" data-tab="sensory" role="tab" id="tab-sensory" aria-selected="false" aria-controls="panel-sensory" tabindex="-1" aria-label="Sensory">&#x1F9D8;</button>
-      <button class="tab-btn" data-tab="focus" role="tab" id="tab-focus" aria-selected="false" aria-controls="panel-focus" tabindex="-1" aria-label="Focus">&#x1F3AF;</button>
-      <button class="tab-btn" data-tab="tts" role="tab" id="tab-tts" aria-selected="false" aria-controls="panel-tts" tabindex="-1" aria-label="Text to Speech">&#x1F50A;</button>
-      <button class="tab-btn" data-tab="site" role="tab" id="tab-site" aria-selected="false" aria-controls="panel-site" tabindex="-1" aria-label="Site Settings">&#x2699;</button>
+      <button class="tab-btn active" data-tab="read" role="tab" id="tab-read" aria-selected="true" aria-controls="panel-read" tabindex="0">Read</button>
+      <button class="tab-btn" data-tab="visual" role="tab" id="tab-visual" aria-selected="false" aria-controls="panel-visual" tabindex="-1">Visual</button>
+      <button class="tab-btn" data-tab="focus" role="tab" id="tab-focus" aria-selected="false" aria-controls="panel-focus" tabindex="-1">Focus</button>
     </nav>
 
-    <!-- Tab: Reading -->
-    <section class="tab-panel active" data-panel="reading" role="tabpanel" id="panel-reading" aria-labelledby="tab-reading">
-      <div class="panel-card">
-        <label class="toggle-row">
-          <span class="toggle-label">&#x1F308; Color Tint</span>
-          <span class="toggle-wrap">
-            <input type="checkbox" id="overlay-toggle" aria-label="Color Tint">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </span>
-        </label>
-        <div class="sub-controls" id="overlay-controls">
-          <div class="slider-row">
-            <span class="slider-label">Tint Color</span>
-            <input type="color" id="tint-color" value="#FDCFE1" class="color-input">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Opacity</span>
-            <input type="range" id="tint-opacity" min="0" max="50" value="15" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Brightness</span>
-            <input type="range" id="brightness" min="50" max="150" value="100" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Contrast</span>
-            <input type="range" id="contrast" min="50" max="200" value="100" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Temperature</span>
-            <input type="range" id="temperature" min="-100" max="100" value="0" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Color Filter</span>
-            <select id="color-filter" class="font-select">
-              <option value="none">None</option>
-              <option value="protanopia">Protanopia</option>
-              <option value="deuteranopia">Deuteranopia</option>
-              <option value="tritanopia">Tritanopia</option>
-            </select>
-          </div>
-        </div>
-      </div>
+    <!-- Tab: Read -->
+    <section class="tab-panel active" data-panel="read" role="tabpanel" id="panel-read" aria-labelledby="tab-read">
 
       <div class="panel-card">
         <label class="toggle-row">
-          <span class="toggle-label">&#x1F4A1; Bionic Reading</span>
+          <span class="toggle-label">Font & Typography</span>
           <span class="toggle-wrap">
-            <input type="checkbox" id="bionic-toggle" aria-label="Bionic Reading">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </span>
-        </label>
-        <div class="sub-controls" id="bionic-controls">
-          <div class="slider-row">
-            <span class="slider-label">Intensity</span>
-            <select id="bionic-intensity" class="font-select">
-              <option value="1">Light</option>
-              <option value="2" selected>Medium</option>
-              <option value="3">Strong</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel-card">
-        <label class="toggle-row">
-          <span class="toggle-label">&#x1F4D6; Reading Mode</span>
-          <span class="toggle-wrap">
-            <input type="checkbox" id="reading-mode-toggle" aria-label="Reading Mode">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </span>
-        </label>
-        <div class="sub-controls" id="reading-controls">
-          <div class="slider-row">
-            <span class="slider-label">Max Width</span>
-            <input type="range" id="reading-width" min="480" max="960" value="680" step="20" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Background</span>
-            <input type="color" id="reading-bg" value="#FFF8F0" class="color-input">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tab: Typography -->
-    <section class="tab-panel" data-panel="typography" role="tabpanel" id="panel-typography" aria-labelledby="tab-typography">
-      <div class="panel-card">
-        <label class="toggle-row">
-          <span class="toggle-label">&#x1F524; Reading Font</span>
-          <span class="toggle-wrap">
-            <input type="checkbox" id="font-toggle" aria-label="Reading Font">
+            <input type="checkbox" id="font-toggle" aria-label="Font & Typography">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
           </span>
         </label>
@@ -202,7 +120,51 @@
 
       <div class="panel-card">
         <label class="toggle-row">
-          <span class="toggle-label">&#x270D;&#xFE0F; Writing Comfort</span>
+          <span class="toggle-label">Bionic Reading</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="bionic-toggle" aria-label="Bionic Reading">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="bionic-controls">
+          <div class="slider-row">
+            <span class="slider-label">Intensity</span>
+            <select id="bionic-intensity" class="font-select">
+              <option value="1">Light</option>
+              <option value="2" selected>Medium</option>
+              <option value="3">Strong</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">Reading Ruler</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="ruler-toggle" aria-label="Reading Ruler">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="ruler-controls">
+          <div class="slider-row">
+            <span class="slider-label">Height</span>
+            <input type="range" id="ruler-height" min="40" max="200" value="80" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Opacity</span>
+            <input type="range" id="ruler-opacity" min="10" max="90" value="50" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Color</span>
+            <input type="color" id="ruler-color" value="#000000" class="color-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">Writing Comfort</span>
           <span class="toggle-wrap">
             <input type="checkbox" id="writing-toggle" aria-label="Writing Comfort">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -225,13 +187,115 @@
           </label>
         </div>
       </div>
-    </section>
 
-    <!-- Tab: Sensory -->
-    <section class="tab-panel" data-panel="sensory" role="tabpanel" id="panel-sensory" aria-labelledby="tab-sensory">
       <div class="panel-card">
         <label class="toggle-row">
-          <span class="toggle-label">&#x1F9D8; Sensory Controls</span>
+          <span class="toggle-label">Text-to-Speech</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="tts-toggle" aria-label="Text-to-Speech">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="tts-controls">
+          <div class="slider-row">
+            <span class="slider-label">Speed</span>
+            <input type="range" id="tts-speed" min="50" max="200" value="100" class="slider">
+            <span class="slider-value" id="tts-speed-val">1.0x</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Voice</span>
+            <select id="tts-voice" class="font-select">
+              <option value="">Default</option>
+            </select>
+          </div>
+        </div>
+        <p class="hint-text">Select text on any page to hear it read aloud</p>
+      </div>
+
+    </section>
+
+    <!-- Tab: Visual -->
+    <section class="tab-panel" data-panel="visual" role="tabpanel" id="panel-visual" aria-labelledby="tab-visual">
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">Color Tint</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="overlay-toggle" aria-label="Color Tint">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="overlay-controls">
+          <div class="slider-row">
+            <span class="slider-label">Tint Color</span>
+            <input type="color" id="tint-color" value="#FDCFE1" class="color-input">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Opacity</span>
+            <input type="range" id="tint-opacity" min="0" max="50" value="15" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Brightness</span>
+            <input type="range" id="brightness" min="50" max="150" value="100" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Contrast</span>
+            <input type="range" id="contrast" min="50" max="200" value="100" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Temperature</span>
+            <input type="range" id="temperature" min="-100" max="100" value="0" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Color Filter</span>
+            <select id="color-filter" class="font-select">
+              <option value="none">None</option>
+              <option value="protanopia">Protanopia</option>
+              <option value="deuteranopia">Deuteranopia</option>
+              <option value="tritanopia">Tritanopia</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">Reading Mode</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="reading-mode-toggle" aria-label="Reading Mode">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+        <div class="sub-controls" id="reading-controls">
+          <div class="slider-row">
+            <span class="slider-label">Max Width</span>
+            <input type="range" id="reading-width" min="480" max="960" value="680" step="20" class="slider">
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Background</span>
+            <input type="color" id="reading-bg" value="#FFF8F0" class="color-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">Large Cursor</span>
+          <span class="toggle-wrap">
+            <input type="checkbox" id="large-cursor" aria-label="Large Cursor">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+      </div>
+
+    </section>
+
+    <!-- Tab: Focus -->
+    <section class="tab-panel" data-panel="focus" role="tabpanel" id="panel-focus" aria-labelledby="tab-focus">
+
+      <div class="panel-card">
+        <label class="toggle-row">
+          <span class="toggle-label">Sensory Controls</span>
           <span class="toggle-wrap">
             <input type="checkbox" id="sensory-toggle" aria-label="Sensory Controls">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -266,22 +330,12 @@
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </span>
           </label>
-          <label class="toggle-row sub">
-            <span class="toggle-label">Large cursor</span>
-            <span class="toggle-wrap">
-              <input type="checkbox" id="large-cursor" aria-label="Large cursor">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </span>
-          </label>
         </div>
       </div>
-    </section>
 
-    <!-- Tab: Focus -->
-    <section class="tab-panel" data-panel="focus" role="tabpanel" id="panel-focus" aria-labelledby="tab-focus">
       <div class="panel-card">
         <label class="toggle-row">
-          <span class="toggle-label">&#x1F50D; Paragraph Focus</span>
+          <span class="toggle-label">Paragraph Focus</span>
           <span class="toggle-wrap">
             <input type="checkbox" id="focus-toggle" aria-label="Paragraph Focus">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -304,31 +358,7 @@
 
       <div class="panel-card">
         <label class="toggle-row">
-          <span class="toggle-label">&#x1F4CF; Reading Ruler</span>
-          <span class="toggle-wrap">
-            <input type="checkbox" id="ruler-toggle" aria-label="Reading Ruler">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </span>
-        </label>
-        <div class="sub-controls" id="ruler-controls">
-          <div class="slider-row">
-            <span class="slider-label">Height</span>
-            <input type="range" id="ruler-height" min="40" max="200" value="80" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Opacity</span>
-            <input type="range" id="ruler-opacity" min="10" max="90" value="50" class="slider">
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Color</span>
-            <input type="color" id="ruler-color" value="#000000" class="color-input">
-          </div>
-        </div>
-      </div>
-
-      <div class="panel-card">
-        <label class="toggle-row">
-          <span class="toggle-label">&#x1F6E1;&#xFE0F; Hide Distractions</span>
+          <span class="toggle-label">Hide Distractions</span>
           <span class="toggle-wrap">
             <input type="checkbox" id="distraction-toggle" aria-label="Hide Distractions">
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -379,54 +409,8 @@
           </label>
         </div>
       </div>
+
     </section>
-
-    <!-- Tab: TTS -->
-    <section class="tab-panel" data-panel="tts" role="tabpanel" id="panel-tts" aria-labelledby="tab-tts">
-      <div class="panel-card">
-        <label class="toggle-row">
-          <span class="toggle-label">&#x1F50A; Text-to-Speech</span>
-          <span class="toggle-wrap">
-            <input type="checkbox" id="tts-toggle" aria-label="Text-to-Speech">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </span>
-        </label>
-        <div class="sub-controls" id="tts-controls">
-          <div class="slider-row">
-            <span class="slider-label">Speed</span>
-            <input type="range" id="tts-speed" min="50" max="200" value="100" class="slider">
-            <span class="slider-value" id="tts-speed-val">1.0x</span>
-          </div>
-          <div class="slider-row">
-            <span class="slider-label">Voice</span>
-            <select id="tts-voice" class="font-select">
-              <option value="">Default</option>
-            </select>
-          </div>
-        </div>
-        <p class="hint-text">Select text on any page, then click "Read aloud"</p>
-      </div>
-    </section>
-
-    <!-- Tab: Site/Settings -->
-    <section class="tab-panel" data-panel="site" role="tabpanel" id="panel-site" aria-labelledby="tab-site">
-      <div class="panel-card">
-        <div class="site-row">
-          <span class="site-icon">&#x1F4CD;</span>
-          <span id="site-domain" class="site-domain">&mdash;</span>
-          <button id="site-disable-btn" class="site-btn">&#x2716; Disable here</button>
-        </div>
-      </div>
-
-      <div class="panel-card">
-        <button id="reset-btn" class="action-btn">&#x1F504; Reset to Defaults</button>
-      </div>
-
-      <div class="panel-card">
-        <button id="guide-btn" class="action-btn" aria-label="Open usage guide in new tab">&#x1F4D6; How to Use Cozy</button>
-      </div>
-    </section>
-
 
   </div>
   <script src="../lib/lovespark-footer.js"></script>

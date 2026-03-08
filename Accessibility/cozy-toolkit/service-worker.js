@@ -134,6 +134,26 @@ async function injectContentScripts(tabId) {
 
 chrome.tabs.onRemoved.addListener((tabId) => injectedTabs.delete(tabId));
 
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'loading') {
+    injectedTabs.delete(tabId);
+    return;
+  }
+
+  if (changeInfo.status !== 'complete') return;
+  if (!tab.url || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) return;
+
+  try {
+    const { globalSettings, disabledSites } = await chrome.storage.local.get(['globalSettings', 'disabledSites']);
+    if (!globalSettings?.enabled) return;
+
+    const hostname = new URL(tab.url).hostname.replace(/^www\./, '');
+    if ((disabledSites || []).includes(hostname)) return;
+
+    injectContentScripts(tabId);
+  } catch (_) {}
+});
+
 // ── OrchestratorAgent ──────────────────────────────────────────────────────────
 
 async function updateBadge(enabled) {

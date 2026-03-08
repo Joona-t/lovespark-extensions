@@ -482,20 +482,8 @@ function updateSiteBtn(isDisabled) {
   }
 }
 
-// Reset
-$('reset-btn').addEventListener('click', async () => {
-  settings = { ...DEFAULT_SETTINGS };
-  await chrome.storage.local.set({ globalSettings: settings });
-  applyToUI(settings);
-});
-
 // Settings page
 $('settings-btn').addEventListener('click', () => chrome.runtime.openOptionsPage());
-
-// Guide
-$('guide-btn').addEventListener('click', () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL('guide/guide.html') });
-});
 
 // ── Storage change listener ─────────────────────────────────────────────────────
 

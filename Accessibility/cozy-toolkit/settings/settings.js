@@ -96,7 +96,7 @@ document.getElementById('export-btn').addEventListener('click', async () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'cozy-accessibility-settings.json';
+  a.download = 'cozy-toolkit-settings.json';
   a.click();
   URL.revokeObjectURL(url);
 });
@@ -139,7 +139,7 @@ importFile.addEventListener('change', async (e) => {
 // ── Reset ───────────────────────────────────────────────────────────────────────
 
 document.getElementById('reset-btn').addEventListener('click', async () => {
-  if (!confirm('Reset all Cozy Accessibility settings to defaults? This cannot be undone.')) return;
+  if (!confirm('Reset all Cozy settings to defaults? This cannot be undone.')) return;
 
   await chrome.storage.local.set({
     globalSettings: { ...DEFAULT_SETTINGS },
