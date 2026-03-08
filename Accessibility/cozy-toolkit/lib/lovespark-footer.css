@@ -17,15 +17,14 @@
 .ls-footer-suite {
   font-size: 11px;
   color: var(--ls-text-dark, #5C1A36);
-  opacity: 0.85;
 }
 
 .ls-kofi-btn {
   display: inline-block;
   font-size: 11px;
   font-family: inherit;
-  color: var(--ls-text-white, #fff);
-  background: var(--ls-pink-accent, #E8457C);
+  color: #fff;
+  background: #b92d5d;
   border: none;
   border-radius: 999px;
   padding: 5px 14px;
@@ -59,5 +58,4 @@
 .ls-footer-credit {
   font-size: 10px;
   color: var(--ls-text-dark, #5C1A36);
-  opacity: 0.7;
 }
