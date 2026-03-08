@@ -156,7 +156,7 @@ async function updateBadge(enabled) {
 
 // Listen for settings changes to update badge
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== 'sync') return;
+  if (area !== 'local') return;
   if (!changes.settings) return;
 
   const newSettings = changes.settings.newValue;

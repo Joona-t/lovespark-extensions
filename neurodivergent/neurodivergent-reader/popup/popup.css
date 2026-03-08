@@ -167,6 +167,8 @@ body {
   border: 1px solid var(--ls-glass-border);
   border-radius: var(--ls-radius-sm);
   padding: 6px 8px;
+  min-height: 32px;
+  min-width: 32px;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -359,13 +361,13 @@ body {
 }
 
 .site-btn:hover {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   box-shadow: var(--ls-glow);
 }
 
 .site-btn.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
 }
 
@@ -392,33 +394,33 @@ body {
 /* ── Focus states (keyboard accessibility) ───────────────────────────────────── */
 
 .toggle-wrap input:focus-visible + .toggle-track {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .icon-btn:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .site-btn:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
   box-shadow: var(--ls-glow-strong);
 }
 
 .font-select:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .theme-dropdown-trigger:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .theme-option:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
@@ -446,6 +448,7 @@ body {
   font-family: var(--ls-font-body);
   font-size: 11px;
   padding: 5px 10px;
+  min-height: 32px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
   backdrop-filter: blur(6px);
@@ -487,6 +490,7 @@ body {
   display: block;
   width: 100%;
   padding: 6px 10px;
+  min-height: 32px;
   border-radius: var(--ls-radius-sm);
   border: none;
   background: transparent;

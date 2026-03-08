@@ -213,7 +213,7 @@ body {
 
 .color-input {
   width: 40px;
-  height: 30px;
+  height: 32px;
   border: 1px solid var(--ls-glass-border);
   border-radius: var(--ls-radius-sm);
   background: transparent;
@@ -246,7 +246,7 @@ body {
 }
 
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -285,8 +285,8 @@ body {
   cursor: pointer;
   color: var(--ls-text-muted);
   padding: 4px 8px;
-  min-width: 28px;
-  min-height: 28px;
+  min-width: 32px;
+  min-height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -332,39 +332,39 @@ body {
 /* ── Focus states (keyboard accessibility) ───────────────────────────────────── */
 
 .toggle-wrap input:focus-visible + .toggle-track {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .btn-pink:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
   box-shadow: var(--ls-glow-strong);
 }
 
 .text-input:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .font-select:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .slider:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 
 .site-remove:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
   color: var(--ls-pink-accent);
 }
 
 .color-input:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-pink-deep);
   outline-offset: 2px;
 }
 

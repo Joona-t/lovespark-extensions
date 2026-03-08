@@ -46,7 +46,7 @@ class ContentOrchestrator {
     }
 
     try {
-      const { settings = {} } = await storage.sync.get('settings');
+      const { settings = {} } = await storage.local.get('settings');
       this._settings = this._mergeDefaults(settings);
       this._applySettings();
     } catch (err) {
@@ -74,7 +74,7 @@ class ContentOrchestrator {
     // Persist to storage
     const storage = chrome.storage || (typeof browser !== 'undefined' && browser.storage);
     if (storage) {
-      storage.sync.set({ settings: this._settings }).catch(() => {});
+      storage.local.set({ settings: this._settings }).catch(() => {});
     }
   }
 
@@ -119,7 +119,7 @@ class ContentOrchestrator {
   }
 
   _handleStorageChanged(changes, area) {
-    if (area !== 'sync') return;
+    if (area !== 'local') return;
     if (!changes.settings) return;
 
     this._settings = this._mergeDefaults(changes.settings.newValue || {});
