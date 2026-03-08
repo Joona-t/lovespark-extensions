@@ -206,16 +206,19 @@ async function init() {
     speechSynthesis.onvoiceschanged = populateVoices;
   }
 
-  // Cute message rotation
-  let msgIdx = 0;
-  setInterval(() => {
-    msgIdx = (msgIdx + 1) % CUTE_MSGS.length;
-    cuteMsgEl.style.opacity = '0';
-    setTimeout(() => {
-      cuteMsgEl.textContent = CUTE_MSGS[msgIdx];
-      cuteMsgEl.style.opacity = '1';
-    }, 200);
-  }, 3500);
+  // Cute message rotation (skip if user prefers reduced motion)
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!prefersReducedMotion.matches) {
+    let msgIdx = 0;
+    setInterval(() => {
+      msgIdx = (msgIdx + 1) % CUTE_MSGS.length;
+      cuteMsgEl.style.opacity = '0';
+      setTimeout(() => {
+        cuteMsgEl.textContent = CUTE_MSGS[msgIdx];
+        cuteMsgEl.style.opacity = '1';
+      }, 200);
+    }, 3500);
+  }
 }
 
 function populateVoices() {

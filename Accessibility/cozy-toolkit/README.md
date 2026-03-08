@@ -26,6 +26,24 @@ A comprehensive, free, open-source accessibility extension for neurodivergent us
 - No tracking, analytics, or telemetry sent anywhere
 - All settings stored locally in your browser
 
+## Permissions
+
+| Permission | Why it's needed |
+|------------|----------------|
+| `activeTab` | Apply accessibility features to the current page when you click the extension |
+| `scripting` | Inject content scripts that modify page fonts, colors, and layout |
+| `storage` | Save your settings locally in the browser |
+| `<all_urls>` (host) | Apply accessibility features on any website you visit |
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `j` / `k` | Move paragraph focus forward / backward (when Paragraph Focus is enabled) |
+| `Tab` | Navigate popup controls |
+| `Arrow keys` | Switch between popup tabs |
+| `Escape` | Close theme dropdown |
+
 ## Install
 
 ### Chrome
@@ -45,6 +63,13 @@ A comprehensive, free, open-source accessibility extension for neurodivergent us
 pip install Pillow
 python generate_icons.py
 ```
+
+## Troubleshooting
+
+- **Extension not working on a page?** Check if the site is in your Disabled Sites list (Settings page). Also, some browser-internal pages (`chrome://`, `about:`) cannot be modified by extensions.
+- **Fonts look wrong?** Try toggling the Reading Font off and back on. If using a preset, re-click it to reapply.
+- **Text-to-Speech not working?** Make sure TTS is enabled in the popup, then select text on the page. The "Read aloud" button appears near your selection.
+- **Settings not saving?** Check that the extension has storage permission enabled in `chrome://extensions`.
 
 ## License
 

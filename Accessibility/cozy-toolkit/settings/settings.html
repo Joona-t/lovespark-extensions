@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cozy Accessibility — Settings</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../fonts/ui-fonts.css">
   <link rel="stylesheet" href="../lib/lovespark-base.css">
   <link rel="stylesheet" href="../lib/lovespark-footer.css">
   <link rel="stylesheet" href="settings.css">
@@ -52,7 +51,7 @@
     <section class="card">
       <h2 class="card-title">&#x1F6AB; Disabled Sites</h2>
       <p class="setting-desc">Sites where Cozy is completely disabled. Remove a site to re-enable.</p>
-      <div id="disabled-sites-list" class="site-list"></div>
+      <div id="disabled-sites-list" class="site-list" role="region" aria-live="polite" aria-label="Disabled sites list"></div>
       <p class="hint" id="no-disabled-hint">No disabled sites yet.</p>
     </section>
 

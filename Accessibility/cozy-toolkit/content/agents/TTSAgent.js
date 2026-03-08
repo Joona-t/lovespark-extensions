@@ -120,6 +120,7 @@ class TTSAgent {
     this._fabEl = document.createElement('button');
     this._fabEl.className = 'cozy-tts-fab';
     this._fabEl.textContent = '\u{1F50A} Read aloud';
+    this._fabEl.setAttribute('aria-label', 'Read aloud');
     this._fabEl.addEventListener('click', this._onFabClick);
 
     // Toolbar
