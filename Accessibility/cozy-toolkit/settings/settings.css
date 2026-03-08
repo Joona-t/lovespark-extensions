@@ -172,6 +172,97 @@ body {
   }
 }
 
+/* ── Feature Guide accordion ── */
+
+.guide-section {
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  margin-bottom: 8px;
+  background: var(--ls-glass-light);
+  overflow: hidden;
+}
+
+.guide-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.guide-summary {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.guide-summary:hover {
+  background: var(--ls-glass-border);
+}
+
+.guide-summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide-summary::after {
+  content: '\25B8';
+  font-size: 12px;
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+details[open] > .guide-summary::after {
+  transform: rotate(90deg);
+}
+
+.guide-body {
+  padding: 4px 14px 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ls-text-dark);
+  opacity: 0.92;
+}
+
+.guide-body p {
+  margin-bottom: 8px;
+}
+
+.guide-body p:last-child {
+  margin-bottom: 0;
+}
+
+.guide-body ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.guide-body li {
+  margin-bottom: 6px;
+}
+
+.guide-body li:last-child {
+  margin-bottom: 0;
+}
+
+.guide-note {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  background: var(--ls-glass);
+  border-left: 3px solid var(--ls-pink-accent);
+  border-radius: var(--ls-radius-sm);
+}
+
+.guide-summary:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: -2px;
+}
+
 /* Theme dropdown: uses lovespark-base.css styles, just position for settings header */
 .theme-dropdown {
   margin-left: auto;
