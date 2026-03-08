@@ -64,10 +64,10 @@ body {
 
 .card-subtitle {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 14px;
   margin-bottom: 6px;
-  color: var(--ls-pink-accent);
+  color: var(--ls-text-dark);
 }
 
 .card p {
@@ -111,7 +111,7 @@ body.theme-slate .header-title { color: #e8926e; }
 
 /* ── Focus states ────────────────────────────── */
 .theme-dropdown-trigger:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-focus-ring);
   outline-offset: 2px;
 }
 

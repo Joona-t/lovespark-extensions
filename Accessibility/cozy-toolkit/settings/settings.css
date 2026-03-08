@@ -80,8 +80,8 @@ body {
   transition: background 0.2s ease;
 }
 .toggle-wrap input:checked + .toggle-track {
-  background: var(--ls-pink-accent);
-  border-color: var(--ls-pink-accent);
+  background: var(--ls-focus-ring);
+  border-color: var(--ls-focus-ring);
   box-shadow: var(--ls-glow);
 }
 .toggle-thumb {
@@ -96,7 +96,7 @@ body {
 }
 
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-btn-hover-bg);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -107,7 +107,7 @@ body {
   transition: all 0.2s ease;
   box-shadow: var(--ls-glow);
 }
-.btn-pink:hover { background: var(--ls-pink-deep); box-shadow: var(--ls-glow-strong); }
+.btn-pink:hover { filter: brightness(0.85); box-shadow: var(--ls-glow-strong); }
 
 .btn-danger {
   background: #dc3545;
@@ -140,7 +140,7 @@ body {
 .site-remove {
   background: none;
   border: none;
-  color: var(--ls-pink-accent);
+  color: var(--ls-text-dark);
   cursor: pointer;
   font-size: 14px;
   padding: 2px 6px;
@@ -149,7 +149,7 @@ body {
 .hint { font-size: 12px; color: var(--ls-text-dark); opacity: 0.85; font-style: italic; }
 
 .about-text { font-size: 13px; line-height: 1.7; }
-.about-text a { color: var(--ls-pink-accent); }
+.about-text a { color: var(--ls-text-dark); text-decoration: underline; text-decoration-color: var(--ls-pink-accent); }
 
 .settings-footer {
   text-align: center;
@@ -161,7 +161,7 @@ body {
 .toggle-wrap input:focus-visible + .toggle-track,
 .btn-pink:focus-visible,
 .btn-danger:focus-visible {
-  outline: 2px solid var(--ls-pink-accent);
+  outline: 2px solid var(--ls-focus-ring);
   outline-offset: 2px;
 }
 

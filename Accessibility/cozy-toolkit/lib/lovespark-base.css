@@ -38,6 +38,8 @@
   --ls-radius-sm: 10px;
   --ls-font-body: 'DM Mono', monospace;
   --ls-font-display: 'Press Start 2P', cursive;
+  --ls-focus-ring: #D63466;
+  --ls-btn-hover-bg: #D63466;
 }
 
 /* ── Theme: Dark (LoveSpark Noir) ─────────────────────── */
@@ -59,6 +61,8 @@ body.theme-dark {
   --ls-glow: 0 0 20px rgba(255, 110, 180, 0.35), 0 0 60px rgba(255, 110, 180, 0.15);
   --ls-glow-strong: 0 0 20px #ff6eb4, 0 0 40px rgba(255, 110, 180, 0.55);
   --ls-glow-white: 0 0 16px rgba(240, 230, 246, 0.3);
+  --ls-focus-ring: #ff6eb4;
+  --ls-btn-hover-bg: #c2185b;
 }
 
 body.theme-dark::before {
@@ -98,6 +102,8 @@ body.theme-beige {
   --ls-radius: 2px;
   --ls-radius-sm: 2px;
   --ls-font-body: 'Lora', Georgia, serif;
+  --ls-focus-ring: #7a4a35;
+  --ls-btn-hover-bg: #7a4a35;
 }
 
 /* ── Theme: Slate ─────────────────────────────────────── */
@@ -121,6 +127,8 @@ body.theme-slate {
   --ls-glow-white: 0 2px 8px rgba(0, 0, 0, 0.15);
   --ls-radius: 5px;
   --ls-radius-sm: 4px;
+  --ls-focus-ring: #d4714e;
+  --ls-btn-hover-bg: #a04520;
 }
 
 /* ── Theme Title Visibility ───────────────────────────── */
@@ -183,7 +191,7 @@ body.theme-slate .popup-header h1 {
 .theme-dropdown-header {
   font-size: 9px;
   font-weight: 500;
-  color: var(--ls-text-muted);
+  color: var(--ls-text-dark);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 6px 10px 4px;
@@ -205,7 +213,7 @@ body.theme-slate .popup-header h1 {
 }
 
 .theme-option:hover { background: var(--ls-glass); }
-.theme-option.active { color: var(--ls-pink-accent); font-weight: 500; }
+.theme-option.active { color: var(--ls-text-dark); font-weight: 600; }
 
 body { transition: background 0.3s ease, color 0.3s ease; }
 
