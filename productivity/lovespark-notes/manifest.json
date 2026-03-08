@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
@@ -49,6 +49,9 @@
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
+  },
+  "externally_connectable": {
+    "ids": ["*"]
   },
   "browser_specific_settings": {
     "gecko": {

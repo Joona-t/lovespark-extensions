@@ -16,7 +16,7 @@ import {
 } from '../shared/notes-core.js';
 import { renderMarkdown } from '../shared/markdown.js';
 import {
-  formatDate, wordCount, escapeHtml, sanitizeTag, tagColor, autoTitle,
+  formatDate, wordCount, escapeHtml, sanitizeTag, tagColor, autoTitle, todayISO,
 } from '../shared/formatters.js';
 import {
   CATEGORIES, FONTS, DEBOUNCE_LOCAL, DEBOUNCE_SYNC,
@@ -32,6 +32,7 @@ let activeContent = '';
 let currentCategory = 'all';
 let currentSearch = '';
 let currentTagFilter = null;
+let currentDateFilter = null; // ISO date 'YYYY-MM-DD' or null
 let showPreview = false;
 let distractionFree = false;
 let contentFont = 'dm-mono';
@@ -103,6 +104,7 @@ function cacheDom() {
   dom.syncNowBtn = $('syncNowBtn');
   dom.syncLast = $('syncLast');
   dom.syncSignOutBtn = $('syncSignOutBtn');
+  dom.formatRow = $('formatRow');
 }
 
 // ── Init ───────────────────────────────────────────────────────
@@ -146,6 +148,7 @@ async function init() {
   renderFontSwitcher();
   renderNotesList();
   renderTagFilters();
+  renderCalendar();
 
   // Phase 2: load active note content
   if (initialNoteId) {
@@ -169,35 +172,45 @@ async function init() {
 
 function renderCategoryNav() {
   const counts = categoryCounts(index.notes);
-  let html = `<button class="cat-item${currentCategory === 'all' ? ' active' : ''}" data-cat="all">
-    <span class="cat-emoji">📝</span><span>All</span>
-    <span class="cat-count">${counts.all}</span>
-  </button>`;
+  dom.categoryNav.replaceChildren();
+
+  function addCatItem(catId, emoji, label, count) {
+    const btn = document.createElement('button');
+    btn.className = 'cat-item' + (currentCategory === catId ? ' active' : '');
+    btn.dataset.cat = catId;
+    const emojiSpan = document.createElement('span');
+    emojiSpan.className = 'cat-emoji';
+    emojiSpan.textContent = emoji;
+    const labelSpan = document.createElement('span');
+    labelSpan.textContent = label;
+    const countSpan = document.createElement('span');
+    countSpan.className = 'cat-count';
+    countSpan.textContent = count;
+    btn.appendChild(emojiSpan);
+    btn.appendChild(labelSpan);
+    btn.appendChild(countSpan);
+    dom.categoryNav.appendChild(btn);
+  }
+
+  addCatItem('all', '📝', 'All', counts.all);
 
   for (const cat of CATEGORIES) {
-    html += `<button class="cat-item${currentCategory === cat.id ? ' active' : ''}" data-cat="${cat.id}">
-      <span class="cat-emoji">${cat.emoji}</span><span>${cat.label}</span>
-      <span class="cat-count">${counts[cat.id] || 0}</span>
-    </button>`;
+    addCatItem(cat.id, cat.emoji, cat.label, counts[cat.id] || 0);
   }
 
   if (counts.pinned > 0) {
-    html += `<div class="cat-divider"></div>`;
-    html += `<button class="cat-item${currentCategory === 'pinned' ? ' active' : ''}" data-cat="pinned">
-      <span class="cat-emoji">💖</span><span>Pinned</span>
-      <span class="cat-count">${counts.pinned}</span>
-    </button>`;
+    const divider = document.createElement('div');
+    divider.className = 'cat-divider';
+    dom.categoryNav.appendChild(divider);
+    addCatItem('pinned', '💖', 'Pinned', counts.pinned);
   }
 
   if (counts.trash > 0) {
-    html += `<div class="cat-divider"></div>`;
-    html += `<button class="cat-item${currentCategory === 'trash' ? ' active' : ''}" data-cat="trash">
-      <span class="cat-emoji">🗑️</span><span>Trash</span>
-      <span class="cat-count">${counts.trash}</span>
-    </button>`;
+    const divider = document.createElement('div');
+    divider.className = 'cat-divider';
+    dom.categoryNav.appendChild(divider);
+    addCatItem('trash', '🗑️', 'Trash', counts.trash);
   }
-
-  dom.categoryNav.innerHTML = html;
 }
 
 // ── Rendering: Notes List ──────────────────────────────────────
@@ -239,6 +252,10 @@ function getFilteredNotes() {
     notes = notes.filter(n => (n.tags || []).includes(currentTagFilter));
   }
 
+  if (currentDateFilter) {
+    notes = notes.filter(n => new Date(n.createdAt).toISOString().slice(0, 10) === currentDateFilter);
+  }
+
   return notes.sort((a, b) => {
     if (a.pinned && !b.pinned) return -1;
     if (!a.pinned && b.pinned) return 1;
@@ -246,6 +263,71 @@ function getFilteredNotes() {
   });
 }
 
+// ── Date Grouping Helpers ─────────────────────────────────────
+
+function getDateBucket(createdAt) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const dayOfWeek = today.getDay();
+  const weekStart = new Date(today);
+  weekStart.setDate(weekStart.getDate() - ((dayOfWeek + 6) % 7)); // Monday
+  const lastWeekStart = new Date(weekStart);
+  lastWeekStart.setDate(lastWeekStart.getDate() - 7);
+
+  const d = new Date(createdAt);
+  const dDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  if (dDate.getTime() === today.getTime()) return { key: 'today', label: 'Today', order: 0 };
+  if (dDate.getTime() === yesterday.getTime()) return { key: 'yesterday', label: 'Yesterday', order: 1 };
+  if (dDate >= weekStart) return { key: 'this-week', label: 'This Week', order: 2 };
+  if (dDate >= lastWeekStart) return { key: 'last-week', label: 'Last Week', order: 3 };
+
+  const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  const monthLabel = d.toLocaleString('en', { month: 'long', year: 'numeric' });
+  const order = 100 + ((now.getFullYear() - d.getFullYear()) * 12 + (now.getMonth() - d.getMonth()));
+  return { key: monthKey, label: monthLabel, order };
+}
+
+function renderNoteItem(note, isTrash) {
+  const origCat = isTrash ? CATEGORIES.find(c => c.id === note.originalCategory) : CATEGORIES.find(c => c.id === note.category);
+  const isActive = note.id === activeNoteId;
+
+  const displayTitle = currentSearch
+    ? fuzzyHighlight(currentSearch, note.title || 'Untitled')
+    : escapeHtml(note.title || 'Untitled');
+
+  return `<div class="note-item${isActive ? ' active' : ''}" data-id="${note.id}"${!isTrash && !currentSearch ? ' draggable="true"' : ''}>
+    <div class="note-item-title">
+      ${note.pinned ? '<span class="note-item-pin">💖</span>' : ''}
+      ${displayTitle}
+    </div>
+    ${note.snippet ? `<div class="note-item-preview">${escapeHtml(note.snippet)}</div>` : ''}
+    <div class="note-item-meta">
+      <span class="note-item-date">${isTrash ? 'Deleted ' + formatDate(note.deletedAt) : formatDate(note.updatedAt)}</span>
+      ${origCat ? `<span class="note-item-cat" style="color:${origCat.color};background:${origCat.bg}">${origCat.emoji} ${origCat.label}</span>` : ''}
+    </div>
+    ${isTrash
+      ? `<button class="note-item-restore" data-id="${note.id}" title="Restore">↩</button>`
+      : ''}
+    <button class="note-item-delete" data-id="${note.id}" title="${isTrash ? 'Delete forever' : 'Delete'}">×</button>
+  </div>`;
+}
+
+function buildGroupHeader(key, label, count) {
+  return `<div class="date-group-header" data-group="${escapeHtml(key)}" role="button" tabindex="0" aria-expanded="true">
+    <span class="date-group-label">${escapeHtml(label)}</span>
+    <span class="date-group-count">${count}</span>
+    <span class="date-group-chevron">▸</span>
+  </div>`;
+}
+
+// SAFETY: innerHTML is intentionally used in renderNotesList because:
+// 1. fuzzyHighlight() returns HTML with <mark> tags for search highlighting
+// 2. All user data is escaped via escapeHtml() before insertion
+// 3. Category data comes from hardcoded CATEGORIES constant
+// 4. buildGroupHeader() and renderNoteItem() escape all dynamic values via escapeHtml()
 function renderNotesList() {
   const filtered = getFilteredNotes();
   const isTrash = currentCategory === 'trash';
@@ -260,35 +342,54 @@ function renderNotesList() {
 
   let html = '';
 
+  // Date filter chip
+  if (currentDateFilter) {
+    html += `<div class="date-filter-chip">
+      <span>${escapeHtml(currentDateFilter)}</span>
+      <button class="date-filter-clear" id="dateFilterClear" title="Clear date filter">×</button>
+    </div>`;
+  }
+
   if (isTrash) {
     html += `<div style="padding:6px 8px;margin-bottom:4px">
       <button class="btn-empty-trash" id="btnEmptyTrash" style="width:100%;padding:6px;background:transparent;border:1px solid var(--ls-glass-border);border-radius:var(--ls-radius-sm);color:var(--ls-text-muted);font-family:var(--ls-font-body);font-size:11px;cursor:pointer">🗑️ Empty Trash</button>
     </div>`;
   }
 
-  for (const note of filtered) {
-    const origCat = isTrash ? CATEGORIES.find(c => c.id === note.originalCategory) : CATEGORIES.find(c => c.id === note.category);
-    const isActive = note.id === activeNoteId;
+  // Flat rendering for: trash, search, date filter
+  if (isTrash || currentSearch || currentDateFilter) {
+    for (const note of filtered) {
+      html += renderNoteItem(note, isTrash);
+    }
+  } else {
+    // Grouped rendering
+    const pinned = filtered.filter(n => n.pinned);
+    const unpinned = filtered.filter(n => !n.pinned);
 
-    const displayTitle = currentSearch
-      ? fuzzyHighlight(currentSearch, note.title || 'Untitled')
-      : escapeHtml(note.title || 'Untitled');
+    if (pinned.length > 0) {
+      html += buildGroupHeader('pinned', 'Pinned', pinned.length);
+      html += `<div class="date-group-body" data-group="pinned">`;
+      for (const note of pinned) html += renderNoteItem(note, false);
+      html += `</div>`;
+    }
 
-    html += `<div class="note-item${isActive ? ' active' : ''}" data-id="${note.id}"${!isTrash && !currentSearch ? ' draggable="true"' : ''}>
-      <div class="note-item-title">
-        ${note.pinned ? '<span class="note-item-pin">💖</span>' : ''}
-        ${displayTitle}
-      </div>
-      ${note.snippet ? `<div class="note-item-preview">${escapeHtml(note.snippet)}</div>` : ''}
-      <div class="note-item-meta">
-        <span class="note-item-date">${isTrash ? 'Deleted ' + formatDate(note.deletedAt) : formatDate(note.updatedAt)}</span>
-        ${origCat ? `<span class="note-item-cat" style="color:${origCat.color};background:${origCat.bg}">${origCat.emoji} ${origCat.label}</span>` : ''}
-      </div>
-      ${isTrash
-        ? `<button class="note-item-restore" data-id="${note.id}" title="Restore">↩</button>`
-        : ''}
-      <button class="note-item-delete" data-id="${note.id}" title="${isTrash ? 'Delete forever' : 'Delete'}">×</button>
-    </div>`;
+    // Group unpinned by date bucket
+    const bucketMap = new Map();
+    for (const note of unpinned) {
+      const bucket = getDateBucket(note.createdAt);
+      if (!bucketMap.has(bucket.key)) {
+        bucketMap.set(bucket.key, { label: bucket.label, order: bucket.order, notes: [] });
+      }
+      bucketMap.get(bucket.key).notes.push(note);
+    }
+
+    const sortedBuckets = [...bucketMap.entries()].sort((a, b) => a[1].order - b[1].order);
+    for (const [key, bucket] of sortedBuckets) {
+      html += buildGroupHeader(key, bucket.label, bucket.notes.length);
+      html += `<div class="date-group-body" data-group="${escapeHtml(key)}">`;
+      for (const note of bucket.notes) html += renderNoteItem(note, false);
+      html += `</div>`;
+    }
   }
 
   dom.notesList.innerHTML = html;
@@ -298,6 +399,30 @@ function renderNotesList() {
     const emptyBtn = document.getElementById('btnEmptyTrash');
     if (emptyBtn) emptyBtn.addEventListener('click', handleEmptyTrash);
   }
+
+  // Bind date filter clear
+  const clearBtn = document.getElementById('dateFilterClear');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      currentDateFilter = null;
+      renderCalendar();
+      renderNotesList();
+    });
+  }
+
+  // Bind group collapse/expand
+  dom.notesList.querySelectorAll('.date-group-header').forEach(header => {
+    const toggle = () => {
+      header.classList.toggle('collapsed');
+      const body = dom.notesList.querySelector(`.date-group-body[data-group="${header.dataset.group}"]`);
+      if (body) body.classList.toggle('collapsed');
+      header.setAttribute('aria-expanded', !header.classList.contains('collapsed'));
+    };
+    header.addEventListener('click', toggle);
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
 }
 
 function updateActiveNoteInList(entry) {
@@ -307,7 +432,15 @@ function updateActiveNoteInList(entry) {
 
   const titleEl = el.querySelector('.note-item-title');
   if (titleEl) {
-    titleEl.innerHTML = `${entry.pinned ? '<span class="note-item-pin">💖</span>' : ''}${escapeHtml(entry.title || 'Untitled')}`;
+    // Build title with optional pin icon via DOM API
+    titleEl.replaceChildren();
+    if (entry.pinned) {
+      const pin = document.createElement('span');
+      pin.className = 'note-item-pin';
+      pin.textContent = '💖';
+      titleEl.appendChild(pin);
+    }
+    titleEl.appendChild(document.createTextNode(entry.title || 'Untitled'));
   }
 
   const previewEl = el.querySelector('.note-item-preview');
@@ -339,17 +472,31 @@ function renderTagFilters() {
     >${escapeHtml(tag)}</button>`;
   }
 
-  dom.tagFilterList.innerHTML = html;
+  dom.tagFilterList.replaceChildren();
+  for (const tag of tags) {
+    const tc = tagColor(tag);
+    const active = currentTagFilter === tag;
+    const btn = document.createElement('button');
+    btn.className = 'tag-filter' + (active ? ' active' : '');
+    btn.dataset.tag = tag;
+    if (active) btn.style.cssText = `border-color:${tc.color};color:${tc.color}`;
+    btn.textContent = tag;
+    dom.tagFilterList.appendChild(btn);
+  }
 }
 
 // ── Rendering: Font Switcher ───────────────────────────────────
 
 function renderFontSwitcher() {
-  let html = '';
+  dom.fontSwitcher.replaceChildren();
   for (const font of FONTS) {
-    html += `<button class="font-btn${contentFont === font.id ? ' active' : ''}" data-font="${font.id}" title="${font.label}">${font.shortLabel}</button>`;
+    const btn = document.createElement('button');
+    btn.className = 'font-btn' + (contentFont === font.id ? ' active' : '');
+    btn.dataset.font = font.id;
+    btn.title = font.label;
+    btn.textContent = font.shortLabel;
+    dom.fontSwitcher.appendChild(btn);
   }
-  dom.fontSwitcher.innerHTML = html;
 }
 
 function applyFont(fontId) {
@@ -366,14 +513,16 @@ function renderCategoryPills() {
   const entry = activeNoteId ? index.notes.find(n => n.id === activeNoteId) : null;
   const activeCat = entry ? entry.category : '';
 
-  let html = '';
+  dom.categoryPills.replaceChildren();
   for (const cat of CATEGORIES) {
     const active = activeCat === cat.id;
-    html += `<button class="cat-pill${active ? ' active' : ''}" data-cat="${cat.id}"
-      style="${active ? `color:${cat.color};border-color:${cat.color};background:${cat.bg}` : ''}"
-    >${cat.emoji} ${cat.label}</button>`;
+    const btn = document.createElement('button');
+    btn.className = 'cat-pill' + (active ? ' active' : '');
+    btn.dataset.cat = cat.id;
+    if (active) btn.style.cssText = `color:${cat.color};border-color:${cat.color};background:${cat.bg}`;
+    btn.textContent = cat.emoji + ' ' + cat.label;
+    dom.categoryPills.appendChild(btn);
   }
-  dom.categoryPills.innerHTML = html;
 }
 
 // ── Rendering: Current Tags (editor) ───────────────────────────
@@ -381,17 +530,20 @@ function renderCategoryPills() {
 function renderCurrentTags() {
   const entry = activeNoteId ? index.notes.find(n => n.id === activeNoteId) : null;
   if (!entry || !entry.tags || entry.tags.length === 0) {
-    dom.currentTags.innerHTML = '';
+    dom.currentTags.replaceChildren();
     return;
   }
 
-  let html = '';
+  dom.currentTags.replaceChildren();
   for (const tag of entry.tags) {
     const tc = tagColor(tag);
-    html += `<span class="tag-chip-removable" data-tag="${escapeHtml(tag)}" style="color:${tc.color};background:${tc.bg}">
-      ${escapeHtml(tag)} ×</span>`;
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip-removable';
+    chip.dataset.tag = tag;
+    chip.style.cssText = `color:${tc.color};background:${tc.bg}`;
+    chip.textContent = tag + ' ×';
+    dom.currentTags.appendChild(chip);
   }
-  dom.currentTags.innerHTML = html;
 }
 
 // ── Note Selection ─────────────────────────────────────────────
@@ -423,6 +575,7 @@ async function selectNote(id) {
 
   // Preview state
   if (showPreview) {
+    // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
     dom.markdownPreview.innerHTML = renderMarkdown(activeContent);
     dom.markdownPreview.style.display = '';
     dom.noteContent.style.display = 'none';
@@ -584,6 +737,7 @@ async function openVersionDrawer() {
   dom.noteContent.readOnly = true;
 
   if (versions.length === 0) {
+    // SAFETY: Static content only, no user data
     dom.versionList.innerHTML = `<div class="empty-state">
       <span class="emoji">🕐</span>
       <span>No versions yet</span>
@@ -602,6 +756,7 @@ async function openVersionDrawer() {
     </div>`;
   }
 
+  // SAFETY: Only numeric index, formatDate output, and word count — no raw user strings
   dom.versionList.innerHTML = html;
 }
 
@@ -618,6 +773,7 @@ function closeVersionDrawer() {
     dom.noteContent.value = activeContent;
     updateWordCount();
     if (showPreview) {
+      // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
       dom.markdownPreview.innerHTML = renderMarkdown(activeContent);
     }
   }
@@ -634,6 +790,7 @@ async function previewVersion(idx) {
   dom.noteContent.value = v.content;
   updateWordCount();
   if (showPreview) {
+    // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
     dom.markdownPreview.innerHTML = renderMarkdown(v.content);
   }
 
@@ -667,6 +824,7 @@ async function previewVersion(idx) {
 function togglePreview() {
   showPreview = !showPreview;
   if (showPreview) {
+    // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
     dom.markdownPreview.innerHTML = renderMarkdown(dom.noteContent.value);
     dom.markdownPreview.style.display = '';
     dom.noteContent.style.display = 'none';
@@ -847,6 +1005,62 @@ function insertLink(textarea) {
   textarea.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
+function insertListPrefix(textarea, prefix) {
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const text = textarea.value;
+
+  // Detect prefix pattern for removal
+  const isOrdered = /^\d+\.\s/.test(prefix);
+  const prefixPattern = isOrdered ? /^\d+\.\s/ : new RegExp('^' + prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  if (start === end) {
+    // No selection: toggle prefix on current line
+    const lineStart = text.lastIndexOf('\n', start - 1) + 1;
+    const lineEnd = text.indexOf('\n', start);
+    const lineEndSafe = lineEnd === -1 ? text.length : lineEnd;
+    const line = text.slice(lineStart, lineEndSafe);
+
+    if (prefixPattern.test(line)) {
+      // Remove prefix
+      const newLine = line.replace(prefixPattern, '');
+      textarea.value = text.slice(0, lineStart) + newLine + text.slice(lineEndSafe);
+      textarea.selectionStart = textarea.selectionEnd = Math.max(lineStart, start - (line.length - newLine.length));
+    } else {
+      // Add prefix
+      textarea.value = text.slice(0, lineStart) + prefix + text.slice(lineStart);
+      textarea.selectionStart = textarea.selectionEnd = start + prefix.length;
+    }
+  } else {
+    // Selection: expand to full line boundaries, toggle on each line
+    const selStart = text.lastIndexOf('\n', start - 1) + 1;
+    const selEnd = text.indexOf('\n', end - 1);
+    const selEndSafe = (selEnd === -1 || selEnd < end) ? (text.indexOf('\n', end) === -1 ? text.length : text.indexOf('\n', end)) : selEnd;
+    const block = text.slice(selStart, selEndSafe);
+    const lines = block.split('\n');
+
+    const allHavePrefix = lines.every(l => prefixPattern.test(l));
+
+    let newLines;
+    if (allHavePrefix) {
+      newLines = lines.map(l => l.replace(prefixPattern, ''));
+    } else {
+      newLines = lines.map((l, i) => {
+        if (isOrdered) return `${i + 1}. ${l.replace(prefixPattern, '')}`;
+        return prefix + l;
+      });
+    }
+
+    const newBlock = newLines.join('\n');
+    textarea.value = text.slice(0, selStart) + newBlock + text.slice(selEndSafe);
+    textarea.selectionStart = selStart;
+    textarea.selectionEnd = selStart + newBlock.length;
+  }
+
+  textarea.focus();
+  textarea.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 // ── Floating Format Bar ───────────────────────────────────────
 
 let formatBar = null;
@@ -861,9 +1075,19 @@ function createFormatBar() {
     { fmt: 'italic', label: 'I', title: 'Italic (Cmd+I)', italic: true },
     { fmt: 'code', label: '</>', title: 'Code' },
     { fmt: 'link', label: '\u{1F517}', title: 'Link (Cmd+K)' },
+    { separator: true },
+    { fmt: 'bullet', label: '•', title: 'Bullet list (Cmd+Shift+8)' },
+    { fmt: 'ordered', label: '1.', title: 'Ordered list (Cmd+Shift+9)' },
+    { fmt: 'checklist', label: '☐', title: 'Checklist' },
   ];
 
   for (const b of buttons) {
+    if (b.separator) {
+      const sep = document.createElement('div');
+      sep.className = 'format-bar-sep';
+      formatBar.appendChild(sep);
+      continue;
+    }
     const btn = document.createElement('button');
     btn.dataset.fmt = b.fmt;
     btn.title = b.title;
@@ -884,6 +1108,9 @@ function createFormatBar() {
     else if (fmt === 'italic') wrapSelection(dom.noteContent, '*', '*');
     else if (fmt === 'code') wrapSelection(dom.noteContent, '`', '`');
     else if (fmt === 'link') insertLink(dom.noteContent);
+    else if (fmt === 'bullet') insertListPrefix(dom.noteContent, '- ');
+    else if (fmt === 'ordered') insertListPrefix(dom.noteContent, '1. ');
+    else if (fmt === 'checklist') insertListPrefix(dom.noteContent, '- [ ] ');
     hideFormatBar();
   });
 }
@@ -1079,8 +1306,8 @@ function renderCalendar() {
   const cal = document.getElementById('miniCalendar');
   if (!wrap || !cal) return;
 
-  // Only show when viewing daily category
-  if (currentCategory !== 'daily') {
+  // Show calendar for all categories except trash
+  if (currentCategory === 'trash') {
     wrap.style.display = 'none';
     return;
   }
@@ -1091,14 +1318,15 @@ function renderCalendar() {
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
   const monthName = new Date(calYear, calMonth).toLocaleString('en', { month: 'long', year: 'numeric' });
+  const monthPrefix = `${calYear}-${String(calMonth + 1).padStart(2, '0')}`;
 
-  // Find daily notes in this month
-  const dailyDates = new Set();
+  // Find ALL non-deleted notes in this month
+  const noteDates = new Set();
   for (const n of index.notes) {
-    if (n.category === 'daily' && !n.deletedAt) {
+    if (!n.deletedAt) {
       const d = new Date(n.createdAt).toISOString().slice(0, 10);
-      if (d.startsWith(`${calYear}-${String(calMonth + 1).padStart(2, '0')}`)) {
-        dailyDates.add(d);
+      if (d.startsWith(monthPrefix)) {
+        noteDates.add(d);
       }
     }
   }
@@ -1152,15 +1380,18 @@ function renderCalendar() {
     el.textContent = d;
 
     if (dateStr === todayStr) el.classList.add('today');
-    if (dailyDates.has(dateStr)) {
+    if (dateStr === currentDateFilter) el.classList.add('selected');
+    if (noteDates.has(dateStr)) {
       el.classList.add('has-note');
       el.addEventListener('click', () => {
-        // Find and select the daily note for this date
-        const note = index.notes.find(n =>
-          n.category === 'daily' && !n.deletedAt &&
-          new Date(n.createdAt).toISOString().slice(0, 10) === dateStr
-        );
-        if (note) selectNote(note.id);
+        // Toggle date filter
+        if (currentDateFilter === dateStr) {
+          currentDateFilter = null;
+        } else {
+          currentDateFilter = dateStr;
+        }
+        renderCalendar();
+        renderNotesList();
       });
     }
 
@@ -1475,6 +1706,8 @@ function bindEvents() {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
       currentSearch = dom.searchInput.value.trim();
+      currentDateFilter = null;
+      renderCalendar();
       renderNotesList();
     }, DEBOUNCE_SEARCH);
   });
@@ -1485,6 +1718,7 @@ function bindEvents() {
     if (!item) return;
     currentCategory = item.dataset.cat;
     currentTagFilter = null;
+    currentDateFilter = null;
     renderCategoryNav();
     renderTagFilters();
     renderNotesList();
@@ -1623,6 +1857,23 @@ function bindEvents() {
     if (formatBar && !formatBar.contains(e.target)) hideFormatBar();
   });
 
+  // Static format row
+  if (dom.formatRow) {
+    dom.formatRow.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      const btn = e.target.closest('.format-row-btn');
+      if (!btn || !activeNoteId || showPreview) return;
+      const fmt = btn.dataset.fmt;
+      if (fmt === 'bold') wrapSelection(dom.noteContent, '**', '**');
+      else if (fmt === 'italic') wrapSelection(dom.noteContent, '*', '*');
+      else if (fmt === 'code') wrapSelection(dom.noteContent, '`', '`');
+      else if (fmt === 'link') insertLink(dom.noteContent);
+      else if (fmt === 'bullet') insertListPrefix(dom.noteContent, '- ');
+      else if (fmt === 'ordered') insertListPrefix(dom.noteContent, '1. ');
+      else if (fmt === 'checklist') insertListPrefix(dom.noteContent, '- [ ] ');
+    });
+  }
+
   // Category pills
   dom.categoryPills.addEventListener('click', async (e) => {
     const pill = e.target.closest('.cat-pill');
@@ -1719,6 +1970,7 @@ async function handleNewNote() {
   index = await getStorage().loadIndex();
   renderCategoryNav();
   renderNotesList();
+  renderCalendar();
   await selectNote(entry.id);
   dom.noteTitle.focus();
 
@@ -1761,6 +2013,7 @@ async function handleDeleteNote(id) {
   renderCategoryNav();
   renderTagFilters();
   renderNotesList();
+  renderCalendar();
 }
 
 async function handleRestoreNote(id) {
@@ -1770,6 +2023,7 @@ async function handleRestoreNote(id) {
   renderCategoryNav();
   renderTagFilters();
   renderNotesList();
+  renderCalendar();
   toast('Note restored 💖');
 }
 
@@ -1907,6 +2161,18 @@ function handleKeydown(e) {
   if (isMeta && e.key === 'k') {
     e.preventDefault();
     if (activeNoteId && !showPreview) insertLink(dom.noteContent);
+    return;
+  }
+
+  if (isMeta && e.shiftKey && e.key === '8') {
+    e.preventDefault();
+    if (activeNoteId && !showPreview) insertListPrefix(dom.noteContent, '- ');
+    return;
+  }
+
+  if (isMeta && e.shiftKey && e.key === '9') {
+    e.preventDefault();
+    if (activeNoteId && !showPreview) insertListPrefix(dom.noteContent, '1. ');
     return;
   }
 
