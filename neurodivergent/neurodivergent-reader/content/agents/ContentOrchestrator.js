@@ -4,7 +4,7 @@
  * ContentOrchestrator — Coordinates all content-side agents.
  *
  * Responsibilities:
- *   - Reads settings from chrome.storage.sync on init
+ *   - Reads settings from chrome.storage.local on init
  *   - Listens to chrome.storage.onChanged for live updates
  *   - Dispatches SETTINGS_UPDATED to all agents via MessageBus
  *   - Handles per-domain disable list

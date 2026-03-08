@@ -3,7 +3,7 @@
 /**
  * Settings page — full control over all Neurodivergent Reader features.
  * Writes to chrome.storage.local, content scripts react via storage.onChanged.
- * Debounces slider changes at 300ms to stay within sync write rate limits.
+ * Debounces slider changes at 300ms to avoid write storms on rapid slider movement.
  */
 
 let settings = null;
