@@ -127,7 +127,7 @@ body {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--ls-pink-accent), #FFB7C5);
+  background: linear-gradient(90deg, var(--ls-pink-deep), #FFB7C5);
   border-radius: 5px;
   transition: width 0.6s ease;
   width: 0%;
@@ -157,7 +157,7 @@ body {
 /* --- Buttons --- */
 
 .back-btn {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -178,7 +178,7 @@ body {
   font-size: 11px;
   color: var(--ls-text-muted);
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.78;
   transition: opacity 0.2s;
   margin-top: 4px;
 }
@@ -339,5 +339,9 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .loading-state { animation: none; opacity: 1; }
-  .progress-bar { transition: none; }
+  .progress-bar,
+  .back-btn,
+  .btn-cancel,
+  .btn-unblock,
+  .unblock-link { transition: none; }
 }

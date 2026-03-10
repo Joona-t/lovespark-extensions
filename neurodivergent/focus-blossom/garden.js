@@ -8,14 +8,25 @@
 
 // Cloud stamps (Part A)
 const CLOUD_STAMP_VARIANTS = 4;   // number of unique cloud shapes
-const CLOUD_PUFFS_MIN = 24;       // min puff circles per stamp
-const CLOUD_PUFFS_MAX = 38;       // max puff circles per stamp
-const CLOUD_STAMP_W = 200;        // offscreen stamp width (px)
-const CLOUD_STAMP_H = 120;        // offscreen stamp height (px)
-const CLOUD_BLUR_PX = 6;          // gaussian blur radius on stamps
-const CLOUD_WIND_SHEAR = 0.07;    // horizontal skew intensity
+const CLOUD_PUFFS_MIN = 7;        // min puff circles per stamp
+const CLOUD_PUFFS_MAX = 12;       // max puff circles per stamp
+const CLOUD_STAMP_W = 260;        // offscreen stamp width (px)
+const CLOUD_STAMP_H = 150;        // offscreen stamp height (px)
+const CLOUD_BLUR_PX = 5;          // gaussian blur radius on stamps
+const CLOUD_WIND_SHEAR = 0.02;    // horizontal skew intensity
 
-// Sparky mascot (Part B)
+// Ground flowers (Part B)
+const GROUND_FLOWER_COUNT_MIN = 18;   // min flower slots
+const GROUND_FLOWER_COUNT_MAX = 24;   // max flower slots
+const GROUND_FLOWER_STEM_MIN = 15;    // min stem height (px, pre-scale)
+const GROUND_FLOWER_STEM_MAX = 35;    // max stem height (px, pre-scale)
+const GROUND_FLOWER_SWAY_AMP = 2.5;   // sway displacement (px)
+const GROUND_FLOWER_SWAY_FREQ = 0.001;// sway speed
+
+// Sparky mascot (Part C)
+const MASCOT_ASPECT = 400 / 266;  // original image aspect ratio (landscape)
+const MASCOT_H_FULL = 0.22;       // mascot height as fraction of canvas (blocked page)
+const MASCOT_H_THUMB = 0.20;      // mascot height in thumbnail mode
 const MASCOT_HOP_AMP = 5;         // hop bounce height (px)
 const MASCOT_HOP_FREQ = 0.008;    // hop cycle speed
 const MASCOT_SQUASH = 0.10;       // squash/stretch intensity (0-1)
@@ -41,6 +52,7 @@ class GardenRenderer {
     // Tree
     this.branches = [];
     this.bloomSpots = [];
+    this.groundFlowers = [];
     this._treeBuilt = false;
     this._lastRenderedStage = -1;
 
@@ -58,6 +70,7 @@ class GardenRenderer {
     this.mascotWaterDrops = [];
     this.mascotSplashes = [];
     this.mascotFacing = 1;
+    this.mascotWaterTilt = 0;
     this._lastTime = 0;
 
     // Dynamic clouds — stamp cache + slot data
@@ -98,37 +111,103 @@ class GardenRenderer {
     };
 
     for (let v = 0; v < CLOUD_STAMP_VARIANTS; v++) {
-      // Draw puffs onto a temp canvas, then blur-copy to final stamp
       const tmp = document.createElement('canvas');
       tmp.width = CLOUD_STAMP_W;
       tmp.height = CLOUD_STAMP_H;
       const tctx = tmp.getContext('2d');
 
-      const puffCount = CLOUD_PUFFS_MIN + Math.floor(sr() * (CLOUD_PUFFS_MAX - CLOUD_PUFFS_MIN));
       const cx = CLOUD_STAMP_W / 2;
       const cy = CLOUD_STAMP_H / 2;
 
-      for (let p = 0; p < puffCount; p++) {
-        const angle = sr() * Math.PI * 2;
-        const distRaw = sr();
-        // Quadratic falloff clusters puffs toward center
-        const dist = distRaw * distRaw * 0.85;
+      // --- Volumetric cumulus cloud (3-layer) ---
 
-        const px = cx + Math.cos(angle) * dist * (CLOUD_STAMP_W * 0.42);
-        // Slight bottom bias for natural cloud shape
-        const py = cy + Math.sin(angle) * dist * (CLOUD_STAMP_H * 0.32) + (sr() - 0.35) * 8;
-        // Larger puffs toward center
-        const puffR = (16 + sr() * 26) * (1 - dist * 0.35);
-        const alpha = 0.13 + sr() * 0.14;
+      // Layer 1: Base puffs — shadowed bottom of cloud
+      const baseCount = 3 + Math.floor(sr() * 2);
+      for (let b = 0; b < baseCount; b++) {
+        const bx = cx + (b / (baseCount - 1) - 0.5) * CLOUD_STAMP_W * 0.55;
+        const by = cy + CLOUD_STAMP_H * 0.1;
+        const br = 24 + sr() * 18;
+        tctx.globalAlpha = 0.65 + sr() * 0.15;
+        const grad = tctx.createRadialGradient(bx, by - br * 0.2, 0, bx, by, br);
+        grad.addColorStop(0, '#F0F0F5');
+        grad.addColorStop(0.6, '#E0E0EA');
+        grad.addColorStop(1, '#D0D0DD');
+        tctx.fillStyle = grad;
+        tctx.beginPath();
+        tctx.arc(bx, by, br, 0, Math.PI * 2);
+        tctx.fill();
+      }
 
-        tctx.globalAlpha = alpha;
-        tctx.fillStyle = '#FFFFFF';
+      // Layer 2: Body puffs — clustered for natural shape
+      const clusters = 2 + Math.floor(sr() * 3);
+      for (let ci = 0; ci < clusters; ci++) {
+        const clusterCx = cx + (sr() - 0.5) * CLOUD_STAMP_W * 0.5;
+        const clusterCy = cy - sr() * CLOUD_STAMP_H * 0.28;
+        const puffsInCluster = 2 + Math.floor(sr() * 3);
+        for (let p = 0; p < puffsInCluster; p++) {
+          const angle = sr() * Math.PI * 2;
+          const dist = sr() * (15 + sr() * 12);
+          const px = clusterCx + Math.cos(angle) * dist;
+          const py = clusterCy + Math.sin(angle) * dist * 0.6;
+          const puffR = 16 + sr() * 20;
+          tctx.globalAlpha = 0.6 + sr() * 0.25;
+          const grad = tctx.createRadialGradient(
+            px - puffR * 0.25, py - puffR * 0.25, 0,
+            px, py, puffR
+          );
+          grad.addColorStop(0, '#FFFFFF');
+          grad.addColorStop(0.55, '#F8F8FA');
+          grad.addColorStop(1, '#E8E8F0');
+          tctx.fillStyle = grad;
+          tctx.beginPath();
+          tctx.arc(px, py, puffR, 0, Math.PI * 2);
+          tctx.fill();
+        }
+      }
+
+      // Layer 3: Bright top puffs — catch light
+      const topCount = 2 + Math.floor(sr() * 3);
+      for (let t = 0; t < topCount; t++) {
+        const px = cx + (sr() - 0.5) * CLOUD_STAMP_W * 0.4;
+        const py = cy - CLOUD_STAMP_H * (0.18 + sr() * 0.15);
+        const puffR = 14 + sr() * 16;
+        tctx.globalAlpha = 0.7 + sr() * 0.2;
+        const grad = tctx.createRadialGradient(
+          px - puffR * 0.3, py - puffR * 0.3, 0,
+          px, py, puffR
+        );
+        grad.addColorStop(0, '#FFFFFF');
+        grad.addColorStop(0.4, '#FFFFFF');
+        grad.addColorStop(1, '#F0F0F6');
+        tctx.fillStyle = grad;
         tctx.beginPath();
         tctx.arc(px, py, puffR, 0, Math.PI * 2);
         tctx.fill();
       }
 
-      // Blur-copy: temp → final stamp for soft edges
+      // Sun highlight glow — radial fade top-left
+      tctx.globalAlpha = 0.3;
+      const hlR = 28 + sr() * 14;
+      const hlGrad = tctx.createRadialGradient(
+        cx - CLOUD_STAMP_W * 0.15, cy - CLOUD_STAMP_H * 0.2, 0,
+        cx - CLOUD_STAMP_W * 0.15, cy - CLOUD_STAMP_H * 0.2, hlR
+      );
+      hlGrad.addColorStop(0, '#FFFFFF');
+      hlGrad.addColorStop(1, 'rgba(255,255,255,0)');
+      tctx.fillStyle = hlGrad;
+      tctx.beginPath();
+      tctx.arc(cx - CLOUD_STAMP_W * 0.15, cy - CLOUD_STAMP_H * 0.2, hlR, 0, Math.PI * 2);
+      tctx.fill();
+
+      // Dark underside — full-width bottom gradient
+      tctx.globalAlpha = 1;
+      const shadowGrad = tctx.createLinearGradient(0, cy, 0, cy + CLOUD_STAMP_H * 0.35);
+      shadowGrad.addColorStop(0, 'rgba(180,180,200,0)');
+      shadowGrad.addColorStop(1, 'rgba(180,180,200,0.18)');
+      tctx.fillStyle = shadowGrad;
+      tctx.fillRect(cx - CLOUD_STAMP_W * 0.38, cy, CLOUD_STAMP_W * 0.76, CLOUD_STAMP_H * 0.35);
+
+      // Blur-copy for soft puff merging
       const oc = document.createElement('canvas');
       oc.width = CLOUD_STAMP_W;
       oc.height = CLOUD_STAMP_H;
@@ -138,7 +217,6 @@ class GardenRenderer {
         octx.drawImage(tmp, 0, 0);
         octx.filter = 'none';
       } catch (_) {
-        // Fallback: no blur (still looks decent from overlapping puffs)
         octx.drawImage(tmp, 0, 0);
       }
 
@@ -245,6 +323,46 @@ class GardenRenderer {
       -Math.PI / 2, trunkH * 0.5, 5.5 * scale,
       0, 3, sr, scale
     );
+
+    this._generateGroundFlowers(sr, scale);
+  }
+
+  _generateGroundFlowers(sr, scale) {
+    const w = this.w;
+    const h = this.h;
+    const groundY = h * 0.65;
+    const count = GROUND_FLOWER_COUNT_MIN +
+      Math.floor(sr() * (GROUND_FLOWER_COUNT_MAX - GROUND_FLOWER_COUNT_MIN));
+
+    // Distribute across width with jitter, avoid tree trunk center (40%-60%)
+    const slots = [];
+    for (let i = 0; i < count; i++) {
+      let x;
+      // 70% chance outside trunk zone, 30% near edges of trunk
+      if (sr() < 0.7) {
+        x = sr() < 0.5
+          ? w * (0.05 + sr() * 0.33)   // left side
+          : w * (0.62 + sr() * 0.33);   // right side
+      } else {
+        x = w * (0.05 + sr() * 0.9);    // anywhere
+      }
+
+      const stemH = (GROUND_FLOWER_STEM_MIN + sr() * (GROUND_FLOWER_STEM_MAX - GROUND_FLOWER_STEM_MIN)) * (scale * 0.7);
+      const flowerSize = 0.4 + sr() * 0.4;
+      const bloomDelay = sr();  // stagger when each flower appears within a stage
+      const curveBias = (sr() - 0.5) * 0.4; // stem curve direction
+      // Mostly use the garden's flower type, occasionally pick a random one
+      const typeIdx = sr() < 0.65
+        ? this.flowerType
+        : FLOWER_TYPES[Math.floor(sr() * FLOWER_TYPES.length)];
+      const flowerType = typeof typeIdx === 'object' ? typeIdx : FLOWER_TYPES[typeIdx % FLOWER_TYPES.length];
+
+      slots.push({ x, y: groundY, stemH, size: flowerSize, bloomDelay, curveBias, flowerType });
+    }
+
+    // Sort left-to-right for natural layering
+    slots.sort((a, b) => a.x - b.x);
+    this.groundFlowers = slots;
   }
 
   _buildBranch(x, y, angle, length, width, depth, maxDepth, sr, scale) {
@@ -315,6 +433,7 @@ class GardenRenderer {
 
     this._drawSky(desat, stage);
     this._drawGround(desat);
+    this._drawGroundFlowers(stage, stageProgress, desat);
     this._drawTree(desat);
     this._drawTreeFlowers(stage, stageProgress, desat);
     this._updateMascot(stage);
@@ -340,22 +459,22 @@ class GardenRenderer {
 
     const grad = ctx.createLinearGradient(0, 0, 0, groundY);
     if (desat > 0) {
-      grad.addColorStop(0, this._desaturate("#FDCFE1", desat));
-      grad.addColorStop(1, this._desaturate("#E8A0C0", desat));
+      grad.addColorStop(0, this._desaturate("#FFF0F5", desat));
+      grad.addColorStop(1, this._desaturate("#F3B8D4", desat));
     } else {
-      grad.addColorStop(0, "#FDCFE1");
-      grad.addColorStop(0.5, "#F3B8D4");
-      grad.addColorStop(1, "#E8A0C0");
+      grad.addColorStop(0, "#FFF0F5");
+      grad.addColorStop(0.4, "#FDCFE1");
+      grad.addColorStop(1, "#F3B8D4");
     }
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, groundY);
 
-    // Soft stamp-based clouds — count increases with garden stage
+    // Fluffy stamp-based clouds — count increases with garden stage
     if (desat < 0.5 && this._cloudStamps.length > 0) {
       const visibleClouds = this.thumbnailMode
         ? Math.min(this.clouds.length, Math.max(1, stage))
         : Math.min(this.clouds.length, stage + 1);
-      const baseAlpha = Math.min(1, (0.35 + stage * 0.08) * (1 - desat * 2));
+      const baseAlpha = Math.min(1, (0.62 + stage * 0.08) * (1 - desat * 2));
       const t = this.time;
 
       for (let i = 0; i < visibleClouds; i++) {
@@ -369,8 +488,8 @@ class GardenRenderer {
           ? c.yBase * groundY
           : c.yBase * groundY + Math.sin(t * c.vertSpeed + c.phase) * c.vertAmp;
 
-        const drawW = c.size * 3.2;
-        const drawH = c.size * 1.9;
+        const drawW = c.size * 3.6;
+        const drawH = c.size * 2.0;
 
         ctx.save();
         ctx.globalAlpha = baseAlpha * c.opacity;
@@ -386,9 +505,38 @@ class GardenRenderer {
         ctx.restore();
       }
     }
+
+    // Atmospheric haze at horizon — depth separation between sky and ground
+    if (!this.thumbnailMode && desat < 0.3) {
+      const hazeH = 30;
+      const haze = ctx.createLinearGradient(0, groundY - hazeH, 0, groundY);
+      haze.addColorStop(0, 'rgba(253,207,225,0)');
+      haze.addColorStop(1, 'rgba(253,207,225,0.35)');
+      ctx.fillStyle = haze;
+      ctx.fillRect(0, groundY - hazeH, w, hazeH);
+    }
   }
 
   // --- Ground ---
+
+  _drawHillLayer(ctx, w, groundY, h, topColor, bottomColor, riseAmount, freq, phase, desat) {
+    const hillTop = groundY - riseAmount;
+    const grad = ctx.createLinearGradient(0, hillTop, 0, h);
+    grad.addColorStop(0, this._desaturate(topColor, desat));
+    grad.addColorStop(1, this._desaturate(bottomColor, desat));
+    ctx.fillStyle = grad;
+
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    for (let x = 0; x <= w; x += 4) {
+      const wave = Math.sin(x * freq / w * Math.PI * 2 + phase);
+      const y = groundY - riseAmount * (0.5 + 0.5 * wave);
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    ctx.fill();
+  }
 
   _drawGround(desat) {
     const ctx = this.ctx;
@@ -396,38 +544,121 @@ class GardenRenderer {
     const h = this.h;
     const groundY = h * 0.65;
 
-    const grad = ctx.createLinearGradient(0, groundY, 0, h);
+    // Layer 1 (back): lightest green, tall gentle hills
+    this._drawHillLayer(ctx, w, groundY, h, "#A5C882", "#8DB86A", h * 0.12, 1.2, 0.5, desat);
+
+    // Layer 2 (mid): medium green, shorter different-frequency hills
+    this._drawHillLayer(ctx, w, groundY, h, "#7CB342", "#5E9A28", h * 0.04, 0.8, 2.1, desat);
+
+    // Layer 3 (front): darkest green, flat from groundY down
+    const frontGrad = ctx.createLinearGradient(0, groundY, 0, h);
     if (desat > 0) {
-      grad.addColorStop(0, this._desaturate("#7CB342", desat));
-      grad.addColorStop(0.4, this._desaturate("#558B2F", desat));
-      grad.addColorStop(1, this._desaturate("#33691E", desat));
+      frontGrad.addColorStop(0, this._desaturate("#6AAD35", desat));
+      frontGrad.addColorStop(0.4, this._desaturate("#558B2F", desat));
+      frontGrad.addColorStop(1, this._desaturate("#33691E", desat));
     } else {
-      grad.addColorStop(0, "#7CB342");
-      grad.addColorStop(0.4, "#558B2F");
-      grad.addColorStop(1, "#33691E");
+      frontGrad.addColorStop(0, "#6AAD35");
+      frontGrad.addColorStop(0.4, "#558B2F");
+      frontGrad.addColorStop(1, "#33691E");
     }
-    ctx.fillStyle = grad;
+    ctx.fillStyle = frontGrad;
     ctx.fillRect(0, groundY, w, h - groundY);
 
-    // Grass tufts
+    // Layered grass throughout ground area
     if (!this.thumbnailMode) {
-      ctx.save();
-      ctx.globalAlpha = 0.3 * (1 - desat);
-      ctx.strokeStyle = "#8BC34A";
-      ctx.lineWidth = 1.5;
       let seed = 42;
       const sr = () => { seed = (seed * 16807) % 2147483647; return (seed & 0x7fffffff) / 2147483647; };
-      for (let i = 0; i < 30; i++) {
+      const groundH = h - groundY;
+
+      ctx.lineCap = "round";
+
+      // Layer 1: Tall prominent grass at ground line
+      ctx.save();
+      ctx.globalAlpha = 0.5 * (1 - desat);
+      ctx.lineWidth = 1.8;
+      const grassColors = ["#8BC34A", "#9CCC65", "#7CB342"];
+      for (let i = 0; i < 70; i++) {
         const gx = sr() * w;
-        const gy = groundY + sr() * 15;
+        const gy = groundY + sr() * 4;
+        const bladeH = 10 + sr() * 14;
+        const curve = (sr() - 0.5) * 10;
+        ctx.strokeStyle = grassColors[Math.floor(sr() * 3)];
         ctx.beginPath();
         ctx.moveTo(gx, gy);
-        ctx.lineTo(gx - 3, gy - 8 - sr() * 6);
+        ctx.quadraticCurveTo(gx + curve, gy - bladeH * 0.6, gx + curve * 1.3, gy - bladeH);
         ctx.stroke();
+      }
+      ctx.restore();
+
+      // Layer 2: Medium grass in upper ground band (0-30%)
+      ctx.save();
+      ctx.globalAlpha = 0.32 * (1 - desat);
+      ctx.lineWidth = 1.4;
+      for (let i = 0; i < 60; i++) {
+        const gx = sr() * w;
+        const gy = groundY + 5 + sr() * groundH * 0.3;
+        const bladeH = 7 + sr() * 10;
+        const curve = (sr() - 0.5) * 7;
+        ctx.strokeStyle = grassColors[Math.floor(sr() * 3)];
         ctx.beginPath();
-        ctx.moveTo(gx + 2, gy);
-        ctx.lineTo(gx + 5, gy - 7 - sr() * 5);
+        ctx.moveTo(gx, gy);
+        ctx.quadraticCurveTo(gx + curve, gy - bladeH * 0.6, gx + curve * 1.2, gy - bladeH);
         ctx.stroke();
+      }
+      ctx.restore();
+
+      // Layer 3: Short scattered grass in mid ground (30-60%)
+      ctx.save();
+      ctx.globalAlpha = 0.22 * (1 - desat);
+      ctx.lineWidth = 1.2;
+      for (let i = 0; i < 50; i++) {
+        const gx = sr() * w;
+        const gy = groundY + groundH * 0.3 + sr() * groundH * 0.3;
+        const bladeH = 5 + sr() * 7;
+        const curve = (sr() - 0.5) * 5;
+        ctx.strokeStyle = grassColors[Math.floor(sr() * 3)];
+        ctx.beginPath();
+        ctx.moveTo(gx, gy);
+        ctx.quadraticCurveTo(gx + curve, gy - bladeH * 0.6, gx + curve * 1.1, gy - bladeH);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Layer 4: Faint tiny grass in lower ground (60-90%)
+      ctx.save();
+      ctx.globalAlpha = 0.14 * (1 - desat);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#6AAD35";
+      for (let i = 0; i < 35; i++) {
+        const gx = sr() * w;
+        const gy = groundY + groundH * 0.6 + sr() * groundH * 0.3;
+        const bladeH = 3 + sr() * 5;
+        const curve = (sr() - 0.5) * 4;
+        ctx.beginPath();
+        ctx.moveTo(gx, gy);
+        ctx.quadraticCurveTo(gx + curve, gy - bladeH * 0.6, gx + curve * 1.1, gy - bladeH);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Grass clumps — small dense tufts scattered across ground
+      ctx.save();
+      ctx.lineWidth = 1.3;
+      for (let c = 0; c < 12; c++) {
+        const cx = sr() * w;
+        const cy = groundY + 4 + sr() * groundH * 0.55;
+        const depth = (cy - groundY) / groundH; // 0 at top, ~0.6 at bottom
+        ctx.globalAlpha = (0.38 - depth * 0.3) * (1 - desat);
+        for (let b = 0; b < 5 + Math.floor(sr() * 4); b++) {
+          const bx = cx + (sr() - 0.5) * 8;
+          const bladeH = 6 + sr() * 10 * (1 - depth * 0.6);
+          const curve = (sr() - 0.5) * 6;
+          ctx.strokeStyle = grassColors[Math.floor(sr() * 3)];
+          ctx.beginPath();
+          ctx.moveTo(bx, cy);
+          ctx.quadraticCurveTo(bx + curve, cy - bladeH * 0.6, bx + curve * 1.2, cy - bladeH);
+          ctx.stroke();
+        }
       }
       ctx.restore();
     }
@@ -449,6 +680,119 @@ class GardenRenderer {
         ctx.stroke();
       }
       ctx.restore();
+    }
+  }
+
+  // --- Ground Flowers ---
+
+  _drawGroundFlowers(stage, stageProgress, desat) {
+    if (stage === 0 && stageProgress < 0.5) return; // nothing at early seed stage
+    const ctx = this.ctx;
+    const total = this.groundFlowers.length;
+    const droop = this.destroying ? this.destroyProgress : 0;
+
+    // How many flowers are visible based on stage
+    // Stage 0 late: ~10%, Stage 1: ~25%, Stage 2: ~50%, Stage 3: ~80%, Stage 4: 100%
+    const stageFraction = Math.min(1, (stage + stageProgress) / 4.2);
+    const visibleFraction = stage === 0 ? stageProgress * 0.1 : stageFraction;
+    const thumbnailCap = this.thumbnailMode ? 6 : total;
+
+    for (let i = 0; i < Math.min(total, thumbnailCap); i++) {
+      const f = this.groundFlowers[i];
+
+      // Staggered appearance: each flower has a bloomDelay threshold
+      const effectiveFraction = visibleFraction - f.bloomDelay * 0.3;
+      if (effectiveFraction < i / total) continue;
+
+      // Growth factor: how much this individual flower has grown (0-1)
+      const growthRaw = Math.min(1, (effectiveFraction - i / total) * total * 0.5);
+      const growth = Math.max(0, growthRaw);
+      if (growth <= 0) continue;
+
+      const stemH = f.stemH * growth;
+      const sway = this.thumbnailMode ? 0
+        : Math.sin(this.time * GROUND_FLOWER_SWAY_FREQ + f.x * 0.05) * GROUND_FLOWER_SWAY_AMP * growth;
+
+      // Wilt during destruction: stems bend over
+      const wiltAngle = droop * (0.8 + f.bloomDelay * 0.4);
+
+      // Stem base and tip
+      const baseX = f.x;
+      const baseY = f.y;
+      const tipX = baseX + sway + (f.curveBias * stemH * 0.3) - Math.sin(wiltAngle) * stemH * 0.5;
+      const tipY = baseY - stemH * Math.cos(wiltAngle) * (1 - droop * 0.3);
+
+      // Control point for stem curve
+      const cpX = baseX + f.curveBias * stemH * 0.5 + sway * 0.5;
+      const cpY = baseY - stemH * 0.5;
+
+      // Draw stem
+      ctx.save();
+      ctx.globalAlpha = (1 - desat * 0.6) * Math.min(1, growth * 2);
+      ctx.strokeStyle = this._desaturate("#6AAF50", desat);
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(baseX, baseY);
+      ctx.quadraticCurveTo(cpX, cpY, tipX, tipY);
+      ctx.stroke();
+
+      // Leaf at mid-stem (stage 2+)
+      if (stage >= 2 || (stage === 1 && stageProgress > 0.6)) {
+        const leafX = (baseX + cpX) / 2 + 1;
+        const leafY = (baseY + cpY) / 2;
+        const leafSize = 3 + f.size * 3;
+        const leafDir = f.curveBias > 0 ? 1 : -1;
+        ctx.fillStyle = this._desaturate("#77DD77", desat);
+        ctx.beginPath();
+        ctx.ellipse(
+          leafX + leafDir * leafSize * 0.6,
+          leafY,
+          leafSize * 0.8,
+          leafSize * 0.35,
+          leafDir * 0.5,
+          0, Math.PI * 2
+        );
+        ctx.fill();
+      }
+
+      ctx.restore();
+
+      // Flower head at tip
+      if (growth > 0.3) {
+        const ft = f.flowerType;
+        const headProgress = (growth - 0.3) / 0.7; // 0-1 within flower appearance
+
+        if (stage <= 1) {
+          // Tiny green bud
+          const budSize = (1.5 + headProgress * 2) * f.size;
+          this._drawBud(tipX, tipY, budSize, "#A5D6A7", desat);
+        } else if (stage === 2) {
+          // Colored bud
+          const budSize = (2 + headProgress * 2.5) * f.size;
+          this._drawBud(tipX, tipY, budSize, ft.petalColor, desat);
+        } else {
+          // Open flower — scale up at stage 4
+          const sizeBoost = stage === 4 ? 1.3 : 1;
+          const petalSize = (3 + headProgress * 3) * f.size * sizeBoost;
+          this._drawPetals(tipX, tipY, petalSize, ft, desat);
+
+          // Spawn detaching petals during destruction
+          if (this.destroying && this.destroyProgress > 0.2 && !this.thumbnailMode && Math.random() < 0.04) {
+            this.particles.push({
+              x: tipX + (Math.random() - 0.5) * petalSize,
+              y: tipY,
+              vx: (Math.random() - 0.5) * 1.2,
+              vy: Math.random() * 0.3 + 0.1,
+              size: petalSize * 0.3,
+              color: ft.petalColor,
+              life: 1,
+              decay: 0.006 + Math.random() * 0.005,
+              type: "petal"
+            });
+          }
+        }
+      }
     }
   }
 
@@ -539,9 +883,10 @@ class GardenRenderer {
 
     if (this.mascotTimer <= 0) {
       if (this.mascotState === "idle") {
-        this.mascotTargetX = 0.2 + Math.random() * 0.65;
+        this.mascotTargetX = 0.15 + Math.random() * 0.70;
         this.mascotFacing = this.mascotTargetX > this.mascotX ? 1 : -1;
         this.mascotState = "walking";
+        this.mascotTimer = 99999; // walking ends by distance, not timer
       } else if (this.mascotState === "walking") {
         this.mascotState = "watering";
         this.mascotTimer = 2000 + Math.random() * 1500;
@@ -562,14 +907,37 @@ class GardenRenderer {
       }
     }
 
+    // Ease watering can tilt: ramp up when watering, ramp down otherwise
+    if (this.mascotState === "watering") {
+      this.mascotWaterTilt = Math.min(1, this.mascotWaterTilt + dt * 0.003);
+    } else {
+      this.mascotWaterTilt = Math.max(0, this.mascotWaterTilt - dt * 0.005);
+    }
+
     // Spawn water drops from watering can spout tip (capped)
     if (this.mascotState === "watering" && this.mascotWaterDrops.length < MASCOT_MAX_DROPS && Math.random() < 0.25) {
       const groundY = this.h * 0.65;
-      const mascotH = this.h * 0.15;
-      // Spout tip: offset from mascot center toward facing side
-      const centerX = this.mascotX * this.w + mascotH / 2;
-      const spoutX = centerX + this.mascotFacing * mascotH * 0.55;
-      const spoutY = groundY - mascotH * 0.48;
+      const mascotH = this.h * MASCOT_H_FULL;
+      const mascotW = mascotH * MASCOT_ASPECT;
+      const canW = mascotH * 0.32;
+      const canH = mascotH * 0.38;
+      const centerX = this.mascotX * this.w;
+
+      // Compute tilted spout tip position (rotated around handle pivot)
+      const tilt = this.mascotWaterTilt * 0.65;
+      const cos = Math.cos(tilt);
+      const sin = Math.sin(tilt);
+      // Spout tip relative to can baseX/baseY: (canW*1.35, -canH*0.25)
+      // Handle pivot relative to can baseX/baseY: (canW*0.08, canH*0.45)
+      const pivX = canW * 0.08;
+      const pivY = canH * 0.45;
+      const spDx = canW * 1.35 - pivX;
+      const spDy = -canH * 0.25 - pivY;
+      const rotDx = pivX + spDx * cos - spDy * sin;
+      const rotDy = pivY + spDx * sin + spDy * cos;
+      // Can baseX offset from mascot center: mascotW*0.30 (half mascotW - center to right edge offset)
+      const spoutX = centerX + this.mascotFacing * (mascotW * 0.30 + rotDx);
+      const spoutY = groundY - mascotH * 0.55 + rotDy;
       this.mascotWaterDrops.push({
         x: spoutX + (Math.random() - 0.5) * 4,
         y: spoutY,
@@ -616,10 +984,13 @@ class GardenRenderer {
     const h = this.h;
     const groundY = h * 0.65;
 
-    const mascotH = this.thumbnailMode ? h * 0.12 : h * 0.15;
-    const mascotW = mascotH;
-    const mx = this.thumbnailMode ? w * 0.68 : this.mascotX * w;
+    const mascotH = this.thumbnailMode ? h * MASCOT_H_THUMB : h * MASCOT_H_FULL;
+    const mascotW = mascotH * MASCOT_ASPECT;
+    // Center-anchor X so mascot walks centered on its position
+    const mx = this.thumbnailMode ? w * 0.68 - mascotW / 2 : this.mascotX * w - mascotW / 2;
     const my = groundY - mascotH * 0.88;
+
+    ctx.imageSmoothingQuality = 'high';
 
     // Hop phase and squash/stretch (walking only)
     let bobY = 0;
@@ -656,25 +1027,9 @@ class GardenRenderer {
       ctx.restore();
     }
 
-    // --- Draw mascot sprite ---
+    // --- Draw mascot sprite (never flipped — 3D render looks wrong mirrored) ---
     ctx.save();
     if (desat > 0) ctx.globalAlpha = 1 - desat * 0.6;
-
-    // Flip horizontally when facing left
-    if (!this.thumbnailMode && this.mascotFacing === -1) {
-      ctx.translate(mx + mascotW / 2, 0);
-      ctx.scale(-1, 1);
-      ctx.translate(-(mx + mascotW / 2), 0);
-    }
-
-    // Lean forward during watering
-    if (!this.thumbnailMode && this.mascotState === "watering") {
-      const pivotX = mx + mascotW / 2;
-      const pivotY = my + mascotH;
-      ctx.translate(pivotX, pivotY);
-      ctx.rotate(-0.12);
-      ctx.translate(-pivotX, -pivotY);
-    }
 
     // Squash/stretch transform (pivot at feet)
     if (!this.thumbnailMode && (scaleX !== 1 || scaleY !== 1)) {
@@ -686,13 +1041,33 @@ class GardenRenderer {
     }
 
     ctx.drawImage(this.mascotImg, mx, my + bobY, mascotW, mascotH);
-
-    // Watering can — drawn inside transform context so it follows flip/lean/squash
-    if (!this.thumbnailMode) {
-      this._drawWateringCan(ctx, mx, my, mascotW, mascotH, bobY);
-    }
-
     ctx.restore();
+
+    // --- Watering can (separate context — flips to match facing direction) ---
+    if (!this.thumbnailMode) {
+      ctx.save();
+      if (desat > 0) ctx.globalAlpha = 1 - desat * 0.6;
+
+      const pivotX = mx + mascotW / 2;
+      const pivotY = my + mascotH;
+
+      // Squash/stretch (same as mascot)
+      if (scaleX !== 1 || scaleY !== 1) {
+        ctx.translate(pivotX, pivotY);
+        ctx.scale(scaleX, scaleY);
+        ctx.translate(-pivotX, -pivotY);
+      }
+
+      // Flip can to correct side when facing left
+      if (this.mascotFacing === -1) {
+        ctx.translate(pivotX, 0);
+        ctx.scale(-1, 1);
+        ctx.translate(-pivotX, 0);
+      }
+
+      this._drawWateringCan(ctx, mx, my, mascotW, mascotH, bobY);
+      ctx.restore();
+    }
 
     // --- Water drops (teardrop shapes) ---
     if (!this.thumbnailMode && this.mascotWaterDrops.length > 0) {
@@ -727,21 +1102,22 @@ class GardenRenderer {
   // --- Watering Can ---
 
   _drawWateringCan(ctx, mx, my, mascotW, mascotH, bobY) {
-    const canW = mascotH * 0.18;
-    const canH = mascotH * 0.24;
+    const canW = mascotH * 0.32;
+    const canH = mascotH * 0.38;
 
-    // Position: right side of mascot at hand height
-    const baseX = mx + mascotW * 0.72;
-    const baseY = my + bobY + mascotH * 0.46;
+    // Position: at Sparky's right hand, clearly outside body
+    const baseX = mx + mascotW * 0.80;
+    const baseY = my + bobY + mascotH * 0.38;
 
     ctx.save();
 
-    // Extra tilt during watering (pouring angle)
-    if (this.mascotState === "watering") {
-      const px = baseX + canW * 0.5;
-      const py = baseY + canH;
+    // Smooth tilt during watering — pivot at handle grip, clockwise pour
+    const tiltAmt = this.mascotWaterTilt || 0;
+    if (tiltAmt > 0.01) {
+      const px = baseX + canW * 0.08;
+      const py = baseY + canH * 0.45;
       ctx.translate(px, py);
-      ctx.rotate(-0.4);
+      ctx.rotate(tiltAmt * 0.65);
       ctx.translate(-px, -py);
     }
 

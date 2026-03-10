@@ -16,16 +16,25 @@ function applyTheme(t) {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    function openMenu() { menu.classList.add('open'); toggle.setAttribute('aria-expanded', 'true'); }
+    function closeMenu() { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.contains('open') ? closeMenu() : openMenu(); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
       chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+      closeMenu();
+      toggle.focus();
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => closeMenu());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.classList.contains('open')) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -56,7 +65,7 @@ async function renderGardens() {
     return (b._displayTotalMs || 0) - (a._displayTotalMs || 0);
   });
 
-  grid.innerHTML = "";
+  grid.replaceChildren();
 
   if (entries.length === 0) {
     emptyState.style.display = "block";
@@ -86,6 +95,9 @@ async function renderGardens() {
 function createGardenCard(garden) {
   const card = document.createElement("div");
   card.className = "garden-card" + (expandedDomain === garden.domain ? " expanded" : "");
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", garden.domain + " garden");
   if (!garden.isBlocked) card.style.opacity = "0.6";
 
   const totalMs = garden._displayTotalMs || garden.totalBlockedMs;
@@ -115,10 +127,14 @@ function createGardenCard(garden) {
 
   const meta = document.createElement("div");
   meta.className = "garden-card-meta";
-  meta.innerHTML = `
-    <span class="garden-card-stage">${timeStr} ${garden.isBlocked ? "" : "(unblocked)"}</span>
-    <span class="garden-card-emoji">${STAGE_EMOJIS[stage]}</span>
-  `;
+  const stageSpan = document.createElement("span");
+  stageSpan.className = "garden-card-stage";
+  stageSpan.textContent = timeStr + (garden.isBlocked ? "" : " (unblocked)");
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "garden-card-emoji";
+  emojiSpan.textContent = STAGE_EMOJIS[stage];
+  meta.appendChild(stageSpan);
+  meta.appendChild(emojiSpan);
 
   // Details (shown when expanded)
   const details = document.createElement("div");
@@ -127,39 +143,66 @@ function createGardenCard(garden) {
   const stageInfo = GROWTH_STAGES[stage];
   const streak = garden.streak || { currentDays: 0, longestDays: 0 };
 
-  details.innerHTML = `
-    <div class="detail-row">
-      <span class="detail-label">Stage</span>
-      <span class="detail-value">${stageInfo.label}</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-label">Flower</span>
-      <span class="detail-value">${FLOWER_TYPES[garden.flowerType % FLOWER_TYPES.length].name}</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-label">Streak</span>
-      <span class="detail-value">${streak.currentDays}d (best: ${streak.longestDays}d)</span>
-    </div>
-    <div class="garden-actions">
-      ${garden.isBlocked
-        ? `<button class="btn-unblock-small" data-action="unblock" data-domain="${garden.domain}">Unblock</button>
-           <button class="btn-remove-small" data-action="remove" data-domain="${garden.domain}">Remove</button>`
-        : `<button class="btn-reblock-small" data-action="reblock" data-domain="${garden.domain}">Re-block</button>
-           <button class="btn-remove-small" data-action="remove" data-domain="${garden.domain}">Remove</button>`
-      }
-    </div>
-  `;
+  function addDetailRow(parent, label, value) {
+    const row = document.createElement("div");
+    row.className = "detail-row";
+    const lbl = document.createElement("span");
+    lbl.className = "detail-label";
+    lbl.textContent = label;
+    const val = document.createElement("span");
+    val.className = "detail-value";
+    val.textContent = value;
+    row.appendChild(lbl);
+    row.appendChild(val);
+    parent.appendChild(row);
+  }
+
+  addDetailRow(details, "Stage", stageInfo.label);
+  addDetailRow(details, "Flower", FLOWER_TYPES[garden.flowerType % FLOWER_TYPES.length].name);
+  addDetailRow(details, "Streak", `${streak.currentDays}d (best: ${streak.longestDays}d)`);
+
+  const actions = document.createElement("div");
+  actions.className = "garden-actions";
+  if (garden.isBlocked) {
+    const unblockBtn = document.createElement("button");
+    unblockBtn.className = "btn-unblock-small";
+    unblockBtn.dataset.action = "unblock";
+    unblockBtn.dataset.domain = garden.domain;
+    unblockBtn.textContent = "Unblock";
+    actions.appendChild(unblockBtn);
+  } else {
+    const reblockBtn = document.createElement("button");
+    reblockBtn.className = "btn-reblock-small";
+    reblockBtn.dataset.action = "reblock";
+    reblockBtn.dataset.domain = garden.domain;
+    reblockBtn.textContent = "Re-block";
+    actions.appendChild(reblockBtn);
+  }
+  const removeBtn = document.createElement("button");
+  removeBtn.className = "btn-remove-small";
+  removeBtn.dataset.action = "remove";
+  removeBtn.dataset.domain = garden.domain;
+  removeBtn.textContent = "Remove";
+  actions.appendChild(removeBtn);
+  details.appendChild(actions);
 
   card.appendChild(canvas);
   card.appendChild(domainEl);
   card.appendChild(meta);
   card.appendChild(details);
 
-  // Click to expand/collapse
-  card.addEventListener("click", (e) => {
-    if (e.target.closest("button")) return; // don't toggle on button clicks
+  // Click/keyboard to expand/collapse
+  function toggleCard(e) {
+    if (e.target.closest("button")) return;
     expandedDomain = expandedDomain === garden.domain ? null : garden.domain;
     renderGardens();
+  }
+  card.addEventListener("click", toggleCard);
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleCard(e);
+    }
   });
 
   // Action buttons

@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Focus Blossom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="blocked.css">
 </head>
 <body>
@@ -27,7 +26,7 @@
 
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="progressBar"></div>
-        <span class="progress-text" id="progressText"></span>
+        <span class="progress-text" id="progressText" aria-live="polite"></span>
       </div>
 
       <div class="affirmation" id="affirmation"></div>
@@ -38,7 +37,7 @@
     </div>
 
     <!-- Friction overlay -->
-    <div class="friction-overlay" id="frictionOverlay" style="display:none">
+    <div class="friction-overlay" id="frictionOverlay" style="display:none" role="dialog" aria-labelledby="frictionTitle" aria-modal="true">
       <div class="friction-card">
         <div class="friction-title" id="frictionTitle">Are you sure?</div>
         <div class="friction-body" id="frictionBody">
@@ -47,11 +46,11 @@
         <div class="friction-preview">
           <canvas id="frictionCanvas" width="280" height="160"></canvas>
         </div>
-        <div class="friction-timer" id="frictionTimer" style="display:none">
+        <div class="friction-timer" id="frictionTimer" style="display:none" aria-live="polite">
           Wait <span id="timerCount">30</span>s...
         </div>
         <div class="friction-input-wrap" id="frictionInputWrap" style="display:none">
-          <label class="friction-input-label" id="frictionInputLabel">Type the domain to confirm:</label>
+          <label class="friction-input-label" id="frictionInputLabel" for="frictionInput">Type the domain to confirm:</label>
           <input type="text" class="friction-input" id="frictionInput" autocomplete="off" spellcheck="false">
         </div>
         <div class="friction-buttons">

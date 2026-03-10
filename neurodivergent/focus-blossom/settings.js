@@ -130,3 +130,13 @@ importFile.addEventListener("change", async (e) => {
 // --- Init ---
 
 loadSettings();
+
+// Dynamic version from manifest
+const aboutEl = document.getElementById('aboutText');
+if (aboutEl) {
+  const ver = chrome.runtime.getManifest().version;
+  aboutEl.textContent = '';
+  aboutEl.append(`Focus Blossom v${ver}`);
+  aboutEl.append(document.createElement('br'));
+  aboutEl.append('Part of the LoveSpark Suite');
+}

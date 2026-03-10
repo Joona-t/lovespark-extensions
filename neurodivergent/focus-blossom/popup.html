@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Focus Blossom</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="headerTitle">
     <header class="popup-header">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
-      <span class="header-title">Focus Blossom</span>
+      <span class="header-title" id="headerTitle">Focus Blossom</span>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -46,7 +45,7 @@
 
     <!-- Add site -->
     <div class="add-site-row">
-      <input type="text" id="siteInput" class="site-input" placeholder="e.g. reddit.com" spellcheck="false" autocomplete="off">
+      <input type="text" id="siteInput" class="site-input" placeholder="e.g. reddit.com" spellcheck="false" autocomplete="off" aria-label="Site domain to block">
       <button class="btn-add" id="addBtn">+ Add</button>
     </div>
 
@@ -54,15 +53,15 @@
     <div class="stats-card" id="statsCard">
       <div class="stats-row">
         <span class="stats-label">🌱 Gardens growing</span>
-        <span class="stats-value" id="statGrowing">0</span>
+        <span class="stats-value" id="statGrowing" aria-live="polite">0</span>
       </div>
       <div class="stats-row">
         <span class="stats-label">🔥 Longest streak</span>
-        <span class="stats-value" id="statStreak">0d</span>
+        <span class="stats-value" id="statStreak" aria-live="polite">0d</span>
       </div>
       <div class="stats-row">
         <span class="stats-label">⏱️ Total blocked</span>
-        <span class="stats-value" id="statBlocked">0h</span>
+        <span class="stats-value" id="statBlocked" aria-live="polite">0h</span>
       </div>
     </div>
 
@@ -71,7 +70,7 @@
 
     <footer class="popup-footer">
       <span>LoveSpark Suite 💕</span>
-      <a class="settings-link" id="settingsLink" title="Settings" tabindex="0">⚙</a>
+      <a class="settings-link" id="settingsLink" title="Settings" tabindex="0" role="button" aria-label="Settings">⚙</a>
     </footer>
   </div>
 

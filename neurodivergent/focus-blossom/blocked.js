@@ -162,13 +162,16 @@ function startFriction(domain, garden, level, stage, totalMs) {
   }
 
   // Timer countdown
+  let interval = null;
+  const inputAC = new AbortController();
   if (waitSeconds > 0) {
     timerCount.textContent = waitSeconds;
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
       waitSeconds--;
       timerCount.textContent = waitSeconds;
       if (waitSeconds <= 0) {
         clearInterval(interval);
+        interval = null;
         timerDone = true;
         timerEl.style.display = "none";
         checkReady();
@@ -181,16 +184,18 @@ function startFriction(domain, garden, level, stage, totalMs) {
     input.addEventListener("input", () => {
       inputDone = input.value.trim().toLowerCase() === domain.toLowerCase();
       checkReady();
-    });
+    }, { signal: inputAC.signal });
   }
 
   function checkReady() {
     confirmBtn.disabled = !(timerDone && inputDone);
   }
 
-  // Cancel
+  // Cancel — clean up timer and input listener
   cancelBtn.addEventListener("click", () => {
     overlay.style.display = "none";
+    if (interval) clearInterval(interval);
+    inputAC.abort();
     fRenderer.stop();
   }, { once: true });
 
