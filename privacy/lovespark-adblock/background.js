@@ -46,6 +46,9 @@ chrome.runtime.onInstalled.addListener(async ({ reason }) => {
 
   // Schedule daily reset alarm
   scheduleResetAlarm();
+
+  // Immediate poll so stats appear without waiting for the 1-minute alarm
+  pollMatchedRules();
 });
 
 // ── Alarms ────────────────────────────────────────────────────────────────────
@@ -71,54 +74,45 @@ chrome.runtime.onStartup.addListener(() => {
     displayActionCountAsBadgeText: true,
   });
   chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
+  pollMatchedRules();
 });
 
 // ── Stats tracking ────────────────────────────────────────────────────────────
 
-// onRuleMatchedDebug fires in developer/unpacked mode (best accuracy)
+// onRuleMatchedDebug fires in developer/unpacked mode (best accuracy).
+// The API object exists even in packed extensions but never fires — so we
+// track whether it has actually fired to decide which stats path to use.
+let _debugListenerFired = false;
+
 if (chrome.declarativeNetRequest.onRuleMatchedDebug) {
   chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(async () => {
-    await bumpStats(1);
+    _debugListenerFired = true;
+    await writeStats(1);
   });
 }
 
 // Fallback: poll getMatchedRules (works in packed extensions with declarativeNetRequestFeedback).
 // _lastPollTs is persisted in storage so service worker restarts don't create gaps.
 async function pollMatchedRules() {
-  if (chrome.declarativeNetRequest.onRuleMatchedDebug) return;
+  if (_debugListenerFired) return;
 
   try {
     const { _lastPollTs: stored } = await chrome.storage.local.get('_lastPollTs');
-    const ts = stored || Date.now();
+    const ts = stored || 0;
     const result = await chrome.declarativeNetRequest.getMatchedRules({
       minTimeStamp: ts,
     });
-    const count = result.matchedRules ? result.matchedRules.length : 0;
-    if (count > 0) bumpStats(count);
-  } catch (_) {
-    // Permission not granted or not supported — silent fail
+    const count = result.rulesMatchedInfo ? result.rulesMatchedInfo.length : 0;
+    if (count > 0) await writeStats(count);
+  } catch (err) {
+    console.warn('[LoveSpark AdBlock] pollMatchedRules failed:', err);
   }
   await chrome.storage.local.set({ _lastPollTs: Date.now() });
 }
 
-// Accumulate counts in memory, flush to storage on a debounce.
-// Eliminates the read-modify-write race when onRuleMatchedDebug
-// fires many times in quick succession.
-let _pendingBump = 0;
-let _flushTimer = null;
-
-function bumpStats(n) {
-  _pendingBump += n;
-  if (!_flushTimer) {
-    _flushTimer = setTimeout(flushStats, 500);
-  }
-}
-
-async function flushStats() {
-  _flushTimer = null;
-  const n = _pendingBump;
-  if (n === 0) return;
-  _pendingBump = 0;
+// Write stats directly to storage. No debounce — service workers can die
+// at any moment, so every write must be durable immediately.
+async function writeStats(n) {
   const data = await chrome.storage.local.get(['adsBlockedToday', 'adsBlockedTotal']);
   await chrome.storage.local.set({
     adsBlockedToday: (data.adsBlockedToday || 0) + n,
@@ -222,6 +216,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 async function handleMessage(msg) {
   switch (msg.type) {
     case 'GET_STATS': {
+      // Poll for latest matched rules so popup shows fresh data immediately
+      await pollMatchedRules();
       const data = await chrome.storage.local.get([
         'adsBlockedToday',
         'adsBlockedTotal',

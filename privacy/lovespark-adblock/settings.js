@@ -130,18 +130,27 @@ resetStatsBtn.addEventListener('click', async () => {
 // ── Whitelist ─────────────────────────────────────────────────────────────────
 
 function renderWhitelist() {
-  wlList.innerHTML = '';
+  wlList.replaceChildren();
   if (!whitelistedDomains.length) {
-    wlList.innerHTML = '<li class="wl-empty">No whitelisted sites yet 🩷</li>';
+    const li = document.createElement('li');
+    li.className = 'wl-empty';
+    li.textContent = 'No whitelisted sites yet 🩷';
+    wlList.appendChild(li);
     return;
   }
   whitelistedDomains.forEach((domain) => {
     const li = document.createElement('li');
     li.className = 'wl-item';
-    li.innerHTML = `
-      <span class="wl-domain">${escHtml(domain)}</span>
-      <button class="wl-remove" data-domain="${escHtml(domain)}" aria-label="Remove ${escHtml(domain)}">✕</button>
-    `;
+    const span = document.createElement('span');
+    span.className = 'wl-domain';
+    span.textContent = domain;
+    const btn = document.createElement('button');
+    btn.className = 'wl-remove';
+    btn.dataset.domain = domain;
+    btn.setAttribute('aria-label', 'Remove ' + domain);
+    btn.textContent = '✕';
+    li.appendChild(span);
+    li.appendChild(btn);
     wlList.appendChild(li);
   });
 }
