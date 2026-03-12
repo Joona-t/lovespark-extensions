@@ -22,23 +22,30 @@ chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
 
 function renderDomainTags(domains) {
   const container = document.getElementById('domainList');
+  container.replaceChildren();
   if (domains.length === 0) {
-    container.innerHTML = '<span class="empty-state">No custom domains added yet</span>';
+    const empty = document.createElement('span');
+    empty.className = 'empty-state';
+    empty.textContent = 'No custom domains added yet';
+    container.appendChild(empty);
     return;
   }
-  container.innerHTML = domains.map(d => `
-    <span class="tag">
-      ${escHtml(d)}
-      <button class="tag-remove" data-domain="${escHtml(d)}" title="Remove">&times;</button>
-    </span>
-  `).join('');
-
-  container.querySelectorAll('.tag-remove').forEach(btn => {
+  domains.forEach(d => {
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.appendChild(document.createTextNode(d + ' '));
+    const btn = document.createElement('button');
+    btn.className = 'tag-remove';
+    btn.dataset.domain = d;
+    btn.title = 'Remove';
+    btn.textContent = '\u00d7';
     btn.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'REMOVE_DOMAIN', domain: btn.dataset.domain }, (res) => {
+      chrome.runtime.sendMessage({ type: 'REMOVE_DOMAIN', domain: d }, (res) => {
         renderDomainTags(res?.userDomains || []);
       });
     });
+    tag.appendChild(btn);
+    container.appendChild(tag);
   });
 }
 
@@ -66,23 +73,30 @@ function addDomain() {
 
 function renderSubTags(subs) {
   const container = document.getElementById('subList');
+  container.replaceChildren();
   if (subs.length === 0) {
-    container.innerHTML = '<span class="empty-state">No custom subreddits added yet</span>';
+    const empty = document.createElement('span');
+    empty.className = 'empty-state';
+    empty.textContent = 'No custom subreddits added yet';
+    container.appendChild(empty);
     return;
   }
-  container.innerHTML = subs.map(s => `
-    <span class="tag">
-      r/${escHtml(s)}
-      <button class="tag-remove" data-sub="${escHtml(s)}" title="Remove">&times;</button>
-    </span>
-  `).join('');
-
-  container.querySelectorAll('.tag-remove').forEach(btn => {
+  subs.forEach(s => {
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.appendChild(document.createTextNode('r/' + s + ' '));
+    const btn = document.createElement('button');
+    btn.className = 'tag-remove';
+    btn.dataset.sub = s;
+    btn.title = 'Remove';
+    btn.textContent = '\u00d7';
     btn.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'REMOVE_SUBREDDIT', subreddit: btn.dataset.sub }, (res) => {
+      chrome.runtime.sendMessage({ type: 'REMOVE_SUBREDDIT', subreddit: s }, (res) => {
         renderSubTags(res?.userSubreddits || []);
       });
     });
+    tag.appendChild(btn);
+    container.appendChild(tag);
   });
 }
 
@@ -148,70 +162,107 @@ document.getElementById('resetStats').addEventListener('click', () => {
 
 function renderBypassLog(log) {
   const container = document.getElementById('bypassLog');
+  container.replaceChildren();
   if (log.length === 0) {
-    container.innerHTML = '<div class="log-empty">No bypasses recorded. Keep it up! \uD83D\uDCAA</div>';
+    const empty = document.createElement('div');
+    empty.className = 'log-empty';
+    empty.textContent = 'No bypasses recorded. Keep it up! \uD83D\uDCAA';
+    container.appendChild(empty);
     return;
   }
 
-  const rows = log.slice().reverse().slice(0, 50).map(entry => `
-    <tr>
-      <td>${formatDate(entry.timestamp)}</td>
-      <td>${escHtml(truncate(entry.url, 40))}</td>
-      <td>${escHtml(entry.reason || '\u2014')}</td>
-    </tr>
-  `).join('');
+  const table = document.createElement('table');
+  table.className = 'log-table';
+  const thead = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  ['When', 'URL', 'Reason'].forEach(h => {
+    const th = document.createElement('th');
+    th.textContent = h;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
 
-  container.innerHTML = `
-    <table class="log-table">
-      <thead><tr><th>When</th><th>URL</th><th>Reason</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
+  const tbody = document.createElement('tbody');
+  log.slice().reverse().slice(0, 50).forEach(entry => {
+    const tr = document.createElement('tr');
+    const tdWhen = document.createElement('td');
+    tdWhen.textContent = formatDate(entry.timestamp);
+    const tdUrl = document.createElement('td');
+    tdUrl.textContent = truncate(entry.url, 40);
+    const tdReason = document.createElement('td');
+    tdReason.textContent = entry.reason || '\u2014';
+    tr.appendChild(tdWhen);
+    tr.appendChild(tdUrl);
+    tr.appendChild(tdReason);
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  container.appendChild(table);
 }
 
 // ═══ Reported Sites ═══
 
 function renderReportedSites(reports) {
   const container = document.getElementById('reportedLog');
+  container.replaceChildren();
   if (reports.length === 0) {
-    container.innerHTML = '<div class="log-empty">No reported sites yet</div>';
+    const empty = document.createElement('div');
+    empty.className = 'log-empty';
+    empty.textContent = 'No reported sites yet';
+    container.appendChild(empty);
     return;
   }
 
-  const rows = reports.slice().reverse().slice(0, 50).map(entry => `
-    <tr>
-      <td>${formatDate(entry.timestamp)}</td>
-      <td>${escHtml(entry.url)}</td>
-      <td><button class="btn-save" data-report-url="${escHtml(entry.url)}" style="font-size:0.65rem;padding:4px 10px;">+ Block</button></td>
-    </tr>
-  `).join('');
+  const table = document.createElement('table');
+  table.className = 'log-table';
+  const thead = document.createElement('thead');
+  const headRow = document.createElement('tr');
+  ['When', 'Site', 'Action'].forEach(h => {
+    const th = document.createElement('th');
+    th.textContent = h;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
 
-  container.innerHTML = `
-    <table class="log-table">
-      <thead><tr><th>When</th><th>Site</th><th>Action</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-  `;
-
-  container.querySelectorAll('[data-report-url]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.dataset.reportUrl;
+  const tbody = document.createElement('tbody');
+  reports.slice().reverse().slice(0, 50).forEach(entry => {
+    const tr = document.createElement('tr');
+    const tdWhen = document.createElement('td');
+    tdWhen.textContent = formatDate(entry.timestamp);
+    const tdUrl = document.createElement('td');
+    tdUrl.textContent = entry.url;
+    const tdAction = document.createElement('td');
+    const blockBtn = document.createElement('button');
+    blockBtn.className = 'btn-save';
+    blockBtn.style.cssText = 'font-size:0.65rem;padding:4px 10px;';
+    blockBtn.textContent = '+ Block';
+    blockBtn.addEventListener('click', () => {
+      const url = entry.url;
       if (url.includes('r/') || url.startsWith('/r/')) {
         const sub = url.replace(/.*r\//, '').replace(/\/.*/, '').toLowerCase();
         chrome.runtime.sendMessage({ type: 'ADD_SUBREDDIT', subreddit: sub }, (res) => {
-          btn.textContent = '\u2713';
-          btn.disabled = true;
+          blockBtn.textContent = '\u2713';
+          blockBtn.disabled = true;
           renderSubTags(res?.userSubreddits || []);
         });
       } else {
         chrome.runtime.sendMessage({ type: 'ADD_DOMAIN', domain: url }, (res) => {
-          btn.textContent = '\u2713';
-          btn.disabled = true;
+          blockBtn.textContent = '\u2713';
+          blockBtn.disabled = true;
           renderDomainTags(res?.userDomains || []);
         });
       }
     });
+    tdAction.appendChild(blockBtn);
+    tr.appendChild(tdWhen);
+    tr.appendChild(tdUrl);
+    tr.appendChild(tdAction);
+    tbody.appendChild(tr);
   });
+  table.appendChild(tbody);
+  container.appendChild(table);
 }
 
 // ═══ Utilities ═══

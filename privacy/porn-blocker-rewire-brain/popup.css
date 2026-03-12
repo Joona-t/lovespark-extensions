@@ -1,0 +1,49 @@
+/* popup.css — LoveSpark brand foundation for Porn Blocker Rewire Brain
+   Links to lib/lovespark-base.css for CSS variables and theme support.
+   This file provides brand-aligned overrides for the popup UI. */
+
+body {
+  background: var(--ls-bg-gradient);
+  font-family: var(--ls-font-body);
+  color: var(--ls-text-dark);
+}
+
+.mascot {
+  display: block;
+  margin: 0 auto;
+}
+
+.header {
+  background: var(--ls-glass-light);
+  border-bottom-color: var(--ls-glass-border);
+}
+
+.brand-name {
+  color: var(--ls-pink-accent);
+}
+
+.toggle-label {
+  color: var(--ls-text-dark);
+}
+
+.stat-value {
+  color: var(--ls-pink-accent);
+}
+
+.stat-label {
+  color: var(--ls-text-muted);
+}
+
+.affirmation-label,
+.quick-add-label,
+.apps-label {
+  color: var(--ls-pink-accent);
+}
+
+.quick-add-btn {
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
+}
+
+.footer a {
+  color: var(--ls-pink-accent);
+}

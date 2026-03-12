@@ -45,7 +45,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 });
 
 // ── Alarm for streak & pause management ───────────────────────────
-chrome.alarms.create('dailyStreak', { periodInMinutes: 60 });
+// Guard: only create alarm if it doesn't already exist (MV3 SW restarts)
+chrome.alarms.get('dailyStreak', (existing) => {
+  if (!existing) chrome.alarms.create('dailyStreak', { periodInMinutes: 60 });
+});
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === 'dailyStreak') {
     await updateStreak();
