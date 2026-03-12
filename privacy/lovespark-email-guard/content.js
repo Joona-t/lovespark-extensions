@@ -220,7 +220,11 @@ function showBadge(emailBody, count) {
       const badge = document.createElement('span');
       badge.className = 'lovespark-tracker-badge';
       badge.title = `LoveSpark blocked ${count} tracking pixel${count !== 1 ? 's' : ''} in this email`;
-      badge.innerHTML = `💌 <span class="lovespark-badge-count">${count}</span>`;
+      badge.textContent = '💌 ';
+      const countSpan = document.createElement('span');
+      countSpan.className = 'lovespark-badge-count';
+      countSpan.textContent = count;
+      badge.appendChild(countSpan);
       sender.appendChild(badge);
       return;
     }
