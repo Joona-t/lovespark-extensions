@@ -61,19 +61,29 @@ function renderDomainTable(domainStats) {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10);
 
+  domainTbody.replaceChildren();
+
   if (!entries.length) {
-    domainTbody.innerHTML = '<tr><td colspan="2" class="empty-row">No data yet 🌸</td></tr>';
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 2;
+    td.className = 'empty-row';
+    td.textContent = 'No data yet 🌸';
+    tr.appendChild(td);
+    domainTbody.appendChild(tr);
     return;
   }
 
-  domainTbody.innerHTML = entries
-    .map(([domain, count]) => `
-      <tr>
-        <td>${escHtml(domain)}</td>
-        <td>${count.toLocaleString()}</td>
-      </tr>
-    `)
-    .join('');
+  for (const [domain, count] of entries) {
+    const tr = document.createElement('tr');
+    const tdDomain = document.createElement('td');
+    tdDomain.textContent = domain;
+    const tdCount = document.createElement('td');
+    tdCount.textContent = count.toLocaleString();
+    tr.appendChild(tdDomain);
+    tr.appendChild(tdCount);
+    domainTbody.appendChild(tr);
+  }
 }
 
 // ── Stats: export + reset ─────────────────────────────────────────────────────
@@ -102,18 +112,27 @@ resetStatsBtn.addEventListener('click', async () => {
 
 // ── Whitelist ─────────────────────────────────────────────────────────────────
 function renderWhitelist() {
-  wlList.innerHTML = '';
+  wlList.replaceChildren();
   if (!whitelistedDomains.length) {
-    wlList.innerHTML = '<li class="wl-empty">No whitelisted sites yet 🩷</li>';
+    const li = document.createElement('li');
+    li.className = 'wl-empty';
+    li.textContent = 'No whitelisted sites yet 🩷';
+    wlList.appendChild(li);
     return;
   }
   whitelistedDomains.forEach((domain) => {
     const li = document.createElement('li');
     li.className = 'wl-item';
-    li.innerHTML = `
-      <span class="wl-domain">${escHtml(domain)}</span>
-      <button class="wl-remove" data-domain="${escHtml(domain)}" aria-label="Remove ${escHtml(domain)}">✕</button>
-    `;
+    const span = document.createElement('span');
+    span.className = 'wl-domain';
+    span.textContent = domain;
+    const btn = document.createElement('button');
+    btn.className = 'wl-remove';
+    btn.dataset.domain = domain;
+    btn.setAttribute('aria-label', 'Remove ' + domain);
+    btn.textContent = '✕';
+    li.appendChild(span);
+    li.appendChild(btn);
     wlList.appendChild(li);
   });
 }
