@@ -50,22 +50,32 @@ const SIDEBAR_SELECTORS = [
 // ─── Counter ─────────────────────────────────────────────────────────────────
 
 let hiddenCount = 0;
+let persistTimer = null;
 
 function persistCount() {
+  if (hiddenCount === 0) return; // nothing new to write
+  const batch = hiddenCount;
+  hiddenCount = 0;
+
   const today = new Date().toISOString().slice(0, 10);
   browser.storage.local.get(['hiddenToday', 'hiddenTotal', 'lastResetDate']).then((data) => {
     const needsReset = data.lastResetDate !== today;
     browser.storage.local.set({
-      hiddenToday: needsReset ? hiddenCount : (data.hiddenToday || 0) + hiddenCount,
-      hiddenTotal: (data.hiddenTotal || 0) + hiddenCount,
+      hiddenToday: needsReset ? batch : (data.hiddenToday || 0) + batch,
+      hiddenTotal: (data.hiddenTotal || 0) + batch,
       lastResetDate: today,
     });
-    hiddenCount = 0;
   });
 }
 
-// Batch-flush counter every 3 seconds to avoid hammering storage on scroll
-setInterval(persistCount, 3000);
+// Debounced flush: writes storage only when hiddenCount changes, max once per 3s
+function schedulePersist() {
+  if (persistTimer) return;
+  persistTimer = setTimeout(() => {
+    persistTimer = null;
+    persistCount();
+  }, 3000);
+}
 
 // ─── Core hide function ──────────────────────────────────────────────────────
 
@@ -74,6 +84,7 @@ function hideElement(el) {
   el.dataset.lovesparkHidden = '1';
   el.style.setProperty('display', 'none', 'important');
   hiddenCount++;
+  schedulePersist();
 }
 
 // ─── Text-based fallback ─────────────────────────────────────────────────────
