@@ -19,9 +19,10 @@ globalThis.__lovespark.state = {
   DEFAULT_STATE,
 
   async getState() {
-    const stored = await browser.storage.local.get(null);
+    const keys = ['schemaVersion', 'globalEnabled', 'siteExclusions', 'modules'];
+    const stored = await browser.storage.local.get(keys);
     if (!stored || !stored.schemaVersion) return structuredClone(DEFAULT_STATE);
-    return stored;
+    return { ...structuredClone(DEFAULT_STATE), ...stored };
   },
 
   async setState(patch) {
