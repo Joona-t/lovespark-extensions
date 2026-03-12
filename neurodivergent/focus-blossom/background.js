@@ -262,8 +262,13 @@ async function syncBlockingRules() {
 
 // --- Alarms ---
 
-chrome.alarms.create("growthTick", { periodInMinutes: 5 });
-chrome.alarms.create("dailyStreak", { periodInMinutes: 60 });
+// Guard: only create alarms if they don't already exist (MV3 SW restarts)
+chrome.alarms.get("growthTick", (existing) => {
+  if (!existing) chrome.alarms.create("growthTick", { periodInMinutes: 5 });
+});
+chrome.alarms.get("dailyStreak", (existing) => {
+  if (!existing) chrome.alarms.create("dailyStreak", { periodInMinutes: 60 });
+});
 
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === "growthTick") await creditGrowth();
