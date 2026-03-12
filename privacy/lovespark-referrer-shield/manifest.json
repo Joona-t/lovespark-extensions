@@ -28,6 +28,9 @@
   "host_permissions": [
     "<all_urls>"
   ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "referrer-shield@lovespark.suite",
