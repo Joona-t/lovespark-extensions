@@ -52,6 +52,9 @@
     "page": "settings.html",
     "open_in_tab": true
   },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "adblock@lovespark.suite",
