@@ -51,19 +51,23 @@ export async function saveDoses(doses) {
 }
 
 export async function logDose(dose) {
-  const doses = await getDoses();
+  // Single atomic read-modify-write to prevent race conditions
+  const [doses, meds] = await Promise.all([getDoses(), getMedications()]);
   doses.push(dose);
-  await saveDoses(doses);
+
+  const updates = {};
+  updates[STORAGE_KEYS.DOSES] = { doses };
 
   // Decrement supply if tracked
   if (dose.status === 'taken') {
-    const meds = await getMedications();
     const med = meds.find(m => m.id === dose.medicationId);
     if (med && med.supply !== null && med.supply > 0) {
       med.supply -= 1;
-      await saveMedications(meds);
+      updates[STORAGE_KEYS.MEDICATIONS] = { medications: meds };
     }
   }
+
+  await chrome.storage.local.set(updates);
 }
 
 export async function undoDose(doseId) {
