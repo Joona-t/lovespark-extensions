@@ -90,7 +90,7 @@ body.theme-beige {
   --ls-pink-deep: #a86c56;
   --ls-white: #5c4a2a;
   --ls-text-dark: #5c4a2a;
-  --ls-text-muted: #8b6f47;
+  --ls-text-muted: #6b5630;
   --ls-text-white: #f5efe0;
   --ls-glow: 0 3px 12px rgba(139, 111, 71, 0.25);
   --ls-glow-strong: 0 3px 12px rgba(139, 111, 71, 0.4);
@@ -128,7 +128,7 @@ body.theme-beige .title,
 body.theme-beige .header-title,
 body.theme-beige .logo-text,
 body.theme-beige .popup-header h1 {
-  color: #4a7c59;
+  color: #3d5a2e;
 }
 
 body.theme-slate .title,
