@@ -6,8 +6,6 @@
 
   const STORAGE_KEY = "loveSparkSettings";
   const TRANSITION_DEBOUNCE_MS = 300;
-  const EVALUATION_INTERVAL_MS = 1000;
-  const URL_POLL_INTERVAL_MS = 1000;
 
   const AD_STATES = Object.freeze({
     UNKNOWN: "UNKNOWN",
@@ -55,8 +53,6 @@
       this.player = null;
       this.pageObserver = null;
       this.playerObserver = null;
-      this.urlTimer = null;
-      this.evalTimer = null;
 
       this.session = {
         baselineMuted: null,
@@ -157,56 +153,42 @@
         this.boundNavigationHandler,
         true
       );
+      document.addEventListener(
+        "yt-page-data-updated",
+        this.boundNavigationHandler,
+        true
+      );
       window.addEventListener("popstate", this.boundNavigationHandler, true);
       window.addEventListener("hashchange", this.boundNavigationHandler, true);
-
-      this.urlTimer = window.setInterval(() => {
-        this.handlePotentialNavigation();
-      }, URL_POLL_INTERVAL_MS);
     }
 
     startObservers() {
-      this.pageObserver = new MutationObserver((mutations) => {
-        try {
-          let rebindNeeded = false;
-          let evaluateNeeded = false;
+      // Watch #movie_player container for ad-related DOM changes.
+      // Falls back to a scoped body observer only until the player appears.
+      this.waitForPlayer();
+    }
 
-          for (const mutation of mutations) {
-            if (mutation.type !== "childList") {
-              continue;
-            }
+    waitForPlayer() {
+      const player = document.querySelector("#movie_player");
+      if (player) {
+        this.ensureVideoBinding();
+        return;
+      }
 
-            evaluateNeeded = true;
-
-            if (
-              containsNodeOfInterest(mutation.addedNodes) ||
-              containsNodeOfInterest(mutation.removedNodes)
-            ) {
-              rebindNeeded = true;
-            }
-          }
-
-          if (rebindNeeded) {
-            this.ensureVideoBinding();
-          }
-
-          if (evaluateNeeded) {
-            this.scheduleEvaluation("document-mutation");
-          }
-        } catch (_error) {
-          // Fail silently when YouTube DOM internals change.
+      // Scoped observer: watch body's direct children for the player to appear
+      this.pageObserver = new MutationObserver(() => {
+        const found = document.querySelector("#movie_player");
+        if (found) {
+          this.pageObserver.disconnect();
+          this.pageObserver = null;
+          this.ensureVideoBinding();
         }
       });
 
-      this.pageObserver.observe(document.documentElement, {
+      this.pageObserver.observe(document.body || document.documentElement, {
         childList: true,
         subtree: true,
       });
-
-      this.evalTimer = window.setInterval(() => {
-        this.ensureVideoBinding();
-        this.evaluateAdState("interval");
-      }, EVALUATION_INTERVAL_MS);
     }
 
     handlePotentialNavigation() {
@@ -217,6 +199,11 @@
       this.lastUrl = location.href;
       this.ensureVideoBinding(true);
       this.scheduleEvaluation("navigation");
+
+      // Re-wait for player if it doesn't exist yet (SPA navigation)
+      if (!document.querySelector("#movie_player")) {
+        this.waitForPlayer();
+      }
     }
 
     ensureVideoBinding(forceRebind = false) {
@@ -261,8 +248,21 @@
         return;
       }
 
-      this.playerObserver = new MutationObserver(() => {
-        this.scheduleEvaluation("player-mutation");
+      this.playerObserver = new MutationObserver((mutations) => {
+        let needsEval = false;
+        for (const mutation of mutations) {
+          if (mutation.type === "attributes" && mutation.attributeName === "class") {
+            needsEval = true;
+            break;
+          }
+          if (mutation.type === "childList") {
+            needsEval = true;
+            break;
+          }
+        }
+        if (needsEval) {
+          this.scheduleEvaluation("player-mutation");
+        }
         if (this.session.adActive) {
           this.updateBadgeText();
         }

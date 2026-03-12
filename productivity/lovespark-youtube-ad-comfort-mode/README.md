@@ -28,7 +28,7 @@ It detects likely ad playback, applies local comfort effects, then restores your
 2. Enable **Developer mode**.
 3. Click **Load unpacked**.
 4. Select this folder:
-   `~/Codex x LoveSpark/lovespark-youtube-ad-comfort-mode`
+   the `lovespark-youtube-ad-comfort-mode` folder
 5. (Optional) Open extension options and tune comfort settings.
 6. (Optional) Set/change the hotkey at `chrome://extensions/shortcuts` for command `toggle-comfort-mode`.
 
