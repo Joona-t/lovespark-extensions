@@ -1,6 +1,10 @@
 # Bugs & Iterations
 
-_No entries yet. Document bugs, fixes, and iterations here as they occur._
+## : |2026-03-05|||fix: replace broken footer with aesthetic ls-footer
+
+**Problem:** |2026-03-05|||fix: replace broken footer with aesthetic ls-footer
+**Files:** lib/lovespark-base.css,lib/lovespark-footer.css,lib/lovespark-footer.js
+**Commit:** 0651139
 
 <!-- Format:
 ## YYYY-MM-DD: Short Title
