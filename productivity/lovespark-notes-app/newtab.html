@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Notes</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body class="theme-dark">
+
+<div id="app">
+  <!-- Top bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <img src="mascot.png" alt="Sparky mascot" class="sparky-icon" width="28" height="28">
+      <div class="search-wrap">
+        <span class="search-pin" aria-hidden="true">&#128161;</span>
+        <input type="text" id="searchInput" class="search-input"
+               placeholder="Search or &#8984;K..."
+               aria-label="Search notes"
+               autocomplete="off" spellcheck="false">
+        <button id="searchClear" class="search-clear hidden" aria-label="Clear search">&times;</button>
+      </div>
+    </div>
+    <div class="top-bar-right">
+      <div class="view-toggle" role="radiogroup" aria-label="View mode">
+        <button id="viewList" class="view-btn active" role="radio" aria-checked="true" aria-label="List view" title="List view">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="2" rx="1" fill="currentColor"/><rect x="1" y="7" width="14" height="2" rx="1" fill="currentColor"/><rect x="1" y="12" width="14" height="2" rx="1" fill="currentColor"/></svg>
+        </button>
+        <button id="viewGrid" class="view-btn" role="radio" aria-checked="false" aria-label="Grid view" title="Grid view">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+
+      <!-- Theme dropdown (shared lib pattern) -->
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          <span id="themeLabel">Dark</span>
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="menuitem">Retro Pink</button>
+          <button class="theme-option active" data-theme="dark" role="menuitem">Dark</button>
+          <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+          <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category filter tabs -->
+  <nav class="category-tabs" role="tablist" aria-label="Note categories">
+    <button class="cat-tab active" role="tab" aria-selected="true" data-cat="all">All</button>
+    <button class="cat-tab" role="tab" aria-selected="false" data-cat="idea">&#128161; Idea</button>
+    <button class="cat-tab" role="tab" aria-selected="false" data-cat="project">&#9889; Project</button>
+    <button class="cat-tab" role="tab" aria-selected="false" data-cat="someday">&#127769; Someday</button>
+    <button class="cat-tab" role="tab" aria-selected="false" data-cat="daily">&#128197; Daily</button>
+  </nav>
+
+  <!-- Two-pane layout -->
+  <main class="two-pane">
+    <!-- Left: Note list -->
+    <aside class="list-pane" aria-label="Note list">
+      <div id="noteList" class="note-list" role="listbox" aria-label="Notes"></div>
+      <div id="noteCount" class="note-count" aria-live="polite"></div>
+    </aside>
+
+    <!-- Right: Editor -->
+    <section class="editor-pane" id="editorPane" aria-label="Note editor">
+      <div id="editorEmpty" class="editor-empty">
+        <img src="mascot.png" alt="Sparky" class="editor-sparky" width="64" height="64">
+        <p class="editor-empty-text">Select a note or tap + to start writing</p>
+      </div>
+      <div id="editorActive" class="editor-active hidden">
+        <div class="editor-toolbar">
+          <select id="editorCategory" class="editor-cat-select" aria-label="Note category">
+            <option value="uncategorized">Uncategorized</option>
+            <option value="idea">&#128161; Idea</option>
+            <option value="project">&#9889; Project</option>
+            <option value="someday">&#127769; Someday</option>
+            <option value="daily">&#128197; Daily</option>
+          </select>
+          <div class="editor-meta">
+            <span id="editorWordCount" class="editor-wc">0w</span>
+            <span id="editorTime" class="editor-time"></span>
+          </div>
+          <div class="editor-actions">
+            <button id="editorPin" class="editor-btn" aria-label="Pin note" title="Pin">&#128204;</button>
+            <button id="editorDelete" class="editor-btn editor-btn-danger" aria-label="Delete note" title="Delete">&#128465;</button>
+          </div>
+        </div>
+        <input type="text" id="editorTitle" class="editor-title"
+               placeholder="Title" aria-label="Note title"
+               maxlength="200" spellcheck="true">
+        <div class="editor-tag-bar">
+          <div id="editorTags" class="editor-tags"></div>
+          <input type="text" id="editorTagInput" class="editor-tag-input"
+                 placeholder="Add tag..." aria-label="Add tag"
+                 maxlength="20" autocomplete="off">
+        </div>
+        <textarea id="editorContent" class="editor-content"
+                  placeholder="Start writing..."
+                  aria-label="Note content" spellcheck="true"></textarea>
+      </div>
+    </section>
+  </main>
+
+  <!-- FAB -->
+  <button id="fabNew" class="fab" aria-label="Create new note" title="New note">+</button>
+</div>
+
+<script src="lib/lovespark-theme.js"></script>
+<script src="newtab.js"></script>
+</body>
+</html>
