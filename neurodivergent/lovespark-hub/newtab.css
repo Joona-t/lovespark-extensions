@@ -1,0 +1,502 @@
+/* ── LoveSpark Hub — New Tab Dashboard ─────────────────────────────
+   Uses shared lovespark-base.css variables for theming.
+   Background: var(--ls-bg-gradient) as required. */
+
+/* ── Reset & Base ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--ls-bg-gradient);
+  font-family: var(--ls-font-body);
+  color: var(--ls-text-dark);
+  min-height: 100vh;
+  padding: 24px 32px 48px;
+  overflow-y: auto;
+}
+
+/* ── Header ───────────────────────────────────────────────────────── */
+.hub-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-mascot {
+  border-radius: 50%;
+  box-shadow: var(--ls-glow);
+}
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 16px;
+  color: var(--ls-text-dark);
+  letter-spacing: 1px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-clock {
+  font-family: var(--ls-font-display);
+  font-size: 12px;
+  color: var(--ls-text-dark);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ── Time Awareness Bar ───────────────────────────────────────────── */
+.time-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 13px;
+}
+
+.time-bar-date {
+  font-weight: 500;
+  color: var(--ls-text-dark);
+}
+
+.time-bar-session {
+  color: var(--ls-text-muted);
+  margin-left: auto;
+}
+
+.time-ring-wrap {
+  flex-shrink: 0;
+}
+
+.time-ring-bg {
+  stroke: var(--ls-glass-border);
+}
+
+.time-ring-fill {
+  stroke: var(--ls-pink-accent);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dasharray 1s ease;
+}
+
+/* ── Dashboard Grid ───────────────────────────────────────────────── */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Glass Card ───────────────────────────────────────────────────── */
+.card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 18px 20px;
+  transition: box-shadow 0.25s ease;
+}
+
+.card:hover {
+  box-shadow: var(--ls-glow);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ls-text-dark);
+}
+
+/* ── Daily Tasks ──────────────────────────────────────────────────── */
+.task-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 12px;
+  background: var(--ls-pink-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.task-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.task-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-glass-light);
+  color: var(--ls-text-dark);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.task-input::placeholder {
+  color: var(--ls-text-muted);
+}
+
+.task-add-btn {
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-pink-accent);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.task-add-btn:hover {
+  background: var(--ls-btn-hover-bg);
+}
+
+.task-list {
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--ls-glass-border);
+  transition: opacity 0.3s ease;
+}
+
+.task-item.done {
+  opacity: 0.45;
+}
+
+.task-item.done .task-text {
+  text-decoration: line-through;
+}
+
+.task-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  border: 2px solid var(--ls-pink-accent);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.task-checkbox:checked {
+  background: var(--ls-pink-accent);
+}
+
+.task-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.task-text {
+  font-size: 13px;
+  color: var(--ls-text-dark);
+  flex: 1;
+  word-break: break-word;
+}
+
+.task-delete-btn {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ls-text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.2s, background 0.2s;
+}
+
+.task-delete-btn:hover {
+  color: #e53e3e;
+  background: rgba(229, 62, 62, 0.1);
+}
+
+.clear-done-btn {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  background: transparent;
+  color: var(--ls-text-muted);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.clear-done-btn:hover {
+  background: var(--ls-glass-light);
+  color: var(--ls-text-dark);
+}
+
+/* ── Focus Mode ───────────────────────────────────────────────────── */
+.focus-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.focus-toggle {
+  width: 160px;
+  height: 52px;
+  border: 2px solid var(--ls-pink-accent);
+  border-radius: 26px;
+  background: transparent;
+  color: var(--ls-text-dark);
+  font-family: var(--ls-font-display);
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.focus-toggle[aria-checked="true"] {
+  background: var(--ls-pink-accent);
+  color: #fff;
+  box-shadow: var(--ls-glow-strong);
+}
+
+.focus-elapsed {
+  font-size: 24px;
+  font-family: var(--ls-font-display);
+  color: var(--ls-text-dark);
+  min-height: 32px;
+}
+
+/* ── Break Reminders ──────────────────────────────────────────────── */
+.reminder-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reminder-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-glass-light);
+  color: var(--ls-text-dark);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.reminder-btn:hover {
+  background: var(--ls-glass-strong);
+  box-shadow: var(--ls-glow);
+}
+
+.reminder-item.overdue .reminder-btn {
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+.reminder-emoji {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.reminder-name {
+  font-weight: 500;
+  flex: 1;
+  text-align: left;
+}
+
+.reminder-timer {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  white-space: nowrap;
+}
+
+.reminder-item.overdue .reminder-timer {
+  color: var(--ls-pink-accent);
+  font-weight: 500;
+}
+
+/* ── Sparky Mood ──────────────────────────────────────────────────── */
+.sparky-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.sparky-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.sparky-avatar {
+  border-radius: 50%;
+  box-shadow: var(--ls-glow);
+  transition: transform 0.3s ease;
+}
+
+.sparky-avatar.happy {
+  animation: sparky-bounce 1.5s ease infinite;
+}
+
+.sparky-avatar.nudge {
+  animation: sparky-nudge 2s ease infinite;
+}
+
+@keyframes sparky-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes sparky-nudge {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.sparky-bubble {
+  position: relative;
+  background: var(--ls-glass-strong);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ls-text-dark);
+  flex: 1;
+}
+
+.sparky-bubble::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 18px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid var(--ls-glass-border);
+}
+
+.sparky-bubble::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 19px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-right: 7px solid var(--ls-glass-strong);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  body {
+    padding: 16px 12px 32px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-header {
+    flex-wrap: wrap;
+  }
+
+  .header-title {
+    font-size: 12px;
+  }
+
+  .header-clock {
+    font-size: 10px;
+  }
+
+  .time-bar {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+  }
+}
+
+/* ── Reduced Motion ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sparky-avatar.happy,
+  .sparky-avatar.nudge {
+    animation: none;
+  }
+
+  .card:hover {
+    box-shadow: none;
+  }
+}
