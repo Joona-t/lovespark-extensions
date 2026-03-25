@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=340">
+  <title>LoveSpark Breathe</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body role="dialog" aria-labelledby="popup-title" aria-describedby="popup-desc">
+
+  <!-- Header -->
+  <header class="popup-header">
+    <div class="header-left">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="sparky" width="28" height="28">
+      <h1 id="popup-title">LoveSpark Breathe</h1>
+    </div>
+    <div class="theme-dropdown">
+      <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel">Retro Pink</span>
+      </button>
+      <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option active" data-theme="retro" role="menuitem">Retro Pink</button>
+        <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+        <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+        <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+      </div>
+    </div>
+  </header>
+
+  <p id="popup-desc" class="sr-only">Breathing exercises, grounding techniques, and emotional regulation tools.</p>
+
+  <!-- Main Screen -->
+  <main id="screen-main">
+    <!-- Quick Actions -->
+    <section class="quick-actions" aria-label="Quick actions">
+      <button id="btn-breathe" class="action-btn" aria-label="Start breathing exercise">
+        <span class="action-icon" aria-hidden="true">&#x1FAC1;</span>
+        <span class="action-label">Breathe</span>
+      </button>
+      <button id="btn-ground" class="action-btn" aria-label="Start grounding exercise">
+        <span class="action-icon" aria-hidden="true">&#x1F30D;</span>
+        <span class="action-label">Ground</span>
+      </button>
+      <button id="btn-stepback" class="action-btn" aria-label="Open step back overlay">
+        <span class="action-icon" aria-hidden="true">&#x1F6D1;</span>
+        <span class="action-label">Step Back</span>
+      </button>
+    </section>
+
+    <!-- Comment Dimmer -->
+    <section class="card dimmer-card" aria-label="Comment dimmer controls">
+      <div class="dimmer-row">
+        <span class="dimmer-label">Dim comments on social media</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="dimmer-toggle" aria-label="Toggle comment dimmer">
+          <span class="toggle-track" aria-hidden="true">
+            <span class="toggle-thumb"></span>
+          </span>
+        </label>
+      </div>
+      <span id="dimmer-status" class="dimmer-status" aria-live="polite"></span>
+    </section>
+
+    <!-- Today's Log -->
+    <section class="card log-card" aria-label="Today's activity log">
+      <div class="log-stats" id="log-stats" aria-live="polite"></div>
+      <div class="sparky-message" id="sparky-msg">
+        <img src="mascot.png" alt="" class="sparky-small" width="20" height="20" aria-hidden="true">
+        <span id="sparky-text"></span>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <details class="settings-panel">
+      <summary class="settings-toggle">Settings</summary>
+      <div class="settings-content">
+        <div class="setting-row">
+          <label for="setting-pattern">Default breathing pattern</label>
+          <select id="setting-pattern">
+            <option value="box">Box Breathing</option>
+            <option value="478">4-7-8 Breathing</option>
+            <option value="sigh">Physiological Sigh</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label for="setting-cycles">Number of cycles</label>
+          <select id="setting-cycles">
+            <option value="3">3 cycles</option>
+            <option value="5">5 cycles</option>
+            <option value="10">10 cycles</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label for="setting-dimmer-mode">Comment dimmer</label>
+          <select id="setting-dimmer-mode">
+            <option value="manual">Manual toggle</option>
+            <option value="always">Always on</option>
+          </select>
+        </div>
+        <div class="setting-row shortcut-hint">
+          <span>Keyboard shortcut</span>
+          <kbd>Alt+B</kbd>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <!-- Breathing Exercise Screen -->
+  <section id="screen-breathe" class="screen hidden" aria-label="Breathing exercise">
+    <div class="pattern-selector" role="radiogroup" aria-label="Breathing pattern">
+      <button class="pattern-btn active" data-pattern="box" role="radio" aria-checked="true">Box</button>
+      <button class="pattern-btn" data-pattern="478" role="radio" aria-checked="false">4-7-8</button>
+      <button class="pattern-btn" data-pattern="sigh" role="radio" aria-checked="false">Sigh</button>
+    </div>
+
+    <div class="breathe-visual">
+      <div id="breathe-circle" class="breathe-circle" aria-hidden="true"></div>
+      <div id="breathe-instruction" class="breathe-instruction" aria-live="assertive" role="status">Get ready...</div>
+    </div>
+
+    <div id="breathe-counter" class="breathe-counter" aria-live="polite">Cycle 1 of 5</div>
+
+    <!-- Reduced motion fallback -->
+    <div id="breathe-text-fallback" class="breathe-text-fallback hidden" aria-live="assertive" role="status"></div>
+
+    <button id="btn-breathe-done" class="btn-secondary" aria-label="Stop breathing exercise">Done</button>
+  </section>
+
+  <!-- Grounding Exercise Screen -->
+  <section id="screen-ground" class="screen hidden" aria-label="Grounding exercise">
+    <div class="ground-step">
+      <div id="ground-number" class="ground-number">5</div>
+      <div id="ground-sense" class="ground-sense">things you can SEE</div>
+    </div>
+
+    <div id="ground-progress" class="ground-progress" aria-label="Grounding progress">
+      <span class="dot active" aria-label="Step 1 of 5, current"></span>
+      <span class="dot" aria-label="Step 2 of 5"></span>
+      <span class="dot" aria-label="Step 3 of 5"></span>
+      <span class="dot" aria-label="Step 4 of 5"></span>
+      <span class="dot" aria-label="Step 5 of 5"></span>
+    </div>
+
+    <button id="btn-ground-next" class="btn-primary" aria-label="Tap when ready to continue">Tap when ready</button>
+    <button id="btn-ground-done" class="btn-secondary" aria-label="Stop grounding exercise">Done</button>
+  </section>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

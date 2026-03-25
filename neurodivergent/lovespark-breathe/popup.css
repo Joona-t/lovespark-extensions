@@ -1,0 +1,510 @@
+/* popup.css — LoveSpark Breathe popup styles */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 340px;
+  min-height: 100px;
+  max-height: 520px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--ls-bg-gradient);
+  font-family: var(--ls-font-body, 'DM Mono', monospace);
+  color: var(--ls-text-dark);
+  padding: 12px;
+  position: relative;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sparky {
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.popup-header h1 {
+  font-family: var(--ls-font-display, 'Press Start 2P', cursive);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* ── Quick Actions ──────────────────────────────────── */
+.quick-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 6px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  min-height: 72px;
+  font-family: inherit;
+  color: var(--ls-text-dark);
+}
+
+.action-btn:hover {
+  background: var(--ls-glass-strong);
+  box-shadow: var(--ls-glow);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.action-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* ── Cards ──────────────────────────────────────────── */
+.card {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(8px);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+/* ── Comment Dimmer ─────────────────────────────────── */
+.dimmer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dimmer-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle-wrap input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  width: 40px;
+  height: 22px;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 11px;
+  position: relative;
+  transition: background 0.2s;
+  min-height: 22px;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--ls-text-muted);
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.toggle-wrap input:checked + .toggle-track {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+}
+
+.toggle-wrap input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(18px);
+  background: var(--ls-white);
+}
+
+.dimmer-status {
+  display: block;
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  margin-top: 4px;
+}
+
+/* ── Today's Log ────────────────────────────────────── */
+.log-card {
+  padding: 10px 12px;
+}
+
+.log-stats {
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.sparky-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  font-style: italic;
+}
+
+.sparky-small {
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ── Settings ───────────────────────────────────────── */
+.settings-panel {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.settings-toggle {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ls-text-muted);
+  cursor: pointer;
+  padding: 6px 0;
+  list-style: none;
+  user-select: none;
+}
+
+.settings-toggle::marker,
+.settings-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.settings-toggle::before {
+  content: '\25B6';
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 8px;
+  transition: transform 0.2s;
+}
+
+details[open] .settings-toggle::before {
+  transform: rotate(90deg);
+}
+
+.settings-content {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 10px 12px;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.setting-row label {
+  flex-shrink: 0;
+}
+
+.setting-row select {
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 10px;
+  color: var(--ls-text-dark);
+  cursor: pointer;
+}
+
+.shortcut-hint kbd {
+  background: var(--ls-glass-strong);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-pink-accent);
+}
+
+/* ── Screen management ──────────────────────────────── */
+.screen { display: block; }
+.hidden { display: none !important; }
+
+/* ── Breathing Exercise ─────────────────────────────── */
+.pattern-selector {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.pattern-btn {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-family: inherit;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  color: var(--ls-text-dark);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.pattern-btn:hover {
+  background: var(--ls-glass-strong);
+}
+
+.pattern-btn.active {
+  background: var(--ls-pink-deep);
+  color: var(--ls-text-white);
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+}
+
+.breathe-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+  position: relative;
+  min-height: 160px;
+}
+
+.breathe-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--ls-pink-deep) 70%, var(--ls-pink-deep));
+  box-shadow: var(--ls-glow-strong);
+  transition: transform 0.1s;
+  will-change: transform;
+}
+
+.breathe-circle.inhale {
+  animation: breathe-in var(--breathe-duration, 4s) ease-in-out forwards;
+}
+
+.breathe-circle.exhale {
+  animation: breathe-out var(--breathe-duration, 4s) ease-in-out forwards;
+}
+
+.breathe-circle.hold {
+  /* Stays at current scale — no animation */
+}
+
+@keyframes breathe-in {
+  from { transform: scale(1); }
+  to { transform: scale(1.6); }
+}
+
+@keyframes breathe-out {
+  from { transform: scale(1.6); }
+  to { transform: scale(1); }
+}
+
+.breathe-instruction {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  min-height: 24px;
+}
+
+.breathe-counter {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  margin-bottom: 12px;
+}
+
+/* Reduced motion: text-only fallback */
+.breathe-text-fallback {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 30px 10px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Grounding Exercise ─────────────────────────────── */
+.ground-step {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.ground-number {
+  font-family: var(--ls-font-display, 'Press Start 2P', cursive);
+  font-size: 48px;
+  color: var(--ls-pink-accent);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  transition: color 0.4s;
+}
+
+.ground-sense {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.ground-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ls-glass-border);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.dot.active {
+  background: var(--ls-btn-bg);
+  transform: scale(1.3);
+}
+
+.dot.done {
+  background: var(--ls-pink-deep);
+}
+
+/* Grounding step colors */
+#screen-ground[data-step="0"] { --step-tint: rgba(232, 69, 124, 0.06); }
+#screen-ground[data-step="1"] { --step-tint: rgba(124, 58, 237, 0.06); }
+#screen-ground[data-step="2"] { --step-tint: rgba(13, 148, 136, 0.06); }
+#screen-ground[data-step="3"] { --step-tint: rgba(129, 140, 248, 0.06); }
+#screen-ground[data-step="4"] { --step-tint: rgba(232, 69, 124, 0.08); }
+
+#screen-ground {
+  background: var(--step-tint, transparent);
+  border-radius: var(--ls-radius);
+  transition: background 0.4s;
+  padding: 10px;
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
+  border: none;
+  border-radius: var(--ls-radius);
+  color: var(--ls-text-white);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--ls-glow-strong);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  color: var(--ls-text-dark);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.btn-secondary:hover {
+  background: var(--ls-glass-light);
+}
+
+/* ── Reduced motion overrides ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .breathe-circle {
+    display: none;
+  }
+  .breathe-text-fallback {
+    display: flex !important;
+  }
+  .action-btn:hover {
+    transform: none;
+  }
+  .btn-primary:hover {
+    transform: none;
+  }
+}
