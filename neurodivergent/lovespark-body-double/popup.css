@@ -1,0 +1,213 @@
+/* LoveSpark Body Double — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+/* ── Header ────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+}
+.header-sub {
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Companion ─────────────────────────── */
+.companion-section {
+  text-align: center;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+.sparky-state {
+  font-size: 36px;
+  margin-bottom: 6px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+.sparky-state.focusing {
+  animation: gentle-bob 3s ease-in-out infinite;
+}
+.encouragement {
+  font-size: 12px;
+  color: var(--ls-text-dark);
+  font-style: italic;
+  line-height: 1.4;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes gentle-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ── Timer ─────────────────────────────── */
+.timer-section {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.timer-ring-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 8px;
+}
+.timer-ring {
+  width: 80px;
+  height: 80px;
+  transform: rotate(-90deg);
+}
+.timer-ring-bg {
+  fill: none;
+  stroke: var(--ls-glass-border);
+  stroke-width: 4;
+}
+.timer-ring-progress {
+  fill: none;
+  stroke: var(--ls-pink-deep);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 219.91;
+  stroke-dashoffset: 219.91;
+  transition: stroke-dashoffset 1s linear;
+}
+.timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+}
+.timer-label {
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+}
+.btn-stop {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  background: rgba(220, 53, 69, 0.1);
+  color: var(--ls-text-dark);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 34px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-stop:hover {
+  background: rgba(220, 53, 69, 0.2);
+  border-color: rgba(220, 53, 69, 0.5);
+}
+
+/* ── Presets ────────────────────────────── */
+.preset-section { margin-bottom: 12px; }
+.preset-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ls-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.preset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.btn-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  background: var(--ls-glass);
+  cursor: pointer;
+  min-height: 64px;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-preset:hover {
+  transform: scale(1.03);
+  border-color: var(--ls-pink-accent);
+  box-shadow: 0 0 8px rgba(214, 52, 102, 0.15);
+}
+.preset-emoji { font-size: 20px; line-height: 1; }
+.preset-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ls-text-dark);
+}
+.preset-time {
+  font-family: var(--ls-font-display);
+  font-size: 9px;
+  color: var(--ls-pink-accent);
+}
+
+/* ── Stats ─────────────────────────────── */
+.stats-section {
+  display: flex;
+  align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 10px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 9px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* ── Focus indicators ──────────────────── */
+button:focus-visible,
+input:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

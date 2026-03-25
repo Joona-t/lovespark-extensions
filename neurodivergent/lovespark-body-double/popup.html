@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Body Double</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Body Double</div>
+        <div class="header-sub" id="popupDesc">Your focus companion</div>
+      </div>
+    </header>
+
+    <!-- Sparky companion area -->
+    <div class="companion-section" aria-live="polite">
+      <div id="sparkyState" class="sparky-state" aria-hidden="true">&#x1F33A;</div>
+      <div id="encouragement" class="encouragement">I'm here. Ready when you are.</div>
+    </div>
+
+    <!-- Session timer (shown during active session) -->
+    <div id="timerSection" class="timer-section" hidden>
+      <div class="timer-ring-wrap">
+        <svg class="timer-ring" viewBox="0 0 80 80" aria-hidden="true">
+          <circle class="timer-ring-bg" cx="40" cy="40" r="35" />
+          <circle id="timerRingProgress" class="timer-ring-progress" cx="40" cy="40" r="35" />
+        </svg>
+        <div id="timerDisplay" class="timer-display">0:00</div>
+      </div>
+      <div id="timerLabel" class="timer-label">0 min remaining</div>
+      <button id="stopBtn" class="btn-stop" aria-label="End session">End Session</button>
+    </div>
+
+    <!-- Preset picker (shown when no session active) -->
+    <div id="presetSection" class="preset-section">
+      <div class="preset-label">Start a focus session</div>
+      <div class="preset-grid" role="group" aria-label="Session duration presets">
+        <button class="btn-preset" data-preset="sprint" aria-label="Sprint, 15 minutes">
+          <span class="preset-emoji" aria-hidden="true">&#x26A1;</span>
+          <span class="preset-name">Sprint</span>
+          <span class="preset-time">15 min</span>
+        </button>
+        <button class="btn-preset" data-preset="flow" aria-label="Flow, 25 minutes">
+          <span class="preset-emoji" aria-hidden="true">&#x1F33A;</span>
+          <span class="preset-name">Flow</span>
+          <span class="preset-time">25 min</span>
+        </button>
+        <button class="btn-preset" data-preset="deep" aria-label="Deep, 45 minutes">
+          <span class="preset-emoji" aria-hidden="true">&#x1F30A;</span>
+          <span class="preset-name">Deep</span>
+          <span class="preset-time">45 min</span>
+        </button>
+        <button class="btn-preset" data-preset="marathon" aria-label="Marathon, 60 minutes">
+          <span class="preset-emoji" aria-hidden="true">&#x1F525;</span>
+          <span class="preset-name">Marathon</span>
+          <span class="preset-time">60 min</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Focus statistics">
+      <div class="stat-box" aria-label="Minutes focused today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">min today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Sessions today">
+        <div id="sessionsCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">sessions</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total minutes focused">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total min</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
