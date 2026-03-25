@@ -1,0 +1,170 @@
+/* LoveSpark Affirmation Cards — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+/* ── Header ────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+}
+.header-sub {
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Card ──────────────────────────────── */
+.card-section { margin-bottom: 10px; }
+
+.affirmation-card {
+  background: var(--ls-glass-strong);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card-category {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ls-pink-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ls-text-dark);
+  font-weight: 500;
+  max-width: 280px;
+}
+
+@keyframes cardIn {
+  0% { opacity: 0; transform: translateY(8px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.card-entering {
+  animation: cardIn 0.35s ease forwards;
+}
+
+/* ── Card actions ──────────────────────── */
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-action {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--ls-text-dark);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-action:hover {
+  transform: scale(1.1);
+}
+
+.btn-fav.is-fav {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+  color: white;
+  box-shadow: 0 0 8px rgba(214, 52, 102, 0.3);
+}
+
+.btn-next {
+  background: var(--ls-pink-deep);
+  color: white;
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+}
+.btn-next:hover {
+  box-shadow: 0 0 16px rgba(214, 52, 102, 0.5);
+}
+
+/* ── Favorites count ───────────────────── */
+.fav-count-row {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.fav-count {
+  font-size: 10px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Stats ─────────────────────────────── */
+.stats-section {
+  display: flex;
+  align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 10px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 10px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* ── Focus indicators ──────────────────── */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
