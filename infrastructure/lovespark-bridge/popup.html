@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌉 LoveSpark Bridge</h1>
+      <p class="subtitle">Syncs Focus → Mission Control</p>
+    </header>
+
+    <div class="field">
+      <label for="pomofocus-id">PomoFocus Extension ID</label>
+      <input type="text" id="pomofocus-id" placeholder="Paste extension ID here" spellcheck="false">
+      <p class="hint">Find it at chrome://extensions → LoveSpark Focus → ID</p>
+    </div>
+
+    <div class="field">
+      <label for="mc-url">Mission Control URL</label>
+      <input type="text" id="mc-url" placeholder="http://localhost:3000" spellcheck="false">
+    </div>
+
+    <button id="save-btn" type="button">Save Settings</button>
+    <button id="sync-btn" type="button" class="secondary">Sync Now</button>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
