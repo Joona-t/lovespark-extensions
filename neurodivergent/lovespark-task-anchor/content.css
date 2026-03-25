@@ -1,0 +1,94 @@
+/* Task Anchor — injected banner styles
+   Scoped with ls-task-anchor prefix to avoid conflicts with host pages */
+
+#ls-task-anchor-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #B82A55, #9A2248);
+  color: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 12px rgba(184, 42, 85, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Position variants */
+#ls-task-anchor-banner.ls-task-anchor-top {
+  top: 0;
+  transform: translateY(-100%);
+}
+
+#ls-task-anchor-banner.ls-task-anchor-bottom {
+  bottom: 0;
+  transform: translateY(100%);
+}
+
+/* Visible state */
+#ls-task-anchor-banner.ls-task-anchor-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Icon */
+.ls-task-anchor-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Text */
+.ls-task-anchor-text {
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80vw;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Close button */
+.ls-task-anchor-close {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #FFFFFF;
+  font-size: 18px;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.ls-task-anchor-close:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.ls-task-anchor-close:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #ls-task-anchor-banner {
+    transition: none;
+  }
+}

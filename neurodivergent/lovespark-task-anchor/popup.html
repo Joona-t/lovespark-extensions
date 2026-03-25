@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Task Anchor</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="40" height="40">
+        <div class="header-text">
+          <div class="header-title" id="popupTitle">Task Anchor</div>
+          <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+        </div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          retro
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <!-- Task Input -->
+      <div class="task-section">
+        <label for="taskInput" class="task-label">What are you working on?</label>
+        <div class="task-input-wrap">
+          <input type="text" id="taskInput" class="task-input"
+                 placeholder="e.g. Fix login bug on staging..."
+                 maxlength="120"
+                 aria-label="Current task description">
+          <button id="taskClear" class="task-clear" aria-label="Clear task" title="Clear task">&times;</button>
+        </div>
+        <div class="task-hint" id="taskHint" aria-live="polite">Type your task and press Enter</div>
+      </div>
+
+      <!-- Enable Toggle -->
+      <div class="toggle-section">
+        <div class="toggle-info">
+          <div id="statusIcon" class="status-icon" aria-hidden="true">&#x1f4cc;</div>
+          <div>
+            <div id="statusText" class="status-text" aria-live="polite">Active</div>
+            <div id="cuteMsg" class="cute-msg" aria-hidden="true">Stay on track!</div>
+          </div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable task banner">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section" aria-label="Nudge statistics">
+        <div class="stat-box" aria-label="Nudges shown today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">nudges today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Total nudges shown">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <details class="settings-panel" id="settingsPanel">
+        <summary class="settings-toggle" aria-label="Toggle settings panel">Settings</summary>
+        <div class="settings-body">
+          <div class="setting-row">
+            <label for="bannerPosition">Banner position</label>
+            <select id="bannerPosition" aria-label="Banner position on page">
+              <option value="top">Top</option>
+              <option value="bottom">Bottom</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label for="autoHide">Auto-hide after</label>
+            <select id="autoHide" aria-label="Auto-hide banner delay">
+              <option value="0">Never</option>
+              <option value="5">5 seconds</option>
+              <option value="10">10 seconds</option>
+              <option value="30">30 seconds</option>
+            </select>
+          </div>
+        </div>
+      </details>
+    </main>
+
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
