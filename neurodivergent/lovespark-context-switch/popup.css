@@ -1,0 +1,187 @@
+/* LoveSpark Context Switch -- Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+/* -- Header --------------------------------- */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+}
+.header-sub {
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-text-muted);
+}
+
+/* -- Switch button section ------------------ */
+.switch-section {
+  text-align: center;
+  margin-bottom: 12px;
+}
+.switch-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--ls-pink-deep);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--ls-font-body);
+  cursor: pointer;
+  min-height: 48px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: var(--ls-glow);
+}
+.switch-btn:hover {
+  transform: scale(1.02);
+  box-shadow: var(--ls-glow-strong);
+}
+.switch-btn:active {
+  transform: scale(0.97);
+}
+.switch-feedback {
+  font-size: 11px;
+  color: var(--ls-pink-accent);
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* -- Average section ------------------------ */
+.avg-section {
+  text-align: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(8px);
+}
+.avg-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ls-text-muted);
+  margin-bottom: 4px;
+}
+.avg-num {
+  font-family: var(--ls-font-display);
+  font-size: 20px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+}
+.avg-unit {
+  font-size: 9px;
+  color: var(--ls-text-muted);
+}
+
+/* -- Recent switches ------------------------ */
+.recent-section {
+  margin-bottom: 10px;
+}
+.recent-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--ls-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--ls-text-dark);
+}
+.recent-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ls-pink-accent);
+  flex-shrink: 0;
+}
+.recent-time {
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* -- Cute message --------------------------- */
+.cute-msg {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  text-align: center;
+  margin-bottom: 10px;
+  min-height: 16px;
+  transition: opacity 0.2s;
+}
+
+/* -- Stats ---------------------------------- */
+.stats-section {
+  display: flex;
+  align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 10px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 10px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* -- Focus indicators ----------------------- */
+button:focus-visible,
+input:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+/* -- Reduced motion ------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
