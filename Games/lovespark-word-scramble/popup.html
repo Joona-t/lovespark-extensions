@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Word Scramble</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Word Scramble</div>
+        <div class="header-sub" id="popupDesc">Unscramble the word</div>
+      </div>
+    </header>
+
+    <div id="scrambledWord" class="scrambled-word" aria-live="polite" aria-label="Scrambled word"></div>
+
+    <div class="input-row">
+      <label for="guessInput" class="sr-only">Your guess</label>
+      <input type="text" id="guessInput" class="guess-input" placeholder="Type your guess..." autocomplete="off" spellcheck="false" aria-label="Type your guess">
+      <button id="submitBtn" class="action-btn action-btn-small" aria-label="Submit guess">Go</button>
+    </div>
+
+    <div class="hint-row">
+      <button id="hintBtn" class="hint-btn" aria-label="Get a hint">Hint</button>
+      <button id="skipBtn" class="hint-btn" aria-label="Skip this word">Skip</button>
+    </div>
+
+    <div id="hintText" class="hint-text" aria-live="polite" hidden></div>
+
+    <div id="feedback" class="feedback" role="status" aria-live="assertive"></div>
+
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">solved today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">total</span>
+      <span class="stat-sep">·</span>
+      <span id="streakDisplay" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">streak</span>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
