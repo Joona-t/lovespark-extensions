@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Habit Garden</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Habit Garden</div>
+        <div class="header-sub" id="popupDesc">Grow habits, grow plants</div>
+      </div>
+    </header>
+
+    <div id="gardenGrid" class="garden-grid" aria-label="Your habit garden" role="list"></div>
+
+    <div id="emptyState" class="empty-state" hidden>
+      <div class="empty-emoji" aria-hidden="true">&#x1F331;</div>
+      <div class="empty-text">Your garden is empty!</div>
+      <div class="empty-hint">Add a habit to plant your first seed.</div>
+    </div>
+
+    <div class="add-section">
+      <div class="add-row">
+        <input type="text" id="habitInput" class="habit-input" placeholder="New habit..."
+               aria-label="New habit name" maxlength="40" autocomplete="off">
+        <button id="addBtn" class="btn-add" aria-label="Add habit">+</button>
+      </div>
+    </div>
+
+    <div class="stats-section" aria-label="Garden statistics">
+      <div class="stat-box" aria-label="Completions today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total completions">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

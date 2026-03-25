@@ -1,0 +1,20 @@
+{
+  "name": "LoveSpark Habit Garden",
+  "summary": "Grow a garden by building habits. Track streaks, watch plants bloom. Built for ADHD brains.",
+  "description": "LoveSpark Habit Garden turns your daily habits into a growing garden. Add habits, check them off each day, and watch your plants bloom as your streaks build.\n\nDesigned for ADHD and neurodivergent brains — visual feedback, satisfying progress, zero overwhelm.\n\nFeatures:\n- Add and track daily habits with one click\n- Visual garden grid that grows with your streaks\n- Daily reset with streak tracking\n- 4 cozy themes (Retro Pink, Dark, Beige, Slate)\n- Full keyboard and screen reader support\n- No account required — everything stays in your browser\n\nPrivacy first: No data collection, no tracking, no ads. 100% local storage. Always free, always open source.\n\nPart of the LoveSpark suite — retro pink productivity tools for neurodivergent coders.",
+  "category": "Productivity",
+  "keywords": [
+    "habit tracker",
+    "streak tracker",
+    "ADHD friendly",
+    "neurodivergent",
+    "productivity",
+    "garden game",
+    "daily habits",
+    "no ads extension",
+    "privacy extension",
+    "open source"
+  ],
+  "version": "1.0.0",
+  "language": "en"
+}
