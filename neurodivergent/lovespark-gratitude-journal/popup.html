@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Gratitude Journal</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Gratitude Journal</div>
+        <div class="header-sub" id="popupDesc">3 good things today</div>
+      </div>
+    </header>
+
+    <!-- Streak + garden -->
+    <div class="streak-section" aria-label="Gratitude streak">
+      <span id="streakFlower" class="streak-flower" aria-hidden="true">&#x1F331;</span>
+      <span id="streakText" class="streak-text" aria-live="polite">0 day streak</span>
+    </div>
+
+    <!-- Prompt -->
+    <div id="promptBox" class="prompt-box" aria-live="polite">
+      <span id="promptText" class="prompt-text">What are you grateful for?</span>
+    </div>
+
+    <!-- Input -->
+    <div id="inputSection" class="input-section">
+      <div class="input-row">
+        <input type="text" id="entryInput" class="entry-input" placeholder="I'm grateful for..."
+               aria-label="Gratitude entry" maxlength="200" autocomplete="off" autofocus>
+        <button id="addBtn" class="btn-add" aria-label="Add gratitude entry">+</button>
+      </div>
+      <div id="slotIndicator" class="slot-indicator" aria-live="polite">
+        <span id="slotDot1" class="slot-dot"></span>
+        <span id="slotDot2" class="slot-dot"></span>
+        <span id="slotDot3" class="slot-dot"></span>
+      </div>
+    </div>
+
+    <!-- Today's entries -->
+    <div id="todayList" class="today-list" role="list" aria-label="Today's gratitude entries"></div>
+
+    <!-- Full message when 3 done -->
+    <div id="fullMsg" class="full-msg" hidden aria-live="polite">
+      <div class="full-emoji" aria-hidden="true">&#x1F33B;</div>
+      <div class="full-text">Today's garden is complete!</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Journal statistics">
+      <div class="stat-box" aria-label="Entries today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total entries">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
