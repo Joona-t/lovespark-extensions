@@ -1,0 +1,185 @@
+/* LoveSpark Brain Dump — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+/* ── Header ────────────────────────────── */
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Input ─────────────────────────────── */
+.input-section { margin-bottom: 10px; }
+.input-row { margin-bottom: 6px; }
+.thought-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+  font-size: 13px;
+  font-family: var(--ls-font-body);
+  min-height: 40px;
+  outline: none;
+}
+.thought-input:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+.thought-input::placeholder { color: var(--ls-text-muted); }
+
+.tag-row { display: flex; gap: 6px; align-items: center; }
+.tag-btn {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 32px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.tag-btn[aria-pressed="true"] {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+  color: white;
+}
+.tag-btn:hover:not([aria-pressed="true"]) { background: var(--ls-glass-strong); }
+
+.btn-dump {
+  margin-left: auto;
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: none;
+  background: var(--ls-pink-deep);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 32px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-dump:hover { transform: scale(1.03); box-shadow: var(--ls-glow); }
+
+/* ── Thought list ──────────────────────── */
+.thought-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+.thought-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 7px 8px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+}
+.thought-tag {
+  flex-shrink: 0;
+  font-size: 12px;
+  line-height: 1;
+  margin-top: 1px;
+}
+.thought-text {
+  flex: 1;
+  color: var(--ls-text-dark);
+  word-break: break-word;
+}
+.thought-time {
+  font-size: 9px;
+  color: var(--ls-text-muted);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.thought-delete {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: transparent;
+  color: var(--ls-text-muted);
+  font-size: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.thought-item:hover .thought-delete { opacity: 0.6; }
+.thought-delete:hover { opacity: 1 !important; color: #DC3545; }
+
+/* ── Empty state ───────────────────────── */
+.empty-state { text-align: center; padding: 16px 10px; margin-bottom: 8px; }
+.empty-emoji { font-size: 32px; margin-bottom: 6px; }
+.empty-text { font-size: 12px; font-weight: 600; color: var(--ls-text-dark); margin-bottom: 3px; }
+.empty-hint { font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Clear button ──────────────────────── */
+.btn-clear {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  color: var(--ls-text-muted);
+  font-size: 10px;
+  cursor: pointer;
+  min-height: 32px;
+  margin-bottom: 10px;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-clear:hover { background: rgba(220, 53, 69, 0.1); color: var(--ls-text-dark); }
+
+/* ── Stats ─────────────────────────────── */
+.stats-section {
+  display: flex; align-items: center;
+  background: var(--ls-glass); border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius); padding: 10px 0;
+  backdrop-filter: blur(8px); margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display); font-size: 14px;
+  color: var(--ls-pink-accent); margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 10px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* ── Focus indicators ──────────────────── */
+button:focus-visible, input:focus-visible, [role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+
+/* ── Reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
