@@ -342,3 +342,6 @@ function triggerStepBack() {
     loadLog();
   });
 }
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
