@@ -102,3 +102,6 @@ chrome.storage.onChanged.addListener(() => {
 
 LoveSparkPopup.rotateMessages(cuteMsg, CUTE_MSGS);
 safeSend({ type: 'GET_STATS' }).then(updateUI);
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
