@@ -10,8 +10,6 @@ const DEFAULT_STORAGE = {
   bannersNukedTotal: 0,
   lastResetDate: new Date().toISOString().slice(0, 10),
   isEnabled: true,
-  theme: 'retro',
-  darkMode: false,
 };
 
 async function checkDailyReset() {
@@ -28,7 +26,7 @@ async function checkDailyReset() {
     } else {
       updateBadge(data.bannersNukedToday || 0);
     }
-  } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
+  } catch (_) {}
 }
 
 function updateBadge(count) {
@@ -36,7 +34,7 @@ function updateBadge(count) {
     const text = count > 0 ? String(count) : '';
     chrome.action.setBadgeText({ text });
     chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
-  } catch (err) { console.warn('[lovespark-cookie-nuke] updateBadge:', err); }
+  } catch (_) {}
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -79,7 +77,7 @@ async function incrementCounter() {
     });
 
     updateBadge(dailyCount);
-  } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
+  } catch (_) {}
 }
 
 chrome.runtime.onInstalled.addListener(async () => {

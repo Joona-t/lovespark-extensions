@@ -20,26 +20,19 @@ function applyTheme(t) {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
-    });
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
-      chrome.storage.local.set({ theme: theme, darkMode: theme === 'dark' });
+      chrome.storage.local.set({ theme });
       menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
     });
-    document.addEventListener('click', () => {
-      menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
+    document.addEventListener('click', () => menu.classList.remove('open'));
   }
-  chrome.storage.local.get(['theme'], ({ theme }) => {
+  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
+    if (!theme && darkMode) theme = 'dark';
     applyTheme(theme || 'retro');
   });
 })();
@@ -75,7 +68,7 @@ function loadStats() {
         updateToggleUI(data.isEnabled !== false);
       }
     );
-  } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
+  } catch (_) {}
 }
 
 function animateValue(el, target) {
@@ -101,7 +94,7 @@ function updateToggleUI(enabled) {
 
 toggleEl.addEventListener('click', () => {
   const newState = !toggleEl.classList.contains('active');
-  try { chrome.storage.local.set({ isEnabled: newState }); } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
+  try { chrome.storage.local.set({ isEnabled: newState }); } catch (_) {}
   updateToggleUI(newState);
 });
 
@@ -114,7 +107,7 @@ try {
       animateValue(totalEl, changes.bannersNukedTotal.newValue || 0);
     }
   });
-} catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
+} catch (_) {}
 
 loadStats();
 
