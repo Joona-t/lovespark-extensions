@@ -235,7 +235,7 @@ body {
 }
 
 .toggle-switch.active {
-  background: var(--ls-btn-bg);
+  background: var(--ls-pink-accent);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
