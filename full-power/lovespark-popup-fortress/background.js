@@ -10,7 +10,6 @@ const DEFAULT_STORAGE = {
   popupsBlockedTotal: 0,
   lastResetDate: new Date().toISOString().slice(0, 10),
   isEnabled: true,
-  darkMode: false,
 };
 
 // ---- Daily counter reset ----
@@ -29,7 +28,7 @@ async function checkDailyReset() {
     } else {
       updateBadge(data.popupsBlockedToday || 0);
     }
-  } catch (err) { console.warn('[lovespark-popup-fortress] unknown:', err); }
+  } catch (_) {}
 }
 
 // ---- Badge ----
@@ -39,7 +38,7 @@ function updateBadge(count) {
     const text = count > 0 ? String(count) : '';
     chrome.action.setBadgeText({ text });
     chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
-  } catch (err) { console.warn('[lovespark-popup-fortress] updateBadge:', err); }
+  } catch (_) {}
 }
 
 // ---- Message handler ----
@@ -84,7 +83,7 @@ async function incrementCounter(count) {
     });
 
     updateBadge(dailyCount);
-  } catch (err) { console.warn('[lovespark-popup-fortress] unknown:', err); }
+  } catch (_) {}
 }
 
 // ---- Initialization ----
@@ -94,12 +93,6 @@ chrome.runtime.onInstalled.addListener(async () => {
   const toSet = {};
   for (const [key, val] of Object.entries(DEFAULT_STORAGE)) {
     if (data[key] === undefined) toSet[key] = val;
-  }
-  // Migrate legacy darkMode key (used by shared lovespark-theme.js)
-  if (data.darkMode && !data.theme) {
-    await chrome.storage.local.set({ darkMode: false, theme: 'dark' });
-  } else if (data.darkMode === undefined) {
-    await chrome.storage.local.set({ darkMode: false });
   }
   if (Object.keys(toSet).length > 0) {
     await chrome.storage.local.set(toSet);

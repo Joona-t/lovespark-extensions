@@ -1,13 +1,15 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.14",
-  "homepage_url": "https://lovespark.love",
+  "version": "1.0.8",
   "description": "__MSG_extDescription__",
   "permissions": [
     "alarms",
     "declarativeNetRequest",
     "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "content_scripts": [
     {

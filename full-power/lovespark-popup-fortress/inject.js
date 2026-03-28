@@ -41,7 +41,7 @@
         type: 'LOVESPARK_POPUP_BLOCKED',
         count: blocked,
       }, '*');
-    } catch (err) { console.warn('[lovespark-popup-fortress] reportBlocked:', err); }
+    } catch (_) {}
   }
 
   // ---- Override window.open ----
