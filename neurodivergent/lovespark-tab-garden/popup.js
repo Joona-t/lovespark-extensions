@@ -313,3 +313,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Load initial state
   refreshState();
 });
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
