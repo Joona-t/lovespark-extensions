@@ -425,7 +425,7 @@ details[open] .settings-toggle::before {
 }
 
 .dot.active {
-  background: var(--ls-btn-bg);
+  background: var(--ls-pink-accent);
   transform: scale(1.3);
 }
 
