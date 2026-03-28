@@ -74,7 +74,7 @@ function loadStats() {
         updateToggleUI(enabled);
       }
     );
-  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
+  } catch (_) {}
 }
 
 // ---- Counter animation ----
@@ -117,7 +117,7 @@ toggleEl.addEventListener('click', () => {
 
   try {
     chrome.storage.local.set({ isEnabled: newState });
-  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
+  } catch (_) {}
 
   updateToggleUI(newState);
 });
@@ -133,7 +133,7 @@ try {
       animateValue(totalEl, changes.adsNeutralizedTotal.newValue || 0);
     }
   });
-} catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
+} catch (_) {}
 
 // ---- Init ----
 

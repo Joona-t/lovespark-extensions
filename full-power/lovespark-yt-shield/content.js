@@ -15,14 +15,14 @@
     chrome.storage.local.get(['isEnabled'], (result) => {
       if (result.isEnabled === false) isEnabled = false;
     });
-  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
+  } catch (_) {}
 
   // Listen for toggle changes from popup
   try {
     chrome.storage.onChanged.addListener((changes) => {
       if (changes.isEnabled) isEnabled = changes.isEnabled.newValue;
     });
-  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
+  } catch (_) {}
 
   /**
    * Increment the ad-neutralized counter via the background service worker.
@@ -31,7 +31,7 @@
   function reportNeutralized() {
     try {
       chrome.runtime.sendMessage({ action: 'adNeutralized' });
-    } catch (err) { console.warn('[lovespark-yt-shield] reportNeutralized:', err); }
+    } catch (_) {}
   }
 
   /**

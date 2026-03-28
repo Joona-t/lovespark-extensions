@@ -14,10 +14,16 @@
   font-family: var(--ls-font-body, 'DM Mono', monospace);
 }
 
-.ls-footer-suite {
+.ls-suite-btn {
   font-size: 11px;
   color: var(--ls-text-muted, #9E4D6E);
-  opacity: 0.85;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.ls-suite-btn:hover {
+  opacity: 0.75;
 }
 
 .ls-kofi-btn {

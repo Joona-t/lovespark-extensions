@@ -15,8 +15,6 @@ const LoveSparkLifecycle = (() => {
 
   function setupMessageHandler(handler) {
     chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-      // Only process messages from this extension itself
-      if (sender.id !== chrome.runtime.id) return;
       handler(msg, sender).then(sendResponse).catch(() => sendResponse({ error: true }));
       return true;
     });
