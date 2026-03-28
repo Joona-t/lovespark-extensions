@@ -190,3 +190,6 @@
   /* ── Start ─────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', init);
 })();
+
+/* ── Author / Ko-fi Footer ── */
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
