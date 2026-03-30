@@ -26,7 +26,7 @@ async function checkDailyReset() {
     } else {
       updateBadge(data.bannersNukedToday || 0);
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
 }
 
 function updateBadge(count) {
@@ -34,7 +34,7 @@ function updateBadge(count) {
     const text = count > 0 ? String(count) : '';
     chrome.action.setBadgeText({ text });
     chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-cookie-nuke] updateBadge:', err); }
 }
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -77,7 +77,7 @@ async function incrementCounter() {
     });
 
     updateBadge(dailyCount);
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
 }
 
 chrome.runtime.onInstalled.addListener(async () => {

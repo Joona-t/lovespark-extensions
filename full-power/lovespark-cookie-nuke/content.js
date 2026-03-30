@@ -19,7 +19,7 @@
     chrome.storage.onChanged.addListener((changes) => {
       if (changes.isEnabled) isEnabled = changes.isEnabled.newValue;
     });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
 
   // ---- Selectors ----
 
@@ -186,7 +186,7 @@
     nukesOnThisPage++;
     try {
       chrome.runtime.sendMessage({ action: 'bannerNuked' });
-    } catch (_) {}
+    } catch (err) { console.warn('[lovespark-cookie-nuke] reportNuked:', err); }
   }
 
   // ---- MutationObserver: catch dynamically injected banners ----
@@ -231,7 +231,7 @@
                 nukeBanner(node);
                 break;
               }
-            } catch (_) {}
+            } catch (err) { console.warn('[lovespark-cookie-nuke] unknown:', err); }
           }
         }
 
