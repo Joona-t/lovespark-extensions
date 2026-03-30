@@ -31,8 +31,7 @@ function applyTheme(t) {
     });
     document.addEventListener('click', () => menu.classList.remove('open'));
   }
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
+  chrome.storage.local.get(['theme'], ({ theme }) => {
     applyTheme(theme || 'retro');
   });
 })();
@@ -68,7 +67,7 @@ function loadStats() {
         updateToggleUI(data.isEnabled !== false);
       }
     );
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-popup-fortress] unknown:', err); }
 }
 
 function animateValue(el, target) {
@@ -94,7 +93,7 @@ function updateToggleUI(enabled) {
 
 toggleEl.addEventListener('click', () => {
   const newState = !toggleEl.classList.contains('active');
-  try { chrome.storage.local.set({ isEnabled: newState }); } catch (_) {}
+  try { chrome.storage.local.set({ isEnabled: newState }); } catch (err) { console.warn('[lovespark-popup-fortress] unknown:', err); }
   updateToggleUI(newState);
 });
 
@@ -107,7 +106,7 @@ try {
       animateValue(totalEl, changes.popupsBlockedTotal.newValue || 0);
     }
   });
-} catch (_) {}
+} catch (err) { console.warn('[lovespark-popup-fortress] unknown:', err); }
 
 loadStats();
 
