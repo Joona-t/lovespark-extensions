@@ -28,3 +28,17 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## v1.0.7 — Contrast + Semantics Fix (2026-04-01)
+
+### Bug Fix: Header title contrast fails WCAG AA on retro pink theme
+- **Problem:** `.header-title` used `color: var(--ls-text-white)` (#fff on pink gradient ~1.5:1 ratio)
+- **Root cause:** White text on light pink gradient fails 4.5:1 AA minimum
+- **Fix:** Changed to `var(--ls-text-dark)` (#5c1a36 on #fdcfe1 = ~7.3:1). Theme overrides in tokens.css handle beige/slate. Removed text-shadow (unnecessary with dark text).
+- **Files:** popup.css, settings.css
+
+### Bug Fix: Settings page incorrect role="dialog"
+- **Problem:** `settings.html` container had `role="dialog"` but it opens as a full tab, not a popup
+- **Root cause:** Copy-paste from popup.html pattern; dialogs should only be used for popup overlays
+- **Fix:** Removed `role="dialog"` from settings-container div
+- **Files:** settings.html

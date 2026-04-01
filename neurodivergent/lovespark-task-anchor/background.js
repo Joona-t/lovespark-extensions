@@ -3,16 +3,24 @@ importScripts('lib/lovespark-stats.js', 'lib/lovespark-badge.js', 'lib/lovespark
 
 const DEFAULTS = {
   currentTask: '',
-  taskanchorToday: 0,
-  taskanchorTotal: 0,
-  lastResetDate: LoveSparkStats.todayStr(),
   isEnabled: true,
   bannerPosition: 'top',
   autoHide: 0,
+  taskanchorToday: 0,
+  taskanchorTotal: 0,
+  tasksCompleted: 0,
+  lastResetDate: LoveSparkStats.todayStr(),
 };
 
-const stats = LoveSparkStats.createAccumulator('taskanchorToday', 'taskanchorTotal',
-  () => LoveSparkBadge.update('isEnabled', 'taskanchorToday'));
+// Direct-write nudge counter (no deferred accumulator — KI-020)
+async function bumpNudge() {
+  const data = await chrome.storage.local.get(['taskanchorToday', 'taskanchorTotal']);
+  await chrome.storage.local.set({
+    taskanchorToday: (data.taskanchorToday || 0) + 1,
+    taskanchorTotal: (data.taskanchorTotal || 0) + 1,
+  });
+  await LoveSparkBadge.update('isEnabled', 'taskanchorToday');
+}
 
 chrome.runtime.onInstalled.addListener(async () => {
   await LoveSparkLifecycle.initDefaults(DEFAULTS);
@@ -30,25 +38,44 @@ LoveSparkLifecycle.setupMessageHandler(async (msg) => {
     case 'GET_STATS': {
       await LoveSparkStats.checkDailyReset('taskanchorToday');
       return chrome.storage.local.get([
-        'taskanchorToday', 'taskanchorTotal', 'isEnabled',
-        'currentTask', 'bannerPosition', 'autoHide'
+        'taskanchorToday', 'taskanchorTotal', 'tasksCompleted',
+        'isEnabled', 'currentTask',
       ]);
-    }
-    case 'SET_TASK': {
-      await chrome.storage.local.set({ currentTask: msg.task || '' });
-      return { ok: true };
     }
     case 'SET_ENABLED': {
       await chrome.storage.local.set({ isEnabled: msg.enabled });
       await LoveSparkBadge.update('isEnabled', 'taskanchorToday');
       return { ok: true };
     }
-    case 'SET_SETTING': {
-      await chrome.storage.local.set({ [msg.key]: msg.value });
+    case 'SET_TASK': {
+      const task = (msg.task || '').trim();
+      await chrome.storage.local.set({ currentTask: task });
+      return { ok: true };
+    }
+    case 'CLEAR_TASK': {
+      await chrome.storage.local.set({ currentTask: '' });
+      return { ok: true };
+    }
+    case 'COMPLETE_TASK': {
+      const data = await chrome.storage.local.get(['tasksCompleted']);
+      await chrome.storage.local.set({
+        currentTask: '',
+        tasksCompleted: (data.tasksCompleted || 0) + 1,
+      });
       return { ok: true };
     }
     case 'NUDGE_SHOWN': {
-      stats.bump(1);
+      await bumpNudge();
+      return { ok: true };
+    }
+    case 'GET_SETTINGS': {
+      return chrome.storage.local.get(['bannerPosition', 'autoHide']);
+    }
+    case 'SAVE_SETTINGS': {
+      const updates = {};
+      if (msg.bannerPosition !== undefined) updates.bannerPosition = msg.bannerPosition;
+      if (msg.autoHide !== undefined) updates.autoHide = Number(msg.autoHide);
+      await chrome.storage.local.set(updates);
       return { ok: true };
     }
     default:

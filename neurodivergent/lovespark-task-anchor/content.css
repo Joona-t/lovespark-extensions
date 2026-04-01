@@ -1,94 +1,142 @@
 /* Task Anchor — injected banner styles
-   Scoped with ls-task-anchor prefix to avoid conflicts with host pages */
+   Scoped with ls-task-anchor prefix to avoid conflicts with host pages.
+   Uses !important on layout-critical properties for isolation. */
 
 #ls-task-anchor-banner {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 2147483647;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #B82A55, #9A2248);
-  color: #FFFFFF;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 2px 12px rgba(184, 42, 85, 0.4);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  all: initial !important;
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 8px 16px !important;
+  background: linear-gradient(135deg, #B82A55, #9A2248) !important;
+  color: #FFFFFF !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  box-shadow: 0 2px 12px rgba(184, 42, 85, 0.4) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+  box-sizing: border-box !important;
 }
 
 /* Position variants */
 #ls-task-anchor-banner.ls-task-anchor-top {
-  top: 0;
-  transform: translateY(-100%);
+  top: 0 !important;
+  bottom: auto !important;
+  transform: translateY(-100%) !important;
 }
 
 #ls-task-anchor-banner.ls-task-anchor-bottom {
-  bottom: 0;
-  transform: translateY(100%);
+  bottom: 0 !important;
+  top: auto !important;
+  transform: translateY(100%) !important;
 }
 
 /* Visible state */
 #ls-task-anchor-banner.ls-task-anchor-visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
 }
 
 /* Icon */
-.ls-task-anchor-icon {
-  flex-shrink: 0;
-  font-size: 16px;
-  line-height: 1;
+#ls-task-anchor-banner .ls-task-anchor-icon {
+  all: initial !important;
+  flex-shrink: 0 !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
 }
 
 /* Text */
-.ls-task-anchor-text {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 80vw;
-  line-height: 1.4;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+#ls-task-anchor-banner .ls-task-anchor-text {
+  all: initial !important;
+  flex: 1 !important;
+  text-align: center !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 80vw !important;
+  color: #FFFFFF !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Done button */
+#ls-task-anchor-banner .ls-task-anchor-done {
+  all: initial !important;
+  flex-shrink: 0 !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  padding: 6px 12px !important;
+  border-radius: 14px !important;
+  cursor: pointer !important;
+  min-height: 32px !important;
+  min-width: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s !important;
+}
+
+#ls-task-anchor-banner .ls-task-anchor-done:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+}
+
+#ls-task-anchor-banner .ls-task-anchor-done:focus-visible {
+  outline: 2px solid #FFFFFF !important;
+  outline-offset: 2px !important;
 }
 
 /* Close button */
-.ls-task-anchor-close {
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: #FFFFFF;
-  font-size: 18px;
-  line-height: 1;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s;
+#ls-task-anchor-banner .ls-task-anchor-close {
+  all: initial !important;
+  flex-shrink: 0 !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: none !important;
+  color: #FFFFFF !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  min-width: 32px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s !important;
 }
 
-.ls-task-anchor-close:hover {
-  background: rgba(255, 255, 255, 0.35);
+#ls-task-anchor-banner .ls-task-anchor-close:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
 }
 
-.ls-task-anchor-close:focus-visible {
-  outline: 2px solid #FFFFFF;
-  outline-offset: 2px;
+#ls-task-anchor-banner .ls-task-anchor-close:focus-visible {
+  outline: 2px solid #FFFFFF !important;
+  outline-offset: 2px !important;
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  #ls-task-anchor-banner {
-    transition: none;
+  #ls-task-anchor-banner,
+  #ls-task-anchor-banner .ls-task-anchor-done,
+  #ls-task-anchor-banner .ls-task-anchor-close {
+    transition: none !important;
   }
 }

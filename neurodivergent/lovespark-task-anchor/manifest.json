@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Task Anchor",
-  "version": "1.0.4",
-  "description": "Pin your current task as a persistent mini-banner. Never forget what you were doing when you open a new tab.",
+  "version": "1.0.8",
+  "description": "Pin your current task as a persistent reminder across all tabs. Never lose focus again.",
   "icons": {
     "16": "icons/icon-16.png",
     "48": "icons/icon-48.png",

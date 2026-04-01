@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Task Anchor — Settings</title>
+  <link rel="stylesheet" href="lib/lovespark-tokens.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-top-bar">
+    <div class="theme-dropdown">
+      <button id="themeToggle" class="theme-dropdown-trigger"
+              aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span>
+      </button>
+      <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+        <div class="theme-dropdown-header">Theme</div>
+        <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+        <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+        <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+      </div>
+    </div>
+  </div>
+  <div class="settings-container" aria-labelledby="settingsTitle">
+    <header class="settings-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="48" height="48">
+      <div class="header-text">
+        <h1 class="header-title" id="settingsTitle">Task Anchor Settings</h1>
+        <div class="header-sub">LoveSpark Suite</div>
+      </div>
+    </header>
+
+    <main class="settings-content">
+      <div class="setting-group">
+        <label for="bannerPosition" class="setting-label">Banner Position</label>
+        <p class="setting-desc">Where the task reminder appears on each page.</p>
+        <select id="bannerPosition" class="setting-select" aria-label="Banner position">
+          <option value="top">Top of page</option>
+          <option value="bottom">Bottom of page</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label for="autoHide" class="setting-label">Auto-Hide</label>
+        <p class="setting-desc">Automatically dismiss the banner after a delay.</p>
+        <select id="autoHide" class="setting-select" aria-label="Auto-hide timer">
+          <option value="0">Never (stay visible)</option>
+          <option value="5">After 5 seconds</option>
+          <option value="10">After 10 seconds</option>
+          <option value="30">After 30 seconds</option>
+          <option value="60">After 1 minute</option>
+        </select>
+      </div>
+
+      <div id="savedMsg" class="saved-msg" aria-live="polite"></div>
+    </main>
+
+    <footer class="settings-footer">
+      <span class="footer-brand">LoveSpark Suite</span>
+    </footer>
+  </div>
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-stats.js"></script>
+  <script src="lib/lovespark-badge.js"></script>
+  <script src="lib/lovespark-lifecycle.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

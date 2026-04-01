@@ -1,107 +1,127 @@
 'use strict';
 
+// Theme init — shared lib looks for #themeToggle and #themeMenu
 LoveSparkTheme.init();
 
-const CUTE_MSGS = [
-  'Stay on track!', 'You got this!', 'Focus mode: ON',
-  'One thing at a time!', 'Almost there!', 'Keep going!'
-];
+// Wire aria-expanded on theme dropdown (KI-013)
+const themeToggle = document.getElementById('themeToggle');
+const themeMenu = document.getElementById('themeMenu');
+if (themeToggle && themeMenu) {
+  const observer = new MutationObserver(() => {
+    const isOpen = themeMenu.classList.contains('open');
+    themeToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  observer.observe(themeMenu, { attributes: true, attributeFilter: ['class'] });
+}
 
-const taskInput = document.getElementById('taskInput');
-const taskClear = document.getElementById('taskClear');
-const taskHint = document.getElementById('taskHint');
-const todayEl = document.getElementById('todayCount');
-const totalEl = document.getElementById('totalCount');
+// Elements
+const taskInputSection = document.getElementById('taskInputSection');
+const taskDisplaySection = document.getElementById('taskDisplaySection');
+const taskTextInput = document.getElementById('taskText');
+const pinBtn = document.getElementById('pinTask');
+const currentTaskText = document.getElementById('currentTaskText');
+const doneBtn = document.getElementById('doneTask');
+const clearBtn = document.getElementById('clearTask');
 const toggleEl = document.getElementById('enableToggle');
-const statusIcon = document.getElementById('statusIcon');
 const statusText = document.getElementById('statusText');
 const cuteMsg = document.getElementById('cuteMsg');
-const positionSelect = document.getElementById('bannerPosition');
-const autoHideSelect = document.getElementById('autoHide');
+const todayEl = document.getElementById('todayCount');
+const totalEl = document.getElementById('totalCount');
+const completedEl = document.getElementById('completedCount');
 
 let prevToday = 0;
 let prevTotal = 0;
-let saveTimer = null;
+let prevCompleted = 0;
 
-function safeSend(msg) {
-  return chrome.runtime.sendMessage(msg).catch((err) => {
-    console.warn('[TaskAnchor] sendMessage:', err);
-    return {};
-  });
+const CUTE_MSGS = [
+  'Stay focused!', 'You got this!', 'Deep work energy!',
+  'One thing at a time!', 'Stay on track, bestie!'
+];
+
+function safeSendMessage(msg) {
+  try {
+    return chrome.runtime.sendMessage(msg).catch(err => {
+      console.warn('[LoveSpark Task Anchor] msg:', err);
+      return {};
+    });
+  } catch (err) {
+    console.warn('[LoveSpark Task Anchor] msg:', err);
+    return Promise.resolve({});
+  }
 }
 
 function updateUI(data) {
-  if (!data) return;
   const enabled = data.isEnabled !== false;
+  const hasTask = Boolean(data.currentTask);
   const today = data.taskanchorToday || 0;
   const total = data.taskanchorTotal || 0;
+  const completed = data.tasksCompleted || 0;
 
+  // Toggle
   toggleEl.checked = enabled;
-  statusIcon.classList.toggle('paused', !enabled);
   statusText.textContent = enabled ? 'Active' : 'Paused';
 
-  if (data.currentTask && !taskInput.matches(':focus')) {
-    taskInput.value = data.currentTask;
+  // Task sections
+  taskInputSection.style.display = hasTask ? 'none' : '';
+  taskDisplaySection.style.display = hasTask ? '' : 'none';
+  if (hasTask) {
+    currentTaskText.textContent = data.currentTask;
   }
 
-  if (data.bannerPosition) positionSelect.value = data.bannerPosition;
-  if (data.autoHide !== undefined) autoHideSelect.value = String(data.autoHide);
-
+  // Stats
   LoveSparkPopup.animateCount(todayEl, prevToday, today);
   LoveSparkPopup.animateCount(totalEl, prevTotal, total);
+  LoveSparkPopup.animateCount(completedEl, prevCompleted, completed);
+
   if (today > prevToday && prevToday > 0) LoveSparkPopup.pop(todayEl);
+  if (completed > prevCompleted && prevCompleted > 0) LoveSparkPopup.pop(completedEl);
 
   prevToday = today;
   prevTotal = total;
+  prevCompleted = completed;
 }
 
-function saveTask() {
-  const task = taskInput.value.trim();
-  safeSend({ type: 'SET_TASK', task });
-  taskHint.textContent = task ? 'Saved!' : 'Task cleared';
-  taskHint.classList.add('saved');
-  setTimeout(() => {
-    taskHint.textContent = 'Type your task and press Enter';
-    taskHint.classList.remove('saved');
-  }, 1500);
-}
+// Pin task
+pinBtn.addEventListener('click', () => {
+  const task = taskTextInput.value.trim();
+  if (!task) {
+    taskTextInput.focus();
+    return;
+  }
+  safeSendMessage({ type: 'SET_TASK', task });
+  taskTextInput.value = '';
+});
 
-taskInput.addEventListener('keydown', (e) => {
+// Pin on Enter
+taskTextInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
-    saveTask();
+    pinBtn.click();
   }
 });
 
-taskInput.addEventListener('input', () => {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveTask, 800);
+// Done task
+doneBtn.addEventListener('click', () => {
+  safeSendMessage({ type: 'COMPLETE_TASK' });
 });
 
-taskClear.addEventListener('click', () => {
-  taskInput.value = '';
-  saveTask();
-  taskInput.focus();
+// Clear task
+clearBtn.addEventListener('click', () => {
+  safeSendMessage({ type: 'CLEAR_TASK' });
 });
 
+// Toggle
 toggleEl.addEventListener('change', () => {
-  safeSend({ type: 'SET_ENABLED', enabled: toggleEl.checked });
+  safeSendMessage({ type: 'SET_ENABLED', enabled: toggleEl.checked });
 });
 
-positionSelect.addEventListener('change', () => {
-  safeSend({ type: 'SET_SETTING', key: 'bannerPosition', value: positionSelect.value });
-});
-
-autoHideSelect.addEventListener('change', () => {
-  safeSend({ type: 'SET_SETTING', key: 'autoHide', value: Number(autoHideSelect.value) });
-});
-
+// Listen for storage changes
 chrome.storage.onChanged.addListener(() => {
-  safeSend({ type: 'GET_STATS' }).then(updateUI);
+  safeSendMessage({ type: 'GET_STATS' }).then(updateUI);
 });
 
+// Rotating cute messages (no aria-live — cosmetic only, KI-018)
 LoveSparkPopup.rotateMessages(cuteMsg, CUTE_MSGS);
-safeSend({ type: 'GET_STATS' }).then(updateUI);
 
-/* ── Author / Ko-fi Footer ── */
-document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
+// Initial load
+safeSendMessage({ type: 'GET_STATS' }).then(updateUI);

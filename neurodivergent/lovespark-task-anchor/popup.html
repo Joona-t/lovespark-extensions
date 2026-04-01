@@ -4,66 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Task Anchor</title>
+  <link rel="stylesheet" href="lib/lovespark-tokens.css">
   <link rel="stylesheet" href="lib/lovespark-base.css">
-  <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+  <div class="popup-top-bar">
+    <div class="theme-dropdown">
+      <button id="themeToggle" class="theme-dropdown-trigger"
+              aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span>
+      </button>
+      <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+        <div class="theme-dropdown-header">Theme</div>
+        <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+        <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+        <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+      </div>
+    </div>
+  </div>
   <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
     <header class="popup-header">
-      <div class="header-left">
-        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="40" height="40">
-        <div class="header-text">
-          <div class="header-title" id="popupTitle">Task Anchor</div>
-          <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
-        </div>
-      </div>
-      <div class="theme-dropdown">
-        <button id="themeToggle" class="theme-dropdown-trigger"
-                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
-          retro
-        </button>
-        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
-          <div class="theme-dropdown-header">Theme</div>
-          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
-          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
-          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
-          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
-        </div>
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Task Anchor</div>
+        <div class="header-sub" id="popupDesc">Pin your focus</div>
       </div>
     </header>
 
     <main class="popup-content">
-      <!-- Task Input -->
-      <div class="task-section">
-        <label for="taskInput" class="task-label">What are you working on?</label>
-        <div class="task-input-wrap">
-          <input type="text" id="taskInput" class="task-input"
-                 placeholder="e.g. Fix login bug on staging..."
-                 maxlength="120"
-                 aria-label="Current task description">
-          <button id="taskClear" class="task-clear" aria-label="Clear task" title="Clear task">&times;</button>
+      <!-- Task Input (shown when no task) -->
+      <div id="taskInputSection" class="task-section glass-card" aria-live="polite">
+        <label for="taskText" class="task-label">What are you working on?</label>
+        <div class="task-input-row">
+          <input type="text" id="taskText" class="task-input"
+                 placeholder="e.g. Fix login bug..."
+                 aria-label="Enter your current task"
+                 maxlength="120">
+          <button id="pinTask" class="btn-pin" aria-label="Pin this task">Pin</button>
         </div>
-        <div class="task-hint" id="taskHint" aria-live="polite">Type your task and press Enter</div>
       </div>
 
-      <!-- Enable Toggle -->
-      <div class="toggle-section">
-        <div class="toggle-info">
-          <div id="statusIcon" class="status-icon" aria-hidden="true">&#x1f4cc;</div>
-          <div>
-            <div id="statusText" class="status-text" aria-live="polite">Active</div>
-            <div id="cuteMsg" class="cute-msg" aria-hidden="true">Stay on track!</div>
-          </div>
+      <!-- Task Display (shown when task exists) -->
+      <div id="taskDisplaySection" class="task-section glass-card" style="display:none" aria-live="polite">
+        <div class="task-current">
+          <span class="task-pin-icon" aria-hidden="true">&#x1F4CC;</span>
+          <span id="currentTaskText" class="task-text-display" aria-live="polite"></span>
+        </div>
+        <div class="task-actions">
+          <button id="doneTask" class="btn-done" aria-label="Mark task as done">&#x2713; Done</button>
+          <button id="clearTask" class="btn-clear" aria-label="Clear task without completing">Clear</button>
+        </div>
+      </div>
+
+      <!-- Status + Toggle -->
+      <div class="status-row">
+        <div>
+          <span id="statusText" class="status-text" aria-live="polite">Active</span>
+          <span id="cuteMsg" class="cute-msg" aria-live="polite">Stay focused!</span>
         </div>
         <label class="toggle-wrap">
-          <input type="checkbox" id="enableToggle" checked aria-label="Enable task banner">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable task reminders">
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
         </label>
       </div>
 
       <!-- Stats -->
-      <div class="stats-section" aria-label="Nudge statistics">
+      <div class="stats-section" aria-label="Extension statistics">
         <div class="stat-box" aria-label="Nudges shown today">
           <div id="todayCount" class="stat-num" aria-live="polite">0</div>
           <div class="stat-label">nudges today</div>
@@ -73,37 +82,27 @@
           <div id="totalCount" class="stat-num" aria-live="polite">0</div>
           <div class="stat-label">total</div>
         </div>
-      </div>
-
-      <!-- Settings -->
-      <details class="settings-panel" id="settingsPanel">
-        <summary class="settings-toggle" aria-label="Toggle settings panel">Settings</summary>
-        <div class="settings-body">
-          <div class="setting-row">
-            <label for="bannerPosition">Banner position</label>
-            <select id="bannerPosition" aria-label="Banner position on page">
-              <option value="top">Top</option>
-              <option value="bottom">Bottom</option>
-            </select>
-          </div>
-          <div class="setting-row">
-            <label for="autoHide">Auto-hide after</label>
-            <select id="autoHide" aria-label="Auto-hide banner delay">
-              <option value="0">Never</option>
-              <option value="5">5 seconds</option>
-              <option value="10">10 seconds</option>
-              <option value="30">30 seconds</option>
-            </select>
-          </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Tasks completed">
+          <div id="completedCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">done</div>
         </div>
-      </details>
+      </div>
     </main>
 
-    <footer class="popup-footer">LoveSpark Suite</footer>
+    <footer class="popup-footer">
+      <a href="settings.html" target="_blank" class="settings-link" aria-label="Open settings">Settings</a>
+      <span class="footer-sep">&#xB7;</span>
+      <span class="footer-brand">LoveSpark Suite</span>
+    </footer>
   </div>
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-stats.js"></script>
+  <script src="lib/lovespark-badge.js"></script>
+  <script src="lib/lovespark-lifecycle.js"></script>
   <script src="lib/lovespark-theme.js"></script>
   <script src="lib/lovespark-popup.js"></script>
-  <script src="popup.js"></script>
   <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>
