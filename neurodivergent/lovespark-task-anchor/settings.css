@@ -42,7 +42,7 @@ body {
 
 .header-title {
   font-family: var(--ls-font-display);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--ls-text-dark);
   text-shadow: none;
   margin-bottom: 4px;

@@ -32,7 +32,7 @@ body {
 
 .header-title {
   font-family: var(--ls-font-display);
-  font-size: 10px;
+  font-size: 14px;
   color: var(--ls-text-dark);
   text-shadow: none;
 }
