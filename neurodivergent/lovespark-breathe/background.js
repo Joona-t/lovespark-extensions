@@ -73,15 +73,13 @@ async function logSession(type) {
 }
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.get(['settings'], (data) => {
-    if (!data.settings) {
+  chrome.storage.local.get(['defaultPattern'], (data) => {
+    if (data.defaultPattern === undefined) {
       chrome.storage.local.set({
-        settings: {
-          defaultPattern: 'box',
-          cycles: 5,
-          dimmerMode: 'manual',
-          dimmerEnabled: false
-        }
+        defaultPattern: 'box',
+        cycles: 5,
+        dimmerMode: 'manual',
+        dimmerEnabled: false
       });
     }
   });

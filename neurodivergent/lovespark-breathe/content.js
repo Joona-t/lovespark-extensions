@@ -284,9 +284,8 @@ chrome.runtime.onMessage.addListener((msg) => {
 });
 
 /* ── Init: check if dimmer should be on ─────────────── */
-chrome.storage.local.get(['settings'], (data) => {
-  const s = data.settings || {};
-  if (s.dimmerMode === 'always' || s.dimmerEnabled) {
+chrome.storage.local.get(['dimmerMode', 'dimmerEnabled'], (data) => {
+  if (data.dimmerMode === 'always' || data.dimmerEnabled) {
     toggleDimmer(true);
   }
 });

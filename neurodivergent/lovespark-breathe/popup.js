@@ -56,10 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadSettings() {
-  chrome.storage.local.get(['settings'], (data) => {
-    const s = data.settings || {};
-    currentPattern = s.defaultPattern || 'box';
-    totalCycles = s.cycles || 5;
+  chrome.storage.local.get(['defaultPattern', 'cycles', 'dimmerMode', 'dimmerEnabled'], (data) => {
+    currentPattern = data.defaultPattern || 'box';
+    totalCycles = data.cycles || 5;
 
     const patternSel = document.getElementById('setting-pattern');
     const cyclesSel = document.getElementById('setting-cycles');
@@ -68,13 +67,12 @@ function loadSettings() {
 
     if (patternSel) patternSel.value = currentPattern;
     if (cyclesSel) cyclesSel.value = String(totalCycles);
-    if (dimmerModeSel) dimmerModeSel.value = s.dimmerMode || 'manual';
+    if (dimmerModeSel) dimmerModeSel.value = data.dimmerMode || 'manual';
     if (dimmerToggle) {
-      dimmerToggle.checked = s.dimmerEnabled || false;
+      dimmerToggle.checked = data.dimmerEnabled || false;
       updateDimmerStatus(dimmerToggle.checked);
     }
 
-    /* Sync pattern selector buttons */
     document.querySelectorAll('.pattern-btn').forEach((btn) => {
       const isActive = btn.dataset.pattern === currentPattern;
       btn.classList.toggle('active', isActive);
@@ -84,23 +82,26 @@ function loadSettings() {
 }
 
 function saveSettings() {
-  const settings = {
+  chrome.storage.local.set({
     defaultPattern: document.getElementById('setting-pattern').value,
     cycles: parseInt(document.getElementById('setting-cycles').value, 10),
     dimmerMode: document.getElementById('setting-dimmer-mode').value,
     dimmerEnabled: document.getElementById('dimmer-toggle').checked
-  };
-  chrome.storage.local.set({ settings });
+  });
 }
 
 /* ── Log ────────────────────────────────────────────── */
 function loadLog() {
-  chrome.runtime.sendMessage({ action: 'get-log' }, (log) => {
-    if (chrome.runtime.lastError || !log) {
-      log = { breathing: 0, grounding: 0, stepBack: 0 };
-    }
-    renderLog(log);
-  });
+  try {
+    chrome.runtime.sendMessage({ action: 'get-log' }, (log) => {
+      if (chrome.runtime.lastError || !log) {
+        log = { breathing: 0, grounding: 0, stepBack: 0 };
+      }
+      renderLog(log);
+    });
+  } catch (_) {
+    renderLog({ breathing: 0, grounding: 0, stepBack: 0 });
+  }
 }
 
 function renderLog(log) {
@@ -168,7 +169,7 @@ function bindEvents() {
   document.getElementById('dimmer-toggle').addEventListener('change', (e) => {
     const enabled = e.target.checked;
     updateDimmerStatus(enabled);
-    chrome.runtime.sendMessage({ action: 'toggle-dimmer', enabled });
+    try { chrome.runtime.sendMessage({ action: 'toggle-dimmer', enabled }); } catch (_) {}
     saveSettings();
   });
 
@@ -279,9 +280,12 @@ function finishBreathing() {
   if (fallback) fallback.textContent = 'Well done. You did it.';
   circle.className = 'breathe-circle';
 
-  chrome.runtime.sendMessage({ action: 'log-session', type: 'breathing' }, () => {
-    loadLog();
-  });
+  try {
+    chrome.runtime.sendMessage({ action: 'log-session', type: 'breathing' }, () => {
+      if (chrome.runtime.lastError) return;
+      loadLog();
+    });
+  } catch (_) {}
 
   setTimeout(() => showScreen('main'), 3000);
 }
@@ -325,9 +329,12 @@ function renderGroundStep() {
 
 function advanceGround() {
   if (groundStep >= GROUNDING_STEPS.length - 1) {
-    chrome.runtime.sendMessage({ action: 'log-session', type: 'grounding' }, () => {
-      loadLog();
-    });
+    try {
+      chrome.runtime.sendMessage({ action: 'log-session', type: 'grounding' }, () => {
+        if (chrome.runtime.lastError) return;
+        loadLog();
+      });
+    } catch (_) {}
     showScreen('main');
     return;
   }
@@ -337,10 +344,13 @@ function advanceGround() {
 
 /* ── Step Back ──────────────────────────────────────── */
 function triggerStepBack() {
-  chrome.runtime.sendMessage({ action: 'step-back' });
-  chrome.runtime.sendMessage({ action: 'log-session', type: 'stepBack' }, () => {
-    loadLog();
-  });
+  try { chrome.runtime.sendMessage({ action: 'step-back' }); } catch (_) {}
+  try {
+    chrome.runtime.sendMessage({ action: 'log-session', type: 'stepBack' }, () => {
+      if (chrome.runtime.lastError) return;
+      loadLog();
+    });
+  } catch (_) {}
 }
 
 /* ── Author / Ko-fi Footer ── */

@@ -3,7 +3,7 @@
 
 /* ── Comment Dimmer ─────────────────────────────────── */
 .ls-breathe-dimmed {
-  opacity: 0.15 !important;
+  opacity: 0.85 !important;
   transition: opacity 0.3s ease !important;
 }
 

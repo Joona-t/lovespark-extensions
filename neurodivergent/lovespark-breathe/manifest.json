@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Breathe",
-  "version": "1.0.0",
+  "version": "1.0.15",
   "description": "Breathing exercises, grounding techniques, and comment dimming \u2014 emotional regulation for ADHD brains.",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "background": {
     "service_worker": "background.js"
