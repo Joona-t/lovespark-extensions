@@ -169,7 +169,7 @@ function bindEvents() {
   document.getElementById('dimmer-toggle').addEventListener('change', (e) => {
     const enabled = e.target.checked;
     updateDimmerStatus(enabled);
-    try { chrome.runtime.sendMessage({ action: 'toggle-dimmer', enabled }); } catch (_) {}
+    try { chrome.runtime.sendMessage({ action: 'toggle-dimmer', enabled }); } catch (err) { console.warn('[lovespark-breathe] unknown:', err); }
     saveSettings();
   });
 
@@ -285,7 +285,7 @@ function finishBreathing() {
       if (chrome.runtime.lastError) return;
       loadLog();
     });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-breathe] unknown:', err); }
 
   setTimeout(() => showScreen('main'), 3000);
 }
@@ -334,7 +334,7 @@ function advanceGround() {
         if (chrome.runtime.lastError) return;
         loadLog();
       });
-    } catch (_) {}
+    } catch (err) { console.warn('[lovespark-breathe] unknown:', err); }
     showScreen('main');
     return;
   }
@@ -344,13 +344,13 @@ function advanceGround() {
 
 /* ── Step Back ──────────────────────────────────────── */
 function triggerStepBack() {
-  try { chrome.runtime.sendMessage({ action: 'step-back' }); } catch (_) {}
+  try { chrome.runtime.sendMessage({ action: 'step-back' }); } catch (err) { console.warn('[lovespark-breathe] triggerStepBack:', err); }
   try {
     chrome.runtime.sendMessage({ action: 'log-session', type: 'stepBack' }, () => {
       if (chrome.runtime.lastError) return;
       loadLog();
     });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-breathe] unknown:', err); }
 }
 
 /* ── Author / Ko-fi Footer ── */
