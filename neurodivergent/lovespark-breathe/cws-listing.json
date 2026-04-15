@@ -1,0 +1,20 @@
+{
+  "name": "LoveSpark Breathe",
+  "summary": "Breathing exercises, grounding techniques, and comment dimming — emotional regulation for ADHD brains.",
+  "description": "LoveSpark Breathe gives you instant access to calming tools right in your browser toolbar. Three core features to help you regulate when things get overwhelming.\n\nBreathing Exercises\n- Box Breathing (4-4-4-4)\n- 4-7-8 Breathing\n- Physiological Sigh (double inhale, long exhale)\n- Animated visual guide with cycle tracking\n- Keyboard shortcut: Alt+B\n\n5-4-3-2-1 Grounding\n- Guided sensory grounding exercise\n- Step-by-step progress with visual dots\n- Tap-to-advance at your own pace\n\nComment Dimmer\n- Dims comment sections on Twitter/X, Reddit, YouTube, Facebook, and Instagram\n- Manual toggle or always-on mode\n- Reduces emotional triggers while browsing\n\nDesigned for ADHD and neurodivergent brains — quick access, zero overwhelm, gentle encouragement from Sparky the mascot.\n\nExtra touches:\n- 4 cozy themes (Retro Pink, Dark, Beige, Slate)\n- Daily session log with encouraging messages\n- Full keyboard and screen reader support\n- Respects prefers-reduced-motion\n- No account required — everything stays in your browser\n\nPrivacy first: No data collection, no tracking, no ads. 100% local storage. Always free, always open source.\n\nPart of the LoveSpark suite — retro pink productivity tools for neurodivergent coders.",
+  "category": "Productivity",
+  "keywords": [
+    "breathing exercises",
+    "grounding technique",
+    "ADHD friendly",
+    "neurodivergent",
+    "emotional regulation",
+    "anxiety relief",
+    "comment dimmer",
+    "mindfulness",
+    "privacy extension",
+    "open source"
+  ],
+  "version": "1.0.16",
+  "language": "en"
+}
