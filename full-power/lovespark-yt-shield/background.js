@@ -29,7 +29,7 @@ async function checkDailyReset() {
     } else {
       updateBadge(data.adsNeutralizedToday || 0);
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
 }
 
 // ---- Badge ----
@@ -39,7 +39,7 @@ function updateBadge(count) {
     const text = count > 0 ? String(count) : '';
     chrome.action.setBadgeText({ text });
     chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-yt-shield] updateBadge:', err); }
 }
 
 // ---- Message handler ----
@@ -86,7 +86,7 @@ async function incrementCounter() {
     });
 
     updateBadge(dailyCount);
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
 }
 
 // ---- Initialization ----

@@ -5,37 +5,17 @@
 // Reads stats from storage, handles enable/disable toggle.
 // ============================================================
 
-// Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
-function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
-}
-(function initThemeDropdown() {
+// Theme dropdown (shared lib)
+LoveSparkTheme.init();
+(function initAriaExpanded() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
-    menu.addEventListener('click', (e) => {
-      const opt = e.target.closest('.theme-option');
-      if (!opt) return;
-      const theme = opt.dataset.theme;
-      applyTheme(theme);
-      chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+    const observer = new MutationObserver(() => {
+      toggle.setAttribute('aria-expanded', menu.classList.contains('open'));
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    observer.observe(menu, { attributes: true, attributeFilter: ['class'] });
   }
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
-    applyTheme(theme || 'retro');
-  });
 })();
 
 // ---- Messages ----
@@ -74,7 +54,7 @@ function loadStats() {
         updateToggleUI(enabled);
       }
     );
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
 }
 
 // ---- Counter animation ----
@@ -117,7 +97,7 @@ toggleEl.addEventListener('click', () => {
 
   try {
     chrome.storage.local.set({ isEnabled: newState });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
 
   updateToggleUI(newState);
 });
@@ -133,7 +113,7 @@ try {
       animateValue(totalEl, changes.adsNeutralizedTotal.newValue || 0);
     }
   });
-} catch (_) {}
+} catch (err) { console.warn('[lovespark-yt-shield] unknown:', err); }
 
 // ---- Init ----
 
