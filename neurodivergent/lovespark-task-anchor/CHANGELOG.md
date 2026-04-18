@@ -2,6 +2,13 @@
 
 All notable changes to LoveSpark Task Anchor will be documented in this file.
 
+## [1.0.11] - 2026-04-19
+
+### Release — Chrome / Firefox / Edge stores
+- Shared lib & design tokens fully in sync with canonical
+- ls-check: 39/39 pass · contrast audit: 80/80 across 4 themes · permissions audit: clean
+- No functional changes vs 1.0.8 — polish pass on CSS tokens and overnight sync
+
 ## [1.0.8] - 2026-04-02
 
 ### Changed
