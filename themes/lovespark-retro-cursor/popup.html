@@ -4,19 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LoveSpark Retro Cursor Pack</title>
+    <link rel="stylesheet" href="lib/lovespark-base.css">
+    <link rel="stylesheet" href="lib/lovespark-tokens.css">
     <link rel="stylesheet" href="lib/lovespark-fonts.css">
     <link rel="stylesheet" href="popup.css" />
     <link rel="stylesheet" href="lib/lovespark-footer.css">
   </head>
   <body>
-    <main class="shell">
+    <main class="shell" role="dialog" aria-labelledby="popupTitle">
       <section class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;position:relative">
           <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-          <h1>LoveSpark Retro Cursor Pack</h1>
+          <h1 id="popupTitle">LoveSpark Retro Cursor Pack</h1>
           <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
-        <span id="themeLabel">Retro Pink</span> ▾
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
         <div class="theme-dropdown-header">Change Theme</div>
@@ -30,7 +32,7 @@
         <p class="subtitle">Cute cursors with soft glow and sparkle vibes ✨</p>
 
         <label class="toggle-row" for="cursorToggle">
-          <span id="statusText">Cursors: ON</span>
+          <span id="statusText" aria-live="polite">Cursors: ON</span>
           <span class="toggle-wrap">
             <input id="cursorToggle" type="checkbox" checked />
             <span class="slider"></span>
@@ -88,7 +90,13 @@
         </div>
       </section>
     </main>
+    <script src="lib/browser-polyfill.min.js"></script>
+    <script src="lib/lovespark-theme.js"></script>
+    <script src="lib/lovespark-stats.js"></script>
+    <script src="lib/lovespark-badge.js"></script>
+    <script src="lib/lovespark-popup.js"></script>
+    <script src="lib/lovespark-lifecycle.js"></script>
     <script src="lib/lovespark-footer.js"></script>
-<script src="popup.js"></script>
+    <script src="popup.js"></script>
   </body>
 </html>
