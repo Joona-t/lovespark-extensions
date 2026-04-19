@@ -16,9 +16,7 @@ body {
   min-height: 100vh;
   font-family: "Trebuchet MS", "Avenir Next", sans-serif;
   color: var(--ls-text);
-  background:
-    radial-gradient(circle at top right, rgba(255, 157, 197, 0.45), transparent 40%),
-    linear-gradient(180deg, #fff9fc 0%, var(--ls-bg) 100%);
+  background: var(--ls-bg-gradient);
 }
 
 .panel {
@@ -36,12 +34,71 @@ body {
   padding: 1.25rem 1.4rem;
 }
 
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .eyebrow {
   margin: 0;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   color: #9b3a6a;
+}
+
+.theme-dropdown {
+  position: relative;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--ls-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.theme-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin: 0.25rem 0 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--ls-border);
+  border-radius: 8px;
+  box-shadow: 0 6px 16px var(--ls-shadow);
+  z-index: 100;
+  min-width: 120px;
+}
+
+.theme-menu.open {
+  display: block;
+}
+
+.theme-option {
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.theme-option:hover,
+.theme-option.active {
+  background: rgba(255, 79, 157, 0.12);
 }
 
 h1 {
