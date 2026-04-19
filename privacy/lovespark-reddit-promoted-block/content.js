@@ -54,17 +54,15 @@ let persistTimer = null;
 
 function persistCount() {
   if (hiddenCount === 0) return; // nothing new to write
-  const batch = hiddenCount;
+  const pending = hiddenCount;
   hiddenCount = 0;
 
   const today = new Date().toISOString().slice(0, 10);
   browser.storage.local.get(['hiddenToday', 'hiddenTotal', 'lastResetDate']).then((data) => {
     const needsReset = data.lastResetDate !== today;
-    browser.storage.local.set({
-      hiddenToday: needsReset ? batch : (data.hiddenToday || 0) + batch,
-      hiddenTotal: (data.hiddenTotal || 0) + batch,
-      lastResetDate: today,
-    });
+    const newToday = needsReset ? pending : (data.hiddenToday || 0) + pending;
+    const newTotal = (data.hiddenTotal || 0) + pending;
+    browser.storage.local.set({ hiddenToday: newToday, hiddenTotal: newTotal, lastResetDate: today });
   });
 }
 
@@ -133,7 +131,7 @@ function sweep(root) {
     for (const sel of NEW_REDDIT_SELECTORS) {
       try {
         root.querySelectorAll(sel).forEach(hideElement);
-      } catch (_) {}
+      } catch (err) { console.warn('[LoveSpark Reddit Promoted Block] unknown:', err); }
     }
     // Only run the text walk on nodes large enough to contain a post
     if (root === document || root.childElementCount > 3) {
@@ -144,7 +142,7 @@ function sweep(root) {
   for (const sel of SIDEBAR_SELECTORS) {
     try {
       root.querySelectorAll(sel).forEach(hideElement);
-    } catch (_) {}
+    } catch (err) { console.warn('[LoveSpark Reddit Promoted Block] unknown:', err); }
   }
 }
 
