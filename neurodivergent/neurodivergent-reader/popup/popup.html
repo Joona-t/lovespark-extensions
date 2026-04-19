@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neurodivergent Reader</title>
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="../lib/lovespark-tokens.css">
   <link rel="stylesheet" href="../lib/lovespark-fonts.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="../lib/lovespark-footer.css">
@@ -22,7 +24,7 @@
       <div style="display:flex;align-items:center;gap:6px;">
         <div class="theme-dropdown" id="themeDropdown">
       <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Change theme">
-        <span id="themeLabel">Retro Pink</span> &#x25BE;
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> &#x25BE;
       </button>
       <div class="theme-dropdown-menu" id="themeMenu" role="listbox" aria-label="Theme">
         <div class="theme-dropdown-header" aria-hidden="true">Change Theme</div>
@@ -105,7 +107,13 @@
 
 
   </div>
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="../lib/lovespark-lifecycle.js"></script>
+  <script src="../lib/lovespark-stats.js"></script>
+  <script src="../lib/lovespark-badge.js"></script>
+  <script src="../lib/lovespark-popup.js"></script>
   <script src="../lib/lovespark-footer.js"></script>
-<script src="popup.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>

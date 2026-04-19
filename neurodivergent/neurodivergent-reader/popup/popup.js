@@ -79,8 +79,7 @@ function applyTheme(t) {
 
   document.addEventListener('click', () => closeMenu());
 
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
+  chrome.storage.local.get(['theme'], ({ theme }) => {
     applyTheme(theme || 'retro');
   });
 })();
@@ -122,7 +121,7 @@ let msgIntervalId = null;
 
 async function init() {
   // Load settings
-  const { settings: stored = {} } = await chrome.storage.local.get('settings');
+  const { settings: stored = {} } = await chrome.storage.local.get(['settings']);
   settings = mergeDefaults(stored);
 
   applyToggles(settings);
@@ -139,7 +138,7 @@ async function init() {
         updateSiteBtn(isDisabled);
       } catch (_) { /* non-URL tab (chrome://, etc.) */ }
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[popup] isDisabled:', err); }
 
   // Disable site button on non-injectable tabs
   if (!currentDomain) {
@@ -247,7 +246,7 @@ async function ensureInjected() {
     if (!resp?.injected) {
       await chrome.runtime.sendMessage({ type: 'INJECT_TAB', tabId: tab.id });
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[popup] unknown:', err); }
 }
 
 // ── Event handlers ────────────────────────────────────────────────────────────

@@ -73,7 +73,7 @@ function deepMerge(target, source) {
 }
 
 async function getSettings() {
-  const { settings = {} } = await chrome.storage.local.get('settings');
+  const { settings = {} } = await chrome.storage.local.get(['settings']);
   return deepMerge(DEFAULT_SETTINGS, settings);
 }
 

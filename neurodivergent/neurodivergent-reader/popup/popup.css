@@ -382,12 +382,12 @@ body {
 /* ── Disabled state ──────────────────────────────────────────────────────────── */
 
 .popup-container.disabled .features-card {
-  opacity: 0.5;
+  filter: grayscale(0.4) opacity(0.85);
   pointer-events: none;
 }
 
 .popup-container.disabled .site-section {
-  opacity: 0.5;
+  filter: grayscale(0.4) opacity(0.85);
   pointer-events: none;
 }
 

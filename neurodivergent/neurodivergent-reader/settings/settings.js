@@ -48,7 +48,7 @@ const els = {
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 async function init() {
-  const { settings: stored = {} } = await chrome.storage.local.get('settings');
+  const { settings: stored = {} } = await chrome.storage.local.get(['settings']);
   settings = mergeDefaults(stored);
   applyState(settings);
   bindEvents();
