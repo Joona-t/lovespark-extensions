@@ -201,16 +201,22 @@ function renderSettings(settings) {
 /* ── Actions ────────────────────────────────────────── */
 function restoreTab(id, cardEl) {
   if (cardEl) cardEl.classList.add('restoring');
-  chrome.runtime.sendMessage({ action: 'restoreTab', id: id }, function () {
-    refreshState();
-  });
+  try {
+    chrome.runtime.sendMessage({ action: 'restoreTab', id: id }, function () {
+      if (chrome.runtime.lastError) { /* suppress */ }
+      refreshState();
+    });
+  } catch (e) { refreshState(); }
 }
 
 function removeFromGarden(id, cardEl) {
   if (cardEl) cardEl.classList.add('removing');
-  chrome.runtime.sendMessage({ action: 'removeFromGarden', id: id }, function () {
-    refreshState();
-  });
+  try {
+    chrome.runtime.sendMessage({ action: 'removeFromGarden', id: id }, function () {
+      if (chrome.runtime.lastError) { /* suppress */ }
+      refreshState();
+    });
+  } catch (e) { refreshState(); }
 }
 
 function closeActiveTab(tabId, itemEl) {
@@ -231,34 +237,43 @@ function saveSettings() {
     .map(function (d) { return d.trim(); })
     .filter(function (d) { return d.length > 0; });
 
-  chrome.runtime.sendMessage({
-    action: 'updateSettings',
-    settings: {
-      idleThreshold: threshold,
-      maxGarden: maxG,
-      autoArchive: autoArc,
-      excludedDomains: domains
-    }
-  });
+  try {
+    chrome.runtime.sendMessage({
+      action: 'updateSettings',
+      settings: {
+        idleThreshold: threshold,
+        maxGarden: maxG,
+        autoArchive: autoArc,
+        excludedDomains: domains
+      }
+    }, function () {
+      if (chrome.runtime.lastError) { /* suppress */ }
+    });
+  } catch (e) { /* ignore */ }
 }
 
 function clearGarden() {
   if (!confirm('Remove all plants from your garden? This cannot be undone.')) return;
-  chrome.runtime.sendMessage({ action: 'clearGarden' }, function () {
-    refreshState();
-  });
+  try {
+    chrome.runtime.sendMessage({ action: 'clearGarden' }, function () {
+      if (chrome.runtime.lastError) { /* suppress */ }
+      refreshState();
+    });
+  } catch (e) { refreshState(); }
 }
 
 /* ── Refresh ────────────────────────────────────────── */
 function refreshState() {
-  chrome.runtime.sendMessage({ action: 'getState' }, function (state) {
-    if (!state) return;
-    currentState = state;
-    renderStats(state);
-    renderGarden(state.garden);
-    renderActiveTabs(state.activeTabs);
-    renderSettings(state.settings);
-  });
+  try {
+    chrome.runtime.sendMessage({ action: 'getState' }, function (state) {
+      if (chrome.runtime.lastError || !state) return;
+      currentState = state;
+      renderStats(state);
+      renderGarden(state.garden);
+      renderActiveTabs(state.activeTabs);
+      renderSettings(state.settings);
+    });
+  } catch (e) { /* ignore */ }
 }
 
 /* ── Collapsible Sections ───────────────────────────── */

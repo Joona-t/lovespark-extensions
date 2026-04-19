@@ -14,3 +14,11 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-04-19: A11Y-KI004 strict failure — low opacity on muted text (beige theme)
+
+**Problem:** `ls-check --strict` failed on A11Y-KI004. `opacity: 0.8` on `.stat-divider` and `.setting-row textarea::placeholder` was stacked on top of `var(--ls-text-muted)`, dropping effective contrast below WCAG AA in the beige theme.
+**Root cause:** Redundant opacity applied to already-muted token — the muted color handles its own contrast budget; compounding with `opacity` pushed it under the 4.5:1 threshold.
+**Fix:** Removed the `opacity: 0.8` declarations in popup.css at lines 94 and 470, leaving `var(--ls-text-muted)` as the sole muting mechanism. Bumped manifest to 1.0.21.
+**Files:** popup.css, manifest.json
+

@@ -18,7 +18,7 @@
     </div>
     <div class="theme-dropdown">
       <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
-        <span id="themeLabel">Retro Pink</span>
+        <span id="themeLabel" aria-live="polite">Retro Pink</span>
       </button>
       <div id="themeMenu" class="theme-dropdown-menu" role="menu">
         <div class="theme-dropdown-header">Change Theme</div>
@@ -36,17 +36,17 @@
   <div class="stats-bar" aria-live="polite">
     <span class="stat" id="statActive" aria-label="Active tabs">
       <span class="stat-emoji" aria-hidden="true">&#x1F331;</span>
-      <span id="activeCount">0</span> active
+      <span id="activeCount" aria-live="polite">0</span> active
     </span>
     <span class="stat-divider" aria-hidden="true">|</span>
     <span class="stat" id="statArchived" aria-label="Archived tabs">
       <span class="stat-emoji" aria-hidden="true">&#x1F338;</span>
-      <span id="archivedCount">0</span> archived
+      <span id="archivedCount" aria-live="polite">0</span> archived
     </span>
     <span class="stat-divider" aria-hidden="true">|</span>
     <span class="stat" id="statMemory" aria-label="Estimated memory saved">
       <span class="stat-emoji" aria-hidden="true">&#x1F4BE;</span>
-      ~<span id="memorySaved">0</span>mb saved
+      ~<span id="memorySaved" aria-live="polite">0</span>mb saved
     </span>
   </div>
 
@@ -72,7 +72,7 @@
   <section class="collapsible-section">
     <button class="section-toggle" id="activeTabsToggle" aria-expanded="false" aria-controls="activeTabsList">
       <span class="toggle-arrow" aria-hidden="true">&#x25B6;</span>
-      Active Tabs (<span id="activeTabsCount">0</span>)
+      Active Tabs (<span id="activeTabsCount" aria-live="polite">0</span>)
     </button>
     <div id="activeTabsList" class="section-content" hidden>
       <div id="activeTabsContainer"></div>
@@ -130,6 +130,11 @@
     </div>
   </section>
 
+  <!-- Shared lib inventory (synced from Extensions/infrastructure/lovespark-shared-lib):
+       In use:       lib/lovespark-base.css, lib/lovespark-footer.css, lib/lovespark-theme.js, lib/lovespark-footer.js
+       Reserved (service-worker / future use):
+         lib/lovespark-tokens.css, lib/lovespark-popup.js, lib/lovespark-stats.js,
+         lib/lovespark-badge.js, lib/lovespark-lifecycle.js -->
   <script src="lib/lovespark-theme.js"></script>
   <script src="popup.js"></script>
   <script src="lib/lovespark-footer.js"></script>
