@@ -1,18 +1,20 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.11",
+  "version": "1.0.35",
   "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
     "alarms",
-    "notifications"
+    "notifications",
+    "declarativeNetRequest"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "action": {
     "default_popup": "popup.html",
@@ -62,8 +64,7 @@
     "gecko": {
       "id": "focus-blossom@lovespark.suite",
       "data_collection_permissions": {
-        "is_exempt": true,
-        "justification": "This extension does not collect, transmit, or store any user data."
+        "required": ["none"]
       }
     }
   },

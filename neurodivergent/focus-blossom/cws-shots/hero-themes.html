@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Themes Hero (CWS)</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <style>
+    :root {
+      --ls-bg-gradient: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+      --ls-pink-accent: #E8457C;
+      --ls-text-dark: #5C1A36;
+      --ls-text-muted: #9E4D6E;
+      --ls-font-body: 'DM Mono', monospace;
+      --ls-font-display: 'Press Start 2P', cursive;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1280px; height: 800px;
+      background: var(--ls-bg-gradient);
+      font-family: var(--ls-font-body);
+      color: var(--ls-text-dark);
+      overflow: hidden;
+    }
+    .head {
+      text-align: center;
+      padding: 36px 40px 18px;
+    }
+    .eyebrow {
+      font-family: var(--ls-font-display);
+      font-size: 11px; letter-spacing: 2.5px;
+      color: var(--ls-pink-accent);
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-family: var(--ls-font-display);
+      font-size: 26px; line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    h1 .pink { color: var(--ls-pink-accent); }
+    .sub {
+      font-size: 15px; color: var(--ls-text-muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 16px 32px 40px;
+      height: calc(100% - 170px);
+    }
+    .theme-card {
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-label {
+      font-family: var(--ls-font-display);
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--ls-text-dark);
+    }
+    .popup-frame {
+      width: 290px; height: 540px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(94, 20, 51, 0.3),
+                  0 6px 18px rgba(94, 20, 51, 0.2);
+      border: 1px solid rgba(255,255,255,0.5);
+      position: relative;
+    }
+    .popup-frame::before {
+      content: ""; position: absolute; top:0; left:0; right:0; height:22px;
+      background: rgba(255,255,255,0.55); z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+    }
+    .popup-frame::after {
+      content: "● ● ●";
+      position: absolute; top: 6px; left: 10px;
+      font-size: 8px; letter-spacing: 3px;
+      color: rgba(94, 20, 51, 0.35);
+      z-index: 11;
+    }
+    .popup-frame iframe {
+      width: 360px; height: 672px;
+      border: 0; display: block;
+      transform: scale(0.805); transform-origin: 0 0;
+      margin-top: 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <div class="eyebrow">FOUR THEMES · ONE GARDEN</div>
+    <h1>Pick the <span class="pink">vibe</span> your brain needs.</h1>
+    <div class="sub">Retro Pink · Dark · Beige · Slate — switch any time.</div>
+  </div>
+  <div class="grid">
+    <div class="theme-card">
+      <div class="theme-label">RETRO PINK</div>
+      <div class="popup-frame"><iframe src="cws-shots/popup.html?t=retro"></iframe></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-label">DARK</div>
+      <div class="popup-frame"><iframe src="cws-shots/popup.html?t=dark"></iframe></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-label">BEIGE</div>
+      <div class="popup-frame"><iframe src="cws-shots/popup.html?t=beige"></iframe></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-label">SLATE</div>
+      <div class="popup-frame"><iframe src="cws-shots/popup.html?t=slate"></iframe></div>
+    </div>
+  </div>
+  <script>
+    // Apply the requested theme to each iframe, re-applying in case popup.js clobbers it on storage-read
+    const THEME_NAMES = { retro: "Retro Pink", dark: "Dark", beige: "Beige", slate: "Slate" };
+    function applyThemeToIframe(f) {
+      const t = new URL(f.src).searchParams.get("t") || "retro";
+      const doc = f.contentDocument;
+      if (!doc || !doc.body) return;
+      ["retro", "dark", "beige", "slate"].forEach(n => doc.body.classList.remove("theme-" + n));
+      doc.body.classList.add("theme-" + t);
+      const label = doc.getElementById("themeLabel");
+      if (label) label.textContent = THEME_NAMES[t];
+    }
+    function pumpAll() {
+      document.querySelectorAll("iframe").forEach(applyThemeToIframe);
+    }
+    pumpAll();
+    setInterval(pumpAll, 120);
+  </script>
+</body>
+</html>

@@ -11,18 +11,55 @@ const GROWTH_STAGES = [
 
 const FLOWER_TYPE_COUNT = 5;
 
+// Growth speed multiplier: more blocked sites = faster growth for all gardens
+// 1 site = 1.0x, 2 = 1.1x, 5 = 1.4x, 10 = 1.9x, 16+ capped at 2.5x
+const MULTIPLIER_PER_EXTRA_SITE = 0.10;
+const MULTIPLIER_CAP = 2.5;
+
+function calcMultiplier(gardens) {
+  const blockedCount = Object.values(gardens).filter(g => g.isBlocked).length;
+  if (blockedCount <= 0) return 1;
+  return Math.min(MULTIPLIER_CAP, 1 + (blockedCount - 1) * MULTIPLIER_PER_EXTRA_SITE);
+}
+
 // --- Helpers ---
 
 function today() {
-  return new Date().toISOString().slice(0, 10);
+  // Local date in YYYY-MM-DD (en-CA always outputs ISO format in local time)
+  return new Date().toLocaleDateString("en-CA");
 }
 
-function domainToRuleId(domain) {
+// Collision-free rule ID allocator: sequential IDs persisted per-domain in storage.
+// Legacy gardens (pre-1.0.34) relied on a hash → collision-prone; a migration step in
+// syncBlockingRules() rewrites their rules to allocated IDs on first startup.
+async function getRuleIdMap() {
+  const { ruleIds } = await chrome.storage.local.get("ruleIds");
+  return ruleIds || {};
+}
+
+async function assignRuleId(domain) {
+  const data = await chrome.storage.local.get(["ruleIds", "nextRuleId"]);
+  const ruleIds = data.ruleIds || {};
+  if (ruleIds[domain]) return ruleIds[domain];
+  const nextRuleId = data.nextRuleId || 1;
+  ruleIds[domain] = nextRuleId;
+  await chrome.storage.local.set({ ruleIds, nextRuleId: nextRuleId + 1 });
+  return nextRuleId;
+}
+
+async function releaseRuleId(domain) {
+  const { ruleIds } = await chrome.storage.local.get("ruleIds");
+  if (!ruleIds || !ruleIds[domain]) return;
+  delete ruleIds[domain];
+  await chrome.storage.local.set({ ruleIds });
+}
+
+// Legacy hash (kept only so we can find and remove old-style rules during migration)
+function legacyHashRuleId(domain) {
   let hash = 0;
   for (let i = 0; i < domain.length; i++) {
     hash = ((hash << 5) - hash + domain.charCodeAt(i)) | 0;
   }
-  // Rule IDs must be positive integers
   return (Math.abs(hash) % 2000000) + 1;
 }
 
@@ -50,15 +87,14 @@ async function getSettings() {
 
 // --- Notifications ---
 
-const STAGE_MESSAGES = [
-  "A seed has been planted!",
-  "Your garden is sprouting!",
-  "Buds are forming!",
-  "Your garden is in full bloom!",
-  "A thriving garden!"
-];
-
 const STAGE_EMOJIS = ["\ud83c\udf31", "\ud83c\udf3f", "\ud83c\udf37", "\ud83c\udf38", "\ud83c\udf3a"];
+
+function stageMessage(stage) {
+  // Maps growth stage → localized notification body via _locales messages.json
+  const key = `notifyStage${stage}`;
+  const msg = chrome.i18n.getMessage(key);
+  return msg && msg.length ? msg : chrome.i18n.getMessage("notifyFallback");
+}
 
 async function notifyStageUp(domain, stage) {
   const settings = await getSettings();
@@ -68,9 +104,21 @@ async function notifyStageUp(domain, stage) {
     type: "basic",
     iconUrl: "icons/icon-128.png",
     title: `${STAGE_EMOJIS[stage]} ${domain}`,
-    message: STAGE_MESSAGES[stage] || "Your garden is growing!"
+    message: stageMessage(stage)
   });
 }
+
+// Clicking a stage-up notification opens the garden for that domain
+chrome.notifications.onClicked.addListener((notificationId) => {
+  const match = notificationId.match(/^stage-(.+)-(\d+)$/);
+  if (match) {
+    const domain = match[1];
+    chrome.tabs.create({
+      url: chrome.runtime.getURL(`blocked.html?domain=${encodeURIComponent(domain)}`)
+    });
+  }
+  chrome.notifications.clear(notificationId);
+});
 
 // --- Badge ---
 
@@ -85,7 +133,7 @@ async function updateBadge() {
 
 async function blockSite(domain) {
   const gardens = await getGardens();
-  const ruleId = domainToRuleId(domain);
+  const ruleId = await assignRuleId(domain);
 
   await chrome.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [ruleId],
@@ -133,13 +181,17 @@ async function unblockSite(domain) {
   const garden = gardens[domain];
   if (!garden) return;
 
+  const ruleIdMap = await getRuleIdMap();
+  const ruleId = ruleIdMap[domain] || legacyHashRuleId(domain);
   await chrome.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: [domainToRuleId(domain)],
+    removeRuleIds: [ruleId],
     addRules: []
   });
 
   stats.totalGardensDestroyed += 1;
   garden.isBlocked = false;
+  // Lazy-init streak for gardens created before the streak feature existed
+  garden.streak ??= { currentDays: 0, longestDays: 0, lastCheckedDate: today() };
   garden.streak.currentDays = 0;
 
   // 50% decay — not full reset, not free pass
@@ -156,33 +208,44 @@ async function removeSite(domain) {
   if (!gardens[domain]) return;
 
   if (gardens[domain].isBlocked) {
+    const ruleIdMap = await getRuleIdMap();
+    const ruleId = ruleIdMap[domain] || legacyHashRuleId(domain);
     await chrome.declarativeNetRequest.updateDynamicRules({
-      removeRuleIds: [domainToRuleId(domain)],
+      removeRuleIds: [ruleId],
       addRules: []
     });
   }
 
   delete gardens[domain];
+  await releaseRuleId(domain);
   await chrome.storage.local.set({ gardens });
   updateBadge();
 }
 
 // --- Growth ---
 
+// Cap credit per tick at ~25h so forward clock skew, VM snapshot restores, or multi-day
+// browser closures can't instantly vault a garden through every stage. Normal overnight
+// closes (<25h) still credit in full; longer gaps cap at this value.
+const MAX_TICK_CREDIT_MS = 25 * 60 * 60 * 1000;
+
 async function creditGrowth() {
   const gardens = await getGardens();
   const stats = await getStats();
   const now = Date.now();
+  const multiplier = calcMultiplier(gardens);
   let changed = false;
 
   for (const domain of Object.keys(gardens)) {
     const garden = gardens[domain];
     if (!garden.isBlocked) continue;
 
-    const elapsed = now - new Date(garden.lastGrowthTick).getTime();
-    if (elapsed < 0) continue; // clock skew guard
+    const rawElapsed = now - new Date(garden.lastGrowthTick).getTime();
+    if (rawElapsed < 0) continue; // clock skew backwards → skip
+    const elapsed = Math.min(rawElapsed, MAX_TICK_CREDIT_MS); // forward-skew / long-close cap
 
-    garden.totalBlockedMs += elapsed;
+    const boosted = Math.floor(elapsed * multiplier);
+    garden.totalBlockedMs += boosted;
     garden.lastGrowthTick = new Date(now).toISOString();
 
     const newStage = calcStage(garden.totalBlockedMs);
@@ -192,7 +255,7 @@ async function creditGrowth() {
       notifyStageUp(domain, newStage);
     }
 
-    stats.totalBlockedTimeMs += elapsed;
+    stats.totalBlockedTimeMs += boosted;
     changed = true;
   }
 
@@ -209,6 +272,8 @@ async function updateStreaks() {
 
   for (const garden of Object.values(gardens)) {
     if (!garden.isBlocked) continue;
+    // Lazy-init streak for gardens predating the streak feature
+    garden.streak ??= { currentDays: 0, longestDays: 0, lastCheckedDate: todayStr };
     if (garden.streak.lastCheckedDate === todayStr) continue;
 
     garden.streak.currentDays += 1;
@@ -235,7 +300,14 @@ async function syncBlockingRules() {
   const removeIds = [];
 
   for (const [domain, garden] of Object.entries(gardens)) {
-    const ruleId = domainToRuleId(domain);
+    const ruleId = await assignRuleId(domain); // allocates on first call, idempotent thereafter
+    const legacyId = legacyHashRuleId(domain);
+
+    // Remove any stale legacy rule that doesn't match the allocated ID (one-time migration)
+    if (legacyId !== ruleId && existingIds.has(legacyId)) {
+      removeIds.push(legacyId);
+    }
+
     if (garden.isBlocked && !existingIds.has(ruleId)) {
       addRules.push({
         id: ruleId,
@@ -318,19 +390,20 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       }
       case "getGardens": {
         const gardens = await getGardens();
-        // Credit real-time growth for display accuracy
+        // Credit real-time growth for display accuracy, including speed multiplier
         const now = Date.now();
+        const multiplier = calcMultiplier(gardens);
         for (const g of Object.values(gardens)) {
           if (g.isBlocked) {
             const elapsed = now - new Date(g.lastGrowthTick).getTime();
-            g._displayTotalMs = g.totalBlockedMs + Math.max(0, elapsed);
+            g._displayTotalMs = g.totalBlockedMs + Math.floor(Math.max(0, elapsed) * multiplier);
             g._displayStage = calcStage(g._displayTotalMs);
           } else {
             g._displayTotalMs = g.totalBlockedMs;
             g._displayStage = g.growthStage;
           }
         }
-        sendResponse({ gardens });
+        sendResponse({ gardens, multiplier });
         break;
       }
       case "getStats": {

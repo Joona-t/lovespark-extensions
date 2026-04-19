@@ -53,6 +53,7 @@ async function renderGardens() {
   ]);
 
   const gardens = gardenResp.gardens;
+  const multiplier = gardenResp.multiplier ?? 1;
   const stats = statsResp.stats;
   const grid = document.getElementById("gardenGrid");
   const emptyState = document.getElementById("emptyState");
@@ -90,6 +91,8 @@ async function renderGardens() {
   document.getElementById("statBlocked").textContent = totalHours >= 24
     ? Math.floor(totalHours / 24) + "d " + (totalHours % 24) + "h"
     : totalHours + "h";
+
+  document.getElementById("statSpeed").textContent = multiplier.toFixed(1) + "x";
 }
 
 function createGardenCard(garden) {
@@ -106,7 +109,7 @@ function createGardenCard(garden) {
   const hours = Math.floor((totalMs % 86400000) / 3600000);
 
   let timeStr;
-  if (days >= 1) timeStr = `Day ${days}`;
+  if (days >= 1) timeStr = chrome.i18n.getMessage("dayLabel", [String(days)]);
   else if (hours >= 1) timeStr = `${hours}h`;
   else timeStr = `${Math.max(1, Math.floor(totalMs / 60000))}m`;
 
@@ -129,7 +132,7 @@ function createGardenCard(garden) {
   meta.className = "garden-card-meta";
   const stageSpan = document.createElement("span");
   stageSpan.className = "garden-card-stage";
-  stageSpan.textContent = timeStr + (garden.isBlocked ? "" : " (unblocked)");
+  stageSpan.textContent = timeStr + (garden.isBlocked ? "" : chrome.i18n.getMessage("statusUnblocked"));
   const emojiSpan = document.createElement("span");
   emojiSpan.className = "garden-card-emoji";
   emojiSpan.textContent = STAGE_EMOJIS[stage];
@@ -157,9 +160,10 @@ function createGardenCard(garden) {
     parent.appendChild(row);
   }
 
-  addDetailRow(details, "Stage", stageInfo.label);
-  addDetailRow(details, "Flower", FLOWER_TYPES[garden.flowerType % FLOWER_TYPES.length].name);
-  addDetailRow(details, "Streak", `${streak.currentDays}d (best: ${streak.longestDays}d)`);
+  addDetailRow(details, chrome.i18n.getMessage("labelStage"), stageLabel(stage));
+  addDetailRow(details, chrome.i18n.getMessage("labelFlower"), FLOWER_TYPES[garden.flowerType % FLOWER_TYPES.length].name);
+  addDetailRow(details, chrome.i18n.getMessage("labelStreak"),
+    chrome.i18n.getMessage("streakDisplay", [String(streak.currentDays), String(streak.longestDays)]));
 
   const actions = document.createElement("div");
   actions.className = "garden-actions";
@@ -168,21 +172,21 @@ function createGardenCard(garden) {
     unblockBtn.className = "btn-unblock-small";
     unblockBtn.dataset.action = "unblock";
     unblockBtn.dataset.domain = garden.domain;
-    unblockBtn.textContent = "Unblock";
+    unblockBtn.textContent = chrome.i18n.getMessage("btnUnblock");
     actions.appendChild(unblockBtn);
   } else {
     const reblockBtn = document.createElement("button");
     reblockBtn.className = "btn-reblock-small";
     reblockBtn.dataset.action = "reblock";
     reblockBtn.dataset.domain = garden.domain;
-    reblockBtn.textContent = "Re-block";
+    reblockBtn.textContent = chrome.i18n.getMessage("btnReblock");
     actions.appendChild(reblockBtn);
   }
   const removeBtn = document.createElement("button");
   removeBtn.className = "btn-remove-small";
   removeBtn.dataset.action = "remove";
   removeBtn.dataset.domain = garden.domain;
-  removeBtn.textContent = "Remove";
+  removeBtn.textContent = chrome.i18n.getMessage("btnRemove");
   actions.appendChild(removeBtn);
   details.appendChild(actions);
 
@@ -215,12 +219,12 @@ function createGardenCard(garden) {
     const domain = btn.dataset.domain;
 
     if (action === "unblock") {
-      if (!confirm(`Unblock ${domain}? Your garden will lose 50% growth.`)) return;
+      if (!confirm(chrome.i18n.getMessage("confirmUnblock", [domain]))) return;
       await chrome.runtime.sendMessage({ type: "unblockSite", domain });
     } else if (action === "reblock") {
       await chrome.runtime.sendMessage({ type: "blockSite", domain });
     } else if (action === "remove") {
-      if (!confirm(`Remove ${domain} completely? This deletes the garden.`)) return;
+      if (!confirm(chrome.i18n.getMessage("confirmRemove", [domain]))) return;
       await chrome.runtime.sendMessage({ type: "removeSite", domain });
     }
 
@@ -237,7 +241,20 @@ function normalizeDomain(input) {
   return input.trim().toLowerCase()
     .replace(/^https?:\/\//, "")
     .replace(/^www\./, "")
-    .replace(/\/.*$/, "");
+    .replace(/\/.*$/, "")
+    .replace(/\.+$/, "");   // trailing dots ("localhost." → "localhost")
+}
+
+// Accept only plausible hostnames: labels of [a-z0-9-] separated by single dots,
+// at least one dot present, no leading/trailing hyphens per label.
+// Rejects: empty, "reddit..com", "evil|site.com", "localhost" (no TLD), "..",
+// pure numeric IPs (CWS declarativeNetRequest ||filter works poorly on raw IPs anyway).
+const DOMAIN_RE = /^(?!-)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z][a-z0-9-]{1,62}$/;
+
+function isValidDomain(domain) {
+  if (!domain || domain.length > 253) return false;
+  if (domain.includes("..")) return false;
+  return DOMAIN_RE.test(domain);
 }
 
 document.getElementById("addBtn").addEventListener("click", addSite);
@@ -248,7 +265,15 @@ document.getElementById("siteInput").addEventListener("keydown", (e) => {
 async function addSite() {
   const input = document.getElementById("siteInput");
   const domain = normalizeDomain(input.value);
-  if (!domain || !domain.includes(".")) return;
+  if (!isValidDomain(domain)) {
+    input.classList.add("invalid");
+    input.setAttribute("aria-invalid", "true");
+    setTimeout(() => {
+      input.classList.remove("invalid");
+      input.removeAttribute("aria-invalid");
+    }, 1200);
+    return;
+  }
 
   await chrome.runtime.sendMessage({ type: "blockSite", domain });
   input.value = "";

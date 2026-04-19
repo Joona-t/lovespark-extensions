@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Focus Blossom Settings</title>
   <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-tokens.css">
   <link rel="stylesheet" href="settings.css">
 </head>
 <body>
@@ -12,23 +13,35 @@
     <header class="settings-header">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
       <div>
-        <h1 class="header-title">Settings</h1>
-        <span class="header-subtitle">Focus Blossom</span>
+        <h1 class="header-title" data-i18n="settingsHeaderTitle">Settings</h1>
+        <span class="header-subtitle" data-i18n="settingsHeaderSubtitle">Focus Blossom</span>
       </div>
-      <button class="btn-dark-toggle" id="btnDarkMode" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false">
+          <span id="themeLabel">Retro Pink</span> ▾
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu">
+          <div class="theme-dropdown-header" data-i18n="popupChangeTheme">Change Theme</div>
+          <button class="theme-option" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" data-theme="dark">Dark</button>
+          <button class="theme-option" data-theme="beige">Beige</button>
+          <button class="theme-option" data-theme="slate">Slate</button>
+        </div>
+      </div>
     </header>
 
     <!-- Friction Level -->
     <div class="settings-card">
       <div class="settings-row">
         <div class="settings-label-group">
-          <span class="settings-label">Unblock friction</span>
-          <span class="settings-desc">How hard it is to unblock a site</span>
+          <span class="settings-label" data-i18n="settingsLabelFriction">Unblock friction</span>
+          <span class="settings-desc" data-i18n="settingsDescFriction">How hard it is to unblock a site</span>
         </div>
-        <select id="frictionLevel" class="settings-select" aria-label="Unblock friction level">
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+        <select id="frictionLevel" class="settings-select"
+                aria-label="Unblock friction level" data-i18n-aria-label="settingsFrictionAria">
+          <option value="low"    data-i18n="settingsFrictionLow">Low</option>
+          <option value="medium" data-i18n="settingsFrictionMedium">Medium</option>
+          <option value="high"   data-i18n="settingsFrictionHigh">High</option>
         </select>
       </div>
     </div>
@@ -37,16 +50,16 @@
     <div class="settings-card">
       <div class="settings-row">
         <div class="settings-label-group">
-          <span class="settings-label">Show affirmations</span>
-          <span class="settings-desc">Daily self-compassion quotes</span>
+          <span class="settings-label" data-i18n="settingsLabelAffirmations">Show affirmations</span>
+          <span class="settings-desc" data-i18n="settingsDescAffirmations">Daily self-compassion quotes</span>
         </div>
         <div class="toggle-switch" id="toggleAffirmations" tabindex="0" role="switch" aria-checked="true"></div>
       </div>
 
       <div class="settings-row">
         <div class="settings-label-group">
-          <span class="settings-label">Stage notifications</span>
-          <span class="settings-desc">Notify when your garden grows</span>
+          <span class="settings-label" data-i18n="settingsLabelNotifications">Stage notifications</span>
+          <span class="settings-desc" data-i18n="settingsDescNotifications">Notify when your garden grows</span>
         </div>
         <div class="toggle-switch" id="toggleNotifications" tabindex="0" role="switch" aria-checked="true"></div>
       </div>
@@ -54,40 +67,41 @@
 
     <!-- Data -->
     <div class="settings-card">
-      <h2 class="card-title">Data</h2>
+      <h2 class="card-title" data-i18n="settingsCardData">Data</h2>
       <div class="settings-row">
         <div class="settings-label-group">
-          <span class="settings-label">Export gardens</span>
-          <span class="settings-desc">Download all data as JSON</span>
+          <span class="settings-label" data-i18n="settingsLabelExport">Export gardens</span>
+          <span class="settings-desc" data-i18n="settingsDescExport">Download all data as JSON</span>
         </div>
-        <button class="btn-setting" id="exportBtn">Export</button>
+        <button class="btn-setting" id="exportBtn" data-i18n="settingsBtnExport">Export</button>
       </div>
       <div class="settings-row">
         <div class="settings-label-group">
-          <span class="settings-label">Import gardens</span>
-          <span class="settings-desc">Restore from a backup file</span>
+          <span class="settings-label" data-i18n="settingsLabelImport">Import gardens</span>
+          <span class="settings-desc" data-i18n="settingsDescImport">Restore from a backup file</span>
         </div>
-        <button class="btn-setting" id="importBtn">Import</button>
+        <button class="btn-setting" id="importBtn" data-i18n="settingsBtnImport">Import</button>
         <input type="file" id="importFile" accept=".json" style="display:none">
       </div>
     </div>
 
-    <!-- About -->
+    <!-- About — version + suite line filled in by settings.js, links kept static -->
     <div class="settings-card about-card">
       <div class="about-text" id="aboutText">
-        Focus Blossom<br>
-        Part of the LoveSpark Suite
+        <div id="aboutVersion">Focus Blossom</div>
+        <div data-i18n="settingsAboutSuite">Part of the LoveSpark Suite</div>
       </div>
       <div class="about-links">
-        <a href="https://github.com/Joona-t/focus-blossom" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/Joona-t/focus-blossom" target="_blank" rel="noopener noreferrer" data-i18n="settingsAboutGitHub">GitHub</a>
         <span class="about-dot">&middot;</span>
-        <a href="https://joona-t.github.io" target="_blank" rel="noopener noreferrer">Portfolio</a>
+        <a href="https://joona-t.github.io" target="_blank" rel="noopener noreferrer" data-i18n="settingsAboutPortfolio">Portfolio</a>
       </div>
     </div>
 
-    <div class="saved-toast" id="savedToast" aria-live="polite">Saved!</div>
+    <div class="saved-toast" id="savedToast" aria-live="polite" data-i18n="settingsSavedToast">Saved!</div>
   </div>
 
+  <script src="lib/i18n-html.js"></script>
   <script src="settings.js"></script>
 </body>
 </html>

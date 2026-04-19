@@ -85,6 +85,17 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 14px;
+  position: relative;
+}
+
+.info-mascot {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  width: 38px;
+  height: auto;
+  opacity: 0.85;
+  filter: drop-shadow(0 2px 4px rgba(194, 24, 91, 0.2));
 }
 
 .domain-row {

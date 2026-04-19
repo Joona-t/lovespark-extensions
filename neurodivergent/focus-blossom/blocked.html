@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="blocked.css">
 </head>
 <body>
-  <div class="loading-state" id="loadingState">Growing...</div>
+  <div class="loading-state" id="loadingState" data-i18n="blockedLoading">Growing...</div>
 
   <div class="container" id="mainContainer" style="display:none">
     <div class="garden-canvas-wrap">
@@ -16,6 +16,7 @@
     </div>
 
     <div class="info-panel">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="info-mascot">
       <div class="domain-row">
         <span class="stage-emoji" id="stageEmoji"></span>
         <span class="domain-name" id="domainName"></span>
@@ -31,21 +32,22 @@
 
       <div class="affirmation" id="affirmation"></div>
 
-      <button class="back-btn" id="backBtn">&larr; Go Back</button>
+      <button class="back-btn" id="backBtn" data-i18n="blockedBackBtn">&larr; Go Back</button>
 
-      <div class="unblock-link" id="unblockLink" tabindex="0" role="button">I need to visit this site...</div>
+      <div class="unblock-link" id="unblockLink" tabindex="0" role="button" data-i18n="blockedUnblockLink">I need to visit this site...</div>
     </div>
 
     <!-- Friction overlay -->
     <div class="friction-overlay" id="frictionOverlay" style="display:none" role="dialog" aria-labelledby="frictionTitle" aria-modal="true">
       <div class="friction-card">
-        <div class="friction-title" id="frictionTitle">Are you sure?</div>
-        <div class="friction-body" id="frictionBody">
+        <div class="friction-title" id="frictionTitle" data-i18n="blockedFrictionTitle">Are you sure?</div>
+        <div class="friction-body" id="frictionBody" data-i18n="blockedFrictionBody">
           Unblocking will wilt your garden. Your flowers will lose half their growth.
         </div>
         <div class="friction-preview">
           <canvas id="frictionCanvas" width="280" height="160"></canvas>
         </div>
+        <!-- Timer text is fully rendered by blocked.js using chrome.i18n.getMessage("blockedFrictionWait", [seconds]) -->
         <div class="friction-timer" id="frictionTimer" style="display:none" aria-live="polite">
           Wait <span id="timerCount">30</span>s...
         </div>
@@ -54,13 +56,14 @@
           <input type="text" class="friction-input" id="frictionInput" autocomplete="off" spellcheck="false">
         </div>
         <div class="friction-buttons">
-          <button class="btn-cancel" id="frictionCancel">Cancel</button>
-          <button class="btn-unblock" id="frictionConfirm" disabled>I understand, unblock</button>
+          <button class="btn-cancel" id="frictionCancel" data-i18n="blockedFrictionCancel">Cancel</button>
+          <button class="btn-unblock" id="frictionConfirm" disabled data-i18n="blockedFrictionConfirm">I understand, unblock</button>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="lib/i18n-html.js"></script>
   <script src="garden-sprites.js"></script>
   <script src="affirmations.js"></script>
   <script src="garden.js"></script>

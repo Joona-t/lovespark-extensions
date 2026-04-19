@@ -243,7 +243,10 @@ class GardenRenderer {
     this._draw(stage, stageProgress, totalBlockedMs);
 
     if (!this.thumbnailMode && !this.destroying) {
-      this.animFrame = requestAnimationFrame(() => this.render(totalBlockedMs, stage));
+      const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduced) {
+        this.animFrame = requestAnimationFrame(() => this.render(totalBlockedMs, stage));
+      }
     }
   }
 
@@ -256,7 +259,18 @@ class GardenRenderer {
   }
 
   startDestruction(onComplete) {
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.destroying = true;
+
+    if (reduced) {
+      // Skip animation: jump straight to destroyed state
+      this.destroyProgress = 1;
+      this.time = performance.now();
+      this._draw(this._lastStage, this._lastStageProgress, this._lastTotalMs);
+      onComplete && onComplete();
+      return;
+    }
+
     this.destroyProgress = 0;
     const duration = 3000;
     const startTime = performance.now();

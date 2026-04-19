@@ -1,19 +1,46 @@
 // Focus Blossom — Settings Page
 
-// Dark mode
-chrome.storage.local.get(['darkMode'], ({ darkMode }) => {
-  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-  const btn = document.getElementById('btnDarkMode');
-  if (btn) btn.textContent = darkMode ? '☀️' : '🌙';
-});
-function toggleTheme() {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  chrome.storage.local.set({ darkMode: !isDark });
-  const btn = document.getElementById('btnDarkMode');
-  if (btn) btn.textContent = isDark ? '🌙' : '☀️';
+// Theme dropdown (unified with popup — same `theme` storage key, same body.theme-* classes)
+const THEMES = ['retro', 'dark', 'beige', 'slate'];
+const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
+function applyTheme(t) {
+  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
+  document.body.classList.add('theme-' + t);
+  const label = document.getElementById('themeLabel');
+  if (label) label.textContent = THEME_NAMES[t] || t;
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === t);
+  });
 }
-document.getElementById('btnDarkMode').addEventListener('click', toggleTheme);
+(function initThemeDropdown() {
+  const toggle = document.getElementById('themeToggle');
+  const menu = document.getElementById('themeMenu');
+  if (toggle && menu) {
+    function openMenu() { menu.classList.add('open'); toggle.setAttribute('aria-expanded', 'true'); }
+    function closeMenu() { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.contains('open') ? closeMenu() : openMenu(); });
+    menu.addEventListener('click', (e) => {
+      const opt = e.target.closest('.theme-option');
+      if (!opt) return;
+      const theme = opt.dataset.theme;
+      applyTheme(theme);
+      chrome.storage.local.set({ theme });
+      closeMenu();
+      toggle.focus();
+    });
+    document.addEventListener('click', () => closeMenu());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.classList.contains('open')) {
+        closeMenu();
+        toggle.focus();
+      }
+    });
+  }
+  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
+    if (!theme && darkMode) theme = 'dark';
+    applyTheme(theme || 'retro');
+  });
+})();
 
 const toggleAffirmations = document.getElementById("toggleAffirmations");
 const toggleNotifications = document.getElementById("toggleNotifications");
@@ -111,17 +138,17 @@ importFile.addEventListener("change", async (e) => {
 
     // Validate structure
     if (!data.gardens || typeof data.gardens !== "object") {
-      alert("Invalid backup file: missing gardens data.");
+      alert(chrome.i18n.getMessage("settingsImportInvalid"));
       return;
     }
 
-    if (!confirm("This will replace all your current gardens and settings. Continue?")) return;
+    if (!confirm(chrome.i18n.getMessage("settingsImportConfirm"))) return;
 
     await chrome.storage.local.set(data);
     showToast();
     loadSettings();
   } catch (err) {
-    alert("Failed to read backup file: " + err.message);
+    alert(chrome.i18n.getMessage("settingsImportFailed", [err.message]));
   }
 
   importFile.value = "";
@@ -131,12 +158,10 @@ importFile.addEventListener("change", async (e) => {
 
 loadSettings();
 
-// Dynamic version from manifest
-const aboutEl = document.getElementById('aboutText');
-if (aboutEl) {
+// Dynamic version from manifest (the static "Part of the LoveSpark Suite" line is
+// handled via data-i18n in settings.html and stays untouched here)
+const versionEl = document.getElementById('aboutVersion');
+if (versionEl) {
   const ver = chrome.runtime.getManifest().version;
-  aboutEl.textContent = '';
-  aboutEl.append(`Focus Blossom v${ver}`);
-  aboutEl.append(document.createElement('br'));
-  aboutEl.append('Part of the LoveSpark Suite');
+  versionEl.textContent = chrome.i18n.getMessage("settingsAboutVersion", [ver]);
 }

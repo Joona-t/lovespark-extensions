@@ -5,6 +5,8 @@
   const domain = params.get("domain");
   if (!domain) return;
 
+  const stageEmojis = ["\ud83c\udf31", "\ud83c\udf3f", "\ud83c\udf37", "\ud83c\udf38", "\ud83c\udf3a"];
+
   // Fetch garden data + settings from background
   const [gardenResp, settingsResp] = await Promise.all([
     chrome.runtime.sendMessage({ type: "getGardens" }),
@@ -15,8 +17,8 @@
   if (!garden) return;
 
   const settings = settingsResp.settings;
-  const totalMs = garden._displayTotalMs;
-  const stage = garden._displayStage;
+  let totalMs = garden._displayTotalMs;
+  let stage = garden._displayStage;
 
   // Hide loading, show main
   document.getElementById("loadingState").style.display = "none";
@@ -41,37 +43,49 @@
   const renderer = new GardenRenderer(canvas, garden.flowerType);
   renderer.render(totalMs, stage);
 
-  // --- Info panel ---
-  const stageInfo = GROWTH_STAGES[stage];
-  const stageEmojis = ["\ud83c\udf31", "\ud83c\udf3f", "\ud83c\udf37", "\ud83c\udf38", "\ud83c\udf3a"];
+  // --- Info panel (called on load + polled every 30s for live updates) ---
+  function renderInfoPanel(currentTotalMs, currentStage) {
+    const stageInfo = GROWTH_STAGES[currentStage];
 
-  document.getElementById("stageEmoji").textContent = stageEmojis[stage];
-  document.getElementById("domainName").textContent = domain;
+    document.getElementById("stageEmoji").textContent = stageEmojis[currentStage];
+    document.getElementById("domainName").textContent = domain;
 
-  // Day count
-  const days = Math.floor(totalMs / 86400000);
-  const hours = Math.floor((totalMs % 86400000) / 3600000);
-  let timeStr;
-  if (days >= 1) {
-    timeStr = `Day ${days}`;
-  } else if (hours >= 1) {
-    timeStr = `${hours}h`;
-  } else {
-    const mins = Math.max(1, Math.floor(totalMs / 60000));
-    timeStr = `${mins}m`;
+    // Day count
+    const days = Math.floor(currentTotalMs / 86400000);
+    const hours = Math.floor((currentTotalMs % 86400000) / 3600000);
+    let timeStr;
+    if (days >= 1) {
+      timeStr = chrome.i18n.getMessage("dayLabel", [String(days)]);
+    } else if (hours >= 1) {
+      timeStr = `${hours}h`;
+    } else {
+      const mins = Math.max(1, Math.floor(currentTotalMs / 60000));
+      timeStr = `${mins}m`;
+    }
+    document.getElementById("dayCount").textContent = `\u2014 ${timeStr}`;
+    document.getElementById("stageLabel").textContent = stageLabel(currentStage);
+
+    // Progress bar — progress within current stage toward next
+    const nextStage = GROWTH_STAGES[currentStage + 1];
+    let progressPct = 100;
+    if (nextStage) {
+      const range = nextStage.minMs - stageInfo.minMs;
+      progressPct = Math.min(100, Math.round(((currentTotalMs - stageInfo.minMs) / range) * 100));
+    }
+    document.getElementById("progressBar").style.width = progressPct + "%";
+    document.getElementById("progressText").textContent = progressPct + "%";
   }
-  document.getElementById("dayCount").textContent = `\u2014 ${timeStr}`;
-  document.getElementById("stageLabel").textContent = stageInfo.label;
+  renderInfoPanel(totalMs, stage);
 
-  // Progress bar — progress within current stage toward next
-  const nextStage = GROWTH_STAGES[stage + 1];
-  let progressPct = 100;
-  if (nextStage) {
-    const range = nextStage.minMs - stageInfo.minMs;
-    progressPct = Math.min(100, Math.round(((totalMs - stageInfo.minMs) / range) * 100));
-  }
-  document.getElementById("progressBar").style.width = progressPct + "%";
-  document.getElementById("progressText").textContent = progressPct + "%";
+  // Poll every 30s to keep progress live without requiring reload
+  setInterval(async () => {
+    const resp = await chrome.runtime.sendMessage({ type: "getGardens" });
+    const g = resp.gardens && resp.gardens[domain];
+    if (!g) return;
+    totalMs = g._displayTotalMs;
+    stage = g._displayStage;
+    renderInfoPanel(totalMs, stage);
+  }, 30000);
 
   // Affirmation
   if (settings.showAffirmations) {
@@ -139,11 +153,15 @@ function startFriction(domain, garden, level, stage, totalMs) {
   let inputDone = false;
   let waitSeconds = 0;
 
+  function renderTimer(seconds) {
+    timerEl.textContent = chrome.i18n.getMessage("blockedFrictionWait", [String(seconds)]);
+  }
+
   if (level === "low") {
     timerDone = true;
     inputDone = true;
     confirmBtn.disabled = false;
-    confirmBtn.textContent = "Unblock";
+    confirmBtn.textContent = chrome.i18n.getMessage("blockedFrictionConfirmLow");
   } else if (level === "medium") {
     waitSeconds = 10;
     inputDone = true;
@@ -156,8 +174,9 @@ function startFriction(domain, garden, level, stage, totalMs) {
     waitSeconds = 30;
     timerEl.style.display = "block";
     inputWrap.style.display = "block";
-    document.getElementById("frictionInputLabel").textContent = `Type "${domain}" to confirm:`;
-    confirmBtn.textContent = "I understand, unblock";
+    document.getElementById("frictionInputLabel").textContent =
+      chrome.i18n.getMessage("blockedFrictionInputLabel", [domain]);
+    confirmBtn.textContent = chrome.i18n.getMessage("blockedFrictionConfirm");
     fRenderer.startDestruction(() => {});
   }
 
@@ -165,10 +184,10 @@ function startFriction(domain, garden, level, stage, totalMs) {
   let interval = null;
   const inputAC = new AbortController();
   if (waitSeconds > 0) {
-    timerCount.textContent = waitSeconds;
+    renderTimer(waitSeconds);
     interval = setInterval(() => {
       waitSeconds--;
-      timerCount.textContent = waitSeconds;
+      renderTimer(waitSeconds);
       if (waitSeconds <= 0) {
         clearInterval(interval);
         interval = null;

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Popup Hero (CWS)</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <style>
+    :root {
+      --ls-bg-pink-light: #FDCFE1;
+      --ls-bg-pink: #F9A8C9;
+      --ls-bg-pink-deep: #F48CAF;
+      --ls-bg-gradient: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+      --ls-pink-accent: #E8457C;
+      --ls-pink-deep: #D63466;
+      --ls-text-dark: #5C1A36;
+      --ls-text-muted: #9E4D6E;
+      --ls-font-body: 'DM Mono', monospace;
+      --ls-font-display: 'Press Start 2P', cursive;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 1280px; height: 800px;
+      background: var(--ls-bg-gradient);
+      font-family: var(--ls-font-body);
+      color: var(--ls-text-dark);
+      overflow: hidden;
+    }
+    .stage {
+      width: 1280px; height: 800px;
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 0;
+      align-items: center;
+    }
+    .sidebar {
+      padding: 80px 70px;
+      display: flex; flex-direction: column;
+      justify-content: center;
+    }
+    .eyebrow {
+      font-family: var(--ls-font-display);
+      font-size: 11px;
+      color: var(--ls-pink-accent);
+      letter-spacing: 2.5px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: var(--ls-font-display);
+      font-size: 30px;
+      line-height: 1.35;
+      margin-bottom: 22px;
+      color: var(--ls-text-dark);
+    }
+    h1 .pink { color: var(--ls-pink-accent); }
+    p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--ls-text-muted);
+      margin-bottom: 14px;
+    }
+    .features {
+      margin-top: 26px;
+      font-size: 14px;
+      line-height: 2;
+    }
+    .features div { margin-bottom: 4px; }
+    .popup-holder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 40px;
+    }
+    .popup-shell {
+      width: 360px;
+      height: 680px;
+      background: transparent;
+      border-radius: 22px;
+      box-shadow: 0 30px 80px rgba(94, 20, 51, 0.35),
+                  0 10px 30px rgba(94, 20, 51, 0.25);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    .popup-shell::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0; height: 28px;
+      background: rgba(255,255,255,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+      z-index: 10;
+    }
+    .popup-shell::after {
+      content: "● ● ●";
+      position: absolute; top: 8px; left: 12px;
+      font-size: 9px; letter-spacing: 4px;
+      color: rgba(94, 20, 51, 0.35);
+      z-index: 11;
+    }
+    .popup-shell iframe {
+      width: 360px; height: 680px;
+      border: 0;
+      display: block;
+      margin-top: 28px;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="sidebar">
+      <div class="eyebrow">FOCUS BLOSSOM · POPUP</div>
+      <h1>Every blocked site grows a <span class="pink">flower garden.</span></h1>
+      <p>Add a doomscroll domain. Sparky the mascot starts watering. The longer you resist, the more it blooms — from seed to thriving garden.</p>
+      <p>Made for neurodivergent brains that respond better to rewards than willpower.</p>
+      <div class="features">
+        <div>🌱 Track every streak, every site</div>
+        <div>🌸 5 flower types · 5 growth stages</div>
+        <div>🔥 Longest streak + total time blocked</div>
+        <div>⚡ Speed multiplier for consistency</div>
+      </div>
+    </div>
+    <div class="popup-holder">
+      <div class="popup-shell">
+        <iframe src="cws-shots/popup.html?v=1"></iframe>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

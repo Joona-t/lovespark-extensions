@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Settings (CWS screenshot)</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-tokens.css">
+  <link rel="stylesheet" href="settings.css">
+  <style>
+    /* CWS-screenshot overrides — fill 1280x800 with side-by-side marketing + settings */
+    html, body { margin: 0; padding: 0; }
+    body {
+      width: 1280px;
+      height: 800px;
+      min-height: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 540px;
+      gap: 0;
+      overflow: hidden;
+      justify-content: stretch;
+    }
+    .cws-sidebar {
+      padding: 72px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: var(--ls-text-dark);
+    }
+    .cws-sidebar .eyebrow {
+      font-family: var(--ls-font-display);
+      font-size: 11px;
+      color: var(--ls-pink-accent);
+      letter-spacing: 2.5px;
+      margin-bottom: 20px;
+    }
+    .cws-sidebar h1 {
+      font-family: var(--ls-font-display);
+      font-size: 28px;
+      line-height: 1.35;
+      margin: 0 0 20px 0;
+    }
+    .cws-sidebar h1 .pink { color: var(--ls-pink-accent); }
+    .cws-sidebar p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 14px 0;
+      color: var(--ls-text-muted);
+    }
+    .cws-sidebar .features { margin-top: 24px; font-size: 14px; line-height: 1.9; }
+    .cws-sidebar .features div { margin-bottom: 4px; }
+    .settings-container {
+      max-width: none !important;
+      width: 100%;
+      padding: 36px 40px 36px 20px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+  </style>
+</head>
+<body>
+  <script src="cws-shots/mock.js"></script>
+  <div class="cws-sidebar">
+    <div class="eyebrow">SETTINGS · FULL CONTROL</div>
+    <h1>Tune the <span class="pink">friction</span> to your focus style.</h1>
+    <p>Three unblock levels — from "I just need this" to "make me really think about it." Choose what your brain actually needs.</p>
+    <p>Export your gardens, switch between four cozy themes, toggle affirmations — all stored locally on your device. No account. No cloud. No tracking, ever.</p>
+    <div class="features">
+      <div>🌸 Daily affirmations on every blocked page</div>
+      <div>🔔 Stage notifications when gardens grow</div>
+      <div>💾 Export + import — your data is yours</div>
+      <div>🎨 Retro Pink · Dark · Beige · Slate</div>
+    </div>
+  </div>
+  <div class="settings-container">
+    <header class="settings-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <div>
+        <h1 class="header-title">Settings</h1>
+        <span class="header-subtitle">Focus Blossom</span>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false">
+          <span id="themeLabel">Retro Pink</span> ▾
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" data-theme="dark">Dark</button>
+          <button class="theme-option" data-theme="beige">Beige</button>
+          <button class="theme-option" data-theme="slate">Slate</button>
+        </div>
+      </div>
+    </header>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Unblock friction</span>
+          <span class="settings-desc">How hard it is to unblock a site</span>
+        </div>
+        <select id="frictionLevel" class="settings-select" aria-label="Unblock friction level">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high" selected>High</option>
+        </select>
+      </div>
+    </div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Show affirmations</span>
+          <span class="settings-desc">Daily self-compassion quotes</span>
+        </div>
+        <div class="toggle-switch active" id="toggleAffirmations" tabindex="0" role="switch" aria-checked="true"></div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Stage notifications</span>
+          <span class="settings-desc">Notify when your garden grows</span>
+        </div>
+        <div class="toggle-switch active" id="toggleNotifications" tabindex="0" role="switch" aria-checked="true"></div>
+      </div>
+    </div>
+    <div class="settings-card">
+      <h2 class="card-title">Data</h2>
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Export gardens</span>
+          <span class="settings-desc">Download all data as JSON</span>
+        </div>
+        <button class="btn-setting" id="exportBtn">Export</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label-group">
+          <span class="settings-label">Import gardens</span>
+          <span class="settings-desc">Restore from a backup file</span>
+        </div>
+        <button class="btn-setting" id="importBtn">Import</button>
+        <input type="file" id="importFile" accept=".json" style="display:none">
+      </div>
+    </div>
+    <div class="settings-card about-card">
+      <div class="about-text" id="aboutText">Focus Blossom<br>Part of the LoveSpark Suite</div>
+      <div class="about-links">
+        <a href="#">GitHub</a><span class="about-dot">&middot;</span><a href="#">Portfolio</a>
+      </div>
+    </div>
+    <div class="saved-toast" id="savedToast">Saved!</div>
+  </div>
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Small promo tile</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      width: 440px;
+      height: 280px;
+      background: linear-gradient(135deg, #ffeaf4 0%, #ffb8d4 60%, #e8457c 100%);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      box-sizing: border-box;
+      font-family: 'DM Mono', monospace;
+      overflow: hidden;
+      position: relative;
+    }
+    .mascot {
+      width: 120px;
+      height: auto;
+      flex-shrink: 0;
+      filter: drop-shadow(0 6px 12px rgba(194, 24, 91, 0.25));
+    }
+    .text {
+      margin-left: 20px;
+      color: #4b2b47;
+    }
+    .title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 18px;
+      line-height: 1.35;
+      margin: 0 0 10px 0;
+      color: #4b2b47;
+    }
+    .title .pink { color: #c2185b; }
+    .sub {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #6b4764;
+      margin: 0;
+    }
+    /* Decorative flower emojis */
+    .deco {
+      position: absolute;
+      font-size: 20px;
+      opacity: 0.55;
+    }
+    .d1 { top: 16px; right: 24px; }
+    .d2 { bottom: 16px; right: 100px; }
+    .d3 { top: 40px; right: 80px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <img src="mascot.png" class="mascot" alt="Sparky">
+  <div class="text">
+    <div class="title">Block sites.<br><span class="pink">Grow a garden.</span></div>
+    <p class="sub">Pink, cozy, private. A focus tool for neurodivergent minds.</p>
+  </div>
+  <span class="deco d1">🌸</span>
+  <span class="deco d2">🌿</span>
+  <span class="deco d3">✨</span>
+</body>
+</html>
