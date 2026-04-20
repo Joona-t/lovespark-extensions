@@ -41,8 +41,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
 
   if (msg.action === 'log-session') {
-    logSession(msg.type);
-    sendResponse({ ok: true });
+    logSession(msg.type).then(() => sendResponse({ ok: true }));
     return true;
   }
 

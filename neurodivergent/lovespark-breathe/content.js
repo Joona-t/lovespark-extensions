@@ -94,16 +94,23 @@ function toggleDimmer(enabled) {
 
 /* MutationObserver for dynamic content */
 let dimmerObserver = null;
+let dimmerDebounceTimer = null;
 
 function startDimmerObserver() {
   if (dimmerObserver) return;
   dimmerObserver = new MutationObserver(() => {
-    if (dimmerActive) applyDimmer();
+    if (!dimmerActive) return;
+    if (dimmerDebounceTimer) clearTimeout(dimmerDebounceTimer);
+    dimmerDebounceTimer = setTimeout(applyDimmer, 250);
   });
   dimmerObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 function stopDimmerObserver() {
+  if (dimmerDebounceTimer) {
+    clearTimeout(dimmerDebounceTimer);
+    dimmerDebounceTimer = null;
+  }
   if (dimmerObserver) {
     dimmerObserver.disconnect();
     dimmerObserver = null;

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Breathe",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "Breathing exercises, grounding techniques, and comment dimming \u2014 emotional regulation for ADHD brains.",
   "permissions": [
     "storage",
@@ -50,7 +50,28 @@
       ]
     }
   ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "lovespark-breathe@lovespark.love",
+      "strict_min_version": "109.0"
+    }
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "mascot.png"
+      ],
+      "matches": [
+        "*://*.twitter.com/*",
+        "*://*.x.com/*",
+        "*://*.reddit.com/*",
+        "*://*.facebook.com/*",
+        "*://*.youtube.com/*",
+        "*://*.instagram.com/*"
+      ]
+    }
+  ]
 }

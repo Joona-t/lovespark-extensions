@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.19] — 2026-04-20
+
+### Fixed
+- **Sparky not showing in Step Back overlay** — added `web_accessible_resources` to manifest so `mascot.png` loads correctly from content script DOM injection
+- **CSP violation on every popup open** — removed broken `@import url('https://fonts.googleapis.com/...')` that was blocked by `font-src 'self'`; popup falls back to system fonts gracefully
+- **logSession async race** — background now awaits `logSession()` before responding so popup log refreshes with correct counts
+
+### Improved
+- **MutationObserver debounced (250ms)** — comment dimmer observer reduced from ~60 querySelectorAll calls/sec to ≤4/sec during active scrolling
+- **Dead lib scripts removed** — `lovespark-stats.js`, `lovespark-badge.js`, `lovespark-popup.js`, `lovespark-lifecycle.js` were loaded in popup context but never called; removed to reduce parse overhead
+
+---
+
 ## [1.0.17] — 2026-04-16
 
 ### Added
