@@ -1,5 +1,9 @@
 'use strict';
 
+// LoveSparkTheme: this dashboard ships a custom embedded dark retro theme
+// instead of the shared LoveSparkTheme switcher — all styles are in
+// dashboard.css and the inline <style> block of dashboard.html.
+
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const SELF_ID = chrome.runtime.id;
@@ -39,10 +43,25 @@ const toastsEl      = document.getElementById('toasts');
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
 
-function escapeHtml(str) {
-  const d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
+function makeEl(tag, opts = {}) {
+  const el = document.createElement(tag);
+  if (opts.class) el.className = opts.class;
+  if (opts.text != null) el.textContent = opts.text;
+  if (opts.attrs) {
+    for (const [k, v] of Object.entries(opts.attrs)) el.setAttribute(k, v);
+  }
+  if (opts.data) {
+    for (const [k, v] of Object.entries(opts.data)) el.dataset[k] = v;
+  }
+  return el;
+}
+
+function clearChildren(el) {
+  while (el.firstChild) el.removeChild(el.firstChild);
+}
+
+function emptyStateEl(text) {
+  return makeEl('div', { class: 'empty-state', text });
 }
 
 function isLoveSpark(ext) {
@@ -82,7 +101,8 @@ async function loadExtensions() {
     allExtensions = all.filter(ext => ext.type === 'extension');
     render();
   } catch (err) {
-    gridEl.innerHTML = '<div class="empty-state">Error: ' + escapeHtml(err.message) + '</div>';
+    clearChildren(gridEl);
+    gridEl.appendChild(emptyStateEl('Error: ' + err.message));
   }
 }
 
@@ -107,12 +127,20 @@ function updateCategoryTabs() {
     counts[cat] = (counts[cat] || 0) + 1;
   }
 
-  let html = '<button class="cat-tab' + (activeCategory === 'all' ? ' active' : '') + '" data-cat="all">All</button>';
+  clearChildren(tabsEl);
+  tabsEl.appendChild(makeEl('button', {
+    class: 'cat-tab' + (activeCategory === 'all' ? ' active' : ''),
+    text: 'All',
+    data: { cat: 'all' },
+  }));
   for (const cat of CATEGORIES) {
     if (!counts[cat.id]) continue;
-    html += '<button class="cat-tab' + (activeCategory === cat.id ? ' active' : '') + '" data-cat="' + cat.id + '">' + cat.label + '</button>';
+    tabsEl.appendChild(makeEl('button', {
+      class: 'cat-tab' + (activeCategory === cat.id ? ' active' : ''),
+      text: cat.label,
+      data: { cat: cat.id },
+    }));
   }
-  tabsEl.innerHTML = html;
 }
 
 function renderGrid() {
@@ -140,30 +168,44 @@ function renderGrid() {
     return a.name.localeCompare(b.name);
   });
 
+  clearChildren(gridEl);
+
   // Empty state
   if (!filtered.length) {
-    gridEl.innerHTML = '<div class="empty-state">' +
-      (searchQuery ? 'No extensions match your search \u2728' : 'Just you and me \u2728 \u2014 install some extensions!') +
-      '</div>';
+    gridEl.appendChild(emptyStateEl(
+      searchQuery ? 'No extensions match your search \u2728' : 'Just you and me \u2728 \u2014 install some extensions!'
+    ));
     return;
   }
 
-  gridEl.innerHTML = filtered.map(createCard).join('');
+  for (const ext of filtered) gridEl.appendChild(createCard(ext));
+}
 
-  // Toggle listeners
-  gridEl.querySelectorAll('.toggle-input:not([disabled])').forEach(input => {
+function buildToggle(ext, isSelf) {
+  if (isSelf) {
+    return makeEl('span', { class: 'self-badge', text: "That's me! \u2728" });
+  }
+
+  const label = makeEl('label', {
+    class: ext.mayDisable ? 'toggle-wrap' : 'toggle-wrap disabled',
+    attrs: ext.mayDisable ? {} : { title: 'Managed by your organization' },
+  });
+  const input = makeEl('input', { class: 'toggle-input', attrs: { type: 'checkbox' } });
+  if (ext.enabled || !ext.mayDisable) input.checked = true;
+  if (!ext.mayDisable) {
+    input.disabled = true;
+  } else {
+    input.dataset.extId = ext.id;
+    input.dataset.extName = ext.name;
     input.addEventListener('change', e => {
       toggleExtension(e.target.dataset.extId, e.target.checked, e.target.dataset.extName);
     });
-  });
-
-  // Icon error fallbacks
-  gridEl.querySelectorAll('.card-icon img').forEach(img => {
-    img.addEventListener('error', () => {
-      img.style.display = 'none';
-      img.parentElement.classList.add('fallback-icon');
-    });
-  });
+  }
+  const track = makeEl('span', { class: 'toggle-track' });
+  track.appendChild(makeEl('span', { class: 'toggle-knob' }));
+  label.appendChild(input);
+  label.appendChild(track);
+  return label;
 }
 
 function createCard(ext) {
@@ -173,35 +215,41 @@ function createCard(ext) {
   const isSelf = ext.id === SELF_ID;
   const iconUrl = getExtIcon(ext);
 
-  const iconHtml = iconUrl
-    ? '<img src="' + iconUrl + '" alt="" width="48" height="48">'
-    : '';
+  let cardClass = 'ext-card';
+  if (isLS) cardClass += ' ls-card';
+  if (!ext.enabled) cardClass += ' disabled-card';
+  const card = makeEl('div', { class: cardClass });
 
-  let toggleHtml;
-  if (isSelf) {
-    toggleHtml = '<span class="self-badge">That\'s me! \u2728</span>';
-  } else if (!ext.mayDisable) {
-    toggleHtml = '<label class="toggle-wrap disabled" title="Managed by your organization">' +
-      '<input type="checkbox" class="toggle-input" checked disabled>' +
-      '<span class="toggle-track"><span class="toggle-knob"></span></span></label>';
-  } else {
-    toggleHtml = '<label class="toggle-wrap">' +
-      '<input type="checkbox" class="toggle-input" data-ext-id="' + ext.id + '" data-ext-name="' + escapeHtml(ext.name) + '"' + (ext.enabled ? ' checked' : '') + '>' +
-      '<span class="toggle-track"><span class="toggle-knob"></span></span></label>';
+  // Top row: icon + info + toggle
+  const top = makeEl('div', { class: 'card-top' });
+  const iconBox = makeEl('div', { class: iconUrl ? 'card-icon' : 'card-icon fallback-icon' });
+  if (iconUrl) {
+    const img = makeEl('img', { attrs: { src: iconUrl, alt: '', width: '48', height: '48' } });
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      iconBox.classList.add('fallback-icon');
+    });
+    iconBox.appendChild(img);
   }
+  top.appendChild(iconBox);
 
-  return '<div class="ext-card' + (isLS ? ' ls-card' : '') + (!ext.enabled ? ' disabled-card' : '') + '">' +
-    '<div class="card-top">' +
-      '<div class="card-icon' + (!iconUrl ? ' fallback-icon' : '') + '">' + iconHtml + '</div>' +
-      '<div class="card-info">' +
-        '<div class="card-name">' + (isLS ? '<span class="ls-sparkle">\u2728</span> ' : '') + escapeHtml(ext.name) + '</div>' +
-        '<div class="card-version">v' + escapeHtml(ext.version) + '</div>' +
-      '</div>' +
-      toggleHtml +
-    '</div>' +
-    '<div class="card-desc">' + escapeHtml(ext.description || 'No description') + '</div>' +
-    '<span class="cat-badge badge-' + cat + '">' + catObj.label + '</span>' +
-  '</div>';
+  const info = makeEl('div', { class: 'card-info' });
+  const name = makeEl('div', { class: 'card-name' });
+  if (isLS) {
+    name.appendChild(makeEl('span', { class: 'ls-sparkle', text: '\u2728' }));
+    name.appendChild(document.createTextNode(' '));
+  }
+  name.appendChild(document.createTextNode(ext.name));
+  info.appendChild(name);
+  info.appendChild(makeEl('div', { class: 'card-version', text: 'v' + ext.version }));
+  top.appendChild(info);
+
+  top.appendChild(buildToggle(ext, isSelf));
+  card.appendChild(top);
+
+  card.appendChild(makeEl('div', { class: 'card-desc', text: ext.description || 'No description' }));
+  card.appendChild(makeEl('span', { class: 'cat-badge badge-' + cat, text: catObj.label }));
+  return card;
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────
