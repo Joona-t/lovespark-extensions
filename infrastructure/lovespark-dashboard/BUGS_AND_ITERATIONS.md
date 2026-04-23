@@ -2,6 +2,21 @@
 
 Running log of every bug fix and iteration. Append new entries at the top.
 
+## 2026-04-22 — v1.0.29 dead-lib cleanup
+
+**Problem:** `ls-check` flagged 9 unreferenced files in `lib/` (BRAND-DEAD-LIB)
+and a phantom `#themeLabel` aria-live warning coming from the unused
+`lovespark-theme.js`. Health stuck at 83, stall-detector had flagged the
+extension as low-health for 5 nights.
+
+**Root cause:** Dashboard is self-contained with its own embedded CSS and
+theme styling; the shared-lib files reintroduced by an earlier sync were never
+wired into `dashboard.html`.
+
+**Fix:** Deleted the 9 unused lib files (kept `lovespark-fonts.css` which is
+actually referenced). Bumped manifest to `1.0.29`. `ls-check` now reports
+39/39 pass, health 85.
+
 ## 2026-04-17 — v1.0.21 strict-pass sweep
 
 **Problems:**
