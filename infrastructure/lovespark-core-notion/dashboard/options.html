@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <div id="cursorSettings" class="module-settings">
+      <div id="cursorSettings" class="module-settings" aria-live="polite">
         <p class="settings-label">Theme</p>
         <div class="theme-grid" id="themeGrid">
           <button class="theme-swatch" data-theme="retro-pink" title="Retro Pink">
@@ -131,9 +131,9 @@
       <p class="card-desc">Disable LoveSpark on these domains</p>
       <div class="exclusion-input-row">
         <input type="text" id="exclusionInput" class="text-input" placeholder="example.com" autocomplete="off">
-        <button id="addExclusion" class="btn-pink">+</button>
+        <button id="addExclusion" class="btn-pink" aria-label="Add domain to exclusions">+</button>
       </div>
-      <ul id="exclusionList" class="exclusion-list"></ul>
+      <ul id="exclusionList" class="exclusion-list" aria-live="polite"></ul>
     </section>
 
     <!-- Data -->
@@ -147,13 +147,16 @@
         <label class="btn-pink btn-secondary" for="importFile">Import</label>
         <input type="file" id="importFile" accept=".json" hidden>
       </div>
-      <p id="dataStatus" class="data-status"></p>
+      <p id="dataStatus" class="data-status" aria-live="polite" role="status"></p>
     </section>
 
     <footer class="footer">
       <p>LoveSpark Suite 💕</p>
     </footer>
   </div>
+  <span id="themeLabel" aria-live="polite" hidden></span>
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

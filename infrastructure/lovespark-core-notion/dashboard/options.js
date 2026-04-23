@@ -60,7 +60,7 @@ function render(state) {
 }
 
 function renderExclusions(sites) {
-  exclusionList.innerHTML = "";
+  exclusionList.replaceChildren();
   for (const site of sites) {
     const li = document.createElement("li");
     li.className = "exclusion-item";
@@ -196,4 +196,5 @@ browser.storage.onChanged.addListener((changes, area) => {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 
+if (typeof LoveSparkTheme !== "undefined") LoveSparkTheme.init();
 getState().then(render);
