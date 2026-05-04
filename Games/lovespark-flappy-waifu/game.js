@@ -17,8 +17,15 @@
 
   const toggle = document.getElementById('gameThemeToggle');
   const menu = document.getElementById('gameThemeMenu');
+  function syncExpanded() {
+    if (toggle) toggle.setAttribute('aria-expanded', String(menu.classList.contains('open')));
+  }
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+      syncExpanded();
+    });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
@@ -26,8 +33,12 @@
       applyGameTheme(theme);
       chrome.storage.local.set({ theme });
       menu.classList.remove('open');
+      syncExpanded();
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => {
+      menu.classList.remove('open');
+      syncExpanded();
+    });
   }
 
   if (typeof chrome !== 'undefined' && chrome.storage) {
@@ -240,7 +251,8 @@ const Game = (() => {
       if (audioCtx.state === 'suspended') audioCtx.resume();
       loadMilestoneSound();
       loadUwuSound();
-    } catch (_) {}
+      loadBgm();
+    } catch (err) { console.warn('[lovespark-flappy-waifu] unknown:', err); }
   }
 
   function loadMilestoneSound() {
@@ -281,6 +293,116 @@ const Game = (() => {
     src.connect(gain);
     gain.connect(audioCtx.destination);
     src.start(0);
+  }
+
+  // ─── Background music (BGM) ───
+  // Looping ambient track. Lifecycle: hydrate prefs → user gesture starts audioCtx →
+  // loadBgm decodes file → bgmStart on game start → keeps playing across deaths.
+  let bgmBuffer = null;
+  let bgmSource = null;       // active AudioBufferSourceNode (loop=true)
+  let bgmGainNode = null;     // dedicated gain — independent of SFX
+  let bgmEnabled = true;
+  let bgmVolume = 0.25;
+  let bgmHydrated = false;
+
+  function loadBgm() {
+    if (!audioCtx || bgmBuffer) return;
+    fetch('audio/bgm-main.mp3')
+      .then(r => r.arrayBuffer())
+      .then(buf => audioCtx.decodeAudioData(buf))
+      .then(decoded => {
+        bgmBuffer = decoded;
+        if (bgmEnabled && bgmHydrated && loopActive && !bgmSource) bgmStart();
+      })
+      .catch(() => {});
+  }
+
+  function bgmStart() {
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    if (!bgmBuffer || bgmSource) return;
+    const src = audioCtx.createBufferSource();
+    const gain = audioCtx.createGain();
+    src.buffer = bgmBuffer;
+    src.loop = true;
+    const now = audioCtx.currentTime;
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(bgmVolume, now + 1.2);
+    src.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start(0);
+    bgmSource = src;
+    bgmGainNode = gain;
+  }
+
+  function bgmStop(fadeMs) {
+    if (!bgmSource || !bgmGainNode || !audioCtx) return;
+    const now = audioCtx.currentTime;
+    const fadeSec = (fadeMs == null ? 600 : fadeMs) / 1000;
+    const currentVal = bgmGainNode.gain.value;
+    bgmGainNode.gain.cancelScheduledValues(now);
+    bgmGainNode.gain.setValueAtTime(currentVal, now);
+    bgmGainNode.gain.linearRampToValueAtTime(0, now + fadeSec);
+    const src = bgmSource;
+    bgmSource = null;
+    bgmGainNode = null;
+    setTimeout(() => { try { src.stop(); } catch (e) {} }, (fadeSec * 1000) + 50);
+  }
+
+  function bgmSetVolume(v01) {
+    bgmVolume = Math.max(0, Math.min(1, +v01 || 0));
+    if (bgmGainNode && audioCtx) {
+      const now = audioCtx.currentTime;
+      const currentVal = bgmGainNode.gain.value;
+      bgmGainNode.gain.cancelScheduledValues(now);
+      bgmGainNode.gain.setValueAtTime(currentVal, now);
+      bgmGainNode.gain.linearRampToValueAtTime(bgmVolume, now + 0.15);
+    }
+  }
+
+  function bgmSetEnabled(en) {
+    bgmEnabled = !!en;
+    updateMuteButton();
+    if (bgmEnabled) {
+      if (audioCtx && audioCtx.state === 'running' && bgmBuffer && !bgmSource) bgmStart();
+    } else {
+      bgmStop();
+    }
+  }
+
+  function updateMuteButton() {
+    const btn = document.getElementById('mute-btn');
+    if (!btn) return;
+    btn.setAttribute('aria-pressed', String(bgmEnabled));
+    btn.textContent = bgmEnabled ? '\u{1F50A}' : '\u{1F507}';
+    btn.classList.toggle('muted', !bgmEnabled);
+  }
+
+  function hydrateBgmPrefs(done) {
+    if (typeof chrome === 'undefined' || !chrome.storage) {
+      bgmHydrated = true;
+      updateMuteButton();
+      if (done) done();
+      return;
+    }
+    chrome.storage.local.get(['bgmEnabled', 'bgmVolume'], (data) => {
+      const toPersist = {};
+      if (typeof data.bgmEnabled === 'boolean') {
+        bgmEnabled = data.bgmEnabled;
+      } else {
+        bgmEnabled = !REDUCED_MOTION;
+        toPersist.bgmEnabled = bgmEnabled;
+      }
+      if (typeof data.bgmVolume === 'number' && isFinite(data.bgmVolume)) {
+        bgmVolume = Math.max(0, Math.min(1, data.bgmVolume));
+      } else {
+        bgmVolume = 0.25;
+        toPersist.bgmVolume = bgmVolume;
+      }
+      if (Object.keys(toPersist).length) chrome.storage.local.set(toPersist);
+      bgmHydrated = true;
+      updateMuteButton();
+      if (done) done();
+    });
   }
 
   function playTone(freq, dur, vol, type, freqEnd) {
@@ -633,7 +755,7 @@ const Game = (() => {
         chrome.storage.local.set(updated);
       });
     } else {
-      try { localStorage.setItem('flappyWaifuBest', bestScore); } catch (_) {}
+      try { localStorage.setItem('flappyWaifuBest', bestScore); } catch (err) { console.warn('[lovespark-flappy-waifu] unknown:', err); }
       // Minimal hearts calc for non-extension mode
       runHearts = state.score;
       runGrade = getRunGrade(state.score, bestScore).grade;
@@ -1610,17 +1732,34 @@ const Game = (() => {
     // Hearts breakdown
     const heartsEl = document.getElementById('death-hearts');
     if (heartsEl) {
-      let html = '';
-      if (runHeartsBreakdown.pipes) html += '<div class="hearts-row"><span>Pipes ' + state.score + '</span><span>+' + runHeartsBreakdown.pipes + ' \u{1F496}</span></div>';
-      if (runHeartsBreakdown.graze) html += '<div class="hearts-row"><span>Grazes</span><span>+' + runHeartsBreakdown.graze + ' \u{1F496}</span></div>';
-      if (runHeartsBreakdown.golden) html += '<div class="hearts-row hearts-bonus"><span>Golden Pipes</span><span>+' + runHeartsBreakdown.golden + ' \u{1F496}</span></div>';
-      if (runHeartsBreakdown.combo) html += '<div class="hearts-row"><span>Combo</span><span>+' + runHeartsBreakdown.combo + ' \u{1F496}</span></div>';
-      if (runHeartsBreakdown.newBest) html += '<div class="hearts-row hearts-bonus"><span>New Best!</span><span>+' + runHeartsBreakdown.newBest + ' \u{1F496}</span></div>';
-      if (runHeartsBreakdown.newMedal) html += '<div class="hearts-row hearts-bonus"><span>New Medal!</span><span>+' + runHeartsBreakdown.newMedal + ' \u{1F496}</span></div>';
-      if (runHeartsBreakdown.daily) html += '<div class="hearts-row hearts-bonus"><span>Daily \u2713</span><span>+' + runHeartsBreakdown.daily + ' \u{1F496}</span></div>';
-      if (luckyRun) html += '<div class="hearts-row hearts-lucky"><span>LUCKY! 2x</span><span>+' + runHeartsBreakdown.lucky + ' \u{1F496}</span></div>';
-      html += '<div class="hearts-total"><span>Total</span><span>' + runHearts + ' \u{1F496}</span></div>';
-      heartsEl.innerHTML = html;
+      heartsEl.replaceChildren();
+      const HEART = '\u{1F496}';
+      const addRow = (cls, label, value) => {
+        const row = document.createElement('div');
+        row.className = cls;
+        const lhs = document.createElement('span');
+        lhs.textContent = label;
+        const rhs = document.createElement('span');
+        rhs.textContent = '+' + value + ' ' + HEART;
+        row.append(lhs, rhs);
+        heartsEl.appendChild(row);
+      };
+      if (runHeartsBreakdown.pipes)    addRow('hearts-row',                'Pipes ' + state.score, runHeartsBreakdown.pipes);
+      if (runHeartsBreakdown.graze)    addRow('hearts-row',                'Grazes',               runHeartsBreakdown.graze);
+      if (runHeartsBreakdown.golden)   addRow('hearts-row hearts-bonus',   'Golden Pipes',         runHeartsBreakdown.golden);
+      if (runHeartsBreakdown.combo)    addRow('hearts-row',                'Combo',                runHeartsBreakdown.combo);
+      if (runHeartsBreakdown.newBest)  addRow('hearts-row hearts-bonus',   'New Best!',            runHeartsBreakdown.newBest);
+      if (runHeartsBreakdown.newMedal) addRow('hearts-row hearts-bonus',   'New Medal!',           runHeartsBreakdown.newMedal);
+      if (runHeartsBreakdown.daily)    addRow('hearts-row hearts-bonus',   'Daily \u2713',         runHeartsBreakdown.daily);
+      if (luckyRun)                    addRow('hearts-row hearts-lucky',   'LUCKY! 2x',            runHeartsBreakdown.lucky);
+      const total = document.createElement('div');
+      total.className = 'hearts-total';
+      const totalLabel = document.createElement('span');
+      totalLabel.textContent = 'Total';
+      const totalValue = document.createElement('span');
+      totalValue.textContent = runHearts + ' ' + HEART;
+      total.append(totalLabel, totalValue);
+      heartsEl.appendChild(total);
     }
 
     // Hearts balance
@@ -1631,8 +1770,17 @@ const Game = (() => {
     const dailyEl = document.getElementById('death-daily');
     if (dailyEl && dailyChallenge) {
       const pct = Math.min(100, (dailyChallengeProgress / dailyChallenge.target) * 100);
-      dailyEl.innerHTML = '<div class="daily-label">' + (dailyChallengeComplete ? '\u2713 ' : '') + dailyChallenge.desc + '</div>' +
-        '<div class="daily-bar"><div class="daily-fill" style="width:' + pct + '%"></div></div>';
+      dailyEl.replaceChildren();
+      const labelEl = document.createElement('div');
+      labelEl.className = 'daily-label';
+      labelEl.textContent = (dailyChallengeComplete ? '\u2713 ' : '') + dailyChallenge.desc;
+      const barEl = document.createElement('div');
+      barEl.className = 'daily-bar';
+      const fillEl = document.createElement('div');
+      fillEl.className = 'daily-fill';
+      fillEl.style.width = pct + '%';
+      barEl.appendChild(fillEl);
+      dailyEl.append(labelEl, barEl);
       dailyEl.style.display = 'block';
     } else if (dailyEl) {
       dailyEl.style.display = 'none';
@@ -1674,6 +1822,10 @@ const Game = (() => {
     spawnPipe();
     // V2: Start ambient pulse
     startPulse();
+    // BGM: kick off if enabled and ready (else loadBgm callback will start it on decode)
+    if (bgmEnabled && bgmHydrated && audioCtx && audioCtx.state === 'running' && bgmBuffer && !bgmSource) {
+      bgmStart();
+    }
   }
 
   // ─── Events ───
@@ -1712,6 +1864,35 @@ const Game = (() => {
       }
     }
   });
+
+  // ─── BGM wiring: hydrate prefs, wire mute button, listen for settings changes ───
+  hydrateBgmPrefs();
+
+  const muteBtnEl = document.getElementById('mute-btn');
+  if (muteBtnEl) {
+    muteBtnEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (!audioCtx) initAudio();
+      const next = !bgmEnabled;
+      bgmSetEnabled(next);
+      if (typeof chrome !== 'undefined' && chrome.storage) {
+        chrome.storage.local.set({ bgmEnabled: next });
+      }
+    });
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+    chrome.storage.onChanged.addListener((changes, area) => {
+      if (area !== 'local') return;
+      if (changes.bgmEnabled && typeof changes.bgmEnabled.newValue === 'boolean') {
+        bgmSetEnabled(changes.bgmEnabled.newValue);
+      }
+      if (changes.bgmVolume && typeof changes.bgmVolume.newValue === 'number') {
+        bgmSetVolume(changes.bgmVolume.newValue);
+      }
+    });
+  }
 
   return { start: startGame };
 })();

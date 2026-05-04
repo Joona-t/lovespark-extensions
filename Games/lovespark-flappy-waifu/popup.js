@@ -15,8 +15,15 @@ function applyTheme(t) {
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
+  function syncExpanded() {
+    if (toggle) toggle.setAttribute('aria-expanded', String(menu.classList.contains('open')));
+  }
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+      syncExpanded();
+    });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
@@ -24,8 +31,12 @@ function applyTheme(t) {
       applyTheme(theme);
       chrome.storage.local.set({ theme });
       menu.classList.remove('open');
+      syncExpanded();
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => {
+      menu.classList.remove('open');
+      syncExpanded();
+    });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -99,7 +110,12 @@ chrome.storage.local.get(null, (data) => {
   document.getElementById('stat-combo').textContent = data.bestCombo || 0;
 
   // Hearts
-  document.getElementById('hearts-badge').innerHTML = (data.hearts || 0) + ' <span class="heart-icon">&hearts;</span>';
+  const heartsBadge = document.getElementById('hearts-badge');
+  heartsBadge.textContent = (data.hearts || 0) + ' ';
+  const heartIcon = document.createElement('span');
+  heartIcon.className = 'heart-icon';
+  heartIcon.textContent = '♥';
+  heartsBadge.appendChild(heartIcon);
 
   // Mastery
   const mastery = getMastery(data.totalPipes || 0);
@@ -133,14 +149,15 @@ chrome.storage.local.get(null, (data) => {
   const streak = data.streak || 0;
   document.getElementById('streak-count').textContent = streak;
   const stampsEl = document.getElementById('streak-stamps');
+  stampsEl.replaceChildren();
   const dayInCycle = streak % 7;
-  let stampsHtml = '';
   for (let i = 0; i < 7; i++) {
     const filled = i < dayInCycle || (dayInCycle === 0 && streak > 0);
-    stampsHtml += '<span class="stamp' + (filled ? ' stamp-filled' : '') + '">' +
-      (filled ? STREAK_STAMPS[i] : '\u25CB') + '</span>';
+    const stamp = document.createElement('span');
+    stamp.className = 'stamp' + (filled ? ' stamp-filled' : '');
+    stamp.textContent = filled ? STREAK_STAMPS[i] : '\u25CB';
+    stampsEl.appendChild(stamp);
   }
-  stampsEl.innerHTML = stampsHtml;
 });
 
 /* ── Author / Ko-fi Footer ── */

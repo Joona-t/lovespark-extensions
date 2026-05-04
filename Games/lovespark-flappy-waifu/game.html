@@ -15,10 +15,10 @@
   <div id="title-row">
     <div id="title">Flappy <span>Waifu</span></div>
     <div class="game-theme-dropdown" id="gameThemeDropdown">
-      <button class="game-theme-trigger" id="gameThemeToggle">
+      <button class="game-theme-trigger" id="gameThemeToggle" aria-expanded="false" aria-haspopup="menu" aria-controls="gameThemeMenu">
         <span id="gameThemeLabel">Retro Pink</span> ▾
       </button>
-      <div class="game-theme-menu" id="gameThemeMenu">
+      <div class="game-theme-menu" id="gameThemeMenu" role="menu">
         <div class="game-theme-header">Change Theme</div>
         <button class="theme-option" data-theme="retro">Retro Pink</button>
         <button class="theme-option" data-theme="dark">Dark</button>
@@ -36,9 +36,12 @@
         <div id="score-label">Score</div>
         <div id="score-display">0</div>
       </div>
-      <div id="best-display">
-        <div id="best-label">Best</div>
-        <div id="best-num">0</div>
+      <div id="hud-right">
+        <div id="best-display">
+          <div id="best-label">Best</div>
+          <div id="best-num">0</div>
+        </div>
+        <button id="mute-btn" type="button" aria-label="Toggle music" aria-pressed="true" title="Toggle music">&#x1F50A;</button>
       </div>
     </div>
 

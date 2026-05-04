@@ -119,3 +119,27 @@ document.getElementById('confirm-yes').addEventListener('click', () => {
     loadStats();
   });
 });
+
+// ─── Music settings ───
+const bgmToggle = document.getElementById('bgm-toggle');
+const bgmVolume = document.getElementById('bgm-volume');
+
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+chrome.storage.local.get(['bgmEnabled', 'bgmVolume'], (data) => {
+  const enabled = typeof data.bgmEnabled === 'boolean' ? data.bgmEnabled : !REDUCED_MOTION;
+  const volume = typeof data.bgmVolume === 'number' && isFinite(data.bgmVolume)
+    ? Math.max(0, Math.min(1, data.bgmVolume))
+    : 0.25;
+  bgmToggle.checked = enabled;
+  bgmVolume.value = String(Math.round(volume * 100));
+});
+
+bgmToggle.addEventListener('change', () => {
+  chrome.storage.local.set({ bgmEnabled: bgmToggle.checked });
+});
+
+bgmVolume.addEventListener('input', () => {
+  const v = Math.max(0, Math.min(1, parseInt(bgmVolume.value, 10) / 100));
+  chrome.storage.local.set({ bgmVolume: v });
+});

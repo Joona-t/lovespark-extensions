@@ -193,6 +193,12 @@ canvas {
   opacity: 0.8;
 }
 
+#hud-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
 #best-display { text-align: right; }
 
 #best-num {
@@ -210,6 +216,44 @@ canvas {
   text-transform: uppercase;
   font-weight: 600;
   opacity: 0.6;
+}
+
+#mute-btn {
+  pointer-events: auto;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 110, 180, 0.45);
+  border-radius: 10px;
+  color: var(--pink-bright);
+  cursor: pointer;
+  text-shadow: 0 0 8px #ff6eb466;
+  box-shadow: 0 0 12px rgba(255, 110, 180, 0.25);
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+#mute-btn:hover {
+  background: rgba(255, 110, 180, 0.18);
+  box-shadow: 0 0 18px rgba(255, 110, 180, 0.45);
+}
+
+#mute-btn:focus-visible {
+  outline: 2px solid var(--pink-bright);
+  outline-offset: 2px;
+}
+
+#mute-btn:active { transform: scale(0.94); }
+
+#mute-btn.muted {
+  color: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.25);
+  text-shadow: none;
+  box-shadow: none;
 }
 
 /* Overlay */
@@ -533,6 +577,17 @@ body.theme-dark .game-theme-trigger {
   border-color: rgba(255,110,180,0.2);
 }
 
+body.theme-dark #mute-btn {
+  background: rgba(255, 110, 180, 0.12);
+  border-color: rgba(255, 110, 180, 0.55);
+  color: #ff9fd3;
+}
+body.theme-dark #mute-btn:hover { background: rgba(255, 110, 180, 0.22); }
+body.theme-dark #mute-btn.muted {
+  color: rgba(240, 230, 246, 0.5);
+  border-color: rgba(240, 230, 246, 0.2);
+}
+
 body.theme-dark::before {
   background-image:
     radial-gradient(1px 1px at 8% 15%, #ffffff55 0%, transparent 100%),
@@ -585,6 +640,19 @@ body.theme-beige .game-theme-menu .theme-option.active {
   background: rgba(196,128,106,0.12);
 }
 
+body.theme-beige #mute-btn {
+  background: rgba(92, 74, 42, 0.08);
+  border-color: rgba(196, 128, 106, 0.55);
+  color: #5c4a2a;
+  text-shadow: none;
+  box-shadow: none;
+}
+body.theme-beige #mute-btn:hover { background: rgba(92, 74, 42, 0.15); }
+body.theme-beige #mute-btn.muted {
+  color: rgba(92, 74, 42, 0.45);
+  border-color: rgba(92, 74, 42, 0.2);
+}
+
 body.theme-beige::before {
   background-image: none;
 }
@@ -609,6 +677,24 @@ body.theme-slate .game-theme-trigger {
   color: #ecececcc;
   background: rgba(255,255,255,0.06);
   border-color: rgba(255,255,255,0.12);
+}
+
+body.theme-slate #mute-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(212, 113, 78, 0.55);
+  color: #d4714e;
+  text-shadow: 0 0 6px rgba(212, 113, 78, 0.35);
+  box-shadow: 0 0 10px rgba(212, 113, 78, 0.18);
+}
+body.theme-slate #mute-btn:hover {
+  background: rgba(212, 113, 78, 0.12);
+  box-shadow: 0 0 14px rgba(212, 113, 78, 0.35);
+}
+body.theme-slate #mute-btn.muted {
+  color: rgba(236, 236, 236, 0.5);
+  border-color: rgba(236, 236, 236, 0.2);
+  text-shadow: none;
+  box-shadow: none;
 }
 
 body.theme-slate::before {
