@@ -8,16 +8,18 @@
   const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
   const STORAGE_KEY_PACK = "lovesparkCursorPack";
   const DEFAULT_PACK = "retro-pink";
+  // Y2K Korean lineup: 9 packs × {emoji, pointer} variants = 18 SVG-based packs
+  const Y2K_NAMES = [
+    "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
+    "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
+  ];
+  const Y2K_PACKS = Y2K_NAMES.flatMap((n) => [`${n}-emoji`, `${n}-pointer`]);
   const ALLOWED_PACKS = new Set([
     "retro-pink", "sakura-peach", "starlight-purple",
-    "moonlight-rose", "candy-floss", "cyber-cherry",
-    "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
+    ...Y2K_PACKS
   ]);
-  // New themes use SVG cursors (default.svg, pointer.svg, text.svg, wait.svg)
-  const SVG_PACKS = new Set([
-    "moonlight-rose", "candy-floss", "cyber-cherry",
-    "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
-  ]);
+  // SVG-based packs (default.svg, pointer.svg, text.svg, wait.svg)
+  const SVG_PACKS = new Set(Y2K_PACKS);
 
   function sanitizePack(pack) {
     if (typeof pack === "string" && ALLOWED_PACKS.has(pack)) {
@@ -32,19 +34,23 @@
 
   function buildCursorCSS(pack) {
     if (SVG_PACKS.has(pack)) {
+      // Emoji variants center the icon (16 16); Pointer variants use traditional offsets
+      const isEmoji = pack.endsWith("-emoji");
+      const defH = isEmoji ? "16 16" : "3 1";
+      const ptrH = isEmoji ? "16 16" : "8 4";
       const def = cursorURL(pack, "default.svg");
       const ptr = cursorURL(pack, "pointer.svg");
       const txt = cursorURL(pack, "text.svg");
       const wait = cursorURL(pack, "wait.svg");
       return `
 html, body, body *, body *::before, body *::after {
-  cursor: url("${def}") 3 1, auto !important;
+  cursor: url("${def}") ${defH}, auto !important;
 }
 a, area, button, summary, label[for], [role="button"], [role="link"], input[type="submit"], input[type="button"], .clickable, [onclick], [tabindex]:not([tabindex="-1"]) {
-  cursor: url("${ptr}") 3 1, pointer !important;
+  cursor: url("${ptr}") ${ptrH}, pointer !important;
 }
 input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"] {
-  cursor: url("${txt}") 8 8, text !important;
+  cursor: url("${txt}") 16 16, text !important;
 }
 .loading, [aria-busy="true"] {
   cursor: url("${wait}") 16 16, wait !important;

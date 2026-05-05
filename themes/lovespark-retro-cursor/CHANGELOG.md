@@ -2,6 +2,14 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.32] - 2026-05-05
+- **Y2K Korean Collection**: replaced 7 New Collection SVG packs with 9 Y2K Korean themed packs in dual variants (Emoji + Pointer subcategories) — 18 new pack registrations, 21 packs total.
+- New packs: Honey Bunny (꿀토끼), Cyworld Dotti (싸이월드), Coquette Ribbon (리본), Strawberry Milk (딸기우유), Glossy Pearl, Bubble Boba (버블티), Phone Charm (폰꽂이), Heart Locket (하트 로켓), Cyber Butterfly (나비).
+- Removed: Moonlight Rose, Candy Floss, Cyber Cherry, Mint Blossom, Golden Hour, Holographic, Obsidian Heart (off-brand palette and flat icon style).
+- Popup nav restructured into OG / Y2K Korean → Emoji + Pointer collapsible groups using native `<details>` for keyboard accessibility.
+- Storage migration: stale New Collection pack IDs auto-fall-back to retro-pink on upgrade.
+- Per-cursor-type hotspot map: Pointer variants use traditional offsets, Emoji variants center on the icon.
+
 ## [1.1.20] - 2026-04-09
 - Shared lib sync and fleet audit compliance
 

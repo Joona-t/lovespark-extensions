@@ -1,5 +1,13 @@
 # Bugs & Iterations
 
+## 2026-05-05: Y2K Korean Collection — replaced New Collection with dual-variant lineup
+
+**Problem:** The 7 SVG packs in "New Collection" (Moonlight Rose, Candy Floss, Cyber Cherry, Mint Blossom, Golden Hour, Holographic, Obsidian Heart) drifted from the Pink Y2K Korean kawaii brand — palette went mint/orange/red, and the flat-icon style felt disconnected from cursor functionality.
+**Root cause:** Initial New Collection optimized for procedural-generation variety in `gen_cursors.py` rather than brand consistency. Aesthetic divergence wasn't caught before ship because there was no brand audit gate.
+**Fix:** Removed all 7 New Collection packs. Added 9 Y2K Korean themed packs in two design subcategories — Emoji (symmetric kawaii icon as the cursor) and Pointer (traditional asymmetric arrow with theme decoration) — for 18 new pack registrations. Final lineup: 21 packs (3 OG + 18 Y2K Korean). Pack IDs follow `{name}-emoji` / `{name}-pointer` convention. Storage migration in popup.js falls stale pack IDs back to retro-pink.
+**Files:** manifest.json, gen_cursors.py, content_script.js, popup.html, popup.js, popup.css, README.md, CHANGELOG.md
+**Version:** 1.1.32
+
 ## : |2026-03-05|||Fix theme dropdown: add missing CSS styles for styled dropdown menu
 
 **Problem:** |2026-03-05|||Fix theme dropdown: add missing CSS styles for styled dropdown menu

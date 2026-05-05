@@ -41,8 +41,17 @@ function applyTheme(t) {
 const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
 const STORAGE_KEY_PACK = "lovesparkCursorPack";
 const DEFAULT_PACK = "retro-pink";
+const Y2K_NAMES = [
+  "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
+  "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
+];
+const Y2K_PACKS = Y2K_NAMES.flatMap((n) => [`${n}-emoji`, `${n}-pointer`]);
 const ALLOWED_PACKS = new Set([
   "retro-pink", "sakura-peach", "starlight-purple",
+  ...Y2K_PACKS
+]);
+// Stale IDs from removed New Collection — migrated to retro-pink on first load after upgrade
+const STALE_PACKS = new Set([
   "moonlight-rose", "candy-floss", "cyber-cherry",
   "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
 ]);
@@ -79,7 +88,14 @@ async function saveAndBroadcast(enabled, pack) {
 async function loadState() {
   const result = await chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
   const enabled = typeof result[STORAGE_KEY_ENABLED] === "boolean" ? result[STORAGE_KEY_ENABLED] : true;
-  const pack = sanitizePack(result[STORAGE_KEY_PACK]);
+  let pack = result[STORAGE_KEY_PACK];
+  if (typeof pack === "string" && STALE_PACKS.has(pack)) {
+    // Migrate stale New Collection ID to default and persist so content_script reloads correctly
+    pack = DEFAULT_PACK;
+    await chrome.storage.local.set({ [STORAGE_KEY_PACK]: DEFAULT_PACK });
+  } else {
+    pack = sanitizePack(pack);
+  }
   render(enabled, pack);
 }
 
