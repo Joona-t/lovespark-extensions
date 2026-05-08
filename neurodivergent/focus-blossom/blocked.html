@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="blocked.css">
 </head>
 <body>
-  <div class="loading-state" id="loadingState" data-i18n="blockedLoading">Growing...</div>
+  <div class="loading-state" id="loadingState" data-i18n="blockedLoading" aria-live="polite">Growing...</div>
 
-  <div class="container" id="mainContainer" style="display:none">
+  <div class="container" id="mainContainer" style="display:none" aria-live="polite">
     <div class="garden-canvas-wrap">
       <canvas id="gardenCanvas"></canvas>
     </div>
@@ -18,19 +18,19 @@
     <div class="info-panel">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="info-mascot">
       <div class="domain-row">
-        <span class="stage-emoji" id="stageEmoji"></span>
-        <span class="domain-name" id="domainName"></span>
-        <span class="day-count" id="dayCount"></span>
+        <span class="stage-emoji" id="stageEmoji" aria-live="polite"></span>
+        <span class="domain-name" id="domainName" aria-live="polite"></span>
+        <span class="day-count" id="dayCount" aria-live="polite"></span>
       </div>
 
-      <div class="stage-label" id="stageLabel"></div>
+      <div class="stage-label" id="stageLabel" aria-live="polite"></div>
 
       <div class="progress-bar-wrap">
         <div class="progress-bar" id="progressBar"></div>
         <span class="progress-text" id="progressText" aria-live="polite"></span>
       </div>
 
-      <div class="affirmation" id="affirmation"></div>
+      <div class="affirmation" id="affirmation" aria-live="polite"></div>
 
       <button class="back-btn" id="backBtn" data-i18n="blockedBackBtn">&larr; Go Back</button>
 
@@ -38,7 +38,7 @@
     </div>
 
     <!-- Friction overlay -->
-    <div class="friction-overlay" id="frictionOverlay" style="display:none" role="dialog" aria-labelledby="frictionTitle" aria-modal="true">
+    <div class="friction-overlay" id="frictionOverlay" style="display:none" role="dialog" aria-labelledby="frictionTitle" aria-modal="true" aria-live="polite">
       <div class="friction-card">
         <div class="friction-title" id="frictionTitle" data-i18n="blockedFrictionTitle">Are you sure?</div>
         <div class="friction-body" id="frictionBody" data-i18n="blockedFrictionBody">
@@ -51,7 +51,7 @@
         <div class="friction-timer" id="frictionTimer" style="display:none" aria-live="polite">
           Wait <span id="timerCount">30</span>s...
         </div>
-        <div class="friction-input-wrap" id="frictionInputWrap" style="display:none">
+        <div class="friction-input-wrap" id="frictionInputWrap" style="display:none" aria-live="polite">
           <label class="friction-input-label" id="frictionInputLabel" for="frictionInput">Type the domain to confirm:</label>
           <input type="text" class="friction-input" id="frictionInput" autocomplete="off" spellcheck="false">
         </div>

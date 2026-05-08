@@ -71,17 +71,17 @@ function calcStage(totalBlockedMs) {
 }
 
 async function getGardens() {
-  const data = await chrome.storage.local.get("gardens");
+  const data = await chrome.storage.local.get(["gardens"]);
   return data.gardens || {};
 }
 
 async function getStats() {
-  const data = await chrome.storage.local.get("stats");
+  const data = await chrome.storage.local.get(["stats"]);
   return data.stats || { totalGardensGrown: 0, totalGardensDestroyed: 0, longestStreak: 0, totalBlockedTimeMs: 0 };
 }
 
 async function getSettings() {
-  const data = await chrome.storage.local.get("settings");
+  const data = await chrome.storage.local.get(["settings"]);
   return data.settings || { isEnabled: true, showAffirmations: true, unblockFriction: "high" };
 }
 
@@ -198,7 +198,7 @@ async function unblockSite(domain) {
   garden.totalBlockedMs = Math.floor(garden.totalBlockedMs * 0.5);
   garden.growthStage = calcStage(garden.totalBlockedMs);
 
-  await chrome.storage.local.set({ gardens, stats });
+  await chrome.storage.local.set({ gardens: gardens, stats: stats });
   updateBadge();
   return garden;
 }
@@ -260,7 +260,7 @@ async function creditGrowth() {
   }
 
   if (changed) {
-    await chrome.storage.local.set({ gardens, stats });
+    await chrome.storage.local.set({ gardens: gardens, stats: stats });
   }
 }
 
@@ -284,7 +284,28 @@ async function updateStreaks() {
   }
 
   if (changed) {
-    await chrome.storage.local.set({ gardens, stats });
+    await chrome.storage.local.set({ gardens: gardens, stats: stats });
+  }
+}
+
+// Renamed-host aliases: a blocked garden for one side must also block the other
+// (e.g. "twitter.com" gardens predating the rename to "x.com").
+const ALIASES = {
+  "twitter.com": ["x.com"],
+  "x.com": ["twitter.com"]
+};
+
+// One-shot migration: ensure every blocked garden's aliases are also blocked.
+// Adds them via blockSite() so rule + garden state stay in sync.
+async function migrateAliases() {
+  const gardens = await getGardens();
+  for (const [domain, garden] of Object.entries(gardens)) {
+    if (!garden.isBlocked) continue;
+    for (const alias of ALIASES[domain] || []) {
+      if (!gardens[alias] || !gardens[alias].isBlocked) {
+        await blockSite(alias);
+      }
+    }
   }
 }
 
@@ -292,6 +313,7 @@ async function updateStreaks() {
 // If the extension was updated or restarted, ensure dynamic rules match stored gardens
 
 async function syncBlockingRules() {
+  await migrateAliases();
   const gardens = await getGardens();
   const existing = await chrome.declarativeNetRequest.getDynamicRules();
   const existingIds = new Set(existing.map(r => r.id));

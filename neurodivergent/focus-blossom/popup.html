@@ -17,7 +17,7 @@
       <span class="header-title" id="headerTitle">Focus Blossom</span>
       <div class="theme-dropdown" id="themeDropdown">
       <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false">
-        <span id="themeLabel">Retro Pink</span> ▾
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
         <div class="theme-dropdown-header" data-i18n="popupChangeTheme">Change Theme</div>
@@ -30,10 +30,10 @@
     </header>
 
     <!-- Garden Grid -->
-    <div class="garden-grid" id="gardenGrid"></div>
+    <div class="garden-grid" id="gardenGrid" aria-live="polite"></div>
 
     <!-- Empty state -->
-    <div class="empty-state" id="emptyState" style="display:none">
+    <div class="empty-state" id="emptyState" style="display:none" aria-live="polite">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" style="width:64px;height:64px;margin-bottom:8px">
       <div class="empty-emoji">🌱</div>
       <div class="empty-text">
@@ -42,7 +42,7 @@
       </div>
       <div class="preset-buttons">
         <button class="btn-preset" data-domain="reddit.com">reddit.com</button>
-        <button class="btn-preset" data-domain="twitter.com">twitter.com</button>
+        <button class="btn-preset" data-domain="x.com">x.com</button>
         <button class="btn-preset" data-domain="tiktok.com">tiktok.com</button>
         <button class="btn-preset" data-domain="instagram.com">instagram.com</button>
       </div>
@@ -78,7 +78,7 @@
     </div>
 
     <!-- Affirmation -->
-    <div class="affirmation" id="affirmation"></div>
+    <div class="affirmation" id="affirmation" aria-live="polite"></div>
 
     <footer class="popup-footer">
       <span>LoveSpark Suite 💕</span>

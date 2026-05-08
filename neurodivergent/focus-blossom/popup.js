@@ -36,8 +36,7 @@ function applyTheme(t) {
       }
     });
   }
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
+  chrome.storage.local.get(['theme'], ({ theme }) => {
     applyTheme(theme || 'retro');
   });
 })();
@@ -257,6 +256,24 @@ function isValidDomain(domain) {
   return DOMAIN_RE.test(domain);
 }
 
+// Renamed-host aliases: blocking either side blocks the other so a stale
+// preset (e.g. "twitter.com") still catches the live host ("x.com").
+const ALIASES = {
+  "twitter.com": ["x.com"],
+  "x.com": ["twitter.com"]
+};
+
+function expandAliases(domain) {
+  const extras = ALIASES[domain] || [];
+  return [domain, ...extras];
+}
+
+async function blockWithAliases(domain) {
+  for (const d of expandAliases(domain)) {
+    await chrome.runtime.sendMessage({ type: "blockSite", domain: d });
+  }
+}
+
 document.getElementById("addBtn").addEventListener("click", addSite);
 document.getElementById("siteInput").addEventListener("keydown", (e) => {
   if (e.key === "Enter") addSite();
@@ -275,7 +292,7 @@ async function addSite() {
     return;
   }
 
-  await chrome.runtime.sendMessage({ type: "blockSite", domain });
+  await blockWithAliases(domain);
   input.value = "";
   renderGardens();
 }
@@ -286,7 +303,7 @@ document.addEventListener("click", async (e) => {
   const preset = e.target.closest(".btn-preset[data-domain]");
   if (!preset) return;
   const domain = preset.dataset.domain;
-  await chrome.runtime.sendMessage({ type: "blockSite", domain });
+  await blockWithAliases(domain);
   renderGardens();
 });
 

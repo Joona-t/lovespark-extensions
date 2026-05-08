@@ -42,7 +42,7 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.6; }
+  0%, 100% { opacity: 0.85; }
   50% { opacity: 1; }
 }
 
@@ -189,7 +189,7 @@ body {
   font-size: 11px;
   color: var(--ls-text-muted);
   cursor: pointer;
-  opacity: 0.78;
+  opacity: 0.9;
   transition: opacity 0.2s;
   margin-top: 4px;
 }

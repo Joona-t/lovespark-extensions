@@ -300,7 +300,7 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   padding: 4px 8px;
   min-width: 32px;
   min-height: 32px;
-  opacity: 0.7;
+  opacity: 0.88;
   transition: opacity 0.2s;
 }
 .btn-dark-toggle:hover { opacity: 1; }

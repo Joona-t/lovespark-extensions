@@ -1,5 +1,21 @@
 # Bugs & Iterations
 
+## 2026-05-08 — v1.0.43 — Twitter/X rename bypass
+
+**Problem:** Typing `https://x.com/...` directly bypassed the blocker. Users who added the "twitter.com" preset only got a `||twitter.com` DNR rule, which never matches `x.com` requests, so the page loaded normally.
+**Root cause:** Preset hardcoded `twitter.com` (since 1.0.0) but Twitter renamed to `x.com` in 2023; codebase had no alias mapping, so the two domains were treated as unrelated.
+**Fix:**
+1. Renamed preset `twitter.com` → `x.com` in `popup.html` and `cws-shots/popup.html`.
+2. Added `ALIASES = { "twitter.com": ["x.com"], "x.com": ["twitter.com"] }` to `popup.js` — `addSite()` and the preset click handler now route through `blockWithAliases()`, which blocks every aliased host in one go.
+3. Added a one-shot `migrateAliases()` step at the top of `syncBlockingRules()` in `background.js` — on next startup, existing users with stale `twitter.com` gardens automatically get `x.com` blocked too (and vice versa).
+**Files:** popup.html, cws-shots/popup.html, popup.js, background.js, manifest.json
+
+## 2026-04-27 — v1.0.41 — Remove dead shared lib files
+
+**Problem:** BRAND-DEAD-LIB warning — 4 lib files (lovespark-popup.js, lovespark-badge.js, lovespark-lifecycle.js, lovespark-stats.js) shipped in lib/ but never referenced from any HTML. Bloated bundle and tripped fleet-audit.
+**Root cause:** sync-shared-lib.sh copies the full canonical set; focus-blossom only consumes base/theme/footer/tokens.
+**Fix:** Deleted the four unused lib files. Bumped manifest 1.0.40 → 1.0.41. Health 83 → 84 (39/39 checks pass).
+
 ## : |2026-03-05|||fix: replace broken footer with aesthetic ls-footer
 
 **Problem:** |2026-03-05|||fix: replace broken footer with aesthetic ls-footer

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.35",
+  "version": "1.0.44",
   "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
@@ -14,7 +14,9 @@
   ],
   "background": {
     "service_worker": "background.js",
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "action": {
     "default_popup": "popup.html",
@@ -64,7 +66,9 @@
     "gecko": {
       "id": "focus-blossom@lovespark.suite",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     }
   },
