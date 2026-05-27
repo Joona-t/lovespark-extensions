@@ -2,27 +2,96 @@
 // Porn Blocker Rewire Brain — Popup Script
 // ═══════════════════════════════════════════════════════════════════
 
-const AFFIRMATIONS = [
-  '"You are building the version of yourself you\'ve always wanted to become."',
-  '"Every small choice in the right direction compounds into something extraordinary."',
-  '"Your attention is your most valuable resource. Spend it wisely."',
-  '"Rest is not the same as giving in. Take care of yourself in healthy ways."',
-  '"The discomfort of discipline is always less than the regret of giving up."',
-  '"You are worthy of the life you\'re working toward."',
-  '"Focus on what makes you feel genuinely proud of yourself."',
-  '"Your brain is literally rewiring itself every time you resist. Keep going."',
-  '"The urge will pass whether you act on it or not. Choose the version that builds you up."',
-  '"Clarity, energy, confidence — that\'s what\'s on the other side of this."',
-  '"You don\'t have to be perfect. You just have to keep showing up."',
-  '"The chains of habit are too light to be felt until they are too heavy to be broken. Break them now."',
-];
+// ── Safe sendMessage wrapper ──
+// Wraps chrome.runtime.sendMessage in try/catch + lastError check.
+// Survives extension context invalidation gracefully.
+function safeSend(message, callback) {
+  try {
+    chrome.runtime.sendMessage(message, (response) => {
+      if (chrome.runtime.lastError) {
+        console.warn('[Rewire Brain]', message.type, 'failed:', chrome.runtime.lastError.message);
+        if (callback) callback({ error: chrome.runtime.lastError.message });
+        return;
+      }
+      if (callback) callback(response);
+    });
+  } catch (err) {
+    console.warn('[Rewire Brain] sendMessage threw for', message.type, err);
+    if (callback) callback({ error: err.message });
+  }
+}
+
+// ── Tab switching ──
+document.querySelectorAll('.popup-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.popup-tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.remove('active');
+    });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    const panel = document.getElementById(tab.getAttribute('aria-controls'));
+    if (panel) panel.classList.add('active');
+  });
+});
+
+// ── Open dashboard in new tab ──
+document.getElementById('openDashboard').addEventListener('click', () => {
+  chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') });
+  window.close();
+});
 
 // ── Load state ──
-chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
+safeSend({ type: 'GET_SETTINGS' }, (data) => {
   if (chrome.runtime.lastError || !data) return;
 
+  // If onboarding never completed, redirect to it
+  if (!data.onboardingComplete) {
+    chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
+    window.close();
+    return;
+  }
+
   document.getElementById('blockedCount').textContent = data.blockedCount || 0;
-  document.getElementById('streakDays').textContent = data.streakDays || 0;
+  document.getElementById('imagesBlurredCount').textContent = data.imagesBlurredCount || 0;
+
+  // Image Blur toggle (default ON)
+  const blurToggle = document.getElementById('blurToggle');
+  const blurEnabled = data.imageBlurEnabled !== false;
+  blurToggle.checked = blurEnabled;
+  document.getElementById('blurStatus').textContent = blurEnabled
+    ? 'Hiding NSFW images on every site'
+    : 'Image blur disabled';
+
+  // Live sobriety timer
+  const sobrietyStart = data.sobrietyStartTime;
+  if (sobrietyStart) {
+    const timerEl = document.getElementById('sobrietyTimer');
+    function updateSobrietyTimer() {
+      const elapsed = Date.now() - new Date(sobrietyStart).getTime();
+      if (elapsed < 0) { timerEl.textContent = '0d 0h 0m'; return; }
+      const days = Math.floor(elapsed / 86400000);
+      const hours = Math.floor((elapsed % 86400000) / 3600000);
+      const mins = Math.floor((elapsed % 3600000) / 60000);
+      const secs = Math.floor((elapsed % 60000) / 1000);
+      timerEl.textContent = days + 'd ' + hours + 'h ' + mins + 'm ' + secs + 's';
+    }
+    updateSobrietyTimer();
+    setInterval(updateSobrietyTimer, 1000);
+  }
+
+  // XP display
+  if (typeof getXpProgress === 'function') {
+    const xp = data.xp || 0;
+    const progress = getXpProgress(xp);
+    document.getElementById('xpLevel').textContent =
+      'Lv ' + progress.level + ' \u2014 ' + progress.name;
+    document.getElementById('xpAmount').textContent = xp + ' XP';
+    document.getElementById('xpBarFill').style.width = progress.percent + '%';
+  }
 
   const toggle = document.getElementById('enableToggle');
   const enabled = data.enabled !== false;
@@ -38,16 +107,32 @@ chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
   }
 });
 
-// ── Affirmation (changes daily) ──
-const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-document.getElementById('affirmation').textContent = AFFIRMATIONS[dayOfYear % AFFIRMATIONS.length];
+// ── Affirmation (changes daily, uses quotes.js) ──
+if (typeof getDailyAffirmation === 'function') {
+  const daily = getDailyAffirmation();
+  const el = document.getElementById('affirmation');
+  if (el) {
+    let display = '\u201C' + daily.text + '\u201D';
+    if (daily.author) display += ' \u2014 ' + daily.author;
+    el.textContent = display;
+  }
+}
+
+// ── Image Blur toggle ──
+document.getElementById('blurToggle').addEventListener('change', (e) => {
+  const enabled = e.target.checked;
+  chrome.storage.local.set({ imageBlurEnabled: enabled });
+  document.getElementById('blurStatus').textContent = enabled
+    ? 'Hiding NSFW images on every site'
+    : 'Image blur disabled';
+});
 
 // ── Shield toggle ──
 document.getElementById('enableToggle').addEventListener('change', (e) => {
   const enabled = e.target.checked;
 
   if (enabled) {
-    chrome.runtime.sendMessage({ type: 'SET_ENABLED', enabled: true });
+    safeSend({ type: 'SET_ENABLED', enabled: true });
     updateToggleUI(true);
     document.getElementById('pauseSection').classList.remove('visible');
     document.getElementById('pauseInfo').textContent = '';
@@ -62,7 +147,7 @@ document.getElementById('enableToggle').addEventListener('change', (e) => {
 document.querySelectorAll('.pause-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const minutes = parseInt(btn.dataset.minutes);
-    chrome.runtime.sendMessage({ type: 'PAUSE_SHIELD', minutes }, (response) => {
+    safeSend({ type: 'PAUSE_SHIELD', minutes }, (response) => {
       if (response && response.pauseUntil) {
         const toggle = document.getElementById('enableToggle');
         toggle.checked = false;
@@ -73,12 +158,16 @@ document.querySelectorAll('.pause-btn').forEach(btn => {
   });
 });
 
+let pauseIntervalId = null;
+
 function showPauseInfo(until) {
+  if (pauseIntervalId) clearInterval(pauseIntervalId);
   const pauseInfo = document.getElementById('pauseInfo');
   const update = () => {
     const remaining = Math.max(0, until - Date.now());
     if (remaining <= 0) {
-      pauseInfo.textContent = 'Pause expired — shield re-enabled!';
+      if (pauseIntervalId) { clearInterval(pauseIntervalId); pauseIntervalId = null; }
+      pauseInfo.textContent = 'Pause expired \u2014 shield re-enabled!';
       document.getElementById('enableToggle').checked = true;
       updateToggleUI(true);
       document.getElementById('pauseSection').classList.remove('visible');
@@ -86,15 +175,15 @@ function showPauseInfo(until) {
     }
     const mins = Math.floor(remaining / 60000);
     const secs = Math.floor((remaining % 60000) / 1000);
-    pauseInfo.textContent = `⏸ Shield paused — auto-resumes in ${mins}m ${secs}s`;
+    pauseInfo.textContent = '\u23F8 Shield paused \u2014 auto-resumes in ' + mins + 'm ' + secs + 's';
   };
   update();
-  setInterval(update, 1000);
+  pauseIntervalId = setInterval(update, 1000);
 }
 
 function updateToggleUI(enabled) {
   const sub = document.getElementById('toggleStatus');
-  sub.textContent = enabled ? 'Protecting your browsing ✓' : 'Shield is paused ⚠';
+  sub.textContent = enabled ? 'Protecting your browsing \u2713' : 'Shield is paused \u26A0';
   sub.style.color = enabled ? '#e91e8c' : '#b06080';
 }
 
@@ -117,24 +206,24 @@ function quickAdd() {
   // Detect if it's a subreddit
   if (value.startsWith('r/') || value.startsWith('/r/')) {
     const sub = value.replace(/^\/r\//, '').replace(/^r\//, '').toLowerCase();
-    chrome.runtime.sendMessage({ type: 'ADD_SUBREDDIT', subreddit: sub }, (res) => {
+    safeSend({ type: 'ADD_SUBREDDIT', subreddit: sub }, (res) => {
       if (chrome.runtime.lastError) {
         feedback.textContent = 'Error adding subreddit';
         return;
       }
-      feedback.textContent = `✓ r/${sub} blocked`;
+      feedback.textContent = '\u2713 r/' + sub + ' blocked';
       input.value = '';
       setTimeout(() => { feedback.textContent = ''; }, 3000);
     });
   } else {
-    chrome.runtime.sendMessage({ type: 'ADD_DOMAIN', domain: value }, (res) => {
+    safeSend({ type: 'ADD_DOMAIN', domain: value }, (res) => {
       if (chrome.runtime.lastError) {
         feedback.textContent = 'Error adding domain';
         return;
       }
       const domains = res?.userDomains || [];
       const added = domains[domains.length - 1] || value;
-      feedback.textContent = `✓ ${added} blocked`;
+      feedback.textContent = '\u2713 ' + added + ' blocked';
       input.value = '';
       setTimeout(() => { feedback.textContent = ''; }, 3000);
     });
@@ -146,7 +235,60 @@ document.getElementById('openSettings').addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
 });
 
-// Theme dropdown
+// ── Render resources tab ──
+function renderResources() {
+  const container = document.getElementById('resourcesScroll');
+  if (!container || typeof RESOURCES === 'undefined') return;
+
+  const sections = [
+    { key: 'science', label: '\u{1F9EA} Science' },
+    { key: 'books', label: '\u{1F4DA} Books' },
+    { key: 'recovery', label: '\u{1F4AA} Recovery Tools' },
+    { key: 'articles', label: '\u{1F52C} Research Articles' },
+  ];
+
+  sections.forEach(({ key, label }) => {
+    const items = RESOURCES[key] || [];
+    if (items.length === 0) return;
+
+    const header = document.createElement('div');
+    header.className = 'res-header';
+    header.textContent = label;
+    container.appendChild(header);
+
+    items.forEach(item => {
+      const a = document.createElement('a');
+      a.className = 'res-card';
+      a.href = item.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.setAttribute('aria-label', item.title + ' \u2014 opens in new tab');
+
+      const emojiSpan = document.createElement('span');
+      emojiSpan.className = 'res-emoji';
+      emojiSpan.textContent = item.emoji;
+
+      const infoDiv = document.createElement('div');
+
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'res-title';
+      titleDiv.textContent = item.title;
+
+      const descDiv = document.createElement('div');
+      descDiv.className = 'res-desc';
+      descDiv.textContent = item.description;
+
+      infoDiv.appendChild(titleDiv);
+      infoDiv.appendChild(descDiv);
+      a.appendChild(emojiSpan);
+      a.appendChild(infoDiv);
+      container.appendChild(a);
+    });
+  });
+}
+renderResources();
+
+// ── Theme dropdown ──
 const THEMES = ['retro', 'dark', 'beige', 'slate'];
 const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
 function applyTheme(t) {
@@ -178,9 +320,5 @@ function applyTheme(t) {
     applyTheme(theme || 'retro');
   });
 })();
-  applyTheme(theme || 'retro');
-});
-document.getElementById('themeToggle');
 
-/* ── Author / Ko-fi Footer ── */
-document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
+// Footer is custom-built in popup.html — no shared footer needed

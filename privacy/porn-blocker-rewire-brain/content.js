@@ -15,40 +15,55 @@
   style.textContent = 'html{visibility:hidden!important;background:#fff0f5!important;}';
   (document.head || document.documentElement).appendChild(style);
 
-  // Ask the background if this URL should be blocked
-  chrome.runtime.sendMessage(
-    { type: 'CHECK_BLOCKED', url: window.location.href },
-    (response) => {
-      if (chrome.runtime.lastError) {
-        // Extension context invalidated — unhide
-        style.remove();
-        return;
+  let responded = false;
+
+  // Ask the background if this URL should be blocked.
+  // Wrap in try/catch — sendMessage can throw synchronously if the
+  // extension context is invalidated (reload during dev).
+  try {
+    chrome.runtime.sendMessage(
+      { type: 'CHECK_BLOCKED', url: window.location.href },
+      (response) => {
+        responded = true;
+
+        if (chrome.runtime.lastError) {
+          // Extension context invalidated — unhide
+          if (style.parentNode) style.remove();
+          return;
+        }
+
+        if (response && response.blocked) {
+          // Notify background of the block event
+          try {
+            chrome.runtime.sendMessage({
+              type: 'SITE_BLOCKED',
+              url: window.location.href
+            });
+          } catch (e) {
+            console.warn('[Rewire Brain] SITE_BLOCKED notify failed:', e);
+          }
+
+          // Redirect to the blocked page
+          const blockedUrl = chrome.runtime.getURL('blocked.html') +
+            '?url=' + encodeURIComponent(window.location.href);
+          window.location.replace(blockedUrl);
+        } else {
+          // Not blocked — remove the hiding style
+          if (style.parentNode) style.remove();
+        }
       }
+    );
+  } catch (e) {
+    console.warn('[Rewire Brain] CHECK_BLOCKED sendMessage threw:', e);
+    responded = true;
+    if (style.parentNode) style.remove();
+  }
 
-      if (response && response.blocked) {
-        // Notify background of the block event
-        chrome.runtime.sendMessage({
-          type: 'SITE_BLOCKED',
-          url: window.location.href
-        });
-
-        // Redirect to the blocked page
-        const blockedUrl = chrome.runtime.getURL('blocked.html') +
-          '?url=' + encodeURIComponent(window.location.href);
-        window.location.replace(blockedUrl);
-      } else {
-        // Not blocked — remove the hiding style
-        style.remove();
-      }
-    }
-  );
-
-  // Safety timeout: if we don't get a response in 500ms, unhide
+  // Safety timeout: if we don't get a response in 1500ms, unhide.
   // This prevents the page from being permanently hidden if the
-  // service worker is slow to wake up
+  // service worker is dead. 1500ms is the SW cold-start budget headroom.
+  // FAIL-CLOSED: if we already received a "blocked" response, do NOT unhide.
   setTimeout(() => {
-    if (document.querySelector('style') === style && style.parentNode) {
-      style.remove();
-    }
-  }, 500);
+    if (!responded && style.parentNode) style.remove();
+  }, 1500);
 })();

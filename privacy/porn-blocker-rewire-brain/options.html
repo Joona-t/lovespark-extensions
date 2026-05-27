@@ -4,65 +4,101 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Porn Blocker Rewire Brain — Settings</title>
+  <link rel="preload" href="lib/fonts/opendyslexic-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
   <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Comfortaa', cursive; background: #fff0f5; color: #4a1a30; min-height: 100vh; position: relative; }
+    body { font-family: 'OpenDyslexic', 'Comfortaa', cursive; background: #fff0f5; color: #4a1a30; min-height: 100vh; position: relative; }
     body::before { content: ''; position: fixed; top: -100px; right: -100px; width: 500px; height: 500px; background: #ffb3d1; border-radius: 50%; filter: blur(80px); opacity: 0.2; pointer-events: none; z-index: 0; }
     body::after { content: ''; position: fixed; bottom: -80px; left: -80px; width: 400px; height: 400px; background: #ffd6e7; border-radius: 50%; filter: blur(80px); opacity: 0.2; pointer-events: none; z-index: 0; }
     .container { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 32px 24px 60px; }
     .page-header { text-align: center; margin-bottom: 32px; }
-    .page-header .logo { font-size: 2.4rem; margin-bottom: 4px; }
-    .page-header h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #c2185b; margin-bottom: 4px; }
-    .page-header .tagline { font-size: 0.75rem; color: #b06080; letter-spacing: 0.05em; }
+    .page-header .page-mascot { display: block; width: 56px; height: 56px; margin: 0 auto 8px; filter: drop-shadow(0 4px 12px rgba(255, 140, 180, 0.3)); }
+    .page-header h1 { font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-size: 1.6rem; color: #c2185b; margin-bottom: 4px; }
+    .page-header .tagline { font-size: 0.75rem; color: #8a3060; letter-spacing: 0.05em; }
     .section { background: rgba(255,255,255,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1.5px solid rgba(255,182,213,0.4); border-radius: 20px; padding: 24px; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(255,100,160,0.08); }
     .section-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; color: #e91e8c; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
     .section-desc { font-size: 0.78rem; color: #906070; line-height: 1.6; margin-bottom: 14px; }
     .input-row { display: flex; gap: 8px; margin-bottom: 10px; }
-    .input-text { flex: 1; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #ffc0d8; font-family: 'Comfortaa', cursive; font-size: 0.82rem; background: white; color: #4a1a30; outline: none; transition: border-color 0.2s; }
+    .input-text { flex: 1; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #ffc0d8; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-size: 0.82rem; background: white; color: #4a1a30; outline: none; transition: border-color 0.2s; }
     .input-text:focus { border-color: #e91e8c; }
     .input-text::placeholder { color: #d0a8b8; }
-    .btn-add { padding: 10px 20px; border-radius: 12px; border: none; background: linear-gradient(135deg, #ff80b0, #e91e8c); color: white; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-add { padding: 10px 20px; border-radius: 12px; border: none; background: linear-gradient(135deg, #ff80b0, #e91e8c); color: white; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
     .btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(233,30,140,0.3); }
     .tag-list { display: flex; flex-wrap: wrap; gap: 6px; min-height: 20px; }
     .tag { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px 5px 12px; background: linear-gradient(135deg, #fff0f7, #ffe8f0); border: 1px solid #ffd0e0; border-radius: 8px; font-size: 0.72rem; color: #8a3060; font-weight: 700; }
     .tag-remove { background: none; border: none; color: #c07080; cursor: pointer; font-size: 1rem; padding: 0 2px; line-height: 1; font-family: sans-serif; }
     .tag-remove:hover { color: #c2185b; }
     .empty-state { font-size: 0.72rem; color: #c0a0b0; font-style: italic; }
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .switch-track { position: absolute; cursor: pointer; inset: 0; background: #ffd0e0; border-radius: 28px; transition: 0.25s; }
+    .switch-track::before { content: ''; position: absolute; height: 22px; width: 22px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.25s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .toggle-switch input:checked + .switch-track { background: linear-gradient(135deg, #ff80b0, #e91e8c); }
+    .toggle-switch input:checked + .switch-track::before { transform: translateX(22px); }
+    .toggle-switch input:focus-visible + .switch-track { outline: 2px solid #e91e8c; outline-offset: 2px; }
+    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px 12px; border-radius: 10px; background: #fff5f9; border: 1.5px solid #ffd0e8; cursor: pointer; transition: all 0.2s; font-size: 0.78rem; color: #7a3050; line-height: 1.5; }
+    .radio-row:hover { background: #ffe8f0; border-color: #ffb3d0; }
+    .radio-row input[type="radio"] { margin-top: 3px; flex-shrink: 0; accent-color: #e91e8c; }
+    .radio-row em { color: #8a3060; font-style: normal; font-size: 0.7rem; }
     .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,179,208,0.2); }
     .setting-row:last-child { border-bottom: none; }
     .setting-label { font-size: 0.82rem; font-weight: 700; color: #7a3050; }
-    .setting-sublabel { font-size: 0.68rem; color: #b08090; margin-top: 2px; }
-    .setting-input { width: 250px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid #ffc0d8; font-family: 'Comfortaa', cursive; font-size: 0.8rem; background: white; color: #4a1a30; outline: none; transition: border-color 0.2s; }
+    .setting-sublabel { font-size: 0.68rem; color: #7a5060; margin-top: 2px; }
+    .setting-input { width: 250px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid #ffc0d8; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-size: 0.8rem; background: white; color: #4a1a30; outline: none; transition: border-color 0.2s; }
     .setting-input:focus { border-color: #e91e8c; }
     .setting-input::placeholder { color: #d0a8b8; }
     .setting-number { width: 80px; text-align: center; }
-    .btn-save { padding: 10px 24px; border-radius: 12px; border: none; background: linear-gradient(135deg, #ff80b0, #e91e8c); color: white; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
+    .btn-save { padding: 10px 24px; border-radius: 12px; border: none; background: linear-gradient(135deg, #ff80b0, #e91e8c); color: white; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
     .btn-save:hover { transform: translateY(-1px); }
-    .btn-danger { padding: 10px 24px; border-radius: 12px; border: 2px solid #e08090; background: transparent; color: #a04060; font-family: 'Comfortaa', cursive; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
+    .btn-danger { padding: 10px 24px; border-radius: 12px; border: 2px solid #e08090; background: transparent; color: #a04060; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
     .btn-danger:hover { background: #fff0f5; transform: translateY(-1px); }
     .log-list { max-height: 200px; overflow-y: auto; padding: 4px 0; }
     .log-item { padding: 6px 0; border-bottom: 1px solid rgba(255,179,208,0.15); font-size: 0.72rem; color: #7a4060; }
     .log-item:last-child { border-bottom: none; }
     .log-url { color: #c2185b; font-weight: 700; word-break: break-all; }
-    .log-time { color: #b08090; }
+    .log-time { color: #7a5060; }
     .log-reason { color: #906070; font-style: italic; }
     .saved-msg { display: inline-block; font-size: 0.72rem; color: #e91e8c; font-weight: 700; margin-left: 10px; opacity: 0; transition: opacity 0.3s; }
     .saved-msg.visible { opacity: 1; }
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .stat-card { text-align: center; padding: 16px 10px; background: linear-gradient(135deg, #fff5f9, #ffe8f0); border-radius: 14px; border: 1px solid #ffd0e0; }
-    .stat-val { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #e91e8c; font-weight: 700; line-height: 1; }
-    .stat-lbl { font-size: 0.62rem; color: #b06080; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+    .stat-val { font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-size: 1.8rem; color: #e91e8c; font-weight: 700; line-height: 1; }
+    .stat-lbl { font-size: 0.62rem; color: #8a3060; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
     .footer { text-align: center; margin-top: 30px; padding: 20px; font-size: 0.72rem; color: #c090a8; }
     .footer a { color: #e91e8c; text-decoration: none; font-weight: 700; }
     .footer a:hover { text-decoration: underline; }
     @media (max-width: 500px) { .container { padding: 20px 16px 40px; } .section { padding: 18px; } .setting-row { flex-direction: column; align-items: flex-start; gap: 8px; } .setting-input { width: 100%; } .stats-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* Honor user reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="page-header">
-      <div class="logo">🧠</div>
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="page-mascot" width="56" height="56">
       <h1>Rewire Brain Settings</h1>
       <div class="tagline">Customize your mindful browsing shield &middot; by LoveSpark 🌸</div>
     </div>
@@ -72,19 +108,19 @@
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-val" id="statBlocked">0</div><div class="stat-lbl">Sites Blocked</div></div>
         <div class="stat-card"><div class="stat-val" id="statStreak">0</div><div class="stat-lbl">Day Streak 🔥</div></div>
-        <div class="stat-card"><div class="stat-val" id="statBypasses">0</div><div class="stat-lbl">Bypasses</div></div>
+        <div class="stat-card"><div class="stat-val" id="statBypasses" aria-live="polite">0</div><div class="stat-lbl">Bypasses</div></div>
       </div>
       <button class="btn-danger" id="resetStats">Reset All Stats</button>
-      <span class="saved-msg" id="resetSaved"></span>
+      <span class="saved-msg" id="resetSaved" aria-live="polite" role="status"></span>
     </div>
 
     <div class="section">
       <div class="section-title">🌐 Custom Blocked Domains</div>
       <div class="section-desc">Add any domain you want to block. The built-in list covers 125+ major sites — these are your personal additions.</div>
       <div class="input-row">
-        <input type="text" class="input-text" id="domainInput" placeholder="e.g. example.com">
+        <input type="text" class="input-text" id="domainInput" placeholder="e.g. example.com" aria-label="Add domain to blocklist">
         <button class="btn-add" id="addDomain">+ Add</button>
-        <span class="saved-msg" id="domainFeedback"></span>
+        <span class="saved-msg" id="domainFeedback" aria-live="polite" role="status"></span>
       </div>
       <div class="tag-list" id="domainList"><span class="empty-state">No custom domains added yet</span></div>
     </div>
@@ -93,9 +129,9 @@
       <div class="section-title">🔴 Custom Blocked Subreddits</div>
       <div class="section-desc">Block specific NSFW subreddits without blocking all of Reddit. The built-in list covers 30+ common NSFW subs.</div>
       <div class="input-row">
-        <input type="text" class="input-text" id="subInput" placeholder="e.g. gonewild (without r/)">
+        <input type="text" class="input-text" id="subInput" placeholder="e.g. gonewild (without r/)" aria-label="Add subreddit to blocklist">
         <button class="btn-add" id="addSub">+ Add</button>
-        <span class="saved-msg" id="subFeedback"></span>
+        <span class="saved-msg" id="subFeedback" aria-live="polite" role="status"></span>
       </div>
       <div class="tag-list" id="subList"><span class="empty-state">No custom subreddits added yet</span></div>
     </div>
@@ -108,11 +144,11 @@
           <div class="setting-label">Redirect URL</div>
           <div class="setting-sublabel">Leave empty to use the default LoveSpark portfolio</div>
         </div>
-        <input type="text" class="setting-input" id="redirectUrl" placeholder="https://todoist.com">
+        <input type="text" class="setting-input" id="redirectUrl" placeholder="https://todoist.com" aria-label="Custom redirect URL">
       </div>
       <div style="margin-top: 12px;">
         <button class="btn-save" id="saveRedirect">Save</button>
-        <span class="saved-msg" id="redirectSaved">✓ Saved!</span>
+        <span class="saved-msg" id="redirectSaved" aria-live="polite" role="status">✓ Saved!</span>
       </div>
     </div>
 
@@ -124,11 +160,61 @@
           <div class="setting-label">Cooldown Timer</div>
           <div class="setting-sublabel">5–300 seconds (default: 30)</div>
         </div>
-        <input type="number" class="setting-input setting-number" id="cooldownSec" min="5" max="300" value="30">
+        <input type="number" class="setting-input setting-number" id="cooldownSec" min="5" max="300" value="30" aria-label="Bypass cooldown timer in seconds">
       </div>
       <div style="margin-top: 12px;">
         <button class="btn-save" id="saveCooldown">Save</button>
-        <span class="saved-msg" id="cooldownSaved">✓ Saved!</span>
+        <span class="saved-msg" id="cooldownSaved" aria-live="polite" role="status">✓ Saved!</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">🛡 Image Blur (NSFW Detection)</div>
+      <div class="section-desc">A small machine-learning model runs locally in your browser to detect explicit images on any site — even ones not in our blocklist. <strong>No image data ever leaves your device.</strong> Once an image is blurred, it stays blurred — there is no reveal.</div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Enable image blur</div>
+          <div class="setting-sublabel">Hides NSFW images on every page (recommended)</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="imageBlurEnabledOpt" checked aria-label="Enable image blur">
+          <span class="switch-track"></span>
+        </label>
+      </div>
+
+      <div class="setting-row" style="flex-direction: column; align-items: stretch;">
+        <div style="margin-bottom: 8px;">
+          <div class="setting-label">Sensitivity</div>
+          <div class="setting-sublabel">What kinds of content trigger a blur</div>
+        </div>
+        <div class="radio-group">
+          <label class="radio-row">
+            <input type="radio" name="blurSensitivity" value="strict" checked aria-label="Strict sensitivity">
+            <span><strong>Strict</strong> — blur explicit + suggestive (lingerie, swimwear, etc.) <em>recommended</em></span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="blurSensitivity" value="standard" aria-label="Standard sensitivity">
+            <span><strong>Standard</strong> — blur explicit only (real + animated)</span>
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="blurSensitivity" value="permissive" aria-label="Permissive sensitivity">
+            <span><strong>Permissive</strong> — blur explicit photos only</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Total images blurred</div>
+          <div class="setting-sublabel">Lifetime count across all sites</div>
+        </div>
+        <div style="font-size: 1.4rem; font-weight: 700; color: #e91e8c;" id="imagesBlurredOpt" aria-live="polite">0</div>
+      </div>
+
+      <div style="margin-top: 12px;">
+        <button class="btn-save" id="saveBlurSettings">Save</button>
+        <span class="saved-msg" id="blurSaved">✓ Saved!</span>
       </div>
     </div>
 

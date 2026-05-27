@@ -1,0 +1,58 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Porn Blocker Rewire Brain — Image Blur Styles
+   On-device NSFW classification + blur (no reveal, ever)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Pre-blur applied to every qualifying image while it's being classified.
+   Removed if the image is classified as Neutral/Drawing.
+   Prevents flash-of-explicit-content. */
+img.rb-blur-pending {
+  filter: blur(40px) brightness(0.85) !important;
+  transition: filter 0.18s ease !important;
+}
+
+/* Permanent blur for confirmed NSFW.
+   No reveal possible — pointer-events disabled, no transition out. */
+img.rb-blur {
+  filter: blur(48px) brightness(0.65) saturate(0.4) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  transition: none !important;
+  cursor: not-allowed !important;
+}
+
+/* Wrap span for showing the "Rewire Brain" badge over a blurred image.
+   Inserted by image-blur.js — wraps the <img> in a relative-positioned span.
+   Cannot use ::after on <img> since img is a replaced element. */
+.rb-blur-wrap {
+  display: inline-block;
+  position: relative;
+  isolation: isolate;
+}
+
+.rb-blur-wrap::after {
+  content: '\1F338\00A0Rewire Brain';
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #c2185b;
+  background: rgba(255, 240, 247, 0.95);
+  padding: 3px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(255, 100, 160, 0.3);
+  z-index: 2147483647;
+  letter-spacing: 0.02em;
+}
+
+/* Reduced motion: drop the transition for users who request it */
+@media (prefers-reduced-motion: reduce) {
+  img.rb-blur-pending,
+  img.rb-blur {
+    transition: none !important;
+  }
+}

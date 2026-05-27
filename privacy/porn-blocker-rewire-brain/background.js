@@ -20,6 +20,29 @@ const DEFAULTS = {
   pauseUntil: null,           // ISO timestamp when pause expires
   bypassCooldownSec: 30,     // seconds user must wait before bypass
   blockLog: [],               // last 100 blocks: { url, timestamp }
+  // XP system
+  xp: 0,
+  totalBlocksEver: 0,
+  breathingCompleted: 0,
+  dailyBlockXp: 0,            // XP earned from blocks today (resets daily, cap 50)
+  dailyBlockXpDate: null,     // date string for daily cap tracking
+  lastMilestoneDays: 0,       // last streak day count that triggered milestone bonus
+  lastStreakXpDate: null,      // date string for daily streak XP tracking
+  // Sobriety timer
+  sobrietyStartTime: null,     // ISO timestamp (precise, for hours/minutes/seconds)
+  // Journal
+  journalEntries: [],          // [{ date, text, timestamp }]
+  journalReminderTime: null,   // "21:00" (HH:MM)
+  journalReminderEnabled: true,
+  // Onboarding
+  onboardingComplete: false,
+  userReason: '',              // "Why are you doing this?"
+  userGoal: '',                // "What do you hope to achieve?"
+  // Image blur (NSFW detection)
+  imageBlurEnabled: true,           // ON by default — immediate protection
+  imageBlurSensitivity: 'strict',   // 'strict' | 'standard' | 'permissive'
+  imageBlurThreshold: 0.6,          // probability threshold (0-1)
+  imagesBlurredCount: 0,            // lifetime count of blurred images
 };
 
 // Dynamic rules start at ID 10000 to avoid collision with static rules
@@ -38,10 +61,21 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   if (!merged.installDate) merged.installDate = now;
   if (!merged.streakStartDate) merged.streakStartDate = toDateStr(now);
   if (!merged.lastActiveDate) merged.lastActiveDate = toDateStr(now);
+  if (!merged.sobrietyStartTime) merged.sobrietyStartTime = now;
 
   await chrome.storage.local.set(merged);
   await syncDynamicRules();
   await updateStreak();
+
+  // Open onboarding on first install
+  if (details.reason === 'install' && !merged.onboardingComplete) {
+    chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
+  }
+
+  // Schedule journal reminder if set
+  if (merged.journalReminderTime && merged.journalReminderEnabled) {
+    scheduleJournalReminder(merged.journalReminderTime);
+  }
 });
 
 // ── Alarm for streak & pause management ───────────────────────────
@@ -57,7 +91,38 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     await chrome.storage.local.set({ enabled: true, pauseMinutes: 0, pauseUntil: null });
     await syncDynamicRules();
   }
+  if (alarm.name === 'journalReminder') {
+    chrome.notifications.create('journalReminder', {
+      type: 'basic',
+      iconUrl: 'icons/icon128.png',
+      title: 'Rewire Brain \u{1F338}',
+      message: 'Time to journal \u2014 reflect on your day and how far you\u2019ve come.',
+      priority: 2
+    });
+    // Reschedule for tomorrow
+    const data = await chrome.storage.local.get(['journalReminderTime']);
+    if (data.journalReminderTime) scheduleJournalReminder(data.journalReminderTime);
+  }
 });
+
+// Open dashboard when journal notification is clicked
+chrome.notifications.onClicked.addListener((notificationId) => {
+  if (notificationId === 'journalReminder') {
+    chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html#journal') });
+    chrome.notifications.clear(notificationId);
+  }
+});
+
+// Schedule journal reminder alarm for a given HH:MM time
+function scheduleJournalReminder(timeStr) {
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const now = new Date();
+  const target = new Date();
+  target.setHours(hours, minutes, 0, 0);
+  if (target <= now) target.setDate(target.getDate() + 1);
+  const delayMs = target - now;
+  chrome.alarms.create('journalReminder', { delayInMinutes: delayMs / 60000 });
+}
 
 // ── Message Handler ───────────────────────────────────────────────
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -77,23 +142,44 @@ async function handleMessage(message, sender) {
     }
 
     case 'SITE_BLOCKED': {
-      const data = await chrome.storage.local.get(['blockedCount', 'blockLog', 'lastActiveDate', 'streakStartDate']);
+      const data = await chrome.storage.local.get([
+        'blockedCount', 'blockLog', 'lastActiveDate', 'streakStartDate',
+        'xp', 'totalBlocksEver', 'dailyBlockXp', 'dailyBlockXpDate'
+      ]);
       const count = (data.blockedCount || 0) + 1;
+      const total = (data.totalBlocksEver || 0) + 1;
       const log = data.blockLog || [];
       log.push({ url: message.url || 'unknown', timestamp: Date.now() });
       if (log.length > 100) log.shift();
 
       const today = toDateStr(new Date().toISOString());
-      const updates = { blockedCount: count, blockLog: log, lastActiveDate: today };
+      const updates = { blockedCount: count, totalBlocksEver: total, blockLog: log, lastActiveDate: today };
 
-      // If streak was broken (lastActiveDate is >1 day ago), restart it
+      // Streak resets if >1 calendar day gap (intentionally lenient — allows
+      // a full day without blocks before breaking). The hourly dailyStreak
+      // alarm also calls updateStreak() to keep lastActiveDate current.
       if (data.lastActiveDate && daysBetween(data.lastActiveDate, today) > 1) {
         updates.streakStartDate = today;
+        updates.streakDays = 0; // C-6: keep storage consistent before updateStreak fires
       }
+
+      // XP: +5 per block, capped at 50 XP/day
+      let dailyXp = data.dailyBlockXpDate === today ? (data.dailyBlockXp || 0) : 0;
+      if (dailyXp < 50) {
+        const award = Math.min(5, 50 - dailyXp);
+        updates.xp = (data.xp || 0) + award;
+        dailyXp += award;
+      }
+      updates.dailyBlockXp = dailyXp;
+      updates.dailyBlockXpDate = today;
 
       await chrome.storage.local.set(updates);
       await updateStreak();
-      return { blockedCount: count };
+
+      // C-2: re-read xp after updateStreak() so the response reflects any
+      // streak-XP or milestone-bonus that updateStreak may have added.
+      const fresh = await chrome.storage.local.get(['xp']);
+      return { blockedCount: count, xp: fresh.xp ?? updates.xp ?? data.xp ?? 0 };
     }
 
     case 'LOG_BYPASS': {
@@ -185,6 +271,16 @@ async function handleMessage(message, sender) {
 
     case 'SET_REDIRECT': {
       const url = (message.url || '').trim();
+      if (url) {
+        try {
+          const u = new URL(url);
+          if (u.protocol !== 'http:' && u.protocol !== 'https:') {
+            return { error: 'Only HTTP/HTTPS URLs allowed' };
+          }
+        } catch {
+          return { error: 'Invalid URL' };
+        }
+      }
       await chrome.storage.local.set({ redirectUrl: url });
       return { redirectUrl: url };
     }
@@ -203,9 +299,89 @@ async function handleMessage(message, sender) {
         streakStartDate: today,
         lastActiveDate: today,
         bypassLog: [],
-        blockLog: []
+        blockLog: [],
+        xp: 0,
+        totalBlocksEver: 0,
+        breathingCompleted: 0,
+        dailyBlockXp: 0,
+        lastMilestoneDays: 0,
+        lastStreakXpDate: null,
+        sobrietyStartTime: new Date().toISOString(),
+        imagesBlurredCount: 0
       });
       return { reset: true };
+    }
+
+    case 'SAVE_JOURNAL_ENTRY': {
+      // Upsert by date — never let multiple saves on the same day produce
+      // duplicate entries. dashboard.js uses .find(date) which would otherwise
+      // return the OLDEST save instead of the newest.
+      const data = await chrome.storage.local.get(['journalEntries']);
+      const entries = data.journalEntries || [];
+      const date = message.date || toDateStr(new Date().toISOString());
+      const newEntry = { date, text: message.text || '', timestamp: Date.now() };
+      const idx = entries.findIndex(e => e.date === date);
+      if (idx !== -1) {
+        entries[idx] = newEntry;
+      } else {
+        entries.push(newEntry);
+      }
+      if (entries.length > 365) entries.shift();
+      await chrome.storage.local.set({ journalEntries: entries });
+      return { saved: true, count: entries.length };
+    }
+
+    case 'SET_JOURNAL_REMINDER': {
+      const time = message.time; // "HH:MM"
+      const enabled = message.enabled !== false;
+      await chrome.storage.local.set({
+        journalReminderTime: time,
+        journalReminderEnabled: enabled
+      });
+      if (time && enabled) {
+        scheduleJournalReminder(time);
+      } else {
+        chrome.alarms.clear('journalReminder');
+      }
+      return { journalReminderTime: time, journalReminderEnabled: enabled };
+    }
+
+    case 'COMPLETE_ONBOARDING': {
+      const updates = {
+        onboardingComplete: true,
+        userReason: message.reason || '',
+        userGoal: message.goal || '',
+        sobrietyStartTime: new Date().toISOString()
+      };
+      if (message.journalTime) {
+        updates.journalReminderTime = message.journalTime;
+        updates.journalReminderEnabled = true;
+        scheduleJournalReminder(message.journalTime);
+      }
+      await chrome.storage.local.set(updates);
+      return { onboardingComplete: true };
+    }
+
+    case 'BREATHING_COMPLETED': {
+      const data = await chrome.storage.local.get(['xp', 'breathingCompleted']);
+      const xp = (data.xp || 0) + 15;
+      const bc = (data.breathingCompleted || 0) + 1;
+      await chrome.storage.local.set({ xp, breathingCompleted: bc });
+      return { xp, breathingCompleted: bc };
+    }
+
+    case 'BYPASS_RESISTED': {
+      const data = await chrome.storage.local.get(['xp']);
+      const xp = (data.xp || 0) + 25;
+      await chrome.storage.local.set({ xp });
+      return { xp };
+    }
+
+    case 'IMAGE_BLURRED': {
+      const data = await chrome.storage.local.get(['imagesBlurredCount']);
+      const count = (data.imagesBlurredCount || 0) + 1;
+      await chrome.storage.local.set({ imagesBlurredCount: count });
+      return { count };
     }
 
     case 'CHECK_BLOCKED': {
@@ -222,7 +398,10 @@ async function handleMessage(message, sender) {
 
 // ── Streak Logic ──────────────────────────────────────────────────
 async function updateStreak() {
-  const data = await chrome.storage.local.get(['streakStartDate', 'lastActiveDate', 'enabled']);
+  const data = await chrome.storage.local.get([
+    'streakStartDate', 'lastActiveDate', 'enabled',
+    'xp', 'lastMilestoneDays', 'lastStreakXpDate'
+  ]);
   const today = toDateStr(new Date().toISOString());
 
   if (!data.streakStartDate) {
@@ -230,24 +409,39 @@ async function updateStreak() {
     return;
   }
 
-  // If shield is enabled, update last active date
   if (data.enabled) {
     const gap = data.lastActiveDate ? daysBetween(data.lastActiveDate, today) : 0;
 
     if (gap > 1) {
-      // Streak broken — reset start to today
       await chrome.storage.local.set({
         streakStartDate: today,
         lastActiveDate: today,
-        streakDays: 0
+        streakDays: 0,
+        lastMilestoneDays: 0,
+        sobrietyStartTime: new Date().toISOString()
       });
     } else {
-      // Streak continues
       const streakDays = daysBetween(data.streakStartDate, today);
-      await chrome.storage.local.set({
-        lastActiveDate: today,
-        streakDays: streakDays
-      });
+      const updates = { lastActiveDate: today, streakDays: streakDays };
+
+      // Daily streak XP: +10 per day (once per calendar day)
+      if (data.lastStreakXpDate !== today && streakDays > 0) {
+        updates.xp = (data.xp || 0) + 10;
+        updates.lastStreakXpDate = today;
+
+        // Milestone bonus: +100 XP at 7, 14, 30, 60, 90, 180, 365 days
+        const BONUS_DAYS = [7, 14, 30, 60, 90, 180, 365];
+        const lastMs = data.lastMilestoneDays || 0;
+        for (const d of BONUS_DAYS) {
+          if (lastMs < d && streakDays >= d) {
+            updates.xp = (updates.xp || (data.xp || 0)) + 100;
+            updates.lastMilestoneDays = d;
+            break;
+          }
+        }
+      }
+
+      await chrome.storage.local.set(updates);
     }
   }
 }
@@ -388,13 +582,24 @@ function isUrlBlocked(url, userDomains = [], userSubs = []) {
 }
 
 // ── Utilities ─────────────────────────────────────────────────────
+// IMPORTANT: dates use the user's LOCAL timezone, not UTC.
+// A user in UTC+10 journaling at 22:00 local should see the entry stored
+// under their local date. Mixing UTC dates with local-clock alarms led
+// to off-by-one date bugs for non-UTC users.
 function toDateStr(iso) {
-  return new Date(iso).toISOString().split('T')[0]; // YYYY-MM-DD
+  const d = new Date(iso);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 function daysBetween(dateA, dateB) {
-  const a = new Date(dateA + 'T00:00:00Z');
-  const b = new Date(dateB + 'T00:00:00Z');
+  // Both dates are local-date strings (YYYY-MM-DD) per toDateStr above.
+  // Parse at LOCAL midnight (no Z suffix) so daylight-saving transitions
+  // don't introduce ±1 hour skew that flips Math.floor.
+  const a = new Date(dateA + 'T00:00:00');
+  const b = new Date(dateB + 'T00:00:00');
   return Math.floor((b - a) / 86400000);
 }
 
@@ -421,7 +626,8 @@ function normalizeSub(input) {
 }
 
 // ── DNR Feedback: count blocks from the network layer ─────────────
+// onRuleMatchedDebug only fires in unpacked/dev builds. Use console.warn so
+// it doesn't trip lint as a debug-leftover but is still discoverable in DevTools.
 chrome.declarativeNetRequest.onRuleMatchedDebug?.addListener?.((info) => {
-  // Only available in dev mode, useful for debugging
-  console.log('[Rewire Brain] Rule matched:', info);
+  console.warn('[Rewire Brain] DNR rule matched (dev only):', info);
 });

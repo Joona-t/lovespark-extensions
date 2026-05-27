@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rewire Brain Dashboard</title>
+  <link rel="preload" href="lib/fonts/opendyslexic-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      background: #fff0f5;
+      background-image: linear-gradient(160deg, #fff0f7 0%, #ffe4f0 100%);
+      background-attachment: fixed;
+      color: #4a1a30;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .dashboard {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+
+    /* ── Header ── */
+    .dash-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .dash-header img { width: 48px; height: 48px; margin-bottom: 6px; }
+    .dash-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 4px;
+    }
+    .dash-sub {
+      font-size: 0.72rem;
+      color: #8a3060;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Brain Tree Visualization ── */
+    .tree-section {
+      text-align: center;
+      padding: 28px 20px 24px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .tree-container {
+      position: relative;
+      width: 240px;
+      height: 200px;
+      margin: 0 auto 16px;
+    }
+
+    /* Tree trunk */
+    .tree-trunk {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      background: linear-gradient(to top, #6B4914, #8B6928);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.6s ease, width 0.3s ease;
+    }
+
+    /* Tree canopy */
+    .tree-canopy {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50% 50% 45% 45%;
+      transition: all 0.6s ease;
+    }
+
+    /* Ground */
+    .tree-ground {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 14px;
+      background: radial-gradient(ellipse, #c4a060, #d4b878 60%, transparent 100%);
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+
+    /* Stage 1: tiny seedling */
+    .tree-stage-1 .tree-trunk { height: 20px; width: 6px; }
+    .tree-stage-1 .tree-canopy { width: 20px; height: 18px; bottom: 34px; background: #90c464; border-radius: 50%; }
+    .tree-stage-1 .tree-ground { width: 50px; }
+
+    /* Stage 2: small sprout */
+    .tree-stage-2 .tree-trunk { height: 30px; width: 8px; }
+    .tree-stage-2 .tree-canopy { width: 36px; height: 32px; bottom: 42px; background: radial-gradient(circle, #a0d468, #7ab848); }
+    .tree-stage-2 .tree-ground { width: 60px; }
+
+    /* Stage 3: young sapling */
+    .tree-stage-3 .tree-trunk { height: 44px; width: 10px; }
+    .tree-stage-3 .tree-canopy { width: 56px; height: 50px; bottom: 54px; background: radial-gradient(circle at 45% 40%, #8cc850, #5ca030); }
+    .tree-stage-3 .tree-ground { width: 80px; }
+
+    /* Stage 4: growing */
+    .tree-stage-4 .tree-trunk { height: 56px; width: 12px; }
+    .tree-stage-4 .tree-canopy { width: 80px; height: 72px; bottom: 64px; background: radial-gradient(circle at 45% 40%, #a0d468, #5ca030, #3a8020); }
+
+    /* Stage 5: strong */
+    .tree-stage-5 .tree-trunk { height: 66px; width: 14px; }
+    .tree-stage-5 .tree-canopy { width: 104px; height: 94px; bottom: 72px; background: radial-gradient(circle at 45% 38%, #90c860, #48a028, #307018); box-shadow: 0 4px 20px rgba(80, 160, 40, 0.25); }
+
+    /* Stage 6: full canopy */
+    .tree-stage-6 .tree-trunk { height: 74px; width: 16px; }
+    .tree-stage-6 .tree-canopy { width: 128px; height: 115px; bottom: 78px; background: radial-gradient(circle at 45% 38%, #a8d870, #48a028, #206010); box-shadow: 0 6px 28px rgba(60, 140, 30, 0.3); }
+
+    /* Stage 7: deep roots */
+    .tree-stage-7 .tree-trunk { height: 80px; width: 18px; }
+    .tree-stage-7 .tree-canopy { width: 150px; height: 135px; bottom: 82px; background: radial-gradient(circle at 45% 38%, #b0e078, #58b038, #206010); box-shadow: 0 8px 32px rgba(50, 130, 25, 0.35); }
+
+    /* Stage 8: ancient oak */
+    .tree-stage-8 .tree-trunk { height: 86px; width: 20px; }
+    .tree-stage-8 .tree-canopy { width: 170px; height: 153px; bottom: 84px; background: radial-gradient(circle at 45% 38%, #c0e880, #68c048, #288018); box-shadow: 0 10px 36px rgba(50, 140, 30, 0.4); }
+
+    /* Stage 9: forest guardian — glow */
+    .tree-stage-9 .tree-trunk { height: 90px; width: 22px; }
+    .tree-stage-9 .tree-canopy { width: 188px; height: 168px; bottom: 86px; background: radial-gradient(circle at 45% 38%, #d0f090, #78d058, #30a020); box-shadow: 0 12px 40px rgba(60, 160, 40, 0.45), 0 0 60px rgba(100, 200, 80, 0.2); }
+
+    /* Stage 10: rewired — golden glow */
+    .tree-stage-10 .tree-trunk { height: 94px; width: 24px; background: linear-gradient(to top, #8B6928, #b08830); }
+    .tree-stage-10 .tree-canopy { width: 210px; height: 188px; bottom: 88px; background: radial-gradient(circle at 45% 38%, #e8ffa0, #a0e868, #50c838); box-shadow: 0 14px 48px rgba(80, 180, 50, 0.5), 0 0 90px rgba(160, 230, 120, 0.25); }
+
+    /* Level + XP info */
+    .level-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ffe0ee, #ffd0e0);
+      border: 1.5px solid rgba(255, 179, 208, 0.5);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 10px;
+    }
+    .xp-bar-wrap {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto 8px;
+      height: 12px;
+      background: #ffe0ee;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #ffd0e0;
+    }
+    .xp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff80b0, #e91e8c);
+      border-radius: 12px;
+      transition: width 0.5s ease;
+    }
+    .xp-text {
+      font-size: 0.68rem;
+      color: #8a3060;
+      margin-bottom: 6px;
+    }
+
+    /* Milestone label */
+    .milestone-label {
+      font-size: 0.78rem;
+      color: #8a3060;
+      font-weight: 700;
+      margin-top: 8px;
+      padding: 5px 14px;
+      background: rgba(255, 240, 247, 0.8);
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    /* ── Stats Grid ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .stat-icon { font-size: 1.4rem; margin-bottom: 4px; }
+    .stat-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #e91e8c;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.62rem;
+      color: #8a3060;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    /* ── Next Milestone ── */
+    .next-milestone {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .nm-header {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .nm-label {
+      font-size: 0.85rem;
+      color: #7a3050;
+      font-weight: 700;
+    }
+    .nm-days {
+      font-size: 0.72rem;
+      color: #8a3060;
+      margin-top: 4px;
+    }
+
+    /* ── Resources Section ── */
+    .resources-section {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .res-section-title {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .res-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .res-card-d {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      background: #fff5f9;
+      border: 1.5px solid #ffd0e8;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #7a3050;
+      font-size: 0.72rem;
+      transition: all 0.2s;
+    }
+    .res-card-d:hover {
+      background: #ffe0f0;
+      border-color: #ffb3d0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 100, 160, 0.15);
+    }
+    .res-card-d:focus-visible { outline: 2px solid #e91e8c; outline-offset: 2px; }
+    .rcd-emoji { font-size: 1.2rem; flex-shrink: 0; }
+    .rcd-title { font-weight: 700; }
+    .rcd-desc { font-size: 0.62rem; color: #8a3060; margin-top: 2px; line-height: 1.4; }
+
+    /* ── Footer ── */
+    .dash-footer {
+      text-align: center;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .dash-footer a {
+      font-size: 0.72rem;
+      color: #e91e8c;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .dash-footer a:hover { text-decoration: underline; }
+    .dash-footer-sep { color: #ffb3d0; margin: 0 8px; }
+
+    /* ── Sobriety Timer (I Am Sober style) ── */
+    .timer-section {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .timer-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .timer-unit {
+      background: linear-gradient(135deg, #ffe0ee, #ffd0e0);
+      border: 1.5px solid rgba(255, 179, 208, 0.5);
+      border-radius: 14px;
+      padding: 12px 6px;
+    }
+    .timer-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #c2185b;
+      line-height: 1;
+    }
+    .timer-unit-label {
+      font-size: 0.58rem;
+      color: #8a3060;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+    .timer-start-date {
+      font-size: 0.68rem;
+      color: #8a3060;
+      margin-top: 10px;
+    }
+
+    /* ── Motivation Section ── */
+    .motivation-section {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .motivation-section.visible { display: block; }
+    .motiv-header {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .motiv-text {
+      font-size: 0.78rem;
+      color: #7a3050;
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .motiv-label {
+      font-size: 0.62rem;
+      color: #8a3060;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+
+    /* ── Journal Section ── */
+    .journal-section {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .journal-header {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .journal-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.78rem;
+      color: #4a1a30;
+      background: white;
+      outline: none;
+      resize: vertical;
+    }
+    .journal-textarea:focus { border-color: #e91e8c; }
+    .journal-textarea::placeholder { color: #d0a8b8; }
+    .journal-save-btn {
+      margin-top: 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+      min-height: 32px;
+    }
+    .journal-save-btn:hover { transform: translateY(-1px); }
+    .journal-save-btn:focus-visible { outline: 2px solid #e91e8c; outline-offset: 2px; }
+    .journal-feedback {
+      font-size: 0.68rem;
+      color: #e91e8c;
+      margin-top: 6px;
+      min-height: 1em;
+    }
+    .journal-past-header {
+      font-size: 0.62rem;
+      color: #8a3060;
+      font-weight: 700;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    .journal-entry {
+      padding: 10px 12px;
+      background: #fff5f9;
+      border: 1px solid #ffd0e8;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      font-size: 0.72rem;
+      color: #7a3050;
+      line-height: 1.5;
+    }
+    .journal-entry-date {
+      font-size: 0.58rem;
+      color: #8a3060;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .dashboard { padding: 20px 16px 32px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .res-grid { grid-template-columns: 1fr; }
+      .tree-container { transform: scale(0.85); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="dash-header">
+      <img src="mascot.png" alt="Sparky mascot" width="48" height="48">
+      <div class="dash-title">Rewire Brain</div>
+      <div class="dash-sub">Your recovery dashboard</div>
+    </div>
+
+    <!-- Sobriety Timer -->
+    <div class="timer-section">
+      <div class="timer-label">I've been free for</div>
+      <div class="timer-grid">
+        <div class="timer-unit">
+          <div class="timer-num" id="timerDays" aria-live="off">0</div>
+          <div class="timer-unit-label">Days</div>
+        </div>
+        <div class="timer-unit">
+          <div class="timer-num" id="timerHours" aria-live="off">0</div>
+          <div class="timer-unit-label">Hours</div>
+        </div>
+        <div class="timer-unit">
+          <div class="timer-num" id="timerMins" aria-live="off">0</div>
+          <div class="timer-unit-label">Minutes</div>
+        </div>
+        <div class="timer-unit">
+          <div class="timer-num" id="timerSecs" aria-live="off">0</div>
+          <div class="timer-unit-label">Seconds</div>
+        </div>
+      </div>
+      <div class="timer-start-date" id="timerStartDate" aria-live="polite">Since today</div>
+    </div>
+
+    <!-- Brain Tree Visualization -->
+    <div class="tree-section">
+      <div class="tree-container tree-stage-1" id="treeContainer">
+        <div class="tree-ground"></div>
+        <div class="tree-trunk"></div>
+        <div class="tree-canopy"></div>
+      </div>
+      <div class="level-badge" id="levelBadge" aria-live="polite">Level 1 — Seedling</div>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-fill" id="xpBarFill" style="width: 0%" aria-live="off" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+      </div>
+      <div class="xp-text" id="xpText" aria-live="polite">0 / 100 XP</div>
+      <div class="milestone-label" id="milestoneLabel" aria-live="polite">Day 1 — The Hardest Step</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🛡</div>
+        <div class="stat-val" id="statBlocked" aria-live="polite">0</div>
+        <div class="stat-label">Sites Blocked</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-val" id="statStreak" aria-live="polite">0</div>
+        <div class="stat-label">Day Streak</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-val" id="statXp" aria-live="polite">0</div>
+        <div class="stat-label">Total XP</div>
+      </div>
+    </div>
+
+    <!-- Next Milestone -->
+    <div class="next-milestone" id="nextMilestoneSection">
+      <div class="nm-header">Next Milestone</div>
+      <div class="nm-label" id="nmLabel" aria-live="polite">Withdrawal Stabilizing</div>
+      <div class="nm-days" id="nmDays" aria-live="polite">3 days to go</div>
+    </div>
+
+    <!-- Resources -->
+    <div class="resources-section">
+      <div class="res-section-title">📚 Science-Backed Resources</div>
+      <div class="res-grid" id="dashResources">
+        <!-- Rendered by dashboard.js -->
+      </div>
+    </div>
+
+    <!-- My Motivation -->
+    <div class="motivation-section" id="motivationSection">
+      <div class="motiv-header">Why I'm Doing This</div>
+      <div class="motiv-text" id="motivReason" aria-live="polite"></div>
+      <div id="motivGoalWrap" style="display:none" aria-live="polite">
+        <div class="motiv-label">What I Hope to Achieve</div>
+        <div class="motiv-text" id="motivGoal" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- Daily Journal -->
+    <div class="journal-section" id="journalSection">
+      <div class="journal-header">📝 Daily Journal</div>
+      <textarea class="journal-textarea" id="journalInput" placeholder="How are you feeling today? What are you grateful for?"></textarea>
+      <button class="journal-save-btn" id="journalSaveBtn">Save Entry</button>
+      <div class="journal-feedback" id="journalFeedback" aria-live="polite" role="status"></div>
+      <div class="journal-past-header" id="pastHeader" style="display:none" aria-live="polite">Recent Entries</div>
+      <div id="journalPastEntries"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="dash-footer">
+      <a href="https://lovespark.love" target="_blank">🌸 LoveSpark.love</a>
+      <span class="dash-footer-sep">·</span>
+      <a href="https://ko-fi.com/joona_t" target="_blank">☕ Ko-fi</a>
+      <span class="dash-footer-sep">·</span>
+      <a href="#" id="openSettings">⚙ Settings</a>
+    </div>
+  </div>
+
+  <script src="xp.js"></script>
+  <script src="quotes.js"></script>
+  <script src="resources.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

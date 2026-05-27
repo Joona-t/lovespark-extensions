@@ -4,8 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Porn Blocker Rewire Brain 🌸</title>
+  <link rel="preload" href="lib/fonts/opendyslexic-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
   <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
@@ -14,7 +30,7 @@
     }
 
     body {
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       background: #fff0f5;
       min-height: 100vh;
       display: flex;
@@ -79,6 +95,8 @@
       max-width: 580px;
       width: 100%;
       text-align: center;
+      overflow-wrap: break-word;
+      word-break: break-word;
       box-shadow:
         0 20px 60px rgba(255, 100, 160, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.8) inset,
@@ -127,6 +145,13 @@
       margin-bottom: 20px;
       font-weight: 700;
     }
+    .brand-mascot {
+      display: block;
+      margin: 0 auto 8px;
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 2px 8px rgba(255, 140, 180, 0.35));
+    }
 
     .emoji-big {
       font-size: 3.5rem;
@@ -140,7 +165,7 @@
     }
 
     h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-size: 1.9rem;
       color: #c2185b;
       margin-bottom: 12px;
@@ -166,32 +191,40 @@
       margin-bottom: 24px;
     }
     .breathe-label {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       color: #e91e8c;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.06em;
       margin-bottom: 10px;
       font-weight: 700;
+    }
+    .breathe-circle-wrap {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .breathe-circle {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       background: radial-gradient(circle, #ffb3d1, #ff80b0);
-      margin: 0 auto;
       animation: breathe 7s ease-in-out infinite;
       box-shadow: 0 0 0 0 rgba(255, 128, 176, 0.4);
+      flex-shrink: 0;
     }
     @keyframes breathe {
       0%, 100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(255,128,176,0.4); }
-      35% { transform: scale(1.5); box-shadow: 0 0 0 16px rgba(255,128,176,0.0); }
-      50% { transform: scale(1.5); }
+      35% { transform: scale(1.4); box-shadow: 0 0 0 16px rgba(255,128,176,0.0); }
+      50% { transform: scale(1.4); }
       85% { transform: scale(1); }
     }
     .breathe-text {
       font-size: 0.72rem;
-      color: #b06080;
-      margin-top: 8px;
+      color: #8a3060;
+      margin-top: 12px;
     }
     .breathe-phase {
       font-weight: 700;
@@ -210,7 +243,7 @@
       width: 100%;
       padding: 13px 20px;
       border-radius: 50px;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
@@ -254,13 +287,15 @@
     }
     .report-toggle {
       font-size: 0.75rem;
-      color: #c08090;
+      color: #8a3060;
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 3px;
       background: none;
       border: none;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      padding: 8px 4px;
+      min-height: 32px;
     }
     .report-toggle:hover { color: #e91e8c; }
 
@@ -279,7 +314,7 @@
       padding: 10px 14px;
       border-radius: 10px;
       border: 1.5px solid #ffc0d8;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-size: 0.82rem;
       background: white;
       color: #4a1a30;
@@ -296,7 +331,7 @@
       border: none;
       background: linear-gradient(135deg, #ffb3d0, #e91e8c);
       color: white;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-weight: 700;
       font-size: 0.78rem;
       cursor: pointer;
@@ -358,15 +393,17 @@
     }
     .dismiss {
       display: inline-block;
-      font-size: 0.7rem;
-      color: #c8a8b8;
+      font-size: 0.72rem;
+      color: #8a6070;
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 3px;
       background: none;
       border: none;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       transition: color 0.2s;
+      padding: 8px 4px;
+      min-height: 32px;
     }
     .dismiss:hover { color: #c2185b; }
     .dismiss:disabled { cursor: not-allowed; opacity: 0.5; }
@@ -388,7 +425,7 @@
       line-height: 1.5;
     }
     .countdown-timer {
-      font-family: 'Playfair Display', serif;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-size: 2.2rem;
       color: #e91e8c;
       font-weight: 700;
@@ -415,7 +452,7 @@
       border: 2px solid #e08090;
       background: transparent;
       color: #a04060;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-weight: 700;
       font-size: 0.78rem;
       cursor: pointer;
@@ -429,7 +466,7 @@
       padding: 8px 12px;
       border-radius: 8px;
       border: 1.5px solid #ffc0d8;
-      font-family: 'Comfortaa', cursive;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
       font-size: 0.78rem;
       background: white;
       color: #4a1a30;
@@ -439,11 +476,121 @@
     .bypass-reason.visible { display: block; }
     .bypass-reason::placeholder { color: #d0a0b8; }
 
+    /* ── Quote metadata ── */
+    .quote-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quote-author {
+      font-size: 0.78rem;
+      color: #c2185b;
+      font-weight: 700;
+      font-style: italic;
+    }
+    .quote-category {
+      font-size: 0.65rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff0f7, #ffe0ee);
+      border: 1px solid #ffd0e0;
+      color: #8a3060;
+      font-weight: 700;
+    }
+
+    /* ── Resources section ── */
+    .resources-section {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 18px;
+    }
+    .resources-header {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 1rem;
+      color: #c2185b;
+      text-align: center;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .resource-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #fff5f9;
+      border: 1.5px solid #ffd0e8;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #7a3050;
+      font-size: 0.72rem;
+      transition: all 0.2s;
+    }
+    .resource-card:hover {
+      background: #ffe0f0;
+      border-color: #ffb3d0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 100, 160, 0.15);
+    }
+    .resource-card:focus-visible {
+      outline: 2px solid #e91e8c;
+      outline-offset: 2px;
+    }
+    .rc-emoji { font-size: 1.2rem; flex-shrink: 0; }
+    .rc-title { font-weight: 700; }
+    .rc-desc { font-size: 0.65rem; color: #8a3060; margin-top: 2px; line-height: 1.4; }
+
     /* ── Responsive ── */
     @media (max-width: 480px) {
-      .card { padding: 32px 24px 28px; }
-      h1 { font-size: 1.5rem; }
+      .card { padding: 28px 16px 24px; max-width: 100%; }
+      h1 { font-size: 1.3rem; }
+      .brand { font-size: 0.62rem; letter-spacing: 0.1em; }
+      .breathe-label { font-size: 0.65rem; letter-spacing: 0.03em; }
       .apps-grid { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .btn { font-size: 0.8rem; padding: 11px 16px; }
+      .message { font-size: 0.85rem; }
+    }
+
+    /* ── XP Toast ── */
+    .xp-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-60px);
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(233, 30, 140, 0.4);
+      z-index: 1000;
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .xp-toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blob, .heart, .breathe-circle, .emoji-big, .card {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
     }
   </style>
 </head>
@@ -454,31 +601,37 @@
     <div class="blob blob-3"></div>
   </div>
   <div class="hearts" id="hearts"></div>
+  <div class="xp-toast" id="xpToast" aria-live="polite" role="status"></div>
 
   <div class="card">
-    <div class="blocked-badge" id="blockedBadge">🛡 0 blocked</div>
-    <div class="streak" id="streakBadge">🔥 0 days</div>
+    <div class="blocked-badge" id="blockedBadge" aria-live="polite">🛡 0 blocked</div>
+    <div class="streak" id="streakBadge" aria-live="polite">🔥 0 days</div>
+    <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="brand-mascot" width="40" height="40">
     <div class="brand">Porn Blocker Rewire Brain 🌸</div>
 
-    <span class="emoji-big" id="emoji">🌸</span>
-    <h1 id="title">Pause &amp; Breathe</h1>
-    <p class="message" id="messageText">You are more than your impulses. Take three deep breaths and return to what truly matters.</p>
+    <span class="emoji-big" id="emoji" aria-live="polite" aria-hidden="true">🌸</span>
+    <h1 id="title" aria-live="polite">Pause &amp; Breathe</h1>
+    <p class="message" id="messageText" aria-live="polite">You are more than your impulses. Take three deep breaths and return to what truly matters.</p>
+    <div class="quote-meta">
+      <span class="quote-author" id="quoteAuthor" aria-live="polite"></span>
+      <span class="quote-category" id="quoteCategory" role="status" aria-live="polite"></span>
+    </div>
 
     <div class="breathe-box">
       <div class="breathe-label">✿ Breathe with me</div>
-      <div class="breathe-circle" id="breatheCircle"></div>
-      <div class="breathe-text"><span class="breathe-phase" id="breathePhase">Breathe in…</span></div>
+      <div class="breathe-circle-wrap"><div class="breathe-circle" id="breatheCircle"></div></div>
+      <div class="breathe-text"><span class="breathe-phase" id="breathePhase" aria-live="off">Breathe in…</span></div>
     </div>
 
     <div class="btn-group">
       <button class="btn btn-primary" id="btnBack">↩ Take Me Back to Safety</button>
-      <button class="btn btn-redirect" id="btnRedirect" style="display:none;">🎯 Go to My Focus Page</button>
+      <button class="btn btn-redirect" id="btnRedirect" style="display:none;" aria-label="Go to my focus page">🎯 Go to My Focus Page</button>
       <a href="https://joona-t.github.io" class="btn btn-secondary" target="_blank">🌸 Visit LoveSpark Portfolio</a>
     </div>
 
     <!-- Report a missed site -->
     <div class="report-section">
-      <button class="report-toggle" id="reportToggle">🚩 Report a site that should be blocked</button>
+      <button class="report-toggle" id="reportToggle" aria-label="Report a site that should be blocked" aria-expanded="false">🚩 Report a site that should be blocked</button>
       <div class="report-form" id="reportForm">
         <input type="text" id="reportUrl" placeholder="e.g. example.com or r/subredditname">
         <button class="report-submit" id="reportSubmit">Submit Report</button>
@@ -486,16 +639,16 @@
       </div>
     </div>
 
-    <!-- LoveSpark Ecosystem -->
-    <div class="apps-section">
-      <div class="apps-label">✦ More LoveSpark Tools</div>
-      <div class="apps-grid">
-        <a href="https://joona-t.github.io" target="_blank" class="app-chip">🌸 Portfolio</a>
-        <a href="https://chromewebstore.google.com/search/LoveSpark" target="_blank" class="app-chip">🧠 Anti Brainrot</a>
-        <a href="https://chromewebstore.google.com/search/LoveSpark%20tab%20counter" target="_blank" class="app-chip">📑 Are You Cooked?</a>
-        <a href="https://chromewebstore.google.com/search/I%20Dont%20Want%20Cookies%20LoveSpark" target="_blank" class="app-chip">🍪 Cookie Blocker</a>
-        <a href="https://ko-fi.com/joona_t" target="_blank" class="app-chip">☕ Support Us</a>
-        <a href="https://chromewebstore.google.com/search/LoveSpark" target="_blank" class="app-chip">🧩 All Extensions</a>
+    <!-- LoveSpark link -->
+    <div class="apps-section" style="text-align:center">
+      <a href="https://lovespark.love" target="_blank" class="app-chip" style="display:inline-flex;justify-content:center;width:auto;padding:10px 24px">🌸 Visit LoveSpark.love</a>
+    </div>
+
+    <!-- Science-backed resources -->
+    <div class="resources-section" id="resourcesSection">
+      <div class="resources-header">Need Help? You Are Not Alone</div>
+      <div class="resources-grid" id="resourcesGrid">
+        <!-- Rendered by blocked.js from resources.js data -->
       </div>
     </div>
 
@@ -504,7 +657,7 @@
       <button class="dismiss" id="dismissBtn">I understand the risks, proceed anyway</button>
       <div class="bypass-countdown" id="bypassCountdown">
         <div class="countdown-text">Take a moment to reflect. Are you sure this is what you want right now?</div>
-        <div class="countdown-timer" id="countdownTimer">30</div>
+        <div class="countdown-timer" id="countdownTimer" aria-live="off">30</div>
         <div class="countdown-bar"><div class="countdown-fill" id="countdownFill"></div></div>
         <input type="text" class="bypass-reason" id="bypassReason" placeholder="Why are you proceeding? (optional, for your own reflection)">
         <button class="bypass-confirm" id="bypassConfirm">I've reflected, proceed</button>
@@ -512,166 +665,9 @@
     </div>
   </div>
 
-  <script>
-    // ── Mindful messages ──
-    const MESSAGES = [
-      { emoji: '🌸', title: "Pause & Breathe", message: "You are more than your impulses. Take three deep breaths and return to what truly matters." },
-      { emoji: '✨', title: "You've Got This", message: "Every moment is a fresh start. Your goals are waiting for you — and they're worth it." },
-      { emoji: '🌿', title: "Check In With Yourself", message: "What are you really looking for right now? Rest, connection, or excitement? There are better ways to find it." },
-      { emoji: '💖', title: "Be Kind to Future You", message: "The version of you an hour from now will thank you for choosing differently today." },
-      { emoji: '🦋', title: "Growth Happens Here", message: "Discomfort is temporary. The strength you build by redirecting your attention is permanent." },
-      { emoji: '🌙', title: "You Deserve Better", message: "Your mind and your time are precious. Spend them on things that build you up." },
-      { emoji: '⭐', title: "Stay on Track", message: "Whatever you're building, whatever you're dreaming — that's where your energy belongs right now." },
-      { emoji: '🕊️', title: "Freedom Feels Good", message: "True freedom isn't doing whatever feels good in the moment. It's building the life you actually want." },
-      { emoji: '🧠', title: "Rewire Your Brain", message: "Every time you choose differently, you're literally building new neural pathways. This moment is rewiring your brain for the better." },
-      { emoji: '🌊', title: "Ride the Wave", message: "Urges are like waves — they rise, peak, and fall. You don't have to act on them. Just wait." },
-      { emoji: '🔥', title: "Protect Your Streak", message: "You've been doing so well. Don't trade a streak you're proud of for a moment you'll regret." },
-      { emoji: '💪', title: "You Are Stronger", message: "You are stronger than the habit. Every time you resist, you prove it to yourself." },
-    ];
-
-    // ── Initialize ──
-    const msg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-    document.getElementById('emoji').textContent = msg.emoji;
-    document.getElementById('title').textContent = msg.title;
-    document.getElementById('messageText').textContent = msg.message;
-
-    // Get the blocked URL from query params
-    const params = new URLSearchParams(window.location.search);
-    const blockedUrl = params.get('url') || '';
-
-    // ── Floating hearts ──
-    const heartEmojis = ['💕', '🌸', '✨', '💖', '🦋', '🧠', '⭐'];
-    const heartsContainer = document.getElementById('hearts');
-    for (let i = 0; i < 14; i++) {
-      const span = document.createElement('span');
-      span.className = 'heart';
-      span.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-      span.style.left = (Math.random() * 100) + '%';
-      span.style.animationDuration = (6 + Math.random() * 8) + 's';
-      span.style.animationDelay = '-' + (Math.random() * 8) + 's';
-      heartsContainer.appendChild(span);
-    }
-
-    // ── Breathing phase text ──
-    const breathePhase = document.getElementById('breathePhase');
-    const phases = ['Breathe in…', 'Hold…', 'Breathe out…', 'Rest…'];
-    const phaseDurations = [2450, 2450, 2450, 0]; // Approximate to match 7s animation
-    let phaseIdx = 0;
-    function cycleBreathing() {
-      breathePhase.textContent = phases[phaseIdx];
-      const dur = phaseDurations[phaseIdx] || 1750;
-      phaseIdx = (phaseIdx + 1) % phases.length;
-      setTimeout(cycleBreathing, dur);
-    }
-    cycleBreathing();
-
-    // ── Load stats ──
-    let cooldownSec = 30;
-
-    chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (data) => {
-      if (chrome.runtime.lastError || !data) return;
-
-      const streak = data.streakDays || 0;
-      const blocked = data.blockedCount || 0;
-      cooldownSec = data.bypassCooldownSec || 30;
-
-      document.getElementById('streakBadge').textContent = `🔥 ${streak} day${streak !== 1 ? 's' : ''}`;
-      document.getElementById('blockedBadge').textContent = `🛡 ${blocked} blocked`;
-
-      // Show redirect button if custom URL is set
-      const redirectUrl = data.redirectUrl;
-      if (redirectUrl) {
-        const btn = document.getElementById('btnRedirect');
-        btn.style.display = 'block';
-        btn.addEventListener('click', () => {
-          window.location.href = redirectUrl;
-        });
-      }
-    });
-
-    // ── Back button ──
-    document.getElementById('btnBack').addEventListener('click', () => {
-      if (window.history.length > 2) {
-        window.history.go(-2);
-      } else {
-        window.location.href = 'https://joona-t.github.io';
-      }
-    });
-
-    // ── Report a site ──
-    document.getElementById('reportToggle').addEventListener('click', () => {
-      document.getElementById('reportForm').classList.toggle('visible');
-    });
-
-    document.getElementById('reportSubmit').addEventListener('click', () => {
-      const url = document.getElementById('reportUrl').value.trim();
-      if (!url) return;
-      chrome.runtime.sendMessage({ type: 'REPORT_SITE', url }, () => {
-        document.getElementById('reportMsg').classList.add('visible');
-        document.getElementById('reportUrl').value = '';
-        setTimeout(() => {
-          document.getElementById('reportMsg').classList.remove('visible');
-          document.getElementById('reportForm').classList.remove('visible');
-        }, 3000);
-      });
-    });
-
-    // ── Bypass with timed cooldown ──
-    let countdownInterval = null;
-
-    document.getElementById('dismissBtn').addEventListener('click', () => {
-      const countdown = document.getElementById('bypassCountdown');
-      const reason = document.getElementById('bypassReason');
-
-      if (countdown.classList.contains('visible')) {
-        // Already showing — hide it
-        countdown.classList.remove('visible');
-        if (countdownInterval) clearInterval(countdownInterval);
-        return;
-      }
-
-      countdown.classList.add('visible');
-      reason.classList.add('visible');
-
-      let remaining = cooldownSec;
-      const timerEl = document.getElementById('countdownTimer');
-      const fillEl = document.getElementById('countdownFill');
-      const confirmBtn = document.getElementById('bypassConfirm');
-
-      timerEl.textContent = remaining;
-      fillEl.style.width = '0%';
-      confirmBtn.classList.remove('visible');
-
-      countdownInterval = setInterval(() => {
-        remaining--;
-        timerEl.textContent = remaining;
-        fillEl.style.width = ((cooldownSec - remaining) / cooldownSec * 100) + '%';
-
-        if (remaining <= 0) {
-          clearInterval(countdownInterval);
-          timerEl.textContent = '✓';
-          confirmBtn.classList.add('visible');
-        }
-      }, 1000);
-    });
-
-    document.getElementById('bypassConfirm').addEventListener('click', () => {
-      const reason = document.getElementById('bypassReason').value.trim();
-
-      // Log the bypass
-      chrome.runtime.sendMessage({
-        type: 'LOG_BYPASS',
-        url: blockedUrl,
-        reason: reason
-      });
-
-      // Navigate to the original URL
-      if (blockedUrl) {
-        window.location.href = blockedUrl;
-      } else {
-        window.history.back();
-      }
-    });
-  </script>
+  <script src="xp.js"></script>
+  <script src="quotes.js"></script>
+  <script src="resources.js"></script>
+  <script src="blocked.js"></script>
 </body>
 </html>
