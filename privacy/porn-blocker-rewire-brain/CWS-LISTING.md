@@ -269,23 +269,29 @@ The extension does NOT:
 ## 7. Single-purpose justification (CWS field — required)
 
 ```
-Rewire Brain has a single purpose: blocking pornographic and explicit
-content to support users recovering from compulsive use. This includes
-three integrated mechanisms in service of that one purpose:
+Rewire Brain has a single purpose: blocking pornographic and explicit content
+to help users recover from compulsive use.
 
-(a) URL-level blocking of 125+ pre-configured adult domains and 30+ NSFW
-    subreddits via Chrome's declarativeNetRequest API;
+Every feature serves this one purpose:
 
-(b) On-device NSFW image classification using a bundled TensorFlow.js
-    MobileNetV2 model to blur explicit images on sites not in the
-    blocklist (a fallback safety layer);
+(a) URL-level blocking of 125+ adult domains and 30+ NSFW subreddits via
+    Chrome's declarativeNetRequest API.
 
-(c) A mindful interstitial page (replacing blocked pages) with a quote,
+(b) On-device NSFW image classification (bundled TensorFlow.js MobileNetV2)
+    that blurs explicit images on sites not in the blocklist — a fallback
+    safety layer.
+
+(c) A mindful interstitial page replacing blocked pages, with a quote,
     breathing exercise, recovery resources, and a friction-based bypass
-    countdown — designed to interrupt compulsive use patterns.
+    countdown — designed to interrupt compulsive patterns.
 
-All three mechanisms serve the same purpose and reinforce each other.
-There are no unrelated features.
+The streak tracker, journal, sobriety timer, and XP system exist to support
+the user's recovery from the same compulsive use the blocking prevents.
+They are not standalone features — they are reinforcement mechanics for
+the single-purpose blocking behavior.
+
+No unrelated features. No social, productivity, or general-purpose tools
+mixed in.
 ```
 
 ---
