@@ -114,7 +114,7 @@ header {
   color: var(--ls-pink-deep);
 }
 
-.status-text.paused { color: #999; }
+.status-text.paused { color: var(--ls-text-muted); }
 
 .cute-msg {
   font-size: 11px;
@@ -258,7 +258,7 @@ header {
 }
 
 .wl-btn.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
 }
 

@@ -10,11 +10,12 @@
 <body>
 
 <header>
+  <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
   <h1 class="header-title">💕 LoveSpark AdBlock</h1>
   <span class="header-sub">Settings</span>
   <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
-        <span id="themeLabel">Retro Pink</span> ▾
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
         <div class="theme-dropdown-header">Change Theme</div>
@@ -48,7 +49,7 @@
     <h2 class="card-title">⚡ Filter Intensity</h2>
     <div class="intensity-grid">
       <label class="intensity-opt" data-level="light">
-        <input type="radio" name="intensity" value="light">
+        <input type="radio" name="intensity" value="light" aria-label="Light — ads only">
         <span class="opt-card">
           <span class="opt-icon">🌸</span>
           <span class="opt-name">Light</span>
@@ -56,7 +57,7 @@
         </span>
       </label>
       <label class="intensity-opt" data-level="medium">
-        <input type="radio" name="intensity" value="medium" checked>
+        <input type="radio" name="intensity" value="medium" aria-label="Medium — ads and trackers" checked>
         <span class="opt-card">
           <span class="opt-icon">💕</span>
           <span class="opt-name">Medium</span>
@@ -64,7 +65,7 @@
         </span>
       </label>
       <label class="intensity-opt" data-level="strong">
-        <input type="radio" name="intensity" value="strong">
+        <input type="radio" name="intensity" value="strong" aria-label="Strong — ads, trackers and annoyances">
         <span class="opt-card">
           <span class="opt-icon">💪</span>
           <span class="opt-name">Strong</span>
@@ -88,8 +89,8 @@
       </div>
     </div>
     <div class="btn-row" style="margin-top:14px">
-      <button id="export-csv" class="btn btn-secondary">📥 Export CSV</button>
-      <button id="reset-stats" class="btn btn-danger">🗑️ Reset Stats</button>
+      <button id="export-csv" class="btn btn-secondary" aria-label="Export stats as CSV">📥 Export CSV</button>
+      <button id="reset-stats" class="btn btn-danger" aria-label="Reset all stats">🗑️ Reset Stats</button>
     </div>
   </section>
 
@@ -99,33 +100,33 @@
     <p class="setting-desc" style="margin-bottom:10px">Domains where ads are <em>not</em> blocked:</p>
 
     <div class="add-row">
-      <input id="wl-input" type="text" class="text-input" placeholder="example.com" autocomplete="off">
+      <input id="wl-input" type="text" class="text-input" placeholder="example.com" autocomplete="off" aria-label="Domain to whitelist">
       <button id="wl-add" class="btn btn-primary">Add</button>
     </div>
 
     <ul id="wl-list" class="wl-list"></ul>
 
     <div class="btn-row" style="margin-top:10px">
-      <button id="wl-import" class="btn btn-secondary">📂 Import</button>
-      <button id="wl-export" class="btn btn-secondary">📤 Export</button>
+      <button id="wl-import" class="btn btn-secondary" aria-label="Import whitelist from file">📂 Import</button>
+      <button id="wl-export" class="btn btn-secondary" aria-label="Export whitelist to file">📤 Export</button>
     </div>
-    <input id="wl-file" type="file" accept=".txt,.json" style="display:none">
+    <input id="wl-file" type="file" accept=".txt,.json" aria-label="Whitelist file" style="display:none">
   </section>
 
   <!-- ── Suite links ── -->
   <section class="card suite-card">
     <h2 class="card-title">🩷 LoveSpark Suite</h2>
     <div class="suite-links">
-      <a href="#" class="suite-link">✨ Anti Brainrot</a>
-      <a href="#" class="suite-link">🌸 Dreamy Garden</a>
-      <a href="#" class="suite-link">💕 LoveSpark Cards</a>
+      <a href="https://lovespark.love" class="suite-link" target="_blank" rel="noopener">✨ Anti Brainrot</a>
+      <a href="https://lovespark.love" class="suite-link" target="_blank" rel="noopener">🌸 Dreamy Garden</a>
+      <a href="https://lovespark.love" class="suite-link" target="_blank" rel="noopener">💕 LoveSpark Cards</a>
     </div>
   </section>
 
 </div>
 
 <footer>
-  <span>💕 LoveSpark AdBlock v1.0.0 — Made with love</span>
+  <span>💕 LoveSpark AdBlock <span id="app-version">v1.0.0</span> — Made with love</span>
 </footer>
 
 <script src="settings.js"></script>

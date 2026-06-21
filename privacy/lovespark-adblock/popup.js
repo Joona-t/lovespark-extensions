@@ -16,16 +16,20 @@ function applyTheme(t) {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    const setOpen = (open) => {
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
       chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+      setOpen(false);
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => setOpen(false));
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -58,7 +62,6 @@ const todayEl      = document.getElementById('stat-today');
 const totalEl      = document.getElementById('stat-total');
 const domainEl     = document.getElementById('site-domain');
 const wlBtn        = document.getElementById('whitelist-btn');
-const settingsBtn  = document.getElementById('settings-btn');
 const boardBtn     = document.getElementById('board-btn');
 
 // ── Init ──────────────────────────────────────────────────────────────────────
@@ -168,18 +171,18 @@ toggleEl.addEventListener('change', async () => {
 wlBtn.addEventListener('click', async () => {
   if (!currentDomain) return;
   const isWL = whitelistedDomains.includes(currentDomain);
-  if (isWL) {
-    await sendMsg({ type: 'REMOVE_WHITELIST', domain: currentDomain });
-    whitelistedDomains = whitelistedDomains.filter((d) => d !== currentDomain);
-  } else {
-    await sendMsg({ type: 'ADD_WHITELIST', domain: currentDomain });
-    whitelistedDomains.push(currentDomain);
+  const res = await sendMsg(isWL
+    ? { type: 'REMOVE_WHITELIST', domain: currentDomain }
+    : { type: 'ADD_WHITELIST', domain: currentDomain });
+  if (res && res.error) {
+    statusEl.textContent = 'Whitelist failed 😢';
+    return;
   }
+  // storage.onChanged reconciles whitelistedDomains; reflect optimistically too.
+  whitelistedDomains = isWL
+    ? whitelistedDomains.filter((d) => d !== currentDomain)
+    : [...whitelistedDomains, currentDomain];
   updateWhitelistBtn();
-});
-
-settingsBtn.addEventListener('click', () => {
-  chrome.runtime.openOptionsPage();
 });
 
 boardBtn.addEventListener('click', () => {
@@ -188,8 +191,13 @@ boardBtn.addEventListener('click', () => {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function sendMsg(msg) {
-  return chrome.runtime.sendMessage(msg);
+async function sendMsg(msg) {
+  try {
+    return await chrome.runtime.sendMessage(msg);
+  } catch (err) {
+    console.warn('[lovespark-adblock] message failed:', err);
+    return { error: err.message };
+  }
 }
 
 // React to storage changes instead of polling — zero CPU when idle, instant updates.

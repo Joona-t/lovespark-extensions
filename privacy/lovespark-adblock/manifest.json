@@ -18,16 +18,15 @@
     "default_title": "LoveSpark AdBlock"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "permissions": [
     "declarativeNetRequest",
     "declarativeNetRequestFeedback",
     "storage",
-    "alarms"
-  ],
-  "host_permissions": [
-    "<all_urls>"
+    "alarms",
+    "activeTab"
   ],
   "declarative_net_request": {
     "rule_resources": [
@@ -60,8 +59,7 @@
       "id": "adblock@lovespark.suite",
       "strict_min_version": "109.0",
       "data_collection_permissions": {
-        "is_exempt": true,
-        "justification": "This extension does not collect, transmit, or store any user data."
+        "required": ["none"]
       }
     }
   },

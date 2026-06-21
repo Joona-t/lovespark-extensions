@@ -13,7 +13,9 @@ const DEFAULTS = {
 };
 
 function todayStr() {
-  return new Date().toISOString().slice(0, 10);
+  // Local calendar date (YYYY-MM-DD) so "today" rolls over at the user's midnight, not UTC.
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
@@ -84,30 +86,55 @@ chrome.runtime.onStartup.addListener(() => {
 // track whether it has actually fired to decide which stats path to use.
 let _debugListenerFired = false;
 
-if (chrome.declarativeNetRequest.onRuleMatchedDebug) {
+// onRuleMatchedDebug only fires in unpacked/dev mode. Register it inside try/catch
+// rather than a conditional guard (see ls-check MV3-DEBUG-GUARD): the event object can be
+// absent in packed/older contexts, and accessing addListener there would throw.
+try {
   chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(async () => {
     _debugListenerFired = true;
     await writeStats(1);
   });
+} catch (_) {
+  // Packed extension: no debug events — the getMatchedRules poll is the stats source.
 }
 
 // Fallback: poll getMatchedRules (works in packed extensions with declarativeNetRequestFeedback).
-// _lastPollTs is persisted in storage so service worker restarts don't create gaps.
+// NOTE: this counter is a best-effort LOWER BOUND — Chrome only retains matched-rule records for
+// a short rolling window, so blocks that occur while the service worker is asleep past that window
+// are lost. The badge (Chrome's own displayActionCountAsBadgeText) is the authoritative per-tab count.
+let _pollInFlight = null;
+
 async function pollMatchedRules() {
   if (_debugListenerFired) return;
+  // Coalesce concurrent callers (the 1-min alarm + GET_STATS) so the same window isn't processed twice.
+  if (_pollInFlight) return _pollInFlight;
 
-  try {
-    const { _lastPollTs: stored } = await chrome.storage.local.get('_lastPollTs');
-    const ts = stored || 0;
-    const result = await chrome.declarativeNetRequest.getMatchedRules({
-      minTimeStamp: ts,
-    });
-    const count = result.rulesMatchedInfo ? result.rulesMatchedInfo.length : 0;
-    if (count > 0) await writeStats(count);
-  } catch (err) {
-    console.warn('[LoveSpark AdBlock] pollMatchedRules failed:', err);
-  }
-  await chrome.storage.local.set({ _lastPollTs: Date.now() });
+  _pollInFlight = (async () => {
+    try {
+      const { _lastPollTs: stored } = await chrome.storage.local.get('_lastPollTs');
+      const since = stored || 0;
+      const result = await chrome.declarativeNetRequest.getMatchedRules({ minTimeStamp: since });
+      const infos = result.rulesMatchedInfo || [];
+      // Count only matches strictly newer than the cursor, and advance the cursor to the newest
+      // timestamp seen. Re-polling an overlapping window is therefore idempotent — no double-count,
+      // no read→write gap (the old code advanced to Date.now() AFTER the await, dropping matches).
+      let maxTs = since;
+      let count = 0;
+      for (const info of infos) {
+        if (info.timeStamp > since) {
+          count++;
+          if (info.timeStamp > maxTs) maxTs = info.timeStamp;
+        }
+      }
+      if (count > 0) await writeStats(count);
+      if (maxTs > since) await chrome.storage.local.set({ _lastPollTs: maxTs });
+    } catch (err) {
+      console.warn('[LoveSpark AdBlock] pollMatchedRules failed:', err);
+    } finally {
+      _pollInFlight = null;
+    }
+  })();
+  return _pollInFlight;
 }
 
 // Write stats directly to storage. No debounce — service workers can die
@@ -181,29 +208,41 @@ async function applyIntensity(intensity, enabled = true) {
 
 // ── Whitelist (dynamic allow rules) ──────────────────────────────────────────
 
-// Dynamic rule IDs for whitelist: 50000–59999
+// Dynamic rule IDs for whitelist: 50000–50999 (1000 max)
 const WHITELIST_ID_BASE = 50000;
 
+// Conservative hostname check — reject protocol/path/empty so a malformed entry can't
+// reject the whole updateDynamicRules() batch.
+const DOMAIN_RE = /^(?=.{1,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
+
+// Returns the validated/deduped domain list that was actually applied, so callers can
+// keep storage in sync with the rules that exist.
 async function syncWhitelist(domains) {
+  const valid = [...new Set((domains || [])
+    .map((d) => String(d).trim().toLowerCase())
+    .filter((d) => DOMAIN_RE.test(d)))].slice(0, 1000);
+
   // Remove all existing whitelist rules
   const existing = await chrome.declarativeNetRequest.getDynamicRules();
   const oldIds = existing
     .filter((r) => r.id >= WHITELIST_ID_BASE && r.id < WHITELIST_ID_BASE + 1000)
     .map((r) => r.id);
 
-  const newRules = domains.map((domain, i) => ({
+  const newRules = valid.map((domain, i) => ({
     id: WHITELIST_ID_BASE + i,
     priority: 2, // Beats all blocking rules (priority 1)
-    action: { type: 'allow' },
-    condition: {
-      initiatorDomains: [domain],
-    },
+    // allowAllRequests exempts the ENTIRE page (including 3rd-party ad iframes whose
+    // initiator is the iframe origin, not the page) when the top-level/sub-frame URL is on
+    // a whitelisted domain — a true per-site allow, unlike an `allow` keyed on initiatorDomains.
+    action: { type: 'allowAllRequests' },
+    condition: { requestDomains: [domain], resourceTypes: ['main_frame', 'sub_frame'] },
   }));
 
   await chrome.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: oldIds,
     addRules: newRules,
   });
+  return valid;
 }
 
 // ── Message passing (from popup / settings) ───────────────────────────────────
@@ -242,27 +281,28 @@ async function handleMessage(msg) {
     }
 
     case 'ADD_WHITELIST': {
-      const data = await chrome.storage.local.get('whitelistedDomains');
-      const list = data.whitelistedDomains || [];
-      if (!list.includes(msg.domain)) {
-        list.push(msg.domain);
-        await chrome.storage.local.set({ whitelistedDomains: list });
-        await syncWhitelist(list);
+      const domain = String(msg.domain || '').trim().toLowerCase();
+      if (!DOMAIN_RE.test(domain)) return { error: 'Invalid domain' };
+      const { whitelistedDomains: list = [] } = await chrome.storage.local.get('whitelistedDomains');
+      if (!list.includes(domain)) {
+        // Sync first; if updateDynamicRules throws it propagates to onMessage's catch as {error},
+        // and storage is only written once the rules actually applied.
+        const valid = await syncWhitelist([...list, domain]);
+        await chrome.storage.local.set({ whitelistedDomains: valid });
       }
       return { ok: true };
     }
 
     case 'REMOVE_WHITELIST': {
-      const data = await chrome.storage.local.get('whitelistedDomains');
-      const list = (data.whitelistedDomains || []).filter((d) => d !== msg.domain);
-      await chrome.storage.local.set({ whitelistedDomains: list });
-      await syncWhitelist(list);
+      const { whitelistedDomains: list = [] } = await chrome.storage.local.get('whitelistedDomains');
+      const valid = await syncWhitelist(list.filter((d) => d !== msg.domain));
+      await chrome.storage.local.set({ whitelistedDomains: valid });
       return { ok: true };
     }
 
     case 'SET_WHITELIST': {
-      await chrome.storage.local.set({ whitelistedDomains: msg.domains });
-      await syncWhitelist(msg.domains);
+      const valid = await syncWhitelist(msg.domains);
+      await chrome.storage.local.set({ whitelistedDomains: valid });
       return { ok: true };
     }
 
@@ -271,6 +311,7 @@ async function handleMessage(msg) {
         adsBlockedToday: 0,
         adsBlockedTotal: 0,
         lastResetDate: todayStr(),
+        _lastPollTs: Date.now(), // don't re-count matches still in the retention window
       });
       return { ok: true };
     }

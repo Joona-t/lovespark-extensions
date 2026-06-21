@@ -5,20 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LoveSpark AdBlock</title>
 <link rel="stylesheet" href="lib/lovespark-fonts.css">
+<link rel="stylesheet" href="lib/lovespark-base.css">
 <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
 
-<div id="root">
+<div id="root" role="dialog" aria-labelledby="popup-title" aria-describedby="status-text">
 
   <!-- Header -->
   <header>
     <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-    <span class="logo-text">💕 LoveSpark<br><span class="logo-sub">AdBlock</span></span>
+    <span class="logo-text" id="popup-title">💕 LoveSpark<br><span class="logo-sub">AdBlock</span></span>
     <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
-        <span id="themeLabel">Retro Pink</span> ▾
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
         <div class="theme-dropdown-header">Change Theme</div>
@@ -32,8 +33,8 @@
 
   <!-- Shield Status -->
   <section class="shield-section">
-    <div id="shield-icon" class="shield" aria-live="polite">🛡️</div>
-    <div id="status-text" class="status-text">Protected! ✨</div>
+    <div id="shield-icon" class="shield" aria-hidden="true">🛡️</div>
+    <div id="status-text" class="status-text" role="status" aria-live="polite">Protected! ✨</div>
     <p id="cute-msg" class="cute-msg">Keeping your internet sparkly! ✨</p>
     <label class="toggle-wrap" aria-label="Enable or disable ad blocking">
       <input type="checkbox" id="main-toggle" checked>
@@ -46,12 +47,12 @@
   <!-- Stats -->
   <section class="stats-section">
     <div class="stat-box">
-      <div id="stat-today" class="stat-num">0</div>
+      <div id="stat-today" class="stat-num" role="status" aria-live="polite">0</div>
       <div class="stat-label">blocked today</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-box">
-      <div id="stat-total" class="stat-num">0</div>
+      <div id="stat-total" class="stat-num" aria-live="polite">0</div>
       <div class="stat-label">blocked total</div>
     </div>
   </section>
@@ -61,18 +62,19 @@
     <div class="site-row">
       <span class="site-icon">📍</span>
       <span id="site-domain" class="site-domain">—</span>
-      <button id="whitelist-btn" class="wl-btn" title="Toggle whitelist for this site">☆ Allow</button>
+      <button id="whitelist-btn" class="wl-btn" title="Toggle whitelist for this site" aria-label="Allow ads on this site">☆ Allow</button>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <button id="board-btn" class="footer-link">⚙️ Settings</button>
+    <button id="board-btn" class="footer-link" aria-label="Open settings">⚙️ Settings</button>
     <span class="footer-brand">LoveSpark Suite 💕</span>
   </footer>
 
 </div>
 
+<script src="lib/lovespark-theme.js"></script>
 <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>

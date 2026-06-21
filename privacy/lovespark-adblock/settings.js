@@ -16,16 +16,20 @@ function applyTheme(t) {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    const setOpen = (open) => {
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
       chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+      setOpen(false);
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => setOpen(false));
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -167,16 +171,29 @@ wlList.addEventListener('click', async (e) => {
 wlAddBtn.addEventListener('click', addDomain);
 wlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addDomain(); });
 
+// Conservative hostname check (labels, valid TLD, no protocol/path).
+const DOMAIN_RE = /^(?=.{1,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
+
+function setWlError(msg) {
+  wlInput.setCustomValidity(msg || '');
+  if (msg) wlInput.reportValidity();
+}
+
 async function addDomain() {
   const raw = wlInput.value.trim().toLowerCase();
   if (!raw) return;
 
-  // Normalize: strip protocol, www., trailing slash
-  let domain = raw.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
-  if (!domain) return;
+  // Normalize: strip protocol, www., trailing slash/path.
+  const domain = raw.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+  if (!DOMAIN_RE.test(domain)) {
+    setWlError('Enter a valid domain like example.com');
+    return;
+  }
+  setWlError('');
 
   if (!whitelistedDomains.includes(domain)) {
-    await sendMsg({ type: 'ADD_WHITELIST', domain });
+    const res = await sendMsg({ type: 'ADD_WHITELIST', domain });
+    if (res && res.error) { setWlError('Could not add: ' + res.error); return; }
     whitelistedDomains.push(domain);
     renderWhitelist();
   }
@@ -213,8 +230,13 @@ wlExportBtn.addEventListener('click', () => {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function sendMsg(msg) {
-  return chrome.runtime.sendMessage(msg);
+async function sendMsg(msg) {
+  try {
+    return await chrome.runtime.sendMessage(msg);
+  } catch (err) {
+    console.warn('[lovespark-adblock] message failed:', err);
+    return { error: err.message };
+  }
 }
 
 function downloadText(filename, content, mime) {
@@ -225,11 +247,6 @@ function downloadText(filename, content, mime) {
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
-}
-
-const HTML_ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
-function escHtml(str) {
-  return str.replace(/[&<>"']/g, (c) => HTML_ESC[c]);
 }
 
 // React to storage changes instead of polling — zero CPU when idle, instant updates.
@@ -253,5 +270,9 @@ chrome.storage.onChanged.addListener((changes, area) => {
     toggleEnabled.checked = changes.isEnabled.newValue !== false;
   }
 });
+
+// Render the real version into the footer (was hardcoded to v1.0.0).
+const verEl = document.getElementById('app-version');
+if (verEl) verEl.textContent = 'v' + chrome.runtime.getManifest().version;
 
 init();
