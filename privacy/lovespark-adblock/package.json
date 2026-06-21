@@ -1,0 +1,14 @@
+{
+  "name": "lovespark-adblock-build",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Build-time tooling for LoveSpark AdBlock (NOT shipped in the extension). Compiles community filter lists into bundled static declarativeNetRequest rulesets.",
+  "scripts": {
+    "build:rules": "node scripts/build-rules.mjs"
+  },
+  "devDependencies": {
+    "@ghostery/adblocker": "^2.5.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,7 @@
+# Dev-only build artifacts — never ship these in the store zips.
+research.md
+plan.md
+package.json
+package-lock.json
+scripts/
+node_modules/
