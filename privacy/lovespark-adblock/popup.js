@@ -72,7 +72,7 @@ async function init() {
         currentDomain = new URL(tab.url).hostname.replace(/^www\./, '');
       } catch (_) { /* ignore non-URL tabs */ }
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-adblock] unknown:', err); }
 
   // Load state from background
   const data = await sendMsg({ type: 'GET_STATS' });
