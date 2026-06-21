@@ -1,5 +1,13 @@
 # Bugs & Iterations
 
+## 2026-06-21: SEO — lead the store title with "Pink"
+
+**Problem:** The Chrome Web Store / AMO listing title was "LoveSpark Retro Cursor Pack" — the high-intent search keyword "pink" (the pack's defining trait) was absent, and the brand led the title where the store weights leading keywords most.
+**Root cause:** Title optimized for brand-first naming convention rather than search discoverability.
+**Fix:** Renamed to "Pink Retro Cursor Pack by LoveSpark" (35 chars, under the 45-char CWS limit) — keyword leads, brand retained at the tail. Updated `extName` across all 55 locale `messages.json` files and `action.default_title` in manifest.json; popup tab title matches the store name, popup `<h1>` set to the concise "Pink Retro Cursor Pack" (brand already shown via the Sparky mascot).
+**Files:** _locales/*/messages.json (55), manifest.json, popup.html
+**Version:** 1.1.33
+
 ## 2026-05-05: Y2K Korean Collection — replaced New Collection with dual-variant lineup
 
 **Problem:** The 7 SVG packs in "New Collection" (Moonlight Rose, Candy Floss, Cyber Cherry, Mint Blossom, Golden Hour, Holographic, Obsidian Heart) drifted from the Pink Y2K Korean kawaii brand — palette went mint/orange/red, and the flat-icon style felt disconnected from cursor functionality.
