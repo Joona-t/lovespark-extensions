@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Dopamine Menu",
-  "version": "1.0.0",
+  "version": "1.0.29",
   "description": "Need a dopamine hit? Open for a curated list of quick healthy stims. Tap to mark done, track completions. No account, always free.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -19,7 +19,7 @@
     "service_worker": "background.js"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
   },
   "browser_specific_settings": {
     "gecko": {
