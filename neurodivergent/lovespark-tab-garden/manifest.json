@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Tab Garden",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Your tabs are plants. Unused ones get gently archived to your garden \u2014 restore anytime by watering them.",
   "permissions": [
     "storage",
