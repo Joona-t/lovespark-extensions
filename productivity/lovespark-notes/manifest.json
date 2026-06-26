@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.0.12",
+  "version": "1.0.42",
   "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
@@ -50,9 +50,6 @@
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
   },
-  "externally_connectable": {
-    "ids": ["*"]
-  },
   "browser_specific_settings": {
     "gecko": {
       "id": "notes@lovespark.suite",
@@ -62,5 +59,8 @@
       }
     }
   },
-  "default_locale": "en"
+  "default_locale": "en",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  }
 }
