@@ -86,7 +86,7 @@ body {
   transition: background 0.2s ease;
 }
 .toggle-wrap input:checked + .toggle-track {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
@@ -174,7 +174,7 @@ body {
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: var(--ls-glow);
@@ -212,7 +212,7 @@ body {
 }
 
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
