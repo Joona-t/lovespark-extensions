@@ -1,9 +1,12 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Hub",
-  "version": "1.0.0",
-  "description": "Your ADHD command center. Daily planner, focus mode, break reminders, and Sparky — in every new tab.",
-  "permissions": ["storage", "alarms"],
+  "version": "1.0.28",
+  "description": "Your ADHD command center. Daily planner, focus mode, break reminders, and Sparky \u2014 in every new tab.",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
@@ -14,5 +17,8 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
   }
 }
