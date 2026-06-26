@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Minimal Scroll",
-  "version": "1.0.0",
+  "version": "1.0.29",
   "description": "Hide scrollbars and replace with a minimal thin line indicator. Reduces visual clutter. Toggle per-site.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -21,7 +21,7 @@
     "service_worker": "background.js"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
   },
   "browser_specific_settings": {
     "gecko": {
