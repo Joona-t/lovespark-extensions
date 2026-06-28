@@ -138,7 +138,8 @@
 
     bindStorageEvents() {
       chrome.storage.onChanged.addListener((changes, areaName) => {
-        if (areaName !== "sync" || !changes[STORAGE_KEY]) {
+        // areaName must match where settings are written: every write uses chrome.storage.local, so the sync→local migration left this guard stale.
+        if (areaName !== "local" || !changes[STORAGE_KEY]) {
           return;
         }
 

@@ -1,5 +1,11 @@
 # Bugs & Iterations Log
 
+## 2026-06-28 — Dead storage.onChanged listener (v1.0.29) — KI-039
+
+- **Problem:** Live settings changes never applied to open YouTube tabs; users had to refresh the page before any options edit took effect.
+  - **Root cause:** `bindStorageEvents()` in `content.js` guarded on `areaName !== "sync"`, returning early on every event. All settings writes go to `chrome.storage.local` (background.js, options.js, lib/lovespark-lifecycle.js), so `onChanged` always fires with `areaName === "local"` — the listener was dead code. A prior sync→local storage migration left the guard stale. Third instance of KI-039, caught by ls-check rule MV3-STORAGE-AREA-MATCH (after LoveSpark-Retro-Cursor and lovespark-core-notion).
+  - **Fix:** Changed the guard to `areaName !== "local"` (kept the `|| !changes[STORAGE_KEY]` clause) so the listener fires on the area writes actually target; added a comment noting the area must match where writes go.
+
 ## 2026-04-10 — Strict audit fixes (v1.0.17)
 
 - **Problem:** `#lowVolumeValue` and `#shortcutValue` lacked `aria-live` attributes for dynamic content updates.
