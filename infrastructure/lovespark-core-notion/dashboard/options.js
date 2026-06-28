@@ -189,8 +189,11 @@ importFile.addEventListener("change", async (e) => {
 
 // ── Storage sync listener ─────────────────────────────────────────────────────
 
+// State is persisted to storage.local, so the live-render guard must match
+// "local" — guarding on "sync" made this dead code (changes only showed after a
+// manual reload). (KI-039)
 browser.storage.onChanged.addListener((changes, area) => {
-  if (area !== "sync") return;
+  if (area !== "local") return;
   getState().then(render);
 });
 

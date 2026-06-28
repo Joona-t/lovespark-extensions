@@ -1,5 +1,15 @@
 # Bugs & Iterations — lovespark-core-notion
 
+## 2026-06-28 — v0.1.36 fix dead onChanged listeners (KI-039)
+
+**Problem:** Toggling a module (or editing state in the options page) did not apply live to open tabs — the change only took effect after a manual page refresh.
+
+**Root cause:** State is persisted to `storage.local`, but both `chrome.storage.onChanged` listeners guarded `if (area !== "sync") return;` — a value left over from the sync→local storage migration. `onChanged` fires with `area === "local"`, so the guard returned early every time and the listener bodies (`inject(newState)` in `core/runtime.js`, `getState().then(render)` in `dashboard/options.js`) never ran. Dead code.
+
+**Fix:** Guard on `"local"` (the area actually written) in both listeners. Surfaced by the new ls-check rule **MV3-STORAGE-AREA-MATCH** (KI-039), added the same day after the identical bug shipped in LoveSpark-Retro-Cursor. `ls-check --only mv3` now reports 7 pass / 0 fail.
+
+**Prevention:** ls-check MV3-STORAGE-AREA-MATCH (cross-file area-vs-write correlation) blocks this class going forward; post-edit-lint carries a fast `[!=]== "sync"` heuristic.
+
 ## 2026-04-22 — v0.1.27 unblock strict_fail
 
 **Problem:** `ls-check --strict` failing with A11Y-KI004 (low opacity) and BRAND-THEME (no theme support). Extension stalled at health 76-78.

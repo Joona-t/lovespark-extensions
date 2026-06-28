@@ -48,9 +48,12 @@ globalThis.__lovespark = globalThis.__lovespark || {};
 
   inject(currentState);
 
-  // Live toggling via storage changes
+  // Live toggling via storage changes. State is persisted to storage.local
+  // everywhere, so the guard must match "local" — guarding on "sync" (a value
+  // left over from the sync→local storage migration) made this dead code and
+  // forced a page refresh before changes applied. (KI-039)
   browser.storage.onChanged.addListener(async (changes, area) => {
-    if (area !== "sync") return;
+    if (area !== "local") return;
     const newState = await state.getState();
     inject(newState);
   });
