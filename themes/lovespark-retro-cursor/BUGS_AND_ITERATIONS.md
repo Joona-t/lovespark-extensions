@@ -1,5 +1,13 @@
 # Bugs & Iterations
 
+## 2026-06-28: SEO — prepend "Aesthetic" to the store title
+
+**Problem:** The store title "Pink Retro Cursor Pack by LoveSpark" missed "aesthetic" — a high-intent discovery keyword for this niche (users search "aesthetic cursor", "aesthetic pink cursor") and a natural lead word that still reads as a brand descriptor.
+**Root cause:** Title captured the color keyword ("pink") but not the broader aesthetic-search intent.
+**Fix:** Renamed to "Aesthetic Pink Retro Cursor Pack by LoveSpark" (45 chars, exactly at the 45-char CWS limit) — keyword-led, brand retained at the tail. Updated `extName` across all 55 locale `messages.json` files, `action.default_title` in manifest.json, and the popup tab `<title>`. Popup `<h1>` left at the concise "Pink Retro Cursor Pack" — the header flex row (mascot + heading + theme dropdown) has no room for a longer string without overflow, and the brand is already shown via the Sparky mascot.
+**Files:** _locales/*/messages.json (55), manifest.json, popup.html
+**Version:** 1.1.34
+
 ## 2026-06-21: SEO — lead the store title with "Pink"
 
 **Problem:** The Chrome Web Store / AMO listing title was "LoveSpark Retro Cursor Pack" — the high-intent search keyword "pink" (the pack's defining trait) was absent, and the brand led the title where the store weights leading keywords most.

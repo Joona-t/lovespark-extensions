@@ -2,6 +2,9 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.34] - 2026-06-28
+- **Store title**: renamed to "Aesthetic Pink Retro Cursor Pack by LoveSpark" (45 chars) — adds the high-intent "aesthetic" search keyword while keeping the brand at the tail. Updated `extName` across all 55 locales, `action.default_title`, and the popup tab title.
+
 ## [1.1.32] - 2026-05-05
 - **Y2K Korean Collection**: replaced 7 New Collection SVG packs with 9 Y2K Korean themed packs in dual variants (Emoji + Pointer subcategories) — 18 new pack registrations, 21 packs total.
 - New packs: Honey Bunny (꿀토끼), Cyworld Dotti (싸이월드), Coquette Ribbon (리본), Strawberry Milk (딸기우유), Glossy Pearl, Bubble Boba (버블티), Phone Charm (폰꽂이), Heart Locket (하트 로켓), Cyber Butterfly (나비).
