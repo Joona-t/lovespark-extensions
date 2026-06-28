@@ -2,6 +2,10 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.35] - 2026-06-28
+- **Fix**: selecting a different cursor now applies instantly on all open tabs instead of only after a page refresh. The live-apply `storage.onChanged` listener was guarding on the wrong storage area (`sync`) while all writes go to `local`.
+- Simplified the settings path: the popup writes directly to `storage.local` (removed the dead popup→background message relay), and the popup's selected-pack tracking no longer races against initial load.
+
 ## [1.1.34] - 2026-06-28
 - **Store title**: renamed to "Aesthetic Pink Retro Cursor Pack by LoveSpark" (45 chars) — adds the high-intent "aesthetic" search keyword while keeping the brand at the tail. Updated `extName` across all 55 locales, `action.default_title`, and the popup tab title.
 

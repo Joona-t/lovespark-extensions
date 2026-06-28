@@ -129,7 +129,11 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
   }
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName !== "sync") {
+    // Settings are written to chrome.storage.local everywhere (popup + background),
+    // so the live-apply listener must react to the "local" area — guarding on "sync"
+    // (a legacy value left over from the storage.local migration) made this dead code
+    // and forced a page refresh before a newly-selected cursor took effect.
+    if (areaName !== "local") {
       return;
     }
 

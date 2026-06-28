@@ -1,5 +1,14 @@
 # Bugs & Iterations
 
+## 2026-06-28: BUG — selected cursor only applied after a page refresh
+
+**Problem:** Picking a different cursor in the popup did nothing on already-open tabs until the page was reloaded.
+**Root cause:** `content_script.js` registers a `chrome.storage.onChanged` listener as the *only* live-apply mechanism, but it early-returned unless `areaName === "sync"`. Every settings write goes to `chrome.storage.local` (background + popup), so `onChanged` always fired with `areaName === "local"` → the guard short-circuited and `applyCursorStyle` never ran. The cursor only changed on reload, when `loadAndApplyState()` re-reads `storage.local` at `document_start`. The `"sync"` value was a leftover from an earlier storage.local migration (commit 4c7c935) that flipped the read/write paths but missed the listener's area guard. Verified by a 3-auditor + skeptic adversarial audit (4 of 4 agents converged on this root cause).
+**Fix:** Changed the live-apply guard to `areaName !== "local"`. While in the same data path, also: (1) popup now writes straight to `chrome.storage.local` and the dead popup→background `lovespark:set-settings` message hop was removed (background.js relay deleted) — fewer moving parts, more direct live-apply; (2) `getCurrentPack()` now reads a tracked `currentPack` variable instead of the `.selected` DOM class, closing a race where a fast ON/OFF toggle before `loadState()` finished clobbered the saved pack with the default.
+**Files:** content_script.js, popup.js, background.js
+**Version:** 1.1.35
+**Follow-ups (not in this fix):** cursor doesn't apply inside iframes (content script has no `all_frames: true`); SVG packs define only 4 cursor rules vs the PNG packs' 8 (no grab/grabbing/crosshair/not-allowed). Also: `ls-check`'s storage check greps `storage.sync` substrings and missed an `onChanged` area guard mismatching the written area — propose an `MV3-STORAGE-AREA-MATCH` static check.
+
 ## 2026-06-28: SEO — prepend "Aesthetic" to the store title
 
 **Problem:** The store title "Pink Retro Cursor Pack by LoveSpark" missed "aesthetic" — a high-intent discovery keyword for this niche (users search "aesthetic cursor", "aesthetic pink cursor") and a natural lead word that still reads as a brand descriptor.

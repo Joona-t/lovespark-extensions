@@ -21,16 +21,5 @@ async function ensureDefaults() {
 chrome.runtime.onInstalled.addListener(() => void ensureDefaults());
 chrome.runtime.onStartup.addListener(() => void ensureDefaults());
 
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (!message || message.type !== "lovespark:set-settings") return;
-
-  const enabled = Boolean(message.enabled);
-  const pack = typeof message.pack === "string" ? message.pack : DEFAULT_PACK;
-
-  chrome.storage.local
-    .set({ [STORAGE_KEY_ENABLED]: enabled, [STORAGE_KEY_PACK]: pack })
-    .then(() => sendResponse({ ok: true, enabled, pack }))
-    .catch((error) => sendResponse({ ok: false, error: String(error) }));
-
-  return true;
-});
+// The popup writes settings directly to chrome.storage.local; content scripts
+// pick them up live via chrome.storage.onChanged. No message relay is needed here.

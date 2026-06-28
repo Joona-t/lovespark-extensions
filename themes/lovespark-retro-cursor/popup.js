@@ -60,6 +60,11 @@ const toggle = document.getElementById("cursorToggle");
 const statusText = document.getElementById("statusText");
 const themeItems = document.querySelectorAll(".theme-item");
 
+// Source of truth for the selected pack. Tracked in a variable (set by render)
+// rather than read back from the DOM .selected class, so a fast ON/OFF toggle
+// before loadState() finishes can't clobber the saved pack with DEFAULT_PACK.
+let currentPack = DEFAULT_PACK;
+
 function sanitizePack(pack) {
   if (typeof pack === "string" && ALLOWED_PACKS.has(pack)) {
     return pack;
@@ -71,17 +76,20 @@ function render(enabled, pack) {
   toggle.checked = enabled;
   statusText.textContent = `Cursors: ${enabled ? "ON" : "OFF"}`;
   const safe = sanitizePack(pack);
+  currentPack = safe;
   themeItems.forEach((item) => {
     item.classList.toggle("selected", item.dataset.pack === safe);
   });
 }
 
 async function saveAndBroadcast(enabled, pack) {
-  render(enabled, pack);
-  await chrome.runtime.sendMessage({
-    type: "lovespark:set-settings",
-    enabled,
-    pack: sanitizePack(pack)
+  const safe = sanitizePack(pack);
+  render(enabled, safe);
+  // Write straight to storage.local. Every tab's content script reacts via
+  // chrome.storage.onChanged and applies the cursor live — no background hop needed.
+  await chrome.storage.local.set({
+    [STORAGE_KEY_ENABLED]: enabled,
+    [STORAGE_KEY_PACK]: safe
   });
 }
 
@@ -110,8 +118,7 @@ themeItems.forEach((item) => {
 });
 
 function getCurrentPack() {
-  const selected = document.querySelector(".theme-item.selected");
-  return selected ? selected.dataset.pack : DEFAULT_PACK;
+  return currentPack;
 }
 
 void loadState();
