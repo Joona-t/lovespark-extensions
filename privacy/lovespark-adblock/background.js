@@ -1,4 +1,4 @@
-// LoveSpark AdBlock — Background Service Worker
+// LoveSpark Ad Blocker — Background Service Worker
 // Uses declarativeNetRequest for blocking + stats tracking
 
 'use strict';
@@ -18,6 +18,21 @@ function todayStr() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
+// Chrome auto-displays the per-tab block count in the toolbar badge via
+// declarativeNetRequest.setExtensionActionOptions. Firefox doesn't implement it and throws
+// synchronously — isolate + feature-detect so an unsupported API can NEVER abort the rest of
+// blocking/whitelist initialization (regression class: Firefox init abort).
+function enableBadgeCount() {
+  try {
+    if (typeof chrome.declarativeNetRequest.setExtensionActionOptions === 'function') {
+      chrome.declarativeNetRequest.setExtensionActionOptions({ displayActionCountAsBadgeText: true });
+    }
+    chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
+  } catch (err) {
+    console.warn('[LoveSpark Ad Blocker] badge count unavailable (Firefox):', err);
+  }
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 chrome.runtime.onInstalled.addListener(async ({ reason }) => {
@@ -33,13 +48,8 @@ chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (Object.keys(toSet).length) await chrome.storage.local.set(toSet);
   }
 
-  // Show block count in badge automatically
-  chrome.declarativeNetRequest.setExtensionActionOptions({
-    displayActionCountAsBadgeText: true,
-  });
-
-  // Set badge background color
-  chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
+  // Show block count in badge automatically (Chromium-only; guarded so Firefox install can't abort).
+  enableBadgeCount();
 
   // Apply saved state
   const data = await chrome.storage.local.get(['isEnabled', 'filterIntensity', 'whitelistedDomains']);
@@ -48,6 +58,9 @@ chrome.runtime.onInstalled.addListener(async ({ reason }) => {
 
   // Schedule daily reset alarm
   scheduleResetAlarm();
+
+  // Reconcile the day boundary before the first poll so "today" never reflects a stale day.
+  await checkDailyReset();
 
   // Immediate poll so stats appear without waiting for the 1-minute alarm
   pollMatchedRules();
@@ -70,12 +83,11 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 });
 
 // Re-register alarms when service worker wakes up
-chrome.runtime.onStartup.addListener(() => {
+chrome.runtime.onStartup.addListener(async () => {
   scheduleResetAlarm();
-  chrome.declarativeNetRequest.setExtensionActionOptions({
-    displayActionCountAsBadgeText: true,
-  });
-  chrome.action.setBadgeBackgroundColor({ color: '#FF69B4' });
+  enableBadgeCount();
+  // Reconcile the day boundary on cold start before polling.
+  await checkDailyReset();
   pollMatchedRules();
 });
 
@@ -91,7 +103,12 @@ let _debugListenerFired = false;
 // absent in packed/older contexts, and accessing addListener there would throw.
 try {
   chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(async () => {
-    _debugListenerFired = true;
+    if (!_debugListenerFired) {
+      _debugListenerFired = true;
+      // Persist the chosen stats mode so a service-worker restart can't reopen a
+      // poll-vs-debug double-count window (dev/unpacked only).
+      await chrome.storage.local.set({ _statsMode: 'debug' });
+    }
     await writeStats(1);
   });
 } catch (_) {
@@ -106,6 +123,9 @@ let _pollInFlight = null;
 
 async function pollMatchedRules() {
   if (_debugListenerFired) return;
+  // If a debug event ever fired (even in a prior SW lifetime), that's the stats source — never poll.
+  const { _statsMode } = await chrome.storage.local.get('_statsMode');
+  if (_statsMode === 'debug') return;
   // Coalesce concurrent callers (the 1-min alarm + GET_STATS) so the same window isn't processed twice.
   if (_pollInFlight) return _pollInFlight;
 
@@ -129,7 +149,7 @@ async function pollMatchedRules() {
       if (count > 0) await writeStats(count);
       if (maxTs > since) await chrome.storage.local.set({ _lastPollTs: maxTs });
     } catch (err) {
-      console.warn('[LoveSpark AdBlock] pollMatchedRules failed:', err);
+      console.warn('[LoveSpark Ad Blocker] pollMatchedRules failed:', err);
     } finally {
       _pollInFlight = null;
     }
@@ -255,6 +275,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 async function handleMessage(msg) {
   switch (msg.type) {
     case 'GET_STATS': {
+      // Reconcile the day boundary first so "today" reflects the current calendar day.
+      await checkDailyReset();
       // Poll for latest matched rules so popup shows fresh data immediately
       await pollMatchedRules();
       const data = await chrome.storage.local.get([
@@ -265,6 +287,9 @@ async function handleMessage(msg) {
         'filterIntensity',
         'whitelistedDomains',
       ]);
+      // Chrome gates live block counts behind getMatchedRules (declarativeNetRequestFeedback);
+      // Firefox has no such API, so signal the UI to show an honest placeholder, not a frozen 0.
+      data.statsSupported = typeof chrome.declarativeNetRequest.getMatchedRules === 'function';
       return data;
     }
 

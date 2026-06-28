@@ -1,4 +1,6 @@
-# LoveSpark AdBlock 💕🛡️
+# Pink Ad Blocker — by LoveSpark 💕🛡️
+
+> Store name: **Pink Ad Blocker — Block Ads &amp; Trackers** — uses the generic two-word "Ad Blocker" to avoid the "AdBlock"/"Adblock Plus" trademark per Chrome Web Store policy.
 
 A free, open-source, privacy-first ad &amp; tracker blocker for Chrome and Firefox — part of the
 [LoveSpark Suite](https://lovespark.love) of retro-pink productivity tools built for neurodivergent users.

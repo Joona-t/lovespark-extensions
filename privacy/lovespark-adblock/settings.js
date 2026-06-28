@@ -63,9 +63,14 @@ async function init() {
   applyLoadedState(data);
 }
 
+function setEnabledToggle(checked) {
+  toggleEnabled.checked = checked;
+  toggleEnabled.setAttribute('aria-checked', String(checked));
+}
+
 function applyLoadedState(data) {
   // Enable toggle
-  toggleEnabled.checked = data.isEnabled !== false;
+  setEnabledToggle(data.isEnabled !== false);
 
   // Intensity radio
   const intensity = data.filterIntensity || 'medium';
@@ -85,6 +90,7 @@ function applyLoadedState(data) {
 // ── Enable toggle ─────────────────────────────────────────────────────────────
 
 toggleEnabled.addEventListener('change', async () => {
+  toggleEnabled.setAttribute('aria-checked', String(toggleEnabled.checked));
   await sendMsg({ type: 'SET_ENABLED', enabled: toggleEnabled.checked });
 });
 
@@ -267,7 +273,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     renderWhitelist();
   }
   if (changes.isEnabled) {
-    toggleEnabled.checked = changes.isEnabled.newValue !== false;
+    setEnabledToggle(changes.isEnabled.newValue !== false);
   }
 });
 

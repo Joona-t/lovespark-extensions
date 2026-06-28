@@ -1,5 +1,66 @@
 # Bugs & Iterations
 
+## 2026-06-28: Dynamic audit + SEO rename → v1.0.40
+
+Dynamic multi-agent audit (3 disjoint code auditors + SEO/naming agent → skeptic verification;
+16 findings confirmed, 3 debunked, 2 left uncertain). Renamed for the store and shipped the
+confirmed fixes.
+
+**SEO / trademark rename:** "LoveSpark AdBlock" → **"Pink Ad Blocker — Block Ads & Trackers"**
+(38/45 chars). Root reason: "AdBlock"/"Adblock Plus" are registered trademarks (getadblock.com,
+eyeo) and CWS penalizes their use under its IP/impersonation policy. The new name uses the generic
+two-word "Ad Blocker", leads with the highest-intent keyword, and keeps "Trackers" (the default-on
+feature). Updated `extName` + SEO `extDescription` across all 55 locales, `action.default_title`,
+popup/settings titles + in-UI logos, and the public README. Added CWS-LISTING.md, PRIVACY.md,
+SUBMIT.md (rule #14 package).
+
+**Confirmed fixes (16):**
+- **[HIGH] Daily reset never ran on SW cold-start / GET_STATS** — "Blocked Today" could accumulate
+  onto a stale prior-day count. Added `await checkDailyReset()` to onInstalled, onStartup, and the
+  GET_STATS handler before polling. (background.js)
+- **[HIGH] Firefox init abort** — `declarativeNetRequest.setExtensionActionOptions` is Chromium-only
+  and threw synchronously in onInstalled/onStartup, aborting blocking + whitelist setup on Firefox.
+  Extracted a guarded, feature-detected `enableBadgeCount()` helper used at both lifecycle sites.
+  (background.js)
+- **[MEDIUM] Frozen "0" stats on Firefox** — no `getMatchedRules` there. GET_STATS now returns a
+  `statsSupported` flag and the popup shows "—" with an explanatory title instead of a frozen 0.
+- **[LOW] Dev-only double-count window** — persist `_statsMode:'debug'` so a SW restart can't reopen
+  a poll-vs-debug overlap. (background.js)
+- **[HIGH] WCAG AA contrast** — popup status text, cute message, and stat numbers/labels failed AA
+  on the retro/beige light glass; moved to the theme's primary text token, restoring the pink accent
+  only on the dark themes where it passes. (popup.css)
+- **[HIGH] settings.html never loaded lovespark-base.css** — lost the 32px touch-target floor for all
+  controls. Added the link.
+- **[HIGH] Intensity radios had no visible keyboard focus** (0×0 inputs) — added a
+  `:focus-visible + .opt-card` ring. (settings.css)
+- **[MEDIUM] Header logo contrast** — beige/slate header band is a mid-tone where neither white nor
+  dark text clears AA; gave those themes an explicitly darker header with white logo text. (popup.css)
+- **[MEDIUM] Toggles announced as "checkbox"** — added `role="switch"` + synced `aria-checked` in
+  popup + settings (HTML + JS).
+- **[MEDIUM] Whitelist button state not exposed** — added `aria-pressed` + a stateful `aria-label`.
+- **[LOW] Decorative star ::before painted over content** — `z-index: 0` → `-1` (popup + settings).
+- **[LOW] Whitelist remove "✕" below 32px touch target** — added min size + flex centering.
+- **[LOW] Double live-region announcement** — removed redundant `aria-live`/`role=status` from the
+  two stat counters (the shield status already announces).
+- Also cleared low-opacity text (footer brand + logo sub) flagged by A11Y-KI004.
+
+**Notes / deferred:**
+- Finding #11 (remove the unused `lovespark-theme.js` include) was **reverted** — the lib doesn't
+  self-init (no runtime conflict) and the project's `ls-check` BRAND-LIB-WIRED gate requires it
+  wired. Kept the include.
+- The installed `ls-check` binary is a **stale pip copy** missing the LS-1 fix (treat `activeTab` as
+  satisfying an active-tab `tabs.query`); it false-flagged PERM-MISSING `tabs`. The canonical
+  `scripts/ls-check.py` passes clean (37 pass, 0 fail). Did NOT add the broader `tabs` permission —
+  `activeTab` is correct for a privacy-first extension.
+- Deferred (separate concerns): `gecko.strict_min_version` is `109.0` but `declarativeNetRequest`
+  needs Firefox 113+ (core blocking won't work on FF 109–112 — flagged for a follow-up bump);
+  SVG-pack cursor… N/A; concurrent SET_INTENSITY serialization (uncertain, no confirmed wrong state);
+  store screenshots still to be generated via `marketing-asset-generator.py`.
+
+**Files:** background.js, popup.html, popup.js, popup.css, settings.html, settings.js, settings.css,
+manifest.json, _locales/*/messages.json (55), README.md, CWS-LISTING.md, PRIVACY.md, SUBMIT.md
+**Version:** 1.0.40
+
 ## : |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)
 
 **Problem:** |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)

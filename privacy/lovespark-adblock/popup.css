@@ -67,7 +67,6 @@ header {
 
 .logo-sub {
   font-size: 7px;
-  opacity: 0.85;
 }
 
 .icon-btn {
@@ -111,14 +110,14 @@ header {
 .status-text {
   font-family: var(--ls-font-display);
   font-size: 9px;
-  color: var(--ls-pink-deep);
+  color: var(--ls-text-dark);
 }
 
 .status-text.paused { color: var(--ls-text-muted); }
 
 .cute-msg {
   font-size: 11px;
-  color: var(--ls-text-muted);
+  color: var(--ls-text-dark);
   text-align: center;
   min-height: 16px;
   transition: opacity 0.4s;
@@ -190,18 +189,26 @@ header {
 .stat-num {
   font-family: var(--ls-font-display);
   font-size: 16px;
-  color: var(--ls-pink-accent);
+  color: var(--ls-text-dark);
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
 .stat-label {
   font-size: 10px;
-  color: var(--ls-text-muted);
+  color: var(--ls-text-dark);
   margin-top: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+
+/* AA: the pink accent / muted tokens fail contrast on the light retro+beige glass, so the
+   defaults above use the theme's primary text token. Restore the pink accent + muted label
+   only on the dark themes, where they sit on a dark glass surface and already pass. */
+body.theme-dark .stat-num,
+body.theme-slate .stat-num { color: var(--ls-pink-accent); }
+body.theme-dark .stat-label,
+body.theme-slate .stat-label { color: var(--ls-text-muted); }
 
 .stat-divider {
   width: 1px;
@@ -288,7 +295,6 @@ footer {
 .footer-brand {
   font-size: 9.5px;
   color: var(--ls-text-muted);
-  opacity: 0.8;
 }
 
 /* ── Sparkle animation on counter update ── */
@@ -333,7 +339,7 @@ body.theme-dark::before {
     radial-gradient(1px 1px at 88% 78%, #ffffff22 0%, transparent 100%),
     radial-gradient(1px 1px at 40% 88%, #ff6eb425 0%, transparent 100%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 }
 
 /* ── Theme: Beige ─────────────────────────────────────── */
@@ -485,14 +491,18 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   background: var(--ls-glass-light);
 }
 
-/* ── Theme Title Visibility ── */
+/* ── Header logo legibility ──
+   The header band is the theme's --ls-pink-deep. In retro/dark it is deep enough for white
+   logo text; in beige/slate it is a mid-tone where neither white nor dark text clears WCAG AA
+   (4.5:1) behind the small pixel-font logo. Give those two themes an explicitly darker header
+   band with white logo text. */
+body.theme-beige header { background: #6e4632; }
+body.theme-slate header { background: #2a2a2a; }
 body.theme-beige .title,
 body.theme-beige .header-title,
-body.theme-beige .logo-text {
-  color: #4a7c59;
-}
+body.theme-beige .logo-text,
 body.theme-slate .title,
 body.theme-slate .header-title,
 body.theme-slate .logo-text {
-  color: #d4714e;
+  color: #ffffff;
 }

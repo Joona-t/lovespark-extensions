@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LoveSpark AdBlock — Settings</title>
+<title>Pink Ad Blocker — Settings</title>
 <link rel="stylesheet" href="lib/lovespark-fonts.css">
+<link rel="stylesheet" href="lib/lovespark-base.css">
 <link rel="stylesheet" href="settings.css">
 </head>
 <body>
 
 <header>
   <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-  <h1 class="header-title">💕 LoveSpark AdBlock</h1>
+  <h1 class="header-title">💕 LoveSpark Ad Blocker</h1>
   <span class="header-sub">Settings</span>
   <div class="theme-dropdown" id="themeDropdown">
       <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
@@ -38,7 +39,7 @@
         <div class="setting-desc">Turn off to browse without blocking</div>
       </div>
       <label class="toggle-wrap">
-        <input type="checkbox" id="toggle-enabled" checked>
+        <input type="checkbox" id="toggle-enabled" role="switch" aria-checked="true" aria-label="Enable ad blocking" checked>
         <span class="toggle-track"><span class="toggle-thumb"></span></span>
       </label>
     </div>
@@ -126,7 +127,7 @@
 </div>
 
 <footer>
-  <span>💕 LoveSpark AdBlock <span id="app-version">v1.0.0</span> — Made with love</span>
+  <span>💕 LoveSpark Ad Blocker <span id="app-version">v1.0.0</span> — Made with love</span>
 </footer>
 
 <script src="settings.js"></script>

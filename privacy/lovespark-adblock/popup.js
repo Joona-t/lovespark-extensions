@@ -81,10 +81,17 @@ async function init() {
   const data = await sendMsg({ type: 'GET_STATS' });
   applyState(data);
 
-  // Animate counters in
-  animateCount(todayEl, 0, data.adsBlockedToday || 0, 600);
-  animateCount(totalEl, 0, data.adsBlockedTotal || 0, 800);
-  prevToday = data.adsBlockedToday || 0;
+  // Animate counters in. Firefox has no getMatchedRules, so show an honest placeholder
+  // rather than a frozen 0 that reads like a bug.
+  if (data.statsSupported === false) {
+    todayEl.textContent = '—';
+    totalEl.textContent = '—';
+    todayEl.title = totalEl.title = 'Live block counts are available on Chrome and Edge only.';
+  } else {
+    animateCount(todayEl, 0, data.adsBlockedToday || 0, 600);
+    animateCount(totalEl, 0, data.adsBlockedTotal || 0, 800);
+    prevToday = data.adsBlockedToday || 0;
+  }
 
   // Show domain
   if (currentDomain) {
@@ -107,6 +114,8 @@ function applyState(data) {
 }
 
 function updateShieldUI(enabled) {
+  // Keep the switch's accessible state in sync wherever the toggle changes.
+  toggleEl.setAttribute('aria-checked', String(enabled));
   if (enabled) {
     shieldEl.textContent = '🛡️';
     shieldEl.classList.remove('paused');
@@ -125,6 +134,10 @@ function updateWhitelistBtn() {
   const isWL = whitelistedDomains.includes(currentDomain);
   wlBtn.textContent = isWL ? '✓ Allowed' : '☆ Allow';
   wlBtn.classList.toggle('active', isWL);
+  wlBtn.setAttribute('aria-pressed', String(isWL));
+  wlBtn.setAttribute('aria-label', isWL
+    ? `Ads allowed on ${currentDomain} — click to block again`
+    : `Allow ads on ${currentDomain}`);
 }
 
 // ── Counter animation ─────────────────────────────────────────────────────────

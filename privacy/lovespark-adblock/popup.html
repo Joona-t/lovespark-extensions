@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LoveSpark AdBlock</title>
+<title>Pink Ad Blocker — Block Ads & Trackers</title>
 <link rel="stylesheet" href="lib/lovespark-fonts.css">
 <link rel="stylesheet" href="lib/lovespark-base.css">
 <link rel="stylesheet" href="popup.css">
@@ -16,7 +16,7 @@
   <!-- Header -->
   <header>
     <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-    <span class="logo-text" id="popup-title">💕 LoveSpark<br><span class="logo-sub">AdBlock</span></span>
+    <span class="logo-text" id="popup-title">💕 LoveSpark<br><span class="logo-sub">Ad Blocker</span></span>
     <div class="theme-dropdown" id="themeDropdown">
       <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
         <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
@@ -36,8 +36,8 @@
     <div id="shield-icon" class="shield" aria-hidden="true">🛡️</div>
     <div id="status-text" class="status-text" role="status" aria-live="polite">Protected! ✨</div>
     <p id="cute-msg" class="cute-msg">Keeping your internet sparkly! ✨</p>
-    <label class="toggle-wrap" aria-label="Enable or disable ad blocking">
-      <input type="checkbox" id="main-toggle" checked>
+    <label class="toggle-wrap">
+      <input type="checkbox" id="main-toggle" role="switch" aria-checked="true" aria-label="Enable or disable ad blocking" checked>
       <span class="toggle-track">
         <span class="toggle-thumb"></span>
       </span>
@@ -47,12 +47,12 @@
   <!-- Stats -->
   <section class="stats-section">
     <div class="stat-box">
-      <div id="stat-today" class="stat-num" role="status" aria-live="polite">0</div>
+      <div id="stat-today" class="stat-num">0</div>
       <div class="stat-label">blocked today</div>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-box">
-      <div id="stat-total" class="stat-num" aria-live="polite">0</div>
+      <div id="stat-total" class="stat-num">0</div>
       <div class="stat-label">blocked total</div>
     </div>
   </section>
@@ -62,7 +62,7 @@
     <div class="site-row">
       <span class="site-icon">📍</span>
       <span id="site-domain" class="site-domain">—</span>
-      <button id="whitelist-btn" class="wl-btn" title="Toggle whitelist for this site" aria-label="Allow ads on this site">☆ Allow</button>
+      <button id="whitelist-btn" class="wl-btn" title="Toggle whitelist for this site" aria-pressed="false" aria-label="Allow ads on this site">☆ Allow</button>
     </div>
   </section>
 
