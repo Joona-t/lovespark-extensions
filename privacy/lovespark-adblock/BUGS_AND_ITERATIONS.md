@@ -59,7 +59,7 @@ SUBMIT.md (rule #14 package).
 
 **Files:** background.js, popup.html, popup.js, popup.css, settings.html, settings.js, settings.css,
 manifest.json, _locales/*/messages.json (55), README.md, CWS-LISTING.md, PRIVACY.md, SUBMIT.md
-**Version:** 1.0.40
+**Version:** 1.0.41
 
 ## : |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)
 

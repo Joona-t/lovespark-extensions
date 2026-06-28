@@ -1,4 +1,4 @@
-# Submission Quickstart — Pink Ad Blocker (v1.0.40)
+# Submission Quickstart — Pink Ad Blocker (v1.0.41)
 
 One-page map from each store form field to the copy in [CWS-LISTING.md](CWS-LISTING.md).
 Full long-form copy lives there; this is the checklist for upload day.
@@ -22,7 +22,7 @@ Full long-form copy lives there; this is the checklist for upload day.
 | Test instructions | CWS-LISTING.md → *Reviewer test instructions* |
 
 ## Pre-submit checklist
-- [ ] Version bumped (manifest `1.0.40`) and zips rebuilt.
+- [ ] Version bumped (manifest `1.0.41`) and zips rebuilt.
 - [ ] Name avoids the "AdBlock"/"Adblock" trademark token (uses two-word "Ad Blocker"). ✅
 - [ ] PRIVACY.md committed and reachable at the GitHub blob URL above.
 - [ ] All privacy data-collection categories set to **No**; 3 certification boxes ticked.
