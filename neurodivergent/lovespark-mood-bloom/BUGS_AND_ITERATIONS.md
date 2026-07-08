@@ -1,5 +1,12 @@
 # LoveSpark Mood Bloom - Bugs and Iterations
 
+## 2026-07-08: BUG-002 — lib/lovespark-tokens.css deleted in working tree; shared-lib drift
+
+**Problem:** `lib/lovespark-tokens.css` was missing from the working tree even though `lib/lovespark-base.css` `@import`s it — the popup would have silently lost all theme variables. `lib/lovespark-footer.css` and `lib/lovespark-theme.js` also carried uncommitted local edits (hover state → underline instead of opacity; removed legacy `darkMode` boolean fallback in favor of the `theme` string key only) that already matched the canonical shared-lib's pending edits.
+**Root cause:** A prior fleet shared-lib sync pass (P0-7-sweep) edited/deleted files in the working tree but never committed, leaving the repo in a broken/inconsistent state relative to `Extensions/infrastructure/lovespark-shared-lib/`.
+**Fix:** Restored `lib/lovespark-tokens.css` from git history (verified byte-identical to canonical). Confirmed `lib/lovespark-footer.css` and `lib/lovespark-theme.js` already matched canonical's current (pending) state and committed them as-is. `ls-check .` now reports "Shared lib matches canonical".
+**Files:** lib/lovespark-tokens.css, lib/lovespark-footer.css, lib/lovespark-theme.js
+
 ## v1.0.0 (2026-03-21) - Initial Build
 
 ### Architecture Decisions
