@@ -11,11 +11,11 @@
 </head>
 <body>
   <div class="theme-dropdown">
-    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+    <button id="themeToggle" class="theme-dropdown-trigger"
             aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
-      retro
+      <span id="themeLabel" aria-live="polite">Retro Pink</span>
     </button>
-    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
       <div class="theme-dropdown-header">Theme</div>
       <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
       <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
@@ -68,7 +68,7 @@
     <!-- Today's wins -->
     <div id="todayWinsSection" class="today-wins" hidden>
       <div class="today-wins-label">Today's wins</div>
-      <div id="todayWinsList" class="today-wins-list" role="list"></div>
+      <div id="todayWinsList" class="today-wins-list" role="list" aria-live="polite"></div>
     </div>
 
     <!-- Stats -->
