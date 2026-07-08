@@ -161,7 +161,7 @@ body {
 .chart-bar[data-level="2"] { background: #e67e22; }
 .chart-bar[data-level="3"] { background: #f1c40f; }
 .chart-bar[data-level="4"] { background: #2ecc71; }
-.chart-bar[data-level="5"] { background: var(--ls-pink-accent); }
+.chart-bar[data-level="5"] { background: var(--ls-pink-deep); }
 
 /* -- Cute message --------------------------- */
 .cute-msg {
