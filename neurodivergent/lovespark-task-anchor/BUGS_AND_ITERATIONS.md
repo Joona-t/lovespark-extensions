@@ -1,5 +1,13 @@
 # BUGS_AND_ITERATIONS.md — LoveSpark Task Anchor
 
+## 2026-07-08 — P2-sync-4: token re-sync after canonical contrast fix, bump to 1.0.15
+
+**Problem:** `lib/lovespark-tokens.css` had drifted from `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` — the canonical copy had been hand-patched with the KI-002/003/004 contrast fixes (`--ls-text-dark`, `--ls-glass-border`, `--ls-text-muted` darkened/lightened to clear 4.5:1/3:1 on beige and slate themes) but this repo's `lib/` copy still had the pre-fix values. `ls-check .` flagged `BRAND-LIB-SYNC` (md5 mismatch).
+**Root cause:** The canonical contrast fix landed directly in the shared-lib repo without a fleet-wide `sync-shared-lib.sh` pass reaching every extension.
+**Fix:** Copied canonical `lovespark-tokens.css` into `lib/`. Bumped manifest to 1.0.15, rebuilt CWS/AMO zips.
+**Result:** `ls-check .` went from 38 pass / 3 fail to 40 pass / 1 fail. The 1 remaining fail (`BRAND-TOKEN-DRIFT`) is a fleet-wide gap in `design-tokens/tokens.json`/`generate-tokens.py` — the canonical shared-lib CSS was hand-patched but the token generator source was never regenerated to match, so every extension repo with a `lib/` dir shows this same fail regardless of sync state. Confirmed structurally unfixable from this repo (verified `design-tokens/` is shared, ungit-tracked infra outside this repo's scope); flagged separately for a dedicated infra fix.
+**Files:** lib/lovespark-tokens.css, manifest.json (1.0.14 → 1.0.15)
+
 ## 2026-07-08: P0-4-commit-4 — fix host-permission mismatch in CWS/AMO docs, commit bundle, bump to 1.0.14, build store zips
 
 **Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` on disk but never committed them. Worse: both docs flatly stated "no host permissions" / "does not read, modify, or monitor the content of the pages you visit" / "cannot read, see, or modify the content of any web page" — but `manifest.json` declares a `content_scripts` block matching `<all_urls>` (`content.js` + `content.css`) that injects an on-page banner reminder into every page. The generator apparently only inspected the top-level `permissions` array and missed the implicit host access granted by static `content_scripts.matches` in MV3.
