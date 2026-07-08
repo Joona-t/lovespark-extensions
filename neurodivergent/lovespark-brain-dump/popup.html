@@ -13,7 +13,7 @@
   <div class="theme-dropdown">
     <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
             aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
-      retro
+      <span id="themeLabel" aria-live="polite">retro</span>
     </button>
     <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
       <div class="theme-dropdown-header">Theme</div>
@@ -54,7 +54,7 @@
     </div>
 
     <!-- Thought list -->
-    <div id="thoughtList" class="thought-list" role="list" aria-label="Today's thoughts"></div>
+    <div id="thoughtList" class="thought-list" role="list" aria-label="Today's thoughts" aria-live="polite"></div>
 
     <!-- Empty state -->
     <div id="emptyState" class="empty-state" hidden>

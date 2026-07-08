@@ -128,7 +128,7 @@ body {
   opacity: 0;
   transition: opacity 0.15s;
 }
-.thought-item:hover .thought-delete { opacity: 0.6; }
+.thought-item:hover .thought-delete { opacity: 0.85; }
 .thought-delete:hover { opacity: 1 !important; color: #DC3545; }
 
 /* ── Empty state ───────────────────────── */
