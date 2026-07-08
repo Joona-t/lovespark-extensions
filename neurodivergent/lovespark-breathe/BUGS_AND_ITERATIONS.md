@@ -7,6 +7,13 @@
 | | | | |
 
 
+## 2026-07-08: P0-7-sweep-2 — finalize dead-lib deletion + land CWS submission prep
+
+**Problem:** `lib/lovespark-badge.js`, `lovespark-lifecycle.js`, `lovespark-popup.js`, `lovespark-stats.js` were unwired from `popup.html` back in the 2026-04-20 ship-day pass but the actual file deletions from `lib/` and the `manifest.json`/`popup.html` follow-up (script tag reorder, version bump to 1.0.23) sat uncommitted on disk ever since. Separately, a CWS submission-autopilot pass had written a full `cws-listing.json` (permission justifications, privacy policy URL, distribution config) and 12 `cws-shots/` assets (5 localized + 5 global screenshots, 2 promo tiles) to disk, also never committed.
+**Root cause:** Both passes stopped short of `git add`/commit.
+**Fix:** Committed the dead-lib-file deletion + manifest/popup.html follow-up as-is (verified none of the 4 files are referenced anywhere in this repo). Committed `cws-listing.json` + `cws-shots/` as-is — note `cws-listing.json` still has 3 explicit `REVIEW:` placeholders (`single_purpose`, `host_permission_justification`, `reviewer_test_instructions`) that need Joona's input before CWS submission; left untouched, not my call to fill in.
+**Files:** lib/lovespark-badge.js (deleted), lib/lovespark-lifecycle.js (deleted), lib/lovespark-popup.js (deleted), lib/lovespark-stats.js (deleted), manifest.json, popup.html, cws-listing.json, cws-shots/
+
 ## 2026-04-20: Ship-Day v1.0.19 — 5 fixes (swarm audit)
 
 **Sparky missing in Step Back overlay**
