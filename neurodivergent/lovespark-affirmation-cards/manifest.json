@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Affirmation Cards",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "Daily affirmation cards for ADHD brains. Tap for a new card, save favorites, build your deck. Kind words when you need them. No account, always free.",
   "icons": {
     "16": "icons/icon-16.png",
