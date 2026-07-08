@@ -96,7 +96,7 @@ function addSite() {
   var domain = raw;
   try {
     if (raw.includes('://')) domain = new URL(raw).hostname;
-  } catch (_) {}
+  } catch (err) { console.warn('[popup] addSite:', err); }
   domain = domain.replace(/^www\./, '');
   if (!domain || domain.indexOf('.') === -1) return;
   if (sites.indexOf(domain) !== -1) { siteInput.value = ''; return; }
