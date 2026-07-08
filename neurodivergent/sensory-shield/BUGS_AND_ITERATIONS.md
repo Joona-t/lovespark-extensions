@@ -43,3 +43,18 @@ hardcoding v1.0.0. Bump to v1.0.6.
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-07-08: CWS/AMO submission bundle committed (P0-4-commit-3)
+
+**Problem:** Sensory Shield had no committed CWS Web Store / AMO submission package — CWS-LISTING.md, PRIVACY.md, SUBMIT.md, and cws-shots/ existed only as generator output on disk, never landed in git, so the extension wasn't submission-ready from a clean checkout.
+**Root cause:** `fleet-to-store` generates these artifacts locally but a separate commit step was needed to land them, bump the patch version, and rebuild the store zips.
+**Fix:** Verified PRIVACY.md is truthful (local-storage-only, zero external transmission) and CWS-LISTING.md's single-purpose + per-permission + host-permission justifications match the actual manifest.json permissions. Bumped manifest.json to v1.0.37. Rebuilt *-chrome.zip / *-firefox.zip via the canonical `scripts/build-zips.sh`; Firefox zip passed `amo-validate.py`. Committed the bundle.
+**Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/, manifest.json
+
+## 2026-07-08: ITER-A11Y-2 — a11y remediation unblocks CWS pipeline (R-cws-a11y-2)
+
+**Problem:** `ls-check .` failed A11Y-DIALOG (popup.html missing `role="dialog"`/`aria-labelledby`), A11Y-EXPANDED (theme dropdown trigger missing `aria-expanded`), BRAND-LIB-WIRED (popup.html never loaded `lovespark-base.css`/`lovespark-theme.js` despite both files sitting unused in lib/), A11Y-CONTRAST (3 fleet-wide beige/slate failures), and warned QUAL-README/QUAL-LICENSE — the staged CWS bundle was blocked by these real pre-commit a11y fails.
+**Root cause:** popup.html predates the shared-lib theme pattern: it hand-rolled its own theme dropdown (`applyTheme`/`initThemeDropdown` duplicated in popup.js, including a stale `chrome.storage.local` `darkMode` migration key nothing else in the repo ever wrote) instead of loading `lib/lovespark-theme.js`, and never declared a dialog role/label on the popup container or `aria-expanded` on the dropdown trigger. README/LICENSE were never generated for this repo.
+**Fix:** Linked `lib/lovespark-base.css` in `<head>`. Added `role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc"` to `.popup-container` (`id="popupTitle"`/`id="popupDesc"` on the existing `<h1>`/subtitle). Added `aria-expanded="false" aria-haspopup="true" aria-label="Change theme"` to `#themeToggle` and loaded `lib/lovespark-theme.js`. Deleted the duplicated hand-rolled theme JS from popup.js and replaced it with `LoveSparkTheme.init()` plus a small listener that keeps `aria-expanded` synced to the menu's open/closed class (verified no other file reads the dropped legacy `darkMode` key). Added MIT `LICENSE` and a real `README.md`. Bumped manifest.json patch version and rebuilt CWS/AMO zips. `ls-check .` is now clean except the fleet-wide A11Y-CONTRAST check, which is computed against the canonical `Extensions/infrastructure/lovespark-shared-lib` tokens (KI-002/003/004) and is out of this unit's assigned repo scope — tracked separately in meta_implementation.md item 7.
+**Files:** popup/popup.html, popup/popup.js, LICENSE, README.md, manifest.json, *-chrome.zip, *-firefox.zip
+**Commit:** unit R-cws-a11y-2

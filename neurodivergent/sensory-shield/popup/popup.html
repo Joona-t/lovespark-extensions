@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sensory Shield</title>
   <link rel="stylesheet" href="../lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="../lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
     <header class="popup-header" style="position: relative;">
       <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="sparky">
       <div class="header-text">
-        <h1>Sensory Shield</h1>
-        <span class="subtitle">by LoveSpark</span>
+        <h1 id="popupTitle">Sensory Shield</h1>
+        <span class="subtitle" id="popupDesc">by LoveSpark</span>
       </div>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -95,6 +96,7 @@
   <div class="sparkle-container" id="sparkle-container"></div>
 
   <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
   <script src="../lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>

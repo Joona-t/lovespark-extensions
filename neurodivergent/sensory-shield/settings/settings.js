@@ -95,7 +95,7 @@ async function addDomain() {
     if (raw.includes('://')) {
       domain = new URL(raw).hostname;
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[settings] unknown:', err); }
   domain = domain.replace(/^www\./, '');
 
   if (!domain || domain.indexOf('.') === -1) return;

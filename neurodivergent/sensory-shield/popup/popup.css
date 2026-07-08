@@ -210,7 +210,7 @@ body {
 }
 
 .preset-btn.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
@@ -258,7 +258,7 @@ body {
 }
 
 .toggle-switch.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
@@ -329,7 +329,7 @@ body {
 
 .save-btn {
   width: 100%;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -389,7 +389,7 @@ body {
   position: absolute;
   width: 6px;
   height: 6px;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-radius: 50%;
   opacity: 0;
   animation: sparkle-pop 0.6s ease-out forwards;
