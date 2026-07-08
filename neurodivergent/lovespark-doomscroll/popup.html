@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pink Anti-Doomscroll</title>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popup-title" aria-describedby="cute-msg">
 
     <!-- Header -->
     <header class="popup-header">
       <img src="media/mascot.png" alt="Sparky — LoveSpark mascot" class="header-mascot">
-      <span class="header-title">Anti-Doomscroll</span>
+      <span class="header-title" id="popup-title">Anti-Doomscroll</span>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -94,15 +95,15 @@
       <div class="card-title">Mode</div>
       <div class="mode-row">
         <label class="mode-option">
-          <input type="radio" name="mode" value="gentle">
+          <input type="radio" name="mode" value="gentle" aria-label="Gentle mode">
           <span class="mode-label">Gentle</span>
         </label>
         <label class="mode-option">
-          <input type="radio" name="mode" value="standard">
+          <input type="radio" name="mode" value="standard" aria-label="Standard mode">
           <span class="mode-label">Standard</span>
         </label>
         <label class="mode-option">
-          <input type="radio" name="mode" value="firm">
+          <input type="radio" name="mode" value="firm" aria-label="Firm mode">
           <span class="mode-label">Firm</span>
         </label>
       </div>
@@ -126,6 +127,7 @@
 
   </div>
   <script src="lib/lovespark-footer.js"></script>
+<script src="lib/lovespark-theme.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
