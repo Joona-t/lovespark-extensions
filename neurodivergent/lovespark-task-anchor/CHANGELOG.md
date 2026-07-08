@@ -2,6 +2,16 @@
 
 All notable changes to LoveSpark Task Anchor will be documented in this file.
 
+## [1.0.15] - 2026-07-08
+
+### Fixed
+- Re-synced lib/lovespark-tokens.css to the canonical shared-lib contrast fix (KI-002/003/004)
+
+## [1.0.14] - 2026-07-08
+
+### Fixed
+- Corrected CWS/AMO submission docs to disclose content-script `<all_urls>` host access
+
 ## [1.0.11] - 2026-04-19
 
 ### Release — Chrome / Firefox / Edge stores

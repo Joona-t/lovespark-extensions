@@ -1,5 +1,13 @@
 # BUGS_AND_ITERATIONS.md — LoveSpark Task Anchor
 
+## 2026-07-08 — P2-sync-4-followup: CHANGELOG.md drift warn
+
+**Problem:** `ls-check .` warned `QUAL-CHANGELOG-DRIFT`: `CHANGELOG.md`'s latest entry (1.0.11) didn't match `manifest.json` (1.0.15) — the 1.0.14 (host-permission doc fix) and 1.0.15 (P2-sync-4 token re-sync) version bumps were never given CHANGELOG entries.
+**Root cause:** Both prior commits bumped `manifest.json` without a matching `CHANGELOG.md` addition.
+**Fix:** Added `## [1.0.14]` and `## [1.0.15]` entries summarizing the host-permission doc fix and the token re-sync respectively.
+**Result:** `ls-check .` now 42 pass / 1 fail / 0 warn. The 1 fail is the pre-existing fleet-wide `BRAND-TOKEN-DRIFT` gap documented in the P2-sync-4 entry below.
+**Files:** CHANGELOG.md
+
 ## 2026-07-08 — P2-sync-4: token re-sync after canonical contrast fix, bump to 1.0.15
 
 **Problem:** `lib/lovespark-tokens.css` had drifted from `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` — the canonical copy had been hand-patched with the KI-002/003/004 contrast fixes (`--ls-text-dark`, `--ls-glass-border`, `--ls-text-muted` darkened/lightened to clear 4.5:1/3:1 on beige and slate themes) but this repo's `lib/` copy still had the pre-fix values. `ls-check .` flagged `BRAND-LIB-SYNC` (md5 mismatch).
