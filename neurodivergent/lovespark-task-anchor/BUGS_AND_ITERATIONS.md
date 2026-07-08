@@ -42,3 +42,22 @@
 - **Root cause:** Copy-paste from popup.html pattern; dialogs should only be used for popup overlays
 - **Fix:** Removed `role="dialog"` from settings-container div
 - **Files:** settings.html
+
+---
+
+## 2026-07-09: Remove duplicate lovespark-tokens.css load from `popup.html`, `settings.html` (fleet 2026-03-28 regression)
+
+**Problem:** `popup.html`, `settings.html` carried a direct reference to `lovespark-tokens.css` even though
+`lovespark-base.css` (loaded by the same page) already `@import`s it — the token sheet
+loaded twice. This is the fleet-wide 2026-03-28 injection regression; `guard-fleet-sync.sh`
+Gate 4 blocks all fleet shared-lib syncs while any such reference exists in extension HTML.
+
+**Fix:** Removed the redundant `<link>` (a one-line deletion; no other markup touched). Also refreshed `lib/lovespark-tokens.css` to the canonical
+deterministic-header build (token values byte-identical to the 80/80-audited canonical;
+shared-lib ITER-003 / lovespark-shared-lib@7690133) and bumped the manifest patch version.
+
+**Verification:** zero `lovespark-tokens.css` references remain in this extension's HTML;
+`origin/main`'s `lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`,
+so removal is cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live
+tree 2026-07-09; `ls-check` samples (lovespark-breathe 41 pass / 0 fail,
+lovespark-task-anchor 42 pass / 0 fail) after the fleet-wide sync.
