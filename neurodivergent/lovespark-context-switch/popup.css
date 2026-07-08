@@ -127,7 +127,7 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   flex-shrink: 0;
 }
 .recent-time {

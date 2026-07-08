@@ -22,3 +22,10 @@
 **Fix:** Verified the generated PRIVACY.md (local-storage-only, zero transmission, matches actual `storage`-only permission set) and CWS-LISTING.md (single-purpose + per-permission justification matches manifest.json's `["storage"]`, no host permissions claimed or present) are accurate — no hand-fixes needed. Bumped manifest.json to 1.0.30. Ran `scripts/build-zips.sh` — Firefox zip passed AMO validation (auto-fixed `data_collection_permissions.required`, `background.scripts`, `strict_min_version`); both `-chrome.zip` and `-firefox.zip` regenerated and copied into repo root.
 **Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/, manifest.json, lovespark-context-switch-chrome.zip, lovespark-context-switch-firefox.zip
 **Commit:** unit P0-4-commit-2
+
+## 2026-07-08: ITER-CWS-A11Y-1 — mascot.png missing (real ship-blocking fail), LICENSE missing
+
+**Problem:** `ls-check .` failed with BRAND-SPARKY — `mascot.png` (referenced by `popup.html`'s `<img src="mascot.png">`, rule #3) was missing from the repo, even though the extension otherwise renders correctly locally (browsers just show a broken image icon). Also flagged QUAL-LICENSE missing.
+**Root cause:** The file was never checked in — likely dropped during an earlier asset-cleanup pass, or the repo was scaffolded before the mascot was copied in.
+**Fix:** Copied the canonical `mascot.png` (`Assets & Docs/mascot.png` lineage, verified identical 400×266 RGBA PNG as used by the other passing sibling extensions) into the repo root. Added the standard MIT LICENSE (matches every other LoveSpark repo). `ls-check .` went from 32 pass/1 fail/3 warn to 33 pass/0 fail/3 warn.
+**Files:** mascot.png, LICENSE, manifest.json (1.0.30 → 1.0.31)
