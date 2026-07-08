@@ -1,5 +1,12 @@
 # LoveSpark Affirmation Cards - Bugs and Iterations
 
+## 2026-07-08: P0-7-sweep-2 — shared-lib sync + missing mascot.png (rule #3)
+
+**Problem:** `lib/lovespark-footer.css` and `lib/lovespark-theme.js` on disk already matched canonical `Extensions/infrastructure/lovespark-shared-lib/` byte-for-byte but were never committed. Separately, `ls-check` flagged `BRAND-SPARKY: mascot.png missing` — `popup.html` references `mascot.png` at the repo root but it never existed in this repo's git history at all (not a deletion, never added).
+**Root cause:** The shared-lib sync was never committed after copying. The mascot asset was simply never added when the popup was built, despite being referenced from day one (CLAUDE.md rule #3: Sparky mascot required in every UI).
+**Fix:** Committed the shared-lib sync. Copied the canonical mascot (`Claude x LoveSpark/assets/mascot.png`, byte-identical to the copy already shipped in lovespark-body-double) into the repo root and committed it.
+**Files:** lib/lovespark-footer.css, lib/lovespark-theme.js, mascot.png
+
 ## v1.0.0 (2026-03-21) - Initial Build
 
 ### Architecture Decisions
