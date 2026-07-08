@@ -12,7 +12,8 @@
 <body>
   <div class="theme-dropdown">
     <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
-            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme" aria-live="polite">retro</button>
+    <span id="themeLabel" aria-live="polite" class="sr-only"></span>
     <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
       <div class="theme-dropdown-header">Theme</div>
       <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
@@ -32,7 +33,7 @@
     </header>
 
     <div id="reactionZone" class="reaction-zone state-idle" role="button" tabindex="0" aria-label="Reaction test area -- click to start">
-      <div id="reactionText" class="reaction-text">Click to start</div>
+      <div id="reactionText" class="reaction-text" aria-live="polite">Click to start</div>
       <div id="reactionTime" class="reaction-time" aria-live="assertive" hidden></div>
     </div>
 
