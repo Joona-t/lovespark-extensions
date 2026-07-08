@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Calm",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "One toggle to make the web sensory-friendly. Mutes colors, kills animations, hides distractions.",
   "permissions": [
     "storage",
