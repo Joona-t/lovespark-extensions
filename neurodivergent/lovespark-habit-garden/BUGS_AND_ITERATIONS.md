@@ -41,3 +41,10 @@
 **Root cause:** Generator output was never staged/committed as a follow-up step (rule #14 gate); zips were never regenerated after the CWS-asset commit landed.
 **Fix:** Verified CWS-LISTING.md's per-permission justifications match manifest.json (`storage`, `alarms`) and PRIVACY.md's local-storage-only / zero-transmission claims — both already accurate, no hand-fixes needed. Bumped manifest.json to 1.0.32. Rebuilt both zips via the canonical `scripts/build-zips.sh`; Firefox zip passed `amo-validate.py` clean. Removed stray `icons/*.bak` cruft left by a prior icon-regen pass.
 **Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, LICENSE, cws-shots/, manifest.json, lovespark-habit-garden-chrome.zip, lovespark-habit-garden-firefox.zip
+
+## 2026-07-08: ITER-CWS-A11Y-1 — beige-theme contrast fail on delete-icon hover opacity
+
+**Problem:** `ls-check .` flagged A11Y-KI004 — `.habit-card:hover .card-delete` used `opacity: 0.6`, which drops below the 4.5:1 contrast floor on the beige theme (KI-004).
+**Root cause:** Opacity-based dimming instead of a full-opacity muted color; beige's base contrast is thinner than retro/dark/slate so the same opacity value that reads fine elsewhere fails there.
+**Fix:** Raised `.card-delete` hover opacity to 0.85 per the documented KI-004 fix path (opacity ≥ 0.85 on beige-theme text/icons). No functional change, no other themes affected. `ls-check .` unchanged at 0 fail; confirmed the specific KI-004 warning is gone.
+**Files:** popup.css, manifest.json (1.0.32 → 1.0.33)

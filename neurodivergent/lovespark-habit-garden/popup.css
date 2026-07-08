@@ -127,7 +127,7 @@ body {
   min-height: 16px;
 }
 .habit-card:hover .card-delete {
-  opacity: 0.6;
+  opacity: 0.85;
 }
 .card-delete:hover {
   opacity: 1 !important;
