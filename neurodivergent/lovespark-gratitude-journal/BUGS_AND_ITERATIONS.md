@@ -38,3 +38,11 @@
 **Fix:** Verified the generated PRIVACY.md (local-storage-only, zero transmission, matches actual `storage`-only permission set) and CWS-LISTING.md (single-purpose + per-permission justification matches manifest.json's `["storage"]`, no host permissions claimed or present) are accurate — no hand-fixes needed. Bumped manifest.json to 1.0.30. Ran `scripts/build-zips.sh` — Firefox zip passed AMO validation (auto-fixed `data_collection_permissions.required`, `background.scripts`, `strict_min_version`); both `-chrome.zip` and `-firefox.zip` regenerated and copied into repo root, replacing the stale zips.
 **Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/, manifest.json, lovespark-gratitude-journal-chrome.zip, lovespark-gratitude-journal-firefox.zip
 **Commit:** unit P0-4-commit-2
+
+## 2026-07-08: ITER-A11Y-2 — a11y/contrast CWS-unblock pass (R-cws-a11y-2)
+
+**Problem:** `ls-check .` failed A11Y-CONTRAST (3 failures across beige/slate themes) and warned QUAL-LICENSE (no LICENSE file), blocking the fleet CWS-autofill upload pipeline.
+**Root cause:** A11Y-CONTRAST is computed by `scripts/audit-contrast.py` directly against the canonical `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` token values (KI-002 slate muted-on-glass-strong 4.17:1, KI-003 slate focus-ring-on-glass-border 2.65:1, KI-004 beige hint-opacity 4.26:1) — it is identical for every extension in the fleet regardless of local repo content, and can only be fixed by editing the canonical shared-lib repo, which is out of this unit's assigned repo scope. QUAL-LICENSE was simply a missing file.
+**Fix:** Added MIT `LICENSE` (matching the canonical LoveSpark MIT text used across the fleet). Verified every other `ls-check` category passes (A11Y-DIALOG, A11Y-EXPANDED, BRAND-LIB-SYNC/WIRED all clean). Bumped manifest.json patch version and rebuilt CWS/AMO zips. A11Y-CONTRAST remains failing and requires the separate shared-lib fix tracked in `meta_implementation.md` item 7 ("Repair the quality gate, then sweep and enforce shared-lib sync") — flagging here so it isn't lost.
+**Files:** LICENSE, manifest.json, *-chrome.zip, *-firefox.zip
+**Commit:** unit R-cws-a11y-2
