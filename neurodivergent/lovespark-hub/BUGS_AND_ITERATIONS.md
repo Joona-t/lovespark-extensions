@@ -6,6 +6,13 @@
 |------|---------|------------|-----|
 | | | | |
 
+## 2026-07-08: BUG-001 — shared-lib copies drifted from canonical (missing tokens.css + stale files)
+
+**Problem:** `lib/lovespark-base.css`, `lib/lovespark-footer.css`, `lib/lovespark-theme.js` carried uncommitted local edits matching canonical's pending state (base.css migrated to the `@import lovespark-tokens.css` split architecture; footer.css hover → underline; theme.js dropped the legacy `darkMode` boolean fallback). `lib/lovespark-tokens.css`, `lovespark-badge.js`, `lovespark-lifecycle.js`, `lovespark-popup.js`, `lovespark-stats.js` existed on disk but were never added to git — hub was one `git clean` away from a broken theme (base.css `@import`s tokens.css).
+**Root cause:** A prior fleet shared-lib sync pass (P0-7-sweep) copied files into the working tree but never staged/committed them.
+**Fix:** Verified every file byte-identical to `Extensions/infrastructure/lovespark-shared-lib/` and committed the full set. `ls-check .` "Shared lib matches canonical" now passes; gate went from 3 fail → 0 fail.
+**Files:** lib/lovespark-base.css, lib/lovespark-footer.css, lib/lovespark-theme.js, lib/lovespark-tokens.css, lib/lovespark-badge.js, lib/lovespark-lifecycle.js, lib/lovespark-popup.js, lib/lovespark-stats.js
+
 
 ## 2026-03-28: Fleet-wide automation regression — broken CSS variables + missing footers
 
