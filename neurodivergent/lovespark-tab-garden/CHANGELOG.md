@@ -2,6 +2,12 @@
 
 All notable changes to LoveSpark Tab Garden will be documented in this file.
 
+## [1.0.27] - 2026-07-08
+
+### Fixed
+- Re-synced `lib/lovespark-tokens.css` to canonical shared-lib after the fleet-wide contrast fix (ITER-P2-SYNC-1)
+- Built first-ever chrome/firefox store zips via `build-zips.sh` (AMO validator clean)
+
 ## [1.0.22] - 2026-04-20
 
 ### Added
