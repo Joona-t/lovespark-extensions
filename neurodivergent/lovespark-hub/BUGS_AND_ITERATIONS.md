@@ -45,6 +45,13 @@
 **Why not fixed here:** `lovespark-shared-lib` and `design-tokens` are not part of this repo; per the fleet-p1 unit's scope discipline (assigned repos only, never touch other repos), the canonical-infra fix was computed and verified but not applied — flagged as a follow-up task instead.
 **Files:** none (documentation only — no in-repo fix exists for this failure)
 
+## 2026-07-08: ITER-P2-SYNC-1 — re-sync tokens.css after canonical A11Y-CONTRAST fix lands; rebuild zips
+
+**Problem:** Fleet P2 unit "token re-sync": the canonical fix computed in ITER-CWS-A11Y-2 landed in `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` (beige `text-dark` → `#564424`, slate `glass-border` → `#3e3e3e`, slate `text-muted` → `#a8a8a8`) while this unit was in progress. `ls-check .` before this fix: 37 pass, **1 fail** (A11Y-CONTRAST, 3 sub-failures), 3 warn.
+**Root cause:** This repo's `lib/lovespark-tokens.css` copy predated the canonical fix and had drifted (md5 mismatch), tripping `BRAND-LIB-SYNC` the moment canonical changed.
+**Fix:** Re-copied `lovespark-tokens.css` from canonical `Extensions/infrastructure/lovespark-shared-lib/` into `lib/` (byte-identical, verified via md5). `ls-check .` now shows A11Y-CONTRAST and BRAND-LIB-SYNC both passing. One fail remains: `BRAND-TOKEN-DRIFT` (shared-lib CSS vs. `design-tokens/generated/lovespark-tokens.css`) — infra outside this repo, not fixable here; flagged as a follow-up. Bumped patch version and rebuilt both store zips (`build-zips.sh`), which passed the AMO validator gate. Gave this repo a real README.md (was a 5-line stub) mirroring its `CWS-LISTING.md` long description, following `lovespark-med-tracker`'s README as the quality template. `ls-check .` after: 37 pass, **1 fail** (BRAND-TOKEN-DRIFT, infra-level, out of scope), 3 warn (pre-existing BRAND-DEAD-LIB, unrelated to this unit).
+**Files:** lib/lovespark-tokens.css, README.md, manifest.json (1.0.32 → 1.0.33), lovespark-hub-chrome.zip, lovespark-hub-firefox.zip
+
 ## 2026-07-08: ITER-CWS-A11Y-3 — Google Fonts CDN links in newtab.html (SEC-CDN-FONTS)
 
 **Problem:** `ls-check .` flagged SEC-CDN-FONTS — `newtab.html` loaded DM Mono + Press Start 2P from `fonts.googleapis.com`/`fonts.gstatic.com` via `<link>` tags (a live external network request every time the extension's new-tab page opens), violating the privacy-first/no-external-requests rule (KI-026).
