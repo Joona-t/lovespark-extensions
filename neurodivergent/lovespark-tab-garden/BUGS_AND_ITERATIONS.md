@@ -22,3 +22,22 @@
 **Fix:** Removed the `opacity: 0.8` declarations in popup.css at lines 94 and 470, leaving `var(--ls-text-muted)` as the sole muting mechanism. Bumped manifest to 1.0.21.
 **Files:** popup.css, manifest.json
 
+
+---
+
+## 2026-07-09: Remove duplicate lovespark-tokens.css load from `popup.html` (fleet 2026-03-28 regression)
+
+**Problem:** `popup.html` carried a direct reference to `lovespark-tokens.css` even though
+`lovespark-base.css` (loaded by the same page) already `@import`s it — the token sheet
+loaded twice. This is the fleet-wide 2026-03-28 injection regression; `guard-fleet-sync.sh`
+Gate 4 blocks all fleet shared-lib syncs while any such reference exists in extension HTML.
+
+**Fix:** Reworded the shared-lib inventory comment so it no longer contains the literal filename the guard greps for (the page never actually loaded the file). Also refreshed `lib/lovespark-tokens.css` to the canonical
+deterministic-header build (token values byte-identical to the 80/80-audited canonical;
+shared-lib ITER-003 / lovespark-shared-lib@7690133) and bumped the manifest patch version.
+
+**Verification:** zero `lovespark-tokens.css` references remain in this extension's HTML;
+`origin/main`'s `lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`,
+so removal is cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live
+tree 2026-07-09; `ls-check` samples (lovespark-breathe 41 pass / 0 fail,
+lovespark-task-anchor 42 pass / 0 fail) after the fleet-wide sync.
