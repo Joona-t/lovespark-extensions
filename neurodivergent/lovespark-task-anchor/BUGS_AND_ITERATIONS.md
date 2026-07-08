@@ -1,5 +1,13 @@
 # BUGS_AND_ITERATIONS.md — LoveSpark Task Anchor
 
+## 2026-07-08: P0-4-commit-4 — fix host-permission mismatch in CWS/AMO docs, commit bundle, bump to 1.0.14, build store zips
+
+**Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` on disk but never committed them. Worse: both docs flatly stated "no host permissions" / "does not read, modify, or monitor the content of the pages you visit" / "cannot read, see, or modify the content of any web page" — but `manifest.json` declares a `content_scripts` block matching `<all_urls>` (`content.js` + `content.css`) that injects an on-page banner reminder into every page. The generator apparently only inspected the top-level `permissions` array and missed the implicit host access granted by static `content_scripts.matches` in MV3.
+**Root cause:** fleet-to-store's permission-justification generator didn't account for `content_scripts` as a host-permission source; the on-page banner feature (an intentional, real feature — see `background.js` `bannerPosition`/`autoHide` settings) was undocumented entirely.
+**Fix:** Read `content.js`/`content.css` end to end to confirm actual behavior: the content script reads only `location.protocol` (to skip internal browser pages) and injects a single self-contained banner element built from the extension's own local-storage task text — it does not read page content, forms, or DOM data, and makes no network calls. Rewrote the "Host permissions" section of `PRIVACY.md` and the "Host-permissions justification" + reviewer test steps of `CWS-LISTING.md` to accurately disclose the `<all_urls>` content script and its narrow, one-way, display-only access. Added the on-page banner as a documented Feature in `CWS-LISTING.md`'s description (previously omitted). Bumped `manifest.json` to 1.0.14 and synced the stale "Applies to version 1.0.12" / date references in `PRIVACY.md`.
+**Verification:** grepped `content.js` for `fetch`/`XMLHttpRequest`/`innerHTML`/`document.title`/other page-read patterns — none found beyond the single `location.protocol` check.
+**Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/ (12 files), manifest.json (1.0.13 → 1.0.14)
+
 ## v1.0.0 — Initial Build (2026-03-19)
 
 ### Decisions
