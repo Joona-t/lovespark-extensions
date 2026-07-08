@@ -52,3 +52,24 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+---
+
+## 2026-07-09: Remove duplicate lovespark-tokens.css load from `popup.html` (fleet 2026-03-28 regression)
+
+**Problem:** `popup.html` carried a direct `<link>` to `lovespark-tokens.css` even though
+`lovespark-base.css` (loaded by the same page) already `@import`s it — the token sheet loaded
+twice (fleet 2026-03-28 injection regression; `guard-fleet-sync.sh` Gate 4 blocks fleet
+shared-lib syncs while any such reference exists).
+
+**Fix:** Removed the redundant `<link>` (one-line deletion, no other markup touched); refreshed
+`lib/lovespark-tokens.css` to the canonical deterministic-header build (values byte-identical to
+the 80/80-audited canonical; shared-lib ITER-003 / lovespark-shared-lib@7690133); bumped the
+manifest patch version.
+
+**Also in this commit (required to pass the pre-commit ls-check gate — main fails it independently of the tokens cleanup):** KI-039 MV3-STORAGE-AREA-MATCH in `content_script.js` — `storage.onChanged` guarded on `areaName !== "sync"` while every write targets `chrome.storage.local`, so live cursor updates never fired from the listener. Flipped the guard to `"local"` (same fix as lovespark-youtube-ad-comfort-mode f642bc1). The two fixes are bundled because the gate deadlocks a split: a tokens-only commit trips KI-039, a KI-039-only commit trips BRAND-LIB-SYNC's stale tokens.css.
+
+**Verification:** zero `lovespark-tokens.css` references remain in this extension's HTML;
+`lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`, so the removal is
+cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live tree 2026-07-09;
+pre-commit ls-check green at this commit.

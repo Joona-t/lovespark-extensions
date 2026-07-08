@@ -129,7 +129,9 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
   }
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName !== "sync") {
+    // areaName must match where writes go: every write uses chrome.storage.local,
+    // so the stale "sync" guard made this listener dead code (KI-039).
+    if (areaName !== "local") {
       return;
     }
 
