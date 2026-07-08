@@ -140,15 +140,19 @@ function saveSettings() {
     allowlist: allowlistArr
   };
 
-  chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', settings: settings }, function() {
-    var btn = document.getElementById('saveSettings');
-    btn.textContent = 'Saved!';
-    btn.classList.add('saved');
-    setTimeout(function() {
-      btn.textContent = 'Save Settings';
-      btn.classList.remove('saved');
-    }, 1500);
-  });
+  try {
+    chrome.runtime.sendMessage({ type: 'SAVE_SETTINGS', settings: settings }, function() {
+      var btn = document.getElementById('saveSettings');
+      btn.textContent = 'Saved!';
+      btn.classList.add('saved');
+      setTimeout(function() {
+        btn.textContent = 'Save Settings';
+        btn.classList.remove('saved');
+      }, 1500);
+    });
+  } catch (err) {
+    // Extension context invalidated (e.g. after a reload) — nothing to do.
+  }
 }
 
 /* ── Break done buttons ────────────────────────────────── */
@@ -162,10 +166,14 @@ function setupBreakButtons() {
     if (!btn) return;
 
     btn.addEventListener('click', function() {
-      chrome.runtime.sendMessage({ type: 'MARK_BREAK', breakType: type }, function() {
-        // Refresh display
-        loadData();
-      });
+      try {
+        chrome.runtime.sendMessage({ type: 'MARK_BREAK', breakType: type }, function() {
+          // Refresh display
+          loadData();
+        });
+      } catch (err) {
+        // Extension context invalidated (e.g. after a reload) — nothing to do.
+      }
     });
   });
 }
@@ -173,13 +181,17 @@ function setupBreakButtons() {
 /* ── Load all data ─────────────────────────────────────── */
 
 function loadData() {
-  chrome.runtime.sendMessage({ type: 'GET_ALL_TODAY' }, function(response) {
-    if (chrome.runtime.lastError || !response) return;
+  try {
+    chrome.runtime.sendMessage({ type: 'GET_ALL_TODAY' }, function(response) {
+      if (chrome.runtime.lastError || !response) return;
 
-    renderSites(response.today || {}, response.activeDomain);
-    renderBreaks(response.breakDue || {}, response.lastBreak || {});
-    loadSettings(response.settings || {});
-  });
+      renderSites(response.today || {}, response.activeDomain);
+      renderBreaks(response.breakDue || {}, response.lastBreak || {});
+      loadSettings(response.settings || {});
+    });
+  } catch (err) {
+    // Extension context invalidated (e.g. after a reload) — nothing to do.
+  }
 }
 
 /* ── Init ──────────────────────────────────────────────── */
@@ -188,6 +200,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Theme
   if (typeof LoveSparkTheme !== 'undefined') {
     LoveSparkTheme.init();
+  }
+
+  // Footer (LoveSpark Suite / Ko-fi / Report a Bug)
+  var footerMount = document.getElementById('footerMount');
+  if (typeof LoveSparkFooter !== 'undefined' && footerMount) {
+    footerMount.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
   }
 
   // Load data

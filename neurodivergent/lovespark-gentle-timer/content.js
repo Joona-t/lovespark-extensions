@@ -154,7 +154,11 @@ if (window.location.protocol !== 'chrome:' &&
     doneBtn.textContent = 'Done!';
     doneBtn.setAttribute('aria-label', 'Mark ' + breakType + ' break as done');
     doneBtn.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'MARK_BREAK', breakType: breakType });
+      try {
+        chrome.runtime.sendMessage({ type: 'MARK_BREAK', breakType: breakType });
+      } catch (err) {
+        // Extension context invalidated (e.g. after a reload) — nothing to do.
+      }
       removeBanner(banner);
     });
 
@@ -163,7 +167,11 @@ if (window.location.protocol !== 'chrome:' &&
     dismissBtn.textContent = 'Later';
     dismissBtn.setAttribute('aria-label', 'Dismiss ' + breakType + ' reminder');
     dismissBtn.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'DISMISS_BREAK', breakType: breakType });
+      try {
+        chrome.runtime.sendMessage({ type: 'DISMISS_BREAK', breakType: breakType });
+      } catch (err) {
+        // Extension context invalidated (e.g. after a reload) — nothing to do.
+      }
       removeBanner(banner);
     });
 
@@ -203,10 +211,11 @@ if (window.location.protocol !== 'chrome:' &&
 
   function init() {
     // Get settings and current time
-    chrome.runtime.sendMessage({
-      type: 'GET_CURRENT_TIME',
-      domain: window.location.hostname.replace(/^www\./, '')
-    }, (response) => {
+    try {
+      chrome.runtime.sendMessage({
+        type: 'GET_CURRENT_TIME',
+        domain: window.location.hostname.replace(/^www\./, '')
+      }, (response) => {
       if (chrome.runtime.lastError) return; // extension context invalid
       if (!response) return;
 
@@ -224,7 +233,10 @@ if (window.location.protocol !== 'chrome:' &&
           updateBadge(currentSeconds);
         }
       });
-    });
+      });
+    } catch (err) {
+      // Extension context invalidated (e.g. after a reload) — nothing to do.
+    }
 
     // Check for pending break reminders
     chrome.storage.local.get(['breakDue_water', 'breakDue_food', 'breakDue_movement'], (data) => {

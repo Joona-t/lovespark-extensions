@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=350">
+  <link rel="stylesheet" href="lib/lovespark-tokens.css">
   <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
   <link rel="stylesheet" href="popup.css">
   <title>LoveSpark Gentle Timer</title>
 </head>
@@ -17,7 +19,7 @@
     </div>
     <div class="theme-dropdown">
       <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
-        <span id="themeLabel">Retro Pink</span>
+        <span id="themeLabel" aria-live="polite">Retro Pink</span>
       </button>
       <div id="themeMenu" class="theme-dropdown-menu" role="menu">
         <div class="theme-dropdown-header">Change Theme</div>
@@ -126,7 +128,10 @@
 
   </main>
 
+  <div id="footerMount"></div>
+
   <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
