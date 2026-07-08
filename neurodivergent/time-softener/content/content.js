@@ -96,19 +96,34 @@
   document.documentElement.style.overflow = 'hidden';
 
   var remaining = pauseSec;
+  var countdownStart = Date.now();
+  var countdownActive = true;
 
-  var timer = setInterval(function() {
-    remaining--;
-    countdownEl.textContent = remaining;
+  // Drift-corrected countdown: recompute remaining from wall-clock elapsed
+  // time on each tick rather than blindly decrementing, so a throttled/
+  // backgrounded tab (MV3 content scripts can still be deprioritized) never
+  // leaves the countdown stuck behind — it self-corrects the moment it runs.
+  function countdownTick() {
+    if (!countdownActive) return;
+    var elapsedSec = Math.floor((Date.now() - countdownStart) / 1000);
+    var next = Math.max(0, pauseSec - elapsedSec);
+    if (next !== remaining) {
+      remaining = next;
+      countdownEl.textContent = remaining;
+    }
     if (remaining <= 0) {
-      clearInterval(timer);
+      countdownActive = false;
       continueBtn.disabled = false;
       continueBtn.classList.add('ts-ready');
       timerEl.textContent = 'Ready when you are';
+      return;
     }
-  }, 1000);
+    setTimeout(countdownTick, 250);
+  }
+  setTimeout(countdownTick, 250);
 
   function dismiss() {
+    countdownActive = false;
     overlay.classList.add('ts-fade-out');
     document.documentElement.style.overflow = '';
     setTimeout(function() { overlay.remove(); }, 300);
