@@ -29,8 +29,8 @@ var prevTotal = 0;
 var currentRewards = [];
 var isSpinning = false;
 
-if (typeof LoveSparkFooter !== 'undefined') {
-  LoveSparkFooter.render(footerMount);
+if (typeof LoveSparkFooter !== 'undefined' && footerMount) {
+  footerMount.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
 }
 
 // -- Safe message to background ----------------

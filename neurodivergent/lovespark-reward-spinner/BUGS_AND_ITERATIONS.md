@@ -1,5 +1,12 @@
 # Bugs & Iterations — LoveSpark Reward Spinner
 
+## 2026-07-08: R-cws-a11y-4-followup — footer never actually rendered (wrong LoveSparkFooter.render() call signature)
+
+**Problem:** `popup.js` called `LoveSparkFooter.render(footerMount)`, but canonical `lovespark-footer.js`'s `render()` takes no arguments and returns an HTML string — it never touches the passed element. The return value was discarded, so `#footerMount` stayed empty and the LoveSpark Suite / Ko-fi / Report-a-Bug footer never appeared in the popup at all.
+**Root cause:** Call-site didn't match the documented usage in the shared-lib source comment (`document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render())`).
+**Fix:** Changed to `footerMount.insertAdjacentHTML('beforeend', LoveSparkFooter.render())`, matching canonical usage. Content is a fixed string literal from the shared lib (no user-controlled interpolation), so this is not an XSS risk. Found incidentally while working the R-cws-a11y-4 unit; fixed since trivial and in-repo.
+**Files:** popup.js
+
 ## 2026-07-08: R-cws-a11y-4 — add missing mascot.png, commit stranded shared-lib sync, bump to 1.0.31
 
 **Problem:** `ls-check .` failed BRAND-SPARKY (mascot.png missing from repo root), flagged as out-of-scope in the P0-4-commit-4 entry above. Separately, `lib/lovespark-footer.css` and `lib/lovespark-theme.js` had already been re-synced to canonical in the working tree by an earlier interrupted session (footer hover state switched from opacity to text-decoration for KI-004 opacity-on-text safety; theme.js legacy `darkMode` migration read removed) but never committed.
