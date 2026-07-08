@@ -77,3 +77,11 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-07-08: ITER — "Alive" update: butterfly-style animated companions on all Y2K packs (v1.1.36)
+
+**Problem:** Only cyber-butterfly felt alive — its arrow cursor carries 2 SMIL wing-flap butterflies that visibly animate while the mouse moves (Chrome re-rasterizes SVG cursors on move). The other 8 Y2K packs had static or single-twinkle decorations; hands were lifeless in all 9 packs.
+**Root cause:** Packs were designed before the butterfly recipe (2-3 staggered parametrized companions, `additive="sum"` nesting, rest-pose-first keyframes) existed; no shared animation builders in `gen_cursors.py`.
+**Fix:** Added generic `anim_translate/scale/rotate/opacity` SMIL builders + `extra=` param on `hand()/hand_grad()`; each pack got pack-prefixed companion helpers (`_bun_bunny`, `_dot_sparkle`, `_coq_pearl`, `_str_berry`, `_prl_mini`, `_bob_pearl`, `_chm_star`, `_loc_heart`, …) wired into arrow default, hand, and emoji default cursors (25 SVGs changed; I-beam/wait and OG PNG packs untouched per owner decision). Built via 9-agent parallel design workflow (each agent self-tested XML validity, <4KB size, rest-pose loop closure) + 3-skeptic adversarial verify.
+**Verify findings fixed:** cyworld-dotti sparkles were pure white → invisible on light pages; added #5A2A4A outline. Note: cyworld-dotti's old translate(20 4) 1.7s sparkle was deliberately superseded (not lost) by the new twinkle+pop set. ls-check: 34 pass / 0 fail / 1 pre-existing A11Y-LIVE warning (popup.js, untouched by this change).
+**Files:** gen_cursors.py, cursors/*/{default,pointer}.svg (25), manifest.json, CHANGELOG.md

@@ -2,6 +2,21 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.36] - 2026-07-08
+- **"Alive" update**: every Y2K pack now has 2-3 animated companion assets in the
+  cyber-butterfly style (SMIL — animates while the cursor moves in Chrome; perfect
+  static rest pose in Firefox). Hopping bunnies + bobbing carrot (honey-bunny),
+  twinkle-pop sparkles + beating chrome heart (cyworld-dotti), fluttering bow tails +
+  drifting pearls (coquette-ribbon), wiggling strawberries + dripping milk droplet
+  (strawberry-milk), shimmer-pulsing pearls (glossy-pearl), rising boba bubbles
+  (bubble-boba), swinging star charm (phone-charm), beating locket + floating hearts
+  (heart-locket), and butterflies on the hand cursor (cyber-butterfly parity).
+- Companions added to arrow, hand, and emoji default cursors; I-beam and wait cursors
+  unchanged. OG PNG packs (retro-pink, sakura-peach, starlight-purple) intentionally
+  untouched.
+- cyworld-dotti's old 1.7s sparkle superseded by the new twinkle+pop set,
+  dark-outlined (#5A2A4A) so sparkles read on light pages.
+
 ## [1.1.35] - 2026-06-28
 - **Fix**: selecting a different cursor now applies instantly on all open tabs instead of only after a page refresh. The live-apply `storage.onChanged` listener was guarding on the wrong storage area (`sync`) while all writes go to `local`.
 - Simplified the settings path: the popup writes directly to `storage.local` (removed the dead popup→background message relay), and the popup's selected-pack tracking no longer races against initial load.

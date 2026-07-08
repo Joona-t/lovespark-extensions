@@ -27,11 +27,30 @@ def rad(gid, stops, cx=50, cy=50, r=50):
     els = "".join(f'<stop offset="{p}%" stop-color="{c}"/>' for p, c in stops)
     return f'<radialGradient id="{gid}" cx="{cx}%" cy="{cy}%" r="{r}%">{els}</radialGradient>'
 
-# SMIL animation snippets (browsers may freeze in cursor context — designs work as static)
+# SMIL animation snippets (Chrome re-rasterizes SVG cursors on mouse-move so these
+# visibly animate while the cursor moves; Firefox freezes at t=0, so every values=
+# list MUST start (and end) with the rest pose to look perfect as a static frame)
 SPIN = '<animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="3s" repeatCount="indefinite"/>'
 SPIN_SLOW = '<animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="5s" repeatCount="indefinite"/>'
 BOB = '<animateTransform attributeName="transform" type="translate" values="0 0; 0 -2; 0 0" dur="1.6s" repeatCount="indefinite"/>'
 SHIMMER = '<animate attributeName="opacity" values="0.55;1;0.55" dur="1.7s" repeatCount="indefinite"/>'
+
+# Generic staggered-companion animation builders (butterfly recipe, rest-pose-first).
+def anim_translate(values, dur, delay="0s"):
+    return (f'<animateTransform attributeName="transform" type="translate" '
+            f'values="{values}" dur="{dur}" begin="{delay}" repeatCount="indefinite" additive="sum"/>')
+
+def anim_scale(values, dur, delay="0s"):
+    return (f'<animateTransform attributeName="transform" type="scale" '
+            f'values="{values}" dur="{dur}" begin="{delay}" repeatCount="indefinite" additive="sum"/>')
+
+def anim_rotate(values, dur, delay="0s"):
+    return (f'<animateTransform attributeName="transform" type="rotate" '
+            f'values="{values}" dur="{dur}" begin="{delay}" repeatCount="indefinite" additive="sum"/>')
+
+def anim_opacity(values, dur, delay="0s"):
+    return (f'<animate attributeName="opacity" values="{values}" dur="{dur}" '
+            f'begin="{delay}" repeatCount="indefinite"/>')
 
 # Standard arrow path (top-left tip, asymmetric)
 ARROW = "M5,4 L5,22 L9.5,18 L12,24 L15,23 L12.5,17 L18,17 Z"
@@ -51,7 +70,7 @@ _HAND = [
     ('6',   '15', '17.5', '13', '3'),
 ]
 
-def hand(fill, stroke, accent=None):
+def hand(fill, stroke, accent=None, extra=""):
     rects = "".join(
         f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}" '
         f'fill="{fill}" stroke="{stroke}" stroke-width="1"/>'
@@ -61,9 +80,9 @@ def hand(fill, stroke, accent=None):
     if accent:
         body += (f'<circle cx="11.5" cy="2.5" r="1.5" fill="{accent}"/>'
                  f'<circle cx="9.5"  cy="4.5" r="1"   fill="{accent}" opacity="0.75"/>')
-    return svg(body)
+    return svg(body + extra)
 
-def hand_grad(gid, defs, stroke, accent=None):
+def hand_grad(gid, defs, stroke, accent=None, extra=""):
     rects = "".join(
         f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}" '
         f'fill="url(#{gid})" stroke="{stroke}" stroke-width="1"/>'
@@ -73,7 +92,7 @@ def hand_grad(gid, defs, stroke, accent=None):
     if accent:
         body += (f'<circle cx="11.5" cy="2.5" r="1.5" fill="{accent}"/>'
                  f'<circle cx="9.5"  cy="4.5" r="1"   fill="{accent}" opacity="0.75"/>')
-    return svg(body, defs)
+    return svg(body + extra, defs)
 
 def write(theme, filename, content):
     path = os.path.join(BASE, theme, filename)
@@ -94,6 +113,52 @@ def write_pack(pack_id, e_def, e_ptr, e_txt, e_wait, p_def, p_ptr, p_txt, p_wait
     write(f"{pack_id}-pointer", "wait.svg",    p_wait)
 
 # ── Pack designs ───────────────────────────────────────────────────────────────
+
+def _bun_bunny(x, y, scale=1.0, delay="0s"):
+    """Mini hopping bunny companion — translate-y hop, ears squash subtly on landing.
+
+    Rest pose (frame 0) = grounded bunny, ears upright. Butterfly nesting pattern:
+    outer translate positions it, inner <g> carries the additive hop; ears live in a
+    pivot-translated sub-group so the scale squash compresses them toward their base.
+    """
+    s = scale
+    hop = anim_translate("0 0; 0 -1.6; 0 0", "0.6s", delay)
+    squash = anim_scale("1 1; 1 1; 1 0.82; 1 1", "0.6s", delay)
+    return (
+        f'<g transform="translate({x} {y})">'
+        f'<g>{hop}'
+        f'<circle cx="{-2.1*s:.2f}" cy="{0.9*s:.2f}" r="{0.7*s:.2f}" fill="#FFE5E5" stroke="#A06080" stroke-width="{0.3*s:.2f}"/>'
+        f'<ellipse cx="0" cy="{1.0*s:.2f}" rx="{2.1*s:.2f}" ry="{1.5*s:.2f}" fill="#FFFFFF" stroke="#A06080" stroke-width="{0.4*s:.2f}"/>'
+        f'<g transform="translate({1.4*s:.2f} {-1.5*s:.2f})">'
+        f'<g>{squash}'
+        f'<ellipse cx="{-0.55*s:.2f}" cy="{-1.05*s:.2f}" rx="{0.42*s:.2f}" ry="{1.15*s:.2f}" fill="#FFFFFF" stroke="#A06080" stroke-width="{0.3*s:.2f}"/>'
+        f'<ellipse cx="{0.55*s:.2f}" cy="{-1.05*s:.2f}" rx="{0.42*s:.2f}" ry="{1.15*s:.2f}" fill="#FFFFFF" stroke="#A06080" stroke-width="{0.3*s:.2f}"/>'
+        f'<ellipse cx="{-0.55*s:.2f}" cy="{-0.9*s:.2f}" rx="{0.2*s:.2f}" ry="{0.7*s:.2f}" fill="#FF8FB0"/>'
+        f'<ellipse cx="{0.55*s:.2f}" cy="{-0.9*s:.2f}" rx="{0.2*s:.2f}" ry="{0.7*s:.2f}" fill="#FF8FB0"/>'
+        f'</g></g>'
+        f'<circle cx="{1.4*s:.2f}" cy="{-0.5*s:.2f}" r="{1.35*s:.2f}" fill="#FFFFFF" stroke="#A06080" stroke-width="{0.4*s:.2f}"/>'
+        f'<circle cx="{1.95*s:.2f}" cy="{-0.75*s:.2f}" r="{0.24*s:.2f}" fill="#6B4438"/>'
+        f'<ellipse cx="{1.1*s:.2f}" cy="{0.05*s:.2f}" rx="{0.45*s:.2f}" ry="{0.3*s:.2f}" fill="#FF8FB0" opacity="0.75"/>'
+        f'</g></g>'
+    )
+
+
+def _bun_carrot(x, y, scale=1.0, delay="0s"):
+    """Tiny bobbing carrot companion (#FF9A5A body, #7BBF6A leaves), rest-pose-first."""
+    s = scale
+    bob = anim_translate("0 0; 0 -0.9; 0 0", "0.9s", delay)
+    return (
+        f'<g transform="translate({x} {y})">'
+        f'<g>{bob}'
+        f'<ellipse cx="{-0.6*s:.2f}" cy="{-1.9*s:.2f}" rx="{0.4*s:.2f}" ry="{0.9*s:.2f}" fill="#7BBF6A" transform="rotate(-28 {-0.6*s:.2f} {-1.9*s:.2f})"/>'
+        f'<ellipse cx="{0.6*s:.2f}" cy="{-1.9*s:.2f}" rx="{0.4*s:.2f}" ry="{0.9*s:.2f}" fill="#7BBF6A" transform="rotate(28 {0.6*s:.2f} {-1.9*s:.2f})"/>'
+        f'<path d="M {-1.25*s:.2f} {-1.0*s:.2f} Q 0 {-1.7*s:.2f} {1.25*s:.2f} {-1.0*s:.2f} L {0.15*s:.2f} {2.6*s:.2f} Q 0 {2.9*s:.2f} {-0.15*s:.2f} {2.6*s:.2f} Z" '
+        f'fill="#FF9A5A" stroke="#A06080" stroke-width="{0.35*s:.2f}" stroke-linejoin="round"/>'
+        f'<path d="M {-0.7*s:.2f} {0.1*s:.2f} L {0.5*s:.2f} {0.3*s:.2f} M {-0.45*s:.2f} {1.2*s:.2f} L {0.35*s:.2f} {1.35*s:.2f}" '
+        f'stroke="#E07840" stroke-width="{0.25*s:.2f}" stroke-linecap="round"/>'
+        f'</g></g>'
+    )
+
 
 def gen_honey_bunny():
     """Honey Bunny (꿀토끼) — bunny face + paw print, cream-pink palette."""
@@ -132,7 +197,11 @@ def gen_honey_bunny():
         '<circle cx="18.5" cy="14.5" r="0.9" fill="#6B4438"/>'
         '<path d="M 15 16.5 L 16 17.4 L 17 16.5 Z" fill="#FF6E96"/>'
     )
-    e_def = svg(bunny_face_ears)
+    e_def = svg(
+        bunny_face_ears
+        + _bun_bunny(27.5, 5.5, scale=0.7, delay="0s")
+        + _bun_carrot(4.5, 26.5, scale=0.75, delay="0.2s")
+    )
     e_ptr = svg(paw)
     e_wait = svg(f'<g>{BOB}{bunny_face_ears}</g>')
     txt = ibeam("#FF6E96")
@@ -141,12 +210,52 @@ def gen_honey_bunny():
         f'<path d="{ARROW}" fill="url(#bun_pt)" stroke="#A06080" stroke-width="0.7" stroke-linejoin="round"/>'
         f'<ellipse cx="6.5" cy="6" rx="0.6" ry="1.8" fill="#FFFFFF" opacity="0.7"/>'
         f'<circle cx="4.5" cy="23" r="2.3" fill="#FFFFFF" stroke="#A06080" stroke-width="0.4"/>'
-        f'<circle cx="3.7" cy="22.5" r="0.8" fill="#FFE0E8" opacity="0.85"/>',
+        f'<circle cx="3.7" cy="22.5" r="0.8" fill="#FFE0E8" opacity="0.85"/>'
+        + _bun_bunny(24, 10, scale=0.95, delay="0s")
+        + _bun_bunny(26.5, 20, scale=0.8, delay="0.2s")
+        + _bun_carrot(21.5, 27, scale=0.9, delay="0.35s"),
         bun_defs
     )
-    p_ptr = hand("#FFE5E5", "#A06080", accent="#FF8FB0")
+    p_ptr = hand("#FFE5E5", "#A06080", accent="#FF8FB0",
+                 extra=_bun_bunny(28, 7.5, scale=0.8, delay="0s")
+                       + _bun_carrot(3, 9, scale=0.8, delay="0.2s"))
     p_wait = svg(f'<g>{BOB}{bunny_face_no_ears}</g>')
     write_pack("honey-bunny", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
+
+
+def _dot_sparkle(x, y, scale=1.0, delay="0s"):
+    """Cyworld Dotti pixel-cross sparkle: twinkles AND scale-pops (rest-pose-first)."""
+    s = scale
+    return (
+        f'<g transform="translate({x} {y})"><g>'
+        + anim_opacity("1;0.5;1", "0.9s", delay)
+        + anim_scale("1 1; 1.3 1.3; 1 1", "0.9s", delay)
+        + f'<rect x="{-0.4*s:.2f}" y="{-2.2*s:.2f}" width="{0.8*s:.2f}" height="{4.4*s:.2f}" fill="#FFFFFF" stroke="#5A2A4A" stroke-width="{0.3*s:.2f}"/>'
+        + f'<rect x="{-2.2*s:.2f}" y="{-0.4*s:.2f}" width="{4.4*s:.2f}" height="{0.8*s:.2f}" fill="#FFFFFF" stroke="#5A2A4A" stroke-width="{0.3*s:.2f}"/>'
+        + '</g></g>'
+    )
+
+
+def _dot_heart(x, y, scale=1.0, delay="0s"):
+    """Cyworld Dotti mini chrome heart that beats (scale 1→1.15→1, rest-pose-first)."""
+    s = scale
+    i = 0.55 * s  # inner pink heart scale
+    outer = (f'M 0 {-1.2*s:.2f} C {-1.1*s:.2f} {-3*s:.2f}, {-3.2*s:.2f} {-2.4*s:.2f}, {-3.2*s:.2f} {-0.5*s:.2f} '
+             f'C {-3.2*s:.2f} {1.4*s:.2f}, 0 {3.4*s:.2f}, 0 {3.4*s:.2f} '
+             f'C 0 {3.4*s:.2f}, {3.2*s:.2f} {1.4*s:.2f}, {3.2*s:.2f} {-0.5*s:.2f} '
+             f'C {3.2*s:.2f} {-2.4*s:.2f}, {1.1*s:.2f} {-3*s:.2f}, 0 {-1.2*s:.2f} Z')
+    inner = (f'M 0 {0.3*s-1.2*i:.2f} C {-1.1*i:.2f} {0.3*s-3*i:.2f}, {-3.2*i:.2f} {0.3*s-2.4*i:.2f}, {-3.2*i:.2f} {0.3*s-0.5*i:.2f} '
+             f'C {-3.2*i:.2f} {0.3*s+1.4*i:.2f}, 0 {0.3*s+3.4*i:.2f}, 0 {0.3*s+3.4*i:.2f} '
+             f'C 0 {0.3*s+3.4*i:.2f}, {3.2*i:.2f} {0.3*s+1.4*i:.2f}, {3.2*i:.2f} {0.3*s-0.5*i:.2f} '
+             f'C {3.2*i:.2f} {0.3*s-2.4*i:.2f}, {1.1*i:.2f} {0.3*s-3*i:.2f}, 0 {0.3*s-1.2*i:.2f} Z')
+    return (
+        f'<g transform="translate({x} {y})"><g>'
+        + anim_scale("1 1; 1.15 1.15; 1 1", "0.7s", delay)
+        + f'<path d="{outer}" fill="url(#dot_chr)" stroke="#5A2A4A" stroke-width="{0.5*s:.2f}"/>'
+        + f'<path d="{inner}" fill="#FF5BAA"/>'
+        + f'<ellipse cx="{-1.2*s:.2f}" cy="{-0.9*s:.2f}" rx="{0.6*s:.2f}" ry="{0.8*s:.2f}" fill="#FFFFFF" opacity="0.7"/>'
+        + '</g></g>'
+    )
 
 
 def gen_cyworld_dotti():
@@ -178,24 +287,62 @@ def gen_cyworld_dotti():
     defs_e = (rad("dot_chr", [(0, "#FFFFFF"), (55, "#E8E2EC"), (100, "#7A4A6A")], cx=30, cy=30) +
               lin("dot_pk", [(0, "#FFA8C9"), (100, "#FF5BAA")]) +
               lin("dot_lpk", [(0, "#FFC8DD"), (100, "#FF3D8A")]))
-    e_def = svg(chrome_heart + sparkle_top, defs_e)
+    e_def = svg(chrome_heart + sparkle_top
+                + _dot_heart(4.2, 5, scale=0.7, delay="0s")
+                + _dot_sparkle(27.5, 27.5, scale=0.7, delay="0.2s"), defs_e)
     e_ptr = svg(pink_only_heart, defs_e)
     e_wait = svg(spinning_heart, defs_e)
     txt = ibeam("#FF5BAA")
-    p_defs = lin("dot_pt", [(0, "#FFD8EC"), (55, "#FF7DB8"), (100, "#C8408F")])
+    p_defs = (lin("dot_pt", [(0, "#FFD8EC"), (55, "#FF7DB8"), (100, "#C8408F")]) +
+              rad("dot_chr", [(0, "#FFFFFF"), (55, "#E8E2EC"), (100, "#7A4A6A")], cx=30, cy=30))
     p_def = svg(
         f'<path d="{ARROW}" fill="url(#dot_pt)" stroke="#5A2A4A" stroke-width="0.7" stroke-linejoin="round"/>'
         f'<ellipse cx="7.8" cy="7" rx="0.8" ry="2.2" fill="#FFFFFF" opacity="0.6"/>'
-        '<g transform="translate(20 4)">'
-        f'<animate attributeName="opacity" values="0.55;1;0.55" dur="1.7s" repeatCount="indefinite"/>'
-        '<rect x="1.4" y="0" width="0.8" height="3.2" fill="#FFFFFF"/>'
-        '<rect x="0" y="1.4" width="3.2" height="0.8" fill="#FFFFFF"/>'
-        '</g>',
+        + _dot_sparkle(22, 5, scale=1.0, delay="0s")
+        + _dot_sparkle(27, 13, scale=0.9, delay="0.15s")
+        + _dot_sparkle(21, 21, scale=0.85, delay="0.3s")
+        + _dot_heart(25.5, 26.5, scale=0.9, delay="0.1s"),
         p_defs
     )
-    p_ptr = hand_grad("dot_pt", p_defs, "#5A2A4A", accent="#FFFFFF")
+    p_ptr = hand_grad("dot_pt", p_defs, "#5A2A4A", accent="#FFFFFF",
+                      extra=_dot_sparkle(28, 7, scale=0.8, delay="0s")
+                            + _dot_heart(28, 23, scale=0.75, delay="0.2s"))
     p_wait = svg(spinning_heart, defs_e)
     write_pack("cyworld-dotti", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
+
+
+def _coq_pearl(x, y, scale=1.0, delay="0s"):
+    """Small drifting pearl (coq_prl gradient) that bobs gently. Rest pose first."""
+    s = scale
+    return (
+        f'<g transform="translate({x} {y})">'
+        f'<g>{anim_translate("0 0; 0.3 -1.4; 0 0", "0.9s", delay)}'
+        f'<circle cx="0" cy="0" r="{1.6*s:.2f}" fill="url(#coq_prl)" stroke="#A06080" stroke-width="{0.4*s:.2f}"/>'
+        f'<ellipse cx="{-0.5*s:.2f}" cy="{-0.5*s:.2f}" rx="{0.5*s:.2f}" ry="{0.7*s:.2f}" fill="#FFFFFF" opacity="0.7"/>'
+        '</g></g>'
+    )
+
+
+def _coq_mini_bow(x, y, scale=1.0, delay="0s"):
+    """Mini coquette bow — same geometry as the original static bow, tails
+    flutter ±8° around the knot (0, 0.4). Rest pose = the original static bow."""
+    tf = f'translate({x} {y})' + (f' scale({scale})' if scale != 1.0 else '')
+    left_tail = (
+        f'<g>{anim_rotate("0 0 0.4; -8 0 0.4; 0 0 0.4; 8 0 0.4; 0 0 0.4", "0.5s", delay)}'
+        '<path d="M -2.5 1 L -3.5 4.5" stroke="#FF8FB0" stroke-width="0.9" fill="none"/></g>'
+    )
+    right_tail = (
+        f'<g>{anim_rotate("0 0 0.4; 8 0 0.4; 0 0 0.4; -8 0 0.4; 0 0 0.4", "0.5s", delay)}'
+        '<path d="M 2.5 1 L 3.5 4.5" stroke="#FF8FB0" stroke-width="0.9" fill="none"/></g>'
+    )
+    return (
+        f'<g transform="{tf}">'
+        '<path d="M 0 0 L -3.5 -2 L -3.5 3 L 0 1 Z" fill="#FF8FB0"/>'
+        '<path d="M 0 0 L 3.5 -2 L 3.5 3 L 0 1 Z" fill="#FF8FB0"/>'
+        '<circle cx="0" cy="0.4" r="1.1" fill="#FF6E96"/>'
+        f'{left_tail}{right_tail}'
+        '</g>'
+    )
 
 
 def gen_coquette_ribbon():
@@ -225,7 +372,12 @@ def gen_coquette_ribbon():
         '</g>'
     )
     defs = rad("coq_prl", [(0, "#FFFFFF"), (55, "#FFE8F0"), (100, "#E8B8C8")], cx=30, cy=30)
-    e_def = svg(bow, defs)
+    e_def = svg(
+        bow
+        + _coq_pearl(26.5, 5.5, scale=0.9, delay="0s")
+        + _coq_mini_bow(5.5, 5.5, scale=0.7, delay="0.2s"),
+        defs
+    )
     e_ptr = svg(bow_with_pearl, defs)
     e_wait = svg(pearl_drop, defs)
     txt = ibeam("#FF6E96")
@@ -233,18 +385,59 @@ def gen_coquette_ribbon():
     p_def = svg(
         f'<path d="{ARROW}" fill="url(#coq_pt)" stroke="#A06080" stroke-width="0.7" stroke-linejoin="round"/>'
         '<ellipse cx="6.8" cy="6.5" rx="0.6" ry="1.8" fill="#FFFFFF" opacity="0.7"/>'
-        '<g transform="translate(5 22.5)">'
-        '<path d="M 0 0 L -3.5 -2 L -3.5 3 L 0 1 Z" fill="#FF8FB0"/>'
-        '<path d="M 0 0 L 3.5 -2 L 3.5 3 L 0 1 Z" fill="#FF8FB0"/>'
-        '<circle cx="0" cy="0.4" r="1.1" fill="#FF6E96"/>'
-        '<path d="M -2.5 1 L -3.5 4.5" stroke="#FF8FB0" stroke-width="0.9" fill="none"/>'
-        '<path d="M 2.5 1 L 3.5 4.5" stroke="#FF8FB0" stroke-width="0.9" fill="none"/>'
-        '</g>',
-        p_defs
+        + _coq_mini_bow(5, 22.5, scale=1.0, delay="0s")
+        + _coq_pearl(22, 9, scale=1.0, delay="0.15s")
+        + _coq_pearl(26, 18, scale=0.85, delay="0.3s"),
+        p_defs + defs
     )
-    p_ptr = hand_grad("coq_pt", p_defs, "#A06080")
+    p_ptr = hand_grad(
+        "coq_pt", p_defs + defs, "#A06080",
+        extra=_coq_pearl(28, 9, scale=0.8, delay="0s")
+        + _coq_mini_bow(28.5, 23, scale=0.62, delay="0.2s")
+    )
     p_wait = svg(pearl_drop, defs)
     write_pack("coquette-ribbon", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
+
+
+def _straw_berry(x, y, scale=1.0, delay="0s"):
+    """Mini strawberry companion — wiggle-swings ±10° about its stem (rest pose first)."""
+    s = scale
+    piv = f"0 {-2.2*s:.2f}"
+    rot = anim_rotate(f"0 {piv}; 10 {piv}; 0 {piv}; -10 {piv}; 0 {piv}", "0.55s", delay)
+    return (
+        f'<g transform="translate({x} {y})"><g>{rot}'
+        f'<path d="M 0 {-1.6*s:.2f} C {-2.4*s:.2f} {-1.6*s:.2f}, {-3*s:.2f} {0.4*s:.2f}, {-2.2*s:.2f} {1.8*s:.2f} '
+        f'C {-1.4*s:.2f} {3.1*s:.2f}, {-0.6*s:.2f} {3.5*s:.2f}, 0 {3.5*s:.2f} '
+        f'C {0.6*s:.2f} {3.5*s:.2f}, {1.4*s:.2f} {3.1*s:.2f}, {2.2*s:.2f} {1.8*s:.2f} '
+        f'C {3*s:.2f} {0.4*s:.2f}, {2.4*s:.2f} {-1.6*s:.2f}, 0 {-1.6*s:.2f} Z" '
+        f'fill="#FF6E96" stroke="#C84A6B" stroke-width="{0.4*s:.2f}"/>'
+        f'<path d="M {-1.3*s:.2f} {-1.9*s:.2f} L {-0.4*s:.2f} {-3*s:.2f} L {-0.1*s:.2f} {-1.9*s:.2f} Z '
+        f'M {1.3*s:.2f} {-1.9*s:.2f} L {0.4*s:.2f} {-3*s:.2f} L {0.1*s:.2f} {-1.9*s:.2f} Z" '
+        f'fill="#FFC4D8" stroke="#C84A6B" stroke-width="{0.25*s:.2f}"/>'
+        f'<ellipse cx="{-1*s:.2f}" cy="{0.2*s:.2f}" rx="{0.7*s:.2f}" ry="{1*s:.2f}" fill="#FFC4D8" opacity="0.7"/>'
+        f'<circle cx="{0.9*s:.2f}" cy="{0.6*s:.2f}" r="{0.32*s:.2f}" fill="#FFE68A"/>'
+        f'<circle cx="{-0.3*s:.2f}" cy="{1.9*s:.2f}" r="{0.32*s:.2f}" fill="#FFE68A"/>'
+        f'<circle cx="{1*s:.2f}" cy="{2*s:.2f}" r="{0.28*s:.2f}" fill="#FFE68A"/>'
+        '</g></g>'
+    )
+
+
+def _straw_drop(x, y, scale=1.0, delay="0s"):
+    """Milk droplet companion — drips downward while fading to 0, then resets.
+    Frame 0 = droplet at rest, fully visible (Firefox static frame is perfect)."""
+    s = scale
+    trans = anim_translate(f"0 0; 0 {1.8*s:.2f}; 0 {3.6*s:.2f}; 0 {5.4*s:.2f}", "1.1s", delay)
+    fade = anim_opacity("1;0.9;0.55;0", "1.1s", delay)
+    return (
+        f'<g transform="translate({x} {y})"><g>{trans}{fade}'
+        f'<path d="M 0 {-1.6*s:.2f} C {0.9*s:.2f} {-0.3*s:.2f}, {1.3*s:.2f} {0.5*s:.2f}, {1.3*s:.2f} {1*s:.2f} '
+        f'C {1.3*s:.2f} {1.9*s:.2f}, {0.7*s:.2f} {2.4*s:.2f}, 0 {2.4*s:.2f} '
+        f'C {-0.7*s:.2f} {2.4*s:.2f}, {-1.3*s:.2f} {1.9*s:.2f}, {-1.3*s:.2f} {1*s:.2f} '
+        f'C {-1.3*s:.2f} {0.5*s:.2f}, {-0.9*s:.2f} {-0.3*s:.2f}, 0 {-1.6*s:.2f} Z" '
+        f'fill="#FFFFFF" stroke="#C84A6B" stroke-width="{0.3*s:.2f}" opacity="0.95"/>'
+        f'<ellipse cx="{-0.4*s:.2f}" cy="{0.9*s:.2f}" rx="{0.35*s:.2f}" ry="{0.55*s:.2f}" fill="#FFC4D8" opacity="0.6"/>'
+        '</g></g>'
+    )
 
 
 def gen_strawberry_milk():
@@ -280,7 +473,12 @@ def gen_strawberry_milk():
     )
     defs = (lin("straw_g", [(0, "#FFC4D8"), (100, "#FF6E96")]) +
             lin("straw_l", [(0, "#FFD8E0"), (100, "#FF8FAA")]))
-    e_def = svg(straw, defs)
+    e_def = svg(
+        straw
+        + _straw_berry(28.3, 5, scale=0.7, delay="0s")
+        + _straw_drop(3.5, 4.5, scale=0.7, delay="0.35s"),
+        defs
+    )
     e_ptr = svg(straw_milk, defs)
     e_wait = svg(milk_swirl, defs)
     txt = ibeam("#C44A6B")
@@ -290,21 +488,49 @@ def gen_strawberry_milk():
         '<ellipse cx="9" cy="10" rx="0.4" ry="1" fill="#D4A044" transform="rotate(-20 9 10)"/>'
         '<ellipse cx="11" cy="14" rx="0.4" ry="1" fill="#D4A044" transform="rotate(15 11 14)"/>'
         '<ellipse cx="9" cy="17" rx="0.4" ry="1" fill="#D4A044" transform="rotate(-30 9 17)"/>'
-        '<ellipse cx="7.5" cy="6" rx="0.7" ry="2" fill="#FFFFFF" opacity="0.75"/>',
+        '<ellipse cx="7.5" cy="6" rx="0.7" ry="2" fill="#FFFFFF" opacity="0.75"/>'
+        + _straw_berry(23, 9, scale=1.0, delay="0s")
+        + _straw_berry(26.5, 20, scale=0.85, delay="0.18s")
+        + _straw_drop(21, 24.5, scale=0.9, delay="0.35s"),
         p_defs
     )
-    p_ptr = hand_grad("straw_pt", p_defs, "#C84A6B")
+    p_ptr = hand_grad("straw_pt", p_defs, "#C84A6B",
+                      extra=_straw_berry(28.5, 9, scale=0.8, delay="0s")
+                            + _straw_drop(28.5, 19, scale=0.8, delay="0.2s"))
     p_wait = svg(milk_swirl, defs)
     write_pack("strawberry-milk", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
 
 
+def _prl_pearl(x, y, scale=1.0, delay="0s", gid="prl_d"):
+    """Mini iridescent pearl companion — staggered scale-pulse + shimmering
+    highlight (rest pose first: full size, bright highlight). Reads as a
+    rolling/glowing pearl. Butterfly nesting pattern: outer translate, inner
+    animated group pulsing about the pearl's local center."""
+    s = scale
+    pulse = anim_scale("1 1; 1.15 1.15; 1 1", "0.9s", delay)
+    shimmer = anim_opacity("0.85;0.45;0.85", "0.9s", delay)
+    return (
+        f'<g transform="translate({x} {y})">'
+        f'<g>{pulse}'
+        f'<circle cx="0" cy="0" r="{2.2*s:.2f}" fill="url(#{gid})" stroke="#7A6A8E" stroke-width="{0.4*s:.2f}"/>'
+        f'<ellipse cx="{-0.75*s:.2f}" cy="{-0.75*s:.2f}" rx="{0.65*s:.2f}" ry="{0.95*s:.2f}" '
+        f'fill="#FFFFFF" opacity="0.85">{shimmer}</ellipse>'
+        f'<circle cx="{0.9*s:.2f}" cy="{0.9*s:.2f}" r="{0.35*s:.2f}" fill="#FFFFFF" opacity="0.55"/>'
+        '</g></g>'
+    )
+
+
 def gen_glossy_pearl():
-    """Glossy Lip Pearl — iridescent pearl bead with prism shimmer."""
+    """Glossy Lip Pearl — iridescent pearl bead with prism shimmer.
+    Alive update: 3 staggered mini pearls (scale-pulse + shimmer) orbit the
+    arrow; hand + emoji default get corner companions. Rest pose = frame 0."""
     pearl = (
         '<circle cx="16" cy="16" r="10" fill="url(#prl_d)" stroke="#7A6A8E" stroke-width="0.7"/>'
         '<ellipse cx="12" cy="12" rx="3" ry="4.5" fill="#FFFFFF" opacity="0.85"/>'
         '<circle cx="20" cy="20" r="1.4" fill="#FFFFFF" opacity="0.7"/>'
         f'<circle cx="22" cy="14" r="0.7" fill="#FFFFFF">{SHIMMER}</circle>'
+        + _prl_pearl(27.5, 5, scale=0.7, delay="0s")
+        + _prl_pearl(4.5, 27, scale=0.7, delay="0.2s")
     )
     pearl_big = (
         '<circle cx="16" cy="16" r="11" fill="url(#prl_l)" stroke="#7A6A8E" stroke-width="0.7"/>'
@@ -320,7 +546,8 @@ def gen_glossy_pearl():
         '<circle cx="20" cy="19" r="1" fill="#FFFFFF"/>'
         '</g>'
     )
-    defs = (rad("prl_d", [(0, "#FFFFFF"), (35, "#FFE8F4"), (70, "#D5B8E8"), (100, "#9888B5")], cx=35, cy=30) +
+    prl_rad = rad("prl_d", [(0, "#FFFFFF"), (35, "#FFE8F4"), (70, "#D5B8E8"), (100, "#9888B5")], cx=35, cy=30)
+    defs = (prl_rad +
             rad("prl_l", [(0, "#FFFFFF"), (40, "#FFD8F0"), (100, "#A89BC5")], cx=35, cy=30) +
             lin("prl_w", [(0, "#FFD8F0"), (33, "#D5B8E8"), (66, "#B8D5E8"), (100, "#FFE0E8")], x1=0, y1=0, x2=100, y2=100))
     e_def = svg(pearl, defs)
@@ -331,12 +558,35 @@ def gen_glossy_pearl():
     p_def = svg(
         f'<path d="{ARROW}" fill="url(#prl_pt)" stroke="#7A6A8E" stroke-width="0.6" stroke-linejoin="round"/>'
         '<ellipse cx="8" cy="6" rx="1.1" ry="2.6" fill="#FFFFFF" opacity="0.85"/>'
-        f'<circle cx="13" cy="20" r="0.6" fill="#FFFFFF">{SHIMMER}</circle>',
-        p_defs
+        f'<circle cx="13" cy="20" r="0.6" fill="#FFFFFF">{SHIMMER}</circle>'
+        + _prl_pearl(22.5, 7, scale=1.0, delay="0s")
+        + _prl_pearl(26.5, 15.5, scale=0.9, delay="0.2s")
+        + _prl_pearl(22.5, 24.5, scale=0.8, delay="0.4s"),
+        p_defs + prl_rad
     )
-    p_ptr = hand_grad("prl_pt", p_defs, "#7A6A8E")
+    p_ptr = hand_grad(
+        "prl_pt", p_defs + prl_rad, "#7A6A8E",
+        extra=_prl_pearl(28.5, 9, scale=0.8, delay="0s")
+              + _prl_pearl(3, 22, scale=0.7, delay="0.2s")
+    )
     p_wait = svg(prism_spin, defs)
     write_pack("glossy-pearl", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
+
+
+def _bob_pearl(x, y, scale=1.0, delay="0s", rise=6.0, dur="1.1s"):
+    """Bubble Boba companion: dark boba pearl that rises like a bubble and
+    fades out near the top. Rest pose (frame 0) = bottom, fully opaque, so
+    Firefox's frozen static frame shows a perfect resting pearl column."""
+    s = scale
+    return (
+        f'<g transform="translate({x} {y})">'
+        '<g>'
+        + anim_translate(f"0 0; 0 {-0.35 * rise:.1f}; 0 {-0.7 * rise:.1f}; 0 {-rise:.1f}", dur, delay)
+        + anim_opacity("1; 1; 0.75; 0", dur, delay)
+        + f'<circle cx="0" cy="0" r="{1.5 * s:.2f}" fill="#3A2A3A"/>'
+        + f'<circle cx="{-0.5 * s:.2f}" cy="{-0.55 * s:.2f}" r="{0.45 * s:.2f}" fill="#FFFFFF" opacity="0.6"/>'
+        + '</g></g>'
+    )
 
 
 def gen_bubble_boba():
@@ -367,7 +617,12 @@ def gen_bubble_boba():
     )
     defs = (lin("bob_d", [(0, "#FFD8E5"), (100, "#C4A8E0")]) +
             lin("bob_cup", [(0, "#FFE8F5"), (100, "#C4A8E0")]))
-    e_def = svg(droplet, defs)
+    e_def = svg(
+        droplet
+        + _bob_pearl(3, 27, scale=0.7, delay="0s", rise=5.0)
+        + _bob_pearl(29, 27, scale=0.7, delay="0.2s", rise=5.0),
+        defs
+    )
     e_ptr = svg(cluster)
     e_wait = svg(boba_cup, defs)
     txt = ibeam("#7A5A8A")
@@ -376,12 +631,61 @@ def gen_bubble_boba():
         f'<path d="{ARROW}" fill="url(#bob_pt)" stroke="#7A5A8A" stroke-width="0.7" stroke-linejoin="round"/>'
         '<circle cx="9" cy="11" r="1.3" fill="#3A2A3A"/>'
         '<circle cx="11" cy="15" r="1.1" fill="#3A2A3A"/>'
-        '<ellipse cx="7.5" cy="6" rx="0.7" ry="2" fill="#FFFFFF" opacity="0.85"/>',
+        '<ellipse cx="7.5" cy="6" rx="0.7" ry="2" fill="#FFFFFF" opacity="0.85"/>'
+        + _bob_pearl(23, 27, scale=1.0, delay="0s", rise=6.0)
+        + _bob_pearl(25.5, 20, scale=0.9, delay="0.2s", rise=6.0)
+        + _bob_pearl(22.5, 13, scale=0.85, delay="0.4s", rise=6.0),
         p_defs
     )
-    p_ptr = hand_grad("bob_pt", p_defs, "#7A5A8A")
+    p_ptr = hand_grad(
+        "bob_pt", p_defs, "#7A5A8A",
+        extra=_bob_pearl(28, 26, scale=0.85, delay="0s", rise=5.0)
+        + _bob_pearl(29.5, 15, scale=0.7, delay="0.2s", rise=5.0)
+    )
     p_wait = svg(boba_cup, defs)
     write_pack("bubble-boba", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
+
+
+def _chm_charm(x, y, scale=1.0, delay="0s"):
+    """Dangling jelly star phone charm — chain line + link + star, swinging
+    like a pendulum (rotate ±12° about the chain anchor at local 0,0).
+    Rest pose (0°) is the first AND last keyframe (Firefox static-safe)."""
+    s = scale
+    # 5-point star outline, unit shape centered at local (0, 6.6) — hangs below the link
+    pts = [(0.0, -3.2), (0.79, -1.09), (3.04, -0.99), (1.28, 0.42), (1.88, 2.59),
+           (0.0, 1.35), (-1.88, 2.59), (-1.28, 0.42), (-3.04, -0.99), (-0.79, -1.09)]
+    cy = 6.6
+    d_out = "M " + " L ".join(f"{px*s:.2f} {(py+cy)*s:.2f}" for px, py in pts) + " Z"
+    d_in = "M " + " L ".join(f"{px*0.52*s:.2f} {(py*0.52+cy)*s:.2f}" for px, py in pts) + " Z"
+    swing = anim_rotate("0 0 0; 12 0 0; 0 0 0; -12 0 0; 0 0 0", "1.1s", delay)
+    return (
+        f'<g transform="translate({x} {y})">'
+        f'<g>{swing}'
+        f'<line x1="0" y1="0" x2="0" y2="{1.9*s:.2f}" stroke="#C8CCD2" stroke-width="{0.7*s:.2f}"/>'
+        f'<circle cx="0" cy="{2.6*s:.2f}" r="{0.8*s:.2f}" fill="none" stroke="#C8CCD2" stroke-width="{0.6*s:.2f}"/>'
+        f'<path d="{d_out}" fill="#FFB8D9" stroke="#A8408A" stroke-width="{0.55*s:.2f}"/>'
+        f'<path d="{d_in}" fill="#FF3D8A" opacity="0.8"/>'
+        f'<ellipse cx="{-1.1*s:.2f}" cy="{5.4*s:.2f}" rx="{0.75*s:.2f}" ry="{1.05*s:.2f}" fill="#FFFFFF" opacity="0.65"/>'
+        '</g></g>'
+    )
+
+
+def _chm_sparkle(x, y, scale=1.0, delay="0s"):
+    """Four-point jelly sparkle with a twinkle-pop (scale 1→1.3→1 + opacity
+    0.65→1→0.65). Rest pose is first and last keyframe on both channels."""
+    s = scale
+    pop = anim_scale("1 1; 1.3 1.3; 1 1", "0.8s", delay)
+    tw = anim_opacity("0.65;1;0.65", "0.8s", delay)
+    return (
+        f'<g transform="translate({x} {y})">'
+        f'<g>{pop}{tw}'
+        f'<path d="M 0 {-2.3*s:.2f} L {0.55*s:.2f} {-0.55*s:.2f} L {2.3*s:.2f} 0 '
+        f'L {0.55*s:.2f} {0.55*s:.2f} L 0 {2.3*s:.2f} L {-0.55*s:.2f} {0.55*s:.2f} '
+        f'L {-2.3*s:.2f} 0 L {-0.55*s:.2f} {-0.55*s:.2f} Z" '
+        f'fill="#FFB8D9" stroke="#A8408A" stroke-width="{0.4*s:.2f}"/>'
+        f'<circle cx="0" cy="0" r="{0.6*s:.2f}" fill="#FF3D8A"/>'
+        '</g></g>'
+    )
 
 
 def gen_phone_charm():
@@ -414,7 +718,12 @@ def gen_phone_charm():
         '</g>'
     )
     defs = lin("chm_d", [(0, "#FFC8DD"), (100, "#FF8AB8")])
-    e_def = svg(star_jelly, defs)
+    e_def = svg(
+        star_jelly
+        + _chm_charm(28, 2, scale=0.6, delay="0s")
+        + _chm_sparkle(4, 27, scale=0.7, delay="0.2s"),
+        defs
+    )
     e_ptr = svg(star_chain, defs)
     e_wait = svg(star_spin)
     txt = ibeam("#FF3D8A")
@@ -424,16 +733,61 @@ def gen_phone_charm():
         '<g transform="translate(10 13)">'
         '<path d="M 0 -2.4 L 0.7 -0.7 L 2.5 -0.7 L 1 0.5 L 1.6 2.4 L 0 1.2 L -1.6 2.4 L -1 0.5 L -2.5 -0.7 L -0.7 -0.7 Z" fill="#FF3D8A"/>'
         '</g>'
-        '<ellipse cx="7.5" cy="6" rx="0.7" ry="2" fill="#FFFFFF" opacity="0.85"/>',
+        '<ellipse cx="7.5" cy="6" rx="0.7" ry="2" fill="#FFFFFF" opacity="0.85"/>'
+        + _chm_charm(24.5, 5, scale=1.0, delay="0s")
+        + _chm_sparkle(21.5, 21, scale=0.9, delay="0.2s")
+        + _chm_sparkle(26.8, 27, scale=0.75, delay="0.4s"),
         p_defs
     )
-    p_ptr = hand_grad("chm_pt", p_defs, "#A8408A")
+    p_ptr = hand_grad(
+        "chm_pt", p_defs, "#A8408A",
+        extra=_chm_charm(28, 3, scale=0.75, delay="0s")
+        + _chm_sparkle(3, 22, scale=0.7, delay="0.25s")
+    )
     p_wait = svg(star_spin)
     write_pack("phone-charm", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
 
 
+def _loc_heart_path(s):
+    """Heart Locket companion heart outline (~4x4.3 units at s=1), local origin at lobes."""
+    return (f'M 0 {0.6*s:.2f} C {-0.6*s:.2f} {-0.9*s:.2f}, {-2*s:.2f} {-0.7*s:.2f}, {-2*s:.2f} {0.8*s:.2f} '
+            f'C {-2*s:.2f} {2.1*s:.2f}, 0 {3.4*s:.2f}, 0 {3.4*s:.2f} '
+            f'C 0 {3.4*s:.2f}, {2*s:.2f} {2.1*s:.2f}, {2*s:.2f} {0.8*s:.2f} '
+            f'C {2*s:.2f} {-0.7*s:.2f}, {0.6*s:.2f} {-0.9*s:.2f}, 0 {0.6*s:.2f} Z')
+
+
+def _loc_mini_heart(x, y, scale=1.0, delay="0s"):
+    """Heart Locket companion: mini heart that floats upward and fades (love-note trail).
+    Rest pose first (frame 0 = heart at origin, fully opaque) so Firefox's frozen frame
+    is perfect; opacity fades smoothly to 0, and the translate loop-closes back to rest
+    while the heart is invisible, so the reset never pops."""
+    s = scale
+    return (
+        f'<g transform="translate({x} {y})"><g>'
+        + anim_translate("0 0; 0 -1.4; 0 -2.8; 0 -4; 0 0", "1.1s", delay)
+        + anim_opacity("1; 0.85; 0.5; 0; 0", "1.1s", delay)
+        + f'<path d="{_loc_heart_path(s)}" fill="#FF8FA8" stroke="#A04A6E" stroke-width="{0.4*s:.2f}"/>'
+        + f'<circle cx="{-0.8*s:.2f}" cy="{0.5*s:.2f}" r="{0.45*s:.2f}" fill="#FFFFFF" opacity="0.75"/>'
+        + '</g></g>'
+    )
+
+
+def _loc_beat_heart(x, y, scale=1.0, delay="0s"):
+    """Heart Locket companion: mini heart with a gentle two-thump beat (scale pulse)."""
+    s = scale
+    return (
+        f'<g transform="translate({x} {y})"><g>'
+        + anim_scale("1 1; 1.2 1.2; 1 1; 1.12 1.12; 1 1", "0.9s", delay)
+        + f'<path d="{_loc_heart_path(s)}" fill="#FF6E96" stroke="#A04A6E" stroke-width="{0.4*s:.2f}"/>'
+        + f'<circle cx="{-0.8*s:.2f}" cy="{0.5*s:.2f}" r="{0.45*s:.2f}" fill="#FFFFFF" opacity="0.75"/>'
+        + '</g></g>'
+    )
+
+
 def gen_heart_locket():
-    """Heart Locket (하트 로켓) — silver+pink heart locket with chain ring."""
+    """Heart Locket (하트 로켓) — silver+pink heart locket with chain ring.
+    Alive update: the arrow's heart charm beats (scale pulse) and 2 mini hearts float
+    upward and fade in a staggered love-note trail; hand + emoji get companions too."""
     locket = (
         '<line x1="16" y1="3" x2="16" y2="8" stroke="#A04A6E" stroke-width="0.7"/>'
         '<circle cx="16" cy="7" r="1.5" fill="none" stroke="#A04A6E" stroke-width="0.7"/>'
@@ -463,21 +817,37 @@ def gen_heart_locket():
     defs = (lin("loc_d", [(0, "#FFD8E5"), (100, "#FF6E96")]) +
             lin("loc_l", [(0, "#FFE5EC"), (100, "#FF8FA8")]) +
             lin("loc_fix", [(0, "#FFE8F0"), (50, "#E8C8D8"), (100, "#A88498")]))
-    e_def = svg(locket, defs)
+    # Emoji default: locket + 2 floating mini hearts tucked in the free corners.
+    e_def = svg(
+        locket
+        + _loc_mini_heart(27.5, 5.5, scale=0.7, delay="0s")
+        + _loc_mini_heart(4, 26.5, scale=0.7, delay="0.35s"),
+        defs
+    )
     e_ptr = svg(locket_sparkle, defs)
     e_wait = svg(locket_wait_fixed, defs)
     txt = ibeam("#E84A85")
     p_defs = lin("loc_pt", [(0, "#FFD8E5"), (100, "#FF8FA8")])
     rad_shine = rad("loc_shine", [(0, "#FFFFFF"), (100, "#E0CCD8")])
+    # Pointer default: charm heart now beats (nested scale, rest-pose-first),
+    # plus 2 staggered mini hearts rising in the free zone right of the arrow.
     p_def = svg(
         '<path d="M 8 8 L 8 24 L 11.5 20.5 L 14 26 L 16.5 25 L 14 19.5 L 19 19.5 Z" fill="url(#loc_pt)" stroke="#A04A6E" stroke-width="0.7" stroke-linejoin="round"/>'
-        '<g transform="translate(7 5)">'
-        '<path d="M 0 1 C -1 -1.5, -3.2 -1.2, -3.2 1.2 C -3.2 3.2, 0 5.5, 0 5.5 C 0 5.5, 3.2 3.2, 3.2 1.2 C 3.2 -1.2, 1 -1.5, 0 1 Z" fill="url(#loc_shine)" stroke="#A04A6E" stroke-width="0.5"/>'
+        '<g transform="translate(7 5)"><g>'
+        + anim_scale("1 1; 1.2 1.2; 1 1; 1.12 1.12; 1 1", "0.9s")
+        + '<path d="M 0 1 C -1 -1.5, -3.2 -1.2, -3.2 1.2 C -3.2 3.2, 0 5.5, 0 5.5 C 0 5.5, 3.2 3.2, 3.2 1.2 C 3.2 -1.2, 1 -1.5, 0 1 Z" fill="url(#loc_shine)" stroke="#A04A6E" stroke-width="0.5"/>'
         '<circle cx="0" cy="2" r="0.7" fill="#FF8FA8"/>'
-        '</g>',
+        '</g></g>'
+        + _loc_mini_heart(23, 22, scale=0.85, delay="0.15s")
+        + _loc_mini_heart(26.5, 13, scale=0.7, delay="0.35s"),
         p_defs + rad_shine
     )
-    p_ptr = hand_grad("loc_pt", p_defs, "#A04A6E")
+    # Hand: beating heart in the free right column + rising mini heart on the left.
+    p_ptr = hand_grad(
+        "loc_pt", p_defs, "#A04A6E",
+        extra=_loc_beat_heart(28, 9, scale=0.8, delay="0s")
+        + _loc_mini_heart(3, 20, scale=0.7, delay="0.2s")
+    )
     p_wait = svg(locket_wait_fixed, defs)
     write_pack("heart-locket", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
 
@@ -545,10 +915,13 @@ def gen_cyber_butterfly():
         + _butterfly(25, 22, scale=0.85, delay="0.2s"),
         p_defs
     )
-    p_ptr = hand_grad("bfly_pt", p_defs, "#A04A6E")
+    p_ptr = hand_grad(
+        "bfly_pt", p_defs, "#A04A6E",
+        extra=_butterfly(27.5, 7, scale=0.8, delay="0s")
+        + _butterfly(28, 20, scale=0.7, delay="0.2s"),
+    )
     p_wait = svg(butterfly_orbit)
     write_pack("cyber-butterfly", e_def, e_ptr, txt, e_wait, p_def, p_ptr, txt, p_wait)
-
 
 # ── Run ────────────────────────────────────────────────────────────────────────
 
