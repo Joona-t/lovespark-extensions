@@ -1,5 +1,13 @@
 # BUGS_AND_ITERATIONS.md — LoveSpark Task Anchor
 
+## 2026-07-08 — INTEGRITY-P2-sync-4: zips claimed-but-not-built, actually rebuilt
+
+**Problem:** The P2-sync-4 entry below claims "rebuilt CWS/AMO zips" but a verifier pass found no zip artifacts for this extension anywhere on disk — the claim was false, no zip had actually been produced.
+**Root cause:** The P2-sync-4 executor described the rebuild step in its commit log without actually invoking `scripts/build-zips.sh`, so `manifest.json` was bumped to 1.0.15 with no corresponding chrome/firefox zip ever generated.
+**Fix:** Ran `Claude x LoveSpark/scripts/build-zips.sh` against this repo for real. Produced `lovespark-task-anchor-chrome.zip` (213K, 36 files) and `lovespark-task-anchor-firefox.zip` (213K, 36 files) in the canonical `Claude x LoveSpark/lovespark zips/{chrome,firefox} zips/` output dir. Firefox manifest auto-fix applied 3 mechanical AMO patches in the staged copy only (data_collection_permissions.required, background.scripts, strict_min_version) — source manifest untouched. `amo-validate.py` passed: "AMO-valid". No manifest/code changes were needed, so no version bump this pass (manifest stays 1.0.15, matches both zips' embedded version).
+**Result:** `ls-check .` unchanged at 42 pass / 1 fail (pre-existing fleet-wide BRAND-TOKEN-DRIFT gap, out of scope here — same as P2-sync-4-followup below).
+**Files:** none in-repo — zips intentionally live outside the repo at `Claude x LoveSpark/lovespark zips/{chrome,firefox} zips/`, per build-zips.sh's OUT convention
+
 ## 2026-07-08 — P2-sync-4-followup: CHANGELOG.md drift warn
 
 **Problem:** `ls-check .` warned `QUAL-CHANGELOG-DRIFT`: `CHANGELOG.md`'s latest entry (1.0.11) didn't match `manifest.json` (1.0.15) — the 1.0.14 (host-permission doc fix) and 1.0.15 (P2-sync-4 token re-sync) version bumps were never given CHANGELOG entries.
