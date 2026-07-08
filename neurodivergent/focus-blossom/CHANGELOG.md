@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.48] — 2026-07-08 — Fleet token re-sync (P2-sync-3)
+
+### Fixed
+- Version bump only — shared-lib tokens were already synced to canonical (KI-002/003/004 contrast fix) in a prior commit; this entry closes the QUAL-CHANGELOG-DRIFT gap and rebuilds the store zips against the current version.
+
 ## [1.0.33] — 2026-04-19 — Ship Day
 
 ### Fixed (blockers before Chrome Web Store submission)
