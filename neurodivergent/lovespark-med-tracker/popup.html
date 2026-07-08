@@ -4,25 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Med Tracker</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
 
     <!-- Header -->
     <header class="popup-header">
       <div class="header-left">
         <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="header-mascot">
         <div class="header-title-block">
-          <span class="header-title">Med Tracker</span>
-          <span class="header-sub">LoveSpark</span>
+          <span class="header-title" id="popupTitle">Med Tracker</span>
+          <span class="header-sub" id="popupDesc">LoveSpark</span>
         </div>
       </div>
       <div class="header-actions">
         <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -115,6 +116,7 @@
     <!-- Footer -->
   </div>
 
+  <script src="lib/lovespark-theme.js"></script>
   <script type="module" src="popup.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 </body>

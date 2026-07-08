@@ -17,7 +17,7 @@
         <span class="settings-sub">Settings</span>
       </div>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -106,13 +106,13 @@
     <section class="card">
       <h2 class="card-title">📦 Data</h2>
       <div class="btn-row">
-        <button class="btn-secondary" id="exportBtn">📥 Export JSON</button>
-        <button class="btn-secondary" id="importBtn">📂 Import JSON</button>
+        <button class="btn-secondary" id="exportBtn" aria-label="Export data as JSON">📥 Export JSON</button>
+        <button class="btn-secondary" id="importBtn" aria-label="Import data from JSON">📂 Import JSON</button>
       </div>
       <input type="file" id="importFile" accept=".json" style="display:none">
       <div class="btn-row" style="margin-top:8px">
-        <button class="btn-secondary" id="reportBtn">🩺 Doctor Report</button>
-        <button class="btn-danger" id="clearBtn">🗑️ Clear All Data</button>
+        <button class="btn-secondary" id="reportBtn" aria-label="Generate doctor report">🩺 Doctor Report</button>
+        <button class="btn-danger" id="clearBtn" aria-label="Clear all data">🗑️ Clear All Data</button>
       </div>
     </section>
 

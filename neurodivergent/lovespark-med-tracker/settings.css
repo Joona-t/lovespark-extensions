@@ -187,7 +187,7 @@ body {
   transition: background 0.2s;
 }
 .toggle-wrap input:checked + .toggle-track {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
@@ -262,7 +262,7 @@ body {
   transition: all 0.2s;
 }
 .slot-check.selected {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border-color: var(--ls-pink-accent);
 }
@@ -290,7 +290,7 @@ body {
 
 /* Buttons */
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -481,4 +481,15 @@ body {
 .theme-option.active {
   color: var(--ls-pink-accent);
   background: var(--ls-glass-light);
+}
+
+/* ── Focus indicators (accessibility) ──────────────── */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+.toggle-wrap input:focus-visible + .toggle-track {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
 }

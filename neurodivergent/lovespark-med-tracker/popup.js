@@ -13,13 +13,21 @@ let calYear, calMonth;
 
 // ── Init ─────────────────────────────────────────────────
 
+function updateBadge() {
+  try {
+    chrome.runtime.sendMessage({ type: 'UPDATE_BADGE' });
+  } catch (err) {
+    console.warn('[LoveSpark Med Tracker] sendMessage error:', err.message);
+  }
+}
+
 async function init() {
   // Apply theme before render
   settings = await getSettings();
   const themeData = await new Promise(r => chrome.storage.local.get(['theme'], r));
   let theme = themeData.theme;
   if (!theme && settings.darkMode) theme = 'dark';
-  applyTheme(theme || 'retro');
+  LoveSparkTheme.apply(theme || 'retro');
 
   if (!settings.onboardingComplete) {
     document.getElementById('emptyState').style.display = '';
@@ -66,36 +74,35 @@ async function init() {
   });
 }
 
-// Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
-function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
-}
+// Theme dropdown — uses shared LoveSparkTheme.apply() (lib/lovespark-theme.js).
+// Custom init (not LoveSparkTheme.init()) preserves the legacy darkMode-boolean
+// fallback that predates the theme migration (BUG-CWS-A11Y-1).
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
-      applyTheme(theme);
+      LoveSparkTheme.apply(theme);
       chrome.storage.local.set({ theme });
       menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
-    applyTheme(theme || 'retro');
+    LoveSparkTheme.apply(theme || 'retro');
   });
 })();
 
@@ -317,7 +324,7 @@ async function handleDoseLog(medId, slotId) {
   renderTimeline();
 
   // Update badge
-  chrome.runtime.sendMessage({ type: 'UPDATE_BADGE' });
+  updateBadge();
 
   // Show undo toast
   showUndoToast(dose.id);
@@ -355,7 +362,7 @@ document.getElementById('undoBtn').addEventListener('click', async () => {
   allDoses = await getDoses();
   todayDoses = allDoses.filter(d => d.date === todayStr());
   renderTodayView();
-  chrome.runtime.sendMessage({ type: 'UPDATE_BADGE' });
+  updateBadge();
 });
 
 // ── Progress Ring ────────────────────────────────────────
@@ -461,7 +468,7 @@ async function backfillYesterday(promptEl) {
 
   promptEl.style.display = 'none';
   allDoses = await getDoses();
-  chrome.runtime.sendMessage({ type: 'UPDATE_BADGE' });
+  updateBadge();
 }
 
 // ── Calendar ─────────────────────────────────────────────

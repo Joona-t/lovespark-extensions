@@ -396,7 +396,7 @@ body {
 
 .med-card.taken {
   background: var(--ls-glass-light);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .med-emoji { font-size: 22px; flex-shrink: 0; }
@@ -427,7 +427,7 @@ body {
 .med-supply.low { color: var(--ls-pink-accent); font-weight: 500; }
 
 .take-btn {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -550,7 +550,7 @@ body {
   margin-top: 2px;
 }
 .cal-dot.full { background: var(--ls-teal); }
-.cal-dot.partial { background: var(--ls-pink-accent); }
+.cal-dot.partial { background: var(--ls-pink-deep); }
 .cal-dot.none { background: var(--ls-glass-light); border: 1px solid var(--ls-glass-border); }
 
 .day-detail {
@@ -611,12 +611,12 @@ body {
   cursor: pointer;
   transition: all 0.2s;
 }
-.undo-btn:hover { background: var(--ls-pink-accent); color: white; }
+.undo-btn:hover { background: var(--ls-pink-deep); color: white; }
 
 /* ── Buttons ──────────────────────────────────────────── */
 
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
