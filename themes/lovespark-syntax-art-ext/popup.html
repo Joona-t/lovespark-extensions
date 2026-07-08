@@ -4,18 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Syntax Art</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
-  <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
 </head>
-<body>
+<body role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+  <span id="popupDesc" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">LoveSpark Syntax Art settings — pick a code theme, width, and font size for image-to-code-art conversion.</span>
   <div class="popup-container">
     <!-- Header -->
     <header class="popup-header">
       <span class="header-icon">🌸</span>
-      <span class="header-title">Syntax Art</span>
+      <span class="header-title" id="popupTitle">Syntax Art</span>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -85,6 +87,7 @@
   </div>
 
   <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>
