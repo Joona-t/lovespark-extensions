@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.32] - 2026-07-08
+
+### Fixed
+- Re-synced `lib/lovespark-tokens.css` to canonical shared-lib after the fleet-wide contrast fix (ITER-P2-SYNC-1)
+- Rebuilt chrome/firefox store zips via `build-zips.sh` (AMO validator clean)
+- Replaced README.md stub with full listing mirroring CWS-LISTING.md
+
 ## [1.0.0] - 2026-03-22
 
 ### Added
