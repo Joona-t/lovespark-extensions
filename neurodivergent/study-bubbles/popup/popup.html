@@ -10,18 +10,18 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
 
     <header class="popup-header">
       <div class="header-left">
         <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="36" height="36">
         <div class="header-text">
-          <h1 class="header-title">Study Bubbles</h1>
-          <span class="subtitle">by LoveSpark</span>
+          <h1 class="header-title" id="popupTitle">Study Bubbles</h1>
+          <span class="subtitle" id="popupDesc">by LoveSpark</span>
         </div>
       </div>
       <div class="theme-dropdown" id="themeDropdown">
-        <button class="theme-dropdown-trigger" id="themeToggle">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
           <span id="themeLabel">Retro Pink</span> &#x25BE;
         </button>
         <div class="theme-dropdown-menu" id="themeMenu">

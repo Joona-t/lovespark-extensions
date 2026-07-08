@@ -1,6 +1,18 @@
 'use strict';
 
 LoveSparkTheme.init();
+(function syncThemeExpandedState() {
+  // Keep the trigger's aria-expanded in sync with the menu's open/closed
+  // state for screen readers (A11Y-EXPANDED).
+  var toggle = document.getElementById('themeToggle');
+  var menu = document.getElementById('themeMenu');
+  if (!toggle || !menu) return;
+  var sync = function () {
+    toggle.setAttribute('aria-expanded', menu.classList.contains('open') ? 'true' : 'false');
+  };
+  toggle.addEventListener('click', function () { setTimeout(sync, 0); });
+  document.addEventListener('click', function () { setTimeout(sync, 0); });
+})();
 
 var CUTE_MSGS = [
   'Your knowledge base grows with you.',

@@ -86,7 +86,7 @@ body {
   transition: background 0.2s ease;
 }
 .toggle-wrap input:checked + .toggle-track {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
@@ -157,7 +157,7 @@ body {
 }
 
 .tab-btn.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   box-shadow: var(--ls-glow);
 }
@@ -196,7 +196,7 @@ body {
 .study-source {
   font-size: 10px;
   color: var(--ls-text-muted);
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .study-actions {
@@ -250,7 +250,7 @@ body {
 }
 
 .btn-rate-good {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
 }
 
@@ -360,7 +360,7 @@ body {
 }
 
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
