@@ -51,3 +51,49 @@ been dark since the repo extraction.
 **Prevention:** `ls-check`'s own test suite should grow a fixture asserting `find_shared_lib()`
 resolves correctly from an arbitrarily nested repo layout (not just the current one), so a
 future repo move can't silently reintroduce this exact bug a second time.
+
+---
+
+## 2026-07-08 — Canonical lovespark-tokens.css fails its own contrast gate (BUG-002 / KI-002, KI-003, KI-004)
+
+**Problem:** This repo's own canonical `lovespark-tokens.css` — the single source every
+extension's theme colors derive from — failed 3 of the checks in `audit-contrast.py`,
+blocking the fleet CWS upload pipeline (which gates on a clean contrast audit): beige
+hint-text at 0.8 opacity (4.26:1), slate muted-text on glass-strong (4.17:1), and slate
+slider-thumb on track (2.65:1) — all below their WCAG 2.1 thresholds (4.5:1 text / 3:1 UI).
+Documented for months in KI-002/003/004 but never landed in the token file itself.
+
+**Root cause:** The fix direction was documented (`~/.claude/docs/memory/known-issues.md`
+KI-002/003/004, `~/.claude/docs/memory/color-decisions.md`) but nobody had actually edited
+`lovespark-tokens.css` with the corrected values — the KI entries described the target
+ratios and candidate fixes, not applied code.
+
+**Fix:** Adjusted three token values in `lovespark-tokens.css`, computed with the exact WCAG
+2.1 relative-luminance formula `audit-contrast.py` uses, verified via
+`python3 "Claude x LoveSpark/scripts/audit-contrast.py" --verbose --history`:
+
+| Theme | Token | Before | After | Check | Before ratio | After ratio |
+|-------|-------|--------|-------|-------|--------------|-------------|
+| Beige | `--ls-text-dark` | #5C4A2A | #564424 | Hint text (0.8 opacity) on glass | 4.26:1 FAIL | 4.54:1 PASS |
+| Slate | `--ls-text-muted` | #9A9A9A | #A8A8A8 | Muted text on glass-strong | 4.17:1 FAIL | 4.93:1 PASS |
+| Slate | `--ls-glass-border` | #4A4A4A | #3E3E3E | Slider thumb on track | 2.65:1 FAIL | 3.19:1 PASS |
+
+All other checks that use these three tokens (body text, dropdown text, muted-on-glass,
+focus-ring-on-bg/glass, title overrides) already had margin above threshold and only
+improved or stayed flat — no regressions. Full audit went from 77/80 to **80/80 checks
+passing, exit code 0**, across all 4 themes (retro 19/19, dark 19/19, beige 21/21, slate
+21/21). Updated KI-002/003/004 in `known-issues.md` to RESOLVED with these before/after
+ratios, and refreshed the Beige/Slate token tables + Universal Dangerous Pairings in
+`color-decisions.md` to match.
+
+**Note on the beige fix:** the audit's "hint text" check simulates `--ls-text-dark` at 0.8
+opacity as a generic proxy for real hint-text CSS in consuming extensions (out of this
+repo's scope). Darkening the canonical `--ls-text-dark` token raises the floor for every
+consumer without touching extension code, but the KI-004 prevention rule (extensions should
+prefer `--ls-text-muted` or opacity ≥0.85 for hint text, not opacity-reduced `--ls-text-dark`)
+still stands.
+
+**Prevention:** The checker itself was never weakened — this was a token-only fix. Any future
+theme token change must run `audit-contrast.py --verbose --history` before commit; `--history`
+now has a green baseline (2026-07-08) so any new regression trips the "REGRESSIONS DETECTED"
+block on the next run.
