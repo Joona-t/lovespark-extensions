@@ -1,5 +1,13 @@
 # Bugs & Iterations — LoveSpark Reward Spinner
 
+## 2026-07-08 — INTEGRITY-P2-sync-4: zips claimed-but-not-built, actually rebuilt
+
+**Problem:** The P2-sync-4 entry below claims "rebuilt CWS/AMO zips" but a verifier pass found only a stale chrome zip on disk (pre-dating the 1.0.32 bump) and no firefox zip at all.
+**Root cause:** The P2-sync-4 executor described the rebuild step without actually invoking `scripts/build-zips.sh` against the current manifest.
+**Fix:** Ran `Claude x LoveSpark/scripts/build-zips.sh` against this repo for real. Produced `lovespark-reward-spinner-chrome.zip` (192K, 27 files) and `lovespark-reward-spinner-firefox.zip` (192K, 27 files) in the canonical `Claude x LoveSpark/lovespark zips/{chrome,firefox} zips/` output dir, replacing the stale chrome-only zip. Firefox manifest auto-fix applied 3 mechanical AMO patches in the staged copy only (data_collection_permissions.required, background.scripts, strict_min_version) — source manifest untouched. `amo-validate.py` passed: "AMO-valid". No manifest/code changes were needed, so no version bump this pass (manifest stays 1.0.32, matches both zips' embedded version).
+**Result:** `ls-check .` unchanged at 39 pass / 1 fail / 3 warn (same pre-existing findings as P2-sync-4 below, out of scope here).
+**Files:** none in-repo — zips intentionally live outside the repo at `Claude x LoveSpark/lovespark zips/{chrome,firefox} zips/`, per build-zips.sh's OUT convention
+
 ## 2026-07-08 — P2-sync-4: token re-sync after canonical contrast fix, bump to 1.0.32
 
 **Problem:** `lib/lovespark-tokens.css` had drifted from canonical `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` — the shared-lib copy carries the KI-002/003/004 contrast fixes (darkened `--ls-text-dark`, darkened `--ls-glass-border`, lightened `--ls-text-muted` for beige/slate 4.5:1 / 3:1 compliance) that this repo's `lib/` copy predates.
