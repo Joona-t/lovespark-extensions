@@ -76,7 +76,7 @@ body {
   transform: scale(0.98);
 }
 .stim-item.done {
-  opacity: 0.55;
+  opacity: 0.85;
   border-color: var(--ls-pink-accent);
 }
 .stim-icon {
