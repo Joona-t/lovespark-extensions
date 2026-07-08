@@ -2,6 +2,15 @@
 
 All notable changes to Neurodivergent Reader by LoveSpark.
 
+## [1.0.34] - 2026-07-09
+
+### Fixed
+- Lexend and Atkinson Hyperlegible font overrides silently falling back on real pages:
+  added `fonts/*.woff2` to `web_accessible_resources` (only `fonts/*.woff` was declared)
+  and set `use_dynamic_url: false` — Chrome 130+ blocks static `chrome.runtime.getURL()`
+  access from page context when `use_dynamic_url` is true, which broke ALL injected
+  `@font-face` loads (including OpenDyslexic)
+
 ## [1.0.13] - 2026-04-01
 
 ### Fixed

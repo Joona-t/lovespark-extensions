@@ -1,5 +1,28 @@
 # Bugs & Iterations
 
+## BUG-006: |2026-07-09|||fix: Lexend/Atkinson woff2 fonts not web-accessible + use_dynamic_url blocks all page-context font loads
+
+**Problem:** Toggling the Lexend or Atkinson Hyperlegible font override applied the
+font-family CSS but the fonts never rendered — silent fallback to system fonts.
+**Root cause (two-part):**
+1. `web_accessible_resources` declared only `fonts/*.woff`, but `StyleAgent._ensureWebFonts()`
+   injects `@font-face` rules for the bundled `.woff2` files (lexend-*.woff2,
+   atkinson-hyperlegible-*.woff2), so page-origin fetches were rejected.
+2. `use_dynamic_url: true` (added in e881c21, CSO F4 hardening) blocks static
+   `chrome.runtime.getURL()` URLs from page context entirely on Chrome 130+ — verified
+   with page-origin fetches: ALL of .woff/.woff2/.css returned "Failed to fetch",
+   meaning even OpenDyslexic (.woff, whitelisted) was broken on real pages. Content
+   scripts have no API to obtain the dynamic URL for page-injected stylesheets, so
+   `use_dynamic_url` is incompatible with this extension's font-injection architecture.
+**Fix:** Added `fonts/*.woff2` to `web_accessible_resources` and set
+`use_dynamic_url: false`. Exposure is limited to bundled font/CSS files (no user data).
+**Verification:** Real Chromium + unpacked extension via Playwright: toggled the font
+override through the actual popup UI, injected via the real INJECT_TAB path.
+Fixed build: Lexend + Atkinson Hyperlegible faces reach `status: loaded`,
+`document.fonts.check()` true, computed font-family applies on example.com.
+Negative control (woff2 line removed): NetworkError + silent fallback reproduced.
+**Files:** manifest.json (1.0.33 → 1.0.34), CHANGELOG.md
+
 ## : |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)
 
 **Problem:** |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)
