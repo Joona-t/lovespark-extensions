@@ -1,5 +1,12 @@
 # LoveSpark Brain Dump - Bugs and Iterations
 
+## 2026-07-08: P0-7-sweep-2 — shared-lib sync + missing mascot.png + untracked project files
+
+**Problem:** `lib/lovespark-footer.css` and `lib/lovespark-theme.js` on disk already matched canonical `Extensions/infrastructure/lovespark-shared-lib/` byte-for-byte but were never committed. Two dead/unreferenced files (`lib/browser-polyfill.min.js`, `lib/lovespark-tokens.css`) had already been deleted from disk but the deletion was never committed. `popup.html` references `mascot.png` at the repo root but that file had never been committed. `CHANGELOG.md`, `LICENSE`, and `screenshots/` (CWS listing assets) also existed on disk only, never committed.
+**Root cause:** Prior sync/asset-generation passes wrote files to disk but stopped short of `git add`/commit — same pattern as lovespark-body-double, likely the same batch run across both repos.
+**Fix:** Committed the shared-lib sync, finalized the two dead-file deletions, committed `mascot.png` + `CHANGELOG.md` + `LICENSE` + `screenshots/` as-is. Also committed an unrelated uncommitted a11y/design tweak found alongside the sync (`popup.html` theme-label live region + thought-list aria-live, `popup.css` delete-icon hover opacity 0.6 → 0.85) in its own commit.
+**Files:** lib/lovespark-footer.css, lib/lovespark-theme.js, lib/browser-polyfill.min.js (deleted), lib/lovespark-tokens.css (deleted), mascot.png, CHANGELOG.md, LICENSE, screenshots/, popup.html, popup.css
+
 ## v1.0.0 (2026-03-21) - Initial Build
 
 ### Architecture Decisions
