@@ -1,5 +1,30 @@
 # Bugs & Iterations
 
+## BUG-002 — 2026-07-09: Google Fonts CDN dependency (privacy-first violation)
+
+**Problem:** `shared/theme.css` line 1 `@import`ed Silkscreen/Nunito/Space Mono
+from `fonts.googleapis.com`, and the manifest CSP allowlisted
+`fonts.googleapis.com` (style-src) + `fonts.gstatic.com` (font-src). Every
+popup/dashboard open made requests to Google's CDN — violating the LoveSpark
+privacy-first rule (zero external requests). Same violation class fixed
+earlier for lovespark-games.
+**Root cause:** Fonts were wired up the quick way (CDN import) at initial
+build, before the fleet-wide self-hosted-fonts pattern
+(`lovespark-shared-lib/lovespark-fonts.css`) existed.
+**Fix:** Self-hosted all three families under `shared/fonts/` (latin +
+latin-ext woff2 subsets, 10 files, ~140 KB) declared via `@font-face` with
+`font-display: swap` + `unicode-range`, following the shared-lib pattern.
+Nunito is served by Google as one variable font regardless of requested
+weight, so the four weights (400/600/700/800) were deduped to a single
+`nunito-variable-*.woff2` per subset with `font-weight: 400 800`. CSP
+tightened to `script-src 'self'; object-src 'self'; style-src 'self';
+font-src 'self'`. Note: `content-overlay.css` (YouTube pages) references
+Nunito/Silkscreen by family name only and never loaded the CDN import, so
+its system-font fallback behavior on YouTube is unchanged. Version bumped
+1.0.0 → 1.0.1.
+**Files:** `shared/theme.css`, `shared/fonts/*` (new), `manifest.json`
+**Commit:** (this one)
+
 ## GOV-001 — 2026-07-08: Missing README.md, LICENSE, and populated BUGS log
 
 **Problem:** CLAUDE.md's repo rule requires a populated BUGS_AND_ITERATIONS.md
