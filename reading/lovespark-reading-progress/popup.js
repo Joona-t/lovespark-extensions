@@ -84,7 +84,7 @@ function renderRecentPages(pages) {
     wrap.appendChild(el('span', { className: 'recent-percent', textContent: pct + '%' }));
 
     let hostname = '';
-    try { hostname = new URL(page.url).hostname.replace(/^www\./, ''); } catch (_) {}
+    try { hostname = new URL(page.url).hostname.replace(/^www\./, ''); } catch (err) { console.warn('[lovespark-reading-progress] unknown:', err); }
 
     const item = el('div', { className: 'recent-item', role: 'listitem' }, [
       wrap,
