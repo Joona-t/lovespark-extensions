@@ -1,6 +1,6 @@
 # Privacy Policy — LoveSpark Reward Spinner
 
-**Effective date:** 2026-07-08 · **Applies to:** LoveSpark Reward Spinner v1.0.30
+**Effective date:** 2026-07-08 · **Applies to:** LoveSpark Reward Spinner v1.0.31
 
 LoveSpark Reward Spinner is a free, open-source browser extension that lets you spin a wheel of self-chosen rewards after completing a task. Your privacy is not a feature we bolt on — it is the architecture. This extension collects **no** personal data, sends **nothing** to any server, and works entirely on your own device.
 

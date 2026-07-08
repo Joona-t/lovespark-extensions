@@ -1,5 +1,13 @@
 # Bugs & Iterations — LoveSpark Reward Spinner
 
+## 2026-07-08: R-cws-a11y-4 — add missing mascot.png, commit stranded shared-lib sync, bump to 1.0.31
+
+**Problem:** `ls-check .` failed BRAND-SPARKY (mascot.png missing from repo root), flagged as out-of-scope in the P0-4-commit-4 entry above. Separately, `lib/lovespark-footer.css` and `lib/lovespark-theme.js` had already been re-synced to canonical in the working tree by an earlier interrupted session (footer hover state switched from opacity to text-decoration for KI-004 opacity-on-text safety; theme.js legacy `darkMode` migration read removed) but never committed.
+**Root cause:** Mascot copy step was skipped when the extension was scaffolded (fleet convention requires it per CLAUDE.md rule #3); the shared-lib sync commit for the footer/theme fix simply never landed after being applied to the working tree.
+**Fix:** Copied canonical `mascot.png` (400x266, verified byte-identical md5 match against `Claude x LoveSpark/assets/mascot.png`) into repo root — already wired into `popup.html` with proper alt text. Added missing `LICENSE` (MIT, matches fleet template). Committed the already-correct working-tree footer.css/theme.js re-sync. `ls-check .` now reports 0 fail (was 1 fail: BRAND-SPARKY). Bumped manifest to 1.0.31, synced PRIVACY.md version reference, rebuilt CWS/AMO zips.
+**Note (out of scope, not fixed here):** `ls-check .` still reports A11Y-CONTRAST failing — this is a fleet-wide bug in the canonical `lovespark-shared-lib` repo's token values (KI-002/003/004: slate muted-on-glass-strong, slate slider-thumb-on-track, beige 0.8-opacity hint text), NOT specific to this extension. `audit-contrast.py` always audits the canonical shared-lib tokens regardless of which repo's `ls-check` invoked it, so this cannot be fixed by editing this repo. Flagged separately for a canonical shared-lib fix pass (spawned as its own task).
+**Files:** mascot.png (new), LICENSE (new), lib/lovespark-footer.css, lib/lovespark-theme.js, manifest.json (1.0.30 → 1.0.31), PRIVACY.md
+
 ## 2026-07-08: P0-4-commit-4 — commit CWS/AMO submission bundle, bump to 1.0.30, build store zips
 
 **Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` (12 CWS visual assets) on disk but they were never committed; `manifest.json` had been bumped to 1.0.30 locally without a commit.
