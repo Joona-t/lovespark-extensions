@@ -94,7 +94,7 @@ h1 {
   padding: 10px 0;
   border: none;
   border-radius: var(--ls-radius-sm);
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
   cursor: pointer;
   margin-bottom: 8px;
@@ -160,7 +160,7 @@ h1 {
 
 .daily-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--ls-pink-accent), #FF69B4);
+  background: linear-gradient(90deg, var(--ls-pink-deep), #FF69B4);
   border-radius: 3px;
   transition: width 0.3s;
 }
