@@ -1,5 +1,13 @@
 # LoveSpark Reading Progress - Bugs and Iterations
 
+## 2026-07-08: BUG-002 — shared-lib copies drifted from canonical
+
+**Problem:** `lib/lovespark-footer.css` and `lib/lovespark-theme.js` carried uncommitted local edits (hover state → underline instead of opacity; removed legacy `darkMode` boolean fallback in favor of the `theme` string key only) that already matched the canonical shared-lib's pending edits but had never been committed.
+**Root cause:** A prior fleet shared-lib sync pass (P0-7-sweep) edited the working tree but never committed.
+**Fix:** Verified the two files matched `Extensions/infrastructure/lovespark-shared-lib/` exactly and committed them. `ls-check .` "Shared lib matches canonical" now passes (was failing before this fix).
+**Files:** lib/lovespark-footer.css, lib/lovespark-theme.js
+**Note (pre-existing, out of scope):** `ls-check .` still fails BRAND-SPARKY (mascot.png missing) and warns QUAL-LICENSE (LICENSE missing) — both pre-date this sweep and are unrelated to shared-lib sync.
+
 ## v1.0.0 (2026-03-23) - Initial Build
 
 ### Architecture Decisions
