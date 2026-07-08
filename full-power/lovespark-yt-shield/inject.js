@@ -202,16 +202,16 @@
     document.documentElement.style.overflow = '';
   }
 
-  // Run anti-detection on a mutation observer — catches dynamically injected warnings
+  // Run anti-detection on a mutation observer — catches dynamically injected warnings.
+  // No setInterval fallback: the observer already covers this (YouTube's DOM
+  // churns constantly, so any injected warning triggers a mutation almost
+  // immediately), and a poll loop here would contradict the suite's
+  // no-setInterval-for-DOM-watching rule this file's own header claims to follow.
   const observer = new MutationObserver(nukeAdblockWarning);
   observer.observe(document.documentElement, { childList: true, subtree: true });
 
-  // Also run periodically for the first 30 seconds as a safety net
-  let checkCount = 0;
-  const earlyCheck = setInterval(() => {
-    nukeAdblockWarning();
-    checkCount++;
-    if (checkCount >= 30) clearInterval(earlyCheck);
-  }, 1000);
+  // One-shot initial pass in case a warning is already present at inject time
+  // (before any mutation has occurred for the observer to react to).
+  nukeAdblockWarning();
 
 })();

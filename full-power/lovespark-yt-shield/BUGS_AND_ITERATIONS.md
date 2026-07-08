@@ -1,5 +1,30 @@
 # Bugs & Iterations — LoveSpark YouTube Shield
 
+## 2026-07-08
+
+### Deleted setInterval DOM-poll fallback in inject.js (BUG-005, v1.0.29)
+- **Problem:** `inject.js`'s adblock-warning-removal logic set up a
+  `MutationObserver` on `document.documentElement` (the correct, event-driven
+  way to catch dynamically injected warning dialogs) and then *also* ran a
+  `setInterval(..., 1000)` for the first 30 seconds as a "safety net" —
+  directly contradicting the suite's no-`setInterval`-for-DOM-watching rule,
+  and contradicting `background.js`'s own header comment ("No setInterval —
+  uses chrome.alarms for MV3 safety") which implied the whole extension held
+  that line.
+- **Root cause:** The observer only fires on future DOM mutations, not on
+  page-load state that already existed when it was attached — the interval
+  was covering that initial-state gap the lazy way instead of the observer
+  being paired with a single initial invocation.
+- **Fix:** Deleted the `setInterval`/`clearInterval` block entirely — the
+  `MutationObserver` already covers ongoing detection (YouTube's DOM churns
+  constantly, so any injected warning triggers a mutation almost
+  immediately). Replaced the interval's initial-state coverage with one
+  direct `nukeAdblockWarning()` call right after `observer.observe(...)`
+  (a single call, not a timer, so it doesn't reintroduce the pattern).
+  Bumped manifest version 1.0.28 → 1.0.29. `ls-check .` unchanged at
+  40 pass / 2 fail (pre-existing BRAND-LIB-SYNC / BRAND-TOKEN-DRIFT,
+  unrelated to this fix) / 1 warn.
+
 ## 2026-04-16
 
 ### ls-check --strict: 2 failures unblocked (v1.0.26)
