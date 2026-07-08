@@ -262,10 +262,19 @@ function initReminders() {
   buttons.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var type = btn.getAttribute('data-type');
-      chrome.runtime.sendMessage({ action: 'markReminderDone', type: type }, function() {
+      try {
+        chrome.runtime.sendMessage({ action: 'markReminderDone', type: type }, function() {
+          if (chrome.runtime.lastError) {
+            console.warn('[LoveSpark Hub] sendMessage error:', chrome.runtime.lastError.message);
+          }
+          updateReminders();
+          updateSparkyMood();
+        });
+      } catch (err) {
+        console.warn('[LoveSpark Hub] sendMessage threw:', err.message);
         updateReminders();
         updateSparkyMood();
-      });
+      }
     });
   });
 

@@ -212,7 +212,7 @@ body {
 }
 
 .task-item.done {
-  opacity: 0.45;
+  opacity: 0.85;
 }
 
 .task-item.done .task-text {
