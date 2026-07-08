@@ -119,7 +119,7 @@ body {
 }
 
 .toggle-wrap input:checked + .toggle-track {
-  background: linear-gradient(135deg, var(--ls-pink-accent), var(--ls-pink-deep));
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
   border-color: var(--ls-pink-deep);
   box-shadow: var(--ls-glow);
 }
@@ -187,7 +187,7 @@ body {
 }
 
 .intensity-btn.active {
-  background: linear-gradient(135deg, var(--ls-pink-accent), var(--ls-pink-deep));
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
   color: var(--ls-text-white);
   border-color: var(--ls-pink-deep);
   box-shadow: var(--ls-glow);
@@ -265,7 +265,7 @@ body {
 }
 
 .site-btn.active {
-  background: linear-gradient(135deg, var(--ls-pink-accent), var(--ls-pink-deep));
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
   color: var(--ls-text-white);
   border-color: var(--ls-pink-deep);
   box-shadow: var(--ls-glow);
