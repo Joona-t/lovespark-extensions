@@ -50,3 +50,11 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-07-08: ITER-CWS-01 — CWS/AMO submission bundle committed + store zips built
+
+**Problem:** Extension had CWS-LISTING.md/PRIVACY.md/SUBMIT.md/cws-shots/ generated but not committed (cws-shots showed as modified working-tree images from a re-generation), and had no packaged zips at all in the repo.
+**Root cause:** `lovespark-fleet-to-store` generated/regenerated the bundle in a prior pass but the assets were left uncommitted on the `security/cso-hardening-2026-06-26` branch, and packaging (build-zips.sh) was never run for this extension.
+**Fix:** Verified the generated PRIVACY.md (local-storage-only, zero transmission) and CWS-LISTING.md (single-purpose + per-permission justification matches manifest.json's `["storage", "activeTab", "tabs"]`, no host permissions claimed or present) are accurate — no hand-fixes needed. Bumped manifest.json to 1.0.24. Ran `scripts/build-zips.sh` — Firefox zip passed AMO validation (auto-fixed `data_collection_permissions.required`, `background.scripts`); both `-chrome.zip` and `-firefox.zip` built for the first time and added to repo root.
+**Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/, manifest.json, lovespark-breathe-chrome.zip, lovespark-breathe-firefox.zip
+**Commit:** unit P0-4-commit-2
