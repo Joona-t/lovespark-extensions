@@ -2,6 +2,13 @@
 
 <!-- Log every bug fix and iteration with date, problem, root cause, and fix. -->
 
+## 2026-07-08: P0-7-sweep-2 — track shared-lib files sitting untracked on disk
+
+**Problem:** `lib/lovespark-badge.js`, `lifecycle.js`, `popup.js`, `stats.js`, `lovespark-tokens.css` already existed on disk (byte-identical to canonical `Extensions/infrastructure/lovespark-shared-lib/`) but were never `git add`ed — they weren't referenced in `popup.html` either, so this is unused-but-present shared-lib boilerplate (not a functional gap). `lib/lovespark-base.css`, `lovespark-footer.css`, `lovespark-theme.js`, and `popup.css` also had uncommitted working-tree diffs, already matching canonical.
+**Root cause:** A prior sync pass copied the full canonical `lib/` set into place without checking per-extension usage or committing.
+**Fix:** Verified all lib files are byte-identical to canonical (no local drift, nothing to port back) and tracked/committed them as-is — leaving the unused-file cleanup question (same as was done for lovespark-breathe/body-double) for a separate pass, out of scope here. Committed the `popup.css` design tweak found alongside it (toggle/intensity/site-button active-state gradient: `--ls-pink-accent → --ls-pink-deep` solid, was `--ls-pink-accent → --ls-pink-deep` gradient) separately.
+**Files:** lib/lovespark-badge.js, lib/lovespark-lifecycle.js, lib/lovespark-popup.js, lib/lovespark-stats.js, lib/lovespark-tokens.css, lib/lovespark-base.css, lib/lovespark-footer.css, lib/lovespark-theme.js, popup.css
+
 | Date | Problem | Root Cause | Fix |
 |------|---------|------------|-----|
 | | | | |
