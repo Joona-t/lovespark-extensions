@@ -1,5 +1,26 @@
 # Bugs & Iterations
 
+## 2026-07-08: P0-7-sweep-2 — reconcile shared-lib working copy with canonical
+
+**Problem:** `lib/lovespark-*.{css,js}` on disk already matched canonical `Extensions/infrastructure/lovespark-shared-lib/` byte-for-byte, but the sync was never committed — six files sat as uncommitted working-tree diffs against the last committed (stale) copies, plus `lib/lovespark-tokens.css` was present but untracked.
+**Root cause:** A prior sync pass copied canonical files into place but stopped short of `git add`/commit, leaving the repo's git history out of step with its own working tree.
+**Fix:** Verified working-tree lib files are byte-identical to canonical (no local drift, nothing to port back), then committed the sync as-is. Also committed an unrelated uncommitted design tweak (`popup.css` toggle/button color: `--ls-pink-accent` → `--ls-pink-deep`) found alongside it, in a separate commit.
+**Files:** lib/lovespark-badge.js, lib/lovespark-base.css, lib/lovespark-footer.css, lib/lovespark-lifecycle.js, lib/lovespark-popup.js, lib/lovespark-theme.js, lib/lovespark-tokens.css
+
+## 2026-07-08: popup.html accessibility gaps + missing shared-lib wiring (blocking pre-commit gate)
+
+**Problem:** With the stray worktree resolved (see next entry), `ls-check --pre-commit` still failed on 4 pre-existing, unrelated issues: `popup.html` had no `role="dialog"`/`aria-labelledby` on the popup container, the theme dropdown trigger had no `aria-expanded`, the 3 mode radio inputs had no accessible name, and `popup.html` never linked `lib/lovespark-base.css` or loaded `lib/lovespark-theme.js` even though `lib/` had them (it ships a fully self-contained `popup.css` + hand-rolled theme-dropdown JS in `popup.js` instead).
+**Root cause:** This popup predates the shared-lib "wire it in" convention and was never retrofitted; the a11y attributes were simply never added when the dropdown/inputs were built.
+**Fix:** Added `role="dialog"`, `aria-labelledby="popup-title"` (new id on the header title), `aria-describedby="cute-msg"` to `.popup-container`; `aria-expanded="false"` to the theme trigger button; `aria-label` on the 3 mode radios. Linked `lib/lovespark-base.css` *before* `popup.css` in `<head>` (so popup.css's own `:root` vars and `.theme-dropdown*` rules still win on any overlap — verified by reading both files, base.css only contributes purely additive rules: focus-visible outlines, 32px touch targets, reduced-motion, pop animation) and added `<script src="lib/lovespark-theme.js">` (inert — it only defines `LoveSparkTheme`, nothing auto-runs, and `popup.js` keeps using its own existing theme logic unchanged).
+**Files:** popup.html
+
+## 2026-07-08: Stray nested git worktree tracked as a broken gitlink, blocking the pre-commit gate
+
+**Problem:** `.claude/worktrees/practical-neumann` (a full separate `git worktree` checkout of this same repo on branch `claude/practical-neumann`, with its own uncommitted local edits — CSP tightening, a `sender.id` guard, a `timerId` return, a `darkMode` fallback removal — left behind by a prior Claude Code session) was living *inside* this repo's working tree and had been accidentally committed into this repo's index as a `160000` gitlink back in commit `36f9712` ("swarm audit: bundle fonts locally..."), with no matching `.gitmodules`. `ls-check.py`'s file collector does a plain filesystem `os.walk` and isn't git-aware, so it doesn't skip nested worktree directories — every check re-ran against that stray copy's files too (e.g. it flagged Google Fonts CDN links from the worktree's own uncommitted `popup.html`, not this repo's). That made `SEC-CDN-FONTS` fail unconditionally in `.git/hooks/pre-commit`, blocking every commit to this repo regardless of what was actually being changed — independent of and pre-dating this unit's work.
+**Root cause:** A batch/swarm commit ran a broad `git add` that swept up an unrelated nested worktree directory instead of being scoped to real source files; nothing ignored `.claude/worktrees/` so it was trackable at all, and the worktree itself was never cleaned up or relocated after that session ended.
+**Fix:** `git rm --cached .claude/worktrees/practical-neumann` to drop the broken gitlink from this repo's index, then `git worktree move .claude/worktrees/practical-neumann ~/orphaned-claude-worktrees/lovespark-doomscroll-practical-neumann` to relocate the actual worktree (all uncommitted edits + its own git history on branch `claude/practical-neumann`, pushed to origin, fully preserved) outside this repo's tree entirely — nothing was deleted or discarded. Added `.claude/worktrees/` to `.gitignore` so this can't recur. Joona: the orphaned worktree at `~/orphaned-claude-worktrees/lovespark-doomscroll-practical-neumann` still has 4 small uncommitted diffs on `claude/practical-neumann` worth a look (or `git worktree remove` once reviewed).
+**Files:** .gitignore
+
 ## : |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)
 
 **Problem:** |2026-03-05|||fix: theme title text visibility on beige (#4a7c59 earthy green) and slate (#d4714e terracotta)
