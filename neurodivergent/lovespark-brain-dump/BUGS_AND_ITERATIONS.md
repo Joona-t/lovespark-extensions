@@ -1,5 +1,12 @@
 # LoveSpark Brain Dump - Bugs and Iterations
 
+## 2026-07-08: P0-4-commit-4 — commit CWS/AMO submission bundle, bump to 1.0.32, build store zips
+
+**Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` (12 CWS visual assets) on disk but they were never committed, and `manifest.json` had been bumped to 1.0.32 locally without a commit.
+**Root cause:** Same pattern as P0-7-sweep-2 — asset-generation pass wrote files to disk and stopped short of `git add`/commit.
+**Fix:** Verified `PRIVACY.md` (local-storage-only, zero-transmission, single `storage` permission — matches manifest exactly) and `CWS-LISTING.md` (single-purpose + per-permission + host-permission justifications match the actual manifest, which declares only `storage` and no host permissions) were accurate as generated — no hand-fixes needed for this repo. Committed the bundle + version bump, then ran `scripts/build-zips.sh` (canonical) to produce `lovespark-brain-dump-chrome.zip` and `lovespark-brain-dump-firefox.zip`; Firefox zip passed `amo-validate.py` on the first pass.
+**Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/ (12 files), manifest.json (1.0.31 → 1.0.32)
+
 ## 2026-07-08: P0-7-sweep-2 — shared-lib sync + missing mascot.png + untracked project files
 
 **Problem:** `lib/lovespark-footer.css` and `lib/lovespark-theme.js` on disk already matched canonical `Extensions/infrastructure/lovespark-shared-lib/` byte-for-byte but were never committed. Two dead/unreferenced files (`lib/browser-polyfill.min.js`, `lib/lovespark-tokens.css`) had already been deleted from disk but the deletion was never committed. `popup.html` references `mascot.png` at the repo root but that file had never been committed. `CHANGELOG.md`, `LICENSE`, and `screenshots/` (CWS listing assets) also existed on disk only, never committed.
