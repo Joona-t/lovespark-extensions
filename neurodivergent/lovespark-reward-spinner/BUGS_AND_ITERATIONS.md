@@ -1,5 +1,13 @@
 # Bugs & Iterations — LoveSpark Reward Spinner
 
+## 2026-07-08: P0-4-commit-4 — commit CWS/AMO submission bundle, bump to 1.0.30, build store zips
+
+**Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` (12 CWS visual assets) on disk but they were never committed; `manifest.json` had been bumped to 1.0.30 locally without a commit.
+**Root cause:** Same generation-without-commit pattern seen fleet-wide (P0-7-sweep-2 in sibling repos).
+**Fix:** Verified `PRIVACY.md`/`CWS-LISTING.md` accurately declare the single `storage` permission and no host permissions — matches manifest exactly, no hand-fixes needed. Synced the stale "v1.0.29" reference in `PRIVACY.md` to v1.0.30. Committed the bundle + version bump, then ran `scripts/build-zips.sh` to produce `lovespark-reward-spinner-chrome.zip`/`lovespark-reward-spinner-firefox.zip`; Firefox zip passed `amo-validate.py`.
+**Note (out of scope, not fixed here):** `ls-check .` reports a pre-existing gate failure — `BRAND-SPARKY: mascot.png missing` (repo root has no `mascot.png`, unlike sibling repos) — unrelated to the CWS bundle work in this unit, left for a mascot-asset fix pass. `lib/lovespark-footer.css` and `lib/lovespark-theme.js` were already modified in the working tree from an earlier, unrelated session; left untouched/uncommitted here since they're outside this unit's scope.
+**Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/ (12 files), manifest.json (1.0.29 → 1.0.30)
+
 ## v1.0.0 (2026-03-25)
 - **Initial release.** No bugs logged yet.
 - Scaffolded with shared lib, 4 themes, WCAG AA focus indicators, prefers-reduced-motion.
