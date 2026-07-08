@@ -210,7 +210,7 @@ html, body {
 }
 
 .toggle-switch input:checked + .toggle-track {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
@@ -252,7 +252,7 @@ html, body {
 }
 
 .mode-option input:checked + .mode-label {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
@@ -266,7 +266,7 @@ html, body {
 
 .btn-snooze {
   width: 100%;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
