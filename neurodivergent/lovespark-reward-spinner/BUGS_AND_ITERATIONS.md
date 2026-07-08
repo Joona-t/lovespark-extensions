@@ -1,5 +1,13 @@
 # Bugs & Iterations — LoveSpark Reward Spinner
 
+## 2026-07-08 — P2-sync-4: token re-sync after canonical contrast fix, bump to 1.0.32
+
+**Problem:** `lib/lovespark-tokens.css` had drifted from canonical `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` — the shared-lib copy carries the KI-002/003/004 contrast fixes (darkened `--ls-text-dark`, darkened `--ls-glass-border`, lightened `--ls-text-muted` for beige/slate 4.5:1 / 3:1 compliance) that this repo's `lib/` copy predates.
+**Root cause:** Same as prior entries in this log — the canonical contrast fix landed in the shared-lib repo without a fleet sync pass reaching this extension.
+**Fix:** Copied canonical `lovespark-tokens.css` into `lib/`. Bumped manifest to 1.0.32, rebuilt CWS/AMO zips.
+**Result:** `ls-check .` is 37 pass / 1 fail / 3 warn. The 1 fail (`BRAND-TOKEN-DRIFT`) is the same fleet-wide `design-tokens/tokens.json` generator-vs-canonical gap already logged in the 2026-07-08 R-cws-a11y-4 entry below (then reported as `A11Y-CONTRAST`) — still not fixable from this repo. The 3 warns (`A11Y-KI004` flagging `opacity: 0.4` inside the `50% { }` keyframe of the `spin-flash` animation on `.spinner-text` — a transient mid-spin flash, not resting-state text, and the checker's selector tracker misreads the `50%` keyframe stop as a CSS selector; `A11Y-LIVE` on 5 dynamic-content targets; `BRAND-DEAD-LIB` on 5 lib files loaded via `background.js` `importScripts()` / `lib/lovespark-base.css` `@import` rather than HTML `<script>` tags — all checker false positives or pre-existing, unrelated to the token sync) were left as-is; out of scope for this unit.
+**Files:** lib/lovespark-tokens.css, manifest.json (1.0.31 → 1.0.32)
+
 ## 2026-07-08: R-cws-a11y-4-followup — footer never actually rendered (wrong LoveSparkFooter.render() call signature)
 
 **Problem:** `popup.js` called `LoveSparkFooter.render(footerMount)`, but canonical `lovespark-footer.js`'s `render()` takes no arguments and returns an HTML string — it never touches the passed element. The return value was discarded, so `#footerMount` stayed empty and the LoveSpark Suite / Ko-fi / Report-a-Bug footer never appeared in the popup at all.
