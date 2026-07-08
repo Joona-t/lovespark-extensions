@@ -11,6 +11,7 @@
 </head>
 <body>
   <div class="theme-dropdown">
+    <span id="themeLabel" class="sr-only" aria-live="polite"></span>
     <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
             aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
       retro
@@ -34,26 +35,26 @@
     </header>
 
     <!-- Sparky companion area -->
-    <div class="companion-section" aria-live="polite">
-      <div id="sparkyState" class="sparky-state" aria-hidden="true">&#x1F33A;</div>
-      <div id="encouragement" class="encouragement">I'm here. Ready when you are.</div>
+    <div class="companion-section">
+      <div id="sparkyState" class="sparky-state" aria-live="polite" aria-label="Sparky companion status">&#x1F33A;</div>
+      <div id="encouragement" class="encouragement" aria-live="polite">I'm here. Ready when you are.</div>
     </div>
 
     <!-- Session timer (shown during active session) -->
-    <div id="timerSection" class="timer-section" hidden>
+    <div id="timerSection" class="timer-section" hidden aria-live="polite">
       <div class="timer-ring-wrap">
         <svg class="timer-ring" viewBox="0 0 80 80" aria-hidden="true">
           <circle class="timer-ring-bg" cx="40" cy="40" r="35" />
           <circle id="timerRingProgress" class="timer-ring-progress" cx="40" cy="40" r="35" />
         </svg>
-        <div id="timerDisplay" class="timer-display">0:00</div>
+        <div id="timerDisplay" class="timer-display" aria-live="polite">0:00</div>
       </div>
-      <div id="timerLabel" class="timer-label">0 min remaining</div>
+      <div id="timerLabel" class="timer-label" aria-live="polite">0 min remaining</div>
       <button id="stopBtn" class="btn-stop" aria-label="End session">End Session</button>
     </div>
 
     <!-- Preset picker (shown when no session active) -->
-    <div id="presetSection" class="preset-section">
+    <div id="presetSection" class="preset-section" aria-live="polite">
       <div class="preset-label">Start a focus session</div>
       <div class="preset-grid" role="group" aria-label="Session duration presets">
         <button class="btn-preset" data-preset="sprint" aria-label="Sprint, 15 minutes">
