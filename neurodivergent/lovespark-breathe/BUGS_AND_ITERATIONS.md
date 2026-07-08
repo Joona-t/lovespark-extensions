@@ -58,3 +58,11 @@
 **Fix:** Verified the generated PRIVACY.md (local-storage-only, zero transmission) and CWS-LISTING.md (single-purpose + per-permission justification matches manifest.json's `["storage", "activeTab", "tabs"]`, no host permissions claimed or present) are accurate — no hand-fixes needed. Bumped manifest.json to 1.0.24. Ran `scripts/build-zips.sh` — Firefox zip passed AMO validation (auto-fixed `data_collection_permissions.required`, `background.scripts`); both `-chrome.zip` and `-firefox.zip` built for the first time and added to repo root.
 **Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/, manifest.json, lovespark-breathe-chrome.zip, lovespark-breathe-firefox.zip
 **Commit:** unit P0-4-commit-2
+
+## 2026-07-08: ITER-A11Y-2 — a11y/contrast CWS-unblock pass (R-cws-a11y-2)
+
+**Problem:** `ls-check .` failed BRAND-LIB-SYNC (lib/ was missing 4 of the 9 canonical shared-lib files: lovespark-stats.js, lovespark-badge.js, lovespark-popup.js, lovespark-lifecycle.js) and A11Y-CONTRAST (3 fleet-wide beige/slate token failures), blocking the CWS-autofill upload pipeline.
+**Root cause:** `lib/` here only ever received 2 of the 6-9 canonical shared-lib files historically (a known fleet-wide sync-drift pattern, see meta_implementation.md), and BRAND-LIB-SYNC requires all canonical files to be present and byte-identical even if a given extension's HTML doesn't reference every one. A11Y-CONTRAST is computed by `scripts/audit-contrast.py` directly against the canonical shared-lib tokens (KI-002/KI-003/KI-004) and is identical fleet-wide; it can only be fixed by editing the canonical `Extensions/infrastructure/lovespark-shared-lib` repo, which is outside this unit's assigned repo scope.
+**Fix:** Copied the 4 missing files byte-for-byte from the canonical shared-lib (verified clean/unmodified in the canonical repo's working tree before copying, so no in-progress canonical edits were pulled in). BRAND-LIB-SYNC now passes. Bumped manifest.json patch version and rebuilt CWS/AMO zips. A11Y-CONTRAST remains failing pending the separate shared-lib fix tracked in meta_implementation.md item 7.
+**Files:** lib/lovespark-stats.js, lib/lovespark-badge.js, lib/lovespark-popup.js, lib/lovespark-lifecycle.js, manifest.json, *-chrome.zip, *-firefox.zip
+**Commit:** unit R-cws-a11y-2
