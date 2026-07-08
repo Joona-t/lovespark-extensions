@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Body Double",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "Your virtual focus companion. Sparky sits with you while you work \u2014 ADHD body doubling in your browser. Timer, encouragement, session tracking. No account, always free.",
   "icons": {
     "16": "icons/icon-16.png",
