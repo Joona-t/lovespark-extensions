@@ -1,5 +1,31 @@
 # Bugs & Iterations
 
+## BUG-001 — 2026-07-09: Storage-key collision — UI theme dropdown and code-art theme pills both wrote `theme`
+
+**Problem:** The popup's UI theme dropdown (retro/dark/beige/slate, driven by
+`LoveSparkTheme.init()` from `lib/lovespark-theme.js`) and the "Theme" pill
+selector for the code/syntax-art style (dracula/monokai/lovespark/github-light)
+both persisted to the same `chrome.storage.local` key `theme`. Picking a
+code-art theme pill (e.g. `dracula`) silently overwrote the stored UI theme,
+so on next popup open the shared lib tried `body.classList.add('theme-dracula')`
+(a no-op class) and showed "dracula" as the UI theme label. In the other
+direction, picking a UI theme (e.g. `retro`) corrupted the code-art setting:
+`background.js` passed `settings.theme = 'retro'` to `offscreen.js`, whose
+`THEMES['retro']` lookup fails with `Unknown theme: retro`, breaking conversion.
+**Root cause:** Two independent features each claimed the generic storage key
+`theme` — the shared theme lib owns that key fleet-wide, and the extension's
+own `DEFAULTS` in `popup.js`/`background.js` reused it for the syntax-art
+palette instead of a namespaced key.
+**Fix:** Renamed the code-art theme storage key to `codeTheme` end-to-end:
+`DEFAULTS` in `popup.js` and `background.js`, the `initPills('themeSelector')`
+read/write in `popup.js`, the offscreen conversion message field
+(`background.js` send → `offscreen.js` `msg.codeTheme` read). The UI theme
+dropdown's `theme` key is untouched and now solely owned by
+`lib/lovespark-theme.js`. No migration: any pre-fix stored `theme` value was
+already ambiguous/corrupted by the collision, so code-art simply falls back to
+the `dracula` default once.
+**Files:** popup.js, background.js, offscreen.js, manifest.json (1.0.35 → 1.0.36)
+
 ## GOV-002 — 2026-07-08: BRAND-LIB-WIRED/BRAND-LIB-SYNC gate failures — wire shared theme lib into popup
 
 **Problem:** `ls-check`'s pre-commit gate was red on 3 `BRAND` checks:

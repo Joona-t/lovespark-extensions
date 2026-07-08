@@ -127,7 +127,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.target !== 'offscreen') return;
 
   if (msg.action === 'convert') {
-    convertImage(msg.imageUrl, msg.theme, msg.width, msg.fontSize)
+    convertImage(msg.imageUrl, msg.codeTheme, msg.width, msg.fontSize)
       .then(html => {
         chrome.runtime.sendMessage({
           target: 'background',

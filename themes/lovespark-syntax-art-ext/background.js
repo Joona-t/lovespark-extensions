@@ -8,7 +8,7 @@
 // ── Default Settings ────────────────────────────────────────────────
 
 const DEFAULTS = {
-  theme: 'dracula',
+  codeTheme: 'dracula',
   artWidth: 120,
   fontSize: 8,
   convertedToday: 0,
@@ -103,7 +103,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     target: 'offscreen',
     action: 'convert',
     imageUrl: info.srcUrl,
-    theme: settings.theme,
+    codeTheme: settings.codeTheme,
     width: settings.artWidth,
     fontSize: settings.fontSize,
   });

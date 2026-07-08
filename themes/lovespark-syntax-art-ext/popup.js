@@ -6,7 +6,7 @@
 LoveSparkTheme.init();
 
 const DEFAULTS = {
-  theme: 'dracula',
+  codeTheme: 'dracula',
   artWidth: 120,
   fontSize: 8,
   convertedToday: 0,
@@ -42,9 +42,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Theme pills
-  initPills('themeSelector', data.theme, value => {
-    chrome.storage.local.set({ theme: value });
+  // Code-art theme pills — 'codeTheme' key, distinct from the UI theme
+  // dropdown's 'theme' key owned by lib/lovespark-theme.js (BUG-001)
+  initPills('themeSelector', data.codeTheme, value => {
+    chrome.storage.local.set({ codeTheme: value });
   });
 
   // Font size pills
