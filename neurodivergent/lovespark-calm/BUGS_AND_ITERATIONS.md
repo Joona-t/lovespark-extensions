@@ -2,6 +2,14 @@
 
 <!-- Log every bug fix and iteration with date, problem, root cause, and fix. -->
 
+## 2026-07-08: P0-4-commit-4 — commit CWS/AMO submission bundle, bump to 1.0.30, build store zips
+
+**Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` (12 CWS visual assets) on disk but they were never committed; `manifest.json` had been bumped to 1.0.30 locally without a commit.
+**Root cause:** Same pattern as P0-7-sweep-2 — asset-generation pass wrote files to disk and stopped short of `git add`/commit.
+**Fix:** Verified `PRIVACY.md`/`CWS-LISTING.md` accurately cover all three declared permissions (`storage`, `activeTab`, `scripting`) with no host permissions declared or used — matches manifest exactly, no hand-fixes needed. Synced the stale "Applies to version 1.0.29" reference in `PRIVACY.md` to 1.0.30. Committed the bundle + version bump, then ran `scripts/build-zips.sh` to produce `lovespark-calm-chrome.zip`/`lovespark-calm-firefox.zip`; Firefox zip passed `amo-validate.py`.
+**Note (out of scope, not fixed here):** `ls-check .` reports a pre-existing gate failure — `PERM-MISSING: chrome.tabs.query used but 'tabs' not in permissions` — present before this commit (confirmed via `git stash`), unrelated to the CWS bundle work in this unit. Also found three untracked `icons/icon-{16,48,128}.png` files (hyphenated names, differ in content from the committed `icon{16,48,128}.png`) that appeared on disk during this session's tooling runs, origin unclear — left untracked, not committed, flagged for follow-up investigation.
+**Files:** CWS-LISTING.md, PRIVACY.md, SUBMIT.md, cws-shots/ (12 files), manifest.json (1.0.29 → 1.0.30)
+
 ## 2026-07-08: P0-7-sweep-2 — track shared-lib files sitting untracked on disk
 
 **Problem:** `lib/lovespark-badge.js`, `lifecycle.js`, `popup.js`, `stats.js`, `lovespark-tokens.css` already existed on disk (byte-identical to canonical `Extensions/infrastructure/lovespark-shared-lib/`) but were never `git add`ed — they weren't referenced in `popup.html` either, so this is unused-but-present shared-lib boilerplate (not a functional gap). `lib/lovespark-base.css`, `lovespark-footer.css`, `lovespark-theme.js`, and `popup.css` also had uncommitted working-tree diffs, already matching canonical.
