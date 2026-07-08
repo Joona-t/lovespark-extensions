@@ -64,7 +64,7 @@
     </div>
 
     <!-- Optional note -->
-    <div class="note-section" id="noteSection" hidden>
+    <div class="note-section" id="noteSection" hidden aria-live="polite">
       <input type="text" id="noteInput" class="note-input" placeholder="Quick note (optional)..."
              aria-label="Mood note" maxlength="140" autocomplete="off">
       <button id="saveBtn" class="btn-save" aria-label="Save mood entry">Save</button>
@@ -72,8 +72,8 @@
 
     <!-- Today's check-in confirmation -->
     <div class="checkin-confirm" id="checkinConfirm" hidden aria-live="polite">
-      <span id="confirmEmoji" class="confirm-emoji" aria-hidden="true"></span>
-      <span id="confirmText" class="confirm-text"></span>
+      <span id="confirmEmoji" class="confirm-emoji" aria-hidden="true" aria-live="polite"></span>
+      <span id="confirmText" class="confirm-text" aria-live="polite"></span>
     </div>
 
     <!-- Week garden -->
@@ -95,7 +95,7 @@
       </div>
     </div>
 
-    <div id="footerMount"></div>
+    <div id="footerMount" aria-live="polite"></div>
   </div>
 
   <script src="lib/lovespark-theme.js"></script>
