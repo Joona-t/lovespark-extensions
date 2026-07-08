@@ -385,7 +385,7 @@ def gen_coquette_ribbon():
     p_def = svg(
         f'<path d="{ARROW}" fill="url(#coq_pt)" stroke="#A06080" stroke-width="0.7" stroke-linejoin="round"/>'
         '<ellipse cx="6.8" cy="6.5" rx="0.6" ry="1.8" fill="#FFFFFF" opacity="0.7"/>'
-        + _coq_mini_bow(5, 22.5, scale=1.0, delay="0s")
+        + _coq_mini_bow(25.5, 26.5, scale=1.0, delay="0s")
         + _coq_pearl(22, 9, scale=1.0, delay="0.15s")
         + _coq_pearl(26, 18, scale=0.85, delay="0.3s"),
         p_defs + defs
@@ -833,7 +833,7 @@ def gen_heart_locket():
     # plus 2 staggered mini hearts rising in the free zone right of the arrow.
     p_def = svg(
         '<path d="M 8 8 L 8 24 L 11.5 20.5 L 14 26 L 16.5 25 L 14 19.5 L 19 19.5 Z" fill="url(#loc_pt)" stroke="#A04A6E" stroke-width="0.7" stroke-linejoin="round"/>'
-        '<g transform="translate(7 5)"><g>'
+        '<g transform="translate(5 26) scale(0.9)"><g>'
         + anim_scale("1 1; 1.2 1.2; 1 1; 1.12 1.12; 1 1", "0.9s")
         + '<path d="M 0 1 C -1 -1.5, -3.2 -1.2, -3.2 1.2 C -3.2 3.2, 0 5.5, 0 5.5 C 0 5.5, 3.2 3.2, 3.2 1.2 C 3.2 -1.2, 1 -1.5, 0 1 Z" fill="url(#loc_shine)" stroke="#A04A6E" stroke-width="0.5"/>'
         '<circle cx="0" cy="2" r="0.7" fill="#FF8FA8"/>'

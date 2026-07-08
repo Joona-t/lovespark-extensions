@@ -2,6 +2,11 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.37] - 2026-07-08
+- Owner placement feedback: heart-locket's beating locket heart moved from the
+  arrow's top-left to its bottom-left; coquette-ribbon's fluttering bow moved
+  from bottom-left to bottom-right, under the drifting pearls.
+
 ## [1.1.36] - 2026-07-08
 - **"Alive" update**: every Y2K pack now has 2-3 animated companion assets in the
   cyber-butterfly style (SMIL — animates while the cursor moves in Chrome; perfect
