@@ -132,3 +132,11 @@ BRAND-TOKEN-DRIFT residual is gone.
 by construction; future token edits go through `tokens.json` → `generate-tokens.py` → sync.
 The design-tokens pipeline itself is now version-controlled in `Joona-t/lovespark-suite`
 (`design-tokens/`).
+
+**Correction (2026-07-09, sweep session):** ITER-003 above described the 17 fixed HTML
+references as "duplicate/dead" — the two focus-blossom ones were neither: that settings
+page loads tokens.css directly as its ONLY token source (no base.css), and the "dead
+link" impression came from a locally-deleted lib file the fleet sync later restored.
+Those two removals were reverted (files match origin/main again); the fleet guard's
+Gate 4 was refined to flag only true double-loads (suite BUG-003 / lovespark-suite PR #4).
+The other 15 true double-loads landed as per-repo PRs in the 2026-07-09 sweep.
