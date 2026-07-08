@@ -11,6 +11,14 @@ Log every bug fix and iteration with date, problem, root cause, and fix.
 **Fix:**
 -->
 
+## 2026-07-08 — P2-sync-4: token re-sync after canonical contrast fix, README/BUGS governance pass, bump to 1.0.3
+
+**Problem:** `lib/lovespark-tokens.css` had drifted from canonical `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` — the shared-lib copy carries the KI-002/003/004 contrast fixes referenced (but not yet landed) in the R-cws-a11y-4 entry below, which at the time only noted the fleet-wide A11Y-CONTRAST fail as unfixable-from-here.
+**Root cause:** Same fleet-wide gap: the canonical contrast fix landed in the shared-lib repo directly, without a `sync-shared-lib.sh` pass reaching this extension's `lib/` copy.
+**Fix:** Copied canonical `lovespark-tokens.css` into `lib/`. Upgraded README.md to the fleet quality template (Features/Install/Privacy/License, matching `lovespark-med-tracker`'s README) — prior README had Features + License only, no Install or Privacy sections. Bumped manifest to 1.0.3, rebuilt CWS/AMO zips.
+**Result:** `ls-check .` is 37 pass / 1 fail / 3 warn. The 1 fail (`BRAND-TOKEN-DRIFT`) is the same fleet-wide `design-tokens/tokens.json`-vs-canonical-CSS generator gap the R-cws-a11y-4 entry below already identified (there named `A11Y-CONTRAST`) — confirmed still not fixable from this repo. The 3 warns (`A11Y-KI004` content-script overlay opacity, `BRAND-DEAD-LIB` unused shared-lib helpers, `MV3-STORAGE-KEY` computed-property false positive) are the exact same three the R-cws-a11y-4 entry below already investigated and documented as false positives / justified design choices — re-verified, still correct, left as-is.
+**Files:** lib/lovespark-tokens.css, README.md, manifest.json (1.0.2 → 1.0.3)
+
 ## 2026-07-08 — R-cws-a11y-4: real a11y fixes + footer sync, bump to 1.0.2
 
 **Problem:** `ls-check .` failed A11Y-KI001 (`--ls-pink-accent` used directly as the Save button's background gradient with white text — fails WCAG contrast, per color-decisions.md the pairing is 2.58–3.77:1 depending on theme, needs 4.5:1). `lib/` was also missing `lovespark-footer.css`/`lovespark-footer.js` (present in every sibling extension), and several strict-mode warns were open: no CSP in manifest, `sendMessage` calls without error handling in popup.js/content.js, missing README/LICENSE, missing `aria-live` on the theme label.

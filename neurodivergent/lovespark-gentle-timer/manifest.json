@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Gentle Timer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gentle time awareness for ADHD brains. See how long you've been on a site — no shame, just awareness.",
   "permissions": ["storage", "alarms", "activeTab", "tabs"],
   "content_security_policy": {
