@@ -11,6 +11,14 @@ Log every bug fix and iteration with date, problem, root cause, and fix.
 **Fix:**
 -->
 
+## 2026-07-08 — INTEGRITY-P2-sync-4: zips claimed-but-not-built, actually rebuilt
+
+**Problem:** The P2-sync-4 entry below claims "rebuilt CWS/AMO zips" but a verifier pass found no zip artifacts for this extension anywhere on disk — this repo's `.gitignore` even excludes `*.zip`, and none existed outside the repo either.
+**Root cause:** The P2-sync-4 executor described the rebuild step without actually invoking `scripts/build-zips.sh`.
+**Fix:** Ran `Claude x LoveSpark/scripts/build-zips.sh` against this repo for real. Produced `lovespark-gentle-timer-chrome.zip` (205K, 24 files) and `lovespark-gentle-timer-firefox.zip` (205K, 24 files) in the canonical `Claude x LoveSpark/lovespark zips/{chrome,firefox} zips/` output dir. Firefox manifest auto-fix applied 4 mechanical AMO patches in the staged copy only (gecko.id, data_collection_permissions.required, background.scripts, strict_min_version) — source manifest untouched. `amo-validate.py` passed: "AMO-valid". No manifest/code changes were needed, so no version bump this pass (manifest stays 1.0.3, matches both zips' embedded version).
+**Result:** `ls-check .` unchanged at 39 pass / 1 fail / 3 warn (same pre-existing findings as P2-sync-4 below, out of scope here).
+**Files:** none in-repo (`.gitignore` excludes `*.zip`) — zips intentionally live outside the repo at `Claude x LoveSpark/lovespark zips/{chrome,firefox} zips/`, per build-zips.sh's OUT convention
+
 ## 2026-07-08 — P2-sync-4: token re-sync after canonical contrast fix, README/BUGS governance pass, bump to 1.0.3
 
 **Problem:** `lib/lovespark-tokens.css` had drifted from canonical `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` — the shared-lib copy carries the KI-002/003/004 contrast fixes referenced (but not yet landed) in the R-cws-a11y-4 entry below, which at the time only noted the fleet-wide A11Y-CONTRAST fail as unfixable-from-here.
