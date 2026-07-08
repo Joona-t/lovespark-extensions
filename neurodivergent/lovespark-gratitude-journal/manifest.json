@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Gratitude Journal",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "description": "Write 3 things you're grateful for each day. Watch your garden grow with consistency. Quick micro-gratitude for ADHD brains. No account, always free.",
   "icons": {
     "16": "icons/icon-16.png",
