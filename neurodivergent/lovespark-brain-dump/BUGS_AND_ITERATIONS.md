@@ -46,3 +46,10 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-07-08: R-cws-a11y-3 — restore BRAND-LIB-SYNC (lovespark-tokens.css)
+
+**Problem:** `ls-check .` failed `BRAND-LIB-SYNC` — `lib/lovespark-tokens.css` was missing locally, blocking the CWS submission gate (`ls-check . --gate cws`).
+**Root cause:** `lib/lovespark-tokens.css` was never synced into this repo's `lib/` (or was dropped in a prior dead-file cleanup pass); `ls-check`'s `BRAND-LIB-SYNC` check requires the full 7-file canonical shared-lib set present and byte-identical regardless of HTML usage (unused-file cleanup is a separate, non-blocking `BRAND-DEAD-LIB` warning).
+**Fix:** Copied `lovespark-tokens.css` back from canonical `Extensions/infrastructure/lovespark-shared-lib/` (byte-identical, verified via md5) — did not run the fleet-wide `sync-shared-lib.sh` since it walks every extension under `Extensions/` and this unit is scoped to 6 repos only. Also confirmed `A11Y-CONTRAST` (3 failures: beige hint-text opacity, slate muted-on-glass-strong, slate slider-thumb-on-track — KI-002/003/004) is a fleet-wide defect in canonical `lovespark-shared-lib/lovespark-tokens.css` itself (reproduced with `--hardcoded` fallback passing clean, proving the live canonical values are the actual regression, not a per-repo issue) — out of scope for this repo, flagged separately for the `lovespark-shared-lib` repo.
+**Files:** lib/lovespark-tokens.css (restored), manifest.json (1.0.32 → 1.0.33)
