@@ -27,8 +27,26 @@
     bindEvents();
   }
 
+  /* Wraps chrome.runtime.sendMessage so a closed popup / SW respawn
+     ("Extension context invalidated") never throws an uncaught error. */
+  function sendBg(msg, callback) {
+    try {
+      chrome.runtime.sendMessage(msg, function (resp) {
+        if (chrome.runtime.lastError) {
+          console.warn('[LoveSpark Calm] sendMessage error:', chrome.runtime.lastError.message);
+          if (callback) callback(null);
+          return;
+        }
+        if (callback) callback(resp);
+      });
+    } catch (err) {
+      console.warn('[LoveSpark Calm] sendMessage error:', err.message);
+      if (callback) callback(null);
+    }
+  }
+
   function loadState() {
-    chrome.runtime.sendMessage({ action: 'getState' }, function (resp) {
+    sendBg({ action: 'getState' }, function (resp) {
       if (!resp) return;
 
       calmToggle.checked = resp.enabled;
@@ -85,7 +103,7 @@
     calmToggle.addEventListener('change', function () {
       var enabled = calmToggle.checked;
       updateToggleStatus(enabled);
-      chrome.runtime.sendMessage({
+      sendBg({
         action: 'toggleCalm',
         enabled: enabled,
         intensity: currentIntensity
@@ -122,7 +140,7 @@
     currentIntensity = level;
     updateIntensityUI(level);
     updatePreview(level);
-    chrome.runtime.sendMessage({
+    sendBg({
       action: 'changeIntensity',
       intensity: level
     });
@@ -133,7 +151,7 @@
     var mode = btn.getAttribute('data-mode');
     updateSiteUI(mode);
     if (currentDomain) {
-      chrome.runtime.sendMessage({
+      sendBg({
         action: 'setSiteOverride',
         domain: currentDomain,
         mode: mode
