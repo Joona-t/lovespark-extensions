@@ -66,3 +66,11 @@
 **Fix:** Copied the 4 missing files byte-for-byte from the canonical shared-lib (verified clean/unmodified in the canonical repo's working tree before copying, so no in-progress canonical edits were pulled in). BRAND-LIB-SYNC now passes. Bumped manifest.json patch version and rebuilt CWS/AMO zips. A11Y-CONTRAST remains failing pending the separate shared-lib fix tracked in meta_implementation.md item 7.
 **Files:** lib/lovespark-stats.js, lib/lovespark-badge.js, lib/lovespark-popup.js, lib/lovespark-lifecycle.js, manifest.json, *-chrome.zip, *-firefox.zip
 **Commit:** unit R-cws-a11y-2
+
+## 2026-07-08: ITER-A11Y-3 — token re-sync closes the fleet-wide contrast gate (P2-sync-2)
+
+**Problem:** `ls-check .` was still failing A11Y-CONTRAST (3 fleet-wide beige/slate failures: KI-002 slate muted-on-glass-strong 4.17:1, KI-003 slate slider-thumb-on-track 2.65:1, KI-004 beige hint-text 4.26:1), tracked since the previous unit as an out-of-scope canonical issue.
+**Root cause:** The contrast values are baked into `Extensions/infrastructure/lovespark-shared-lib/lovespark-tokens.css` and are identical for every fleet repo; the fix could only land by editing that canonical file, which sits outside this repo's boundary. A sibling unit landed the canonical fix (shared-lib commit 41b43cc, `BUG-002 / KI-002, KI-003, KI-004`) during this pass.
+**Fix:** Synced the corrected `lovespark-tokens.css` from canonical into `lib/`. `ls-check .` no longer fails A11Y-CONTRAST. A **new** canonical-level check, BRAND-TOKEN-DRIFT, surfaced as a side effect: the shared-lib fix was hand-applied to the CSS without regenerating `design-tokens/generated/lovespark-tokens.css` from `design-tokens/tokens.json` (the source-of-truth primitives `earth-dark`/`slate-border`/`gray-muted` still hold the old, pre-fix hex values). That generator pipeline lives outside every extension repo's boundary (it isn't a git repo at all) and is not this unit's to fix — flagging it as the new fleet-wide follow-up item, replacing the now-resolved A11Y-CONTRAST tracking note. Verified no other shared-lib file has drifted from canonical. Bumped manifest.json patch version and rebuilt CWS/AMO zips via `scripts/build-zips.sh` (Firefox zip passed `amo-validate.py`).
+**Files:** lib/lovespark-tokens.css, manifest.json, *-chrome.zip, *-firefox.zip
+**Commit:** unit P2-sync-2
