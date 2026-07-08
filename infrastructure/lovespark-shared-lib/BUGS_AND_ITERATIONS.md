@@ -97,3 +97,38 @@ still stands.
 theme token change must run `audit-contrast.py --verbose --history` before commit; `--history`
 now has a green baseline (2026-07-08) so any new regression trips the "REGRESSIONS DETECTED"
 block on the next run.
+
+---
+
+## 2026-07-09 — Token pipeline reconciled: canonical CSS is now regenerable from tokens.json (ITER-003)
+
+**Problem:** The design-token generator (`Claude x LoveSpark/design-tokens/`) last really
+regenerated 2026-03-23; this canonical `lovespark-tokens.css` evolved by hand since (BUG-002's
+KI-002/003/004 fixes plus four earlier hand-tuned values: retro `--ls-text-muted` #9e4d6e,
+beige `--ls-pink-deep` #a86c56, slate `--ls-pink-deep` #e8926e, and beige's decoupled
+`--ls-white`). ls-check's BRAND-TOKEN-DRIFT md5-compares generated vs canonical and failed
+fleet-wide as a 1-fail residual in otherwise-green repos. Naive regeneration was impossible:
+the generator derived `--ls-white` from `text.dark` (so the KI-004 fix would wrongly cascade),
+couldn't emit the inline KI comments, and stamped a timestamp that made md5 comparison
+unstable.
+
+**Decision:** This hand-tuned canonical file (80/80 in `audit-contrast.py`) is the source of
+truth. Its values were back-ported into `tokens.json` v1.1.0; the generator was extended
+(commented-token form `{"value","comment"}`, theme-level `"white"` override, deterministic
+no-timestamp output); two stale generator contrast pairings that the fleet gate of record
+never checks (muted-on-raw-bg, white-on-pink-deep) were replaced with the gate's actual model
+(muted on glass/glass-strong composited). Regenerated output is now byte-identical to this
+file (md5 d027677ea65e507e85c9c6b50611aa17) — the only content change here is the header
+(v1.1.0, timestamp line dropped); **zero visible theme colors changed**.
+
+**Verification:** generator self-tests 27/27; generator contrast 24/24;
+`audit-contrast.py --verbose --history` 80/80 (retro 19, dark 19, beige 21, slate 21, exit 0);
+`sync-shared-lib.sh` propagated fleet-wide (guard green after fixing the 17 popup.html
+duplicate/dead `lovespark-tokens.css` links flagged by Gate 4); `ls-check` on
+lovespark-breathe (41 pass, 0 fail) and lovespark-task-anchor (42 pass, 0 fail) — the
+BRAND-TOKEN-DRIFT residual is gone.
+
+**Prevention:** Generated CSS carries no timestamp, so BRAND-TOKEN-DRIFT's md5 gate is stable
+by construction; future token edits go through `tokens.json` → `generate-tokens.py` → sync.
+The design-tokens pipeline itself is now version-controlled in `Joona-t/lovespark-suite`
+(`design-tokens/`).
