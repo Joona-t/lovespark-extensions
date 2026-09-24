@@ -46,3 +46,5 @@
 **Verification:** In the browser fixture, the unfixed script kept `scrollY=0` with the banner hidden. The updated script was exercised against body, HTML-root, and fixed-position locks; a separate modal kept scrolling blocked while open and scrolling resumed after close. Auto-decline clicked Reject all once, removed the banner, and allowed scrolling. A root lock with no consent element remained untouched. `node --check content.js` and `git diff --check` passed. This fixture does not establish behavior on a named live news site or an installed-store version.
 
 **Files:** `content.js`, `manifest.json`, `tests/scroll-lock-fixture.html`.
+
+**Release state:** Version `1.0.38` was packaged and the code pushed to `Joona-t/I-Dont-Want-Cookies` `main` on 2026-09-24. The Chrome Web Store dashboard upload and submit-for-review steps remain unverified because browser automation refused the extension gallery and the in-app browser was not signed in.
