@@ -34,3 +34,15 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-09-24: Hidden cookie banner leaves article scroll locked
+
+**Problem:** The user reported that some news pages stop scrolling after this extension handles the cookie banner. A local browser fixture reproduced the failure: the OneTrust-shaped banner was hidden, but scrolling remained at `scrollY=0`.
+
+**Confirmed root cause:** The extension's early CSS and content script hide the consent element without undoing a later `overflow-y: hidden !important` written inline on `<body>` or `<html>` by the consent manager. The existing class-specific stylesheet override cannot beat an inline important declaration. This diagnosis is confirmed for the DOM fixture; the user did not provide an affected news URL, so no specific publisher implementation is claimed.
+
+**Fix:** Once the content script has hidden a known consent element, it removes inline hidden overflow and fixed-position locks from `<html>` or `<body>`, watches later root style changes for five seconds, and leaves visible non-consent dialogs alone. Once a consent element is removed, it clears any remaining lock once and stops attributing later locks to consent. Removing the CMP's inline property lets later site modal styles work normally; the short window avoids touching unrelated dialogs opened later on the page.
+
+**Verification:** In the browser fixture, the unfixed script kept `scrollY=0` with the banner hidden. The updated script was exercised against body, HTML-root, and fixed-position locks; a separate modal kept scrolling blocked while open and scrolling resumed after close. Auto-decline clicked Reject all once, removed the banner, and allowed scrolling. A root lock with no consent element remained untouched. `node --check content.js` and `git diff --check` passed. This fixture does not establish behavior on a named live news site or an installed-store version.
+
+**Files:** `content.js`, `manifest.json`, `tests/scroll-lock-fixture.html`.
