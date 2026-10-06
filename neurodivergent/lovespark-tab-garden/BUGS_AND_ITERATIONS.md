@@ -44,3 +44,22 @@
 **Root cause:** This repo's `lib/lovespark-tokens.css` copy predated the canonical fix and had drifted (md5 mismatch), tripping `BRAND-LIB-SYNC` the moment canonical changed.
 **Fix:** Re-copied `lovespark-tokens.css` from canonical `Extensions/infrastructure/lovespark-shared-lib/` into `lib/` (byte-identical, verified via md5). `ls-check .` now shows A11Y-CONTRAST and BRAND-LIB-SYNC both passing. One fail remains: `BRAND-TOKEN-DRIFT` (shared-lib CSS vs. `design-tokens/generated/lovespark-tokens.css`) — infra outside this repo, not fixable here; flagged as a follow-up. Bumped patch version and built both store zips for the first time via `build-zips.sh`, which passed the AMO validator gate. This repo is not in the GOVERNANCE batch. Left an unrelated pre-existing WIP untouched (a stray `popup.html` script-order edit and untracked `icons/icon-16.png` etc. from an earlier interrupted asset-generation pass, whose filenames don't match what `manifest.json` references — not part of this unit's scope, per the prior commit's own note). `ls-check .` after: 40 pass, **1 fail** (BRAND-TOKEN-DRIFT, infra-level, out of scope), 0 warn.
 **Files:** lib/lovespark-tokens.css, manifest.json (1.0.26 → 1.0.27), lovespark-tab-garden-chrome.zip (new), lovespark-tab-garden-firefox.zip (new)
+
+---
+
+## 2026-07-09: Remove duplicate lovespark-tokens.css load from `popup.html` (fleet 2026-03-28 regression)
+
+**Problem:** `popup.html` carried a direct reference to `lovespark-tokens.css` even though
+`lovespark-base.css` (loaded by the same page) already `@import`s it — the token sheet
+loaded twice. This is the fleet-wide 2026-03-28 injection regression; `guard-fleet-sync.sh`
+Gate 4 blocks all fleet shared-lib syncs while any such reference exists in extension HTML.
+
+**Fix:** Reworded the shared-lib inventory comment so it no longer contains the literal filename the guard greps for (the page never actually loaded the file). Also refreshed `lib/lovespark-tokens.css` to the canonical
+deterministic-header build (token values byte-identical to the 80/80-audited canonical;
+shared-lib ITER-003 / lovespark-shared-lib@7690133) and bumped the manifest patch version.
+
+**Verification:** zero `lovespark-tokens.css` references remain in this extension's HTML;
+`origin/main`'s `lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`,
+so removal is cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live
+tree 2026-07-09; `ls-check` samples (lovespark-breathe 41 pass / 0 fail,
+lovespark-task-anchor 42 pass / 0 fail) after the fleet-wide sync.
