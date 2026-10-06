@@ -75,3 +75,10 @@ hardcoding v1.0.0. Bump to v1.0.6.
 **Fix:** `git rm --cached` the tracked `*-chrome.zip`/`*-firefox.zip` from the repo root, deleted them from disk, added `*.zip` to `.gitignore` so build output never gets re-committed. Reran `scripts/build-zips.sh` — output zip size dropped from 4.17M→1.3M, Firefox zip passed `amo-validate.py`. Verified `ls-check .` is otherwise unchanged (BRAND-TOKEN-DRIFT remains the sole residual fail, root-caused in ITER-A11Y-3 as a `design-tokens/tokens.json` vs. hand-patched canonical CSS mismatch — that pipeline isn't a git repo and sits outside every extension repo's boundary, not this unit's to fix; flagged for a dedicated follow-up).
 **Files:** .gitignore, *-chrome.zip (untracked), *-firefox.zip (untracked)
 **Commit:** unit P2-sync-2
+
+## 2026-10-07: BUG-001 — orphan `popup/lib/` duplicate footer files shipped in package
+**Problem:** `popup/lib/lovespark-footer.css` + `popup/lib/lovespark-footer.js` were a second, stale copy of the shared footer (`.ls-suite-btn` kept `opacity: 0.75` instead of the canonical `text-decoration: underline`). Nothing referenced them — `popup/popup.html` loads `../lib/lovespark-footer.*` — yet they were packed into every CWS/AMO zip and tripped the `A11Y-KI004` low-opacity warning in `ls-check .`.
+**Root cause:** Commit 956ed1e (CSO F4 hardening) added the pair under `popup/lib/` while the live copy already lived in `lib/`; the duplicate was never wired or removed.
+**Fix:** Deleted both orphan files; bumped manifest.json 1.0.39 → 1.0.40. Reproducible check: `grep -rn "popup/lib" --include='*.html' --include='*.js' --include='*.json' . ; ls popup/lib` → no references, directory gone; `ls-check .` → 0 fail, A11Y-KI004 warning no longer reported.
+**Files:** popup/lib/lovespark-footer.css (deleted), popup/lib/lovespark-footer.js (deleted), manifest.json, BUGS_AND_ITERATIONS.md
+**Commit:** BUG-001
