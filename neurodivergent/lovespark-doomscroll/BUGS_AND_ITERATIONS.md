@@ -1,5 +1,15 @@
 # Bugs & Iterations
 
+## 2026-10-07: BUG-001 — theme dropdown `aria-expanded` never updated (static "false")
+
+**Problem:** PR #1 added `aria-expanded="false"` to `#themeToggle` in `popup.html` to satisfy the A11Y-EXPANDED check, but nothing ever flipped it: `popup.js`'s hand-rolled dropdown only toggles `.open` on `#themeMenu`, and `lib/lovespark-theme.js` (newly loaded) is inert (never `init()`'d, and doesn't touch the attribute either). Screen readers were told the theme menu was collapsed while it was open.
+
+**Root cause:** attribute added statically to pass a lint check without wiring it to the dropdown's state transitions (open via trigger, close via trigger / outside click / option pick).
+
+**Fix:** `popup.js` `initThemeDropdown()` now calls `syncExpanded()` after every `menu.classList` mutation so `aria-expanded` mirrors `menu.classList.contains('open')`. Regression test: `tests/popup-aria.test.js` runs `popup.js` in a `node:vm` fake DOM and asserts all four transitions. Manifest bumped 0.1.38 → 0.1.39.
+
+**Check:** `node --test "tests/**/*.test.js"` → 4 pass, 0 fail. On the pre-fix `popup.js` the open-state test fails (1 fail), proving the test catches the defect.
+
 ## 2026-07-08: P0-7-sweep-2 — reconcile shared-lib working copy with canonical
 
 **Problem:** `lib/lovespark-*.{css,js}` on disk already matched canonical `Extensions/infrastructure/lovespark-shared-lib/` byte-for-byte, but the sync was never committed — six files sat as uncommitted working-tree diffs against the last committed (stale) copies, plus `lib/lovespark-tokens.css` was present but untracked.

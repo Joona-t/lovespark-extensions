@@ -17,7 +17,9 @@ function applyTheme(t) {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    // Keep aria-expanded in sync with the menu's real open state (BUG-001).
+    const syncExpanded = () => toggle.setAttribute('aria-expanded', String(menu.classList.contains('open')));
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); syncExpanded(); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
@@ -25,8 +27,9 @@ function applyTheme(t) {
       applyTheme(theme);
       chrome.storage.local.set({ theme });
       menu.classList.remove('open');
+      syncExpanded();
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => { menu.classList.remove('open'); syncExpanded(); });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
