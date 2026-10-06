@@ -1,6 +1,6 @@
 # Privacy Policy — LoveSpark Task Anchor
 
-**Effective date:** 2026-07-08 · **Applies to version:** 1.0.14
+**Effective date:** 2026-07-08 · **Applies to version:** 1.0.15
 
 LoveSpark Task Anchor is built privacy-first. It runs entirely on your device. It does not have a server, does not collect personal data, and does not transmit anything you do to anyone. This policy explains exactly what that means.
 

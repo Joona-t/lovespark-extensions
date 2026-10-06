@@ -1,6 +1,6 @@
 # Submit: LoveSpark Task Anchor
 
-> Version **1.0.12** · [repo](https://github.com/Joona-t/lovespark-task-anchor) · Goal: submit to CWS in ~5 min without re-reading `CWS-LISTING.md`.
+> Version **1.0.15** · [repo](https://github.com/Joona-t/lovespark-task-anchor) · Goal: submit to CWS in ~5 min without re-reading `CWS-LISTING.md`.
 
 ## CWS form field → source
 
@@ -33,7 +33,7 @@ All assets live in `~/Downloads/lovespark-task-anchor-cws-assets`.
 
 **Pre-submit checkboxes (tick during upload):**
 
-- [ ] Version is bumped (`1.0.12`)
+- [ ] Version is bumped (`1.0.15`)
 - [ ] Permissions match justifications
 - [ ] Privacy form: all "Not collected"
 - [ ] Privacy policy URL set

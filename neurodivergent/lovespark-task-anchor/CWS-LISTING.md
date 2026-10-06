@@ -13,7 +13,7 @@ Task Anchor is a deliberately small focus tool. You type your current task, clic
 
 This is a single-task focus tool on purpose. Working memory loss and task-switching are real costs for ADHD and neurodivergent brains, and "do one task at a time" only works if that task stays visible. Task Anchor keeps your focus anchor in reach without timers, streaks, blockers, or guilt.
 
-Built neurodivergent-first by a neurodivergent developer, it uses the **OpenDyslexic** font, a soft retro-pink theme, full keyboard navigation, reduced-motion support, and WCAG-AA contrast — so the tool that's supposed to reduce friction doesn't add any.
+Built neurodivergent-first by a neurodivergent developer, it uses clear, high-contrast monospace typography, a soft retro-pink theme, full keyboard navigation, reduced-motion support, and WCAG-AA contrast — so the tool that's supposed to reduce friction doesn't add any.
 
 **Features**
 - 📌 **Pin your current task** as a persistent reminder that survives new tabs and browser restarts
@@ -22,7 +22,7 @@ Built neurodivergent-first by a neurodivergent developer, it uses the **OpenDysl
 - 🔖 **Toolbar badge indicator** shows at a glance that an anchor is set
 - 🧠 **One task at a time** by design — a focus anchor, not another overflowing to-do list
 - ✏️ **Edit or clear** your task in a tap when you finish or switch
-- ♿ **Accessible by default** — OpenDyslexic font, keyboard-friendly, reduced-motion, high-contrast retro-pink UI
+- ♿ **Accessible by default** — keyboard-friendly, reduced-motion, high-contrast retro-pink UI with clear monospace typography
 - 🔒 **Zero data collection** — everything stays on your device in local storage
 
 **Free, open source, and private.** Task Anchor is MIT-licensed and completely free, with no ads, no accounts, and no tracking. It stores your pinned task only in your browser's local storage and transmits absolutely nothing externally — there are no servers to send anything to. You can read every line of code at https://github.com/Joona-t/lovespark-task-anchor.

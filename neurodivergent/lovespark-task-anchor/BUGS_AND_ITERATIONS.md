@@ -1,5 +1,19 @@
 # BUGS_AND_ITERATIONS.md — LoveSpark Task Anchor
 
+## 2026-10-07 — BUG-001: CWS listing claimed OpenDyslexic font; SUBMIT/PRIVACY carried stale version strings
+
+**Problem:** `CWS-LISTING.md` (detailed description + Features bullet) stated the extension "uses the **OpenDyslexic** font". The extension ships no OpenDyslexic — `git grep -i opendyslexic` over the tracked tree hits only the listing itself; the UI uses the LoveSpark design-system tokens (`--ls-font-body: 'DM Mono', monospace`, no bundled `@font-face`, CSP `font-src 'self'`). A store listing making a false accessibility claim is a CWS review / user-trust liability. Separately, `SUBMIT.md` said "Version **1.0.12**" (twice) and `PRIVACY.md` said "Applies to version: 1.0.14" while `manifest.json` is 1.0.15.
+**Root cause:** `fleet-to-store` generated the listing from suite-wide boilerplate (OpenDyslexic is the *native-app* default per CLAUDE.md rule 12; extensions follow the design system) and `SUBMIT.md` was generated before the 1.0.14/1.0.15 bumps without being re-synced.
+**Fix:** Reworded the two listing sentences to describe the actual typography ("clear, high-contrast monospace typography"); synced `SUBMIT.md` and `PRIVACY.md` version strings to 1.0.15. Docs only — no code change, no manifest bump.
+**Regression check (no test harness in this repo; run from repo root, exit 0 = pass):**
+```sh
+! grep -qi opendyslexic CWS-LISTING.md PRIVACY.md SUBMIT.md \
+  && v=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])") \
+  && grep -q "Version \*\*$v\*\*" SUBMIT.md \
+  && grep -q "Applies to version:\*\* $v" PRIVACY.md && echo PASS
+```
+**Files:** CWS-LISTING.md, SUBMIT.md, PRIVACY.md
+
 ## 2026-07-08 — INTEGRITY-P2-sync-4: zips claimed-but-not-built, actually rebuilt
 
 **Problem:** The P2-sync-4 entry below claims "rebuilt CWS/AMO zips" but a verifier pass found no zip artifacts for this extension anywhere on disk — the claim was false, no zip had actually been produced.
