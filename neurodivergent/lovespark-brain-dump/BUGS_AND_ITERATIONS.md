@@ -1,5 +1,14 @@
 # LoveSpark Brain Dump - Bugs and Iterations
 
+## BUG-001 (2026-10-07): theme dropdown dead — popup.html IDs never matched lib/lovespark-theme.js
+
+**Problem:** Clicking the "Change theme" button in the popup did nothing; only the default retro theme was ever reachable (the stored `theme` still applied on load, but no menu could open to change it).
+**Root cause:** `popup.html` declared `id="themeDropdownTrigger"` / `id="themeDropdownMenu"`, while the canonical shared `lib/lovespark-theme.js` `init()` looks up `document.getElementById('themeToggle')` / `('themeMenu')` and silently skips wiring when either is null (`if (toggle && menu) { ... }`). Nothing else in the repo wired those IDs (`grep -n themeDropdown popup.js lib/*.js` → 0 hits). Present since the initial commit; found during PR #1 verification because the PR ships store zips built from this markup. `ls-check` could not see it (its dropdown check only inspects `aria-expanded`).
+**Fix:** Renamed the two IDs in `popup.html` to the canonical `themeToggle` / `themeMenu` (same convention as e.g. lovespark-cookie-nuke); CSS hooks are class-based (`.theme-dropdown-trigger`, `.theme-dropdown-menu.open`) so no style change was needed. Added `tests/test_popup_wiring.py`, which asserts every ID `lib/lovespark-theme.js` looks up exists in `popup.html` (fails on the old markup: 2 failures; passes after: 2 OK). Bumped manifest 1.0.35 → 1.0.36.
+**Check command:** `python3 -m unittest discover -s tests -v`
+**Not fixed here (follow-ups):** (1) `popup.html` links `lib/lovespark-fonts.css`, which this repo never had — canonical `lovespark-shared-lib` ships `lovespark-fonts.css` + `fonts/` (~1.2 MB, 51 woff2); until synced via `scripts/sync-shared-lib.sh`, DM Mono / Press Start 2P / Lora fall back to system `monospace` / `cursive` / `serif`. (2) The committed `*-chrome.zip` / `*-firefox.zip` are at 1.0.35 and contain the previous build's zips nested inside themselves plus `SUBMIT.md` with local `/Users/...` paths — rebuild with `scripts/build-zips.sh` before any store upload.
+**Files:** popup.html, manifest.json (1.0.35 → 1.0.36), CHANGELOG.md, tests/test_popup_wiring.py
+
 ## 2026-07-08: P0-4-commit-4 — commit CWS/AMO submission bundle, bump to 1.0.32, build store zips
 
 **Problem:** `fleet-to-store` had generated `CWS-LISTING.md`, `PRIVACY.md`, `SUBMIT.md`, and `cws-shots/` (12 CWS visual assets) on disk but they were never committed, and `manifest.json` had been bumped to 1.0.32 locally without a commit.

@@ -1,5 +1,9 @@
 # Changelog — LoveSpark Brain Dump
 
+## 1.0.36 — 2026-10-07 — Fix dead theme dropdown (BUG-001)
+- `popup.html` used `id="themeDropdownTrigger"` / `id="themeDropdownMenu"`, but the shared `lib/lovespark-theme.js` wires `#themeToggle` / `#themeMenu` — so `init()` found neither and the "Change theme" button did nothing. IDs now match the canonical fleet markup (CSS classes unchanged).
+- Added `tests/test_popup_wiring.py` regression test (`python3 -m unittest discover -s tests`).
+
 ## 1.0.35 — 2026-07-08 — Fleet token re-sync (P2-sync-3)
 - Version bump only — shared-lib tokens were already synced to canonical (KI-002/003/004 contrast fix) in a prior commit; this entry closes the QUAL-CHANGELOG-DRIFT gap and rebuilds the store zips against the current version.
 
