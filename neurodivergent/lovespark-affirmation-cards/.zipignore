@@ -1,0 +1,3 @@
+# build-zips.sh honours these rsync --exclude patterns when staging the store zips.
+# Never ship previously built zips inside a new zip (BUG-001).
+*.zip
