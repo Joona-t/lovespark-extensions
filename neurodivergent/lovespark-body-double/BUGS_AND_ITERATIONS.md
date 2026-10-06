@@ -1,5 +1,21 @@
 # LoveSpark Body Double - Bugs and Iterations
 
+## 2026-10-07: BUG-001 — missing lib/lovespark-fonts.css + recursive store zips (PR #1 verification)
+
+**Problem:** (1) `popup.html` line 8 links `lib/lovespark-fonts.css`, but that file never existed in this repo (absent since the initial commit 650afb3; `git ls-tree origin/main lib/` has no fonts.css). The popup therefore 404s the stylesheet and `--ls-font-body: 'DM Mono'` / `--ls-font-display: 'Press Start 2P'` fall back to generic `monospace`/`cursive` — brand fonts never rendered. Not caught by `ls-check` (BRAND-LIB-SYNC only compares files that are present). (2) The two store zips committed in e281798/d05559a each contained `lovespark-body-double-chrome.zip` + `lovespark-body-double-firefox.zip` (v1.0.32, 249 KB each) nested inside, and those nested zips contained 3 more zips — the 708 KB packages were ~70% stale zips, plus `CWS-LISTING.md`/`PRIVACY.md`/`SUBMIT.md`/`screenshots/`.
+**Root cause:** (1) The shared-lib sync passes copied individual `.css`/`.js` files but never `lovespark-fonts.css` + `fonts/`, unlike sibling extensions (doomscroll, calm-down-kit, Anti-Brainrot all ship the full 51-file `lib/fonts/`). (2) `scripts/build-zips.sh` stages the whole extension dir and does not exclude `*.zip`, so once a zip is left in the repo root every rebuild swallows the previous build. Committing build output to the repo (main has none) created the feedback loop.
+**Fix:** Copied canonical `lovespark-fonts.css` (byte-identical, `cmp` verified) + `lib/fonts/*.woff2` (51 files, 1.1 MB) from `Extensions/infrastructure/lovespark-shared-lib/`. `git rm`'d both zips and added `*.zip` to `.gitignore`; zips are rebuilt by `scripts/build-zips.sh` into `lovespark zips/` (where `SUBMIT.md` already points). Bumped manifest 1.0.35 → 1.0.36 + CHANGELOG. Follow-up (outside this repo): add `--exclude '*.zip'` to `build-zips.sh`'s rsync stage so this class of bug is impossible.
+**Regression check (no test harness in this repo):**
+```
+# every local asset popup.html references must exist (exit 0 = pass)
+grep -oE '(src|href)="[^"#h][^"]*"' popup.html | sed -E 's/.*="([^"]*)"/\1/' | while read f; do test -e "$f" || { echo "MISSING $f"; exit 1; }; done
+# every woff2 the font stylesheet references must exist
+grep -oE 'fonts/[a-z0-9-]+\.woff2' lib/lovespark-fonts.css | sort -u | while read f; do test -e "lib/$f" || { echo "MISSING lib/$f"; exit 1; }; done
+# no build zips tracked in git
+test "$(git ls-files '*.zip' | wc -l)" -eq 0
+```
+**Files:** lib/lovespark-fonts.css (new), lib/fonts/ (new, 51 files), lovespark-body-double-chrome.zip (deleted), lovespark-body-double-firefox.zip (deleted), .gitignore, manifest.json (1.0.35 → 1.0.36), CHANGELOG.md
+
 ## 2026-07-08: P0-7-sweep-2 — shared-lib sync + missing mascot.png + untracked project files
 
 **Problem:** `lib/lovespark-footer.css` and `lib/lovespark-theme.js` on disk already matched canonical `Extensions/infrastructure/lovespark-shared-lib/` byte-for-byte but were never committed. Two dead/unreferenced files (`lib/browser-polyfill.min.js`, `lib/lovespark-tokens.css`, neither used by any `.html`/`.js`/manifest) had already been deleted from disk but the deletion was never committed either. Separately, `popup.html` references `mascot.png` at the repo root but that file had never been committed — the extension was shipping without its own mascot per git history. `CHANGELOG.md`, `LICENSE`, and `screenshots/` (CWS listing assets) also existed on disk only, never committed.

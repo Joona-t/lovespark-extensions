@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.36] - 2026-10-07 - PR #1 verification fixes
+### Fixed
+- `popup.html` linked `lib/lovespark-fonts.css`, which was never in the repo, so the popup fell back to generic `monospace`/`cursive` instead of DM Mono / Press Start 2P. Synced canonical `lovespark-fonts.css` + `lib/fonts/` (51 woff2) per fleet convention.
+- Removed the committed store zips: both contained the previous v1.0.32 zips nested inside (which in turn nested older zips), plus marketing docs. Zips are build output (`scripts/build-zips.sh` → `lovespark zips/`), now gitignored.
+
 ## [1.0.35] - 2026-07-08 - Fleet token re-sync (P2-sync-3)
 ### Fixed
 - Version bump only — shared-lib tokens were already synced to canonical (KI-002/003/004 contrast fix) in a prior commit; this entry closes the QUAL-CHANGELOG-DRIFT gap and rebuilds the store zips against the current version.
