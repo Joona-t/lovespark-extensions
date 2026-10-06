@@ -1,0 +1,6 @@
+# LoveSpark Win Jar — per-extension build excludes (read by scripts/build-zips.sh)
+# Store submission docs: keep in repo, never ship inside the extension package.
+CWS-LISTING.md
+SUBMIT.md
+# Previously built store zips must never be nested inside a new zip.
+*.zip

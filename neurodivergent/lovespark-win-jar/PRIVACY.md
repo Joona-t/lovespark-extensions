@@ -1,7 +1,7 @@
 # Privacy Policy — LoveSpark Win Jar
 
 **Effective date:** 2026-07-08
-**Applies to version:** 1.0.30
+**Applies to version:** 1.0.34
 
 LoveSpark Win Jar is a free, open-source browser extension. Your privacy is not a feature we bolted on — it is the whole design. Everything the extension remembers stays on your own device. We do not run a server, we do not have an account system, and we have no way to see your data. This policy explains exactly what that means.
 

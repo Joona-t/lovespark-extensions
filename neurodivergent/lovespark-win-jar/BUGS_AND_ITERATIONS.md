@@ -62,3 +62,21 @@
 **Root cause:** `BRAND-TOKEN-DRIFT` is a canonical-infra gap — the KI-002/003/004 contrast fix was hand-patched directly into `lovespark-shared-lib/lovespark-tokens.css` but `design-tokens/tokens.json` (the generator source of truth, outside this unit's assigned repos) was never regenerated to match, so `generate-tokens.py`'s output no longer md5-matches canonical for any fleet repo. Not fixable at the per-repo level.
 **Fix:** Bumped manifest.json 1.0.32 → 1.0.33 and rebuilt `*-chrome.zip`/`*-firefox.zip` via `scripts/build-zips.sh` (Firefox zip passed `amo-validate.py`). `BRAND-TOKEN-DRIFT` remains open and is flagged as a separate follow-up task against `lovespark-shared-lib`/`design-tokens` (not one of this unit's repos).
 **Files:** manifest.json (1.0.32 → 1.0.33), lovespark-win-jar-chrome.zip, lovespark-win-jar-firefox.zip
+
+## 2026-10-07: BUG-001 — popup.html loaded a non-existent `lib/lovespark-fonts.css`
+
+**Problem:** `popup.html` line 8 has `<link rel="stylesheet" href="lib/lovespark-fonts.css">` but the file was never committed (present on `main` since v1.0.0 and in every store zip through 1.0.33). Every popup open logged a failed stylesheet load; `--ls-font-body: 'DM Mono'` / `--ls-font-display: 'Press Start 2P'` / beige `'Lora'` silently fell back to `monospace` / `cursive` / `Georgia`, so the shipped UI never rendered the design-system fonts. The CSP `font-src 'self'` hardening in this PR had nothing to apply to.
+**Root cause:** `scripts/sync-shared-lib.sh` syncs the JS/CSS lib files but not `lovespark-fonts.css` + `fonts/`; this repo was scaffolded with the `<link>` but the font assets were never copied in (60 sibling extensions ship `lib/lovespark-fonts.css` + `lib/fonts/`).
+**Fix:** Copied canonical `Extensions/infrastructure/lovespark-shared-lib/lovespark-fonts.css` (md5 `8cd206e8ba94fae29baa23f2dbdefa84`) and the 51 `fonts/*.woff2` files into `lib/`, matching the fleet convention. Bumped manifest 1.0.33 → 1.0.34, rebuilt both zips (Firefox zip passed `amo-validate.py`).
+**Regression check (no test harness in this repo):**
+`for f in $(grep -oE '(src|href)="[^"]+"' popup.html | cut -d'"' -f2 | grep -vE '^https?:'); do [ -f "$f" ] || echo "MISSING $f"; done` → must print nothing.
+`grep -oE "url\(fonts/[^)]+\)" lib/lovespark-fonts.css | sed 's/url(//;s/)//' | sort -u | while read f; do [ -f "lib/$f" ] || echo "MISSING lib/$f"; done` → must print nothing.
+**Files:** lib/lovespark-fonts.css (added), lib/fonts/ (51 files added), manifest.json (1.0.33 → 1.0.34), PRIVACY.md (version ref synced), lovespark-win-jar-chrome.zip, lovespark-win-jar-firefox.zip
+
+## 2026-10-07: BUG-002 — store zips nested the previous zips and shipped submission docs with local paths
+
+**Problem:** `unzip -l lovespark-win-jar-chrome.zip` (1.0.33) listed `lovespark-win-jar-chrome.zip` (18 KB, v1.0.0) and `lovespark-win-jar-firefox.zip` (21 KB) *inside* the package, plus `CWS-LISTING.md` and `SUBMIT.md`. `SUBMIT.md` contains three `~/...` filesystem paths, so every store download would have carried the author's local home-directory layout, and each rebuild would re-nest the previous zips.
+**Root cause:** `scripts/build-zips.sh` stages the whole extension dir and only excludes a fixed list (cws-shots, BUGS, CHANGELOG, …); it has no `*.zip` exclude, and this repo had no `.zipignore` (the sibling convention for excluding `CWS-LISTING.md` / `SUBMIT.md`). Zips are committed to the repo root, so the staged tree always contained the previous build.
+**Fix:** Added `.zipignore` with `CWS-LISTING.md`, `SUBMIT.md`, `*.zip` (honored by `build-zips.sh` via `--exclude-from`). Rebuilt zips: 77 files each, zero nested archives, zero submission docs. Follow-up for the fleet (out of scope here): add `--exclude '*.zip'` to `build-zips.sh` itself so no repo can regress this.
+**Regression check:** `unzip -Z1 lovespark-win-jar-chrome.zip | grep -cE "\.zip$|SUBMIT\.md|CWS-LISTING\.md"` → must print `0` (same for the Firefox zip); `unzip -p lovespark-win-jar-chrome.zip SUBMIT.md 2>&1 | grep -c /Users/` → `0`.
+**Files:** .zipignore (added), lovespark-win-jar-chrome.zip, lovespark-win-jar-firefox.zip
