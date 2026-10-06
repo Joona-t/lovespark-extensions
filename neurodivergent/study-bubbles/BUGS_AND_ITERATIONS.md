@@ -50,3 +50,11 @@ _No entries yet. Document bugs, fixes, and iterations here as they occur._
 **Fix:** `git rm --cached` the tracked `*-chrome.zip`/`*-firefox.zip` from the repo root, deleted them from disk, added `*.zip` to `.gitignore` so build output never gets re-committed. Reran `scripts/build-zips.sh` — output zip size dropped from 3.70M→1.2M, Firefox zip passed `amo-validate.py`. Verified `ls-check .` is otherwise unchanged (BRAND-TOKEN-DRIFT remains the sole residual fail, root-caused in ITER-A11Y-3 as a `design-tokens/tokens.json` vs. hand-patched canonical CSS mismatch — that pipeline isn't a git repo and sits outside every extension repo's boundary, not this unit's to fix; flagged for a dedicated follow-up).
 **Files:** .gitignore, *-chrome.zip (untracked), *-firefox.zip (untracked)
 **Commit:** unit P2-sync-2
+
+## 2026-10-07: BUG-001 — dead duplicate footer files under popup/lib/ (PR #1 verifier pass)
+
+**Problem:** PR #1 added `popup/lib/lovespark-footer.css` and `popup/lib/lovespark-footer.js`, but `popup/popup.html` loads the footer from `../lib/lovespark-footer.{css,js}` — nothing referenced the `popup/lib/` copies. The stale CSS copy still carried `.ls-suite-btn { opacity: 0.75 }` (the pre-KI-004 value), so `ls-check .` kept reporting an A11Y-KI004 warning against a file that never ships into the rendered popup.
+**Root cause:** The shared-lib sync was run with the extension's `popup/` dir as the target once, dropping a second copy of the footer files next to popup.html; the canonical copy in `lib/` was then updated but the orphan was never removed.
+**Fix:** Deleted the two unreferenced files. Bumped manifest.json 1.0.32 -> 1.0.33.
+**Check (reproducible):** `grep -rn "popup/lib" --include='*.html' --include='*.js' --include='*.json' . ; test ! -e popup/lib && echo OK` must print only `OK`; `ls-check .` must show 0 fail and no A11Y-KI004 line pointing at `popup/lib/`.
+**Files:** popup/lib/lovespark-footer.css (deleted), popup/lib/lovespark-footer.js (deleted), manifest.json, BUGS_AND_ITERATIONS.md
