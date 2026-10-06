@@ -1,5 +1,10 @@
 # Changelog — LoveSpark Reaction Time
 
+## 1.0.30
+- Land uncommitted CWS-prep work: popup.js reaction-time game state machine, popup.html aria-live fixes, LICENSE, icons/, screenshots/ (BUG-001)
+- Sync lib/lovespark-footer.css + lib/lovespark-theme.js with canonical shared-lib (BUG-001)
+- CSP: add font-src 'self'
+
 ## 1.0.3
 - Patch version bump for CWS submission prep
 
