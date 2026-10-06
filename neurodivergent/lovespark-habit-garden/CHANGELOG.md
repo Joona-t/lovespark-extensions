@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.35 (2026-10-07)
+
+### Fixed
+- Store zips no longer embed the previous store zips (BUG-001: zip-in-zip recursion inflated 1.0.34 zips to 10.2 MB each). Added `.zipignore` with `*.zip`; rebuilt via canonical `build-zips.sh` (1.2 MB, 83 files, AMO-valid).
+
 ## 1.0.34 (2026-07-08)
 
 ### Fixed

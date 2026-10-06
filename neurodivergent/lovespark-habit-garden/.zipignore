@@ -1,0 +1,2 @@
+# build-zips.sh honors this (rsync --exclude-from). Never ship previous store zips inside the new zip.
+*.zip
