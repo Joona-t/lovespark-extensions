@@ -72,3 +72,13 @@
 **Regression check (no test harness in this repo; run after every `build-zips.sh`):** `for z in chrome firefox; do unzip -l lovespark-habit-garden-$z.zip | grep -v '^Archive:' | grep -c '\.zip$'; done` must print `0` twice.
 **Follow-up (fleet-level, not this repo):** add `--exclude '*.zip'` to the canonical `scripts/build-zips.sh` so every extension that commits its zips at the root is protected without a per-repo `.zipignore`.
 **Files:** .zipignore, manifest.json (1.0.34 -> 1.0.35), CHANGELOG.md, lovespark-habit-garden-chrome.zip, lovespark-habit-garden-firefox.zip
+
+## 2026-10-07: BUG-002 — public store zips shipped submission docs with `/Users/` home paths
+
+**Problem:** The v1.0.35 `lovespark-habit-garden-chrome.zip` / `-firefox.zip` (83 entries each) — the packages uploaded publicly to CWS/AMO, downloadable by anyone — contained `SUBMIT.md`, `CWS-LISTING.md`, `cws-listing.json`, `PRIVACY.md`, `README.md` and `screenshots/`. `unzip -p lovespark-habit-garden-chrome.zip SUBMIT.md | grep -c /Users/` printed `5` for each zip (local upload paths under `~/...`). The `main` v1.0.0 zip held runtime files only, so this was a regression from the ITER-CWS-01 bundle commit. Found by the PR #1 skeptic pass.
+**Root cause:** `build-zips.sh`'s built-in exclude list covers `cws-shots/`, `BUGS_AND_ITERATIONS.md`, `CHANGELOG.md` but not the other submission-bundle files that ITER-CWS-01 committed at the repo root, and this repo's `.zipignore` only listed `*.zip`.
+**Fix:** Appended `SUBMIT.md`, `CWS-LISTING.md`, `cws-listing.json`, `PRIVACY.md`, `README.md`, `screenshots/`, `cws-shots/` to `.zipignore` (no runtime file references any of them — grep of *.js/*.html/*.json/*.css). `LICENSE` stays in the package (MIT notice). Rebuilt both zips via canonical `build-zips.sh`: 75 entries each, manifest 1.0.36, Firefox zip `amo-validate.py` PASS, `ls-check .` 35 pass / 0 fail.
+**Regression check (no test harness; run after every `build-zips.sh`):**
+`for z in chrome firefox; do d=$(mktemp -d); unzip -q lovespark-habit-garden-$z.zip -d $d; echo "$z: $(grep -rl /Users/ $d | wc -l) home-path files, $(unzip -Z1 lovespark-habit-garden-$z.zip | grep -cE '\.(md|zip)$|screenshots/|cws-') non-runtime entries"; done` must print `0` / `0` for both.
+**Follow-up (fleet-level, not this repo):** canonical `scripts/build-zips.sh` should exclude `SUBMIT.md`, `CWS-LISTING.md`, `cws-listing.json`, `PRIVACY.md`, `screenshots/` and fail on any `/Users/` string in the staged tree, so every extension carrying the CWS bundle is protected.
+**Files:** .zipignore, manifest.json (1.0.35 -> 1.0.36), CHANGELOG.md, lovespark-habit-garden-chrome.zip, lovespark-habit-garden-firefox.zip

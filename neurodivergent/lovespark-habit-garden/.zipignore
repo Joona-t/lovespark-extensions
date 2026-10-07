@@ -1,2 +1,11 @@
 # build-zips.sh honors this (rsync --exclude-from). Never ship previous store zips inside the new zip.
 *.zip
+# BUG-002: store-submission docs/assets are repo-only — never ship them in the public store package
+# (SUBMIT.md carries /Users/ home paths; the rest is dead weight in the runtime bundle).
+SUBMIT.md
+CWS-LISTING.md
+cws-listing.json
+PRIVACY.md
+README.md
+screenshots/
+cws-shots/

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.36 (2026-10-07)
+
+### Fixed
+- Public store zips no longer ship the repo-only submission docs/assets (BUG-002): `SUBMIT.md` (5 `/Users/` home paths), `CWS-LISTING.md`, `cws-listing.json`, `PRIVACY.md`, `README.md`, `screenshots/`. Added them to `.zipignore`; rebuilt both zips (75 runtime files each, AMO-valid).
+
 ## 1.0.35 (2026-10-07)
 
 ### Fixed
