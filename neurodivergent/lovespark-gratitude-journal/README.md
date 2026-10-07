@@ -13,7 +13,7 @@ Long-form journaling apps ask for more attention than a scattered day can spare,
 - Write 3 things you're grateful for each day — quick, low-friction micro-gratitude
 - A garden that grows as your daily-gratitude habit builds consistency
 - Designed for ADHD and neurodivergent focus: small ask, visible reward, one click away
-- OpenDyslexic font, retro-pink theme, high-contrast, keyboard-navigable, reduced-motion friendly
+- Retro-pink theme, readable typography, high-contrast, keyboard-navigable, reduced-motion friendly
 - 100% local storage — your entries never leave your device
 - No account, no sign-up, no ads, no tracking
 

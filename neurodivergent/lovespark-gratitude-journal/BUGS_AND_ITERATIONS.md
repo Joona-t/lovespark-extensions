@@ -62,3 +62,11 @@
 **Fix:** `git rm --cached` the tracked `*-chrome.zip`/`*-firefox.zip` from the repo root, deleted them from disk, added `*.zip` to `.gitignore` so build output never gets re-committed. Reran `scripts/build-zips.sh` — output zip size dropped from 796K→174K, Firefox zip passed `amo-validate.py`. Verified `ls-check .` is otherwise unchanged (BRAND-TOKEN-DRIFT remains the sole residual fail, root-caused in ITER-A11Y-3 as a `design-tokens/tokens.json` vs. hand-patched canonical CSS mismatch — that pipeline isn't a git repo and sits outside every extension repo's boundary, not this unit's to fix; flagged for a dedicated follow-up).
 **Files:** .gitignore, *-chrome.zip (untracked), *-firefox.zip (untracked)
 **Commit:** unit P2-sync-2
+
+## 2026-10-07: BUG — CWS listing advertised OpenDyslexic font that the extension does not ship
+
+**Problem:** CWS-LISTING.md (long description, feature bullets, single-purpose justification) and README.md claimed the popup "uses the highly-readable OpenDyslexic typeface". No OpenDyslexic font file or @font-face exists in the repo. lib/lovespark-tokens.css sets DM Mono / Press Start 2P / Lora, and those fonts are not loaded either, because lib/lovespark-fonts.css is absent. As a result, the store listing would make a false accessibility claim.
+**Root cause:** Listing copy was templated from fleet boilerplate written before the design system replaced OpenDyslexic with the DM Mono/Press Start 2P stack for extensions (CLAUDE.md rule #12, ratified 2026-06-21).
+**Fix:** Reworded all 4 claims to "readable typography". No code change.
+**Regression check:** `grep -rni dyslexic . --exclude-dir=.git` must print nothing unless an OpenDyslexic @font-face is actually vendored.
+**Open:** popup.html links lib/lovespark-fonts.css, but that file has never been committed, so the fonts fall back to system monospace/cursive. This needs a separate fix (vendor the fonts or drop the link).

@@ -22,7 +22,7 @@ LoveSpark Gratitude Journal is a tiny, friction-free gratitude journal that live
 
 **Watch your consistency grow.** Every day you complete your three entries, your garden grows a little more. It's a gentle, visual way to see your habit taking root over time — momentum you can look at instead of a number that punishes you for a missed day.
 
-**Accessible by design.** Like every LoveSpark tool, the Gratitude Journal is built neurodivergent-first: it uses the highly-readable OpenDyslexic typeface, a calm retro-pink interface, clear focus indicators for keyboard navigation, strong color contrast, and reduced-motion support for anyone who prefers a quieter screen.
+**Accessible by design.** Like every LoveSpark tool, the Gratitude Journal is built neurodivergent-first: it uses a calm retro-pink interface with clear, readable typography, clear focus indicators for keyboard navigation, strong color contrast, and reduced-motion support for anyone who prefers a quieter screen.
 
 **Private and free, forever.** Your reflections are personal, so they stay on your device. Everything you write is saved only in your browser's local storage — nothing is ever uploaded, shared, sold, or tracked. There are no accounts, no ads, and no analytics. The extension is free and open source under the MIT license, so anyone can read exactly how it works.
 
@@ -30,7 +30,7 @@ LoveSpark Gratitude Journal is a tiny, friction-free gratitude journal that live
 - Write 3 things you're grateful for each day — quick, low-friction micro-gratitude
 - A garden that grows as your daily-gratitude habit builds consistency
 - Designed for ADHD and neurodivergent focus: small ask, visible reward, one click away
-- OpenDyslexic font, retro-pink theme, high-contrast, keyboard-navigable, reduced-motion friendly
+- Retro-pink theme, readable typography, high-contrast, keyboard-navigable, reduced-motion friendly
 - 100% local storage — your entries never leave your device
 - No account, no sign-up, no ads, no tracking
 - Free and open source (MIT) — inspect the code anytime
@@ -39,7 +39,7 @@ Open your toolbar, name your three good things, and watch your garden — and yo
 
 ## Single-purpose justification
 
-The single purpose of LoveSpark Gratitude Journal is to help the user record a short daily gratitude entry (three things they are grateful for) and see their consistency reflected in a growing garden. Every feature serves that one purpose: the three-line entry form is the act of journaling; the growing-garden visual is feedback that reinforces the daily journaling habit; the local-storage persistence exists solely to remember the user's own past entries so the journal is continuous day to day; and the accessible, neurodivergent-friendly design (OpenDyslexic font, retro-pink theme, keyboard and reduced-motion support) exists only to make that same daily journaling act easy to complete. There are no unrelated capabilities — no browsing, blocking, content injection, or communication features — so the extension does exactly one thing and nothing else.
+The single purpose of LoveSpark Gratitude Journal is to help the user record a short daily gratitude entry (three things they are grateful for) and see their consistency reflected in a growing garden. Every feature serves that one purpose: the three-line entry form is the act of journaling; the growing-garden visual is feedback that reinforces the daily journaling habit; the local-storage persistence exists solely to remember the user's own past entries so the journal is continuous day to day; and the accessible, neurodivergent-friendly design (retro-pink theme, readable typography, keyboard and reduced-motion support) exists only to make that same daily journaling act easy to complete. There are no unrelated capabilities — no browsing, blocking, content injection, or communication features — so the extension does exactly one thing and nothing else.
 
 ## Per-permission justification
 
