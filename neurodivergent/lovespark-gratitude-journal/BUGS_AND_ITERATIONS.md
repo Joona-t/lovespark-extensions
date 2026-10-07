@@ -68,5 +68,12 @@
 **Problem:** CWS-LISTING.md (long description, feature bullets, single-purpose justification) and README.md claimed the popup "uses the highly-readable OpenDyslexic typeface". No OpenDyslexic font file or @font-face exists in the repo. lib/lovespark-tokens.css sets DM Mono / Press Start 2P / Lora, and those fonts are not loaded either, because lib/lovespark-fonts.css is absent. As a result, the store listing would make a false accessibility claim.
 **Root cause:** Listing copy was templated from fleet boilerplate written before the design system replaced OpenDyslexic with the DM Mono/Press Start 2P stack for extensions (CLAUDE.md rule #12, ratified 2026-06-21).
 **Fix:** Reworded all 4 claims to "readable typography". No code change.
-**Regression check:** `grep -rni dyslexic . --exclude-dir=.git` must print nothing unless an OpenDyslexic @font-face is actually vendored.
+**Regression check:** `grep -rni dyslexic . --exclude-dir=.git --exclude=BUGS_AND_ITERATIONS.md` must print nothing (exit 1) unless an OpenDyslexic @font-face is actually vendored. (Corrected 2026-10-07; see the entry below.)
 **Open:** popup.html links lib/lovespark-fonts.css, but that file has never been committed, so the fonts fall back to system monospace/cursive. This needs a separate fix (vendor the fonts or drop the link).
+
+## 2026-10-07: BUG — OpenDyslexic regression check could never pass
+
+**Problem:** The regression check recorded in the previous entry (`grep -rni dyslexic . --exclude-dir=.git` must print nothing) printed 4 lines on head 9a2c015 (BUGS_AND_ITERATIONS.md:66,68,69,71), so it failed even though the shipped copy was clean.
+**Root cause:** The check scanned the whole tree, including this log. The log has to mention the word to describe the bug, so it always matched.
+**Fix:** Exclude the log from the check (`--exclude=BUGS_AND_ITERATIONS.md`). Docs-only change, so manifest.json is not bumped. Checked shipped files: CWS-LISTING.md, README.md, SUBMIT.md, PRIVACY.md, popup.html/css/js, background.js, lib/ have no match. No store zips are tracked (`*.zip` is gitignored; `git ls-files '*.zip'` is empty).
+**Regression check:** `grep -rni dyslexic . --exclude-dir=.git --exclude=BUGS_AND_ITERATIONS.md; test $? -eq 1 && echo PASS`. This prints `PASS` on the new head.
