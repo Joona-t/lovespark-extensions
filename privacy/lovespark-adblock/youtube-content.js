@@ -23,7 +23,7 @@
 
   function queueScan() {
     if (scanFrame || !active) return;
-    scanFrame = requestAnimationFrame(scan);
+    scanFrame = setTimeout(scan, 0); // not rAF: rAF never fires in background tabs
   }
 
   function start() {
@@ -35,6 +35,7 @@
     }
     observer = new MutationObserver(queueScan);
     observer.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+    document.addEventListener('play', queueScan, true);
     document.addEventListener('timeupdate', queueScan, true);
     document.addEventListener('loadedmetadata', queueScan, true);
     document.addEventListener('yt-navigate-finish', queueScan);
@@ -44,11 +45,12 @@
   function stop() {
     observer?.disconnect();
     observer = null;
-    if (scanFrame) cancelAnimationFrame(scanFrame);
+    if (scanFrame) clearTimeout(scanFrame);
     scanFrame = 0;
     document.removeEventListener('timeupdate', queueScan, true);
     document.removeEventListener('loadedmetadata', queueScan, true);
     document.removeEventListener('yt-navigate-finish', queueScan);
+    document.removeEventListener('play', queueScan, true);
   }
 
   async function refresh() {
@@ -59,7 +61,7 @@
   }
 
   chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === 'local' && (changes.isEnabled || changes.whitelistedDomains)) refresh();
+    if (area === 'local' && (changes.isEnabled || changes.whitelistedDomains)) refresh().catch(() => {});
   });
 
   refresh().catch((error) => console.warn('[Pink Ad Blocker] YouTube layer unavailable:', error));

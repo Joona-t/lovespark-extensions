@@ -34,7 +34,7 @@ so the web loads cleaner and quieter — wrapped in a retro-pink design you'll a
 
 WHY YOU'LL LOVE IT
 • Broad ad coverage — bundled community rules block common banners, video-ad endpoints, and pop-ups;
-  a YouTube-specific layer hides sponsored placements and skips detected in-player ads.
+  a YouTube-specific layer removes video ads from YouTube's player data before they load, hides sponsored placements, and skips any in-player ad that still appears.
 • Stop trackers — third-party trackers are blocked by default for more private browsing.
 • Faster, lighter pages — fewer requests means pages load quicker and use less data.
 • Three intensity tiers — Light (ads only), Medium (ads + trackers, default), Strong (+ annoyances
@@ -87,9 +87,9 @@ lightweight / Manifest V3, pink / cute / aesthetic / retro.
 
 ## Site-access justification
 
-The extension declares **no `<all_urls>` access**. A bundled content script runs only on
-`youtube.com` and `youtube-nocookie.com` to hide sponsored placements and skip an in-player ad after
-YouTube marks the player as showing one. It does not store or transmit page content. Network blocking
+The extension declares **no `<all_urls>` access**. Bundled content scripts run only on
+`youtube.com` and `youtube-nocookie.com`: one removes ad entries from YouTube's player data inside the
+page before ads load, the other hides sponsored placements and skips an in-player ad if one still appears. It does not store or transmit page content. Network blocking
 elsewhere is performed by bundled static `declarativeNetRequest` rulesets, and the current site's
 domain is obtained via the gesture-scoped `activeTab` permission only.
 

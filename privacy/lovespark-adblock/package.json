@@ -6,10 +6,12 @@
   "description": "Build-time tooling for LoveSpark AdBlock (NOT shipped in the extension). Compiles community filter lists into bundled static declarativeNetRequest rulesets.",
   "scripts": {
     "build:rules": "node scripts/build-rules.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "test:youtube": "node scripts/youtube-ab.mjs --arms=A,B --trials=3"
   },
   "devDependencies": {
-    "@ghostery/adblocker": "^2.18.2"
+    "@ghostery/adblocker": "^2.18.2",
+    "puppeteer-core": "^25.12.0"
   },
   "license": "MIT"
 }

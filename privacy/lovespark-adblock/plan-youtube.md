@@ -106,4 +106,4 @@ document_start
 - [ ] Commit on the branch (no Co-Authored-By) and push.
 - [ ] Owner check: disable ABP, then try watch, Shorts, Music in a background tab and one embed. Uninstall ABP if all are clean.
 
-**do not implement yet**
+**IMPLEMENTED 2026-10-07 as v1.1.1** (simplified: single `youtube-main.js` instead of prune+main split; XHR hook and mute/rate fallback skipped because live A/B already hit 100% with 0 breakage). Results in BUGS_AND_ITERATIONS ITER-008.

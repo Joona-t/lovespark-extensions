@@ -17,7 +17,7 @@
   "ruleset_youtube": {
     "tier": "ads",
     "core": true,
-    "count": 6
+    "count": 4
   },
   "ruleset_easylist": {
     "tier": "ads",

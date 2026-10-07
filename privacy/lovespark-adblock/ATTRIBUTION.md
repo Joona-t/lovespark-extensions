@@ -27,6 +27,11 @@ license; the generated `rules-easylist.json`, `rules-easyprivacy.json`, and
   Licensed under **MPL-2.0**. Used **only at build time** (a `devDependency`) to validate filter
   syntax. It is never bundled into the published extension, so the shipped extension remains MIT.
 
+## YouTube page script
+
+`youtube-main.js` is an independent MIT implementation of the well-known "remove the ad fields from the
+player response" technique. No code from uBlock Origin, uBO Lite or Adblock Plus (all GPLv3) is used.
+
 ## The extension itself
 
 LoveSpark AdBlock's own source code is **MIT** licensed — see [LICENSE](LICENSE).

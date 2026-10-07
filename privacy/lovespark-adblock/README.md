@@ -50,15 +50,20 @@ collection time, hashes, emitted counts, and skipped syntax. The installed exten
 
 ## YouTube behavior and limits
 
+- `youtube-main.js` runs **inside the YouTube page** (`world: MAIN`, `document_start`) and deletes the
+  ad schedule (`adPlacements`, `playerAds`, `adSlots`, `adBreakHeartbeatParams`) from YouTube's player
+  data before the player reads it, so pre-roll and mid-roll video ads never load. It also drops Shorts
+  entries marked as ads and neutralises ad-placement kinds. It is our own MIT code: the same technique
+  Adblock Plus and uBlock Origin Lite use, with no code copied from either. It never touches the network
+  or `chrome.*`; it only reads the on/off flag that `youtube-content.js` puts on `<html>`.
 - `rules-youtube.json` **blocks requests** only for ad-specific YouTube endpoints. It deliberately does
   not block `googlevideo.com` or the general player API because those also carry legitimate playback.
-- `youtube-content.css` **hides** known sponsored/player ad elements.
-- `youtube-content.js` **skips** an ad only after YouTube marks the player `ad-showing`; this is a
-  fallback, not proof that the ad request was blocked.
-- This release is not Adblock Plus parity: it has no general-purpose cosmetic/scriptlet engine, and
-  filter subscriptions update at build/release time rather than inside the installed extension.
-- Closing those two gaps would require broad all-sites page access plus a maintained scriptlet/update
-  engine. Version 1.1.0 deliberately does not add that materially larger permission and security surface.
+- `youtube-content.css` **hides** sponsored feed/search/watch/Shorts/mobile/Music placements and the
+  anti-adblock popup.
+- `youtube-content.js` **skips** an ad that still gets through (`ad-showing` / `ad-interrupting`), and
+  keeps working in background tabs.
+- Server-side inserted ads (stitched into the video stream) cannot be removed by any extension.
+- Verify with `npm run test:youtube` (live A/B: real Chrome with vs. without the extension).
 
 ## Install or reload locally
 

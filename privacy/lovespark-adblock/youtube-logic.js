@@ -21,7 +21,7 @@
   }
 
   function findPlayer(root) {
-    return root.querySelector('.html5-video-player.ad-showing, #movie_player.ad-showing');
+    return root.querySelector('.html5-video-player.ad-showing, .html5-video-player.ad-interrupting, #movie_player.ad-showing, #movie_player.ad-interrupting');
   }
 
   function skipActiveAd(root) {

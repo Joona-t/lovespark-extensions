@@ -1,56 +1,60 @@
 [
   {
-    "id": 1,
-    "priority": 1,
-    "action": { "type": "block" },
-    "condition": {
-      "urlFilter": "||youtube.com/get_midroll_info^",
-      "resourceTypes": ["xmlhttprequest"]
-    }
-  },
-  {
-    "id": 2,
-    "priority": 1,
-    "action": { "type": "block" },
-    "condition": {
-      "urlFilter": "||youtube.com/get_video_info?*el=adunit",
-      "resourceTypes": ["xmlhttprequest"]
-    }
-  },
-  {
     "id": 3,
     "priority": 1,
-    "action": { "type": "block" },
+    "action": {
+      "type": "block"
+    },
     "condition": {
       "urlFilter": "||youtube.com/youtubei/v1/player/ad_break^",
-      "resourceTypes": ["xmlhttprequest"]
+      "resourceTypes": [
+        "xmlhttprequest"
+      ]
     }
   },
   {
     "id": 4,
     "priority": 1,
-    "action": { "type": "block" },
+    "action": {
+      "type": "block"
+    },
     "condition": {
       "urlFilter": "||youtube.com/api/stats/ads^",
-      "resourceTypes": ["xmlhttprequest", "ping"]
+      "resourceTypes": [
+        "xmlhttprequest",
+        "ping"
+      ]
     }
   },
   {
     "id": 5,
     "priority": 1,
-    "action": { "type": "block" },
+    "action": {
+      "type": "block"
+    },
     "condition": {
       "urlFilter": "||youtube.com/ptracking^",
-      "resourceTypes": ["image", "xmlhttprequest", "ping"]
+      "resourceTypes": [
+        "image",
+        "xmlhttprequest",
+        "ping"
+      ]
     }
   },
   {
     "id": 6,
     "priority": 1,
-    "action": { "type": "block" },
+    "action": {
+      "type": "block"
+    },
     "condition": {
       "urlFilter": "||youtube.com/pagead/",
-      "resourceTypes": ["script", "image", "xmlhttprequest", "sub_frame"]
+      "resourceTypes": [
+        "script",
+        "image",
+        "xmlhttprequest",
+        "sub_frame"
+      ]
     }
   }
 ]

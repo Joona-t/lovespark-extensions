@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(process.env.LOVESPARK_EXTENSION_DIR || join(dirname(fileURLToPath(import.meta.url)), '..'));
+const EXPECTED_VERSION = JSON.parse(readFileSync(join(ROOT, 'manifest.json'), 'utf8')).version;
 const CHROME = process.env.LOVESPARK_CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const profile = mkdtempSync(join(tmpdir(), 'lovespark-adblock-smoke-'));
 let chrome;
@@ -43,7 +44,7 @@ async function waitForExtensionTarget(port) {
       try {
         await candidate.call('Runtime.enable');
         const version = await evaluate(candidate, 'chrome.runtime?.getManifest?.().version');
-        if (version === '1.1.0') return target;
+        if (version === EXPECTED_VERSION) return target;
       } catch {
         // Other built-in extension workers can expose similarly named scripts.
       } finally {
@@ -303,7 +304,7 @@ try {
   })()`);
 
   const matched = (entry, rulesetId) => entry.matchedRules.some((rule) => !rulesetId || rule.rulesetId === rulesetId);
-  assert.equal(evidence.version, '1.1.0');
+  assert.equal(evidence.version, EXPECTED_VERSION);
   for (const id of ['ruleset_ads', 'ruleset_easylist', 'ruleset_youtube', 'ruleset_tracking', 'ruleset_easyprivacy']) {
     assert.ok(evidence.initialEnabled.includes(id), `initially enabled: ${id}`);
     assert.ok(evidence.mediumRulesets.includes(id), `medium enabled: ${id}`);

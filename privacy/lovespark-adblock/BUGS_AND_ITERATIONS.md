@@ -1,5 +1,42 @@
 # Bugs & Iterations
 
+## 2026-10-07: YouTube video ads actually blocked — v1.1.1
+
+**Problem:** Owner wanted to uninstall Adblock Plus. A live A/B run (real Chrome 154, fresh profiles,
+`scripts/youtube-ab.mjs`) showed v1.1.0 still let video ads play on **7 of 8** popular videos
+(~10 s of ad each) before its skip fallback kicked in.
+
+### ITER-008 (P0): page-world ad-schedule remover (`youtube-main.js`)
+**Root cause:** YouTube delivers the ad schedule *inside* the player data (`ytInitialPlayerResponse` and
+`/youtubei/v1/player` / `/next` responses: `adPlacements`, `playerAds`, `adSlots`). Network rules can't
+touch that, and the isolated-world content script can't see page JS, so ads always loaded.
+**Fix:** New MAIN-world `document_start` script (own MIT code, no uBO/ABP code) that removes those keys
+via a `ytInitialPlayerResponse`/`ytInitialData` setter, `JSON.parse` and `Response.json()` wrappers
+(Proxy, so natives keep their `toString`), a `Map.set` hook that blanks `AD_PLACEMENT_KIND_*`, and drops
+Shorts entries flagged `isAd`. Technique cross-checked against the user's installed Adblock Plus 4.46
+"ABP filters (compliance)" list, which uses the same four ideas on www.youtube.com. Respects on/off +
+allowlist through the `html[data-lovespark-adblock]` flag (missing = on). No new permissions.
+**Result:** Live A/B, Chrome 154, 12 popular videos, 25 s each, consent rejected (`work/yt-ab-2026-10-07T01-37-44-961Z.json`):
+without extension 10/12 showed ads; **with v1.1.1 0/12 ads, 12/12 played (8.8–24.8 s), 0 stalls, 0 anti-adblock
+walls → block rate 10/10 = 100%.** Earlier runs: 20/20 qualified blocked over 2 trials; background-tab run
+0/6 ads, 6/6 played. Before (v1.1.0): ads on 7/8.
+
+### BUG-009 (P1): skip fallback dead in background tabs
+`youtube-content.js` scheduled scans with `requestAnimationFrame`, which never fires in hidden tabs, so
+background music tabs played ads in full. Now `setTimeout(scan, 0)` + a `play` listener; also matches
+YouTube's newer `ad-interrupting` class.
+
+### BUG-010 (P2): no embed coverage, no anti-adblock popup handling, thin cosmetic list
+Both content scripts now `all_frames: true` (YouTube embeds on other sites). CSS adds the enforcement
+popup, feed/search/watch wrappers, Shorts, m.youtube.com and Music placements — all still gated on the flag.
+
+### BUG-011 (P3): dead DNR rules + stale smoke harness
+Dropped `get_midroll_info` and `get_video_info?el=adunit` (endpoints retired). `chrome-smoke.mjs` read a
+hard-coded `'1.1.0'`; it now reads `manifest.json`. Live harness gotcha: fresh EU profiles get a cookie
+consent lightbox that blocks autoplay in *both* arms — the harness now rejects it before measuring.
+
+**Tests:** `npm test` 12 → 16 (pruner keys/nesting/Shorts/odd inputs, hooks on vs off flag, CSS gating).
+
 ## 2026-09-10: YouTube + maintained network coverage — v1.1.0
 
 **Root cause:** v1.0.41 shipped only 124 ad-domain rules and had no YouTube content layer. The

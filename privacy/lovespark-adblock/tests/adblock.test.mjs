@@ -53,15 +53,20 @@ test('rule selection is deterministic, deduplicated, and budgeted', () => {
 test('manifest wires the generated tiers and a narrow YouTube content layer', () => {
   const manifest = readJson('manifest.json');
   assert.equal(manifest.manifest_version, 3);
-  assert.equal(manifest.version, '1.1.0');
+  assert.equal(manifest.version, '1.1.1');
   assert.equal(manifest.host_permissions, undefined);
   const resourceIds = new Set(manifest.declarative_net_request.rule_resources.map(({ id }) => id));
   for (const id of ['ruleset_ads', 'ruleset_easylist', 'ruleset_youtube', 'ruleset_tracking', 'ruleset_easyprivacy']) {
     assert.ok(resourceIds.has(id), id);
   }
-  assert.equal(manifest.content_scripts.length, 1);
-  assert.ok(manifest.content_scripts[0].matches.every((match) => match.includes('youtube')));
-  assert.deepEqual(manifest.content_scripts[0].js, ['youtube-logic.js', 'youtube-content.js']);
+  assert.equal(manifest.content_scripts.length, 2);
+  assert.ok(manifest.content_scripts.every(({ matches }) => matches.every((match) => match.includes('youtube'))));
+  const [mainWorld, isolated] = manifest.content_scripts;
+  assert.deepEqual(mainWorld.js, ['youtube-main.js']);
+  assert.equal(mainWorld.world, 'MAIN');
+  assert.equal(mainWorld.run_at, 'document_start');
+  assert.deepEqual(isolated.js, ['youtube-logic.js', 'youtube-content.js']);
+  assert.ok(manifest.content_scripts.every(({ all_frames }) => all_frames === true));
   assert.ok(manifest.declarative_net_request.rule_resources.length <= 100);
   assert.ok(manifest.declarative_net_request.rule_resources
     .filter(({ id }) => id.includes('_extra_')).every(({ enabled }) => enabled === false));
@@ -181,4 +186,86 @@ test('YouTube fallback clicks skip first and only seeks video inside an ad-showi
   video.currentTime = 4;
   assert.equal(logic.skipActiveAd({ querySelector: () => null }).action, 'none');
   assert.equal(video.currentTime, 4);
+});
+
+function loadYouTubeMain(flag) {
+  const window = {
+    __LOVESPARK_TEST__: true,
+    document: { documentElement: { dataset: flag ? { lovesparkAdblock: flag } : {} } },
+  };
+  const context = { globalThis: window, JSON: { parse: JSON.parse }, Map, Proxy, Reflect, Object, Array };
+  window.JSON = context.JSON;
+  window.Map = class extends Map {};
+  window.Response = class { json() { return Promise.resolve(this.body); } };
+  context.window = window;
+  runInNewContext(readFileSync(join(ROOT, 'youtube-main.js'), 'utf8'), context);
+  return window;
+}
+
+const playerFixture = () => ({
+  playabilityStatus: { status: 'OK' },
+  streamingData: { formats: [{ itag: 18 }] },
+  videoDetails: { videoId: 'x' },
+  adPlacements: [{ adPlacementRenderer: {} }],
+  playerAds: [{}],
+  adSlots: [{}],
+  adBreakHeartbeatParams: 'abc',
+});
+
+test('YouTube pruner strips the ad schedule and keeps playback data', () => {
+  const { __lovesparkYt: yt } = loadYouTubeMain();
+  const top = playerFixture();
+  assert.deepEqual([...yt.prunePlayerResponse(top)].sort(), ['adBreakHeartbeatParams', 'adPlacements', 'adSlots', 'playerAds']);
+  assert.deepEqual(Object.keys(top).sort(), ['playabilityStatus', 'streamingData', 'videoDetails']);
+  assert.deepEqual(top.streamingData, { formats: [{ itag: 18 }] });
+
+  const nested = { playerResponse: playerFixture() };
+  yt.prunePlayerResponse(nested);
+  assert.equal(nested.playerResponse.adPlacements, undefined);
+  const list = [{ playerResponse: playerFixture() }, { response: {} }];
+  yt.prunePlayerResponse(list);
+  assert.equal(list[0].playerResponse.playerAds, undefined);
+
+  for (const odd of [null, 'str', 5, [], Object.freeze(playerFixture())]) assert.doesNotThrow(() => yt.pruneAny(odd));
+  assert.deepEqual(yt.pruneAny({ a: 1 }), { a: 1 });
+});
+
+test('YouTube pruner drops Shorts ad entries only', () => {
+  const { __lovesparkYt: yt } = loadYouTubeMain();
+  const reel = { entries: [
+    { command: { reelWatchEndpoint: { videoId: 'a' } } },
+    { command: { reelWatchEndpoint: { adClientParams: { isAd: true } } } },
+    { command: { reelWatchEndpoint: { videoId: 'b' } } },
+  ] };
+  assert.equal(yt.pruneReelEntries(reel), 1);
+  assert.deepEqual(reel.entries.map((e) => e.command.reelWatchEndpoint.videoId), ['a', 'b']);
+});
+
+test('YouTube page hooks prune JSON.parse, inline globals and ad Map entries; off flag passes through', async () => {
+  const on = loadYouTubeMain();
+  assert.equal(on.JSON.parse(JSON.stringify(playerFixture())).adPlacements, undefined);
+  on.ytInitialPlayerResponse = playerFixture();
+  assert.equal(on.ytInitialPlayerResponse.adSlots, undefined);
+  assert.equal(on.ytInitialPlayerResponse.videoDetails.videoId, 'x');
+  const entry = { kind: 'AD_PLACEMENT_KIND_START' };
+  new on.Map().set('k', entry);
+  assert.equal(entry.kind, '');
+  const response = Object.assign(new on.Response(), { url: 'https://www.youtube.com/youtubei/v1/player?x=1', body: playerFixture() });
+  assert.equal((await response.json()).playerAds, undefined);
+  const other = Object.assign(new on.Response(), { url: 'https://www.youtube.com/other', body: playerFixture() });
+  assert.ok((await other.json()).playerAds);
+
+  const off = loadYouTubeMain('off');
+  assert.ok(off.JSON.parse(JSON.stringify(playerFixture())).adPlacements);
+  const kept = { kind: 'AD_PLACEMENT_KIND_START' };
+  new off.Map().set('k', kept);
+  assert.equal(kept.kind, 'AD_PLACEMENT_KIND_START');
+});
+
+test('YouTube cosmetic CSS is always gated on the on/off flag', () => {
+  const css = readFileSync(join(ROOT, 'youtube-content.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const selectors = css.split('{')[0] && css.match(/[^{}]+(?=\{)/g).flatMap((block) => block.split(',')).map((s) => s.trim()).filter(Boolean);
+  assert.ok(selectors.length > 20);
+  assert.ok(selectors.every((s) => s.startsWith('html[data-lovespark-adblock="on"]')), selectors.find((s) => !s.startsWith('html[')));
+  assert.ok(selectors.some((s) => s.includes('ytd-enforcement-message-view-model')));
 });

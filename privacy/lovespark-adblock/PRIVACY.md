@@ -37,8 +37,9 @@ stored or sent anywhere.**
 | `alarms` | Schedule the daily counter reset and a 1-minute stats refresh. | Nothing network-related. |
 | `activeTab` | When you open the popup, read the **current tab's domain** so you can toggle the per-site whitelist. | Does not grant access to other tabs and is not used to track browsing. |
 
-**Site access:** a bundled content script runs only on `youtube.com` and `youtube-nocookie.com` to hide
-ad placements and skip an in-player ad after YouTube marks the player as showing one. It reads the local
+**Site access:** bundled content scripts run only on `youtube.com` and `youtube-nocookie.com`. One removes ad
+entries from YouTube's player data inside the page before ads load; the other hides
+ad placements and skips an in-player ad if one still appears. They read the local
 enabled/allowlist settings and inspects only YouTube's live page DOM; it does not store or transmit page
 content. There is no `<all_urls>` access. Network blocking is performed by bundled static DNR rules.
 
