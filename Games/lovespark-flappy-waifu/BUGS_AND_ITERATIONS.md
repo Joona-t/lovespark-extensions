@@ -80,3 +80,29 @@
 **Root cause:** A prior sync pass copied the current canonical shared-lib files (and made the local contrast fix) into this repo's working tree but the commit step was never run.
 **Fix:** Diffed every `lib/lovespark-*.{css,js}` file against `Extensions/infrastructure/lovespark-shared-lib/` — all matched byte-for-byte, so committed the sync as-is (no porting or drift-revert needed). Committed the `popup.css` contrast fix separately since it is not a shared-lib file. Bumped patch version.
 **Files:** lib/lovespark-badge.js, lib/lovespark-base.css, lib/lovespark-footer.css, lib/lovespark-lifecycle.js, lib/lovespark-popup.js, lib/lovespark-theme.js, lib/lovespark-tokens.css (new), popup.css, manifest.json (1.0.39 → 1.0.40)
+
+## 2026-10-07: BUG — "AA contrast fix" made Play Now worse in Slate, still failing in Beige
+
+**Problem:** The 2026-07-08 sweep switched `.play-btn` / `.daily-fill` from `--ls-pink-accent` to `--ls-pink-deep` and called it an AA fix. That holds for Retro and Dark, but popup.css's own theme blocks make `--ls-pink-deep` *lighter* than the accent in Slate (#e8926e) and only slightly darker in Beige (#a86c56). Play Now (14px/500, so it needs 4.5:1) measured retro 4.62, dark 5.87, **beige 3.70 (fail), slate 2.03 (worse than the 2.83 before the "fix")**.
+**Root cause:** The fix was verified only by ls-check's static A11Y-KI001 pattern ("pink-accent used as a background"). That rule proves the linter is satisfied, not the contrast. Neither ls-check nor ls-audit-contrast models the button-bg/text-white pair per theme.
+**Fix:** Added a popup-local `--fw-cta-bg` token, set only in the Beige (#8a5340, 5.40:1 vs #f5efe0) and Slate (#9c4a2c, 5.18:1 vs #ececec) theme blocks. `.play-btn`, `.play-btn:hover` and `.daily-fill` use `var(--fw-cta-bg, var(--ls-pink-deep))`, so Retro and Dark are unchanged. In a browser on localhost (transitions off), the computed Play Now bg/text for retro/dark/beige/slate matched these values exactly.
+**Regression check** (run from the repo root; exits 1 if any theme drops below 4.5:1; fails on the pre-fix popup.css, passes after):
+```
+python3 - <<'PY'
+import re,sys
+css=open('popup.css').read()
+blk=lambda s: re.search(re.escape(s)+r'\s*\{(.*?)\}',css,re.S).group(1)
+def v(b,n):
+    m=re.search(r'--'+n+r':\s*(#[0-9a-fA-F]{6})',b); return m and m.group(1)
+def L(h):
+    c=[int(h[i:i+2],16)/255 for i in (1,3,5)]; c=[x/12.92 if x<=0.03928 else ((x+0.055)/1.055)**2.4 for x in c]
+    return .2126*c[0]+.7152*c[1]+.0722*c[2]
+root=blk(':root'); bad=0
+for t,s in [('retro',':root'),('dark','body.theme-dark'),('beige','body.theme-beige'),('slate','body.theme-slate')]:
+    b=blk(s); g=lambda n: v(b,n) or v(root,n)
+    bg=v(b,'fw-cta-bg') or g('ls-pink-deep'); fg=g('ls-text-white'); a,c=sorted([L(bg),L(fg)]); r=(c+.05)/(a+.05)
+    bad+=r<4.5; print(t,bg,fg,round(r,2),'OK' if r>=4.5 else 'FAIL')
+sys.exit(bad>0)
+PY
+```
+**Files:** popup.css, manifest.json (1.0.40 → 1.0.41)
