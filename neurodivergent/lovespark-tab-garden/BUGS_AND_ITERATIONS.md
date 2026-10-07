@@ -63,3 +63,15 @@ shared-lib ITER-003 / lovespark-shared-lib@7690133) and bumped the manifest patc
 so removal is cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live
 tree 2026-07-09; `ls-check` samples (lovespark-breathe 41 pass / 0 fail,
 lovespark-task-anchor 42 pass / 0 fail) after the fleet-wide sync.
+
+---
+
+## 2026-10-07: ITER-CWS-02 — CWS bundle docs did not match the shipped extension (PR #1 skeptic review)
+
+**Problem:** A skeptic review of PR #1 found five defects in the paste-into-CWS docs. (1) The reviewer test claimed "~3 minutes" and told the reviewer to set the shortest threshold or use an "archive now" control. The shortest threshold is 15 minutes (`popup.html` option 900000), the alarm runs every 5 minutes (`background.js` `ALARM_INTERVAL`), and there is no archive-now control. A reviewer following the script could not see archiving in the stated time, which is a rejection risk. (2) The SUBMIT.md store-icon slot pointed to `icons/icon-128.png`; the file is `icons/icon128.png`. (3) The SUBMIT.md field map sent Category/Language to CWS-LISTING.md sections that did not exist. (4) The store copy claimed "OpenDyslexic-friendly type", but the popup uses DM Mono / Press Start 2P and the repo contains no OpenDyslexic font. That was a false public claim. (5) The SUBMIT.md header and checkbox said v1.0.25 while the manifest is 1.0.27.
+**Root cause:** The bundle was generated from a template (marketing-asset-generator) and never checked against the extension's real UI, file names or version.
+**Fix:** Docs only, with no extension code change and so no manifest bump. The reviewer test now offers a 3-minute DevTools fast path: from the service-worker console, set `idleThreshold: 0` and call the real `archiveIdleTabs()`. It also gives an honest UI-only path (15-minute option plus a 5-minute alarm, about 20 minutes) and says there is no archive-now button. The restore step now describes the real action (click or Enter on the plant card). The icon path is fixed. `## Category` (Productivity → Workflow & Planning) and `## Language` (English) sections are added. "OpenDyslexic-friendly" is replaced with "clean monospace". The version strings are now 1.0.27.
+**Reproducible check (run from repo root, prints OK):**
+`! grep -nE 'OpenDyslexic|icon-128|\(listing\)|1\.0\.25' CWS-LISTING.md SUBMIT.md && grep -q '^## Category' CWS-LISTING.md && grep -q '^## Language' CWS-LISTING.md && test -f "$(grep -o 'icons/icon[0-9]*\.png' SUBMIT.md | head -1)" && grep -q '^async function archiveIdleTabs' background.js && grep -q 'value="900000">15 minutes' popup.html && echo OK`
+The fast-path snippet was also executed verbatim, from CWS-LISTING.md, against the real `background.js` in a Node `vm` with a mocked `chrome` API: 2 background tabs archived, the active tab kept, threshold set to 0.
+**Files:** CWS-LISTING.md, SUBMIT.md, BUGS_AND_ITERATIONS.md

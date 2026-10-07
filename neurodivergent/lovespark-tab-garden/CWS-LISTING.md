@@ -16,7 +16,7 @@ LoveSpark Tab Garden is a gentle, automatic tab manager for people who open a do
 
 If a wall of open tabs makes your browser (and your brain) feel cluttered, Tab Garden gives you a clean workspace without the anxiety of losing anything. Nothing is deleted. Archived tabs move to your garden, where they wait patiently until you need them again.
 
-**Who it's for.** Tab Garden is built neurodivergent-first — for coders, students, and anyone with ADHD, autism, or executive-function challenges who finds tab overload draining. The interface uses the OpenDyslexic-friendly, high-contrast, retro-pink LoveSpark design, honors `prefers-reduced-motion`, is fully keyboard-navigable, and meets WCAG contrast standards. Sparky the wolf keeps you company along the way. The "garden" framing turns a stressful chore (closing tabs) into a low-pressure, forgiving ritual: unused tabs simply go dormant, and restoring them is one friendly click.
+**Who it's for.** Tab Garden is built neurodivergent-first — for coders, students, and anyone with ADHD, autism, or executive-function challenges who finds tab overload draining. The interface uses the high-contrast, retro-pink LoveSpark design with a clean monospace body font, honors `prefers-reduced-motion`, is fully keyboard-navigable, and meets WCAG contrast standards. Sparky the wolf keeps you company along the way. The "garden" framing turns a stressful chore (closing tabs) into a low-pressure, forgiving ritual: unused tabs simply go dormant, and restoring them is one friendly click.
 
 **It's free, open source, and private by design.** Tab Garden is MIT-licensed and its full source is public. It stores everything on your own device in local browser storage and transmits **zero** data anywhere — no accounts, no sign-in, no analytics, no ads, no tracking. There is no server to send your tabs to, because there is no server.
 
@@ -26,11 +26,19 @@ If a wall of open tabs makes your browser (and your brain) feel cluttered, Tab G
 - 💧 **Restore by watering** — bring any archived tab back to life with a single click; nothing is ever lost.
 - 🪴 **A calm visual garden** — see your dormant tabs as plants instead of a stressful list, and reopen exactly the one you need.
 - ⏰ **Set-and-forget scheduling** — Tab Garden checks tab activity in the background on a light schedule; no persistent background page draining your battery.
-- 🎨 **Neurodivergent-first design** — OpenDyslexic-friendly type, retro-pink theme, reduced-motion support, keyboard navigation, and the Sparky mascot.
+- 🎨 **Neurodivergent-first design** — clean monospace type, retro-pink theme, reduced-motion support, keyboard navigation, and the Sparky mascot.
 - 🔒 **Private and local** — everything stays in `chrome.storage.local`; nothing leaves your machine, ever.
 - 🆓 **Free and open source forever** — MIT-licensed, no paywall, no upsells.
 
 Reduce tab clutter, reclaim focus, and give your open tabs a place to rest. Plant, tend, restore.
+
+## Category
+
+Productivity → Workflow & Planning
+
+## Language
+
+English
 
 ## Single-purpose justification
 
@@ -74,13 +82,16 @@ Tab Garden stores archived tab titles/URLs and preferences only in `chrome.stora
 
 ## Reviewer test instructions
 
-Total time: ~3 minutes. No account, sign-in, or setup required.
+Total time: ~3 minutes using the DevTools fast path in step 3 (or ~20 minutes using only the popup UI — see note). No account, sign-in, or setup required.
 
 1. **Install and open (20s).** Install the extension and pin it. Click the Tab Garden toolbar icon — the popup opens showing the Sparky mascot and your (initially empty) garden in the retro-pink LoveSpark UI.
-2. **Create some tabs to work with (20s).** Open 3–4 new tabs to different sites (e.g. example.com, wikipedia.org, github.com) and leave them in the background without clicking them.
-3. **Trigger archiving (40s).** Open the extension's settings/popup and set the inactivity threshold to its shortest available value (or use any "archive now"/manual control if present). Wait for the idle-check to run. The background tabs you haven't touched are moved out of the tab bar and appear as plants in the garden.
+2. **Create some tabs to work with (20s).** Open 3–4 new tabs to different sites (e.g. example.com, wikipedia.org, github.com), then click back to one other tab so the new ones sit in the background untouched.
+3. **Trigger archiving (40s).** Go to `chrome://extensions`, enable Developer mode, and click **Inspect views: service worker** under Tab Garden. In that DevTools console paste:
+   `await chrome.storage.local.get('settings').then(d => chrome.storage.local.set({settings: {...(d.settings || {}), idleThreshold: 0}})); await archiveIdleTabs();`
+   This runs the same archive routine the 5-minute alarm runs, with a 0 ms idle threshold. Every non-active, non-pinned, non-audible tab is moved out of the tab bar into the garden. Afterwards, re-open the popup and pick any **Idle threshold** value to restore a normal setting.
+   *UI-only alternative:* in the popup set **Idle threshold** to its shortest option, **15 minutes**, and leave the background tabs untouched. The idle check runs every 5 minutes, so the tabs are archived 15–20 minutes later. There is no "archive now" button in the UI.
 4. **Confirm the garden (20s).** Open the popup and verify the archived tabs are listed as plants, each showing its page title so you can identify it. The tab you are actively using is not archived.
-5. **Restore by watering (30s).** Click the water action on one archived plant. Confirm that tab reopens in the browser exactly where it left off and is removed from the garden — nothing is lost.
+5. **Restore by watering (30s).** Click (or focus and press Enter on) one archived plant card. Confirm that tab reopens in the browser exactly where it left off and is removed from the garden — nothing is lost.
 6. **Verify privacy (30s).** Open DevTools → Network on the extension's popup/background and confirm there are no outbound network requests. All data (the garden and settings) is held in `chrome.storage.local`; no host permissions are requested and no page content is accessed.
 
 Full source for verification: https://github.com/Joona-t/lovespark-tab-garden

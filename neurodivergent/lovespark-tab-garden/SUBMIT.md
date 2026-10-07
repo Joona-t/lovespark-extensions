@@ -1,6 +1,6 @@
 # Submit: LoveSpark Tab Garden
 
-> Extension `lovespark-tab-garden` · v1.0.25 · [repo](https://github.com/Joona-t/lovespark-tab-garden)
+> Extension `lovespark-tab-garden` · v1.0.27 · [repo](https://github.com/Joona-t/lovespark-tab-garden)
 > Goal: submit to CWS in ~5 min without re-reading `CWS-LISTING.md`.
 
 ## CWS form field → source
@@ -10,8 +10,8 @@
 | Title | **Extension name** |
 | Summary | **Short description** |
 | Description | **Detailed description** |
-| Category | **Category** (listing) |
-| Language | **Language** (listing) |
+| Category | **Category** |
+| Language | **Language** |
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all data categories → "Not collected") |
@@ -23,7 +23,7 @@ All assets in `~/Downloads/lovespark-tab-garden-cws-assets`.
 
 | CWS slot | File / spec |
 |---|---|
-| ☐ Store icon (128×128) | `icons/icon-128.png` |
+| ☐ Store icon (128×128) | `icons/icon128.png` |
 | ☐ Screenshots (1280×800) | 5 localized + 5 global from the assets dir |
 | ☐ Small promo tile (440×280) | small promo tile PNG |
 | ☐ Marquee promo tile (1400×560) | marquee promo tile PNG |
@@ -35,7 +35,7 @@ All assets in `~/Downloads/lovespark-tab-garden-cws-assets`.
 - ☐ Upload `~/Claude x LoveSpark/lovespark zips/chrome zips/lovespark-tab-garden-chrome.zip` to the [CWS Developer Dashboard](https://chrome.google.com/webstore/devconsole).
 
 **Pre-submit checkboxes (tick during upload):**
-- ☐ Version is bumped (`1.0.25`)
+- ☐ Version is bumped (`1.0.27`)
 - ☐ Permissions match justifications
 - ☐ Privacy form all "Not collected"
 - ☐ Privacy policy URL set
