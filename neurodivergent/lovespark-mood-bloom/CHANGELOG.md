@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.33] - 2026-10-07
+
+### Fixed
+- Store zips no longer pack previous store zips, CWS listing docs or screenshots (BUG-003); added `.zipignore`, rebuilt both zips (3.85 MB -> 1.2 MB, AMO validator clean)
+
 ## [1.0.32] - 2026-07-08
 
 ### Fixed

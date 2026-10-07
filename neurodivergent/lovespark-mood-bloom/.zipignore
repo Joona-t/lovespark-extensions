@@ -1,0 +1,8 @@
+# Store-package excludes honored by scripts/build-zips.sh (rsync --exclude-from).
+# BUG-003: without these, the in-repo store zips got packed into the next build
+# (recursive self-nesting) along with store-listing docs.
+*.zip
+CWS-LISTING.md
+PRIVACY.md
+SUBMIT.md
+screenshots/
