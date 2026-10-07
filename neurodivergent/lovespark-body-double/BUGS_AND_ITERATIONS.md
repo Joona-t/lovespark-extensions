@@ -1,5 +1,19 @@
 # LoveSpark Body Double - Bugs and Iterations
 
+## 2026-10-07: BUG-002 — dead theme dropdown + unstyled `.sr-only` theme label leak (PR #1 skeptic refutation)
+
+**Problem:** (1) The theme dropdown never opened. `popup.html` used `id="themeDropdownTrigger"`/`id="themeDropdownMenu"`, but `lib/lovespark-theme.js:21-22` (canonical shared lib) does `getElementById('themeToggle')`/`getElementById('themeMenu')`. The `if (toggle && menu)` guard silently skipped wiring the click handlers, so theme switching was dead. This was already broken on `main`. (2) PR #1 added `<span id="themeLabel" class="sr-only" aria-live="polite">`, but `.sr-only` is defined in no stylesheet (not lib/*.css, not popup.css, not the canonical shared lib). `LoveSparkTheme.init()` → `apply()` writes "Retro Pink" into it on every popup open, so the name rendered as stray visible text next to the trigger and the live region announced it on load. The trigger itself showed static, never-updated "retro".
+**Root cause:** The popup markup was hand-written against a different id convention than the shared lib it loads, and the shared lib fails silently when its ids are missing. `ls-check` has no check that the ids a script looks up exist in the HTML, or that the classes the HTML uses are defined anywhere.
+**Fix:** Adopted the sibling-extension pattern (e.g. reading/lovespark-reader): ids `themeToggle`/`themeMenu`, with `#themeLabel` inside the trigger as its visible text (`Theme: <span id="themeLabel">Retro Pink</span> ▾`, arrow `aria-hidden`). The menu header now reads "Change Theme" per UI rule #2. `aria-live` was dropped from the label. The shared lib stays byte-identical to canonical. Bumped manifest 1.0.36 → 1.0.37 + CHANGELOG. Known residual (shared-lib-wide, out of scope): `lovespark-theme.js` never toggles `aria-expanded`, and it no longer honours the legacy `darkMode` storage key.
+**Regression check (no test harness in this repo; exit 0 = pass, fails 3 ways on the pre-fix head 369c43a):**
+```
+fail=0
+for id in $(grep -ohE "getElementById\('[A-Za-z]+'\)" lib/lovespark-theme.js popup.js | sed -E "s/.*\('([A-Za-z]+)'\)/\1/" | sort -u); do grep -q "id=\"$id\"" popup.html || { echo "MISSING id #$id"; fail=1; }; done
+for c in $(grep -oE 'class="[^"]+"' popup.html | sed -E 's/class="(.*)"/\1/' | tr ' ' '\n' | sort -u); do cat lib/*.css popup.css | grep -qE "\.$c([^A-Za-z0-9_-]|$)" || { echo "UNSTYLED .$c"; fail=1; }; done
+exit $fail
+```
+**Files:** popup.html, manifest.json (1.0.36 → 1.0.37), CHANGELOG.md
+
 ## 2026-10-07: BUG-001 — missing lib/lovespark-fonts.css + recursive store zips (PR #1 verification)
 
 **Problem:** (1) `popup.html` line 8 links `lib/lovespark-fonts.css`, but that file never existed in this repo (absent since the initial commit 650afb3; `git ls-tree origin/main lib/` has no fonts.css). The popup therefore 404s the stylesheet and `--ls-font-body: 'DM Mono'` / `--ls-font-display: 'Press Start 2P'` fall back to generic `monospace`/`cursive` — brand fonts never rendered. Not caught by `ls-check` (BRAND-LIB-SYNC only compares files that are present). (2) The two store zips committed in e281798/d05559a each contained `lovespark-body-double-chrome.zip` + `lovespark-body-double-firefox.zip` (v1.0.32, 249 KB each) nested inside, and those nested zips contained 3 more zips — the 708 KB packages were ~70% stale zips, plus `CWS-LISTING.md`/`PRIVACY.md`/`SUBMIT.md`/`screenshots/`.

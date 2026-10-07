@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.37] - 2026-10-07 - Theme dropdown wiring (BUG-002)
+### Fixed
+- Theme dropdown never opened: `popup.html` used `#themeDropdownTrigger`/`#themeDropdownMenu`, but the shared `lib/lovespark-theme.js` binds `#themeToggle`/`#themeMenu`. Renamed the ids to match the shared lib, so theme switching works again.
+- `#themeLabel` carried `class="sr-only"`, but no stylesheet defines `.sr-only`, so the theme name leaked as stray visible text beside the trigger. The label now sits inside the trigger as its visible text ("Theme: Retro Pink"), as in the sibling extensions. The stale static "retro" text and the aria-live announcement on load are gone.
+
 ## [1.0.36] - 2026-10-07 - PR #1 verification fixes
 ### Fixed
 - `popup.html` linked `lib/lovespark-fonts.css`, which was never in the repo, so the popup fell back to generic `monospace`/`cursive` instead of DM Mono / Press Start 2P. Synced canonical `lovespark-fonts.css` + `lib/fonts/` (51 woff2) per fleet convention.

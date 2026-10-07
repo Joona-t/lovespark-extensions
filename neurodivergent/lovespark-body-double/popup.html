@@ -11,13 +11,12 @@
 </head>
 <body>
   <div class="theme-dropdown">
-    <span id="themeLabel" class="sr-only" aria-live="polite"></span>
-    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
-            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
-      retro
+    <button id="themeToggle" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" title="Change Theme">
+      Theme: <span id="themeLabel">Retro Pink</span> <span aria-hidden="true">&#x25BE;</span>
     </button>
-    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
-      <div class="theme-dropdown-header">Theme</div>
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Change Theme</div>
       <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
       <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
       <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
