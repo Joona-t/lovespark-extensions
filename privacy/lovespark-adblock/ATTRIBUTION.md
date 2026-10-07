@@ -11,16 +11,15 @@ satisfies that attribution / share-alike obligation.
   Licensed under **GPL-3.0** and **CC BY-SA 3.0**.
 - **EasyPrivacy** — © The EasyList authors — https://easylist.to/
   Licensed under **GPL-3.0** and **CC BY-SA 3.0**.
-- **AdGuard Base filter** — © AdGuard Software Ltd. — https://adguard.com/
-  Licensed under **GPL-3.0**.
 - **Fanboy's Annoyance List** — © The EasyList authors — https://easylist.to/
   Licensed under **GPL-3.0** and **CC BY-SA 3.0**.
 
 Because these lists are GPL-3.0 + CC BY-SA, any distributed ruleset derived from them must credit
-"The EasyList authors (https://easylist.to/)" and the AdGuard team, and remain share-alike. The
+"The EasyList authors (https://easylist.to/)" and remain share-alike. The
 hand-curated rules that ship by default (`rules-ads.json`, `rules-tracking.json`,
-`rules-annoyances.json`) are original LoveSpark work under the project's MIT license; only
-build-generated lists carry the obligations above.
+`rules-annoyances.json`, `rules-youtube.json`) are original LoveSpark work under the project's MIT
+license; the generated `rules-easylist.json`, `rules-easyprivacy.json`, and
+`rules-fanboy-annoyances.json` carry the list licenses above.
 
 ## Build tooling (code, not shipped)
 

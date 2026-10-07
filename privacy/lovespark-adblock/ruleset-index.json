@@ -1,0 +1,207 @@
+{
+  "ruleset_ads": {
+    "tier": "ads",
+    "core": true,
+    "count": 124
+  },
+  "ruleset_tracking": {
+    "tier": "tracking",
+    "core": true,
+    "count": 76
+  },
+  "ruleset_annoyances": {
+    "tier": "annoyances",
+    "core": true,
+    "count": 60
+  },
+  "ruleset_youtube": {
+    "tier": "ads",
+    "core": true,
+    "count": 6
+  },
+  "ruleset_easylist": {
+    "tier": "ads",
+    "core": true,
+    "count": 22500
+  },
+  "ruleset_easylist_extra_1": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_2": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_3": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_4": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_5": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_6": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_7": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_8": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_9": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_10": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_11": {
+    "tier": "ads",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easylist_extra_12": {
+    "tier": "ads",
+    "core": false,
+    "count": 1367
+  },
+  "ruleset_easyprivacy": {
+    "tier": "tracking",
+    "core": true,
+    "count": 6800
+  },
+  "ruleset_easyprivacy_extra_1": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_2": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_3": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_4": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_5": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_6": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_7": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_8": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_9": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_10": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_11": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_12": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_13": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_14": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_15": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_16": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_17": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_18": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_19": {
+    "tier": "tracking",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_easyprivacy_extra_20": {
+    "tier": "tracking",
+    "core": false,
+    "count": 1659
+  },
+  "ruleset_fanboy_annoyances": {
+    "tier": "annoyances",
+    "core": true,
+    "count": 200
+  },
+  "ruleset_fanboy_annoyances_extra_1": {
+    "tier": "annoyances",
+    "core": false,
+    "count": 2500
+  },
+  "ruleset_fanboy_annoyances_extra_2": {
+    "tier": "annoyances",
+    "core": false,
+    "count": 1393
+  }
+}

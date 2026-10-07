@@ -3,6 +3,8 @@
 
 'use strict';
 
+importScripts('ruleset-planner.js');
+
 const DEFAULTS = {
   adsBlockedToday: 0,
   adsBlockedTotal: 0,
@@ -11,6 +13,42 @@ const DEFAULTS = {
   isEnabled: true,
   filterIntensity: 'medium',
 };
+
+const CORE_RULESET_TIERS = {
+  ads: ['ruleset_ads', 'ruleset_easylist', 'ruleset_youtube'],
+  tracking: ['ruleset_tracking', 'ruleset_easyprivacy'],
+  annoyances: ['ruleset_annoyances', 'ruleset_fanboy_annoyances'],
+};
+
+const RULESET_RESOURCES = chrome.runtime.getManifest().declarative_net_request.rule_resources;
+const ALL_RULESET_IDS = RULESET_RESOURCES.map(({ id }) => id);
+let rulesetIndexPromise;
+
+function loadRulesetIndex() {
+  if (!rulesetIndexPromise) {
+    rulesetIndexPromise = fetch(chrome.runtime.getURL('ruleset-index.json')).then((response) => {
+      if (!response.ok) throw new Error(`ruleset index unavailable: ${response.status}`);
+      return response.json();
+    });
+  }
+  return rulesetIndexPromise;
+}
+
+async function planRulesets(intensity) {
+  const index = await loadRulesetIndex();
+  const current = await chrome.declarativeNetRequest.getEnabledRulesets();
+  let capacity = 30000;
+  if (typeof chrome.declarativeNetRequest.getAvailableStaticRuleCount === 'function') {
+    const additional = await chrome.declarativeNetRequest.getAvailableStaticRuleCount();
+    capacity = additional + current.reduce((sum, id) => sum + (index[id]?.count || 0), 0);
+  }
+  const maxEnabled = chrome.declarativeNetRequest.MAX_NUMBER_OF_ENABLED_STATIC_RULESETS || 10;
+  return {
+    current,
+    index,
+    plan: globalThis.LoveSparkRulesetPlanner.select(index, RULESET_RESOURCES, intensity, capacity, maxEnabled),
+  };
+}
 
 function todayStr() {
   // Local calendar date (YYYY-MM-DD) so "today" rolls over at the user's midnight, not UTC.
@@ -86,6 +124,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 chrome.runtime.onStartup.addListener(async () => {
   scheduleResetAlarm();
   enableBadgeCount();
+  const { isEnabled, filterIntensity } = await chrome.storage.local.get(['isEnabled', 'filterIntensity']);
+  await applyIntensity(filterIntensity || 'medium', isEnabled !== false);
   // Reconcile the day boundary on cold start before polling.
   await checkDailyReset();
   pollMatchedRules();
@@ -189,7 +229,7 @@ async function setEnabled(enabled) {
   } else {
     // Disable all rulesets
     await chrome.declarativeNetRequest.updateEnabledRulesets({
-      disableRulesetIds: ['ruleset_ads', 'ruleset_tracking', 'ruleset_annoyances'],
+      disableRulesetIds: ALL_RULESET_IDS,
     });
   }
   await chrome.storage.local.set({ isEnabled: enabled });
@@ -200,30 +240,32 @@ async function setEnabled(enabled) {
 async function applyIntensity(intensity, enabled = true) {
   if (!enabled) {
     await chrome.declarativeNetRequest.updateEnabledRulesets({
-      disableRulesetIds: ['ruleset_ads', 'ruleset_tracking', 'ruleset_annoyances'],
+      disableRulesetIds: ALL_RULESET_IDS,
     });
     return;
   }
 
-  const enable = [];
-  const disable = [];
-
-  if (intensity === 'light') {
-    enable.push('ruleset_ads');
-    disable.push('ruleset_tracking', 'ruleset_annoyances');
-  } else if (intensity === 'medium') {
-    enable.push('ruleset_ads', 'ruleset_tracking');
-    disable.push('ruleset_annoyances');
-  } else {
-    // strong
-    enable.push('ruleset_ads', 'ruleset_tracking', 'ruleset_annoyances');
+  try {
+    const { current, plan } = await planRulesets(intensity);
+    const desired = new Set(plan.ids);
+    await chrome.declarativeNetRequest.updateEnabledRulesets({
+      enableRulesetIds: plan.ids.filter((id) => !current.includes(id)),
+      disableRulesetIds: current.filter((id) => !desired.has(id)),
+    });
+  } catch (error) {
+    // Capacity can change if another extension enables rules during the calculation.
+    // Fall back to the guaranteed core instead of leaving the user's requested tier half-applied.
+    console.warn('[LoveSpark Ad Blocker] supplemental rules unavailable; using guaranteed core:', error);
+    const coreIds = intensity === 'light'
+      ? CORE_RULESET_TIERS.ads
+      : intensity === 'strong'
+        ? [...CORE_RULESET_TIERS.ads, ...CORE_RULESET_TIERS.tracking, ...CORE_RULESET_TIERS.annoyances]
+        : [...CORE_RULESET_TIERS.ads, ...CORE_RULESET_TIERS.tracking];
+    await chrome.declarativeNetRequest.updateEnabledRulesets({
+      enableRulesetIds: coreIds,
+      disableRulesetIds: ALL_RULESET_IDS.filter((id) => !coreIds.includes(id)),
+    });
   }
-
-  // Only pass IDs for rulesets that actually exist
-  await chrome.declarativeNetRequest.updateEnabledRulesets({
-    enableRulesetIds: enable,
-    disableRulesetIds: disable,
-  });
 }
 
 // ── Whitelist (dynamic allow rules) ──────────────────────────────────────────
@@ -250,7 +292,7 @@ async function syncWhitelist(domains) {
 
   const newRules = valid.map((domain, i) => ({
     id: WHITELIST_ID_BASE + i,
-    priority: 2, // Beats all blocking rules (priority 1)
+    priority: 100, // Beats bundled blocks, including converted $important rules.
     // allowAllRequests exempts the ENTIRE page (including 3rd-party ad iframes whose
     // initiator is the iframe origin, not the page) when the top-level/sub-frame URL is on
     // a whitelisted domain — a true per-site allow, unlike an `allow` keyed on initiatorDomains.

@@ -1,4 +1,4 @@
-# Submission Quickstart — Pink Ad Blocker (v1.0.41)
+# Submission Quickstart — Pink Ad Blocker (v1.1.0)
 
 One-page map from each store form field to the copy in [CWS-LISTING.md](CWS-LISTING.md).
 Full long-form copy lives there; this is the checklist for upload day.
@@ -16,13 +16,13 @@ Full long-form copy lives there; this is the checklist for upload day.
 | Category | Productivity (or Privacy & Security) |
 | Single purpose | CWS-LISTING.md → *Single-purpose justification* |
 | Permission justifications | CWS-LISTING.md → *Per-permission justification* |
-| Host permission justification | CWS-LISTING.md → *Host-permissions justification* (none requested) |
+| Site access justification | CWS-LISTING.md → *Site-access justification* (YouTube only; no `<all_urls>`) |
 | Privacy practices (§5) | CWS-LISTING.md → *Privacy disclosure* — all data types **No** |
 | Privacy policy URL | `https://github.com/Joona-t/lovespark-adblock/blob/main/PRIVACY.md` |
 | Test instructions | CWS-LISTING.md → *Reviewer test instructions* |
 
 ## Pre-submit checklist
-- [ ] Version bumped (manifest `1.0.41`) and zips rebuilt.
+- [ ] Version bumped (manifest `1.1.0`) and zips rebuilt.
 - [ ] Name avoids the "AdBlock"/"Adblock" trademark token (uses two-word "Ad Blocker"). ✅
 - [ ] PRIVACY.md committed and reachable at the GitHub blob URL above.
 - [ ] All privacy data-collection categories set to **No**; 3 certification boxes ticked.

@@ -1,5 +1,48 @@
 # Bugs & Iterations
 
+## 2026-09-10: YouTube + maintained network coverage — v1.1.0
+
+**Root cause:** v1.0.41 shipped only 124 ad-domain rules and had no YouTube content layer. The
+existing generator accepted only hostname-only filters, discarded path rules and cosmetic rules,
+and emitted new ruleset IDs that `background.js` did not enable. YouTube ads therefore had no
+targeted handling, while the broader blocker covered only a small curated host sample.
+
+**Fix:** Bundled all 111,419 safely convertible network rules from current EasyList, EasyPrivacy,
+and Fanboy subscriptions, with source hashes/counts in `rules-metadata.json`. A 29,500-rule core is
+always available; 34 disabled supplemental chunks are enabled only within the browser-reported static
+capacity and enabled-ruleset limit. Rewrote the conservative DNR
+converter to retain compatible path, resource-type, party, domain, and exception filters; and wired
+all generated rulesets into every enable/intensity path. Added a YouTube-only content layer that
+hides known sponsored renderers and, only while YouTube marks the player `ad-showing`, clicks Skip
+or seeks that ad to its end. Ordinary Googlevideo media is deliberately not blocked. Global disable
+and site allowlisting turn the page layer off as well as the DNR rules. Raised Firefox's minimum to
+113, where MV3 DNR is available.
+
+**Evidence (2026-09-10):** `npm test` (12/12), JS/JSON parse checks, package integrity checks, and the
+Firefox AMO validator passed. The packaged Chrome ZIP loaded in official Chrome for Testing 153.0.8010.36
+with an isolated temporary profile. Chrome accepted all 41 static rulesets and reported 300,494 additional
+static-rule capacity. Medium enabled the ads/tracking supplements; Strong also enabled all annoyance
+supplements, with 41 total rulesets (below Chrome's 50-enabled ceiling). Browser `testMatchOutcome`
+matched the YouTube ad endpoint, YouTube ad telemetry, a general ad, and a general tracker while leaving
+an ordinary script and a representative `googlevideo.com/videoplayback` request unmatched.
+
+The same run exercised real HTTP requests between mapped `.test` origins: the ordinary script loaded,
+the ad-shaped script was stopped before the fixture server received it, allowlisting made both load, and
+global disable made both load. The exact Kyoto YouTube watch page loaded and the YouTube content layer
+activated; ad-service requests were observed as blocked and Googlevideo requests were not DNR-blocked.
+Playback progress is **not** claimed: the disposable browser's media requests failed with DNS/HTTP 403,
+and a control with LoveSpark fully disabled also failed to play. No served in-player ad was observed, so
+account/region-specific live-ad blocking remains a manual validation item rather than a universal pass.
+
+**Deliberate residual gap:** this remains below Adblock Plus-style general cosmetic/scriptlet and live
+subscription-update coverage. Adding those capabilities would require broad all-sites page access and a
+maintained scriptlet/update engine, a materially larger permission/security surface not silently added in
+this release.
+
+**Files:** `background.js`, `manifest.json`, `rules-*.json`, `rules-metadata.json`,
+`youtube-content.{js,css}`, `youtube-logic.js`, `scripts/build-rules.mjs`, tests/docs
+**Version:** 1.1.0
+
 ## 2026-06-28: Dynamic audit + SEO rename → v1.0.40
 
 Dynamic multi-agent audit (3 disjoint code auditors + SEO/naming agent → skeptic verification;

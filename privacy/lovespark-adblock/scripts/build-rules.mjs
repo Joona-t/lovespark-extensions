@@ -1,183 +1,261 @@
 #!/usr/bin/env node
 /*
- * build-rules.mjs — DEV-ONLY, build-time blocklist compiler. NOT shipped in the extension.
- * ─────────────────────────────────────────────────────────────────────────────────────────
- * Compiles community filter lists (EasyList / EasyPrivacy / AdGuard Base) into bundled static
- * declarativeNetRequest (DNR) rulesets, split to stay under Chrome MV3's caps. No runtime
- * network and no remote code — MV3-compliant and zero data collection (rule #10). Updating the
- * blocklist = re-run this, review the diff, bump the version, rebuild zips, resubmit.
+ * Build-time only: convert maintained EasyList-family subscriptions into a
+ * conservative subset of Chrome/Firefox MV3 declarativeNetRequest rules.
  *
- *   Usage:   npm install            # installs @ghostery/adblocker (MPL-2.0) as a DEV dependency only
- *            npm run build:rules    # regenerates rules-*.json + manifest.rule_resources
- *
- * ⚠ VERIFY LOCALLY before committing generated rules: load unpacked, hit known ad/track domains,
- *   confirm the counter increments, spot-check for over-blocking (logins/players/payment widgets),
- *   and assert headroom with chrome.declarativeNetRequest.getAvailableStaticRuleCount().
- *
- * License posture: @ghostery/adblocker is MPL-2.0 and used here ONLY at build time to validate
- * filter syntax — it is never bundled, so the shipped extension stays MIT. The GENERATED rules are
- * derived from EasyList (GPL-3.0 + CC BY-SA 3.0): see ATTRIBUTION.md (mandatory, content license).
- *
- * Scope: converts hostname-anchored network rules (||domain^ and @@||domain^ exceptions) with their
- * resource-type / third-party / $domain options. Cosmetic (##), regex (/.../$), and path/generic
- * rules are intentionally SKIPPED (no content scripts here) and their counts are logged — never
- * silently dropped. Full-fidelity conversion (path/regex) is a documented future upgrade via
- * @ghostery/adblocker's native DNR conversion.
+ * The converter deliberately skips operations DNR cannot reproduce safely
+ * (redirects, header/CSP changes, scriptlets and regular expressions). The
+ * shipped extension never downloads lists or executes remote code.
  */
 import { NetworkFilter } from '@ghostery/adblocker';
-import { writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..'); // scripts/.. = extension root
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const isGeneratedResource = (id) => /^(ruleset_easylist|ruleset_easyprivacy|ruleset_fanboy_annoyances)(?:_extra_\d+)?$/.test(id);
+const EXTRA_CHUNK_SIZE = 2500;
 
-// Tier -> upstream lists. Fetched at build time on YOUR machine/CI, never at runtime.
-const LISTS = {
-  ads: [
-    'https://easylist.to/easylist/easylist.txt',
-    'https://filters.adtidy.org/extension/chromium/filters/2.txt', // AdGuard Base
-  ],
-  tracking: ['https://easylist.to/easylist/easyprivacy.txt'],
-  annoyances: ['https://easylist.to/easylist/fanboy-annoyance.txt'],
-};
+export const SOURCES = [
+  {
+    tier: 'ads', id: 'ruleset_easylist', path: 'rules-easylist.json',
+    url: 'https://easylist.to/easylist/easylist.txt', budget: 22500, enabled: true,
+  },
+  {
+    tier: 'tracking', id: 'ruleset_easyprivacy', path: 'rules-easyprivacy.json',
+    url: 'https://easylist.to/easylist/easyprivacy.txt', budget: 6800, enabled: true,
+  },
+  {
+    tier: 'annoyances', id: 'ruleset_fanboy_annoyances', path: 'rules-fanboy-annoyances.json',
+    url: 'https://easylist.to/easylist/fanboy-annoyance.txt', budget: 200, enabled: false,
+  },
+];
 
-const ENABLED_CAP = 30000; // GUARANTEED_MINIMUM_STATIC_RULES across all ENABLED rulesets
-const PER_FILE = 5000;     // keep each generated ruleset file readable
-let   REGEX_BUDGET = 1000; // MAX_NUMBER_OF_REGEX_RULES (static+dynamic) — we emit none, but guard anyway
-
-// Map filter $type option -> DNR resourceType.
 const TYPE_MAP = {
   script: 'script', image: 'image', stylesheet: 'stylesheet', object: 'object',
-  xmlhttprequest: 'xmlhttprequest', subdocument: 'sub_frame', ping: 'ping',
-  media: 'media', font: 'font', websocket: 'websocket', other: 'other', document: 'main_frame',
+  object_subrequest: 'object', xmlhttprequest: 'xmlhttprequest', xhr: 'xmlhttprequest',
+  subdocument: 'sub_frame', frame: 'sub_frame', ping: 'ping', media: 'media',
+  font: 'font', websocket: 'websocket', other: 'other', document: 'main_frame', doc: 'main_frame',
 };
 
-// Parse a single filter LINE into a DNR rule, or return a skip reason.
-// We read options from the raw text (not Ghostery internals) so the output is fully under our control.
-function lineToDNR(line, id) {
+const UNSUPPORTED_OPTIONS = new Set([
+  'badfilter', 'csp', 'elemhide', 'empty', 'extension', 'genericblock', 'generichide',
+  'ghide', 'header', 'html', 'inline-font', 'inline-script', 'permissions', 'popup',
+  'popunder', 'redirect', 'redirect-rule', 'removeheader', 'removeparam', 'rewrite',
+  'shide', 'sitekey', 'specifichide', 'urltransform', 'webrtc',
+]);
+
+function cleanDomains(raw) {
+  const included = [];
+  const excluded = [];
+  for (const item of raw.split('|')) {
+    const negated = item.startsWith('~');
+    const domain = (negated ? item.slice(1) : item).trim().toLowerCase();
+    if (!/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(domain)) return null;
+    (negated ? excluded : included).push(domain);
+  }
+  return { included: [...new Set(included)], excluded: [...new Set(excluded)] };
+}
+
+function normalizePattern(pattern) {
+  if (!pattern || pattern.length > 1024 || /[^\x00-\x7F]/.test(pattern) || /\s/.test(pattern)) return null;
+  if (pattern.startsWith('/') && pattern.endsWith('/') && pattern.length > 2) return null;
+  if (pattern.startsWith('||*')) return null;
+  let body = pattern;
+  if (body.startsWith('||')) body = body.slice(2);
+  else if (body.startsWith('|')) body = body.slice(1);
+  if (body.endsWith('|')) body = body.slice(0, -1);
+  if (body.includes('|')) return null;
+  return pattern.replace(/\*{2,}/g, '*');
+}
+
+export function lineToDNR(rawLine, id = 1) {
+  const line = rawLine.trim();
+  if (!line || line.startsWith('!') || line.startsWith('[')) return { skip: 'metadata' };
+  if (line.includes('##') || line.includes('#@#') || line.includes('#?#') || line.includes('#$#')) return { skip: 'cosmetic-or-scriptlet' };
+  if (!NetworkFilter.parse(line)) return { skip: 'invalid-filter' };
+
   const isException = line.startsWith('@@');
   const body = isException ? line.slice(2) : line;
-  const hashIdx = body.indexOf('$');
-  const pattern = hashIdx === -1 ? body : body.slice(0, hashIdx);
-  const opts = hashIdx === -1 ? '' : body.slice(hashIdx + 1);
+  const optionAt = body.indexOf('$');
+  const pattern = normalizePattern(optionAt === -1 ? body : body.slice(0, optionAt));
+  if (!pattern) return { skip: 'unsupported-pattern' };
 
-  // Only clean hostname anchors: ||domain^  (optionally trailing ^). No paths, no regex, no wildcards mid-host.
-  const m = /^\|\|([a-z0-9.-]+)\^?$/i.exec(pattern);
-  if (!m) return { skip: 'non-hostname (path/regex/generic)' };
+  const condition = { urlFilter: pattern, isUrlFilterCaseSensitive: false };
+  const includedTypes = [];
+  const excludedTypes = [];
+  let domainType;
+  let priority = isException ? 10 : 1;
+  const options = optionAt === -1 ? [] : body.slice(optionAt + 1).split(',').filter(Boolean);
 
-  const condition = { urlFilter: `||${m[1]}^` };
-  const resourceTypes = [];
-  let thirdParty = false;
-  const initiator = [];
-  const excludedInitiator = [];
+  for (const rawOption of options) {
+    const option = rawOption.trim();
+    const negated = option.startsWith('~');
+    const unsigned = negated ? option.slice(1) : option;
+    const equalAt = unsigned.indexOf('=');
+    const key = (equalAt === -1 ? unsigned : unsigned.slice(0, equalAt)).toLowerCase();
+    const value = equalAt === -1 ? '' : unsigned.slice(equalAt + 1);
 
-  for (const raw of opts.split(',').filter(Boolean)) {
-    const opt = raw.trim();
-    if (opt === 'third-party' || opt === '3p') { thirdParty = true; continue; }
-    if (opt === 'first-party' || opt === '1p') { continue; }
-    if (opt.startsWith('domain=')) {
-      for (const d of opt.slice(7).split('|')) {
-        if (d.startsWith('~')) excludedInitiator.push(d.slice(1).toLowerCase());
-        else if (d) initiator.push(d.toLowerCase());
-      }
-      continue;
+    if (TYPE_MAP[key]) {
+      (negated ? excludedTypes : includedTypes).push(TYPE_MAP[key]);
+    } else if (key === 'third-party' || key === '3p') {
+      domainType = negated ? 'firstParty' : 'thirdParty';
+    } else if (key === 'first-party' || key === '1p') {
+      domainType = negated ? 'thirdParty' : 'firstParty';
+    } else if (key === 'domain') {
+      const domains = cleanDomains(value);
+      if (!domains) return { skip: 'invalid-domain-option' };
+      if (domains.included.length) condition.initiatorDomains = domains.included;
+      if (domains.excluded.length) condition.excludedInitiatorDomains = domains.excluded;
+    } else if (key === 'denyallow') {
+      const domains = cleanDomains(value);
+      if (!domains || domains.excluded.length) return { skip: 'invalid-denyallow-option' };
+      if (domains.included.length) condition.excludedRequestDomains = domains.included;
+    } else if (key === 'to') {
+      const domains = cleanDomains(value);
+      if (!domains) return { skip: 'invalid-to-option' };
+      if (domains.included.length) condition.requestDomains = domains.included;
+      if (domains.excluded.length) condition.excludedRequestDomains = domains.excluded;
+    } else if (key === 'match-case') {
+      condition.isUrlFilterCaseSensitive = !negated;
+    } else if (key === 'important') {
+      if (negated) return { skip: 'unsupported-negated-important' };
+      priority = isException ? 10 : 2;
+    } else if (key === 'all') {
+      // No additional DNR condition required.
+    } else if (UNSUPPORTED_OPTIONS.has(key) || equalAt !== -1) {
+      return { skip: `unsupported-option:${key}` };
+    } else {
+      return { skip: `unknown-option:${key}` };
     }
-    const neg = opt.startsWith('~');
-    const key = neg ? opt.slice(1) : opt;
-    if (TYPE_MAP[key]) { if (!neg) resourceTypes.push(TYPE_MAP[key]); continue; }
-    // Unsupported option (important, redirect, csp, popup, badfilter, etc.) -> skip to stay safe.
-    return { skip: `unsupported option: ${key}` };
   }
 
-  if (resourceTypes.length) condition.resourceTypes = [...new Set(resourceTypes)];
-  if (thirdParty) condition.domainType = 'thirdParty';
-  if (initiator.length) condition.initiatorDomains = initiator;
-  if (excludedInitiator.length) condition.excludedInitiatorDomains = excludedInitiator;
+  if (includedTypes.length && excludedTypes.length) return { skip: 'mixed-resource-types' };
+  if (includedTypes.length) condition.resourceTypes = [...new Set(includedTypes)];
+  if (excludedTypes.length) condition.excludedResourceTypes = [...new Set(excludedTypes)];
+  if (domainType) condition.domainType = domainType;
 
+  return { rule: { id, priority, action: { type: isException ? 'allow' : 'block' }, condition } };
+}
+
+function scoreRule(rule) {
+  const pattern = rule.condition.urlFilter;
+  let score = 0;
+  if (/^\|\|[a-z0-9.-]+\^?$/.test(pattern)) score += 10000;
+  if (rule.condition.domainType === 'thirdParty') score += 2000;
+  if (rule.condition.initiatorDomains) score += 1000;
+  return score + Math.max(0, 500 - pattern.length);
+}
+
+export function convertList(text, budget) {
+  const skipped = {};
+  const candidates = [];
+  const seen = new Set();
+  for (const rawLine of text.split(/\r?\n/)) {
+    const result = lineToDNR(rawLine);
+    if (!result.rule) {
+      skipped[result.skip] = (skipped[result.skip] || 0) + 1;
+      continue;
+    }
+    const key = `${result.rule.action.type}:${JSON.stringify(result.rule.condition)}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    candidates.push({ rule: result.rule, order: candidates.length });
+  }
+  const byScore = (a, b) => scoreRule(b.rule) - scoreRule(a.rule) || a.order - b.order;
+  const allows = candidates.filter(({ rule }) => rule.action.type === 'allow').sort(byScore);
+  const blocks = candidates.filter(({ rule }) => rule.action.type === 'block');
+  const hostnameBlocks = blocks.filter(({ rule }) => /^\|\|[a-z0-9.-]+\^?$/.test(rule.condition.urlFilter)).sort(byScore);
+  const specificBlocks = blocks.filter(({ rule }) => !/^\|\|[a-z0-9.-]+\^?$/.test(rule.condition.urlFilter)).sort(byScore);
+
+  // Keep every exception when it is a modest share of the ruleset, but never let a small tier
+  // become exception-only. Reserve space for path/generic filters instead of filling the whole
+  // budget with alphabetically ordered ad-host domains.
+  const selectedAllows = allows.slice(0, Math.floor(budget * 0.15));
+  const blockBudget = budget - selectedAllows.length;
+  const selectedHosts = hostnameBlocks.slice(0, Math.floor(blockBudget * 0.65));
+  const selectedSpecific = specificBlocks.slice(0, blockBudget - selectedHosts.length);
+  const selected = [...selectedAllows, ...selectedHosts, ...selectedSpecific];
+  if (selected.length < budget) {
+    const selectedSet = new Set(selected);
+    selected.push(...[...hostnameBlocks, ...specificBlocks].filter((candidate) => !selectedSet.has(candidate)).slice(0, budget - selected.length));
+  }
+  const selectedSet = new Set(selected);
+  const overflowRules = [...allows, ...hostnameBlocks, ...specificBlocks]
+    .filter((candidate) => !selectedSet.has(candidate))
+    .map(({ rule }) => rule);
+  const rules = selected.map(({ rule }, index) => ({ ...rule, id: index + 1 }));
   return {
-    rule: {
-      id,
-      priority: isException ? 2 : 1, // exceptions beat blocks; whitelist allowAllRequests sits above at 2 too
-      action: { type: isException ? 'allow' : 'block' },
-      condition,
+    rules,
+    overflowRules,
+    skipped,
+    compatibleCount: candidates.length,
+    selectedCounts: {
+      allow: rules.filter(({ action }) => action.type === 'allow').length,
+      hostnameBlock: rules.filter(({ action, condition }) => action.type === 'block' && /^\|\|[a-z0-9.-]+\^?$/.test(condition.urlFilter)).length,
+      specificBlock: rules.filter(({ action, condition }) => action.type === 'block' && !/^\|\|[a-z0-9.-]+\^?$/.test(condition.urlFilter)).length,
     },
   };
 }
 
-async function fetchList(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`fetch ${url} -> HTTP ${res.status}`);
-  return res.text();
+async function fetchText(url) {
+  const response = await fetch(url, { headers: { 'user-agent': 'LoveSpark-AdBlock-build/1.1' } });
+  if (!response.ok) throw new Error(`fetch ${url} -> HTTP ${response.status}`);
+  return response.text();
 }
 
-function convert(text, skips) {
-  const rules = [];
-  let id = 1;
-  for (const rawLine of text.split('\n')) {
-    const line = rawLine.trim();
-    if (!line || line.startsWith('!') || line.startsWith('[')) continue; // comment / list header
-    if (line.includes('##') || line.includes('#@#') || line.includes('#?#')) { skips.cosmetic++; continue; }
-    // Validate it is a real network filter Ghostery recognizes before we convert.
-    if (!NetworkFilter.parse(line)) { skips.invalid++; continue; }
-    const out = lineToDNR(line, id);
-    if (out.skip) { skips.byReason[out.skip] = (skips.byReason[out.skip] || 0) + 1; skips.unsupported++; continue; }
-    rules.push(out.rule);
-    id++;
+export async function build({ root = ROOT, fetcher = fetchText } = {}) {
+  const manifestPath = join(root, 'manifest.json');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  const resources = manifest.declarative_net_request.rule_resources.filter(({ id }) => !isGeneratedResource(id));
+  for (const filename of readdirSync(root)) {
+    if (/^rules-(easylist|easyprivacy|fanboy-annoyances)(?:-extra-\d+)?\.json$/.test(filename)) unlinkSync(join(root, filename));
   }
-  return rules;
-}
+  const rulesetIndex = {};
+  const tierByCuratedId = {
+    ruleset_ads: 'ads', ruleset_youtube: 'ads', ruleset_tracking: 'tracking', ruleset_annoyances: 'annoyances',
+  };
+  for (const resource of resources) {
+    rulesetIndex[resource.id] = {
+      tier: tierByCuratedId[resource.id], core: true,
+      count: JSON.parse(readFileSync(join(root, resource.path), 'utf8')).length,
+    };
+  }
+  const metadata = { generatedAt: new Date().toISOString(), sources: [] };
 
-function chunk(rules, size) {
-  const out = [];
-  for (let i = 0; i < rules.length; i += size) out.push(rules.slice(i, i + size));
-  return out;
-}
+  for (const source of SOURCES) {
+    const text = await fetcher(source.url);
+    const { rules, overflowRules, skipped, compatibleCount, selectedCounts } = convertList(text, source.budget);
+    writeFileSync(join(root, source.path), `${JSON.stringify(rules)}\n`);
+    resources.push({ id: source.id, enabled: source.enabled, path: source.path });
+    rulesetIndex[source.id] = { tier: source.tier, core: true, count: rules.length };
 
-async function main() {
-  const manifestPath = join(ROOT, 'manifest.json');
-  const manifest = JSON.parse(await import('node:fs').then((fs) => fs.readFileSync(manifestPath, 'utf8')));
-  const ruleResources = [];
-  let enabledTotal = 0;
-  const skips = { cosmetic: 0, invalid: 0, unsupported: 0, byReason: {} };
-
-  for (const [tier, urls] of Object.entries(LISTS)) {
-    const texts = await Promise.all(urls.map(fetchList));
-    let rules = convert(texts.join('\n'), skips);
-
-    // Deduplicate by stringified condition; re-number per file (DNR ids only need to be unique per ruleset).
-    const seen = new Set();
-    rules = rules.filter((r) => {
-      const k = JSON.stringify(r.condition) + r.action.type;
-      if (seen.has(k)) return false;
-      seen.add(k);
-      return true;
+    for (let offset = 0, chunkNumber = 1; offset < overflowRules.length; offset += EXTRA_CHUNK_SIZE, chunkNumber += 1) {
+      const chunk = overflowRules.slice(offset, offset + EXTRA_CHUNK_SIZE).map((rule, index) => ({ ...rule, id: index + 1 }));
+      const id = `${source.id}_extra_${chunkNumber}`;
+      const path = `rules-${source.path.slice(6, -5)}-extra-${chunkNumber}.json`;
+      writeFileSync(join(root, path), `${JSON.stringify(chunk)}\n`);
+      resources.push({ id, enabled: false, path });
+      rulesetIndex[id] = { tier: source.tier, core: false, count: chunk.length };
+    }
+    metadata.sources.push({
+      tier: source.tier, url: source.url,
+      sha256: createHash('sha256').update(text).digest('hex'),
+      sourceBytes: Buffer.byteLength(text), compatibleRules: compatibleCount,
+      emittedRules: rules.length + overflowRules.length, coreRules: rules.length,
+      supplementalRules: overflowRules.length, budget: source.budget, selectedCounts, skipped,
     });
-
-    const enabled = tier !== 'annoyances'; // preserve current default (annoyances off)
-    const files = chunk(rules, PER_FILE);
-    files.forEach((fileRules, idx) => {
-      fileRules.forEach((r, i) => { r.id = i + 1; });
-      const path = `rules-${tier}-${idx + 1}.json`;
-      writeFileSync(join(ROOT, path), JSON.stringify(fileRules, null, 2) + '\n');
-      ruleResources.push({ id: `ruleset_${tier}_${idx + 1}`, enabled, path });
-      if (enabled) enabledTotal += fileRules.length;
-    });
-    console.log(`${tier}: ${rules.length} rules -> ${files.length} file(s)${enabled ? '' : ' (disabled by default)'}`);
+    console.log(`${source.tier}: ${rules.length}/${compatibleCount} compatible rules from ${source.url}`);
   }
 
-  if (enabledTotal > ENABLED_CAP) {
-    console.error(`\n✗ ${enabledTotal} enabled static rules exceeds the ${ENABLED_CAP} cap. Trim a list or move it to a disabled ruleset.`);
-    process.exit(2);
-  }
-
-  // Regenerate the manifest's rule_resources (do not hand-edit).
-  manifest.declarative_net_request = { rule_resources: ruleResources };
-  writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
-
-  console.log(`\nEnabled static rules: ${enabledTotal} / ${ENABLED_CAP}.`);
-  console.log(`Skipped — cosmetic: ${skips.cosmetic}, invalid: ${skips.invalid}, unsupported: ${skips.unsupported}`);
-  console.log('Top unsupported reasons:', Object.entries(skips.byReason).sort((a, b) => b[1] - a[1]).slice(0, 8));
-  console.log('\n⚠ Update applyIntensity() in background.js to enable the new multi-file ruleset ids, then VERIFY on device.');
+  manifest.declarative_net_request.rule_resources = resources;
+  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  writeFileSync(join(root, 'rules-metadata.json'), `${JSON.stringify(metadata, null, 2)}\n`);
+  writeFileSync(join(root, 'ruleset-index.json'), `${JSON.stringify(rulesetIndex, null, 2)}\n`);
+  return metadata;
 }
 
-main().catch((err) => { console.error(err); process.exit(1); });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  build().catch((error) => { console.error(error); process.exitCode = 1; });
+}

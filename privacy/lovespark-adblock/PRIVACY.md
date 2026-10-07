@@ -1,6 +1,6 @@
 # Privacy Policy — Pink Ad Blocker (by LoveSpark)
 
-_Last updated: 2026-06-28_
+_Last updated: 2026-09-10_
 
 **Pink Ad Blocker — Block Ads & Trackers** is built privacy-first. It collects **zero** personal
 data and transmits **nothing** off your device. There are no accounts, no analytics, no tracking,
@@ -37,9 +37,10 @@ stored or sent anywhere.**
 | `alarms` | Schedule the daily counter reset and a 1-minute stats refresh. | Nothing network-related. |
 | `activeTab` | When you open the popup, read the **current tab's domain** so you can toggle the per-site whitelist. | Does not grant access to other tabs and is not used to track browsing. |
 
-**Host permissions:** none. The extension requests no broad host permission (`<all_urls>` etc.).
-Blocking is performed by static `declarativeNetRequest` rulesets, which do not require host access,
-and `activeTab` is granted only for the tab you're on when you click the toolbar icon.
+**Site access:** a bundled content script runs only on `youtube.com` and `youtube-nocookie.com` to hide
+ad placements and skip an in-player ad after YouTube marks the player as showing one. It reads the local
+enabled/allowlist settings and inspects only YouTube's live page DOM; it does not store or transmit page
+content. There is no `<all_urls>` access. Network blocking is performed by bundled static DNR rules.
 
 ## Third-party services
 

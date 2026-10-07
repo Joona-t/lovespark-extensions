@@ -33,20 +33,23 @@ Pink Ad Blocker is a cute, fast, privacy-first ad blocker that blocks ads, pop-u
 so the web loads cleaner and quieter — wrapped in a retro-pink design you'll actually enjoy opening.
 
 WHY YOU'LL LOVE IT
-• Block ads everywhere — banner ads, video ads, and intrusive pop-ups disappear.
+• Broad ad coverage — bundled community rules block common banners, video-ad endpoints, and pop-ups;
+  a YouTube-specific layer hides sponsored placements and skips detected in-player ads.
 • Stop trackers — third-party trackers are blocked by default for more private browsing.
 • Faster, lighter pages — fewer requests means pages load quicker and use less data.
 • Three intensity tiers — Light (ads only), Medium (ads + trackers, default), Strong (+ annoyances
   like cookie banners and overlays). Pick how aggressive you want to be.
+• Capacity-aware coverage — a guaranteed core is always enabled, with more bundled community rules
+  activated automatically when your browser reports room for them.
 • Per-site whitelist — love a site? Allow its ads in one click; everything else stays blocked.
 • Live block counter — see how many ads and trackers you've blocked today and all-time.
 • 4 themes + Sparky — Retro Pink, Dark, Beige, and Slate, with an accessible, OpenDyslexic-friendly
   design and full keyboard navigation.
 
 PRIVACY YOU CAN VERIFY
-• 100% local. All blocking runs on your device via Manifest V3 declarativeNetRequest.
+• 100% local. Request blocking and the YouTube page helper run on your device.
 • Zero data collection. No accounts, no analytics, no tracking, nothing transmitted — ever.
-• No broad permissions. No "read all your data on all sites" — blocking needs no host access.
+• No broad all-sites access. The page helper is limited to YouTube and never transmits content.
 • Free and open source (MIT). Read the code: github.com/Joona-t/lovespark-adblock
 
 Block ads, block pop-ups, block trackers, and reclaim a faster, cleaner, more private web —
@@ -82,11 +85,13 @@ lightweight / Manifest V3, pink / cute / aesthetic / retro.
   whitelist toggle can target the site the user is on. Granted only on user gesture; no access to
   other tabs.
 
-## Host-permissions justification
+## Site-access justification
 
-None requested. The extension declares **no host permissions** (`<all_urls>` is not used). Network
-blocking is performed by static `declarativeNetRequest` rulesets that require no host access, and
-the current site's domain is obtained via the gesture-scoped `activeTab` permission only.
+The extension declares **no `<all_urls>` access**. A bundled content script runs only on
+`youtube.com` and `youtube-nocookie.com` to hide sponsored placements and skip an in-player ad after
+YouTube marks the player as showing one. It does not store or transmit page content. Network blocking
+elsewhere is performed by bundled static `declarativeNetRequest` rulesets, and the current site's
+domain is obtained via the gesture-scoped `activeTab` permission only.
 
 ## Privacy disclosure (CWS §5 — paste these answers)
 
@@ -117,3 +122,5 @@ the current site's domain is obtained via the gesture-scoped `activeTab` permiss
 5. Open **Settings** (gear in the popup) to switch intensity tier (Light / Medium / Strong), manage
    the whitelist (add / import / export), export stats CSV, and change theme.
 6. Verify in DevTools that the extension makes **no outbound network requests** of its own.
+7. On YouTube, verify sponsored feed/player placements are hidden. If an in-player ad is served,
+   verify it is skipped while ordinary playback, seeking, audio, captions, and navigation remain usable.

@@ -4,4 +4,6 @@ plan.md
 package.json
 package-lock.json
 scripts/
+tests/
 node_modules/
+_metadata/
