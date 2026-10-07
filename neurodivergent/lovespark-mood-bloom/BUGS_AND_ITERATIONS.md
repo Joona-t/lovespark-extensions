@@ -68,3 +68,12 @@
 **Regression check (must print nothing):**
 `for z in lovespark-mood-bloom-chrome.zip lovespark-mood-bloom-firefox.zip; do unzip -Z1 "$z" | grep -E '\.zip$|^(CWS-LISTING|PRIVACY|SUBMIT)\.md$|^screenshots/'; done`
 **Files:** .zipignore, manifest.json, lovespark-mood-bloom-chrome.zip, lovespark-mood-bloom-firefox.zip
+
+## 2026-10-07: BUG-004 — SUBMIT.md pointed uploads at stale out-of-repo zips
+
+**Problem:** SUBMIT.md told the submitter to upload `lovespark-mood-bloom-chrome.zip` / `-firefox.zip` from an absolute path in the maintainer's home folder (`lovespark zips/chrome zips/`, `firefox zips/`) and to fetch assets from a `Downloads/` folder. Those external zips were the stale v1.0.32 builds (83 entries, nested older zips + CWS-LISTING/PRIVACY/SUBMIT docs) that BUG-003 fixed only in the repo. SUBMIT.md also still said `v1.0.30`. Following the checklist would ship the broken package.
+**Root cause:** SUBMIT.md was generated with machine-specific absolute paths to an external zip staging folder, so it never tracked the in-repo zips that BUG-003 rebuilt. The version string was hard-coded at generation time and never refreshed.
+**Fix:** SUBMIT.md now points at the in-repo `lovespark-mood-bloom-chrome.zip` / `-firefox.zip` and `cws-shots/` assets with repo-relative paths, has no absolute home paths, and names v1.0.33 to match manifest.json. Docs-only change: SUBMIT.md is in `.zipignore`, so the store zips are unchanged and there is no manifest bump.
+**Regression check (run from repo root; must print `OK`):**
+`! grep -nE '/Users/|Downloads/' SUBMIT.md CWS-LISTING.md && V=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])") && grep -q "v$V" SUBMIT.md && for z in lovespark-mood-bloom-chrome.zip lovespark-mood-bloom-firefox.zip; do ! unzip -Z1 "$z" | grep -E '\.zip$|^(CWS-LISTING|PRIVACY|SUBMIT)\.md$|^screenshots/' && [ "$(unzip -p "$z" manifest.json | python3 -c "import json,sys;print(json.load(sys.stdin)['version'])")" = "$V" ] || exit 1; done && echo OK`
+**Files:** SUBMIT.md, BUGS_AND_ITERATIONS.md
