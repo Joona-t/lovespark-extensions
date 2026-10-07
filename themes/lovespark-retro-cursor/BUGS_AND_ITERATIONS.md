@@ -73,3 +73,5 @@ manifest patch version.
 `lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`, so the removal is
 cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live tree 2026-07-09;
 pre-commit ls-check green at this commit.
+
+**Follow-up (2026-10-07, PR #1 verification):** `ls-check .` flagged QUAL-CHANGELOG-DRIFT (CHANGELOG latest 1.1.32 vs manifest 1.1.33). Added the `[1.1.33]` CHANGELOG entry. Check: `ls-check . --strict` → 0 fail, 0 warn.

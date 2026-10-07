@@ -2,6 +2,11 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.33] - 2026-07-09
+- Fix: `storage.onChanged` listener in `content_script.js` guarded on `"sync"` while every write uses `chrome.storage.local` — live cursor-pack/enabled updates never fired on open tabs (KI-039). Guard flipped to `"local"`.
+- Remove duplicate `lib/lovespark-tokens.css` `<link>` from `popup.html` (`lovespark-base.css` already `@import`s it; cascade-neutral).
+- Refresh `lib/lovespark-tokens.css` to canonical shared-lib build (KI-002/003/004 contrast fixes for slate/beige themes).
+
 ## [1.1.32] - 2026-05-05
 - **Y2K Korean Collection**: replaced 7 New Collection SVG packs with 9 Y2K Korean themed packs in dual variants (Emoji + Pointer subcategories) — 18 new pack registrations, 21 packs total.
 - New packs: Honey Bunny (꿀토끼), Cyworld Dotti (싸이월드), Coquette Ribbon (리본), Strawberry Milk (딸기우유), Glossy Pearl, Bubble Boba (버블티), Phone Charm (폰꽂이), Heart Locket (하트 로켓), Cyber Butterfly (나비).
