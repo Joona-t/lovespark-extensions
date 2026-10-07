@@ -197,8 +197,10 @@
       backdrop.style.display = 'none';
     }
 
-    // Restore body scrolling
-    document.body.style.overflow = '';
+    // Restore body scrolling. This script runs at document_start (manifest
+    // run_at), so document.body can still be null on the very first pass /
+    // early mutations — guard it (BUG-006).
+    if (document.body) document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
   }
 

@@ -25,6 +25,27 @@
   40 pass / 2 fail (pre-existing BRAND-LIB-SYNC / BRAND-TOKEN-DRIFT,
   unrelated to this fix) / 1 warn.
 
+## 2026-10-07
+
+### document_start null-body crash from BUG-005's one-shot call (BUG-006, v1.0.29)
+- **Problem:** BUG-005 replaced the `setInterval` safety net with one synchronous
+  `nukeAdblockWarning()` call at inject time. `inject.js` is registered with
+  `run_at: document_start` / `world: MAIN` (manifest.json), where `document.body`
+  is still `null` — so the new call hit `document.body.style.overflow = ''` and
+  threw `TypeError: Cannot read properties of null (reading 'style')` on every
+  YouTube page load. The old interval had masked this because its first tick ran
+  1 s later, after `<body>` existed; the `MutationObserver` callback had the same
+  latent null-deref on any mutation that fired before `<body>` was parsed.
+- **Root cause:** `nukeAdblockWarning()` assumed `document.body` exists; nothing
+  in the PR verified the script's `run_at` timing.
+- **Fix:** Guard the body write: `if (document.body) document.body.style.overflow = '';`.
+  Regression test added: `tests/inject-document-start.test.js` evaluates `inject.js`
+  in a `document_start`-shaped sandbox (`document.body === null`), fires an early
+  observer callback, and asserts no `setInterval(` call remains. Run with
+  `node tests/inject-document-start.test.js` (3 checks). Version stays 1.0.29 —
+  the 1.0.28 → 1.0.29 bump from BUG-005 in this same unreleased branch already
+  covers the code change.
+
 ## 2026-04-16
 
 ### ls-check --strict: 2 failures unblocked (v1.0.26)
