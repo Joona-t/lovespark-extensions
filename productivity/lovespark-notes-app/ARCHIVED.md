@@ -3,7 +3,9 @@
 This repo (`lovespark-notes-app`) is one of two competing LoveSpark notes-taking builds:
 
 - `lovespark-notes-app` (this repo) — new-tab-override notes app (Streamlined Hybrid
-  design, categories, search, themes, candy theme + WCAG-audited CWS assets already done).
+  design, categories, search, themes). Candy theme / WCAG audit / CWS assets exist only as
+  uncommitted local WIP — NOT on `main` (no `cws-shots/`, `CWS-LISTING.md`, `PRIVACY.md`,
+  `SUBMIT.md`; `ls-check` still fails A11Y-KI001 + A11Y-KI006).
 - [`lovespark-notes`](https://github.com/Joona-t/lovespark-notes) — popup-based notes app
   (Cmd+Shift+N quick capture, three-pane full app, version history, markdown preview).
 
