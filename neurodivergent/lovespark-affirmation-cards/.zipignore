@@ -1,3 +1,8 @@
 # build-zips.sh honours these rsync --exclude patterns when staging the store zips.
 # Never ship previously built zips inside a new zip (BUG-001).
 *.zip
+# Store-submission docs are repo-only, never package contents (BUG-002):
+# SUBMIT.md carries local /Users/ paths and AMO packages are publicly downloadable.
+SUBMIT.md
+CWS-LISTING.md
+PRIVACY.md
