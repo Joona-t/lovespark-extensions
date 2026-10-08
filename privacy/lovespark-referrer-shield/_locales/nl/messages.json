@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "LoveSpark Referrer Shield"
+  },
+  "extDescription": {
+    "message": "Control or strip the Referer header so sites don't know where you came from 🌸"
+  }
+}

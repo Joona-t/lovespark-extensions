@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveSpark Referrer Shield</title>
+<link rel="stylesheet" href="lib/lovespark-fonts.css">
+<link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+
+<div class="popup-container">
+
+  <!-- Header -->
+  <header class="popup-header">
+    <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
+    <span class="header-title">Referrer Shield</span>
+    <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mode selector -->
+  <section class="mode-section">
+    <label class="mode-option" data-mode="strip">
+      <input type="radio" name="mode" value="strip">
+      <div class="mode-card">
+        <div class="mode-title">Strip all</div>
+        <div class="mode-desc">Remove Referer completely</div>
+      </div>
+    </label>
+
+    <label class="mode-option" data-mode="origin">
+      <input type="radio" name="mode" value="origin" checked>
+      <div class="mode-card">
+        <div class="mode-title">Origin only</div>
+        <div class="mode-desc">Send site name, not page</div>
+      </div>
+    </label>
+
+    <label class="mode-option" data-mode="off">
+      <input type="radio" name="mode" value="off">
+      <div class="mode-card">
+        <div class="mode-title">Off</div>
+        <div class="mode-desc">Browser default behavior</div>
+      </div>
+    </label>
+  </section>
+
+  <!-- Status card -->
+  <section class="stats-card">
+    <div class="stats-row">
+      <span class="stats-label" id="status-icon">🛡️</span>
+      <span class="stats-value" id="status-text">Shield active</span>
+    </div>
+    <div class="stats-row">
+      <span class="stats-label">Streak</span>
+      <span class="stats-value" id="streak-value">0 days</span>
+    </div>
+    <div class="stats-row">
+      <span class="stats-label">Mode</span>
+      <span class="stats-value" id="mode-value">Origin only</span>
+    </div>
+  </section>
+
+  <!-- Cute message -->
+  <p class="cute-msg" id="cute-msg">Browse in peace! 💕</p>
+
+  <!-- Whitelist -->
+  <section class="whitelist-section">
+    <div class="whitelist-header">Whitelisted sites</div>
+    <ul class="whitelist-list" id="whitelist-list">
+      <!-- populated by JS -->
+    </ul>
+    <div class="whitelist-empty" id="whitelist-empty">No whitelisted sites yet 🌸</div>
+    <div class="whitelist-add">
+      <input type="text" id="wl-input" class="wl-input" placeholder="example.com" autocomplete="off">
+      <button id="wl-add-btn" class="btn-pink btn-sm">+ Add</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+
+</div>
+
+<script src="lib/browser-polyfill.min.js"></script>
+<script src="lib/lovespark-footer.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
