@@ -1,0 +1,392 @@
+/* LoveSpark Calm — Popup Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  min-height: 100px;
+  max-height: 520px;
+  overflow-y: auto;
+  background: var(--ls-bg-gradient);
+  font-family: var(--ls-font-body), 'DM Mono', monospace;
+  color: var(--ls-text-dark);
+  padding: 14px;
+}
+
+/* ── Screen reader only ─────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sparky {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-family: var(--ls-font-display), 'Press Start 2P', cursive;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--ls-text-dark);
+  white-space: nowrap;
+}
+
+/* ── Main Toggle ────────────────────────────────────── */
+.toggle-section {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 16px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.toggle-label {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.toggle-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.toggle-wrap input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  display: block;
+  width: 56px;
+  height: 32px;
+  background: var(--ls-glass-strong);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 16px;
+  position: relative;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: var(--ls-white);
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-wrap input:checked + .toggle-track {
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+}
+
+.toggle-wrap input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(24px);
+  background: var(--ls-white);
+}
+
+.toggle-status {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.toggle-status.active {
+  color: var(--ls-pink-accent);
+  font-weight: 600;
+}
+
+/* ── Section Titles ─────────────────────────────────── */
+.section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+}
+
+/* ── Intensity Buttons ──────────────────────────────── */
+.intensity-section {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.intensity-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.intensity-btn {
+  flex: 1;
+  padding: 8px 4px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  color: var(--ls-text-dark);
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  text-align: center;
+}
+
+.intensity-btn:hover {
+  background: var(--ls-glass-strong);
+}
+
+.intensity-btn.active {
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
+  color: var(--ls-text-white);
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+  font-weight: 600;
+}
+
+/* ── Preview Strip ──────────────────────────────────── */
+.preview-strip {
+  margin-top: 10px;
+}
+
+.preview-block {
+  height: 32px;
+  border-radius: var(--ls-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.3s;
+  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb, #8fd3f4);
+  overflow: hidden;
+}
+
+.preview-block.level-light {
+  filter: saturate(0.7) brightness(0.95);
+}
+
+.preview-block.level-medium {
+  filter: saturate(0.5) brightness(0.95);
+}
+
+.preview-block.level-full {
+  filter: saturate(0.3) brightness(0.9);
+}
+
+.preview-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Per-Site Buttons ───────────────────────────────── */
+.site-section {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.site-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.site-btn {
+  flex: 1;
+  padding: 7px 4px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  color: var(--ls-text-dark);
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  text-align: center;
+}
+
+.site-btn:hover {
+  background: var(--ls-glass-strong);
+}
+
+.site-btn.active {
+  background: linear-gradient(135deg, var(--ls-pink-deep), var(--ls-pink-deep));
+  color: var(--ls-text-white);
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+  font-weight: 600;
+}
+
+/* ── Stats ──────────────────────────────────────────── */
+.stats-section {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.stat-line {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
+
+.stat-line strong {
+  color: var(--ls-pink-accent);
+}
+
+/* ── Settings Panel ─────────────────────────────────── */
+.settings-panel {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(10px);
+}
+
+.settings-trigger {
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ls-text-dark);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.settings-trigger::before {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid var(--ls-text-muted);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform 0.15s;
+}
+
+details[open] .settings-trigger::before {
+  transform: rotate(90deg);
+}
+
+.settings-body {
+  padding: 0 12px 12px;
+}
+
+.setting-group {
+  margin-bottom: 10px;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ls-text-muted);
+  margin-bottom: 4px;
+}
+
+.setting-select {
+  width: 100%;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--ls-text-dark);
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+}
+
+.setting-textarea {
+  width: 100%;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 11px;
+  color: var(--ls-text-dark);
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.setting-textarea::placeholder {
+  color: var(--ls-text-muted);
+  opacity: 0.6;
+}
+
+/* ── Reduced Motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .toggle-thumb,
+  .toggle-track,
+  .preview-block,
+  .intensity-btn,
+  .site-btn,
+  .settings-trigger::before {
+    transition: none;
+  }
+}

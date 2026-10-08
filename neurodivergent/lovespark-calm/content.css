@@ -1,0 +1,221 @@
+/* LoveSpark Calm — Injected Content Styles
+   Applied by background.js via chrome.scripting.insertCSS
+   Each level builds on the previous. JS toggles data-ls-calm on <html>. */
+
+/* ── Light Calm ──────────────────────────────────────── */
+html[data-ls-calm="light"] img,
+html[data-ls-calm="light"] video,
+html[data-ls-calm="light"] iframe {
+  filter: saturate(0.7) brightness(0.95) !important;
+}
+
+html[data-ls-calm="light"] *,
+html[data-ls-calm="light"] *::before,
+html[data-ls-calm="light"] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+html[data-ls-calm="light"] .cookie-banner,
+html[data-ls-calm="light"] [class*="cookie-banner"],
+html[data-ls-calm="light"] [class*="cookie-consent"],
+html[data-ls-calm="light"] [class*="cookie-notice"],
+html[data-ls-calm="light"] [id*="cookie"],
+html[data-ls-calm="light"] [class*="cookie-popup"],
+html[data-ls-calm="light"] [class*="chat-widget"],
+html[data-ls-calm="light"] [class*="chat-bubble"],
+html[data-ls-calm="light"] [class*="intercom"],
+html[data-ls-calm="light"] [id*="intercom"],
+html[data-ls-calm="light"] [class*="drift-"],
+html[data-ls-calm="light"] [class*="crisp-"],
+html[data-ls-calm="light"] [class*="livechat"],
+html[data-ls-calm="light"] [id*="livechat"],
+html[data-ls-calm="light"] [class*="newsletter-popup"],
+html[data-ls-calm="light"] [class*="popup-overlay"],
+html[data-ls-calm="light"] [class*="modal-overlay"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* ── Medium Calm (adds to Light) ────────────────────── */
+html[data-ls-calm="medium"] img,
+html[data-ls-calm="medium"] video,
+html[data-ls-calm="medium"] iframe {
+  filter: saturate(0.5) brightness(0.95) !important;
+}
+
+html[data-ls-calm="medium"] *,
+html[data-ls-calm="medium"] *::before,
+html[data-ls-calm="medium"] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+html[data-ls-calm="medium"] body {
+  filter: saturate(0.5) !important;
+}
+
+html[data-ls-calm="medium"] .cookie-banner,
+html[data-ls-calm="medium"] [class*="cookie-banner"],
+html[data-ls-calm="medium"] [class*="cookie-consent"],
+html[data-ls-calm="medium"] [class*="cookie-notice"],
+html[data-ls-calm="medium"] [id*="cookie"],
+html[data-ls-calm="medium"] [class*="cookie-popup"],
+html[data-ls-calm="medium"] [class*="chat-widget"],
+html[data-ls-calm="medium"] [class*="chat-bubble"],
+html[data-ls-calm="medium"] [class*="intercom"],
+html[data-ls-calm="medium"] [id*="intercom"],
+html[data-ls-calm="medium"] [class*="drift-"],
+html[data-ls-calm="medium"] [class*="crisp-"],
+html[data-ls-calm="medium"] [class*="livechat"],
+html[data-ls-calm="medium"] [id*="livechat"],
+html[data-ls-calm="medium"] [class*="newsletter-popup"],
+html[data-ls-calm="medium"] [class*="popup-overlay"],
+html[data-ls-calm="medium"] [class*="modal-overlay"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+html[data-ls-calm="medium"] [class*="badge"],
+html[data-ls-calm="medium"] [class*="notification-count"],
+html[data-ls-calm="medium"] [class*="notification-badge"],
+html[data-ls-calm="medium"] [class*="unread-count"],
+html[data-ls-calm="medium"] [class*="dot-indicator"] {
+  display: none !important;
+}
+
+html[data-ls-calm="medium"] [class*="floating"],
+html[data-ls-calm="medium"] [class*="sticky-ad"],
+html[data-ls-calm="medium"] [class*="fixed-bottom"],
+html[data-ls-calm="medium"] [class*="float-btn"] {
+  display: none !important;
+}
+
+/* Soften sharp edges */
+html[data-ls-calm="medium"] div,
+html[data-ls-calm="medium"] section,
+html[data-ls-calm="medium"] article,
+html[data-ls-calm="medium"] aside,
+html[data-ls-calm="medium"] button,
+html[data-ls-calm="medium"] input,
+html[data-ls-calm="medium"] img {
+  border-radius: 8px !important;
+}
+
+/* Clamp font sizes for reduced visual noise */
+html[data-ls-calm="medium"] p,
+html[data-ls-calm="medium"] li,
+html[data-ls-calm="medium"] span,
+html[data-ls-calm="medium"] td,
+html[data-ls-calm="medium"] th,
+html[data-ls-calm="medium"] label,
+html[data-ls-calm="medium"] a {
+  font-size: clamp(14px, 1em, 20px) !important;
+}
+
+/* ── Full Calm (adds to Medium) ─────────────────────── */
+html[data-ls-calm="full"] img,
+html[data-ls-calm="full"] video,
+html[data-ls-calm="full"] iframe {
+  filter: saturate(0.3) brightness(0.9) !important;
+}
+
+html[data-ls-calm="full"] *,
+html[data-ls-calm="full"] *::before,
+html[data-ls-calm="full"] *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+html[data-ls-calm="full"] body {
+  filter: saturate(0.3) brightness(0.9) !important;
+}
+
+html[data-ls-calm="full"] .cookie-banner,
+html[data-ls-calm="full"] [class*="cookie-banner"],
+html[data-ls-calm="full"] [class*="cookie-consent"],
+html[data-ls-calm="full"] [class*="cookie-notice"],
+html[data-ls-calm="full"] [id*="cookie"],
+html[data-ls-calm="full"] [class*="cookie-popup"],
+html[data-ls-calm="full"] [class*="chat-widget"],
+html[data-ls-calm="full"] [class*="chat-bubble"],
+html[data-ls-calm="full"] [class*="intercom"],
+html[data-ls-calm="full"] [id*="intercom"],
+html[data-ls-calm="full"] [class*="drift-"],
+html[data-ls-calm="full"] [class*="crisp-"],
+html[data-ls-calm="full"] [class*="livechat"],
+html[data-ls-calm="full"] [id*="livechat"],
+html[data-ls-calm="full"] [class*="newsletter-popup"],
+html[data-ls-calm="full"] [class*="popup-overlay"],
+html[data-ls-calm="full"] [class*="modal-overlay"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+html[data-ls-calm="full"] [class*="badge"],
+html[data-ls-calm="full"] [class*="notification-count"],
+html[data-ls-calm="full"] [class*="notification-badge"],
+html[data-ls-calm="full"] [class*="unread-count"],
+html[data-ls-calm="full"] [class*="dot-indicator"] {
+  display: none !important;
+}
+
+html[data-ls-calm="full"] [class*="floating"],
+html[data-ls-calm="full"] [class*="sticky-ad"],
+html[data-ls-calm="full"] [class*="fixed-bottom"],
+html[data-ls-calm="full"] [class*="float-btn"] {
+  display: none !important;
+}
+
+html[data-ls-calm="full"] div,
+html[data-ls-calm="full"] section,
+html[data-ls-calm="full"] article,
+html[data-ls-calm="full"] aside,
+html[data-ls-calm="full"] button,
+html[data-ls-calm="full"] input,
+html[data-ls-calm="full"] img {
+  border-radius: 8px !important;
+}
+
+html[data-ls-calm="full"] p,
+html[data-ls-calm="full"] li,
+html[data-ls-calm="full"] span,
+html[data-ls-calm="full"] td,
+html[data-ls-calm="full"] th,
+html[data-ls-calm="full"] label,
+html[data-ls-calm="full"] a {
+  font-size: clamp(14px, 1em, 20px) !important;
+}
+
+/* Hide background images on text-heavy elements */
+html[data-ls-calm="full"] p,
+html[data-ls-calm="full"] article,
+html[data-ls-calm="full"] main,
+html[data-ls-calm="full"] section,
+html[data-ls-calm="full"] .content,
+html[data-ls-calm="full"] [class*="article"],
+html[data-ls-calm="full"] [class*="post-body"],
+html[data-ls-calm="full"] [class*="entry-content"] {
+  background-image: none !important;
+}
+
+/* Collapse sidebars and distracting sections */
+html[data-ls-calm="full"] aside,
+html[data-ls-calm="full"] [class*="sidebar"],
+html[data-ls-calm="full"] [class*="side-bar"],
+html[data-ls-calm="full"] [id*="sidebar"],
+html[data-ls-calm="full"] [class*="related"],
+html[data-ls-calm="full"] [class*="trending"],
+html[data-ls-calm="full"] [class*="recommended"],
+html[data-ls-calm="full"] [class*="suggestions"],
+html[data-ls-calm="full"] [class*="also-like"],
+html[data-ls-calm="full"] [class*="more-stories"],
+html[data-ls-calm="full"] [class*="promoted"] {
+  display: none !important;
+}
