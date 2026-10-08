@@ -8,18 +8,19 @@
   <link rel="stylesheet" href="warning.css">
 </head>
 <body>
-  <div class="warning-container">
+  <div class="warning-container" role="dialog" aria-modal="true"
+       aria-labelledby="title" aria-describedby="warningSub">
     <div class="warning-card">
       <div class="mascot-wrap">
         <img class="mascot" src="mascot.png" alt="Sparky — LoveSpark mascot" />
       </div>
-      <h1 class="warning-title" id="title">Homie are you cooked?! 🔥</h1>
-      <p class="warning-sub">You have <span class="tab-num" id="count">?</span> tabs open bestie 💀</p>
+      <h1 class="warning-title" id="title" aria-live="assertive">Homie are you cooked?! 🔥</h1>
+      <p class="warning-sub" id="warningSub">You have <span class="tab-num" id="count">?</span> tabs open bestie 💀</p>
       <div class="btn-group" id="btnGroup">
-        <button class="btn-dismiss" id="dismissBtn">I know I know... 😭</button>
-        <button class="btn-mindful" id="mindfulBtn">You are right, let me be mindful</button>
+        <button class="btn-dismiss" id="dismissBtn" aria-label="Dismiss warning">I know I know... 😭</button>
+        <button class="btn-mindful" id="mindfulBtn" aria-label="Close this tab and be mindful">You are right, let me be mindful</button>
       </div>
-      <div class="progress-track" id="progressTrack">
+      <div class="progress-track" id="progressTrack" aria-hidden="true">
         <div class="progress-bar" id="progressBar"></div>
       </div>
     </div>

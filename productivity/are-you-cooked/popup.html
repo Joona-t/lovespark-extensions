@@ -9,13 +9,14 @@
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle">
     <header class="popup-header">
       <img class="header-mascot" src="mascot.png" alt="Sparky — LoveSpark mascot" />
-      <span class="header-title">Are You Cooked?</span>
+      <span class="header-title" id="popupTitle">Are You Cooked?</span>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
-        <span id="themeLabel">Retro Pink</span> ▾
+      <button class="theme-dropdown-trigger" id="themeToggle"
+              aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> <span aria-hidden="true">▾</span>
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
         <div class="theme-dropdown-header">Change Theme</div>
@@ -38,6 +39,10 @@
         </div>
         <div class="divider"></div>
         <div class="verdict" id="verdict" aria-live="polite">counting...</div>
+        <div class="stats-strip" aria-label="Today's stats" aria-live="polite">
+          <div class="stat-line"><span class="stat-icon" aria-hidden="true">🏆</span> peak today: <span id="worstToday">—</span></div>
+          <div class="stat-line"><span class="stat-icon" aria-hidden="true">🌸</span> mindful saves: <span id="mindfulHelp">—</span></div>
+        </div>
       </div>
     </main>
 

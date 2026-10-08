@@ -49,12 +49,11 @@ const numericTabId = tabId ? Number(tabId) : null;
 
 const isStrict = level === 'strict';
 
-// Dark mode init
-try {
-  chrome.storage.local.get('darkMode').then(data => {
-    if (data.darkMode) document.documentElement.setAttribute('data-theme', 'dark');
-  });
-} catch {}
+// Theme init — read both the new `theme` key and the legacy `darkMode` bool.
+chrome.storage.local.get(['theme', 'darkMode']).then(({ theme, darkMode }) => {
+  const resolved = theme || (darkMode ? 'dark' : 'retro');
+  document.documentElement.setAttribute('data-theme', resolved);
+}).catch(err => console.warn('[AYC] theme load', err));
 
 if (isStrict) document.body.classList.add('strict');
 
@@ -75,12 +74,18 @@ if (isStrict) {
 
   mindfulBtn.addEventListener('click', () => {
     if (numericTabId && numericTabId > 0) {
-      chrome.runtime.sendMessage({ action: 'closeTab', tabId: numericTabId });
+      try {
+        chrome.runtime.sendMessage({ action: 'closeTab', tabId: numericTabId })
+          .catch(err => console.warn('[AYC] sendMessage', err));
+      } catch (err) {
+        console.warn('[AYC] sendMessage', err);
+      }
     }
     window.close();
   });
 
   dismissBtn.addEventListener('click', () => window.close());
+  mindfulBtn.focus();
 } else {
   dismissBtn.textContent = pick(DISMISS_COPY_MILD);
   const timer = setTimeout(() => window.close(), DISMISS_MS);
@@ -89,4 +94,8 @@ if (isStrict) {
     clearTimeout(timer);
     window.close();
   });
+  dismissBtn.focus();
 }
+
+// ESC closes the dialog at any tier.
+window.addEventListener('keydown', e => { if (e.key === 'Escape') window.close(); });

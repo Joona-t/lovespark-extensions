@@ -26,17 +26,24 @@ function applyTheme(t) {
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
+  const setExpanded = (open) => {
+    menu.classList.toggle('open', open);
+    if (toggle) toggle.setAttribute('aria-expanded', String(open));
+  };
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setExpanded(!menu.classList.contains('open'));
+    });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
       chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+      setExpanded(false);
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => setExpanded(false));
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -58,6 +65,18 @@ function applyTheme(t) {
 
   const mascot = document.getElementById('mascot');
   mascot.className = `mascot panic-${tier.panic}`;
+
+  // Stats strip — peak today (Tier 2.1) + mindful saves all-time (Tier 2.2)
+  const today = new Date().toISOString().slice(0, 10);
+  chrome.storage.local.get([
+    'worstToday', 'ayc_worstResetDate', 'mindfulHelpTotal',
+  ]).then(data => {
+    const peak = data.ayc_worstResetDate === today ? (data.worstToday || 0) : 0;
+    const peakEl = document.getElementById('worstToday');
+    const helpEl = document.getElementById('mindfulHelp');
+    if (peakEl) peakEl.textContent = peak;
+    if (helpEl) helpEl.textContent = data.mindfulHelpTotal || 0;
+  }).catch(err => console.warn('[AYC] stats load', err));
 })();
 
 /* ── Author / Ko-fi Footer ── */

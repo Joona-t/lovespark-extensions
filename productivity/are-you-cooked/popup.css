@@ -233,6 +233,35 @@ body.state-911 .tab-count {
 }
 body.state-911 .verdict { color: var(--ls-state-911); }
 
+/* -- Stats Strip (peak today + mindful saves) -- */
+.stats-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.stat-line span[id] {
+  color: var(--ls-text-dark);
+  font-weight: 500;
+}
+
+.stat-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
 /* -- Footer -- */
 .popup-footer {
   margin-top: 14px;
