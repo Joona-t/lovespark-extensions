@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Stim Board</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Stim Board</div>
+        <div class="header-sub" id="popupDesc">Channel your stimulation</div>
+      </div>
+    </header>
+
+    <!-- Stim grid -->
+    <div class="stim-grid" role="group" aria-label="Stim toys">
+
+      <!-- 1. Clicker -->
+      <button id="clicker" class="stim-tile" aria-label="Clicker — tap to count">
+        <div class="stim-icon" aria-hidden="true">&#x1F4A5;</div>
+        <div id="clickerCount" class="stim-value">0</div>
+        <div class="stim-name">Clicker</div>
+      </button>
+
+      <!-- 2. Color Blob -->
+      <button id="colorBlob" class="stim-tile" aria-label="Color blob — tap to change color">
+        <div id="blobCircle" class="blob-circle" aria-hidden="true"></div>
+        <div class="stim-name">Color Blob</div>
+      </button>
+
+      <!-- 3. Breathing Circle -->
+      <div id="breatheTile" class="stim-tile stim-tile-breath" role="button" tabindex="0"
+           aria-label="Breathing circle — inhale and exhale">
+        <div id="breatheCircle" class="breathe-circle" aria-hidden="true"></div>
+        <div id="breatheLabel" class="stim-name">Breathe</div>
+      </div>
+
+      <!-- 4. Pattern Tapper -->
+      <div class="stim-tile stim-tile-pattern" aria-label="Pattern tapper — tap the grid">
+        <div id="patternGrid" class="pattern-grid" role="group" aria-label="Tap pattern"></div>
+        <div class="stim-name">Pattern</div>
+      </div>
+
+      <!-- 5. Spinner -->
+      <button id="spinner" class="stim-tile" aria-label="Fidget spinner — tap to spin">
+        <div id="spinnerIcon" class="spinner-icon" aria-hidden="true">&#x1F300;</div>
+        <div class="stim-name">Spinner</div>
+      </button>
+
+      <!-- 6. Toggle Switch -->
+      <button id="toggleStim" class="stim-tile" aria-label="Satisfying toggle — tap to flip">
+        <div id="toggleDot" class="toggle-dot" aria-hidden="true"></div>
+        <div class="stim-name">Toggle</div>
+      </button>
+
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Stim statistics">
+      <div class="stat-box" aria-label="Stims today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total stims">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
