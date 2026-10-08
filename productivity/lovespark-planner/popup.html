@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Planner</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container" role="alertdialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" style="height:36px">
+      <span id="popupTitle" class="header-title">Planner</span>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true">
+          <span id="themeLabel">Retro Pink</span> &#9662;
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="menuitem">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+          <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+          <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div class="today-label" id="todayLabel"></div>
+      <p id="popupDesc" class="sr-only">Today's tasks and planner summary</p>
+
+      <div class="task-list" id="taskList" aria-label="Today's tasks" role="list"></div>
+
+      <form class="add-task-form" id="addTaskForm">
+        <input type="text" id="taskInput" placeholder="+ Add task..." autocomplete="off" aria-label="New task text">
+        <button type="submit" class="btn-add" aria-label="Add task">+</button>
+      </form>
+
+      <div class="sync-summary" id="syncSummary"></div>
+    </main>
+
+    <div class="popup-actions">
+      <button class="btn-open" id="btnOpenApp">Open Full Planner</button>
+    </div>
+
+    <footer class="popup-footer">
+      <span class="footer-msg" id="footerMsg"></span>
+    </footer>
+  </div>
+
+  <script src="shared/constants.js"></script>
+  <script src="shared/planner-core.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>

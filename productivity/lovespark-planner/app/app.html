@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Planner</title>
+  <link rel="stylesheet" href="../lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <img src="../mascot.png" alt="Sparky -- LoveSpark mascot" class="logo-mascot">
+        <span class="logo-text header-title"><span class="logo-love">Love</span>Spark <span class="logo-sub">Planner</span></span>
+      </div>
+      <div class="header-right">
+        <div class="theme-dropdown" id="themeDropdown">
+          <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true">
+            <span id="themeLabel">Retro Pink</span> &#9662;
+          </button>
+          <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+            <div class="theme-dropdown-header">Change Theme</div>
+            <button class="theme-option" data-theme="retro" role="menuitem">Retro Pink</button>
+            <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+            <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+            <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar" aria-label="Navigation">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Views</div>
+          <button class="view-btn active" data-view="today" id="viewToday">Today</button>
+          <button class="view-btn" data-view="month" id="viewMonth">Month</button>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Sync</div>
+          <div class="sync-status" id="syncFocusStatus">
+            <span class="sync-icon">&#127813;</span>
+            <span class="sync-name">Focus</span>
+            <span class="sync-state" id="syncFocusState">--</span>
+          </div>
+          <div class="sync-status" id="syncNotesStatus">
+            <span class="sync-icon">&#128221;</span>
+            <span class="sync-name">Notes</span>
+            <span class="sync-state" id="syncNotesState">--</span>
+          </div>
+          <button class="btn-sync" id="btnSync">Sync Now</button>
+          <button class="btn-settings" id="btnSettings">Settings</button>
+        </div>
+
+        <div class="sidebar-section" id="statsSection">
+          <div class="sidebar-label">Stats</div>
+          <div class="stat-line" id="statStreak"></div>
+          <div class="stat-line" id="statCompleted"></div>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <div class="content-area" id="contentArea">
+        <!-- Today View -->
+        <div class="today-view" id="todayView">
+          <div class="day-header" id="todayHeader"></div>
+
+          <div class="section-block">
+            <div class="section-title">Tasks</div>
+            <div class="task-list" id="todayTaskList" role="list" aria-label="Today's tasks"></div>
+            <form class="add-task-form" id="todayAddForm">
+              <input type="text" id="todayTaskInput" placeholder="+ Add task..." autocomplete="off" aria-label="New task">
+              <select id="todayTaskPriority" aria-label="Priority">
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="low">Low</option>
+              </select>
+              <button type="submit" class="btn-add" aria-label="Add task">+</button>
+            </form>
+          </div>
+
+          <div class="section-block" id="todayUndatedSection">
+            <div class="section-title section-collapsible" id="undatedToggle" role="button" tabindex="0" aria-expanded="false">
+              Undated Tasks <span class="collapse-arrow">&#9662;</span>
+            </div>
+            <div class="task-list collapsed" id="undatedTaskList" role="list" aria-label="Undated tasks"></div>
+          </div>
+
+          <div class="section-block" id="todayFocusSection" style="display:none">
+            <div class="section-title">Focus Sessions</div>
+            <div class="event-list" id="todayFocusList"></div>
+          </div>
+
+          <div class="section-block" id="todayNoteSection" style="display:none">
+            <div class="section-title">Daily Note</div>
+            <div class="note-preview" id="todayNotePreview"></div>
+          </div>
+        </div>
+
+        <!-- Month View -->
+        <div class="month-view" id="monthView" style="display:none">
+          <div class="month-layout">
+            <div class="calendar-panel" id="calendarPanel"></div>
+            <div class="day-detail-panel" id="dayDetailPanel">
+              <div class="day-header" id="dayDetailHeader">Select a day</div>
+              <div class="section-block">
+                <div class="section-title">Tasks</div>
+                <div class="task-list" id="dayTaskList" role="list" aria-label="Day tasks"></div>
+                <form class="add-task-form" id="dayAddForm">
+                  <input type="text" id="dayTaskInput" placeholder="+ Add task..." autocomplete="off" aria-label="New task for selected day">
+                  <select id="dayTaskPriority" aria-label="Priority">
+                    <option value="normal">Normal</option>
+                    <option value="high">High</option>
+                    <option value="low">Low</option>
+                  </select>
+                  <button type="submit" class="btn-add" aria-label="Add task">+</button>
+                </form>
+              </div>
+              <div class="section-block" id="dayFocusSection" style="display:none">
+                <div class="section-title">Focus Sessions</div>
+                <div class="event-list" id="dayFocusList"></div>
+              </div>
+              <div class="section-block" id="dayNoteSection" style="display:none">
+                <div class="section-title">Daily Note</div>
+                <div class="note-preview" id="dayNotePreview"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal" style="display:none" role="dialog" aria-labelledby="settingsTitle" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <span class="modal-title" id="settingsTitle">Settings</span>
+          <button class="btn-close" id="btnCloseSettings" aria-label="Close settings">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <label class="setting-label" for="settingWeekStart">Week starts on</label>
+            <select id="settingWeekStart" class="setting-select">
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label class="setting-label" for="settingDefaultView">Default view</label>
+            <select id="settingDefaultView" class="setting-select">
+              <option value="today">Today</option>
+              <option value="month">Month</option>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label class="setting-label">
+              <input type="checkbox" id="settingShowCompleted"> Show completed tasks
+            </label>
+          </div>
+          <div class="setting-divider"></div>
+          <div class="setting-group">
+            <label class="setting-label" for="settingFocusId">Focus Extension ID</label>
+            <input type="text" id="settingFocusId" class="setting-input" placeholder="Paste extension ID..." autocomplete="off">
+          </div>
+          <div class="setting-group">
+            <label class="setting-label" for="settingNotesId">Notes Extension ID</label>
+            <input type="text" id="settingNotesId" class="setting-input" placeholder="Paste extension ID..." autocomplete="off">
+          </div>
+          <button class="btn-save-settings" id="btnSaveSettings">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Todo Modal -->
+    <div class="modal-overlay" id="editModal" style="display:none" role="dialog" aria-labelledby="editTitle" aria-modal="true">
+      <div class="modal-card modal-sm">
+        <div class="modal-header">
+          <span class="modal-title" id="editTitle">Edit Task</span>
+          <button class="btn-close" id="btnCloseEdit" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <label class="setting-label" for="editText">Task</label>
+            <input type="text" id="editText" class="setting-input" autocomplete="off">
+          </div>
+          <div class="setting-group">
+            <label class="setting-label" for="editDueDate">Due date</label>
+            <input type="date" id="editDueDate" class="setting-input">
+          </div>
+          <div class="setting-group">
+            <label class="setting-label" for="editPriority">Priority</label>
+            <select id="editPriority" class="setting-select">
+              <option value="low">Low</option>
+              <option value="normal">Normal</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-save-settings" id="btnSaveEdit">Save</button>
+            <button class="btn-delete" id="btnDeleteEdit">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/constants.js"></script>
+  <script src="../shared/planner-core.js"></script>
+  <script src="../shared/calendar.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="../lib/lovespark-popup.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
