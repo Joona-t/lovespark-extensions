@@ -1,0 +1,228 @@
+/* LoveSpark Daily Checklist -- popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 16px; }
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.header-sub {
+  font-family: var(--ls-font-display);
+  font-size: 8px;
+  color: var(--ls-pink-accent);
+}
+
+/* -- Progress Bar -- */
+.progress-section {
+  margin-bottom: 12px;
+}
+
+.progress-bar-wrap {
+  width: 100%;
+  height: 10px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--ls-pink-deep);
+  border-radius: 999px;
+  transition: width 0.4s ease, background 0.3s;
+}
+
+.progress-fill.complete {
+  background: var(--ls-teal, #0d9488);
+}
+
+.progress-label {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  text-align: center;
+}
+
+/* -- Stats -- */
+.stats-section {
+  display: flex;
+  align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 12px;
+}
+
+.stat-box { flex: 1; text-align: center; }
+
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.stat-label { font-size: 11px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 32px; background: var(--ls-glass-border); }
+
+/* -- Add Form -- */
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.item-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-family: var(--ls-font-body);
+  font-size: 12px;
+  color: var(--ls-text-dark);
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+}
+
+.item-input::placeholder {
+  color: var(--ls-text-muted);
+}
+
+.add-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ls-text-white);
+  background: var(--ls-pink-deep);
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-btn:hover {
+  background: var(--ls-btn-hover-bg);
+  box-shadow: var(--ls-glow);
+}
+
+/* -- Item List -- */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  transition: background 0.15s;
+}
+
+.check-item:hover {
+  background: var(--ls-glass-strong);
+}
+
+.check-item.done {
+  opacity: 0.6;
+}
+
+.check-cb {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--ls-pink-deep);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.check-text {
+  flex: 1;
+  font-size: 12px;
+  color: var(--ls-text-dark);
+  min-width: 0;
+  word-break: break-word;
+}
+
+.check-item.done .check-text {
+  text-decoration: line-through;
+  color: var(--ls-text-muted);
+}
+
+.check-delete {
+  background: none;
+  border: none;
+  color: var(--ls-text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.check-delete:hover {
+  color: #dc3545;
+}
+
+.empty-state {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ls-text-muted);
+  padding: 20px 10px;
+}
+
+.empty-state.hidden { display: none; }
+
+/* -- Focus indicators -- */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
+}
+
+/* -- Reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
