@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Focus</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body role="dialog" aria-labelledby="popup-title">
+  <div class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="sparky" id="sparky">
+        <div class="title-block">
+          <span class="title" id="popup-title">LoveSpark</span>
+          <span class="subtitle">Focus</span>
+        </div>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="menu">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+        <button class="theme-option" data-theme="pink">Sakura Pink</button>
+        <button class="theme-option" data-theme="orange">Persimmon Orange</button>
+        <button class="theme-option" data-theme="warmBrown">Espresso</button>
+      </div>
+    </div>
+      <button class="open-tab-btn" id="btn-open-tab" title="Open full timer">&#x26F6;</button>
+      <button class="settings-btn" id="settings-btn" title="Settings">⚙️</button>
+    </header>
+
+    <!-- Session type selector -->
+    <div class="session-tabs">
+      <button class="tab active" data-type="focus">Focus</button>
+      <button class="tab" data-type="shortBreak">Short Break</button>
+      <button class="tab" data-type="longBreak">Long Break</button>
+    </div>
+
+    <!-- Task input -->
+    <input type="text" class="task-input" id="task-input" placeholder="What are you focusing on? 🌸" maxlength="120" spellcheck="false">
+
+    <!-- Progress ring + countdown -->
+    <div class="ring-container">
+      <svg class="progress-ring" viewBox="0 0 120 120" aria-hidden="true">
+        <!-- Track ring -->
+        <circle class="ring-track" cx="60" cy="60" r="52" fill="none" stroke-width="8"/>
+        <!-- Progress ring -->
+        <circle id="progress-ring-circle"
+          cx="60" cy="60" r="52" fill="none"
+          stroke-width="8"
+          stroke-linecap="round"
+          stroke-dasharray="326.73"
+          stroke-dashoffset="0"
+          transform="rotate(-90 60 60)"/>
+      </svg>
+
+      <div class="ring-content">
+        <div class="countdown" id="countdown">25:00</div>
+      </div>
+    </div>
+
+    <!-- Session type label / current task -->
+    <div class="session-label" id="session-label">F O C U S</div>
+    <div class="current-task" id="current-task" style="display:none"></div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-start">▶ Start</button>
+      <button class="btn btn-secondary" id="btn-reset" disabled>↺ Reset</button>
+    </div>
+
+    <!-- Session dots -->
+    <div class="dots-row" id="dots-row">
+      <span class="dot" data-pos="0"></span>
+      <span class="dot" data-pos="1"></span>
+      <span class="dot" data-pos="2"></span>
+      <span class="dot" data-pos="3"></span>
+    </div>
+
+    <!-- Completed tasks -->
+    <div class="completed-section" id="completed-section" style="display:none">
+      <button class="completed-toggle" id="completed-toggle">
+        <span class="completed-toggle-arrow" id="completed-arrow">▸</span>
+        Completed <span class="completed-count" id="completed-count">(0)</span>
+      </button>
+      <div class="completed-list" id="completed-list" style="display:none"></div>
+      <button class="btn-clear-tasks" id="btn-clear-tasks" style="display:none">Clear completed</button>
+    </div>
+
+    <!-- Stats card -->
+    <div class="stats-card">
+      <div class="stats-row">
+        <span class="stats-label">Sessions today</span>
+        <span class="stats-value" id="stat-sessions">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Focus time</span>
+        <span class="stats-value" id="stat-minutes">0 min</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Streak</span>
+        <span class="stats-value" id="stat-streak">0 days</span>
+      </div>
+    </div>
+
+    <div class="blocking-indicator" id="blocking-indicator" style="display:none">🔒 Blocking distractions</div>
+
+    <!-- Sparkle overlay (shown on session transition) -->
+    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
+  </div>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
