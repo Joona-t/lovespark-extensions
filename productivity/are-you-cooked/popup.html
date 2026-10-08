@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Are You Cooked?</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle">
+    <header class="popup-header">
+      <img class="header-mascot" src="mascot.png" alt="Sparky — LoveSpark mascot" />
+      <span class="header-title" id="popupTitle">Are You Cooked?</span>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle"
+              aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> <span aria-hidden="true">▾</span>
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+    </header>
+
+    <main class="popup-content">
+      <div class="stats-card">
+        <div class="mascot-wrap">
+          <img class="mascot panic-0" id="mascot" src="mascot.png" alt="Sparky — LoveSpark mascot" />
+        </div>
+        <div class="count-wrapper">
+          <div class="tab-count" id="tabCount" role="status">—</div>
+          <div class="tabs-label">tabs open</div>
+        </div>
+        <div class="divider"></div>
+        <div class="verdict" id="verdict" aria-live="polite">counting...</div>
+        <div class="stats-strip" aria-label="Today's stats" aria-live="polite">
+          <div class="stat-line"><span class="stat-icon" aria-hidden="true">🏆</span> peak today: <span id="worstToday">—</span></div>
+          <div class="stat-line"><span class="stat-icon" aria-hidden="true">🌸</span> mindful saves: <span id="mindfulHelp">—</span></div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+  <script src="lib/lovespark-footer.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
