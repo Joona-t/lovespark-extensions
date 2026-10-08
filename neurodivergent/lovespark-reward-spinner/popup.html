@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Reward Spinner</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeToggle" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Reward Spinner</div>
+        <div class="header-sub" id="popupDesc">Spin for your reward!</div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <!-- Spinner display -->
+      <div class="spinner-section">
+        <div id="spinnerDisplay" class="spinner-display" aria-live="polite">
+          <div id="spinnerText" class="spinner-text">Tap spin to start!</div>
+        </div>
+        <button id="spinBtn" class="spin-btn" aria-label="Spin the reward wheel">
+          Spin!
+        </button>
+      </div>
+
+      <!-- Result display -->
+      <div id="resultSection" class="result-section" hidden aria-live="polite">
+        <div class="result-label">Your reward:</div>
+        <div id="resultText" class="result-text"></div>
+      </div>
+
+      <!-- Reward list -->
+      <div class="rewards-section">
+        <div class="rewards-header">
+          <span class="rewards-title">Your rewards</span>
+          <span id="rewardCount" class="rewards-count">0/20</span>
+        </div>
+        <div id="rewardList" class="reward-list" role="list"></div>
+        <div class="add-row">
+          <input type="text" id="rewardInput" class="reward-input" placeholder="Add a reward..."
+                 aria-label="Type a new reward" maxlength="100" autocomplete="off">
+          <button id="addBtn" class="btn-add" aria-label="Add reward to wheel">+</button>
+        </div>
+      </div>
+
+      <div id="cuteMsg" class="cute-msg" aria-live="polite">You earned this!</div>
+
+      <!-- Stats -->
+      <div class="stats-section" aria-label="Spin statistics">
+        <div class="stat-box" aria-label="Spins today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Total spins">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
