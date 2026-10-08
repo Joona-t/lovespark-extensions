@@ -83,7 +83,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   opacity: 0.6;
   animation: breathe-anim 6s ease-in-out infinite;
 }
