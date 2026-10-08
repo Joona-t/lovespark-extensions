@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Noise Level</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky, the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Noise Level</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          retro
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div id="cuteMsg" class="cute-msg" aria-live="polite">How noisy is it right now?</div>
+
+      <!-- Current noise rating -->
+      <div class="noise-rating" role="radiogroup" aria-label="Rate current noise level from 1 to 5">
+        <button class="noise-btn" role="radio" aria-checked="false" data-level="1" aria-label="Level 1: Silent">
+          <span class="noise-icon" aria-hidden="true">1</span>
+          <span class="noise-label">Silent</span>
+        </button>
+        <button class="noise-btn" role="radio" aria-checked="false" data-level="2" aria-label="Level 2: Quiet">
+          <span class="noise-icon" aria-hidden="true">2</span>
+          <span class="noise-label">Quiet</span>
+        </button>
+        <button class="noise-btn" role="radio" aria-checked="false" data-level="3" aria-label="Level 3: Moderate">
+          <span class="noise-icon" aria-hidden="true">3</span>
+          <span class="noise-label">Moderate</span>
+        </button>
+        <button class="noise-btn" role="radio" aria-checked="false" data-level="4" aria-label="Level 4: Loud">
+          <span class="noise-icon" aria-hidden="true">4</span>
+          <span class="noise-label">Loud</span>
+        </button>
+        <button class="noise-btn" role="radio" aria-checked="false" data-level="5" aria-label="Level 5: Very loud">
+          <span class="noise-icon" aria-hidden="true">5</span>
+          <span class="noise-label">Very loud</span>
+        </button>
+      </div>
+
+      <!-- Visual meter -->
+      <div class="meter-wrap" aria-hidden="true">
+        <div class="meter-bar">
+          <div id="meterFill" class="meter-fill" style="width: 0%;"></div>
+        </div>
+        <div class="meter-labels">
+          <span>Quiet</span>
+          <span>Loud</span>
+        </div>
+      </div>
+
+      <!-- Weekly pattern -->
+      <div class="week-section">
+        <div class="week-title">This week's pattern</div>
+        <div id="weekChart" class="week-chart" aria-label="Weekly noise pattern chart"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section" aria-label="Logging statistics">
+        <div class="stat-box" aria-label="Logs today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Logs total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
