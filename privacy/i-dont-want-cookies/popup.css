@@ -35,7 +35,7 @@ body {
 /* ── Header ── */
 header {
   position: relative;
-  background: linear-gradient(90deg, var(--ls-pink-accent), var(--ls-pink-deep));
+  background: linear-gradient(90deg, var(--ls-pink-deep), var(--ls-pink-deep));
   padding: 10px 14px;
   display: flex;
   align-items: center;
@@ -193,8 +193,8 @@ header {
   transition: all 0.15s;
   white-space: nowrap;
 }
-.wl-btn:hover        { background: var(--ls-pink-accent); color: #fff; }
-.wl-btn.active       { background: var(--ls-pink-accent); color: #fff; }
+.wl-btn:hover        { background: var(--ls-pink-deep); color: #fff; }
+.wl-btn.active       { background: var(--ls-pink-deep); color: #fff; }
 
 /* ── Auto-decline ── */
 .autodecline-section {

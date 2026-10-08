@@ -57,7 +57,6 @@ const todayEl        = document.getElementById('stat-today');
 const totalEl        = document.getElementById('stat-total');
 const domainEl       = document.getElementById('site-domain');
 const wlBtn          = document.getElementById('whitelist-btn');
-const settingsBtn    = document.getElementById('settings-btn');
 const settingsFooter = document.getElementById('settings-footer-btn');
 
 // ── Init ──────────────────────────────────────────────────────────────────────
@@ -65,9 +64,9 @@ async function init() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab?.url) {
-      try { currentDomain = new URL(tab.url).hostname.replace(/^www\./, ''); } catch (_) {}
+      try { currentDomain = new URL(tab.url).hostname.replace(/^www\./, ''); } catch (err) { console.warn('[i-dont-want-cookies] unknown:', err); }
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[i-dont-want-cookies] unknown:', err); }
 
   const data = await chrome.runtime.sendMessage({ type: 'GET_STATS' });
   applyState(data);
@@ -181,9 +180,7 @@ wlBtn.addEventListener('click', async () => {
   updateWlBtn();
 });
 
-[settingsBtn, settingsFooter].forEach((btn) =>
-  btn.addEventListener('click', () => chrome.runtime.openOptionsPage())
-);
+settingsFooter.addEventListener('click', () => chrome.runtime.openOptionsPage());
 
 init();
 

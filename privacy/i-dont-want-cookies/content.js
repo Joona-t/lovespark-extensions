@@ -205,7 +205,7 @@ function checkNode(el) {
         hideEl(child);
         found = true;
       });
-    } catch (_) {}
+    } catch (err) { console.warn('[i-dont-want-cookies] unknown:', err); }
   }
 
   if (found && settings.autoDecline) {
@@ -233,7 +233,7 @@ function attemptDecline(nearEl) {
         btn.click();
         return;
       }
-    } catch (_) {}
+    } catch (err) { console.warn('[i-dont-want-cookies] unknown:', err); }
   }
 
   // 2. Fall back to text-content matching across all buttons
@@ -275,7 +275,7 @@ function flushBadge() {
       count: pendingCount,
       domain: location.hostname.replace(/^www\./, ''),
     });
-  } catch (_) {}
+  } catch (err) { console.warn('[i-dont-want-cookies] unknown:', err); }
   pendingCount = 0;
 }
 
