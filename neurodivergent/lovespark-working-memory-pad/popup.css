@@ -1,0 +1,67 @@
+/* LoveSpark Working Memory Pad — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Pads ──────────────────────────────── */
+.pads-section { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.pad-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px; background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border); border-radius: 8px;
+}
+.pad-pin { font-size: 14px; flex-shrink: 0; }
+.pad-input {
+  flex: 1; padding: 6px 4px; border: none; background: transparent;
+  color: var(--ls-text-dark); font-size: 12px; font-family: var(--ls-font-body);
+  outline: none; min-height: 28px;
+}
+.pad-input:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px; border-radius: 4px;
+}
+.pad-input::placeholder { color: var(--ls-text-muted); }
+.pad-input:not(:placeholder-shown) { font-weight: 600; }
+.pad-clear {
+  width: 20px; height: 20px; border: none; background: transparent;
+  color: var(--ls-text-muted); font-size: 14px; cursor: pointer;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.15s;
+}
+.pad-item:hover .pad-clear { opacity: 0.6; }
+.pad-clear:hover { opacity: 1 !important; color: #DC3545; }
+
+/* ── Hint ──────────────────────────────── */
+.hint-text {
+  text-align: center; font-size: 9px; color: var(--ls-text-muted);
+  margin-bottom: 10px;
+}
+
+/* ── Stats ─────────────────────────────── */
+.stats-row { text-align: center; font-size: 10px; color: var(--ls-text-muted); margin-bottom: 8px; }
+.stat-inline { font-family: var(--ls-font-display); color: var(--ls-pink-accent); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+button:focus-visible, input:focus-visible, [role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
