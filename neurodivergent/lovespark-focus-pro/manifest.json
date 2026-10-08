@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Focus Pro",
+  "version": "1.0.1",
+  "homepage_url": "https://lovespark.love",
+  "description": "ADHD focus suite: Pomodoro timer, site blocker, ambient sounds, analytics. Free core, Pro unlocks all. No tracking.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "declarativeNetRequest",
+    "notifications"
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-focus": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F"
+      },
+      "description": "Start/pause focus session"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "lovespark-focus-pro@lovespark.suite",
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ],
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data. All data stays in local browser storage."
+      }
+    }
+  }
+}

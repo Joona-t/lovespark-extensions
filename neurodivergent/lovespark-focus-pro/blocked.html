@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stay Focused! - LoveSpark Focus Pro</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(165deg, #FDCFE1 0%, #F9A8C9 40%, #F48CAF 100%);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #5C1A36;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 480px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(232, 69, 124, 0.15);
+    }
+
+    .shield { font-size: 64px; margin-bottom: 16px; display: block; }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #E8457C;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #5C1A36;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #9E4D6E;
+      font-size: 14px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      margin-bottom: 24px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #E8457C, #D63466);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 32px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(232, 69, 124, 0.4);
+    }
+
+    .back-btn:active { transform: scale(0.97); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .back-btn { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="shield" aria-hidden="true">&#x1F6E1;&#xFE0F;</span>
+    <h1>Stay Focused!</h1>
+    <p>This site is blocked during your focus session. You're doing great — keep going!</p>
+    <div class="quote" id="quote"></div>
+    <button class="back-btn" id="back-btn">Go Back</button>
+  </div>
+  <script>
+    'use strict';
+    const quotes = [
+      'The secret of getting ahead is getting started. — Mark Twain',
+      'Focus on being productive instead of busy. — Tim Ferriss',
+      'It is during our darkest moments that we must focus to see the light. — Aristotle',
+      'Concentrate all your thoughts upon the work at hand. — Alexander Graham Bell',
+      'Where focus goes, energy flows. — Tony Robbins',
+      'Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment. — Buddha',
+      'You can always find a distraction if you are looking for one. — Tom Kite',
+      'Starve your distractions, feed your focus.',
+    ];
+    var quoteEl = document.getElementById('quote');
+    quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('back-btn').addEventListener('click', function() {
+      history.back();
+    });
+  </script>
+</body>
+</html>

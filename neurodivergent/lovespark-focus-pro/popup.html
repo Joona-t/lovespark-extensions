@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Focus Pro</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body role="dialog" aria-labelledby="fp-title" aria-describedby="fp-session-label">
+  <div class="ls-shell">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky - LoveSpark mascot" class="sparky" id="sparky">
+        <div class="title-block">
+          <span class="title" id="fp-title">LoveSpark</span>
+          <span class="subtitle">Focus Pro</span>
+        </div>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme, currently Retro Pink">
+          <span id="themeLabel">Retro Pink</span> &#9662;
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="menuitem" aria-label="Switch to Retro Pink theme">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="menuitem" aria-label="Switch to Dark theme">Dark</button>
+          <button class="theme-option" data-theme="beige" role="menuitem" aria-label="Switch to Beige theme">Beige</button>
+          <button class="theme-option" data-theme="slate" role="menuitem" aria-label="Switch to Slate theme">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Timer Section -->
+      <div class="timer-section">
+        <svg class="progress-ring" viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#E8457C"/>
+              <stop offset="100%" stop-color="#C084FC"/>
+            </linearGradient>
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C084FC"/>
+              <stop offset="100%" stop-color="#818CF8"/>
+            </linearGradient>
+            <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#5EEAD4"/>
+              <stop offset="100%" stop-color="#0D9488"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="60" cy="60" r="52" fill="none" stroke-width="8"/>
+          <circle id="ring-progress"
+            cx="60" cy="60" r="52" fill="none"
+            stroke="url(#pinkGrad)"
+            stroke-width="8"
+            stroke-linecap="round"
+            stroke-dasharray="326.73"
+            stroke-dashoffset="0"
+            transform="rotate(-90 60 60)"/>
+        </svg>
+        <div class="ring-content">
+          <div class="countdown" id="countdown" aria-live="polite" aria-atomic="true">25:00</div>
+        </div>
+      </div>
+
+      <!-- Session type selector -->
+      <div class="session-tabs" role="radiogroup" aria-label="Session type">
+        <button class="tab active" data-type="focus" role="radio" aria-checked="true">Focus</button>
+        <button class="tab" data-type="shortBreak" role="radio" aria-checked="false">Short Break</button>
+        <button class="tab" data-type="longBreak" role="radio" aria-checked="false">Long Break</button>
+      </div>
+
+      <!-- Session label -->
+      <div class="session-label" id="fp-session-label">F O C U S</div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button id="btn-start" class="btn btn-primary" aria-label="Start focus session">Start Focus</button>
+        <button id="btn-pause" class="btn btn-secondary" hidden aria-label="Pause timer">Pause</button>
+        <button id="btn-reset" class="btn btn-danger" hidden aria-label="Reset timer">Reset</button>
+      </div>
+
+      <!-- Session dots -->
+      <div class="dots-row" aria-label="Pomodoro cycle progress">
+        <span class="dot" data-pos="0"></span>
+        <span class="dot" data-pos="1"></span>
+        <span class="dot" data-pos="2"></span>
+        <span class="dot" data-pos="3"></span>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-card">
+        <div class="stat-row">
+          <span class="stat-label">Sessions</span>
+          <span class="stat-value" id="stat-sessions" aria-live="polite">0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Focus time</span>
+          <span class="stat-value" id="stat-minutes" aria-live="polite">0 min</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Streak</span>
+          <span class="stat-value" id="stat-streak" aria-live="polite">0 days</span>
+        </div>
+      </div>
+
+      <!-- Quick Block -->
+      <div class="block-section glass-card">
+        <h3 class="section-title">Block Sites</h3>
+        <div class="block-input-row">
+          <input id="block-input" type="text" class="block-input" placeholder="example.com" aria-label="Site domain to block" autocomplete="off" spellcheck="false">
+          <button id="btn-add-block" class="btn btn-small" aria-label="Add site to block list">+</button>
+        </div>
+        <ul id="block-list" role="list" aria-label="Blocked sites"></ul>
+        <p id="block-limit" class="hint">3 sites free — <a href="#" id="upgrade-link">Unlock unlimited</a></p>
+      </div>
+
+      <!-- Ambient Sounds (Pro) -->
+      <div class="sounds-section glass-card">
+        <h3 class="section-title">Ambient Sounds <span class="pro-badge" id="sounds-pro-badge">PRO</span></h3>
+        <div class="sound-buttons">
+          <button class="sound-btn" data-sound="rain" aria-label="Play rain sounds">Rain</button>
+          <button class="sound-btn" data-sound="cafe" aria-label="Play cafe sounds">Cafe</button>
+          <button class="sound-btn" data-sound="lofi" aria-label="Play lofi sounds">Lofi</button>
+          <button class="sound-btn" data-sound="white" aria-label="Play white noise">White</button>
+        </div>
+        <div class="volume-row">
+          <label for="volume-slider" class="volume-label">Vol</label>
+          <input type="range" id="volume-slider" min="0" max="100" value="50" aria-label="Sound volume">
+        </div>
+      </div>
+
+      <!-- Pro upgrade CTA (shown to free users) -->
+      <div class="pro-cta glass-card" id="pro-cta">
+        <span class="pro-cta-text">Unlock unlimited sites, ambient sounds, and analytics</span>
+        <button class="btn btn-pro" id="btn-upgrade" aria-label="Upgrade to Focus Pro">Upgrade to Pro — $9.99/mo</button>
+      </div>
+    </main>
+
+    <!-- Sparkle overlay -->
+    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+
+    <div id="footer-mount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="sounds.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

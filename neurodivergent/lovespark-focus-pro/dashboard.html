@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Pro Analytics - LoveSpark</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="dash-layout">
+
+    <!-- Sidebar -->
+    <nav class="dash-sidebar" role="navigation" aria-label="Dashboard navigation">
+      <div class="sidebar-brand">
+        <img src="mascot.png" alt="Sparky - LoveSpark mascot" class="sparky">
+        <div class="sidebar-title-block">
+          <span class="sidebar-title">Focus Pro</span>
+          <span class="sidebar-subtitle">Analytics</span>
+        </div>
+      </div>
+      <ul class="sidebar-nav" role="list">
+        <li><button class="nav-btn active" data-section="overview" aria-current="true">Overview</button></li>
+        <li><button class="nav-btn" data-section="trends">Trends</button></li>
+        <li><button class="nav-btn" data-section="heatmap">Heatmap</button></li>
+        <li><button class="nav-btn" data-section="distractions">Distractions</button></li>
+      </ul>
+      <div class="sidebar-footer">
+        <button class="nav-btn nav-btn-settings" id="btn-open-settings" aria-label="Open settings">Settings</button>
+        <button class="nav-btn nav-btn-export" id="btn-export-csv" aria-label="Export data as CSV">Export CSV</button>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="dash-main" id="dash-main">
+
+      <!-- Header bar -->
+      <header class="dash-header">
+        <h1 class="dash-heading" id="dash-heading">Overview</h1>
+        <div class="theme-dropdown" id="themeDropdown">
+          <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme, currently Retro Pink">
+            <span id="themeLabel">Retro Pink</span> &#9662;
+          </button>
+          <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+            <div class="theme-dropdown-header">Change Theme</div>
+            <button class="theme-option" data-theme="retro" role="menuitem" aria-label="Switch to Retro Pink theme">Retro Pink</button>
+            <button class="theme-option" data-theme="dark" role="menuitem" aria-label="Switch to Dark theme">Dark</button>
+            <button class="theme-option" data-theme="beige" role="menuitem" aria-label="Switch to Beige theme">Beige</button>
+            <button class="theme-option" data-theme="slate" role="menuitem" aria-label="Switch to Slate theme">Slate</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Summary cards -->
+      <div class="summary-row" id="summary-row" aria-label="Focus statistics summary">
+        <!-- Built dynamically by dashboard.js -->
+      </div>
+
+      <!-- Chart sections (one visible at a time based on nav) -->
+      <section class="dash-section active" id="section-overview" aria-labelledby="dash-heading">
+        <div class="chart-grid">
+          <div class="chart-card glass-card">
+            <h2 class="chart-title">Daily Focus (Last 7 Days)</h2>
+            <div class="chart-wrap">
+              <canvas id="chart-daily" aria-label="Bar chart showing daily focus minutes for the last 7 days" role="img"></canvas>
+            </div>
+          </div>
+          <div class="chart-card glass-card">
+            <h2 class="chart-title">Session Completion</h2>
+            <div class="chart-wrap chart-wrap-pie">
+              <canvas id="chart-pie" aria-label="Pie chart showing completed versus abandoned sessions" role="img"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section" id="section-trends" aria-label="Weekly trend chart">
+        <div class="chart-card glass-card chart-card-wide">
+          <h2 class="chart-title">Weekly Trend (Last 4 Weeks)</h2>
+          <div class="chart-wrap chart-wrap-wide">
+            <canvas id="chart-weekly" aria-label="Line chart showing weekly focus trend over last 4 weeks" role="img"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section" id="section-heatmap" aria-label="Focus hour heatmap">
+        <div class="chart-card glass-card chart-card-wide">
+          <h2 class="chart-title">Focus Hours Heatmap</h2>
+          <div class="chart-wrap chart-wrap-wide">
+            <canvas id="chart-heatmap" aria-label="Heatmap showing focus intensity by hour and day of week" role="img"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section" id="section-distractions" aria-label="Top distractions">
+        <div class="chart-card glass-card chart-card-wide">
+          <h2 class="chart-title">Top Distractions</h2>
+          <div class="chart-wrap chart-wrap-wide">
+            <canvas id="chart-distractions" aria-label="Bar chart showing top 5 most visited distraction sites" role="img"></canvas>
+          </div>
+          <ul class="distraction-list" id="distraction-list" role="list" aria-label="Distraction sites with block buttons"></ul>
+        </div>
+      </section>
+
+      <!-- Pro gate overlay -->
+      <div class="pro-gate-overlay" id="pro-gate" hidden>
+        <div class="pro-gate-card">
+          <img src="mascot.png" alt="Sparky" class="pro-gate-sparky">
+          <h2 class="pro-gate-title">Unlock Analytics</h2>
+          <p class="pro-gate-text">Upgrade to Focus Pro to access detailed analytics, heatmaps, and distraction tracking.</p>
+          <button class="btn btn-pro" id="btn-pro-upgrade" aria-label="Upgrade to Focus Pro">Upgrade to Pro -- $9.99/mo</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="paywall.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

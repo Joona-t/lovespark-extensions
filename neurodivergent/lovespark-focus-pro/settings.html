@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - LoveSpark Focus Pro</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-shell">
+
+    <!-- Header -->
+    <header class="settings-header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky - LoveSpark mascot" class="sparky">
+        <div class="header-title-block">
+          <span class="header-title">Focus Pro</span>
+          <span class="header-subtitle">Settings</span>
+        </div>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme, currently Retro Pink">
+          <span id="themeLabel">Retro Pink</span> &#9662;
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="menuitem" aria-label="Switch to Retro Pink theme">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="menuitem" aria-label="Switch to Dark theme">Dark</button>
+          <button class="theme-option" data-theme="beige" role="menuitem" aria-label="Switch to Beige theme">Beige</button>
+          <button class="theme-option" data-theme="slate" role="menuitem" aria-label="Switch to Slate theme">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="settings-main">
+
+      <!-- Timer Settings -->
+      <section class="settings-section glass-card" aria-labelledby="sec-timer">
+        <h2 class="section-title" id="sec-timer">Timer</h2>
+        <div class="input-group">
+          <label for="inp-focus">Focus duration (min)</label>
+          <input type="number" id="inp-focus" min="1" max="120" value="25" class="num-input" aria-describedby="inp-focus-desc">
+          <span class="input-desc" id="inp-focus-desc">1 - 120 minutes</span>
+        </div>
+        <div class="input-group">
+          <label for="inp-short">Short break (min)</label>
+          <input type="number" id="inp-short" min="1" max="30" value="5" class="num-input" aria-describedby="inp-short-desc">
+          <span class="input-desc" id="inp-short-desc">1 - 30 minutes</span>
+        </div>
+        <div class="input-group">
+          <label for="inp-long">Long break (min)</label>
+          <input type="number" id="inp-long" min="1" max="60" value="15" class="num-input" aria-describedby="inp-long-desc">
+          <span class="input-desc" id="inp-long-desc">1 - 60 minutes</span>
+        </div>
+        <div class="toggle-group">
+          <label for="tog-auto-break">Auto-start breaks</label>
+          <button id="tog-auto-break" class="toggle-btn" role="switch" aria-checked="true"><span class="toggle-knob"></span></button>
+        </div>
+        <div class="toggle-group">
+          <label for="tog-auto-focus">Auto-start next focus</label>
+          <button id="tog-auto-focus" class="toggle-btn" role="switch" aria-checked="false"><span class="toggle-knob"></span></button>
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section class="settings-section glass-card" aria-labelledby="sec-notif">
+        <h2 class="section-title" id="sec-notif">Notifications</h2>
+        <div class="toggle-group">
+          <label for="tog-notif-sound">Notification sound</label>
+          <button id="tog-notif-sound" class="toggle-btn" role="switch" aria-checked="true"><span class="toggle-knob"></span></button>
+        </div>
+        <div class="toggle-group">
+          <label for="tog-notif-desktop">Desktop notifications</label>
+          <button id="tog-notif-desktop" class="toggle-btn" role="switch" aria-checked="true"><span class="toggle-knob"></span></button>
+        </div>
+      </section>
+
+      <!-- Sound Settings -->
+      <section class="settings-section glass-card" aria-labelledby="sec-sound">
+        <h2 class="section-title" id="sec-sound">Sound</h2>
+        <div class="input-group">
+          <label for="sel-sound">Default ambient sound</label>
+          <select id="sel-sound" class="sel-input">
+            <option value="">None</option>
+            <option value="rain">Rain</option>
+            <option value="cafe">Cafe</option>
+            <option value="lofi">Lofi</option>
+            <option value="white">White Noise</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="inp-volume">Default volume</label>
+          <input type="range" id="inp-volume" min="0" max="100" value="50" class="range-input" aria-label="Default sound volume">
+          <span class="input-desc" id="volume-display">50%</span>
+        </div>
+      </section>
+
+      <!-- Block List Management -->
+      <section class="settings-section glass-card" aria-labelledby="sec-blocklist">
+        <h2 class="section-title" id="sec-blocklist">Block List</h2>
+        <div class="block-input-row">
+          <input type="text" id="inp-add-site" class="text-input" placeholder="example.com" aria-label="Site domain to block" autocomplete="off" spellcheck="false">
+          <button id="btn-add-site" class="btn btn-small" aria-label="Add site to block list">+</button>
+        </div>
+        <ul id="site-list" role="list" aria-label="Blocked sites"></ul>
+        <div class="blocklist-actions">
+          <button id="btn-import-sites" class="btn btn-outline" aria-label="Import block list from file">Import List</button>
+          <button id="btn-export-sites" class="btn btn-outline" aria-label="Export block list to file">Export List</button>
+        </div>
+      </section>
+
+      <!-- Data -->
+      <section class="settings-section glass-card" aria-labelledby="sec-data">
+        <h2 class="section-title" id="sec-data">Data</h2>
+        <div class="data-actions">
+          <button id="btn-export-data" class="btn btn-outline">Export All Data (JSON)</button>
+          <button id="btn-clear-data" class="btn btn-danger">Clear All Data</button>
+        </div>
+      </section>
+
+      <!-- Account -->
+      <section class="settings-section glass-card" aria-labelledby="sec-account">
+        <h2 class="section-title" id="sec-account">Account</h2>
+        <div class="account-row">
+          <span class="account-label">Status</span>
+          <span class="account-value" id="pro-status-label">Free</span>
+        </div>
+        <button id="btn-manage-sub" class="btn btn-pro-settings">Manage Subscription</button>
+      </section>
+
+      <!-- About -->
+      <section class="settings-section glass-card" aria-labelledby="sec-about">
+        <h2 class="section-title" id="sec-about">About</h2>
+        <div class="about-row">
+          <span class="about-label">Version</span>
+          <span class="about-value" id="version-label">1.0.0</span>
+        </div>
+        <div class="about-row">
+          <span class="about-label">Built by</span>
+          <span class="about-value">Joona Tyrninoksa</span>
+        </div>
+        <div class="about-links">
+          <a href="https://lovespark.love" target="_blank" rel="noopener noreferrer" class="about-link">lovespark.love</a>
+          <a href="https://github.com/Joona-t" target="_blank" rel="noopener noreferrer" class="about-link">GitHub</a>
+          <a href="mailto:joona@lovespark.love?subject=Focus Pro Feedback" class="about-link">Feedback</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="paywall.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
