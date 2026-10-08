@@ -280,7 +280,7 @@ body {
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border: none;
   border-radius: var(--ls-radius-sm);
   color: var(--ls-text-white);
@@ -500,7 +500,7 @@ body {
 }
 
 .tag-filter:hover { border-color: var(--ls-pink-accent); color: var(--ls-pink-accent); }
-.tag-filter.active { background: rgba(232,69,124,0.12); border-color: var(--ls-pink-accent); color: var(--ls-pink-accent); }
+.tag-filter.active { background: rgba(232,69,124,0.12); border-color: var(--ls-pink-deep); color: var(--ls-pink-deep); }
 
 /* ── Mini Calendar ── */
 .calendar-wrap {
@@ -589,7 +589,7 @@ body {
 
 .btn-new-dropdown {
   padding: 8px 8px;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border: none;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0 var(--ls-radius-sm) var(--ls-radius-sm) 0;
@@ -629,7 +629,7 @@ body {
   transition: background 0.1s;
 }
 
-.template-item:hover { background: var(--ls-glass); color: var(--ls-pink-accent); }
+.template-item:hover { background: var(--ls-glass); color: var(--ls-pink-deep); }
 .template-item-emoji { font-size: 13px; }
 
 /* ── Notes List ── */
@@ -724,7 +724,7 @@ body {
 }
 
 .note-item:hover .note-item-delete { opacity: 1; }
-.note-item-delete:hover { background: rgba(232,69,124,0.15); color: var(--ls-pink-accent); }
+.note-item-delete:hover { background: rgba(232,69,124,0.15); color: var(--ls-pink-deep); }
 
 .note-item-restore {
   position: absolute;
@@ -922,7 +922,7 @@ body {
 }
 
 .font-btn:hover { border-color: var(--ls-pink-accent); color: var(--ls-pink-accent); }
-.font-btn.active { background: var(--ls-pink-accent); color: white; border-color: var(--ls-pink-accent); }
+.font-btn.active { background: var(--ls-pink-deep); color: white; border-color: var(--ls-pink-deep); }
 
 /* ── Toolbar small buttons ── */
 .btn-icon-sm {
@@ -940,8 +940,8 @@ body {
   gap: 3px;
 }
 
-.btn-icon-sm:hover { background: var(--ls-glass); border-color: var(--ls-pink-accent); color: var(--ls-pink-accent); }
-.btn-icon-sm.active { background: var(--ls-pink-accent); color: white; border-color: var(--ls-pink-accent); }
+.btn-icon-sm:hover { background: var(--ls-glass); border-color: var(--ls-pink-deep); color: var(--ls-pink-deep); }
+.btn-icon-sm.active { background: var(--ls-pink-deep); color: white; border-color: var(--ls-pink-deep); }
 
 /* ── Editor Content ── */
 .editor-content-area {
@@ -1137,7 +1137,7 @@ body.theme-dark .hl-number { color: #c084fc; }
   text-overflow: ellipsis;
 }
 
-.link-ac-item:hover { background: var(--ls-glass); color: var(--ls-pink-accent); }
+.link-ac-item:hover { background: var(--ls-glass); color: var(--ls-pink-deep); }
 
 /* ── Backlinks Panel ── */
 .backlinks-panel {
@@ -1216,7 +1216,7 @@ body.theme-dark .hl-number { color: #c084fc; }
   justify-content: center;
 }
 
-.btn-close:hover { background: var(--ls-glass); color: var(--ls-pink-accent); }
+.btn-close:hover { background: var(--ls-glass); color: var(--ls-pink-deep); }
 
 .version-list {
   flex: 1;
@@ -1234,7 +1234,7 @@ body.theme-dark .hl-number { color: #c084fc; }
 }
 
 .version-item:hover { background: var(--ls-glass); border-color: var(--ls-glass-border); }
-.version-item.active { background: var(--ls-glass-strong); border-color: var(--ls-pink-accent); }
+.version-item.active { background: var(--ls-glass-strong); border-color: var(--ls-pink-deep); }
 
 .version-item-label {
   font-size: 12px;
@@ -1253,7 +1253,7 @@ body.theme-dark .hl-number { color: #c084fc; }
   width: 100%;
   margin-top: 8px;
   padding: 6px;
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);
@@ -1641,7 +1641,7 @@ body.distraction-free .word-count {
   transition: background 0.1s;
 }
 
-.slash-item:hover { background: var(--ls-glass); color: var(--ls-pink-accent); }
+.slash-item:hover { background: var(--ls-glass); color: var(--ls-pink-deep); }
 .slash-item-emoji { font-size: 13px; }
 
 /* ── Toast ── */
@@ -1766,7 +1766,7 @@ body.distraction-free .word-count {
 }
 
 .sync-pulse.syncing {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   animation: syncPulse 1.2s ease-in-out infinite;
 }
 
@@ -1903,7 +1903,7 @@ body.distraction-free .format-row { display: none; }
 
 /* ── Calendar Selected Day ── */
 .cal-day.selected {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
   border-radius: 50%;
   font-weight: 600;
