@@ -1,0 +1,34 @@
+# BUGS AND ITERATIONS - LoveSpark Scroll To Top
+
+## v1.0.0 (2026-03-25)
+
+### Initial Release
+- Scaffold generated via scaffold-extension.py
+- Custom implementation: floating back-to-top button injected via content script
+- Smooth scroll via window.scrollTo with behavior: 'smooth'
+- Configurable threshold (100-2000px) via range slider + number input in popup
+- Button uses LoveSpark pink (#e8457c) with hover glow effect
+- SVG chevron-up arrow, 44px circular button, z-index: 2147483647
+- Scroll listener throttled to 100ms via setTimeout (not setInterval)
+- Content script listens to storage.onChanged for live setting updates
+- Theme dropdown uses correct IDs (themeToggle/themeMenu) matching lovespark-theme.js
+- 340px popup width, var(--ls-bg-gradient), Sparky mascot, 4 themes
+- Zero innerHTML usage -- button and SVG built via DOM API (createElement/createElementNS)
+- Style injected via style.textContent (not innerHTML)
+- WCAG AA: focus-visible on floating button, aria-label, prefers-reduced-motion disables transitions
+- Permissions: storage, activeTab, scripting
+- Content script registered in manifest (matches: all_urls, run_at: document_idle)
+
+### Known Limitations
+- Button appears on all pages including those with existing scroll-to-top buttons
+- No per-site exclusion list yet
+- Button position (bottom-right) is not configurable in v1
+
+
+## 2026-03-28: Fleet-wide automation regression — broken CSS variables + missing footers
+
+**Problem:** A post-swarm-audit automation run injected `lovespark-tokens.css` and `lovespark-base.css` into popup.html, and replaced `--ls-pink-accent` with undefined `--ls-btn-bg` in popup.css. This broke toggle colors (rendered transparent) and changed disabled opacity from 0.4 to 0.9. Footer buttons were also missing from 26 extensions.
+**Root cause:** Batch automation (`sync-shared-lib.sh` or swarm pass) overwrote extension CSS without validating variable definitions. The `--ls-btn-bg` variable was never defined in any CSS file.
+**Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
+**Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
+**Commit:** fleet-wide fix, multiple commits
