@@ -1,0 +1,212 @@
+/* LoveSpark Download Guard — Extension-specific styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 16px; }
+
+/* ── Header ──────────────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.header-sub {
+  font-family: var(--ls-font-display);
+  font-size: 8px;
+  color: var(--ls-pink-accent);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Status section ──────────────────────────────── */
+.status-section { text-align: center; margin-bottom: 14px; }
+.status-icon { font-size: 32px; margin-bottom: 6px; transition: transform 0.3s ease; }
+.status-icon.paused { opacity: 0.4; filter: grayscale(1); }
+.status-text { font-size: 13px; font-weight: 500; color: var(--ls-text-dark); margin-bottom: 4px; }
+.cute-msg { font-size: 11px; color: var(--ls-text-muted); margin-bottom: 10px; transition: opacity 0.2s; min-height: 16px; }
+
+/* ── Toggle ──────────────────────────────────────── */
+.toggle-wrap { display: inline-block; cursor: pointer; }
+.toggle-wrap input { display: none; }
+.toggle-track {
+  display: block; width: 48px; height: 26px;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 13px; position: relative;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.toggle-wrap input:checked + .toggle-track {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+}
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px; background: white;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.toggle-wrap input:checked + .toggle-track .toggle-thumb { transform: translateX(22px); }
+
+/* ── Warning section ─────────────────────────────── */
+.warning-section {
+  background: var(--ls-glass);
+  border: 2px solid var(--ls-pink-accent);
+  border-radius: var(--ls-radius);
+  padding: 14px;
+  backdrop-filter: blur(8px);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.warning-section.hidden { display: none; }
+
+.warning-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+  color: var(--ls-pink-accent);
+}
+
+.warning-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ls-text-dark);
+  margin-bottom: 8px;
+}
+
+.warning-file {
+  font-size: 11px;
+  color: var(--ls-text-dark);
+  word-break: break-all;
+  margin-bottom: 4px;
+}
+
+.warning-ext {
+  font-size: 10px;
+  font-family: var(--ls-font-display);
+  color: var(--ls-pink-accent);
+  margin-bottom: 10px;
+}
+
+.warning-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.warning-btn {
+  flex: 1;
+  padding: 8px;
+  font-family: var(--ls-font-body);
+  font-size: 12px;
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border: none;
+}
+
+.allow-btn {
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  color: var(--ls-text-dark);
+}
+
+.cancel-btn {
+  background: var(--ls-pink-deep);
+  color: var(--ls-text-white);
+  box-shadow: var(--ls-glow);
+}
+
+.warning-btn:hover { opacity: 0.85; }
+
+/* ── Info section ────────────────────────────────── */
+.info-section {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 12px 14px;
+  backdrop-filter: blur(8px);
+  margin-bottom: 14px;
+}
+
+.info-label {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+}
+
+.info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.info-tag {
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+/* ── Stats ───────────────────────────────────────── */
+.stats-section {
+  display: flex; align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 14px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 14px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 16px; color: var(--ls-pink-accent);
+  margin-bottom: 4px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 11px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 36px; background: var(--ls-glass-border); }
+
+/* ── Focus indicators (WCAG AA) ──────────────────── */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+.toggle-wrap input:focus-visible + .toggle-track {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

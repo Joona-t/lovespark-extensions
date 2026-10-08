@@ -1,0 +1,27 @@
+{
+  "extension": "LoveSpark Download Guard",
+  "path": "~/Claude x LoveSpark/Extensions/privacy/lovespark-download-guard",
+  "timestamp": "2026-03-27T01:53:29",
+  "results": {
+    "privacy_policy_page": true,
+    "icons": true,
+    "mascot": true,
+    "promo_tile": true,
+    "description_quality": true,
+    "gecko": true,
+    "csp": true,
+    "mv3": true,
+    "chrome_zip": true,
+    "firefox_zip": false,
+    "no_innerHTML": true,
+    "permissions_ok": true,
+    "bugs_doc": true,
+    "ls_check_ran": true
+  },
+  "passed": 13,
+  "total_checks": 14,
+  "blockers": [
+    "CWS developer account submission (Joona)"
+  ],
+  "ship_ready": true
+}
