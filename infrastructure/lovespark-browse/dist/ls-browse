@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# ls-browse — shell wrapper that invokes the CLI via Bun.
+# Uses this script's directory to locate the source, so symlinks work.
+
+set -e
+
+SCRIPT="${BASH_SOURCE[0]}"
+while [ -L "$SCRIPT" ]; do
+  DIR="$(cd -P "$(dirname "$SCRIPT")" && pwd)"
+  SCRIPT="$(readlink "$SCRIPT")"
+  [[ $SCRIPT != /* ]] && SCRIPT="$DIR/$SCRIPT"
+done
+DIR="$(cd -P "$(dirname "$SCRIPT")/.." && pwd)"
+
+BUN="${BUN:-$HOME/.bun/bin/bun}"
+if ! command -v "$BUN" >/dev/null 2>&1; then
+  echo "ls-browse: bun not found at $BUN" >&2
+  echo "  Remedy: install Bun with 'curl -fsSL https://bun.sh/install | bash' then re-run." >&2
+  exit 1
+fi
+
+exec "$BUN" "$DIR/src/cli.ts" "$@"

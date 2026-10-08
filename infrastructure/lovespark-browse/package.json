@@ -1,0 +1,25 @@
+{
+  "name": "lovespark-browse",
+  "version": "0.1.0",
+  "description": "Persistent Chromium daemon for LoveSpark real-DOM QA, a11y verification, and extension testing",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/server.ts",
+    "cli": "bun src/cli.ts",
+    "build": "bun build --compile src/cli.ts --outfile dist/ls-browse",
+    "install-chromium": "bunx playwright install chromium",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}
