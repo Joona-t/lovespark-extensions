@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Tab Garden",
+  "version": "1.0.27",
+  "description": "Your tabs are plants. Unused ones get gently archived to your garden \u2014 restore anytime by watering them.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  }
+}

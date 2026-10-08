@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Garden</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body role="dialog" aria-labelledby="popup-title" aria-describedby="popup-desc">
+
+  <!-- Header -->
+  <header class="popup-header">
+    <div class="header-left">
+      <img src="mascot.png" alt="Sparky, the LoveSpark mascot" class="mascot" width="28" height="28">
+      <h1 id="popup-title" class="header-title">Tab Garden</h1>
+    </div>
+    <div class="theme-dropdown">
+      <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span>
+      </button>
+      <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option active" data-theme="retro" role="menuitem">Retro Pink</button>
+        <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+        <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+        <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+      </div>
+    </div>
+  </header>
+
+  <p id="popup-desc" class="sr-only">Gamified tab manager. Idle tabs become plants in your garden. Restore them anytime.</p>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar" aria-live="polite">
+    <span class="stat" id="statActive" aria-label="Active tabs">
+      <span class="stat-emoji" aria-hidden="true">&#x1F331;</span>
+      <span id="activeCount" aria-live="polite">0</span> active
+    </span>
+    <span class="stat-divider" aria-hidden="true">|</span>
+    <span class="stat" id="statArchived" aria-label="Archived tabs">
+      <span class="stat-emoji" aria-hidden="true">&#x1F338;</span>
+      <span id="archivedCount" aria-live="polite">0</span> archived
+    </span>
+    <span class="stat-divider" aria-hidden="true">|</span>
+    <span class="stat" id="statMemory" aria-label="Estimated memory saved">
+      <span class="stat-emoji" aria-hidden="true">&#x1F4BE;</span>
+      ~<span id="memorySaved" aria-live="polite">0</span>mb saved
+    </span>
+  </div>
+
+  <!-- Search -->
+  <div class="search-wrap">
+    <label for="searchInput" class="sr-only">Search archived tabs</label>
+    <input type="text" id="searchInput" class="search-input" placeholder="Search garden..." autocomplete="off">
+  </div>
+
+  <!-- Garden Grid -->
+  <section class="garden-section" aria-label="Archived tabs garden">
+    <div id="gardenGrid" class="garden-grid"></div>
+    <div id="gardenEmpty" class="garden-empty" hidden>
+      <span class="empty-emoji" aria-hidden="true">&#x1F333;</span>
+      <p class="empty-text">Your garden is empty. Idle tabs will appear here as plants!</p>
+    </div>
+    <div id="gardenNoResults" class="garden-empty" hidden>
+      <p class="empty-text">No plants match your search.</p>
+    </div>
+  </section>
+
+  <!-- Active Tabs (collapsible) -->
+  <section class="collapsible-section">
+    <button class="section-toggle" id="activeTabsToggle" aria-expanded="false" aria-controls="activeTabsList">
+      <span class="toggle-arrow" aria-hidden="true">&#x25B6;</span>
+      Active Tabs (<span id="activeTabsCount" aria-live="polite">0</span>)
+    </button>
+    <div id="activeTabsList" class="section-content" hidden>
+      <div id="activeTabsContainer"></div>
+    </div>
+  </section>
+
+  <!-- Settings (collapsible) -->
+  <section class="collapsible-section">
+    <button class="section-toggle" id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel">
+      <span class="toggle-arrow" aria-hidden="true">&#x25B6;</span>
+      Settings
+    </button>
+    <div id="settingsPanel" class="section-content" hidden>
+      <div class="settings-grid">
+
+        <div class="setting-row">
+          <label for="idleThreshold">Idle threshold</label>
+          <select id="idleThreshold">
+            <option value="900000">15 minutes</option>
+            <option value="1800000" selected>30 minutes</option>
+            <option value="3600000">1 hour</option>
+            <option value="7200000">2 hours</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <label for="maxGarden">Max garden size</label>
+          <select id="maxGarden">
+            <option value="50">50 tabs</option>
+            <option value="100" selected>100 tabs</option>
+            <option value="200">200 tabs</option>
+            <option value="-1">Unlimited</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <label for="autoArchiveToggle">Auto-archive</label>
+          <div class="toggle-wrap">
+            <input type="checkbox" id="autoArchiveToggle" checked>
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row setting-row-full">
+          <label for="excludedDomains">Excluded domains (one per line)</label>
+          <textarea id="excludedDomains" rows="3" placeholder="localhost&#10;mail.google.com"></textarea>
+        </div>
+
+        <div class="setting-row setting-row-actions">
+          <button id="clearGardenBtn" class="btn btn-danger" aria-label="Clear all archived tabs from garden">Clear Garden</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shared lib inventory (synced from Extensions/infrastructure/lovespark-shared-lib):
+       In use:       lib/lovespark-base.css, lib/lovespark-footer.css, lib/lovespark-theme.js, lib/lovespark-footer.js
+       Reserved (service-worker / future use):
+         lovespark-tokens (via base.css @import), lib/lovespark-popup.js, lib/lovespark-stats.js,
+         lib/lovespark-badge.js, lib/lovespark-lifecycle.js -->
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
