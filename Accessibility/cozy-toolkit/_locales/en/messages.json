@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Cozy: ADHD & Dyslexia Accessibility Toolkit",
+    "description": "Extension name shown in browser"
+  },
+  "extDescription": {
+    "message": "Free accessibility toolkit — dyslexia fonts, reading ruler, bionic reading, sensory controls, TTS & more. No data collected.",
+    "description": "Extension description for store listing"
+  }
+}

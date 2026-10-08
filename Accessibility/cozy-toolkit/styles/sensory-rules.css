@@ -1,0 +1,50 @@
+/* ── Reduce Motion ─────────────────────────────── */
+html[data-cozy-reduce-motion] *,
+html[data-cozy-reduce-motion] *::before,
+html[data-cozy-reduce-motion] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+html[data-cozy-reduce-motion] video[autoplay] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-cozy-reduce-motion] *,
+  html[data-cozy-reduce-motion] *::before,
+  html[data-cozy-reduce-motion] *::after {
+    animation-duration: revert !important;
+    animation-iteration-count: revert !important;
+    transition-duration: revert !important;
+    scroll-behavior: revert !important;
+  }
+  html[data-cozy-reduce-motion] video[autoplay] {
+    display: revert !important;
+  }
+}
+
+/* ── Hide GIFs ─────────────────────────────────── */
+html[data-cozy-hide-gifs] img[src$=".gif"],
+html[data-cozy-hide-gifs] img[src$=".GIF"],
+html[data-cozy-hide-gifs] img[src*=".gif?"],
+html[data-cozy-hide-gifs] img[src*=".gif#"],
+html[data-cozy-hide-gifs] img[data-src$=".gif"],
+html[data-cozy-hide-gifs] picture source[srcset$=".gif"] {
+  visibility: hidden !important;
+}
+
+/* ── Large Cursor ──────────────────────────────── */
+html[data-cozy-cursor],
+html[data-cozy-cursor] * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 2 L4 26 L10 20 L16 28 L20 26 L14 18 L22 18 Z' fill='%23E8457C' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+html[data-cozy-cursor] a,
+html[data-cozy-cursor] button,
+html[data-cozy-cursor] [role="button"],
+html[data-cozy-cursor] input[type="submit"],
+html[data-cozy-cursor] input[type="button"],
+html[data-cozy-cursor] label[for] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='12' r='10' fill='none' stroke='%23E8457C' stroke-width='2.5'/%3E%3Cpath d='M16 6 L16 18 M10 12 L22 12' stroke='%23E8457C' stroke-width='2'/%3E%3C/svg%3E") 16 12, pointer !important;
+}

@@ -1,0 +1,56 @@
+/* Local UI font declarations — replaces Google Fonts CDN loading.
+   Fonts: DM Mono (body), Lora (beige theme), Press Start 2P (display headings). */
+
+/* DM Mono — 300 Light */
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('DM_Mono_300.woff2') format('woff2');
+}
+
+/* DM Mono — 400 Regular */
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('DM_Mono_400.woff2') format('woff2');
+}
+
+/* DM Mono — 500 Medium */
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('DM_Mono_500.woff2') format('woff2');
+}
+
+/* Lora — 400/500 Regular (variable weight) */
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('Lora_400.woff2') format('woff2');
+}
+
+/* Lora — 400/500 Italic (variable weight) */
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('Lora_400_italic.woff2') format('woff2');
+}
+
+/* Press Start 2P — 400 Regular */
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('PressStart2P_400.woff2') format('woff2');
+}
