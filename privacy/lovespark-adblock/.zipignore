@@ -17,3 +17,9 @@ icons/_gen.py
 CWS-LISTING.md
 SUBMIT.md
 cws-spec.json
+# Shared-lib files synced into lib/ but not loaded by this extension
+lib/lovespark-popup.js
+lib/lovespark-badge.js
+lib/lovespark-lifecycle.js
+lib/browser-polyfill.min.js
+lib/lovespark-stats.js
