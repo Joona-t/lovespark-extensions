@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Run ls-check on every extension folder that has staged changes (monorepo quality gate).
+command -v ls-check >/dev/null || { echo "ls-check not installed; skipping"; exit 0; }
+fail=0
+for d in $(git diff --cached --name-only | awk -F/ 'NF>2{print $1"/"$2}' | sort -u); do
+  [ -f "$d/manifest.json" ] || continue
+  ls-check "$d" >/tmp/ls-check-$$.txt 2>&1 || { echo "ls-check failed: $d"; tail -5 /tmp/ls-check-$$.txt; fail=1; }
+done
+rm -f /tmp/ls-check-$$.txt
+exit $fail
