@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=350">
+  <link rel="stylesheet" href="lib/lovespark-tokens.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+  <title>LoveSpark Gentle Timer</title>
+</head>
+<body role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+
+  <!-- Header -->
+  <header class="popup-header">
+    <div class="header-left">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" width="28" height="28" class="sparky">
+      <h1 id="popupTitle" class="header-title">Gentle Timer</h1>
+    </div>
+    <div class="theme-dropdown">
+      <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span>
+      </button>
+      <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option active" data-theme="retro" role="menuitem">Retro Pink</button>
+        <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+        <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+        <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+      </div>
+    </div>
+  </header>
+
+  <p id="popupDesc" class="sr-only">Time tracking dashboard showing today's browsing activity and break reminders.</p>
+
+  <main class="popup-body">
+
+    <!-- Today's Breakdown -->
+    <section class="card" aria-labelledby="todayLabel">
+      <h2 id="todayLabel" class="card-title">Today's Browsing</h2>
+      <div id="totalTime" class="total-time" aria-live="polite">0m total</div>
+      <div id="siteList" class="site-list" role="list" aria-label="Sites visited today">
+        <div class="empty-state" role="listitem">No browsing tracked yet today</div>
+      </div>
+    </section>
+
+    <!-- Break Status -->
+    <section class="card" aria-labelledby="breakLabel">
+      <h2 id="breakLabel" class="card-title">Break Reminders</h2>
+      <div class="break-grid">
+        <div class="break-row">
+          <span class="break-icon" aria-hidden="true">&#x1F4A7;</span>
+          <span class="break-name">Water</span>
+          <span id="breakWaterStatus" class="break-status">--</span>
+          <button id="breakWaterDone" class="break-done-btn" aria-label="Mark water break as done">Done</button>
+        </div>
+        <div class="break-row">
+          <span class="break-icon" aria-hidden="true">&#x1F355;</span>
+          <span class="break-name">Food</span>
+          <span id="breakFoodStatus" class="break-status">--</span>
+          <button id="breakFoodDone" class="break-done-btn" aria-label="Mark food break as done">Done</button>
+        </div>
+        <div class="break-row">
+          <span class="break-icon" aria-hidden="true">&#x1F3C3;</span>
+          <span class="break-name">Movement</span>
+          <span id="breakMovementStatus" class="break-status">--</span>
+          <button id="breakMovementDone" class="break-done-btn" aria-label="Mark movement break as done">Done</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <details class="card settings-card">
+      <summary class="card-title settings-toggle" aria-label="Toggle settings panel">Settings</summary>
+      <div class="settings-body">
+
+        <div class="setting-row">
+          <label for="nudgeThreshold">Nudge after</label>
+          <select id="nudgeThreshold" aria-label="Nudge threshold in minutes">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+
+        <div class="setting-row">
+          <label for="breakWaterInterval">Water reminder</label>
+          <div class="input-unit">
+            <input id="breakWaterInterval" type="number" min="0" max="480" value="45" aria-label="Water break interval in minutes">
+            <span class="unit">min</span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label for="breakFoodInterval">Food reminder</label>
+          <div class="input-unit">
+            <input id="breakFoodInterval" type="number" min="0" max="480" value="180" aria-label="Food break interval in minutes">
+            <span class="unit">min</span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label for="breakMovementInterval">Movement reminder</label>
+          <div class="input-unit">
+            <input id="breakMovementInterval" type="number" min="0" max="480" value="60" aria-label="Movement break interval in minutes">
+            <span class="unit">min</span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label for="showBadge">Show floating badge</label>
+          <div class="toggle-wrap">
+            <input type="checkbox" id="showBadge" checked aria-label="Toggle floating badge on websites">
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row setting-row-full">
+          <label for="allowlist">Allowlist (don't track)</label>
+          <textarea id="allowlist" rows="3" placeholder="example.com&#10;github.com" aria-label="Domains to exclude from tracking, one per line"></textarea>
+        </div>
+
+        <button id="saveSettings" class="save-btn" aria-label="Save settings">Save Settings</button>
+      </div>
+    </details>
+
+  </main>
+
+  <div id="footerMount"></div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
