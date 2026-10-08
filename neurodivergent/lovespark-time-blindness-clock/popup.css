@@ -1,0 +1,78 @@
+/* LoveSpark Time Blindness Clock — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Big clock ─────────────────────────── */
+.clock-section {
+  text-align: center; padding: 16px 0; margin-bottom: 10px;
+  background: var(--ls-glass); border: 1px solid var(--ls-glass-border);
+  border-radius: 12px; backdrop-filter: blur(8px);
+}
+.big-time {
+  font-family: var(--ls-font-display);
+  font-size: 36px;
+  color: var(--ls-pink-accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.big-date {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Time-until markers ────────────────── */
+.markers-section { margin-bottom: 10px; }
+.markers-list { display: flex; flex-direction: column; gap: 4px; }
+.marker-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border); border-radius: 8px;
+}
+.marker-label { font-size: 11px; color: var(--ls-text-dark); font-weight: 500; }
+.marker-until {
+  font-family: var(--ls-font-display); font-size: 11px; color: var(--ls-pink-accent);
+}
+.marker-past { color: var(--ls-text-muted); font-style: italic; }
+
+/* ── Day progress ──────────────────────── */
+.day-progress {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+}
+.day-label { font-size: 9px; font-weight: 600; color: var(--ls-text-muted); min-width: 70px; }
+.day-bar-wrap {
+  flex: 1; height: 6px; background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border); border-radius: 3px; overflow: hidden;
+}
+.day-bar { height: 100%; background: var(--ls-pink-deep); border-radius: 3px; transition: width 1s ease; }
+.day-pct { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-pink-accent); min-width: 28px; text-align: right; }
+
+/* ── Stats ─────────────────────────────── */
+.stats-row { text-align: center; font-size: 10px; color: var(--ls-text-muted); margin-bottom: 8px; }
+.stat-inline { font-family: var(--ls-font-display); color: var(--ls-pink-accent); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+button:focus-visible, [role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
