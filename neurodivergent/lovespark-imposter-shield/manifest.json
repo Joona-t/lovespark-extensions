@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Imposter Shield",
+  "version": "1.0.1",
+  "homepage_url": "https://lovespark.love",
+  "description": "ADHD imposter syndrome support. Build an evidence vault of your real accomplishments. When the voice says fraud, shake for proof you're not. Always free.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon-48.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "imposter-shield@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "No user data collected. Evidence vault stays in local browser storage."
+      }
+    }
+  }
+}
