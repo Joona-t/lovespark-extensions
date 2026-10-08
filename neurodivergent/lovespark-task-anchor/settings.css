@@ -1,0 +1,138 @@
+/* Task Anchor — Settings page styles. Base is in lib/lovespark-base.css */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+  min-height: 100vh;
+}
+
+/* ── Top bar (theme dropdown) ────────────────────────── */
+.settings-top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px 0;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── Container ────────────────────────────────────────── */
+.settings-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 20px 32px;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.mascot {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-text-dark);
+  text-shadow: none;
+  margin-bottom: 4px;
+}
+
+.header-sub {
+  font-size: 13px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Setting Groups ───────────────────────────────────── */
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.setting-group {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 18px;
+  backdrop-filter: blur(8px);
+}
+
+.setting-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ls-text-dark);
+  margin-bottom: 4px;
+}
+
+.setting-desc {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  margin-bottom: 12px;
+}
+
+.setting-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  color: var(--ls-text-dark);
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  cursor: pointer;
+  min-height: 36px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.setting-select:focus {
+  border-color: var(--ls-pink-accent);
+  box-shadow: var(--ls-glow);
+}
+
+/* ── Saved confirmation ───────────────────────────────── */
+.saved-msg {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ls-pink-deep);
+  min-height: 20px;
+  transition: opacity 0.3s;
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.settings-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  opacity: 0.85;
+}
+
+/* ── Focus indicators (KI-006) ────────────────────────── */
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion (KI-008) ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
