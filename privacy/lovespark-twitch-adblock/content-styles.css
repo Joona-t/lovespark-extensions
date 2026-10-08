@@ -1,0 +1,28 @@
+/*
+ * LoveSpark Twitch AdBlock — Cosmetic Filters
+ * Injected at document_start to prevent ad UI flash.
+ * Elements remain in DOM for JS detection — only visually hidden.
+ */
+
+/* Ad label ("Ad" text on player) */
+[data-a-target="video-ad-label"] { display: none !important; }
+
+/* Ad countdown timer */
+[data-a-target="video-ad-countdown"] { display: none !important; }
+
+/* Ad banner overlay */
+[data-test-selector="ad-banner-default-id"] { display: none !important; }
+
+/* Ad product link (external click) */
+[data-a-target="video-ad-product-link"] { display: none !important; }
+
+/* Ad CTA button ("Learn More") */
+[data-a-target="video-ad-cta-button"] { display: none !important; }
+[data-a-target="ad-cta-button"] { display: none !important; }
+
+/* "Subscribe to skip ads" nag */
+[data-a-target="video-ad-subscribe-button"] { display: none !important; }
+
+/* Generic ad container */
+.video-player__ad-banner { display: none !important; }
+.video-ads-container { display: none !important; }
