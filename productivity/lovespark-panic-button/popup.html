@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Panic Button</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="safeMsg">
+    <!-- Safe space header -->
+    <div class="safe-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot-large" width="48" height="48">
+      <div class="safe-title" id="popupTitle">You're safe now</div>
+    </div>
+
+    <!-- Breathing circle -->
+    <div class="breathe-section" aria-label="Breathing exercise">
+      <div id="breatheCircle" class="breathe-circle" aria-hidden="true"></div>
+      <div id="breatheText" class="breathe-text" aria-live="polite">Breathe with me</div>
+    </div>
+
+    <!-- Calming message -->
+    <div id="safeMsg" class="safe-message" aria-live="polite">You are safe. You are here.</div>
+
+    <!-- New message button -->
+    <button id="newMsgBtn" class="btn-new-msg" aria-label="Show another calming message">
+      Another message
+    </button>
+
+    <!-- Shortcut hint -->
+    <div class="shortcut-hint">
+      <span class="hint-key">Alt+Shift+P</span> to open anytime
+    </div>
+
+    <!-- Stats (minimal) -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">escapes today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

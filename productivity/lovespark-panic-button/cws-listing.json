@@ -1,0 +1,9 @@
+{
+  "name": "LoveSpark Panic Button",
+  "summary": "One click to escape sensory overload. Breathing guide, grounding words, and a calm safe space. Built for ADHD.",
+  "description": "When everything is too much, press the button.\n\nSensory overload, anxiety spikes, and overwhelm hit without warning. You need a way out that's faster than closing tabs or finding a meditation app. LoveSpark Panic Button opens a gentle safe space instantly -- right in your browser, right when you need it.\n\nFEATURES\n\n- One-click or keyboard shortcut (Alt+Shift+P) to open a calm safe space\n- Animated breathing circle guides you through slow, steady breaths\n- Rotating grounding messages to anchor you in the present moment\n- Escape counter tracks how many times you've used it (daily and lifetime)\n- Sparky mascot provides a friendly, familiar face during hard moments\n- Gentle visuals designed to reduce stimulation, not add to it\n- 4 cozy themes (Retro Pink, Dark, Beige, Slate)\n- Full keyboard and screen reader support\n\nPRIVACY\n\n- Zero data collection, no tracking, no ads\n- No account required -- everything stays in your browser\n- Open source (MIT license)\n\nPart of the LoveSpark suite -- free retro pink tools for neurodivergent minds.",
+  "category": "Productivity",
+  "keywords": ["panic button", "sensory overload", "ADHD", "breathing exercise", "open source"],
+  "version": "1.0.0",
+  "language": "en"
+}
