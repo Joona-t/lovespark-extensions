@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti Brainrot</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle">
+
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="header-title" id="popupTitle">Anti Brainrot</span>
+      <div class="header-right">
+        <div class="theme-dropdown" id="themeDropdown">
+          <button class="theme-dropdown-trigger" id="themeToggle" aria-label="Change theme">
+            <span id="themeLabel">Retro Pink</span> ▾
+          </button>
+          <div class="theme-dropdown-menu" id="themeMenu">
+            <div class="theme-dropdown-header">Change Theme</div>
+            <button class="theme-option" data-theme="retro">Retro Pink</button>
+            <button class="theme-option" data-theme="dark">Dark</button>
+            <button class="theme-option" data-theme="beige">Beige</button>
+            <button class="theme-option" data-theme="slate">Slate</button>
+          </div>
+        </div>
+        <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Open settings">&#x2699;&#xFE0F;</button>
+      </div>
+    </header>
+
+    <div class="master-section">
+      <label class="toggle-row">
+        <span class="toggle-text master-text">Extension Enabled</span>
+        <div class="toggle-switch">
+          <input type="checkbox" id="masterToggle" checked aria-label="Enable or disable Anti Brainrot">
+          <span class="slider"></span>
+        </div>
+      </label>
+    </div>
+
+    <div class="feature-groups" id="featureGroups">
+
+      <!-- Feed & Recommendations -->
+      <div class="group">
+        <button class="group-header" aria-expanded="true" data-group="feed" type="button">
+          <span class="group-icon">📺</span>
+          <span class="group-name">Feed & Recommendations</span>
+          <span class="group-chevron">▾</span>
+        </button>
+        <div class="group-body" id="group-feed">
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Homepage Feed</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideHomepage" checked aria-label="Hide Homepage Feed">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Sidebar</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideSidebar" checked aria-label="Hide Sidebar Recommendations">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide End Screen</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideEndscreen" checked aria-label="Hide End Screen Suggestions">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Shorts</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideShorts" checked aria-label="Hide Shorts">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Mix / Radio</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideMix" checked aria-label="Hide Mix and Radio Playlists">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Page -->
+      <div class="group">
+        <button class="group-header" aria-expanded="true" data-group="video" type="button">
+          <span class="group-icon">🎬</span>
+          <span class="group-name">Video Page</span>
+          <span class="group-chevron">▾</span>
+        </button>
+        <div class="group-body" id="group-video">
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Comments</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideComments" checked aria-label="Hide Comments">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Description</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideDescription" aria-label="Hide Description">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Live Chat</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideLiveChat" checked aria-label="Hide Live Chat">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Merch / Offers</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideMerch" checked aria-label="Hide Merch and Offers">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- UI & Controls -->
+      <div class="group">
+        <button class="group-header" aria-expanded="false" data-group="ui" type="button">
+          <span class="group-icon">🎛️</span>
+          <span class="group-name">UI & Controls</span>
+          <span class="group-chevron">▸</span>
+        </button>
+        <div class="group-body collapsed" id="group-ui">
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Video Buttons</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideVideoButtons" aria-label="Hide Video Buttons">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Channel Info</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideChannelInfo" aria-label="Hide Channel Info">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Notification Bell</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideNotifications" aria-label="Hide Notification Bell">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Annotations</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hideAnnotations" checked aria-label="Hide Annotations and Info Cards">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Hide Playlist Panel</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="hidePlaylist" aria-label="Hide Playlist Panel">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Behavior -->
+      <div class="group">
+        <button class="group-header" aria-expanded="true" data-group="behavior" type="button">
+          <span class="group-icon">⚡</span>
+          <span class="group-name">Behavior</span>
+          <span class="group-chevron">▾</span>
+        </button>
+        <div class="group-body" id="group-behavior">
+          <div class="setting">
+            <label class="toggle-row">
+              <span class="toggle-text">Disable Autoplay</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="disableAutoplay" checked aria-label="Disable Autoplay">
+                <span class="slider"></span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="status" id="status" role="status" aria-live="polite">Settings saved! 💕</div>
+
+
+  </div>
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+<script src="lib/lovespark-theme.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
