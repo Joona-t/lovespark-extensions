@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porn Blocker Rewire Brain 🌸</title>
+  <link rel="preload" href="lib/fonts/opendyslexic-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      background: #fff0f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* ── Animated background blobs ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.35;
+      animation: float 8s ease-in-out infinite;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #ffb3d1; top: -100px; left: -100px; animation-delay: 0s; }
+    .blob-2 { width: 400px; height: 400px; background: #ffd6e7; bottom: -80px; right: -80px; animation-delay: -3s; }
+    .blob-3 { width: 300px; height: 300px; background: #ffe4f0; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -6s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* ── Floating hearts ── */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: riseUp linear infinite;
+      opacity: 0;
+    }
+    @keyframes riseUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateY(-20px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Main card ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 2px solid rgba(255, 182, 213, 0.5);
+      border-radius: 28px;
+      padding: 44px 40px 36px;
+      max-width: 580px;
+      width: 100%;
+      text-align: center;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      box-shadow:
+        0 20px 60px rgba(255, 100, 160, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+        0 1px 0 rgba(255, 200, 220, 0.6) inset;
+      animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.92); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── Streak badge ── */
+    .streak {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 0.72rem;
+      color: #e91e8c;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffe0ee, #ffd0e0);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 179, 208, 0.5);
+    }
+
+    /* ── Blocked count badge ── */
+    .blocked-badge {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      font-size: 0.72rem;
+      color: #c2185b;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffe0ee, #ffd0e0);
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 179, 208, 0.5);
+    }
+
+    .brand {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ff80b0;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .brand-mascot {
+      display: block;
+      margin: 0 auto 8px;
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 2px 8px rgba(255, 140, 180, 0.35));
+    }
+
+    .emoji-big {
+      font-size: 3.5rem;
+      display: block;
+      margin-bottom: 12px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    h1 {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 1.9rem;
+      color: #c2185b;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .message {
+      font-size: 0.95rem;
+      color: #7a4060;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Breathing exercise ── */
+    .breathe-box {
+      background: linear-gradient(135deg, #fff0f7, #ffe0ee);
+      border: 1.5px solid #ffb3d0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .breathe-label {
+      font-size: 0.72rem;
+      color: #e91e8c;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .breathe-circle-wrap {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .breathe-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffb3d1, #ff80b0);
+      animation: breathe 7s ease-in-out infinite;
+      box-shadow: 0 0 0 0 rgba(255, 128, 176, 0.4);
+      flex-shrink: 0;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(255,128,176,0.4); }
+      35% { transform: scale(1.4); box-shadow: 0 0 0 16px rgba(255,128,176,0.0); }
+      50% { transform: scale(1.4); }
+      85% { transform: scale(1); }
+    }
+    .breathe-text {
+      font-size: 0.72rem;
+      color: #8a3060;
+      margin-top: 12px;
+    }
+    .breathe-phase {
+      font-weight: 700;
+      color: #e91e8c;
+    }
+
+    /* ── Buttons ── */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 50px;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+      text-align: center;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      box-shadow: 0 4px 15px rgba(233, 30, 140, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233, 30, 140, 0.4); }
+
+    .btn-secondary {
+      background: transparent;
+      color: #c2185b;
+      border: 2px solid #ffb3d0;
+    }
+    .btn-secondary:hover { background: #fff0f7; transform: translateY(-1px); }
+
+    .btn-redirect {
+      background: linear-gradient(135deg, #ffd0e0, #ffb3d0);
+      color: #8b1a4a;
+      box-shadow: 0 2px 10px rgba(255, 100, 160, 0.15);
+    }
+    .btn-redirect:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(255, 100, 160, 0.25); }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* ── Report form ── */
+    .report-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .report-toggle {
+      font-size: 0.75rem;
+      color: #8a3060;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      padding: 8px 4px;
+      min-height: 32px;
+    }
+    .report-toggle:hover { color: #e91e8c; }
+
+    .report-form {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      background: #fff5f9;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 179, 208, 0.4);
+    }
+    .report-form.visible { display: block; animation: cardIn 0.3s ease; }
+
+    .report-form input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.82rem;
+      background: white;
+      color: #4a1a30;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .report-form input:focus { border-color: #e91e8c; }
+    .report-form input::placeholder { color: #d0a0b8; }
+
+    .report-submit {
+      margin-top: 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(135deg, #ffb3d0, #e91e8c);
+      color: white;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .report-submit:hover { transform: translateY(-1px); }
+
+    .report-msg {
+      font-size: 0.72rem;
+      color: #e91e8c;
+      margin-top: 8px;
+      display: none;
+    }
+    .report-msg.visible { display: block; }
+
+    /* ── LoveSpark apps section ── */
+    .apps-section {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .apps-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+    .app-chip {
+      background: #fff0f7;
+      border: 1.5px solid #ffd0e8;
+      border-radius: 10px;
+      padding: 8px 10px;
+      text-decoration: none;
+      color: #b02060;
+      font-size: 0.72rem;
+      font-weight: 700;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .app-chip:hover {
+      background: #ffe0f0;
+      border-color: #ffb3d0;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(255, 100, 160, 0.12);
+    }
+
+    /* ── Bypass section ── */
+    .bypass-section {
+      margin-top: 16px;
+    }
+    .dismiss {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: #8a6070;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      transition: color 0.2s;
+      padding: 8px 4px;
+      min-height: 32px;
+    }
+    .dismiss:hover { color: #c2185b; }
+    .dismiss:disabled { cursor: not-allowed; opacity: 0.5; }
+
+    .bypass-countdown {
+      display: none;
+      margin-top: 10px;
+      padding: 14px;
+      background: linear-gradient(135deg, #fff5f9, #ffe8f0);
+      border-radius: 14px;
+      border: 1.5px solid #ffc8d8;
+    }
+    .bypass-countdown.visible { display: block; animation: cardIn 0.3s ease; }
+
+    .countdown-text {
+      font-size: 0.82rem;
+      color: #8a3060;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .countdown-timer {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 2.2rem;
+      color: #e91e8c;
+      font-weight: 700;
+    }
+    .countdown-bar {
+      width: 100%;
+      height: 4px;
+      background: #ffe0ee;
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .countdown-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff80b0, #e91e8c);
+      border-radius: 4px;
+      transition: width 1s linear;
+    }
+    .bypass-confirm {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 24px;
+      border-radius: 20px;
+      border: 2px solid #e08090;
+      background: transparent;
+      color: #a04060;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+    .bypass-confirm.visible { display: inline-block; }
+    .bypass-confirm:hover { background: #fff0f5; }
+
+    .bypass-reason {
+      display: none;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.78rem;
+      background: white;
+      color: #4a1a30;
+      margin-top: 8px;
+      outline: none;
+    }
+    .bypass-reason.visible { display: block; }
+    .bypass-reason::placeholder { color: #d0a0b8; }
+
+    /* ── Quote metadata ── */
+    .quote-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quote-author {
+      font-size: 0.78rem;
+      color: #c2185b;
+      font-weight: 700;
+      font-style: italic;
+    }
+    .quote-category {
+      font-size: 0.65rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff0f7, #ffe0ee);
+      border: 1px solid #ffd0e0;
+      color: #8a3060;
+      font-weight: 700;
+    }
+
+    /* ── Resources section ── */
+    .resources-section {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 182, 213, 0.4);
+      border-radius: 18px;
+    }
+    .resources-header {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 1rem;
+      color: #c2185b;
+      text-align: center;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .resource-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #fff5f9;
+      border: 1.5px solid #ffd0e8;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #7a3050;
+      font-size: 0.72rem;
+      transition: all 0.2s;
+    }
+    .resource-card:hover {
+      background: #ffe0f0;
+      border-color: #ffb3d0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 100, 160, 0.15);
+    }
+    .resource-card:focus-visible {
+      outline: 2px solid #e91e8c;
+      outline-offset: 2px;
+    }
+    .rc-emoji { font-size: 1.2rem; flex-shrink: 0; }
+    .rc-title { font-weight: 700; }
+    .rc-desc { font-size: 0.65rem; color: #8a3060; margin-top: 2px; line-height: 1.4; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 28px 16px 24px; max-width: 100%; }
+      h1 { font-size: 1.3rem; }
+      .brand { font-size: 0.62rem; letter-spacing: 0.1em; }
+      .breathe-label { font-size: 0.65rem; letter-spacing: 0.03em; }
+      .apps-grid { grid-template-columns: 1fr; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .btn { font-size: 0.8rem; padding: 11px 16px; }
+      .message { font-size: 0.85rem; }
+    }
+
+    /* ── XP Toast ── */
+    .xp-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-60px);
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 16px rgba(233, 30, 140, 0.4);
+      z-index: 1000;
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .xp-toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blob, .heart, .breathe-circle, .emoji-big, .card {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="hearts" id="hearts"></div>
+  <div class="xp-toast" id="xpToast" aria-live="polite" role="status"></div>
+
+  <div class="card">
+    <div class="blocked-badge" id="blockedBadge" aria-live="polite">🛡 0 blocked</div>
+    <div class="streak" id="streakBadge" aria-live="polite">🔥 0 days</div>
+    <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="brand-mascot" width="40" height="40">
+    <div class="brand">Porn Blocker Rewire Brain 🌸</div>
+
+    <span class="emoji-big" id="emoji" aria-live="polite" aria-hidden="true">🌸</span>
+    <h1 id="title" aria-live="polite">Pause &amp; Breathe</h1>
+    <p class="message" id="messageText" aria-live="polite">You are more than your impulses. Take three deep breaths and return to what truly matters.</p>
+    <div class="quote-meta">
+      <span class="quote-author" id="quoteAuthor" aria-live="polite"></span>
+      <span class="quote-category" id="quoteCategory" role="status" aria-live="polite"></span>
+    </div>
+
+    <div class="breathe-box">
+      <div class="breathe-label">✿ Breathe with me</div>
+      <div class="breathe-circle-wrap"><div class="breathe-circle" id="breatheCircle"></div></div>
+      <div class="breathe-text"><span class="breathe-phase" id="breathePhase" aria-live="off">Breathe in…</span></div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" id="btnBack">↩ Take Me Back to Safety</button>
+      <button class="btn btn-redirect" id="btnRedirect" style="display:none;" aria-label="Go to my focus page">🎯 Go to My Focus Page</button>
+      <a href="https://joona-t.github.io" class="btn btn-secondary" target="_blank">🌸 Visit LoveSpark Portfolio</a>
+    </div>
+
+    <!-- Report a missed site -->
+    <div class="report-section">
+      <button class="report-toggle" id="reportToggle" aria-label="Report a site that should be blocked" aria-expanded="false">🚩 Report a site that should be blocked</button>
+      <div class="report-form" id="reportForm">
+        <input type="text" id="reportUrl" placeholder="e.g. example.com or r/subredditname">
+        <button class="report-submit" id="reportSubmit">Submit Report</button>
+        <div class="report-msg" id="reportMsg">Thanks! We've logged this for review.</div>
+      </div>
+    </div>
+
+    <!-- LoveSpark link -->
+    <div class="apps-section" style="text-align:center">
+      <a href="https://lovespark.love" target="_blank" class="app-chip" style="display:inline-flex;justify-content:center;width:auto;padding:10px 24px">🌸 Visit LoveSpark.love</a>
+    </div>
+
+    <!-- Science-backed resources -->
+    <div class="resources-section" id="resourcesSection">
+      <div class="resources-header">Need Help? You Are Not Alone</div>
+      <div class="resources-grid" id="resourcesGrid">
+        <!-- Rendered by blocked.js from resources.js data -->
+      </div>
+    </div>
+
+    <!-- Bypass with friction -->
+    <div class="bypass-section">
+      <button class="dismiss" id="dismissBtn">I understand the risks, proceed anyway</button>
+      <div class="bypass-countdown" id="bypassCountdown">
+        <div class="countdown-text">Take a moment to reflect. Are you sure this is what you want right now?</div>
+        <div class="countdown-timer" id="countdownTimer" aria-live="off">30</div>
+        <div class="countdown-bar"><div class="countdown-fill" id="countdownFill"></div></div>
+        <input type="text" class="bypass-reason" id="bypassReason" placeholder="Why are you proceeding? (optional, for your own reflection)">
+        <button class="bypass-confirm" id="bypassConfirm">I've reflected, proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="xp.js"></script>
+  <script src="quotes.js"></script>
+  <script src="resources.js"></script>
+  <script src="blocked.js"></script>
+</body>
+</html>

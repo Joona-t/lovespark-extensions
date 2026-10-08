@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Rewire Brain</title>
+  <link rel="preload" href="lib/fonts/opendyslexic-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal; font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      background: #fff0f5;
+      background-image: linear-gradient(160deg, #fff0f7 0%, #ffe4f0 100%);
+      background-attachment: fixed;
+      color: #4a1a30;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 2px solid rgba(255, 182, 213, 0.5);
+      border-radius: 28px;
+      padding: 44px 36px 36px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(255, 100, 160, 0.15);
+      animation: cardIn 0.5s ease;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mascot { width: 64px; height: 64px; margin-bottom: 10px; }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #c2185b;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 0.82rem;
+      color: #8a3060;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .question {
+      font-size: 1rem;
+      color: #7a3050;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.85rem;
+      color: #4a1a30;
+      background: white;
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s;
+      line-height: 1.5;
+    }
+    textarea:focus { border-color: #e91e8c; }
+    textarea::placeholder { color: #d0a8b8; }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 22px;
+      padding: 16px 24px;
+      border-radius: 50px;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      min-height: 52px;
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      box-shadow: 0 6px 20px rgba(233, 30, 140, 0.35);
+      line-height: 1.3;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(233, 30, 140, 0.45);
+    }
+    .btn:focus-visible { outline: 3px solid #e91e8c; outline-offset: 3px; }
+    .btn:active { transform: translateY(0); }
+
+    .privacy-note {
+      margin-top: 14px;
+      font-size: 0.68rem;
+      color: #7a5060;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 22px 26px; }
+      h1 { font-size: 1.25rem; }
+      .question { font-size: 0.92rem; }
+      .btn { font-size: 0.85rem; padding: 14px 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="mascot.png" alt="Sparky mascot" class="mascot">
+    <h1>Welcome to Your Fresh Start</h1>
+    <div class="subtitle">Every journey begins with a single step.</div>
+
+    <div class="question">What is the reason you are doing this?</div>
+    <textarea id="inputReason" placeholder="Be honest with yourself. This is private and only for you." autofocus></textarea>
+
+    <button class="btn" id="btnStart">Begin Your Journey to Rewire Your Brain</button>
+
+    <div class="privacy-note">Your answer stays on your device. Nothing is sent anywhere.</div>
+  </div>
+
+  <script src="onboarding.js"></script>
+</body>
+</html>

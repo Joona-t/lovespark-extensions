@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porn Blocker Rewire Brain</title>
+  <link rel="preload" href="lib/fonts/opendyslexic-regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <style>
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OpenDyslexic';
+      src: url('lib/fonts/opendyslexic-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      width: 340px;
+      background: linear-gradient(160deg, #fff0f7 0%, #ffe4f0 100%);
+      color: #4a1a30;
+      overflow-x: hidden;
+    }
+
+    /* ── Expand button ── */
+    .btn-expand {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,179,208,0.4);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #7a3050;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    .btn-expand:hover { background: #ffe0f0; border-color: #e91e8c; color: #e91e8c; }
+    .btn-expand:focus-visible { outline: 2px solid #e91e8c; outline-offset: 2px; }
+
+    /* ── Header ── */
+    .header {
+      position: relative;
+      padding: 18px 20px 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 179, 208, 0.4);
+      background: rgba(255,255,255,0.3);
+    }
+    .logo { font-size: 1.6rem; margin-bottom: 2px; }
+    .brand-name {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 1.05rem;
+      color: #c2185b;
+      font-weight: 700;
+    }
+    .tagline {
+      font-size: 0.65rem;
+      color: #8a3060;
+      margin-top: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Toggle Section ── */
+    .toggle-section {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.6);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .toggle-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #7a3050;
+    }
+    .toggle-sub {
+      font-size: 0.68rem;
+      color: #7a5060;
+      margin-top: 2px;
+    }
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #ddd;
+      border-radius: 26px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .slider:before {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      left: 3px; bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    input:checked + .slider { background: linear-gradient(135deg, #ff80b0, #e91e8c); }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    /* ── Pause controls ── */
+    .pause-section {
+      display: none;
+      padding: 10px 20px 12px;
+      background: rgba(255,240,245,0.8);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .pause-section.visible { display: block; }
+    .pause-row {
+      display: flex;
+      gap: 6px;
+    }
+    .pause-btn {
+      flex: 1;
+      padding: 7px;
+      border-radius: 8px;
+      border: 1.5px solid #ffc0d8;
+      background: white;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #8a3060;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pause-btn:hover { background: #ffe8f0; border-color: #ffb3d0; }
+    .pause-info {
+      font-size: 0.65rem;
+      color: #e91e8c;
+      margin-top: 6px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* ── XP Section ── */
+    .xp-section {
+      padding: 10px 20px 8px;
+      background: rgba(255,255,255,0.5);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .xp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .xp-level {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #c2185b;
+    }
+    .xp-amount {
+      font-size: 0.65rem;
+      color: #8a3060;
+      font-weight: 700;
+    }
+    .xp-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: #ffe0ee;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .xp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff80b0, #e91e8c);
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255, 179, 208, 0.3);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .stat {
+      background: rgba(255,255,255,0.7);
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 1.7rem;
+      color: #e91e8c;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .stat-timer {
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      color: #8a3060;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    /* ── Affirmation ── */
+    .affirmation {
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.5);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .affirmation-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .affirmation-text {
+      font-size: 0.8rem;
+      color: #7a3050;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ── Quick Add ── */
+    .quick-add {
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.4);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .quick-add-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .quick-add-row {
+      display: flex;
+      gap: 6px;
+    }
+    .quick-add-input {
+      flex: 1;
+      min-width: 0;
+      min-height: 36px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #ffc0d8;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.78rem;
+      background: white;
+      color: #4a1a30;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .quick-add-input:focus { border-color: #e91e8c; }
+    .quick-add-input::placeholder { color: #d0a8b8; }
+    .quick-add-btn {
+      min-height: 36px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #ff80b0, #e91e8c);
+      color: white;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .quick-add-btn:hover { transform: translateY(-1px); }
+    .quick-add-feedback {
+      font-size: 0.65rem;
+      color: #e91e8c;
+      margin-top: 5px;
+      min-height: 1em;
+    }
+
+    /* ── Apps ── */
+    .apps {
+      padding: 14px 20px;
+    }
+    .apps-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .app-row {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .app-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(255, 179, 208, 0.5);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #7a3050;
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .app-link:hover {
+      background: #fff0f7;
+      border-color: #ffb3d0;
+      transform: translateX(3px);
+    }
+    .app-icon { font-size: 0.95rem; flex-shrink: 0; }
+    .app-desc { font-size: 0.68rem; color: #7a5060; font-weight: 400; margin-top: 1px; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 10px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 179, 208, 0.3);
+      background: rgba(255,255,255,0.4);
+    }
+    .footer a {
+      font-size: 0.68rem;
+      color: #e91e8c;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .footer a:hover { text-decoration: underline; }
+    .footer-sep { color: #ffb3d0; margin: 0 5px; }
+    .footer-settings {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.68rem;
+      color: #7a3050;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      background: none;
+      border: none;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      padding: 6px 4px;
+      min-height: 32px;
+    }
+    .footer-settings:hover { color: #e91e8c; }
+
+    /* ── Theme Tab ── */
+    .theme-tab {
+      position: fixed;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.08);
+      border: none;
+      border-radius: 999px;
+      padding: 3px 12px;
+      font-size: 10px;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      color: inherit;
+      transition: background 0.2s;
+      z-index: 100;
+    }
+    .theme-tab:hover { background: rgba(0, 0, 0, 0.14); }
+
+    /* ── Theme: Dark ── */
+    body.theme-dark {
+      background: linear-gradient(160deg, #1a1128 0%, #110d1a 100%);
+      color: #f0e6f6;
+    }
+    body.theme-dark .header { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .brand-name { color: #ff6eb4; }
+    body.theme-dark .tagline { color: #9b7aac; }
+    body.theme-dark .toggle-section { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .toggle-label { color: #f0e6f6; }
+    body.theme-dark .toggle-sub { color: #9b7aac; }
+    body.theme-dark .stats { background: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .stat { background: rgba(26, 15, 46, 0.85); }
+    body.theme-dark .stat-value { color: #ff6eb4; }
+    body.theme-dark .stat-label { color: #9b7aac; }
+    body.theme-dark .affirmation { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .affirmation-label { color: #ff6eb4; }
+    body.theme-dark .affirmation-text { color: #f0e6f6; }
+    body.theme-dark .quick-add { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .quick-add-label { color: #ff6eb4; }
+    body.theme-dark .quick-add-input { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.2); color: #f0e6f6; }
+    body.theme-dark .quick-add-input::placeholder { color: #9b7aac; }
+    body.theme-dark .apps { background: transparent; }
+    body.theme-dark .apps-label { color: #ff6eb4; }
+    body.theme-dark .app-link { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.13); color: #f0e6f6; }
+    body.theme-dark .app-desc { color: #9b7aac; }
+    body.theme-dark .footer { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .footer a { color: #ff6eb4; }
+    body.theme-dark .pause-section { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .pause-btn { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.2); color: #f0e6f6; }
+    body.theme-dark .pause-btn:hover { background: rgba(26, 15, 46, 0.95); }
+
+    /* ── Theme: Beige ── */
+    body.theme-beige {
+      background: #f5efe0;
+      color: #5c4a2a;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+    }
+    body.theme-beige .header { background: #ede4ce; border-color: #d4c4a0; }
+    body.theme-beige .brand-name { color: #c4806a; }
+    body.theme-beige .tagline { color: #8b6f47; }
+    body.theme-beige .toggle-section { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .toggle-label { color: #5c4a2a; }
+    body.theme-beige .toggle-sub { color: #8b6f47; }
+    body.theme-beige .stats { background: #d4c4a0; }
+    body.theme-beige .stat { background: #ede4ce; }
+    body.theme-beige .stat-value { color: #c4806a; }
+    body.theme-beige .stat-label { color: #8b6f47; }
+    body.theme-beige .affirmation { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .affirmation-label { color: #c4806a; }
+    body.theme-beige .affirmation-text { color: #5c4a2a; }
+    body.theme-beige .quick-add { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .quick-add-label { color: #c4806a; }
+    body.theme-beige .quick-add-input { background: #f5efe0; border-color: #d4c4a0; color: #5c4a2a; }
+    body.theme-beige .quick-add-btn { background: linear-gradient(135deg, #c4806a, #a86c56); }
+    body.theme-beige .app-link { background: #ede4ce; border-color: #d4c4a0; color: #5c4a2a; }
+    body.theme-beige .app-desc { color: #8b6f47; }
+    body.theme-beige .footer { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .footer a { color: #c4806a; }
+    body.theme-beige input:checked + .slider { background: linear-gradient(135deg, #c4806a, #a86c56); }
+
+    /* ── Theme: Slate ── */
+    body.theme-slate {
+      background: #1e1e1e;
+      color: #ececec;
+    }
+    body.theme-slate .header { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .brand-name { color: #d4714e; }
+    body.theme-slate .tagline { color: #9a9a9a; }
+    body.theme-slate .toggle-section { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .toggle-label { color: #ececec; }
+    body.theme-slate .toggle-sub { color: #9a9a9a; }
+    body.theme-slate .stats { background: #4a4a4a; }
+    body.theme-slate .stat { background: #252525; }
+    body.theme-slate .stat-value { color: #d4714e; }
+    body.theme-slate .stat-label { color: #9a9a9a; }
+    body.theme-slate .affirmation { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .affirmation-label { color: #d4714e; }
+    body.theme-slate .affirmation-text { color: #ececec; }
+    body.theme-slate .quick-add { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .quick-add-label { color: #d4714e; }
+    body.theme-slate .quick-add-input { background: #2d2d2d; border-color: #4a4a4a; color: #ececec; }
+    body.theme-slate .quick-add-btn { background: linear-gradient(135deg, #d4714e, #e8926e); }
+    body.theme-slate .app-link { background: #252525; border-color: #4a4a4a; color: #ececec; }
+    body.theme-slate .app-desc { color: #9a9a9a; }
+    body.theme-slate .footer { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .footer a { color: #d4714e; }
+    body.theme-slate input:checked + .slider { background: linear-gradient(135deg, #d4714e, #e8926e); }
+    body.theme-slate .pause-section { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .pause-btn { background: #2d2d2d; border-color: #4a4a4a; color: #ececec; }
+
+    body { transition: background 0.3s ease, color 0.3s ease; }
+
+    /* ── Popup Tabs ── */
+    .popup-tabs {
+      display: flex;
+      gap: 0;
+      background: rgba(255, 179, 208, 0.15);
+      border-bottom: 1px solid rgba(255, 179, 208, 0.3);
+    }
+    .popup-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 10px;
+      font-family: 'OpenDyslexic', 'Comfortaa', cursive;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #8a3060;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .popup-tab.active {
+      color: #e91e8c;
+      border-bottom-color: #e91e8c;
+      background: rgba(255, 255, 255, 0.5);
+    }
+    .popup-tab:hover:not(.active) {
+      color: #c2185b;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .popup-tab:focus-visible {
+      outline: 2px solid #e91e8c;
+      outline-offset: -2px;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Resources tab ── */
+    .resources-scroll {
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 12px 16px;
+    }
+    .res-header {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #e91e8c;
+      font-weight: 700;
+      margin: 14px 0 8px;
+    }
+    .res-header:first-child { margin-top: 0; }
+    .res-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(255, 179, 208, 0.4);
+      border-radius: 10px;
+      text-decoration: none;
+      color: #7a3050;
+      font-size: 0.72rem;
+      transition: all 0.2s;
+      margin-bottom: 6px;
+    }
+    .res-card:hover {
+      background: #fff0f7;
+      border-color: #ffb3d0;
+      transform: translateX(2px);
+    }
+    .res-card:focus-visible {
+      outline: 2px solid #e91e8c;
+      outline-offset: 2px;
+    }
+    .res-emoji { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .res-title { font-weight: 700; font-size: 0.74rem; }
+    .res-desc { font-size: 0.62rem; color: #7a5060; margin-top: 2px; line-height: 1.4; }
+
+    /* ── XP + expand theme overrides: Dark ── */
+    body.theme-dark .xp-section { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .xp-level { color: #ff6eb4; }
+    body.theme-dark .xp-amount { color: #9b7aac; }
+    body.theme-dark .xp-bar-wrap { background: rgba(255, 110, 180, 0.15); }
+    body.theme-dark .btn-expand { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.2); color: #f0e6f6; }
+    /* ── XP + expand theme overrides: Beige ── */
+    body.theme-beige .xp-section { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .xp-level { color: #c4806a; }
+    body.theme-beige .xp-amount { color: #8b6f47; }
+    body.theme-beige .xp-bar-wrap { background: #e8dcc0; }
+    body.theme-beige .xp-bar-fill { background: linear-gradient(90deg, #c4806a, #a86c56); }
+    body.theme-beige .btn-expand { background: #ede4ce; border-color: #d4c4a0; color: #5c4a2a; }
+    /* ── XP + expand theme overrides: Slate ── */
+    body.theme-slate .xp-section { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .xp-level { color: #d4714e; }
+    body.theme-slate .xp-amount { color: #9a9a9a; }
+    body.theme-slate .xp-bar-wrap { background: #3a3a3a; }
+    body.theme-slate .xp-bar-fill { background: linear-gradient(90deg, #d4714e, #e8926e); }
+    body.theme-slate .btn-expand { background: #252525; border-color: #4a4a4a; color: #ececec; }
+
+    /* ── Tab theme overrides: Dark ── */
+    body.theme-dark .popup-tabs { background: rgba(26, 15, 46, 0.5); border-color: rgba(255, 110, 180, 0.13); }
+    body.theme-dark .popup-tab { color: #9b7aac; }
+    body.theme-dark .popup-tab.active { color: #ff6eb4; border-bottom-color: #ff6eb4; background: rgba(26, 15, 46, 0.85); }
+    body.theme-dark .popup-tab:hover:not(.active) { color: #ff6eb4; background: rgba(26, 15, 46, 0.6); }
+    body.theme-dark .res-header { color: #ff6eb4; }
+    body.theme-dark .res-card { background: rgba(26, 15, 46, 0.85); border-color: rgba(255, 110, 180, 0.13); color: #f0e6f6; }
+    body.theme-dark .res-card:hover { background: rgba(26, 15, 46, 0.95); border-color: rgba(255, 110, 180, 0.3); }
+    body.theme-dark .res-desc { color: #9b7aac; }
+
+    /* ── Tab theme overrides: Beige ── */
+    body.theme-beige .popup-tabs { background: rgba(237, 228, 206, 0.6); border-color: #d4c4a0; }
+    body.theme-beige .popup-tab { color: #8b6f47; font-family: 'OpenDyslexic', 'Comfortaa', cursive; }
+    body.theme-beige .popup-tab.active { color: #c4806a; border-bottom-color: #c4806a; background: #ede4ce; }
+    body.theme-beige .res-header { color: #c4806a; }
+    body.theme-beige .res-card { background: #ede4ce; border-color: #d4c4a0; color: #5c4a2a; }
+    body.theme-beige .res-card:hover { background: #f5efe0; }
+    body.theme-beige .res-desc { color: #8b6f47; }
+
+    /* ── Tab theme overrides: Slate ── */
+    body.theme-slate .popup-tabs { background: #252525; border-color: #4a4a4a; }
+    body.theme-slate .popup-tab { color: #9a9a9a; }
+    body.theme-slate .popup-tab.active { color: #d4714e; border-bottom-color: #d4714e; background: #2d2d2d; }
+    body.theme-slate .popup-tab:hover:not(.active) { color: #d4714e; background: #2a2a2a; }
+    body.theme-slate .res-header { color: #d4714e; }
+    body.theme-slate .res-card { background: #252525; border-color: #4a4a4a; color: #ececec; }
+    body.theme-slate .res-card:hover { background: #2d2d2d; }
+    body.theme-slate .res-desc { color: #9a9a9a; }
+
+    /* ── Theme Dropdown ── */
+    .theme-dropdown { position: relative; display: inline-block; position: fixed; top: 8px; right: 8px; z-index: 100; }
+    .theme-dropdown-trigger { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,179,208,0.4); border-radius: 10px; color: #7a3050; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-size: 11px; padding: 5px 10px; cursor: pointer; transition: border-color 0.2s, color 0.2s; backdrop-filter: blur(6px); }
+    .theme-dropdown-trigger:hover { border-color: #e91e8c; color: #e91e8c; }
+    .theme-dropdown-menu { display: none; position: absolute; top: calc(100% + 4px); right: 0; min-width: 140px; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(255,179,208,0.4); border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); z-index: 100; padding: 6px; }
+    .theme-dropdown-menu.open { display: block; }
+    .theme-dropdown-header { color: #8a3060; font-size: 9px; padding: 4px 8px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .theme-option { display: block; width: 100%; padding: 6px 10px; border-radius: 8px; border: none; background: transparent; color: #7a3050; font-family: 'OpenDyslexic', 'Comfortaa', cursive; font-size: 11px; cursor: pointer; text-align: left; transition: background 0.15s; }
+    .theme-option:hover { background: rgba(255,179,208,0.2); }
+    .theme-option::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+    .theme-option[data-theme="retro"]::before { background: #F9A8C9; }
+    .theme-option[data-theme="dark"]::before { background: #1a1128; border: 1px solid #ff6eb4; }
+    .theme-option[data-theme="beige"]::before { background: #f5efe0; border: 1px solid #d4c4a0; }
+    .theme-option[data-theme="slate"]::before { background: #1e1e1e; border: 1px solid #4a4a4a; }
+    .theme-option.active { color: #e91e8c; background: rgba(255,179,208,0.15); }
+    body.theme-dark .theme-dropdown-trigger { background: rgba(26,15,46,0.85); border-color: rgba(255,110,180,0.2); color: #f0e6f6; }
+    body.theme-dark .theme-dropdown-menu { background: rgba(26,15,46,0.95); border-color: rgba(255,110,180,0.13); }
+    body.theme-dark .theme-option { color: #f0e6f6; }
+    body.theme-dark .theme-option:hover { background: rgba(255,110,180,0.1); }
+    body.theme-dark .theme-option.active { color: #ff6eb4; }
+    body.theme-beige .theme-dropdown-trigger { background: #ede4ce; border-color: #d4c4a0; color: #5c4a2a; }
+    body.theme-beige .theme-dropdown-menu { background: #f5efe0; border-color: #d4c4a0; }
+    body.theme-beige .theme-option { color: #5c4a2a; }
+    body.theme-beige .theme-option.active { color: #c4806a; }
+    body.theme-slate .theme-dropdown-trigger { background: #252525; border-color: #4a4a4a; color: #ececec; }
+    body.theme-slate .theme-dropdown-menu { background: #2d2d2d; border-color: #4a4a4a; }
+    body.theme-slate .theme-option { color: #ececec; }
+    body.theme-slate .theme-option.active { color: #d4714e; }
+  
+    /* ── Theme Title Visibility ── */
+    body.theme-beige .title,
+    body.theme-beige .header-title {
+      color: #4a7c59;
+    }
+    body.theme-slate .title,
+    body.theme-slate .header-title {
+      color: #d4714e;
+    }
+
+    /* Honor user reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body role="dialog" aria-label="Rewire Brain — Porn Blocker popup">
+
+  <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="menu" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+
+  <div class="header">
+    <button class="btn-expand" id="openDashboard" title="Open full dashboard" aria-label="Open full dashboard in new tab">⛶</button>
+    <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32" style="margin-bottom:4px">
+    <div class="brand-name">Rewire Brain</div>
+    <div class="tagline">a calmer, healthier internet · by LoveSpark</div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="popup-tabs" role="tablist" aria-label="Extension sections">
+    <button class="popup-tab active" role="tab" aria-selected="true" aria-controls="panelShield" id="tabShield" aria-label="Shield tab">🛡 Shield</button>
+    <button class="popup-tab" role="tab" aria-selected="false" aria-controls="panelResources" id="tabResources" aria-label="Resources tab">📚 Resources</button>
+  </div>
+
+  <!-- Shield tab panel -->
+  <div class="tab-panel active" id="panelShield" role="tabpanel" aria-labelledby="tabShield">
+
+  <div class="toggle-section">
+    <div>
+      <div class="toggle-label">Focus Shield</div>
+      <div class="toggle-sub" id="toggleStatus" aria-live="polite">Protecting your browsing ✓</div>
+    </div>
+    <label class="toggle">
+      <input type="checkbox" id="enableToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="toggle-section">
+    <div>
+      <div class="toggle-label">Image Blur</div>
+      <div class="toggle-sub" id="blurStatus" aria-live="polite">Hiding NSFW images on every site</div>
+    </div>
+    <label class="toggle">
+      <input type="checkbox" id="blurToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="pause-section" id="pauseSection">
+    <div class="pause-row">
+      <button class="pause-btn" data-minutes="5">⏸ 5 min</button>
+      <button class="pause-btn" data-minutes="15">⏸ 15 min</button>
+      <button class="pause-btn" data-minutes="30">⏸ 30 min</button>
+      <button class="pause-btn" data-minutes="60">⏸ 60 min</button>
+    </div>
+    <div class="pause-info" id="pauseInfo" aria-live="polite" role="status"></div>
+  </div>
+
+  <!-- XP + Level display -->
+  <div class="xp-section">
+    <div class="xp-row">
+      <span class="xp-level" id="xpLevel" aria-live="polite">Lv 1 — Seedling</span>
+      <span class="xp-amount" id="xpAmount" aria-live="polite">0 XP</span>
+    </div>
+    <div class="xp-bar-wrap">
+      <div class="xp-bar-fill" id="xpBarFill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value" id="blockedCount" aria-live="polite">0</div>
+      <div class="stat-label">Sites Blocked</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="imagesBlurredCount" aria-live="polite">0</div>
+      <div class="stat-label">Images Blurred</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value stat-timer" id="sobrietyTimer" aria-live="off">0d 0h 0m</div>
+      <div class="stat-label">Sober Time</div>
+    </div>
+  </div>
+
+  <div class="affirmation">
+    <div class="affirmation-label">✦ Today's Reminder</div>
+    <div class="affirmation-text" id="affirmation" aria-live="polite">"You are building the version of yourself you've always wanted to become."</div>
+  </div>
+
+  <div class="quick-add">
+    <div class="quick-add-label">✦ Quick Block</div>
+    <div class="quick-add-row">
+      <input type="text" class="quick-add-input" id="quickAddInput" placeholder="domain or r/sub" style="min-width:0">
+      <button class="quick-add-btn" id="quickAddBtn">Block</button>
+    </div>
+    <div class="quick-add-feedback" id="quickAddFeedback" aria-live="polite" role="status"></div>
+  </div>
+
+  <div class="apps">
+    <a href="https://lovespark.love" target="_blank" class="app-link" style="justify-content:center">
+      <span class="app-icon">🌸</span>
+      <div>Visit LoveSpark.love</div>
+    </a>
+  </div>
+
+  </div><!-- /panelShield -->
+
+  <!-- Resources tab panel -->
+  <div class="tab-panel" id="panelResources" role="tabpanel" aria-labelledby="tabResources">
+    <div class="resources-scroll" id="resourcesScroll">
+      <!-- Rendered by popup.js from resources.js data -->
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="https://ko-fi.com/joona_t" target="_blank">☕ Ko-fi</a>
+    <span class="footer-sep">·</span>
+    <a href="https://lovespark.love" target="_blank">🌸 LoveSpark.love</a>
+    <span class="footer-sep">·</span>
+    <button class="footer-settings" id="openSettings">⚙ Settings</button>
+  </div>
+
+  <script src="xp.js"></script>
+  <script src="quotes.js"></script>
+  <script src="resources.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
