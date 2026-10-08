@@ -1,0 +1,250 @@
+/* Dopamine Control — YouTube-injected styles
+   All selectors prefixed dc- to avoid conflicts */
+
+/* ============================================================
+   FLOATING TIMER
+   ============================================================ */
+
+#dc-floating-timer {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: 'Nunito', -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: grab;
+  user-select: none;
+  opacity: 0.75;
+  transition: opacity 0.2s, transform 0.2s, background-color 0.4s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+#dc-floating-timer:hover {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.dc-ft-brain {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.dc-ft-text {
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* Color states */
+#dc-floating-timer.dc-ft-safe {
+  background: rgba(126, 207, 160, 0.88);
+  color: #1a4730;
+}
+
+#dc-floating-timer.dc-ft-caution {
+  background: rgba(255, 209, 102, 0.92);
+  color: #5a3e00;
+}
+
+#dc-floating-timer.dc-ft-danger {
+  background: rgba(255, 107, 107, 0.92);
+  color: #fff;
+  animation: dc-pulse 2s ease-in-out infinite;
+}
+
+#dc-floating-timer.dc-ft-danger-deep {
+  background: rgba(214, 48, 49, 0.95);
+  color: #fff;
+  animation: dc-pulse 1s ease-in-out infinite;
+}
+
+@keyframes dc-pulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  50% { box-shadow: 0 4px 24px rgba(255, 50, 50, 0.5); }
+}
+
+/* ============================================================
+   BLOCK OVERLAY
+   ============================================================ */
+
+#dc-block-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 228, 225, 0.96),
+    rgba(255, 182, 193, 0.96),
+    rgba(255, 105, 180, 0.92)
+  );
+  backdrop-filter: blur(20px);
+  animation: dc-slide-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: 'Nunito', -apple-system, sans-serif;
+}
+
+@keyframes dc-slide-up {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.dc-block-card {
+  background: rgba(255, 249, 250, 0.95);
+  border-radius: 24px;
+  padding: 40px 36px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+  border: 1.5px solid rgba(255, 182, 193, 0.4);
+}
+
+.dc-block-dopa {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 16px;
+  animation: dc-breathe 3s ease-in-out infinite;
+}
+
+@keyframes dc-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.dc-block-title {
+  font-family: 'Silkscreen', 'Courier New', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: #3D2C2E;
+  margin-bottom: 12px;
+}
+
+.dc-block-msg {
+  font-size: 15px;
+  color: #8B7072;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.dc-block-msg strong {
+  color: #FF69B4;
+}
+
+.dc-block-stats {
+  background: rgba(255, 228, 225, 0.6);
+  border: 1px solid rgba(255, 182, 193, 0.4);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-bs-row {
+  font-size: 14px;
+  color: #3D2C2E;
+}
+
+.dc-bs-row strong {
+  color: #FF69B4;
+}
+
+#dc-override-wrap,
+#dc-confirm-wrap {
+  margin-bottom: 20px;
+}
+
+.dc-hidden {
+  display: none !important;
+}
+
+.dc-override-btn {
+  background: transparent;
+  border: 1.5px solid #aaa;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dc-override-btn:hover {
+  border-color: #FF6B6B;
+  color: #FF6B6B;
+}
+
+.dc-override-note {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 6px;
+}
+
+.dc-confirm-q {
+  font-size: 14px;
+  color: #3D2C2E;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.dc-confirm-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.dc-btn-yes {
+  padding: 10px 20px;
+  background: #FF6B6B;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dc-btn-yes:hover {
+  background: #D63031;
+  transform: scale(1.02);
+}
+
+.dc-btn-no {
+  padding: 10px 20px;
+  background: transparent;
+  color: #8B7072;
+  border: 1.5px solid #ccc;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dc-btn-no:hover {
+  border-color: #FF69B4;
+  color: #FF69B4;
+}
+
+.dc-block-quote {
+  font-size: 12px;
+  font-style: italic;
+  color: #8B7072;
+  border: none;
+  margin-top: 4px;
+  line-height: 1.5;
+}

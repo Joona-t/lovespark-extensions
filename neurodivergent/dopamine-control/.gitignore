@@ -1,0 +1,24 @@
+# Node (icon generator script deps, if any)
+node_modules/
+
+# Environment / secrets
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.sw?
+
+# Build output (if a bundler is added later)
+dist/
+build/
+web-ext-artifacts/
+
+# Claude Code internal
+.claude/

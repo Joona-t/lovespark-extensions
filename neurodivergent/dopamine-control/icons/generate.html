@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Dopamine Control Icons</title>
+  <style>
+    body {
+      font-family: -apple-system, sans-serif;
+      background: #FFE4E1;
+      padding: 32px;
+      color: #3D2C2E;
+    }
+    h1 { color: #FF69B4; margin-bottom: 8px; }
+    p  { color: #8B7072; margin-bottom: 24px; }
+    .icons { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 24px; }
+    .icon-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    canvas { border-radius: 22%; box-shadow: 0 4px 16px rgba(255,105,180,0.3); }
+    .icon-label { font-size: 12px; color: #8B7072; font-weight: 600; }
+    button {
+      padding: 12px 24px;
+      background: #FF69B4;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    button:hover { background: #E8408F; }
+    .instructions {
+      background: white;
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-top: 24px;
+      max-width: 520px;
+      border: 1px solid rgba(255,182,193,0.4);
+    }
+    .instructions h2 { color: #FF69B4; font-size: 15px; margin-bottom: 12px; }
+    .instructions ol { padding-left: 18px; line-height: 2; font-size: 13px; color: #3D2C2E; }
+    code { background: #FFE4E1; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<h1>🧠 Icon Generator</h1>
+<p>Click "Download All Icons" to save the 4 PNG files needed by the extension.</p>
+
+<div class="icons" id="icon-previews"></div>
+
+<button id="download-all">Download All Icons</button>
+
+<div class="instructions">
+  <h2>After downloading:</h2>
+  <ol>
+    <li>Save all 4 files into the <code>icons/</code> folder</li>
+    <li>Go to <code>chrome://extensions</code></li>
+    <li>Enable <strong>Developer mode</strong> (top right)</li>
+    <li>Click <strong>Load unpacked</strong> → select the <code>dopamine-control/</code> folder</li>
+    <li>The extension appears in your toolbar 🎉</li>
+  </ol>
+</div>
+
+<script>
+  const SIZES = [16, 32, 48, 128];
+
+  function drawIcon(size) {
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+
+    const s = size;
+    const r = s * 0.14; // corner radius scale
+
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, s, s);
+    grad.addColorStop(0, '#FF69B4');
+    grad.addColorStop(1, '#E8408F');
+
+    // Rounded rect background
+    ctx.beginPath();
+    ctx.moveTo(r, 0);
+    ctx.lineTo(s - r, 0);
+    ctx.quadraticCurveTo(s, 0, s, r);
+    ctx.lineTo(s, s - r);
+    ctx.quadraticCurveTo(s, s, s - r, s);
+    ctx.lineTo(r, s);
+    ctx.quadraticCurveTo(0, s, 0, s - r);
+    ctx.lineTo(0, r);
+    ctx.quadraticCurveTo(0, 0, r, 0);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Brain emoji / simplified brain shape
+    ctx.fillStyle = 'white';
+    ctx.font = `bold ${s * 0.55}px serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    if (size >= 32) {
+      // Draw brain using emoji at larger sizes
+      ctx.font = `${s * 0.52}px serif`;
+      ctx.fillText('🧠', s * 0.5, s * 0.48);
+    } else {
+      // At 16px just draw a white circle with a D
+      ctx.beginPath();
+      ctx.arc(s * 0.5, s * 0.5, s * 0.32, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#FF69B4';
+      ctx.font = `bold ${s * 0.42}px Arial`;
+      ctx.fillText('D', s * 0.5, s * 0.52);
+    }
+
+    // Small clock indicator at bottom-right (sizes 48+)
+    if (size >= 48) {
+      const cx = s * 0.75;
+      const cy = s * 0.75;
+      const cr = s * 0.13;
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, cr, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.fill();
+
+      ctx.strokeStyle = '#FF69B4';
+      ctx.lineWidth = s * 0.025;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx, cy - cr * 0.6);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + cr * 0.45, cy + cr * 0.2);
+      ctx.stroke();
+    }
+
+    return canvas;
+  }
+
+  // Render previews
+  const container = document.getElementById('icon-previews');
+  const canvases = {};
+
+  SIZES.forEach(size => {
+    const canvas = drawIcon(size);
+    canvases[size] = canvas;
+
+    const item = document.createElement('div');
+    item.className = 'icon-item';
+
+    const label = document.createElement('div');
+    label.className = 'icon-label';
+    label.textContent = `${size}×${size}`;
+
+    item.appendChild(canvas);
+    item.appendChild(label);
+    container.appendChild(item);
+  });
+
+  // Download all
+  document.getElementById('download-all').addEventListener('click', () => {
+    SIZES.forEach(size => {
+      const canvas = canvases[size];
+      const link = document.createElement('a');
+      link.download = `icon-${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  });
+</script>
+
+</body>
+</html>
