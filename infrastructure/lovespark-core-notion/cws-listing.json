@@ -1,0 +1,15 @@
+{
+  "name": "LoveSpark Core",
+  "short_description": "Retro pink productivity suite for neurodivergent minds — cursor packs, site exclusions, and shared settings in one hub.",
+  "detailed_description": "LoveSpark Core is the shared hub for the LoveSpark suite of free, open-source extensions built for neurodivergent coders.\n\nFEATURES\n• Cursor Pack — 10 hand-crafted cursor themes (Retro Pink, Sakura Peach, Starlight Purple, Moonlight Rose, Candy Floss, Cyber Cherry, Mint Blossom, Golden Hour, Holographic, Obsidian Heart)\n• Site Exclusions — disable LoveSpark modules on specific domains\n• Data Export / Import — portable settings JSON for syncing across devices\n• Retro pink aesthetic with 4 themes (retro, dark, beige, slate)\n• Sparky mascot keeps you company while you work\n• prefers-reduced-motion respected throughout\n\nPRIVACY\n• No tracking. No analytics. No data collection. Ever.\n• Storage is local-only — nothing leaves your browser\n• No remote code execution\n• MIT licensed and fully open source\n\nWho it's for: Neurodivergent developers and anyone who wants a calm, distraction-reducing browsing environment with a touch of retro pink personality.",
+  "category": "Productivity",
+  "language": "en",
+  "regions": ["all"],
+  "single_purpose": "Provide a shared hub for LoveSpark suite modules — cursor packs, site exclusions, and portable settings.",
+  "permissions_justification": {
+    "storage": "Required to persist user preferences (selected cursor theme, site exclusions, module toggles) locally in the browser. No data is transmitted off-device."
+  },
+  "homepage_url": "https://github.com/Joona-t",
+  "support_url": "https://github.com/Joona-t",
+  "version": "0.1.35"
+}

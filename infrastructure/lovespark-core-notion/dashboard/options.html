@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Core</title>
+  <link rel="stylesheet" href="../lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
+      <h1>LoveSpark Core</h1>
+      <span class="version">v0.1.0</span>
+    </header>
+
+    <!-- Global Toggle -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-icon">💕</span>
+        <h2>Global</h2>
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Suite enabled</span>
+        <button id="globalToggle" class="toggle-switch" role="switch" aria-checked="true">
+          <span class="toggle-thumb"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Modules -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-icon">✨</span>
+        <h2>Modules</h2>
+      </div>
+
+      <!-- Cursor Pack -->
+      <div class="module-row">
+        <div class="module-info">
+          <div class="module-toggle-row">
+            <button id="cursorToggle" class="toggle-switch" role="switch" aria-checked="true">
+              <span class="toggle-thumb"></span>
+            </button>
+            <span class="module-name">Cursor Pack</span>
+          </div>
+          <p class="module-desc">10 cute cursor themes 💕</p>
+        </div>
+      </div>
+
+      <div id="cursorSettings" class="module-settings" aria-live="polite">
+        <p class="settings-label">Theme</p>
+        <div class="theme-grid" id="themeGrid">
+          <button class="theme-swatch" data-theme="retro-pink" title="Retro Pink">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#ff69b4,#ffb6c1)"></span>
+            <span class="swatch-name">🌸 Retro Pink</span>
+          </button>
+          <button class="theme-swatch" data-theme="sakura-peach" title="Sakura Peach">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#ffd7b0,#ffb6c1)"></span>
+            <span class="swatch-name">🌺 Sakura Peach</span>
+          </button>
+          <button class="theme-swatch" data-theme="starlight-purple" title="Starlight Purple">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#c39bd3,#9b59b6)"></span>
+            <span class="swatch-name">⭐ Starlight Purple</span>
+          </button>
+          <button class="theme-swatch" data-theme="moonlight-rose" title="Moonlight Rose">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#c2185b,#f48fb1)"></span>
+            <span class="swatch-name">🌙 Moonlight Rose</span>
+          </button>
+          <button class="theme-swatch" data-theme="candy-floss" title="Candy Floss">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#ffb6c1,#e1bee7,#bbdefb,#c8e6c9)"></span>
+            <span class="swatch-name">🍬 Candy Floss</span>
+          </button>
+          <button class="theme-swatch" data-theme="cyber-cherry" title="Cyber Cherry">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#d50000,#ff69b4)"></span>
+            <span class="swatch-name">🍒 Cyber Cherry</span>
+          </button>
+          <button class="theme-swatch" data-theme="mint-blossom" title="Mint Blossom">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#a5d6a7,#80cbc4)"></span>
+            <span class="swatch-name">🌿 Mint Blossom</span>
+          </button>
+          <button class="theme-swatch" data-theme="golden-hour" title="Golden Hour">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#ffab91,#ffd54f)"></span>
+            <span class="swatch-name">🌅 Golden Hour</span>
+          </button>
+          <button class="theme-swatch" data-theme="holographic" title="Holographic">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#ff6eb4,#c084fc,#818cf8,#5eead4)"></span>
+            <span class="swatch-name">🌈 Holographic</span>
+          </button>
+          <button class="theme-swatch" data-theme="obsidian-heart" title="Obsidian Heart">
+            <span class="swatch-color" style="background:linear-gradient(135deg,#1a1a1a,#c2185b)"></span>
+            <span class="swatch-name">🖤 Obsidian Heart</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="module-divider"></div>
+
+      <!-- Coming soon modules -->
+      <div class="module-row disabled">
+        <div class="module-info">
+          <div class="module-toggle-row">
+            <button class="toggle-switch" disabled>
+              <span class="toggle-thumb"></span>
+            </button>
+            <span class="module-name">Anti Brainrot</span>
+          </div>
+          <p class="module-desc">Coming soon</p>
+        </div>
+      </div>
+      <div class="module-row disabled">
+        <div class="module-info">
+          <div class="module-toggle-row">
+            <button class="toggle-switch" disabled>
+              <span class="toggle-thumb"></span>
+            </button>
+            <span class="module-name">Reddit Blocker</span>
+          </div>
+          <p class="module-desc">Coming soon</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Site Exclusions -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-icon">🛡️</span>
+        <h2>Site Exclusions</h2>
+      </div>
+      <p class="card-desc">Disable LoveSpark on these domains</p>
+      <div class="exclusion-input-row">
+        <input type="text" id="exclusionInput" class="text-input" placeholder="example.com" autocomplete="off">
+        <button id="addExclusion" class="btn-pink" aria-label="Add domain to exclusions">+</button>
+      </div>
+      <ul id="exclusionList" class="exclusion-list" aria-live="polite"></ul>
+    </section>
+
+    <!-- Data -->
+    <section class="card">
+      <div class="card-header">
+        <span class="card-icon">💾</span>
+        <h2>Data</h2>
+      </div>
+      <div class="data-row">
+        <button id="exportBtn" class="btn-pink">Export Settings</button>
+        <label class="btn-pink btn-secondary" for="importFile">Import</label>
+        <input type="file" id="importFile" accept=".json" hidden>
+      </div>
+      <p id="dataStatus" class="data-status" aria-live="polite" role="status"></p>
+    </section>
+
+    <footer class="footer">
+      <p>LoveSpark Suite 💕</p>
+    </footer>
+  </div>
+  <span id="themeLabel" aria-live="polite" hidden></span>
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="../lib/lovespark-stats.js"></script>
+  <script src="../lib/lovespark-badge.js"></script>
+  <script src="../lib/lovespark-popup.js"></script>
+  <script src="../lib/lovespark-lifecycle.js"></script>
+  <script src="../lib/lovespark-footer.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
