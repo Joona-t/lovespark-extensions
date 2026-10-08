@@ -6,22 +6,27 @@ import { createNote, updateNote, loadNoteContent } from '../shared/notes-core.js
 import { autoTitle } from '../shared/formatters.js';
 import { CATEGORIES, DEBOUNCE_LOCAL, DEFAULT_CATEGORY, KEY_SYNC_STATE } from '../shared/constants.js';
 
-// Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
-function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
+// Theme dropdown — apply() comes from the shared lib (lib/lovespark-theme.js);
+// init stays local to keep the legacy `darkMode` fallback.
+const applyTheme = (t) => LoveSparkTheme.apply(t);
+
+// Keep a trigger's aria-expanded in sync with its menu's open state, whatever
+// code path opens/closes it (class toggle or inline display).
+function syncExpanded(trigger, menu) {
+  if (!trigger || !menu) return;
+  const update = () => {
+    const open = menu.classList.contains('open') && menu.style.display !== 'none';
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+  new MutationObserver(update).observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+  update();
 }
+
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
+    syncExpanded(toggle, menu);
     toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
@@ -115,14 +120,18 @@ async function resumeOrCreate() {
 // ── Category Pills ─────────────────────────────────────────────
 
 function renderCategoryPills() {
-  let html = '';
+  const pills = [];
   for (const cat of CATEGORIES) {
     const active = selectedCategory === cat.id;
-    html += `<button class="cat-pill${active ? ' active' : ''}" data-cat="${cat.id}"
-      style="${active ? `color:${cat.color};border-color:${cat.color};background:${cat.bg}` : ''}"
-    >${cat.emoji} ${cat.label}</button>`;
+    const btn = document.createElement('button');
+    btn.className = 'cat-pill' + (active ? ' active' : '');
+    btn.dataset.cat = cat.id;
+    btn.setAttribute('style', active ? `color:${cat.color};border-color:${cat.color};background:${cat.bg}` : '');
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    btn.textContent = `${cat.emoji} ${cat.label}`;
+    pills.push(btn);
   }
-  $('categoryPills').innerHTML = html;
+  $('categoryPills').replaceChildren(...pills);
 }
 
 // ── Save ───────────────────────────────────────────────────────
@@ -287,6 +296,8 @@ async function initSyncUI() {
       }
     } catch {}
   });
+
+  syncExpanded($('syncAvatarBtn'), $('syncDropdown'));
 
   $('syncAvatarBtn').addEventListener('click', (e) => {
     e.stopPropagation();

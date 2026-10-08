@@ -19,6 +19,7 @@ When you click "Save This Page", the address (URL) and title of the current tab,
 | Permission | Why it is needed |
 |---|---|
 | `storage` | Saves your list of saved links, save counters, on/off state and theme locally so they are still there next time. |
+| `activeTab` | Lets the popup read the address and title of the tab you are on, only when you open the popup and click "Save This Page". It grants no access to other tabs or to page content. |
 
 The extension requests **no host permissions** and runs **no content scripts**: it cannot read or change the web pages you visit. The popup reads only the address and title of the active tab, and only at the moment you click "Save This Page".
 

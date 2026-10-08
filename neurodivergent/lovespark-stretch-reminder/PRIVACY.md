@@ -20,6 +20,7 @@ The popup footer contains ordinary links (LoveSpark website, Ko-fi, and a "Repor
 |---|---|
 | `storage` | Saves your reminder settings, theme and stretch counts locally so they are still there next time. |
 | `alarms` | Schedules the recurring stretch reminder at the interval you choose (15, 30, 45 or 60 minutes). |
+| `notifications` | Shows the "Time to Stretch!" desktop notification with the suggested stretch each time a reminder fires. |
 
 The extension requests **no host permissions** and runs **no content scripts**: it cannot read or change the web pages you visit.
 

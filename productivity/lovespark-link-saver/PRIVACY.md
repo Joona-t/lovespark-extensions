@@ -23,6 +23,7 @@ The popup contains links you can choose to click (your saved links, plus footer 
 | Permission | Why it is needed |
 |---|---|
 | `storage` | Saves your links, save counters and settings locally so they are still there next time. |
+| `activeTab` | Lets "Save This Page" read the URL and title of the tab you are on, only when you open the popup. It grants no access to other tabs or to page content. |
 
 The extension requests **no host permissions** and runs **no content scripts**: it cannot read or change the web pages you visit. It only looks up the URL and title of the current tab at the moment you click "Save This Page".
 

@@ -1,31 +1,28 @@
 'use strict';
 
-// Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
-function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
-}
+// Theme dropdown — apply() comes from the shared lib/lovespark-theme.js;
+// listeners stay local so aria-expanded is kept in sync and the legacy
+// darkMode key still migrates.
+const applyTheme = (t) => LoveSparkTheme.apply(t);
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    const setOpen = (open) => {
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
       chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+      setOpen(false);
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';

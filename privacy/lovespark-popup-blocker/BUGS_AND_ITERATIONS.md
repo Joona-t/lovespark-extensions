@@ -56,3 +56,10 @@ relies solely on the content-script window.open override.
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-10-08: ls-check cleanup (v1.0.39)
+
+**Problem:** `ls-check` reported 3 failures: A11Y-DIALOG (popup.html missing role="dialog" + aria-labelledby), A11Y-EXPANDED (theme dropdown trigger missing aria-expanded), BRAND-LIB-WIRED (popup.html not loading shared lib `lovespark-base.css` / `lovespark-theme.js`).
+**Root cause:** Popup was built with an inline theme dropdown in popup.js/popup.css before the shared-lib wiring and dialog/aria-expanded checks were enforced; the lib files were already vendored in `lib/` but never linked.
+**Fix:** `<body>` now has `role="dialog"` with `aria-labelledby="popup-title"` / `aria-describedby="popup-desc"` (ids added to the title/subtitle). Theme trigger gets `aria-haspopup`, `aria-controls`, `aria-expanded="false"`; popup.js keeps it in sync via a `setOpen()` helper on toggle / option pick / outside click. Linked `lib/lovespark-base.css` before popup.css (so local styles still win; adds shared focus-visible rings + 32px touch targets) and `lib/lovespark-theme.js` (no auto-init, so the existing popup.js theme logic incl. legacy `darkMode` migration is unchanged). Patch version 1.0.38 → 1.0.39.
+**Files:** popup.html, popup.js, manifest.json

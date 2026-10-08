@@ -79,7 +79,7 @@ body {
   height: 120px;
   border-radius: 50%;
   border: 3px solid var(--ls-glass-border);
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
   font-family: var(--ls-font-display);
   font-size: 14px;
@@ -178,9 +178,9 @@ body {
 .mode-btn:hover { background: var(--ls-glass-strong); }
 
 .mode-btn.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: var(--ls-text-white);
-  border-color: var(--ls-pink-accent);
+  border-color: var(--ls-pink-deep);
   box-shadow: var(--ls-glow);
 }
 

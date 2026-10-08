@@ -69,3 +69,20 @@
 
 **Files:** background.js, warning.js, warning.html, warning.css, popup.html, popup.css, popup.js, manifest.json, research.md
 **Commit:** TBD
+
+---
+
+## ITER — 2026-10-08 — ls-check cleanup (v2.1.37)
+
+**Problem:** `ls-check` reported 2 failures: `BRAND-LIB-WIRED` (popup.html did not load `lib/lovespark-base.css` / `lib/lovespark-theme.js`) and `PERM-MISSING` (`chrome.tabs.query` used without `tabs`).
+
+**Root cause:** popup.js carried its own copy of the theme-apply logic and popup.html never linked the shared base stylesheet, so the popup drifted from the suite's shared lib even though the files were already synced into `lib/`.
+
+**Fix:**
+- `popup.html`: link `lib/lovespark-base.css` before `popup.css` (popup.css still wins on overrides) and load `lib/lovespark-theme.js` before `popup.js`, matching sibling extensions (e.g. lovespark-panic-button).
+- `popup.js`: `applyTheme()` now delegates to `LoveSparkTheme.apply()`; the local dropdown wiring is kept because it syncs `aria-expanded` and migrates the legacy `darkMode` key (the shared `init()` does neither).
+- `PERM-MISSING` left as a documented false positive: `chrome.tabs.query({ windowType: 'normal' })` is only used for `tabs.length`. It does not read `url`/`title`, so it works without the `tabs` permission. Adding it would trigger a "read your browsing history" install warning for no benefit.
+- `manifest.json`: 2.1.36 → 2.1.37.
+- Mascot path case: git tracks `Mascot.png` but popup.html/warning.html referenced `mascot.png`, which breaks on case-sensitive filesystems (Linux/ChromeOS). References now say `Mascot.png`.
+
+**Files:** popup.html, popup.js, warning.html, manifest.json, BUGS_AND_ITERATIONS.md
