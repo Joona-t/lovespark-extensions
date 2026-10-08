@@ -94,3 +94,12 @@ html.lovespark-hotpink   yt-img-shadow img,
 html.lovespark-starlight yt-img-shadow img {
   filter: none !important;
 }
+
+/* ── Reduced motion (accessibility) ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

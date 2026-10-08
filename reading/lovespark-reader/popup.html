@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>LoveSpark Reader</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
-  <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
 </head>
-<body>
+<body role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+
+  <span id="popupDesc" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">LoveSpark Reader settings — pick a color mode and toggle the extension on or off.</span>
 
   <header class="header">
     <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-    <div class="header-text">
+    <div class="header-text" id="popupTitle">
       <span class="title">LoveSpark</span>
       <span class="subtitle">Reader</span>
     </div>
     <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -78,6 +81,7 @@
   <button class="site-toggle" id="site-toggle">Disable on this site</button>
 
   <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>
