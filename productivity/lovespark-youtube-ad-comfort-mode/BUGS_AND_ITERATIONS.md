@@ -29,3 +29,22 @@
 
 - **Problem:** BUGS_AND_ITERATIONS.md missing.
   - **Fix:** Created this file.
+
+---
+
+## 2026-07-09: Remove duplicate lovespark-tokens.css load from `options.html` (fleet 2026-03-28 regression)
+
+**Problem:** `options.html` carried a direct `<link>` to `lovespark-tokens.css` even though
+`lovespark-base.css` (loaded by the same page) already `@import`s it — the token sheet loaded
+twice (fleet 2026-03-28 injection regression; `guard-fleet-sync.sh` Gate 4 blocks fleet
+shared-lib syncs while any such reference exists).
+
+**Fix:** Removed the redundant `<link>` (one-line deletion, no other markup touched); refreshed
+`lib/lovespark-tokens.css` to the canonical deterministic-header build (values byte-identical to
+the 80/80-audited canonical; shared-lib ITER-003 / lovespark-shared-lib@7690133); bumped the
+manifest patch version.
+
+**Verification:** zero `lovespark-tokens.css` references remain in this extension's HTML;
+`lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`, so the removal is
+cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live tree 2026-07-09;
+pre-commit ls-check green at this commit.
