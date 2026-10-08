@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Hub</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body role="document">
+
+  <!-- Header -->
+  <header class="hub-header" role="banner">
+    <div class="header-left">
+      <img src="mascot.png" alt="Sparky, the LoveSpark mascot" class="header-mascot" width="28" height="28">
+      <h1 class="header-title">LoveSpark Hub</h1>
+    </div>
+    <div class="header-right">
+      <time class="header-clock" id="headerClock" aria-live="polite" aria-label="Current time"></time>
+      <div class="theme-dropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Change Theme">
+          <span id="themeLabel">Retro Pink</span>
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="listbox" aria-label="Theme options">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="option" aria-selected="true">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="option" aria-selected="false">Dark</button>
+          <button class="theme-option" data-theme="beige" role="option" aria-selected="false">Beige</button>
+          <button class="theme-option" data-theme="slate" role="option" aria-selected="false">Slate</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Date & Time Awareness Bar -->
+  <section class="time-bar" aria-label="Date and browsing time">
+    <span class="time-bar-date" id="currentDate"></span>
+    <span class="time-bar-session" id="sessionTime" aria-live="polite">Browsing: 0h 0m</span>
+    <div class="time-ring-wrap" aria-hidden="true">
+      <svg class="time-ring" viewBox="0 0 36 36" width="32" height="32">
+        <circle class="time-ring-bg" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"></circle>
+        <circle class="time-ring-fill" id="timeRingFill" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"
+                stroke-dasharray="0 100" stroke-linecap="round"></circle>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Dashboard Grid -->
+  <main class="dashboard" role="main">
+
+    <!-- Daily Tasks Widget -->
+    <section class="card tasks-card" aria-labelledby="tasksTitle">
+      <div class="card-header">
+        <h2 class="card-title" id="tasksTitle">Daily Tasks</h2>
+        <span class="task-badge" id="taskBadge" aria-live="polite" aria-label="Task count">0</span>
+      </div>
+      <form class="task-form" id="taskForm" aria-label="Add a new task">
+        <input type="text" class="task-input" id="taskInput" placeholder="Add a task..." aria-label="Task description" maxlength="200" autocomplete="off">
+        <button type="submit" class="task-add-btn" aria-label="Add task">+</button>
+      </form>
+      <ul class="task-list" id="taskList" role="list" aria-label="Today's tasks"></ul>
+      <button class="clear-done-btn" id="clearDoneBtn" aria-label="Clear completed tasks">Clear done</button>
+    </section>
+
+    <!-- Focus Mode Widget -->
+    <section class="card focus-card" aria-labelledby="focusTitle">
+      <div class="card-header">
+        <h2 class="card-title" id="focusTitle">Focus Mode</h2>
+      </div>
+      <div class="focus-body">
+        <button class="focus-toggle" id="focusToggle" role="switch" aria-checked="false" aria-label="Toggle focus mode">
+          <span class="focus-toggle-label" id="focusLabel">OFF</span>
+        </button>
+        <div class="focus-elapsed" id="focusElapsed" aria-live="polite" aria-label="Focus time elapsed"></div>
+      </div>
+    </section>
+
+    <!-- Break Reminders Widget -->
+    <section class="card reminders-card" aria-labelledby="remindersTitle">
+      <div class="card-header">
+        <h2 class="card-title" id="remindersTitle">Break Reminders</h2>
+      </div>
+      <ul class="reminder-list" id="reminderList" role="list" aria-label="Break reminder timers">
+        <li class="reminder-item" data-type="water" role="listitem">
+          <button class="reminder-btn" aria-label="Mark water as done" data-type="water">
+            <span class="reminder-emoji" aria-hidden="true">&#x1F4A7;</span>
+            <span class="reminder-name">Water</span>
+            <span class="reminder-timer" id="timer-water">0m ago</span>
+          </button>
+        </li>
+        <li class="reminder-item" data-type="food" role="listitem">
+          <button class="reminder-btn" aria-label="Mark food as done" data-type="food">
+            <span class="reminder-emoji" aria-hidden="true">&#x1F34E;</span>
+            <span class="reminder-name">Food</span>
+            <span class="reminder-timer" id="timer-food">0m ago</span>
+          </button>
+        </li>
+        <li class="reminder-item" data-type="move" role="listitem">
+          <button class="reminder-btn" aria-label="Mark movement as done" data-type="move">
+            <span class="reminder-emoji" aria-hidden="true">&#x1F6B6;</span>
+            <span class="reminder-name">Move</span>
+            <span class="reminder-timer" id="timer-move">0m ago</span>
+          </button>
+        </li>
+        <li class="reminder-item" data-type="meds" role="listitem">
+          <button class="reminder-btn" aria-label="Mark meds as done" data-type="meds">
+            <span class="reminder-emoji" aria-hidden="true">&#x1F48A;</span>
+            <span class="reminder-name">Meds</span>
+            <span class="reminder-timer" id="timer-meds">0m ago</span>
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Sparky Mood Widget -->
+    <section class="card sparky-card" aria-labelledby="sparkyTitle">
+      <div class="card-header">
+        <h2 class="card-title" id="sparkyTitle">Sparky Says</h2>
+      </div>
+      <div class="sparky-body">
+        <div class="sparky-avatar-wrap">
+          <img src="mascot.png" alt="Sparky mascot showing current mood" class="sparky-avatar" id="sparkyAvatar" width="64" height="64">
+        </div>
+        <div class="sparky-bubble" id="sparkyBubble" aria-live="polite" role="status">
+          <span id="sparkyMessage">Loading...</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>
