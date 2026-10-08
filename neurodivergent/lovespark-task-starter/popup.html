@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Task Starter</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Task Starter</div>
+        <div class="header-sub" id="popupDesc">Break the paralysis</div>
+      </div>
+    </header>
+
+    <!-- Step 1: Name the task -->
+    <div id="step1" class="step-card active" aria-live="polite">
+      <div class="step-number">1</div>
+      <div class="step-question">What task are you avoiding?</div>
+      <input type="text" id="taskInput" class="step-input" placeholder="e.g. Write the email..."
+             aria-label="Task you are avoiding" maxlength="100" autocomplete="off" autofocus>
+      <button id="step1Next" class="btn-next" aria-label="Next step">Next</button>
+    </div>
+
+    <!-- Step 2: Find the tiniest step -->
+    <div id="step2" class="step-card" hidden>
+      <div class="step-number">2</div>
+      <div class="step-question">What's the tiniest first step?</div>
+      <div class="step-hint">Make it so small you can't say no.</div>
+      <input type="text" id="stepInput" class="step-input" placeholder="e.g. Open the document..."
+             aria-label="Tiniest first step" maxlength="100" autocomplete="off">
+      <button id="step2Next" class="btn-next" aria-label="Go do it">Go do it</button>
+    </div>
+
+    <!-- Step 3: Go! -->
+    <div id="step3" class="step-card" hidden>
+      <div class="go-section" aria-live="polite">
+        <div class="go-emoji" aria-hidden="true">&#x1F680;</div>
+        <div id="goTask" class="go-task"></div>
+        <div id="goStep" class="go-step"></div>
+        <div id="encouragement" class="encouragement"></div>
+      </div>
+      <button id="resetBtn" class="btn-reset" aria-label="Start over with a new task">New task</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">started today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
