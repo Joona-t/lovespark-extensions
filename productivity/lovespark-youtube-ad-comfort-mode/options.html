@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LoveSpark Comfort Mode Settings</title>
+    <link rel="stylesheet" href="lib/lovespark-base.css" />
+    <link rel="stylesheet" href="lib/lovespark-fonts.css" />
+    <link rel="stylesheet" href="lib/lovespark-footer.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main class="panel">
+      <header class="hero">
+        <div class="hero-top">
+          <div class="hero-left">
+            <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
+            <p class="eyebrow">LoveSpark</p>
+          </div>
+          <div class="theme-dropdown" id="themeToggle" role="button" tabindex="0" aria-expanded="false" aria-haspopup="listbox" aria-label="Change Theme">
+            <span id="themeLabel" aria-live="polite">Retro Pink</span>
+            <ul id="themeMenu" class="theme-menu" role="listbox">
+              <li class="theme-option active" data-theme="retro" role="option">Retro Pink</li>
+              <li class="theme-option" data-theme="dark" role="option">Dark</li>
+              <li class="theme-option" data-theme="beige" role="option">Beige</li>
+              <li class="theme-option" data-theme="slate" role="option">Slate</li>
+            </ul>
+          </div>
+        </div>
+        <h1>YouTube Ad Comfort Mode</h1>
+        <p class="subtitle">
+          Comfort adjustments only. Ads are never blocked, hidden, or bypassed.
+        </p>
+      </header>
+
+      <section class="card">
+        <h2>Behavior</h2>
+
+        <label class="row">
+          <span>
+            <strong>Enable Comfort Mode by default</strong>
+            <small>Applied when a new YouTube tab loads.</small>
+          </span>
+          <input id="comfortModeDefaultEnabled" type="checkbox" />
+        </label>
+
+        <label class="row">
+          <span>
+            <strong>Auto-mute during ads</strong>
+            <small>Mutes ad playback while an ad is active.</small>
+          </span>
+          <input id="autoMuteEnabled" type="checkbox" />
+        </label>
+
+        <label class="row">
+          <span>
+            <strong>Low-volume mode during ads</strong>
+            <small>
+              Uses a target volume instead of mute. Takes precedence over
+              auto-mute.
+            </small>
+          </span>
+          <input id="lowVolumeEnabled" type="checkbox" />
+        </label>
+
+        <div class="slider-row">
+          <label for="lowVolumePercent">
+            Ad low-volume level:
+            <span id="lowVolumeValue" aria-live="polite">10%</span>
+          </label>
+          <input
+            id="lowVolumePercent"
+            type="range"
+            min="0"
+            max="30"
+            step="1"
+            value="10"
+          />
+        </div>
+
+        <label class="row">
+          <span>
+            <strong>Dim player during ads</strong>
+            <small>Shows a subtle retro-pink overlay and badge.</small>
+          </span>
+          <input id="dimOverlayEnabled" type="checkbox" />
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Hotkey</h2>
+        <p class="hotkey-line">
+          Toggle Comfort Mode on the current tab:
+          <code id="shortcutValue" aria-live="polite">Loading…</code>
+        </p>
+        <a class="link" href="chrome://extensions/shortcuts" target="_blank">
+          Open Chrome shortcut settings
+        </a>
+      </section>
+
+      <p id="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="lib/browser-polyfill.min.js"></script>
+    <script src="lib/lovespark-theme.js"></script>
+    <script src="lib/lovespark-stats.js"></script>
+    <script src="lib/lovespark-badge.js"></script>
+    <script src="lib/lovespark-popup.js"></script>
+    <script src="lib/lovespark-lifecycle.js"></script>
+    <script src="lib/lovespark-footer.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
