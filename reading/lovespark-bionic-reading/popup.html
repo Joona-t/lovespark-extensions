@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Bionic Reading</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button class="theme-dropdown-trigger" id="themeToggle"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Bionic Reading</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+    </header>
+    <main class="popup-content">
+      <div class="status-section">
+        <div id="statusIcon" class="status-icon" aria-hidden="true">&#x1F4D6;</div>
+        <div id="statusText" class="status-text" aria-live="polite">Active</div>
+        <div id="cuteMsg" class="cute-msg">Read faster, stay focused!</div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable bionic reading">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="control-section">
+        <label class="slider-label" for="ratioSlider">Bold intensity</label>
+        <div class="slider-row">
+          <input type="range" id="ratioSlider" min="20" max="80" value="50"
+                 aria-label="Bold intensity percentage" aria-valuemin="20" aria-valuemax="80">
+          <span id="ratioValue" class="slider-value" aria-live="polite">50%</span>
+        </div>
+      </div>
+      <div class="preview-section" aria-label="Preview of bionic reading effect">
+        <div class="preview-label">Preview</div>
+        <div id="previewText" class="preview-text">
+          <span data-ls-bionic><b style="font-weight:700">Th</b>is</span>
+          <span data-ls-bionic><b style="font-weight:700">i</b>s</span>
+          <span data-ls-bionic><b style="font-weight:700">ho</b>w</span>
+          <span data-ls-bionic><b style="font-weight:700">bio</b>nic</span>
+          <span data-ls-bionic><b style="font-weight:700">rea</b>ding</span>
+          <span data-ls-bionic><b style="font-weight:700">wo</b>rks</span>
+        </div>
+      </div>
+      <button id="activateBtn" class="activate-btn" type="button">Apply to this page</button>
+      <div class="stats-section" aria-label="Extension statistics">
+        <div class="stat-box" aria-label="Pages styled today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Pages styled total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
