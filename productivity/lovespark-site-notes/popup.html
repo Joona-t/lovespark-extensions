@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Site Notes</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeToggle" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Site Notes</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+    </header>
+    <main class="popup-content">
+      <div class="status-section">
+        <div id="statusIcon" class="status-icon" aria-hidden="true">&#128221;</div>
+        <div id="domainLabel" class="domain-label" aria-live="polite">Loading...</div>
+        <div id="cuteMsg" class="cute-msg">Stay sparkly!</div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable extension">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="note-section">
+        <label for="noteArea" class="note-label">Your note for this site:</label>
+        <textarea id="noteArea" class="note-area" rows="4"
+                  placeholder="Write a note for this domain..."
+                  aria-label="Site note" maxlength="10000"></textarea>
+        <div class="note-actions">
+          <button id="saveBtn" class="action-btn" aria-label="Save note">Save</button>
+          <button id="deleteBtn" class="action-btn action-btn--danger" aria-label="Delete note">Delete</button>
+        </div>
+        <div id="saveStatus" class="save-status" aria-live="polite"></div>
+        <div id="errorStatus" class="error-status" role="alert" aria-live="assertive" aria-atomic="true"></div>
+      </div>
+
+      <section class="backup-section" aria-label="Local backup and restore">
+        <div class="backup-warning">Backups are plaintext. Keep downloaded files private.</div>
+        <div class="backup-actions">
+          <button id="exportBtn" class="action-btn action-btn--secondary" type="button">Download backup</button>
+          <button id="restoreBtn" class="action-btn action-btn--secondary" type="button">Restore backup</button>
+          <input id="restoreInput" type="file" accept="application/json,.json,text/plain" hidden>
+        </div>
+      </section>
+
+      <div class="stats-section" aria-label="Extension statistics">
+        <div class="stat-box" aria-label="Notes saved today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Notes saved total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <footer class="ls-footer">
+    <a href="https://lovespark.love/" target="_blank" rel="noopener noreferrer" class="ls-suite-btn">LoveSpark Suite &#128149;</a>
+    <a href="https://ko-fi.com/joonat" target="_blank" rel="noopener noreferrer" class="ls-kofi-btn">&#9749; Support on Ko-fi</a>
+    <a href="mailto:joona@lovespark.love?subject=Bug%20Report" class="ls-bug-btn">&#128030; Report a Bug</a>
+    <span class="ls-footer-credit">LoveSpark by Joona Tyrninoksa &middot; Crafted with intention &#128149;</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Site Notes",
+  "version": "1.1.0",
+  "homepage_url": "https://lovespark.love",
+  "description": "Attach quick notes to any website. Notes persist per-domain, fully local. ADHD-friendly, free, no tracking.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon-48.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "site-notes@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension stores notes and hostnames locally in browser storage and creates plaintext backup files only when requested by the user; it does not collect or transmit note data."
+      }
+    }
+  }
+}
