@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Read Aloud</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Read Aloud</div>
+        <div class="header-sub" id="popupDesc">Free text-to-speech</div>
+      </div>
+    </header>
+
+    <!-- Article info -->
+    <div id="articleInfo" class="article-info" aria-live="polite">
+      <div id="articleTitle" class="article-title">Click Play to start reading</div>
+      <div id="articleByline" class="article-byline"></div>
+    </div>
+
+    <!-- Error state -->
+    <div id="errorBox" class="error-box" role="alert" hidden>
+      <span id="errorText"></span>
+    </div>
+
+    <!-- Resume prompt -->
+    <div id="resumeBox" class="resume-box" aria-live="polite" hidden>
+      <span class="resume-text">Resume from where you left off?</span>
+      <div class="resume-actions">
+        <button id="resumeYes" class="btn-small btn-primary" aria-label="Resume reading">Resume</button>
+        <button id="resumeNo" class="btn-small btn-secondary" aria-label="Start from beginning">Start over</button>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-section" aria-label="Reading progress">
+      <div class="progress-bar-wrap">
+        <div id="progressBar" class="progress-bar" role="progressbar"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 0%"></div>
+      </div>
+      <div class="progress-label">
+        <span id="progressText" aria-live="polite">0 / 0</span>
+      </div>
+    </div>
+
+    <!-- Transport controls -->
+    <div class="transport-section" role="group" aria-label="Playback controls">
+      <button id="btnPrev" class="btn-transport btn-nav" aria-label="Previous sentence" disabled>
+        <span aria-hidden="true">&#9664;&#9664;</span>
+      </button>
+      <button id="btnPlayPause" class="btn-transport btn-play" aria-label="Play">
+        <span id="playIcon" aria-hidden="true">&#9654;</span>
+      </button>
+      <button id="btnNext" class="btn-transport btn-nav" aria-label="Next sentence" disabled>
+        <span aria-hidden="true">&#9654;&#9654;</span>
+      </button>
+      <button id="btnStop" class="btn-transport btn-stop" aria-label="Stop reading" disabled>
+        <span aria-hidden="true">&#9632;</span>
+      </button>
+    </div>
+
+    <!-- Speed control -->
+    <div class="speed-section">
+      <div class="speed-row">
+        <label for="speedSlider" class="speed-label">Speed</label>
+        <input type="range" id="speedSlider" class="speed-slider"
+               min="0.5" max="3.0" step="0.25" value="1.0"
+               aria-label="Reading speed">
+        <span id="speedValue" class="speed-value" aria-live="polite">1.0x</span>
+      </div>
+      <div class="preset-row" role="group" aria-label="Speed presets">
+        <button class="btn-preset" data-preset="chill" aria-label="Chill speed 0.8x">Chill</button>
+        <button class="btn-preset active" data-preset="flow" aria-label="Flow speed 1.0x">Flow</button>
+        <button class="btn-preset" data-preset="turbo" aria-label="Turbo speed 1.5x">Turbo</button>
+        <button class="btn-preset" data-preset="hyperfocus" aria-label="Hyperfocus speed 2.0x">HF</button>
+      </div>
+    </div>
+
+    <!-- Voice selector -->
+    <div class="voice-section">
+      <label for="voiceSelect" class="voice-label">Voice</label>
+      <select id="voiceSelect" class="voice-select" aria-label="Select voice">
+        <option value="">Default</option>
+      </select>
+    </div>
+
+    <!-- Toggles -->
+    <div class="toggles-section">
+      <label class="toggle-row">
+        <span class="toggle-label-text">Auto-scroll</span>
+        <input type="checkbox" id="autoScrollToggle" checked aria-label="Auto-scroll page while reading">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+      <label class="toggle-row">
+        <span class="toggle-label-text">Highlight sentences</span>
+        <input type="checkbox" id="highlightToggle" checked aria-label="Highlight current sentence">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Reading statistics">
+      <div class="stat-box" aria-label="Sentences read today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total sentences read">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount" aria-live="polite"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
