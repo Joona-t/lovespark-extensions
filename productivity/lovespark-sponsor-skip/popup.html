@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Sponsor Skip</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container">
+
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="header-title">Sponsor Skip</span>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="group">
+      <button class="group-header" aria-expanded="true" data-group="stats" type="button">
+        <span class="group-icon">📊</span>
+        <span class="group-name">Stats</span>
+        <span class="group-chevron">▾</span>
+      </button>
+      <div class="group-body" id="group-stats">
+        <div class="stats-card">
+          <div class="stats-row">
+            <span class="stats-label">Skipped Today</span>
+            <span class="stats-value" id="val-today">0</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-label">Total All-Time</span>
+            <span class="stats-value" id="val-total">0</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-label">Time Saved</span>
+            <span class="stats-value" id="val-time">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This Video -->
+    <div class="group">
+      <button class="group-header" aria-expanded="true" data-group="video" type="button">
+        <span class="group-icon">📺</span>
+        <span class="group-name">This Video</span>
+        <span class="group-chevron">▾</span>
+      </button>
+      <div class="group-body" id="group-video">
+        <div class="segment-list" id="segment-list">
+          <div class="lookup-status" id="lookup-status" data-state="non-video" role="status">Open a YouTube video to scan segments</div>
+          <div class="empty-state" id="empty-state">
+            <span class="empty-text">Open a YouTube video to get started! 💖</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Modes -->
+    <div class="group">
+      <button class="group-header" aria-expanded="false" data-group="modes" type="button">
+        <span class="group-icon">⚙️</span>
+        <span class="group-name">Category Modes</span>
+        <span class="group-chevron">▸</span>
+      </button>
+      <div class="group-body collapsed" id="group-modes">
+        <div class="modes-card">
+          <div class="mode-row"><span class="mode-label">💰 Sponsor</span><select class="mode-select" data-cat="sponsor"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">🛍️ Self-Promo</span><select class="mode-select" data-cat="selfpromo"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">👍 Interaction</span><select class="mode-select" data-cat="interaction"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">🎬 Intro</span><select class="mode-select" data-cat="intro"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">🎞️ Outro</span><select class="mode-select" data-cat="outro"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">⏭️ Preview</span><select class="mode-select" data-cat="preview"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">🎵 Non-Music</span><select class="mode-select" data-cat="music_offtopic"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+          <div class="mode-row"><span class="mode-label">💬 Filler</span><select class="mode-select" data-cat="filler"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Master toggle + settings -->
+    <div class="controls-section">
+      <label class="toggle-row">
+        <span class="toggle-text">Extension Enabled</span>
+        <div class="toggle-switch">
+          <input type="checkbox" id="toggle-enabled" checked aria-label="Enable or disable Sponsor Skip">
+          <span class="slider"></span>
+        </div>
+      </label>
+      <button class="settings-btn" id="settings-btn" aria-label="Open settings">⚙️ Settings</button>
+    </div>
+
+    <footer class="popup-footer">
+      <span class="footer-message" id="footer-message">Sponsor-free vibes! 💕</span>
+    </footer>
+
+  </div>
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="core.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

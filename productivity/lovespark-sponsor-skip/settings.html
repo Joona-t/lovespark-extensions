@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Sponsor Skip — Settings</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+<header class="settings-header">
+  <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+  <div>
+    <h1 class="header-title">Sponsor Skip</h1>
+    <span class="header-sub">Settings</span>
+  </div>
+  <button class="btn-dark-toggle" id="btnDarkMode" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+</header>
+
+<div id="app">
+
+  <!-- Master Toggle -->
+  <section class="card">
+    <h2 class="card-title">⏭️ Protection</h2>
+    <div class="row-between">
+      <div>
+        <div class="setting-label">Enable Sponsor Skip</div>
+        <div class="setting-desc">Turn off to watch YouTube without auto-skipping</div>
+      </div>
+      <label class="toggle-row">
+        <div class="toggle-switch">
+          <input type="checkbox" id="toggle-enabled" checked aria-label="Enable Sponsor Skip">
+          <span class="slider"></span>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <!-- Category Modes -->
+  <section class="card">
+    <h2 class="card-title">🗂️ Category Modes</h2>
+    <p class="setting-desc" style="margin-bottom:14px">Choose how to handle each segment type:</p>
+
+    <div class="category-list">
+      <div class="category-row"><div class="category-info"><span class="category-icon">💰</span><div><div class="setting-label">Sponsor</div><div class="setting-desc">Paid promotions and sponsored segments</div></div></div><select class="mode-select" data-cat="sponsor"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">🛍️</span><div><div class="setting-label">Self-Promo</div><div class="setting-desc">Creator merch, Patreon, channel plugs</div></div></div><select class="mode-select" data-cat="selfpromo"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">👍</span><div><div class="setting-label">Interaction</div><div class="setting-desc">"Like and subscribe", engagement reminders</div></div></div><select class="mode-select" data-cat="interaction"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">🎬</span><div><div class="setting-label">Intro</div><div class="setting-desc">Animated intros and bumpers</div></div></div><select class="mode-select" data-cat="intro"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">🎞️</span><div><div class="setting-label">Outro</div><div class="setting-desc">End cards, credits, subscribe screens</div></div></div><select class="mode-select" data-cat="outro"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">⏭️</span><div><div class="setting-label">Preview</div><div class="setting-desc">Preview of upcoming content</div></div></div><select class="mode-select" data-cat="preview"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">🎵</span><div><div class="setting-label">Non-Music</div><div class="setting-desc">Non-music sections in music videos</div></div></div><select class="mode-select" data-cat="music_offtopic"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+      <div class="category-row"><div class="category-info"><span class="category-icon">💬</span><div><div class="setting-label">Filler</div><div class="setting-desc">Tangents, jokes, off-topic content</div></div></div><select class="mode-select" data-cat="filler"><option value="auto">Auto-skip</option><option value="notify">Notify</option><option value="highlight">Highlight</option><option value="off">Off</option></select></div>
+    </div>
+  </section>
+
+  <!-- Whitelists -->
+  <section class="card">
+    <h2 class="card-title">🤍 Whitelists</h2>
+    <p class="setting-desc" style="margin-bottom:14px">Channels and videos where sponsors won't be skipped:</p>
+
+    <h3 class="sub-title">Channels</h3>
+    <div id="channel-list" class="whitelist-list">
+      <div class="empty-whitelist" id="no-channels">No whitelisted channels yet</div>
+    </div>
+
+    <h3 class="sub-title">Videos</h3>
+    <div id="video-list" class="whitelist-list">
+      <div class="empty-whitelist" id="no-videos">No whitelisted videos yet</div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="card">
+    <h2 class="card-title">📊 Stats</h2>
+
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div id="stat-today" class="stat-big">0</div>
+        <div class="stat-lbl">Today</div>
+      </div>
+      <div class="stat-cell">
+        <div id="stat-total" class="stat-big">0</div>
+        <div class="stat-lbl">All time</div>
+      </div>
+      <div class="stat-cell stat-cell-wide">
+        <div id="stat-time" class="stat-big">—</div>
+        <div class="stat-lbl">Time saved</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">By category</h3>
+    <div class="cat-table" id="cat-table">
+      <div class="cat-row"><span class="cat-name">💰 Sponsor</span><span class="cat-count" id="cat-sponsor">0</span></div>
+      <div class="cat-row"><span class="cat-name">🛍️ Self-Promo</span><span class="cat-count" id="cat-selfpromo">0</span></div>
+      <div class="cat-row"><span class="cat-name">👍 Interaction</span><span class="cat-count" id="cat-interaction">0</span></div>
+      <div class="cat-row"><span class="cat-name">🎬 Intro</span><span class="cat-count" id="cat-intro">0</span></div>
+      <div class="cat-row"><span class="cat-name">🎞️ Outro</span><span class="cat-count" id="cat-outro">0</span></div>
+      <div class="cat-row"><span class="cat-name">⏭️ Preview</span><span class="cat-count" id="cat-preview">0</span></div>
+      <div class="cat-row"><span class="cat-name">🎵 Non-Music</span><span class="cat-count" id="cat-music_offtopic">0</span></div>
+      <div class="cat-row"><span class="cat-name">💬 Filler</span><span class="cat-count" id="cat-filler">0</span></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button id="reset-stats" class="btn btn-danger">🗑️ Reset Stats</button>
+    </div>
+  </section>
+
+  <!-- Keyboard Shortcuts -->
+  <section class="card">
+    <h2 class="card-title">⌨️ Keyboard Shortcuts</h2>
+    <div class="shortcut-row"><kbd>Alt+Shift+S</kbd><span>Toggle sponsor skip on/off</span></div>
+    <div class="shortcut-row"><kbd>Alt+Shift+W</kbd><span>Whitelist current channel</span></div>
+  </section>
+
+  <!-- Attribution -->
+  <section class="card">
+    <h2 class="card-title">🙏 Attribution</h2>
+    <p class="attribution-text">
+      Segment data provided by
+      <a href="https://sponsor.ajay.app" target="_blank" rel="noopener" class="attr-link">SponsorBlock</a>
+      — a crowdsourced browser extension for skipping sponsor segments in YouTube videos.
+      <a href="https://sponsor.ajay.app" target="_blank" rel="noopener" class="attr-link">Learn more ↗</a>
+    </p>
+  </section>
+
+</div>
+
+<footer class="settings-footer">
+  💕 YouTube Sponsor Skip v2.0.0 — Made with love
+</footer>
+
+<script src="lib/browser-polyfill.min.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>
