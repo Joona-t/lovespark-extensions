@@ -1,0 +1,116 @@
+/* LoveSpark Reading Progress — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Toggle ────────────────────────────── */
+.toggle-section {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; padding: 8px 10px;
+  background: var(--ls-glass); border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius); backdrop-filter: blur(8px);
+}
+.toggle-label-text { font-size: 11px; color: var(--ls-text-dark); font-weight: 500; }
+.toggle-row { display: inline-block; cursor: pointer; }
+.toggle-row input { display: none; }
+.toggle-track {
+  display: block; width: 40px; height: 22px;
+  background: var(--ls-glass-light); border: 1px solid var(--ls-glass-border);
+  border-radius: 11px; position: relative;
+  transition: background 0.25s, border-color 0.25s; flex-shrink: 0;
+}
+.toggle-row input:checked + .toggle-track {
+  background: var(--ls-pink-deep); border-color: var(--ls-pink-deep);
+}
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px; width: 16px; height: 16px;
+  background: white; border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.toggle-row input:checked + .toggle-track .toggle-thumb { transform: translateX(18px); }
+
+/* ── Recent pages ──────────────────────── */
+.recent-section { margin-bottom: 10px; }
+.section-label {
+  font-size: 9px; font-weight: 600; color: var(--ls-text-muted);
+  text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;
+}
+.recent-list { display: flex; flex-direction: column; gap: 4px; }
+.recent-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px; background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border); border-radius: 8px;
+}
+.recent-progress-wrap {
+  width: 32px; height: 32px; flex-shrink: 0; position: relative;
+}
+.recent-progress-ring {
+  width: 32px; height: 32px; transform: rotate(-90deg);
+}
+.recent-ring-bg { fill: none; stroke: var(--ls-glass-border); stroke-width: 3; }
+.recent-ring-fill {
+  fill: none; stroke: var(--ls-pink-deep); stroke-width: 3;
+  stroke-linecap: round; stroke-dasharray: 82; stroke-dashoffset: 82;
+}
+.recent-percent {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: var(--ls-font-display); font-size: 8px; color: var(--ls-pink-accent);
+}
+.recent-info { flex: 1; min-width: 0; }
+.recent-title {
+  font-size: 11px; color: var(--ls-text-dark); font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.recent-url {
+  font-size: 9px; color: var(--ls-text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── Empty state ───────────────────────── */
+.empty-state { text-align: center; padding: 14px 10px; }
+.empty-emoji { font-size: 28px; margin-bottom: 4px; }
+.empty-text { font-size: 11px; font-weight: 600; color: var(--ls-text-dark); margin-bottom: 2px; }
+.empty-hint { font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Stats ─────────────────────────────── */
+.stats-section {
+  display: flex; align-items: center; background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border); border-radius: var(--ls-radius);
+  padding: 10px 0; backdrop-filter: blur(8px); margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display); font-size: 14px;
+  color: var(--ls-pink-accent); margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 9px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* ── Focus ─────────────────────────────── */
+button:focus-visible, input:focus-visible, [role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
