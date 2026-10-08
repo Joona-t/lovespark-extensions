@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark YT Digest</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popup-title" aria-describedby="popup-desc">
+    <span id="popup-desc" class="sr-only">YouTube video summarizer powered by AI</span>
+
+    <!-- Header -->
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="header-title" id="popup-title">YT Digest</span>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="listbox" aria-expanded="false">
+          <span id="themeLabel">Retro Pink</span> ▾
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="listbox">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="option">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="option">Dark</button>
+          <button class="theme-option" data-theme="beige" role="option">Beige</button>
+          <button class="theme-option" data-theme="slate" role="option">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Video Info -->
+    <div class="video-section" id="videoSection">
+      <div class="video-info" id="videoInfo" style="display:none;">
+        <p class="video-title" id="videoTitle"></p>
+        <p class="video-channel" id="videoChannel"></p>
+      </div>
+    </div>
+
+    <!-- Status / Action area -->
+    <div class="action-section" id="actionSection">
+      <!-- State: not-youtube -->
+      <div class="state-card" id="stateNotYoutube" style="display:none;">
+        <p class="state-message">Open a YouTube video to get started</p>
+      </div>
+
+      <!-- State: no-captions -->
+      <div class="state-card" id="stateNoCaptions" style="display:none;">
+        <p class="state-message">No captions available for this video</p>
+      </div>
+
+      <!-- State: no-api-key -->
+      <div class="state-card" id="stateNoKey" style="display:none;">
+        <p class="state-message">Set up your OpenAI API key in Settings</p>
+        <button class="btn btn-primary" id="btnGoSettings">Open Settings</button>
+      </div>
+
+      <!-- State: live -->
+      <div class="state-card" id="stateLive" style="display:none;">
+        <p class="state-message">Can't summarize live streams</p>
+      </div>
+
+      <!-- State: ready -->
+      <div class="state-card" id="stateReady" style="display:none;">
+        <button class="btn btn-primary btn-summarize" id="btnSummarize">
+          Summarize This Video
+        </button>
+      </div>
+
+      <!-- State: loading -->
+      <div class="state-card" id="stateLoading" style="display:none;">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="state-message loading-msg">Sparky is reading...</p>
+      </div>
+
+      <!-- State: done -->
+      <div class="state-card" id="stateDone" style="display:none;">
+        <div class="summary-preview" id="summaryPreview"></div>
+        <button class="btn btn-primary" id="btnViewFull">View Full Summary</button>
+      </div>
+
+      <!-- State: error -->
+      <div class="state-card" id="stateError" style="display:none;">
+        <p class="state-message error-msg" id="errorMessage" aria-live="assertive"></p>
+        <button class="btn btn-secondary" id="btnRetry">Retry</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="group">
+      <button class="group-header" aria-expanded="true" data-group="stats" type="button">
+        <span class="group-icon">📊</span>
+        <span class="group-name">Stats</span>
+        <span class="group-chevron">▾</span>
+      </button>
+      <div class="group-body" id="group-stats">
+        <div class="stats-card">
+          <div class="stats-row">
+            <span class="stats-label">Digests Today</span>
+            <span class="stats-value" id="val-today">0</span>
+          </div>
+          <div class="stats-row">
+            <span class="stats-label">Total Digests</span>
+            <span class="stats-value" id="val-total">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-section">
+      <button class="settings-btn" id="settings-btn" aria-label="Open settings">⚙️ Settings</button>
+    </div>
+
+    <footer class="popup-footer">
+      <span class="footer-message" id="footer-message">Ready to digest! 💕</span>
+    </footer>
+  </div>
+
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

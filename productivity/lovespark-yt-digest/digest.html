@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT Digest — Summary</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="digest.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="digest-container" role="main">
+    <!-- Header -->
+    <header class="digest-header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+        <div class="header-text">
+          <h1 class="header-title">YT Digest</h1>
+          <p class="video-title" id="videoTitle"></p>
+          <p class="video-meta" id="videoMeta"></p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="theme-dropdown" id="themeDropdown">
+          <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="listbox" aria-expanded="false">
+            <span id="themeLabel">Retro Pink</span> ▾
+          </button>
+          <div class="theme-dropdown-menu" id="themeMenu" role="listbox">
+            <div class="theme-dropdown-header">Change Theme</div>
+            <button class="theme-option" data-theme="retro" role="option">Retro Pink</button>
+            <button class="theme-option" data-theme="dark" role="option">Dark</button>
+            <button class="theme-option" data-theme="beige" role="option">Beige</button>
+            <button class="theme-option" data-theme="slate" role="option">Slate</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Loading state -->
+    <div class="loading-state" id="loadingState">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Loading summary...</p>
+    </div>
+
+    <!-- Error state -->
+    <div class="error-state" id="errorState" style="display:none;">
+      <p id="errorMessage" aria-live="assertive">Summary not found.</p>
+    </div>
+
+    <!-- Content -->
+    <div class="digest-content" id="digestContent" style="display:none;">
+      <!-- Actions -->
+      <div class="actions-bar">
+        <button class="btn btn-primary" id="btnCopySummary" aria-label="Copy summary to clipboard">Copy Summary</button>
+        <button class="btn btn-secondary" id="btnCopyTranscript" aria-label="Copy transcript to clipboard">Copy Transcript</button>
+        <button class="btn btn-secondary" id="btnResummarize" aria-label="Generate a new summary">Re-summarize</button>
+      </div>
+
+      <!-- Auto-caption notice -->
+      <div class="auto-notice" id="autoNotice" style="display:none;" role="note">
+        Based on auto-generated captions — may contain inaccuracies.
+      </div>
+
+      <!-- Summary sections -->
+      <div class="summary-body" id="summaryBody"></div>
+
+      <!-- Transcript -->
+      <div class="transcript-section">
+        <button class="collapsible-header" id="transcriptToggle" aria-expanded="false" type="button">
+          <span>Full Transcript</span>
+          <span class="chevron" id="transcriptChevron">▸</span>
+        </button>
+        <div class="collapsible-body collapsed" id="transcriptBody">
+          <pre class="transcript-text" id="transcriptText"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copy toast -->
+    <div class="copy-toast" id="copyToast" role="status" aria-live="polite">Copied!</div>
+  </div>
+
+  <div id="footerArea"></div>
+
+  <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="digest.js"></script>
+</body>
+</html>

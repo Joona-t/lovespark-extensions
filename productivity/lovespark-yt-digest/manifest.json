@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark YT Digest",
+  "version": "1.0.2",
+  "homepage_url": "https://lovespark.love",
+  "description": "Extract YouTube transcripts and get summaries to decide if a video is worth it. ADHD-friendly, free, private.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "https://api.openai.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "content-main.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "lib/browser-polyfill.min.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "mascot.png"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "summarize-video": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "Summarize current YouTube video"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-digest@lovespark.suite",
+      "strict_min_version": "109.0"
+    }
+  }
+}
