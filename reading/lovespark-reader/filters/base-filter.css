@@ -1,0 +1,101 @@
+/*
+  LoveSpark Reader — base-filter.css  (Layer 1)
+  CSS filter applied to <html> per mode. GPU-accelerated.
+  Class on <html> selects the active mode.
+  All three mode rules live here; only the active class does anything.
+*/
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MODE 1 — SAKURA  🌸  Soft Blush
+   Warm, gentle, rose-garden reading light.
+════════════════════════════════════════════════════════════════════════════ */
+
+html.lovespark-sakura {
+  filter: sepia(15%) saturate(120%) hue-rotate(330deg) brightness(100%);
+}
+
+/* Counter-filter: reverses the hue-rotate on media so images look natural.
+   Math: hue inverse of 330° = 30° (330 + 30 = 360 = 0). Saturation /1.20 ≈ 83%. */
+html.lovespark-sakura img,
+html.lovespark-sakura video,
+html.lovespark-sakura canvas,
+html.lovespark-sakura picture img,
+html.lovespark-sakura [style*="background-image"] {
+  filter: hue-rotate(30deg) saturate(83%) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MODE 2 — HOT PINK  💖  Bold Bubblegum
+   Full LoveSpark energy. Unapologetically pink.
+════════════════════════════════════════════════════════════════════════════ */
+
+html.lovespark-hotpink {
+  filter: sepia(25%) saturate(200%) hue-rotate(325deg) brightness(98%);
+}
+
+/* Counter: hue inverse of 325° = 35°. Saturation /2.00 = 50%. */
+html.lovespark-hotpink img,
+html.lovespark-hotpink video,
+html.lovespark-hotpink canvas,
+html.lovespark-hotpink picture img,
+html.lovespark-hotpink [style*="background-image"] {
+  filter: hue-rotate(35deg) saturate(50%) brightness(102%) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MODE 3 — STARLIGHT  ✨  Dreamy Iridescent
+   Pink-to-purple shimmer. The fancy one.
+════════════════════════════════════════════════════════════════════════════ */
+
+html.lovespark-starlight {
+  filter: sepia(20%) saturate(160%) hue-rotate(320deg) brightness(99%);
+  animation: lovespark-shimmer 8s ease-in-out infinite alternate;
+  will-change: filter;
+}
+
+@keyframes lovespark-shimmer {
+  0%   { filter: sepia(20%) saturate(160%) hue-rotate(320deg) brightness(99%); }
+  40%  { filter: sepia(18%) saturate(150%) hue-rotate(338deg) brightness(100%); }
+  70%  { filter: sepia(22%) saturate(165%) hue-rotate(314deg) brightness(98%); }
+  100% { filter: sepia(19%) saturate(155%) hue-rotate(330deg) brightness(99%); }
+}
+
+/* Counter: hue inverse of 320° = 40°. Saturation /1.60 ≈ 63%. */
+html.lovespark-starlight img,
+html.lovespark-starlight video,
+html.lovespark-starlight canvas,
+html.lovespark-starlight picture img,
+html.lovespark-starlight [style*="background-image"] {
+  filter: hue-rotate(40deg) saturate(63%) !important;
+  /* No animation on media — counter-animating would stutter */
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ACCESSIBILITY — disable Starlight shimmer for reduced-motion users
+════════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  html.lovespark-starlight {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HARD EXCLUSIONS — never filter these regardless of mode
+   Applied across all modes with a specificity boost.
+════════════════════════════════════════════════════════════════════════════ */
+
+html.lovespark-sakura   input[type="color"],
+html.lovespark-hotpink  input[type="color"],
+html.lovespark-starlight input[type="color"],
+/* YouTube and Vimeo players embedded via iframe */
+html.lovespark-sakura   iframe[src*="youtube.com"],
+html.lovespark-hotpink  iframe[src*="youtube.com"],
+html.lovespark-starlight iframe[src*="youtube.com"],
+html.lovespark-sakura   iframe[src*="vimeo.com"],
+html.lovespark-hotpink  iframe[src*="vimeo.com"],
+html.lovespark-starlight iframe[src*="vimeo.com"] {
+  filter: none !important;
+  animation: none !important;
+}

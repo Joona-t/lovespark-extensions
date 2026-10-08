@@ -1,0 +1,84 @@
+/*
+  LoveSpark Reader — overrides.css  (Layer 2, Generic)
+  Precision fixes that the CSS filter alone can't handle.
+  Targets common cross-site patterns: code blocks, color pickers,
+  SVG icons, and interactive elements that break under filters.
+
+  Rule: only override what is genuinely broken. Don't try to
+  recolor every element — the filter handles that beautifully.
+*/
+
+/* ── Code blocks: preserve syntax highlighting ──────────────────────────── */
+/* Syntax colors are intentional and meaningful. A hue-rotate ruins them. */
+
+html.lovespark-sakura    pre,
+html.lovespark-hotpink   pre,
+html.lovespark-starlight pre,
+html.lovespark-sakura    code,
+html.lovespark-hotpink   code,
+html.lovespark-starlight code,
+html.lovespark-sakura    .highlight,
+html.lovespark-hotpink   .highlight,
+html.lovespark-starlight .highlight,
+html.lovespark-sakura    .CodeMirror,
+html.lovespark-hotpink   .CodeMirror,
+html.lovespark-starlight .CodeMirror,
+html.lovespark-sakura    .monaco-editor,
+html.lovespark-hotpink   .monaco-editor,
+html.lovespark-starlight .monaco-editor,
+html.lovespark-sakura    [class*="prism"],
+html.lovespark-hotpink   [class*="prism"],
+html.lovespark-starlight [class*="prism"],
+html.lovespark-sakura    [class*="hljs"],
+html.lovespark-hotpink   [class*="hljs"],
+html.lovespark-starlight [class*="hljs"] {
+  filter: none !important;
+}
+
+/* ── Color picker inputs ─────────────────────────────────────────────────── */
+/* A tinted color picker is functionally broken — the displayed color is wrong. */
+
+html.lovespark-sakura    input[type="color"],
+html.lovespark-hotpink   input[type="color"],
+html.lovespark-starlight input[type="color"] {
+  filter: none !important;
+}
+
+/* ── SVG icons: let them inherit the hue-rotate naturally ───────────────── */
+/* Most icon SVGs look fine tinted pink. Only restore if site-specific CSS
+   identifies broken icons. No blanket override here. */
+
+/* ── Map embeds and other iframes ───────────────────────────────────────── */
+
+html.lovespark-sakura    iframe[src*="google.com/maps"],
+html.lovespark-hotpink   iframe[src*="google.com/maps"],
+html.lovespark-starlight iframe[src*="google.com/maps"],
+html.lovespark-sakura    iframe[src*="maps.google"],
+html.lovespark-hotpink   iframe[src*="maps.google"],
+html.lovespark-starlight iframe[src*="maps.google"] {
+  filter: none !important;
+}
+
+/* ── Scrollbars: tint them pink too (a nice detail) ─────────────────────── */
+/* Only Chromium supports ::-webkit-scrollbar inside content CSS */
+
+html.lovespark-sakura    ::-webkit-scrollbar-thumb,
+html.lovespark-hotpink   ::-webkit-scrollbar-thumb,
+html.lovespark-starlight ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 105, 180, 0.45) !important;
+}
+
+html.lovespark-sakura    ::-webkit-scrollbar-track,
+html.lovespark-hotpink   ::-webkit-scrollbar-track,
+html.lovespark-starlight ::-webkit-scrollbar-track {
+  background-color: rgba(255, 200, 220, 0.1) !important;
+}
+
+/* ── Selection highlight: lean into the pink ────────────────────────────── */
+
+html.lovespark-sakura    ::selection,
+html.lovespark-hotpink   ::selection,
+html.lovespark-starlight ::selection {
+  background-color: rgba(255, 110, 180, 0.4) !important;
+  color: inherit !important;
+}

@@ -1,0 +1,105 @@
+/*
+  LoveSpark Reader — youtube.css
+  YouTube uses CSS custom properties on ytd-app for their dark theme.
+  We override those vars per mode so UI chrome turns pink without
+  touching the video player, which must remain unfiltered.
+*/
+
+/* ── Sakura ──────────────────────────────────────────────────────────────── */
+
+html.lovespark-sakura ytd-app,
+html.lovespark-sakura #content,
+html.lovespark-sakura tp-yt-app-drawer {
+  --yt-spec-base-background:            #fff0f5 !important;
+  --yt-spec-raised-background:          #fce4ec !important;
+  --yt-spec-menu-background:            #fce4ec !important;
+  --yt-spec-badge-chip-background:      #f8bbd0 !important;
+  --yt-spec-brand-background-primary:   #fff0f5 !important;
+  --yt-spec-brand-background-secondary: #fce4ec !important;
+  --yt-spec-text-primary:               #1a0a12 !important;
+  --yt-spec-text-secondary:             #6d2540 !important;
+  --yt-spec-brand-link-text:            #e91e63 !important;
+  --yt-spec-call-to-action:             #e91e63 !important;
+  --yt-spec-themed-blue:                #e91e63 !important;
+}
+
+/* ── Hot Pink ────────────────────────────────────────────────────────────── */
+
+html.lovespark-hotpink ytd-app,
+html.lovespark-hotpink #content,
+html.lovespark-hotpink tp-yt-app-drawer {
+  --yt-spec-base-background:            #ffb3d9 !important;
+  --yt-spec-raised-background:          #f8bbd0 !important;
+  --yt-spec-menu-background:            #f8bbd0 !important;
+  --yt-spec-badge-chip-background:      #f48fb1 !important;
+  --yt-spec-brand-background-primary:   #ffb3d9 !important;
+  --yt-spec-brand-background-secondary: #f8bbd0 !important;
+  --yt-spec-text-primary:               #2d0020 !important;
+  --yt-spec-text-secondary:             #7b003d !important;
+  --yt-spec-brand-link-text:            #ff1493 !important;
+  --yt-spec-call-to-action:             #ff1493 !important;
+  --yt-spec-themed-blue:                #ff1493 !important;
+}
+
+/* ── Starlight ───────────────────────────────────────────────────────────── */
+
+html.lovespark-starlight ytd-app,
+html.lovespark-starlight #content,
+html.lovespark-starlight tp-yt-app-drawer {
+  --yt-spec-base-background:            #fce4f2 !important;
+  --yt-spec-raised-background:          #f3e5f5 !important;
+  --yt-spec-menu-background:            #f3e5f5 !important;
+  --yt-spec-badge-chip-background:      #e1bee7 !important;
+  --yt-spec-brand-background-primary:   #fce4f2 !important;
+  --yt-spec-brand-background-secondary: #f3e5f5 !important;
+  --yt-spec-text-primary:               #1a0025 !important;
+  --yt-spec-text-secondary:             #4a1060 !important;
+  --yt-spec-brand-link-text:            #c084fc !important;
+  --yt-spec-call-to-action:             #c084fc !important;
+  --yt-spec-themed-blue:                #c084fc !important;
+}
+
+/* ── Critical: never filter the video player ─────────────────────────────── */
+/* The video element is already counter-filtered by base-filter.css, but
+   the player wrapper also needs no additional filter. */
+
+html.lovespark-sakura    #movie_player,
+html.lovespark-hotpink   #movie_player,
+html.lovespark-starlight #movie_player,
+html.lovespark-sakura    #movie_player video,
+html.lovespark-hotpink   #movie_player video,
+html.lovespark-starlight #movie_player video,
+html.lovespark-sakura    .html5-video-container,
+html.lovespark-hotpink   .html5-video-container,
+html.lovespark-starlight .html5-video-container {
+  filter: none !important;
+  animation: none !important;
+}
+
+/* ── Thumbnails: restore them fully ─────────────────────────────────────── */
+
+html.lovespark-sakura    ytd-thumbnail img,
+html.lovespark-hotpink   ytd-thumbnail img,
+html.lovespark-starlight ytd-thumbnail img,
+html.lovespark-sakura    ytd-thumbnail-overlay-toggle-button-renderer,
+html.lovespark-hotpink   ytd-thumbnail-overlay-toggle-button-renderer,
+html.lovespark-starlight ytd-thumbnail-overlay-toggle-button-renderer {
+  filter: none !important;
+}
+
+/* ── Avatar images ───────────────────────────────────────────────────────── */
+
+html.lovespark-sakura    yt-img-shadow img,
+html.lovespark-hotpink   yt-img-shadow img,
+html.lovespark-starlight yt-img-shadow img {
+  filter: none !important;
+}
+
+/* ── Reduced motion (accessibility) ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,98 @@
+/*
+  LoveSpark Reader — google.css
+  Covers Google Search, Gmail, Drive, and Docs.
+  Google mixes inline styles, utility classes, and some CSS vars.
+  We target common structural containers and their CSS custom properties.
+*/
+
+/* ── Google Search ───────────────────────────────────────────────────────── */
+
+/* Search result links: override Google's blue */
+html.lovespark-sakura    a:visited, html.lovespark-sakura    .yuRUbf a,
+html.lovespark-hotpink   a:visited, html.lovespark-hotpink   .yuRUbf a {
+  color: #e91e63 !important;
+}
+html.lovespark-starlight a:visited, html.lovespark-starlight .yuRUbf a {
+  color: #c084fc !important;
+}
+
+html.lovespark-sakura    .yuRUbf a:hover { color: #f06292 !important; }
+html.lovespark-hotpink   .yuRUbf a:hover { color: #ff69b4 !important; }
+html.lovespark-starlight .yuRUbf a:hover { color: #e879f9 !important; }
+
+/* Search bar */
+html.lovespark-sakura    .RNNXgb, html.lovespark-sakura    [role="combobox"] {
+  background-color: #fff0f5 !important;
+  border-color: #f06292 !important;
+}
+html.lovespark-hotpink   .RNNXgb, html.lovespark-hotpink   [role="combobox"] {
+  background-color: #ffe0f0 !important;
+  border-color: #ff1493 !important;
+}
+html.lovespark-starlight .RNNXgb, html.lovespark-starlight [role="combobox"] {
+  background-color: #fce4f2 !important;
+  border-color: #c084fc !important;
+}
+
+/* ── Gmail ───────────────────────────────────────────────────────────────── */
+
+/* Gmail CSS vars */
+html.lovespark-sakura body.bkL {
+  --gmail-bg: #fff0f5;
+}
+
+/* Sidebar background */
+html.lovespark-sakura    .aeN { background-color: #fff0f5 !important; }
+html.lovespark-hotpink   .aeN { background-color: #ffe0f0 !important; }
+html.lovespark-starlight .aeN { background-color: #fce4f2 !important; }
+
+/* Compose button */
+html.lovespark-sakura    .z0 > .L3 { background-color: #fce4ec !important; }
+html.lovespark-hotpink   .z0 > .L3 { background-color: #f8bbd0 !important; }
+html.lovespark-starlight .z0 > .L3 { background-color: #f3e5f5 !important; }
+
+/* ── Google Drive ────────────────────────────────────────────────────────── */
+
+html.lovespark-sakura    [data-tooltip-container],
+html.lovespark-sakura    .LgYqSe {
+  --gm3-sys-color-secondary-container: #fce4ec !important;
+}
+html.lovespark-hotpink   [data-tooltip-container],
+html.lovespark-hotpink   .LgYqSe {
+  --gm3-sys-color-secondary-container: #f8bbd0 !important;
+}
+html.lovespark-starlight [data-tooltip-container],
+html.lovespark-starlight .LgYqSe {
+  --gm3-sys-color-secondary-container: #f3e5f5 !important;
+}
+
+/* Material 3 tokens Google uses across products */
+html.lovespark-sakura {
+  --gm3-sys-color-primary:            #e91e63 !important;
+  --gm3-sys-color-primary-container:  #fce4ec !important;
+  --gm3-sys-color-surface:            #fff0f5 !important;
+  --gm3-sys-color-surface-container:  #fce4ec !important;
+}
+html.lovespark-hotpink {
+  --gm3-sys-color-primary:            #ff1493 !important;
+  --gm3-sys-color-primary-container:  #ffe0f0 !important;
+  --gm3-sys-color-surface:            #ffb3d9 !important;
+  --gm3-sys-color-surface-container:  #f8bbd0 !important;
+}
+html.lovespark-starlight {
+  --gm3-sys-color-primary:            #c084fc !important;
+  --gm3-sys-color-primary-container:  #f3e5f5 !important;
+  --gm3-sys-color-surface:            #fce4f2 !important;
+  --gm3-sys-color-surface-container:  #f3e5f5 !important;
+}
+
+/* ── Google Photos: restore image thumbnails ─────────────────────────────── */
+
+html.lovespark-sakura    [data-p="photo"] img,
+html.lovespark-hotpink   [data-p="photo"] img,
+html.lovespark-starlight [data-p="photo"] img,
+html.lovespark-sakura    .YrbPuc img,
+html.lovespark-hotpink   .YrbPuc img,
+html.lovespark-starlight .YrbPuc img {
+  filter: none !important;
+}

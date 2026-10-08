@@ -1,0 +1,131 @@
+/*
+  LoveSpark Reader — reddit.css
+  Handles both new Reddit (shreddit-app / reddit.com) and
+  old Reddit (old.reddit.com) in a single file.
+  New Reddit uses extensive CSS custom properties on :root.
+  Old Reddit uses mostly direct class-based styling.
+*/
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NEW REDDIT  (shreddit-app, 2023+ design)
+   CSS vars on :root under html.lovespark-*
+══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Sakura ──────────────────────────────────────────────────────────────── */
+
+html.lovespark-sakura {
+  --color-neutral-background-weak:        #fff0f5 !important;
+  --color-neutral-background-strong:      #fce4ec !important;
+  --color-neutral-background-stronger:    #f8bbd0 !important;
+  --color-neutral-content:                #1a0a12 !important;
+  --color-neutral-content-weak:           #6d2540 !important;
+  --color-tone-1:                         #e91e63 !important;
+  --color-tone-2:                         #f06292 !important;
+  --color-brand:                          #e91e63 !important;
+  --reddit-background:                    #fff0f5 !important;
+  --reddit-post-bg:                       #fce4ec !important;
+  --shreddit-background:                  #fff0f5 !important;
+}
+
+/* ── Hot Pink ────────────────────────────────────────────────────────────── */
+
+html.lovespark-hotpink {
+  --color-neutral-background-weak:        #ffb3d9 !important;
+  --color-neutral-background-strong:      #f8bbd0 !important;
+  --color-neutral-background-stronger:    #f48fb1 !important;
+  --color-neutral-content:                #2d0020 !important;
+  --color-neutral-content-weak:           #7b003d !important;
+  --color-tone-1:                         #ff1493 !important;
+  --color-tone-2:                         #ff6eb4 !important;
+  --color-brand:                          #ff1493 !important;
+  --reddit-background:                    #ffb3d9 !important;
+  --reddit-post-bg:                       #f8bbd0 !important;
+  --shreddit-background:                  #ffb3d9 !important;
+}
+
+/* ── Starlight ───────────────────────────────────────────────────────────── */
+
+html.lovespark-starlight {
+  --color-neutral-background-weak:        #fce4f2 !important;
+  --color-neutral-background-strong:      #f3e5f5 !important;
+  --color-neutral-background-stronger:    #e1bee7 !important;
+  --color-neutral-content:                #1a0025 !important;
+  --color-neutral-content-weak:           #4a1060 !important;
+  --color-tone-1:                         #c084fc !important;
+  --color-tone-2:                         #e879f9 !important;
+  --color-brand:                          #c084fc !important;
+  --reddit-background:                    #fce4f2 !important;
+  --reddit-post-bg:                       #f3e5f5 !important;
+  --shreddit-background:                  #fce4f2 !important;
+}
+
+/* ── New Reddit structural elements ──────────────────────────────────────── */
+
+html.lovespark-sakura    shreddit-app,
+html.lovespark-sakura    reddit-feed-unit,
+html.lovespark-sakura    shreddit-post,
+html.lovespark-sakura    [data-testid="post-container"] {
+  background-color: var(--reddit-post-bg, #fce4ec) !important;
+}
+
+html.lovespark-hotpink   shreddit-app,
+html.lovespark-hotpink   shreddit-post,
+html.lovespark-hotpink   [data-testid="post-container"] {
+  background-color: var(--reddit-post-bg, #f8bbd0) !important;
+}
+
+html.lovespark-starlight shreddit-app,
+html.lovespark-starlight shreddit-post,
+html.lovespark-starlight [data-testid="post-container"] {
+  background-color: var(--reddit-post-bg, #f3e5f5) !important;
+}
+
+/* ── Post images: restore ─────────────────────────────────────────────────── */
+
+html.lovespark-sakura    [data-testid="media-element"],
+html.lovespark-hotpink   [data-testid="media-element"],
+html.lovespark-starlight [data-testid="media-element"],
+html.lovespark-sakura    shreddit-player,
+html.lovespark-hotpink   shreddit-player,
+html.lovespark-starlight shreddit-player {
+  filter: none !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   OLD REDDIT  (old.reddit.com)
+   Direct class targeting.
+══════════════════════════════════════════════════════════════════════════ */
+
+html.lovespark-sakura    body.listing-page,
+html.lovespark-sakura    .listing-page #siteTable {
+  background-color: #fff0f5 !important;
+}
+
+html.lovespark-hotpink   body.listing-page,
+html.lovespark-hotpink   .listing-page #siteTable {
+  background-color: #ffb3d9 !important;
+}
+
+html.lovespark-starlight body.listing-page,
+html.lovespark-starlight .listing-page #siteTable {
+  background-color: #fce4f2 !important;
+}
+
+/* Old Reddit header */
+html.lovespark-sakura    #header {
+  background-color: #fce4ec !important;
+  border-bottom: 1px solid #f06292 !important;
+}
+html.lovespark-hotpink   #header {
+  background-color: #f8bbd0 !important;
+  border-bottom: 1px solid #ff1493 !important;
+}
+html.lovespark-starlight #header {
+  background-color: #f3e5f5 !important;
+  border-bottom: 1px solid #c084fc !important;
+}
+
+/* Old Reddit link colors */
+html.lovespark-sakura    a, html.lovespark-sakura    .title a { color: #c2185b !important; }
+html.lovespark-hotpink   a, html.lovespark-hotpink   .title a { color: #ff1493 !important; }
+html.lovespark-starlight a, html.lovespark-starlight .title a { color: #9c27b0 !important; }

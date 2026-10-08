@@ -1,0 +1,117 @@
+/*
+  LoveSpark Reader — github.css
+  GitHub uses a comprehensive CSS custom property system under
+  [data-color-mode] and [data-light-theme] / [data-dark-theme] attrs.
+  We target their --bgColor-*, --fgColor-*, --borderColor-* tokens.
+  Code blocks and syntax highlighting are explicitly excluded.
+*/
+
+/* ── Sakura ──────────────────────────────────────────────────────────────── */
+
+html.lovespark-sakura {
+  /* Background tokens */
+  --bgColor-default:           #fff0f5 !important;
+  --bgColor-muted:             #fce4ec !important;
+  --bgColor-inset:             #f8bbd0 !important;
+  --bgColor-emphasis:          #e91e63 !important;
+  --bgColor-neutral-muted:     rgba(240, 98, 146, 0.1) !important;
+  --bgColor-attention-muted:   rgba(233, 30, 99, 0.1) !important;
+  /* Foreground tokens */
+  --fgColor-default:           #1a0a12 !important;
+  --fgColor-muted:             #6d2540 !important;
+  --fgColor-accent:            #c2185b !important;
+  --fgColor-link:              #c2185b !important;
+  /* Border tokens */
+  --borderColor-default:       rgba(240, 98, 146, 0.3) !important;
+  --borderColor-muted:         rgba(240, 98, 146, 0.15) !important;
+  /* Button */
+  --button-primary-bgColor-rest:    #e91e63 !important;
+  --button-primary-fgColor-rest:    #ffffff !important;
+  --button-primary-borderColor-rest: #c2185b !important;
+}
+
+/* ── Hot Pink ────────────────────────────────────────────────────────────── */
+
+html.lovespark-hotpink {
+  --bgColor-default:           #ffb3d9 !important;
+  --bgColor-muted:             #f8bbd0 !important;
+  --bgColor-inset:             #f48fb1 !important;
+  --bgColor-emphasis:          #ff1493 !important;
+  --bgColor-neutral-muted:     rgba(255, 20, 147, 0.12) !important;
+  --fgColor-default:           #2d0020 !important;
+  --fgColor-muted:             #7b003d !important;
+  --fgColor-accent:            #ff1493 !important;
+  --fgColor-link:              #ff1493 !important;
+  --borderColor-default:       rgba(255, 20, 147, 0.35) !important;
+  --borderColor-muted:         rgba(255, 20, 147, 0.18) !important;
+  --button-primary-bgColor-rest:    #ff1493 !important;
+  --button-primary-borderColor-rest: #c2006e !important;
+}
+
+/* ── Starlight ───────────────────────────────────────────────────────────── */
+
+html.lovespark-starlight {
+  --bgColor-default:           #fce4f2 !important;
+  --bgColor-muted:             #f3e5f5 !important;
+  --bgColor-inset:             #e1bee7 !important;
+  --bgColor-emphasis:          #9c27b0 !important;
+  --bgColor-neutral-muted:     rgba(192, 132, 252, 0.1) !important;
+  --fgColor-default:           #1a0025 !important;
+  --fgColor-muted:             #4a1060 !important;
+  --fgColor-accent:            #7b1fa2 !important;
+  --fgColor-link:              #7b1fa2 !important;
+  --borderColor-default:       rgba(192, 132, 252, 0.3) !important;
+  --borderColor-muted:         rgba(192, 132, 252, 0.15) !important;
+  --button-primary-bgColor-rest:    #9c27b0 !important;
+  --button-primary-borderColor-rest: #6a1b9a !important;
+}
+
+/* ── GitHub header / navbar ──────────────────────────────────────────────── */
+
+html.lovespark-sakura    .AppHeader,
+html.lovespark-sakura    [data-component="AppHeader"] {
+  background-color: #fce4ec !important;
+  border-bottom-color: rgba(240, 98, 146, 0.3) !important;
+}
+html.lovespark-hotpink   .AppHeader,
+html.lovespark-hotpink   [data-component="AppHeader"] {
+  background-color: #f8bbd0 !important;
+  border-bottom-color: rgba(255, 20, 147, 0.4) !important;
+}
+html.lovespark-starlight .AppHeader,
+html.lovespark-starlight [data-component="AppHeader"] {
+  background-color: #f3e5f5 !important;
+  border-bottom-color: rgba(192, 132, 252, 0.3) !important;
+}
+
+/* ── Code blocks: NEVER filter — syntax colours are semantic ─────────────── */
+
+html.lovespark-sakura    .highlight,
+html.lovespark-hotpink   .highlight,
+html.lovespark-starlight .highlight,
+html.lovespark-sakura    .blob-code,
+html.lovespark-hotpink   .blob-code,
+html.lovespark-starlight .blob-code,
+html.lovespark-sakura    .react-code-view,
+html.lovespark-hotpink   .react-code-view,
+html.lovespark-starlight .react-code-view,
+html.lovespark-sakura    pre.blob-code-content,
+html.lovespark-hotpink   pre.blob-code-content,
+html.lovespark-starlight pre.blob-code-content {
+  filter: none !important;
+  --fgColor-default: inherit !important;
+}
+
+/* ── User avatars and repo images: restore ───────────────────────────────── */
+
+html.lovespark-sakura    .avatar,
+html.lovespark-hotpink   .avatar,
+html.lovespark-starlight .avatar,
+html.lovespark-sakura    [data-component="avatar"] img,
+html.lovespark-hotpink   [data-component="avatar"] img,
+html.lovespark-starlight [data-component="avatar"] img,
+html.lovespark-sakura    .social-proof-avatars img,
+html.lovespark-hotpink   .social-proof-avatars img,
+html.lovespark-starlight .social-proof-avatars img {
+  filter: none !important;
+}
