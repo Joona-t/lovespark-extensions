@@ -1,0 +1,251 @@
+/* lovespark-color-picker -- Extension-specific styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 16px; }
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.header-sub {
+  font-family: var(--ls-font-display);
+  font-size: 8px;
+  color: var(--ls-pink-accent);
+}
+
+.status-section { text-align: center; margin-bottom: 14px; }
+.status-icon { font-size: 28px; margin-bottom: 6px; }
+.status-icon.paused { opacity: 0.4; filter: grayscale(1); }
+.status-text { font-size: 13px; font-weight: 500; color: var(--ls-text-dark); margin-bottom: 4px; }
+.cute-msg { font-size: 11px; color: var(--ls-text-muted); margin-bottom: 10px; transition: opacity 0.2s; min-height: 16px; }
+
+.toggle-wrap { display: inline-block; cursor: pointer; }
+.toggle-wrap input { display: none; }
+.toggle-track {
+  display: block; width: 48px; height: 26px;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 13px; position: relative;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.toggle-wrap input:checked + .toggle-track {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+}
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px; background: white;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.toggle-wrap input:checked + .toggle-track .toggle-thumb { transform: translateX(22px); }
+
+/* -- Action button --------------------------------------- */
+.action-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--ls-pink-deep);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--ls-radius-sm);
+  font-family: var(--ls-font-body);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-bottom: 12px;
+}
+
+.action-btn:hover {
+  background: var(--ls-btn-hover-bg);
+  box-shadow: var(--ls-glow);
+}
+
+/* -- Color result ---------------------------------------- */
+.color-result {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.color-preview {
+  width: 100%;
+  height: 48px;
+  border-radius: var(--ls-radius) var(--ls-radius) 0 0;
+}
+
+.color-values { padding: 4px 0; }
+
+.color-value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--ls-font-body);
+  color: var(--ls-text-dark);
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.color-value-row:hover {
+  background: var(--ls-glass-light);
+}
+
+.color-value-row + .color-value-row {
+  border-top: 1px solid var(--ls-glass-border);
+}
+
+.color-value-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ls-text-muted);
+  min-width: 32px;
+}
+
+.color-value-text {
+  font-size: 12px;
+  font-family: var(--ls-font-body);
+  color: var(--ls-text-dark);
+}
+
+.copy-feedback {
+  font-size: 11px;
+  color: var(--ls-pink-accent);
+  text-align: center;
+  min-height: 16px;
+  margin-bottom: 8px;
+  transition: opacity 0.2s;
+}
+
+/* -- History --------------------------------------------- */
+.history-section { margin-bottom: 12px; }
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.history-title {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  font-weight: 600;
+}
+
+.history-clear {
+  background: none;
+  border: none;
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  cursor: pointer;
+  font-family: var(--ls-font-body);
+  padding: 4px 8px;
+}
+
+.history-clear:hover {
+  color: var(--ls-pink-accent);
+}
+
+.history-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.history-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid var(--ls-glass-border);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  padding: 0;
+  background: none;
+}
+
+.history-swatch:hover {
+  transform: scale(1.15);
+  box-shadow: var(--ls-glow);
+}
+
+.history-empty {
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  font-style: italic;
+}
+
+/* -- Stats section --------------------------------------- */
+.stats-section {
+  display: flex; align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 14px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 14px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 16px; color: var(--ls-pink-accent);
+  margin-bottom: 4px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 11px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 36px; background: var(--ls-glass-border); }
+
+.popup-footer { text-align: center; font-size: 11px; color: var(--ls-text-muted); }
+
+/* -- Focus indicators (accessibility) -------------------- */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+.toggle-wrap input:focus-visible + .toggle-track {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
+}
+
+/* -- Reduced motion (accessibility) ---------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
