@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Page Ruler</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button class="theme-dropdown-trigger" id="themeToggle"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Page Ruler</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+    </header>
+    <main class="popup-content">
+      <div class="status-section">
+        <div id="statusIcon" class="status-icon" aria-hidden="true">&#x1F4CF;</div>
+        <div id="statusText" class="status-text" aria-live="polite">Active</div>
+        <div id="cuteMsg" class="cute-msg">Track your lines!</div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable page ruler">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="control-section">
+        <div class="control-group">
+          <label class="slider-label" for="heightSlider">Ruler height</label>
+          <div class="slider-row">
+            <input type="range" id="heightSlider" min="10" max="100" value="40"
+                   aria-label="Ruler height in pixels" aria-valuemin="10" aria-valuemax="100">
+            <span id="heightValue" class="slider-value" aria-live="polite">40px</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="slider-label" for="opacitySlider">Opacity</label>
+          <div class="slider-row">
+            <input type="range" id="opacitySlider" min="5" max="50" value="15"
+                   aria-label="Ruler opacity percentage" aria-valuemin="5" aria-valuemax="50">
+            <span id="opacityValue" class="slider-value" aria-live="polite">15%</span>
+          </div>
+        </div>
+        <div class="color-row">
+          <label class="slider-label" for="colorPicker">Ruler color</label>
+          <input type="color" id="colorPicker" value="#e8457c" aria-label="Ruler color">
+        </div>
+      </div>
+      <div class="preview-section" aria-label="Ruler preview">
+        <div class="preview-label">Preview</div>
+        <div id="rulerPreview" class="ruler-preview"></div>
+      </div>
+      <button id="activateBtn" class="activate-btn" type="button">Activate on this page</button>
+      <div class="stats-section" aria-label="Extension statistics">
+        <div class="stat-box" aria-label="Pages ruled today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Pages ruled total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
