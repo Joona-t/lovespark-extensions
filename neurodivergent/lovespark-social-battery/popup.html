@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Social Battery</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky, the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Social Battery</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          retro
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div id="cuteMsg" class="cute-msg" aria-live="polite">How's your social energy?</div>
+
+      <!-- Battery visual -->
+      <div class="battery-wrap" aria-label="Social battery level">
+        <div class="battery-shell">
+          <div id="batteryFill" class="battery-fill" style="height: 70%;" role="progressbar"
+               aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+          <div id="batteryLabel" class="battery-label">70%</div>
+        </div>
+        <div class="battery-cap" aria-hidden="true"></div>
+      </div>
+
+      <div id="batteryStatus" class="battery-status" aria-live="polite">Feeling social</div>
+
+      <!-- Adjust buttons -->
+      <div class="adjust-section">
+        <div class="adjust-group">
+          <div class="adjust-title">Drain energy</div>
+          <div class="adjust-row">
+            <button class="btn-adjust drain" data-amount="-5" aria-label="Small social event, minus 5">-5</button>
+            <button class="btn-adjust drain" data-amount="-10" aria-label="Medium social event, minus 10">-10</button>
+            <button class="btn-adjust drain" data-amount="-25" aria-label="Big social event, minus 25">-25</button>
+          </div>
+        </div>
+        <div class="adjust-group">
+          <div class="adjust-title">Recharge</div>
+          <div class="adjust-row">
+            <button class="btn-adjust charge" data-amount="5" aria-label="Short break, plus 5">+5</button>
+            <button class="btn-adjust charge" data-amount="10" aria-label="Medium rest, plus 10">+10</button>
+            <button class="btn-adjust charge" data-amount="25" aria-label="Long recharge, plus 25">+25</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section" aria-label="Usage statistics">
+        <div class="stat-box" aria-label="Adjustments today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Adjustments total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
