@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Brain Dump</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeToggle" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      <span id="themeLabel" aria-live="polite">retro</span>
+    </button>
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Brain Dump</div>
+        <div class="header-sub" id="popupDesc">Empty your spinning brain</div>
+      </div>
+    </header>
+
+    <!-- Input area -->
+    <div class="input-section">
+      <div class="input-row">
+        <input type="text" id="thoughtInput" class="thought-input" placeholder="What's on your mind..."
+               aria-label="Type a thought" maxlength="280" autocomplete="off" autofocus>
+      </div>
+      <div class="tag-row" role="group" aria-label="Tag your thought">
+        <button class="tag-btn" data-tag="do" aria-label="Tag as Do" aria-pressed="false">
+          <span aria-hidden="true">&#x26A1;</span> Do
+        </button>
+        <button class="tag-btn" data-tag="think" aria-label="Tag as Think" aria-pressed="false">
+          <span aria-hidden="true">&#x1F4AD;</span> Think
+        </button>
+        <button class="tag-btn" data-tag="feel" aria-label="Tag as Feel" aria-pressed="false">
+          <span aria-hidden="true">&#x1F496;</span> Feel
+        </button>
+        <button id="addBtn" class="btn-dump" aria-label="Dump thought">Dump it</button>
+      </div>
+    </div>
+
+    <!-- Thought list -->
+    <div id="thoughtList" class="thought-list" role="list" aria-label="Today's thoughts" aria-live="polite"></div>
+
+    <!-- Empty state -->
+    <div id="emptyState" class="empty-state" hidden>
+      <div class="empty-emoji" aria-hidden="true">&#x1F9E0;</div>
+      <div class="empty-text">Your brain is clear!</div>
+      <div class="empty-hint">Type a thought and press Enter to dump it.</div>
+    </div>
+
+    <!-- Clear button -->
+    <button id="clearBtn" class="btn-clear" hidden aria-label="Clear today's thoughts">
+      Clear today's dump
+    </button>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Dump statistics">
+      <div class="stat-box" aria-label="Thoughts dumped today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total thoughts dumped">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
