@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Focus Highlight</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button class="theme-dropdown-trigger" id="themeToggle"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Focus Highlight</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+    </header>
+    <main class="popup-content">
+      <div class="status-section">
+        <div id="statusIcon" class="status-icon" aria-hidden="true">&#x1F50E;</div>
+        <div id="statusText" class="status-text" aria-live="polite">Active</div>
+        <div id="cuteMsg" class="cute-msg">Spotlight your reading!</div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable focus highlight">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="control-section">
+        <label class="slider-label" for="dimSlider">Dim intensity</label>
+        <div class="slider-row">
+          <input type="range" id="dimSlider" min="10" max="80" value="25"
+                 aria-label="Dim intensity percentage" aria-valuemin="10" aria-valuemax="80">
+          <span id="dimValue" class="slider-value" aria-live="polite">25%</span>
+        </div>
+      </div>
+      <button id="activateBtn" class="activate-btn" type="button">Activate on this page</button>
+      <div class="stats-section" aria-label="Extension statistics">
+        <div class="stat-box" aria-label="Pages highlighted today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Pages highlighted total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
