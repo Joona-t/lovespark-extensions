@@ -1,0 +1,109 @@
+/* LoveSpark Zen Garden — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+/* ── Picker ────────────────────────────── */
+.picker-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  justify-content: center;
+}
+.pick-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s, border-color 0.1s, background 0.1s;
+}
+.pick-btn:hover { border-color: var(--ls-pink-accent); }
+.pick-btn.active {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+  transform: scale(1.1);
+}
+.btn-clear-garden {
+  margin-left: 4px;
+  font-size: 14px;
+  color: var(--ls-text-muted);
+}
+.btn-clear-garden:hover { color: #DC3545; }
+
+/* ── Garden canvas ─────────────────────── */
+.garden-canvas {
+  width: 308px;
+  height: 220px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 30% 70%, rgba(232, 69, 124, 0.03) 0%, transparent 50%),
+    linear-gradient(180deg, var(--ls-glass) 0%, var(--ls-glass-strong) 100%);
+  border: 1px solid var(--ls-glass-border);
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+  margin-bottom: 8px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.garden-item {
+  position: absolute;
+  font-size: 24px;
+  line-height: 1;
+  cursor: grab;
+  transition: transform 0.15s ease;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.garden-item:hover {
+  transform: scale(1.2);
+}
+
+/* ── Stats row ─────────────────────────── */
+.stats-row {
+  text-align: center;
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+}
+.stat-inline {
+  font-family: var(--ls-font-display);
+  color: var(--ls-pink-accent);
+}
+.stat-inline-label { color: var(--ls-text-muted); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+/* ── Focus ─────────────────────────────── */
+button:focus-visible, [role="menuitem"]:focus-visible, .garden-canvas:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Zen Garden</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Zen Garden</div>
+        <div class="header-sub" id="popupDesc">Tap to place, breathe</div>
+      </div>
+    </header>
+
+    <!-- Element picker -->
+    <div class="picker-bar" role="toolbar" aria-label="Garden elements">
+      <button class="pick-btn active" data-element="rock" aria-label="Rock" aria-pressed="true">&#x1FAA8;</button>
+      <button class="pick-btn" data-element="bamboo" aria-label="Bamboo" aria-pressed="false">&#x1F38D;</button>
+      <button class="pick-btn" data-element="flower" aria-label="Flower" aria-pressed="false">&#x1F338;</button>
+      <button class="pick-btn" data-element="tree" aria-label="Tree" aria-pressed="false">&#x1F333;</button>
+      <button class="pick-btn" data-element="water" aria-label="Water" aria-pressed="false">&#x1F4A7;</button>
+      <button class="pick-btn" data-element="lantern" aria-label="Lantern" aria-pressed="false">&#x1F3EE;</button>
+      <button class="pick-btn btn-clear-garden" data-element="clear" aria-label="Clear garden">&#x1F5D1;</button>
+    </div>
+
+    <!-- Garden canvas -->
+    <div id="gardenCanvas" class="garden-canvas" role="img" aria-label="Your zen garden — click to place elements" tabindex="0"></div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">sessions today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">total</span>
+      <span class="stat-sep">·</span>
+      <span id="itemCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">items</span>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
