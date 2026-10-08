@@ -65,9 +65,9 @@ async function init() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (tab?.url) {
-      try { currentDomain = new URL(tab.url).hostname.replace(/^www\./, ''); } catch (err) { console.warn('[i-dont-want-cookies-scroll-fix] unknown:', err); }
+      try { currentDomain = new URL(tab.url).hostname.replace(/^www\./, ''); } catch (_) {}
     }
-  } catch (err) { console.warn('[i-dont-want-cookies-scroll-fix] unknown:', err); }
+  } catch (_) {}
 
   const data = await chrome.runtime.sendMessage({ type: 'GET_STATS' });
   applyState(data);
