@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Med Reminder</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Med Reminder</div>
+        <div class="header-sub" id="popupDesc">Did you take your meds?</div>
+      </div>
+    </header>
+
+    <!-- Med list -->
+    <div id="medList" class="med-list" role="list" aria-label="Medication reminders"></div>
+
+    <!-- All done message -->
+    <div id="allDone" class="all-done" hidden aria-live="polite">
+      <span class="done-emoji" aria-hidden="true">&#x2705;</span>
+      <span class="done-text">All meds taken today!</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">taken today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+    <div id="footerMount"></div>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+/* LoveSpark Med Reminder — Popup styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 340px; font-family: var(--ls-font-body); background: var(--ls-bg-gradient); color: var(--ls-text-dark); }
+.popup-container { padding: 14px 16px 10px; }
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+.med-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.med-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border); border-radius: 10px;
+  cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  min-height: 48px;
+}
+.med-item:hover { background: var(--ls-glass-strong); }
+.med-item.taken { border-color: #00B894; }
+.med-item.taken .med-label { text-decoration: line-through; color: var(--ls-text-muted); }
+
+.med-check {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid var(--ls-glass-border); background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: transparent; flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.med-item.taken .med-check { background: #00B894; border-color: #00B894; color: white; }
+
+.med-info { flex: 1; }
+.med-label { font-size: 12px; font-weight: 600; color: var(--ls-text-dark); }
+.med-time { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-pink-accent); }
+.med-emoji { font-size: 20px; flex-shrink: 0; }
+
+.all-done {
+  text-align: center; padding: 10px; margin-bottom: 10px;
+  background: rgba(0, 184, 148, 0.1); border: 1px solid #00B894;
+  border-radius: 10px;
+}
+.done-emoji { font-size: 18px; margin-right: 6px; }
+.done-text { font-size: 11px; font-weight: 600; color: #00B894; }
+
+.stats-row { text-align: center; font-size: 10px; color: var(--ls-text-muted); margin-bottom: 8px; }
+.stat-inline { font-family: var(--ls-font-display); color: var(--ls-pink-accent); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+button:focus-visible, [role="menuitem"]:focus-visible, .med-item:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
