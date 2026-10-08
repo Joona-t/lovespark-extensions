@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Consent scroll regression fixture</title>
+  <link rel="stylesheet" href="../content-styles.css">
+  <style>
+    body { margin: 0; font: 16px system-ui; }
+    #status { position: fixed; top: 0; left: 0; z-index: 10; padding: 12px; background: white; border: 2px solid black; }
+    main { padding: 100px 24px 24px; height: 3000px; background: linear-gradient(white, #a9d5ff); }
+    #onetrust-consent-sdk { position: fixed; inset: 10%; background: #fff; z-index: 9; }
+    #unrelated-modal { position: fixed; inset: 15%; z-index: 11; background: #ffe; }
+  </style>
+  <script>
+    window.browser = { runtime: { sendMessage: async () => ({
+      isEnabled: true, whitelisted: false,
+      autoDecline: new URLSearchParams(location.search).has('autoDecline')
+    }) } };
+    window.chrome = { storage: { onChanged: { addListener() {} } } };
+  </script>
+</head>
+<body>
+  <div id="status" aria-live="polite"></div>
+  <main>
+    <h1>Consent scroll regression fixture</h1>
+    <p>The bottom marker should be reachable after the consent banner is hidden.</p>
+    <button id="open-modal">Open unrelated modal</button>
+    <p style="margin-top: 2600px">Bottom marker</p>
+  </main>
+  <script src="../content.js"></script>
+  <script>
+    let rejectClicks = 0;
+    let unrelatedModalOpen = false;
+    const lockRoot = new URLSearchParams(location.search).get('root') === 'html'
+      ? document.documentElement : document.body;
+    const status = document.querySelector('#status');
+    function updateStatus() {
+      const cmp = document.querySelector('#onetrust-consent-sdk');
+      status.textContent = `scrollY=${Math.round(scrollY)}; rootOverflow=${getComputedStyle(lockRoot).overflowY}; rootPosition=${getComputedStyle(lockRoot).position}; bannerHidden=${cmp ? getComputedStyle(cmp).display === 'none' : 'removed'}; rejectClicks=${rejectClicks}; unrelatedModal=${unrelatedModalOpen}`;
+    }
+    document.querySelector('#open-modal').onclick = () => {
+      unrelatedModalOpen = true;
+      const modal = document.createElement('div');
+      modal.id = 'unrelated-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.innerHTML = '<h2>Search modal</h2><button id="close-modal">Close</button>';
+      document.body.append(modal);
+      document.body.style.setProperty('overflow-y', 'hidden', 'important');
+      modal.querySelector('button').onclick = () => {
+        unrelatedModalOpen = false;
+        modal.remove();
+        document.body.style.removeProperty('overflow-y');
+        updateStatus();
+      };
+      updateStatus();
+    };
+    setTimeout(() => {
+      if (new URLSearchParams(location.search).has('noCmp')) {
+        lockRoot.style.setProperty('overflow-y', 'hidden', 'important');
+        updateStatus();
+        return;
+      }
+      const cmp = document.createElement('div');
+      cmp.id = 'onetrust-consent-sdk';
+      cmp.innerHTML = '<button id="onetrust-reject-all-handler">Reject all</button>';
+      cmp.querySelector('button').onclick = () => {
+        rejectClicks += 1;
+        cmp.remove();
+        lockRoot.style.removeProperty('overflow-y');
+        lockRoot.style.removeProperty('position');
+        updateStatus();
+      };
+      document.body.append(cmp);
+      lockRoot.style.setProperty('overflow-y', 'hidden', 'important');
+      if (new URLSearchParams(location.search).has('fixed')) {
+        lockRoot.style.setProperty('position', 'fixed', 'important');
+      }
+      updateStatus();
+    }, 200);
+    addEventListener('scroll', updateStatus);
+    setInterval(updateStatus, 200);
+  </script>
+</body>
+</html>

@@ -1,0 +1,735 @@
+/*
+ * I Don't Want Cookies — content-styles.css
+ * Injected at document_start so banners NEVER visually appear.
+ * 300+ selectors covering named CMPs + generic patterns.
+ * Rules use display:none !important only — no layout side-effects.
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 1 — COOKIEBOT
+   ═══════════════════════════════════════════════════════════ */
+#CybotCookiebotDialog,
+#CybotCookiebotDialogBodyUnderlay,
+#CybotCookiebotBackdrop,
+.CybotCookiebotDialog,
+#CybotCookiebotDialogNav,
+.CybotCookiebotFader,
+div[id^="CybotCookiebot"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 2 — ONETRUST
+   ═══════════════════════════════════════════════════════════ */
+#onetrust-consent-sdk,
+#onetrust-banner-sdk,
+#onetrust-pc-sdk,
+.onetrust-pc-dark-filter,
+.onetrust-blur-overlay,
+.onetrust-fade-in,
+#onetrust-group-container,
+#ot-sdk-btn-floating,
+.ot-fade-in,
+.ot-floating-button,
+div[id^="onetrust-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 3 — COOKIEYES / COOKIE LAW INFO
+   ═══════════════════════════════════════════════════════════ */
+#cookie-law-info-bar,
+#cookie-law-info-again,
+#cookie-law-info-bar-inner,
+.cli-modal-backdrop,
+.cli-modal-overlay,
+.cli-settings-overlay,
+.cli-modal,
+.cookie-law-info-bar,
+#cky-consent-bar,
+#cky-modal,
+.cky-overlay {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 4 — QUANTCAST CHOICE (qc-cmp)
+   ═══════════════════════════════════════════════════════════ */
+#qc-cmp2-container,
+#qc-cmp2-ui,
+.qc-cmp2-consent-info,
+.qc-cmp2-summary-buttons,
+.qcCmpUi,
+div[id^="qc-cmp"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 5 — TRUSTARC / TRUSTE
+   ═══════════════════════════════════════════════════════════ */
+#truste-consent-track,
+#truste-consent-required,
+.truste_overlay,
+.truste_box_overlay,
+#trustarc-consent-panel,
+#truste-show-consent,
+.truste-consent-buttons,
+div[id^="truste-"],
+div[class^="truste_"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 6 — TERMLY
+   ═══════════════════════════════════════════════════════════ */
+#termly-code-snippet-support,
+.t-consentPrompt,
+.termly-styles,
+div[id^="termly-"],
+div[class^="termly-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 7 — IUBENDA
+   ═══════════════════════════════════════════════════════════ */
+#iubenda-cs-banner,
+.iubenda-cs-container,
+.iubenda-backdrop,
+#iubenda-iframe,
+.iubenda-cs-visible,
+div[id^="iubenda-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 8 — OSANO
+   ═══════════════════════════════════════════════════════════ */
+.osano-cm-window,
+.osano-cm-dialog,
+.osano-cm-overlay,
+.osano-cm-widget,
+div[class^="osano-cm-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 9 — COMPLIANZ
+   ═══════════════════════════════════════════════════════════ */
+#cmplz-cookiebanner-container,
+.cmplz-cookiebanner,
+.cmplz-overlay,
+#cmplz-manage-consent,
+.cmplz-bottom,
+.cmplz-top,
+div[id^="cmplz-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 10 — COOKIE SCRIPT
+   ═══════════════════════════════════════════════════════════ */
+#cookiescript_injected,
+#cookiescript_wrapper,
+.cookiescript_badge,
+.cookiescript_fader,
+#cookiescript_injected_wrapper {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 11 — DIDOMI
+   ═══════════════════════════════════════════════════════════ */
+#didomi-host,
+#didomi-consent-popup,
+.didomi-popup-open,
+.didomi-overlay,
+.didomi-notice,
+#didomi-notice,
+#didomi-initial,
+div[id^="didomi-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 12 — AXEPTIO
+   ═══════════════════════════════════════════════════════════ */
+#axeptio_overlay,
+#axeptio_btn,
+.axeptio__widget,
+.axeptio-widget,
+div[id^="axeptio"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 13 — KLARO
+   ═══════════════════════════════════════════════════════════ */
+.klaro .cookie-modal,
+.klaro .cookie-notice,
+.klaro .cookie-notice-inner,
+.klaro .cookie-modal-notice,
+#klaro,
+.klaro {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 14 — SOURCEPOINT (CMP)
+   ═══════════════════════════════════════════════════════════ */
+div[id^="sp_message_container"],
+#sp_privacy_manager_tab,
+.message-overlay,
+div[class^="sp_message"],
+iframe[id^="sp_message_iframe"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 15 — ADMIRAL CMP
+   ═══════════════════════════════════════════════════════════ */
+.admiral-cmp,
+div[id^="admiral-"],
+div[class^="admiral-cmp"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 16 — EVIDON
+   ═══════════════════════════════════════════════════════════ */
+#_evidon-banner,
+#_evidon_banner,
+.evidon-prefdiag-overlay,
+.evidon-banner,
+div[id^="_evidon"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 17 — USERCENTRICS
+   ═══════════════════════════════════════════════════════════ */
+#usercentrics-root,
+div[data-testid="uc-root"],
+.uc-embedding-container,
+#uc-center-container,
+div[id^="usercentrics-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 18 — COOKIEHUB
+   ═══════════════════════════════════════════════════════════ */
+#cookiehub-overlay,
+#cookiehub-widget,
+.ch2-container,
+.ch2-dialog,
+#ch2-dialog,
+div[class^="ch2-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 19 — CONSENTMANAGER.NET
+   ═══════════════════════════════════════════════════════════ */
+#cmpbox,
+#cmpbox2,
+.cmpboxbg,
+.cmpbox,
+#cmp-container,
+div[id^="cmpbox"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 20 — CIVIC COOKIE CONTROL
+   ═══════════════════════════════════════════════════════════ */
+#ccc,
+.ccc-notify-banner,
+.ccc-module,
+#ccc-module,
+#ccc-overlay,
+.ccc-overlay {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 21 — BORLABS COOKIE (WORDPRESS)
+   ═══════════════════════════════════════════════════════════ */
+#BorlabsCookie,
+.borlabs-cookie-widget,
+#borlabs-cookie-box,
+.borlabs-cookie-content-blocker-thumbnail,
+div[id^="BorlabsCookie"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 22 — COOKIEFIRST
+   ═══════════════════════════════════════════════════════════ */
+#cookiefirst-root,
+div[data-cookiefirst-root],
+.cookiefirst-root,
+div[id^="cookiefirst-"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 23 — REAL COOKIE BANNER (WORDPRESS)
+   ═══════════════════════════════════════════════════════════ */
+.rcb-backdrop,
+#rcb-consent-banner,
+.rcb-cookie-banner {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 24 — COOKIE INFORMATION (CMP)
+   ═══════════════════════════════════════════════════════════ */
+.cookie-information-container,
+#coiOverlay,
+.coi-banner-container,
+#CybotCookiebotDialogPoweredbyCybot {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 25 — VANILLA COOKIECONSENT (open-source)
+   ═══════════════════════════════════════════════════════════ */
+.cc-window,
+.cc-banner,
+.cc-popup,
+.cc-overlay,
+.cc-revoke,
+.cc-grower,
+#cc-main,
+.cc-main {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 26 — WP COOKIE NOTICE (WORDPRESS)
+   ═══════════════════════════════════════════════════════════ */
+#cookie-notice,
+.cookie-notice-container,
+#cn-notice-text {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 27 — MOOVE GDPR (WORDPRESS)
+   ═══════════════════════════════════════════════════════════ */
+#gdpr-cookie-compliance,
+.gdpr_lightbox,
+.moove-gdpr-infobar,
+.moove-gdpr-infobar-allow-all,
+#moove_gdpr_cookie_info_bar {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 28 — PANDECTES GDPR (SHOPIFY)
+   ═══════════════════════════════════════════════════════════ */
+#pandectes-banner,
+.pandectes-banner,
+#pandectes-root {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 29 — TERMSFEED
+   ═══════════════════════════════════════════════════════════ */
+.termsfeed-com---nb,
+.termsfeed-com---pc-dialog,
+.termsfeed-com---reset {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 30 — PRIVACY MANAGER / CONSENT
+   ═══════════════════════════════════════════════════════════ */
+.privacy-manager,
+#privacy-manager,
+.privacy-manager-frame,
+.pm-container,
+div[id^="privacy-manager"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 31 — COOKIE PRO / ONETRUST SUBSIDIARIES
+   ═══════════════════════════════════════════════════════════ */
+#cookiepro-banner-sdk,
+.optanon-alert-box-wrapper,
+.optanon-status-editable,
+#optanon-popup-bg,
+#optanon-popup-wrapper,
+div[id^="optanon"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 32 — USERCENTRICS (ALTERNATIVE IDS)
+   ═══════════════════════════════════════════════════════════ */
+.uc-banner-container,
+.uc-privacy-modal,
+#uc-privacy-modal,
+div[data-uc-banner] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 33 — MICROSOFT CONSENT MODE
+   ═══════════════════════════════════════════════════════════ */
+.mscc-banner-container,
+#mscc-banner,
+.mscc-dialog,
+.c-mscc-dialog {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 34 — GENERIC CLASS PATTERNS — COOKIE
+   (paired with structural suffixes to avoid false positives)
+   ═══════════════════════════════════════════════════════════ */
+[class*="cookie-banner" i],
+[class*="cookie-consent" i],
+[class*="cookie-notice" i],
+[class*="cookie-popup" i],
+[class*="cookie-wall" i],
+[class*="cookie-modal" i],
+[class*="cookie-dialog" i],
+[class*="cookie-overlay" i],
+[class*="cookie-disclaimer" i],
+[class*="cookie-bar" i],
+[class*="cookie-alert" i],
+[class*="cookie-message" i],
+[class*="cookie-notification" i],
+[class*="cookie-warning" i],
+[class*="cookiebar" i],
+[class*="cookiebanner" i],
+[class*="cookieconsent" i],
+[class*="cookie_consent" i],
+[class*="cookie-law-bar" i],
+[class*="cookie-law-info" i],
+[class*="eu-cookie" i],
+[class*="policyAccept" i],
+[class*="cookie-policy-banner" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 35 — GENERIC CLASS PATTERNS — GDPR
+   ═══════════════════════════════════════════════════════════ */
+[class*="gdpr-banner" i],
+[class*="gdpr-notice" i],
+[class*="gdpr-popup" i],
+[class*="gdpr-modal" i],
+[class*="gdpr-overlay" i],
+[class*="gdpr-container" i],
+[class*="gdpr-alert" i],
+[class*="gdpr-box" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 36 — GENERIC CLASS PATTERNS — CONSENT
+   ═══════════════════════════════════════════════════════════ */
+[class*="consent-banner" i],
+[class*="consent-popup" i],
+[class*="consent-modal" i],
+[class*="consent-notice" i],
+[class*="consent-overlay" i],
+[class*="consent-dialog" i],
+[class*="consent-wall" i],
+[class*="consent-bar" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 37 — GENERIC CLASS PATTERNS — PRIVACY
+   ═══════════════════════════════════════════════════════════ */
+[class*="privacy-banner" i],
+[class*="privacy-notice" i],
+[class*="privacy-popup" i],
+[class*="privacy-modal" i],
+[class*="privacy-overlay" i],
+[class*="privacy-dialog" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 38 — GENERIC ID PATTERNS — COOKIE
+   ═══════════════════════════════════════════════════════════ */
+[id*="cookie-banner" i],
+[id*="cookie-consent" i],
+[id*="cookie-notice" i],
+[id*="cookie-popup" i],
+[id*="cookie-bar" i],
+[id*="cookie-modal" i],
+[id*="cookie-dialog" i],
+[id*="cookie-overlay" i],
+[id*="cookie-alert" i],
+[id*="cookie-wall" i],
+[id*="cookiebanner" i],
+[id*="cookieconsent" i],
+[id*="cookiebar" i],
+[id*="eu-cookie" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 39 — GENERIC ID PATTERNS — GDPR / CONSENT
+   ═══════════════════════════════════════════════════════════ */
+[id*="gdpr-banner" i],
+[id*="gdpr-notice" i],
+[id*="gdpr-popup" i],
+[id*="gdpr-modal" i],
+[id*="gdpr-overlay" i],
+[id*="consent-banner" i],
+[id*="consent-popup" i],
+[id*="consent-modal" i],
+[id*="consent-notice" i],
+[id*="consent-dialog" i],
+[id*="privacy-banner" i],
+[id*="privacy-notice" i],
+[id*="privacy-popup" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 40 — ARIA / ROLE PATTERNS
+   (only target dialog roles to avoid breaking legitimate content)
+   ═══════════════════════════════════════════════════════════ */
+[aria-label*="cookie" i][role="dialog"],
+[aria-label*="cookie" i][role="alertdialog"],
+[aria-label*="cookies" i][role="dialog"],
+[aria-label*="consent" i][role="dialog"],
+[aria-label*="consent" i][role="alertdialog"],
+[aria-label*="privacy" i][role="dialog"],
+[aria-label*="gdpr" i][role="dialog"],
+[aria-label*="data protection" i][role="dialog"],
+[aria-label*="cookie notice" i],
+[aria-label*="cookie consent" i],
+[aria-label*="cookie policy" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 41 — DATA ATTRIBUTE PATTERNS
+   ═══════════════════════════════════════════════════════════ */
+[data-testid*="cookie-banner" i],
+[data-testid*="consent-banner" i],
+[data-testid*="gdpr-banner" i],
+[data-testid*="cookie-notice" i],
+[data-cookie-consent],
+[data-gdpr-consent],
+[data-consent-banner],
+[data-cookie-banner],
+[data-privacy-notice],
+[data-cookie-overlay],
+[data-cookiebanner],
+[data-gdpr],
+div[data-nosnippet][aria-modal="true"] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 42 — OVERLAY / BACKDROP HELPERS
+   (standalone overlay divs that darken the page behind a banner)
+   ═══════════════════════════════════════════════════════════ */
+.cookie-consent-overlay,
+.gdpr-overlay,
+.consent-overlay,
+.privacy-overlay,
+.cookie-overlay,
+.cookie-modal-overlay,
+.cookie-backdrop,
+.consent-backdrop,
+.gdpr-backdrop,
+#consent-overlay,
+#gdpr-overlay,
+#cookie-backdrop,
+#privacy-overlay,
+.cmp-overlay,
+.cmp-backdrop,
+#cmp-overlay {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 43 — WRAPPERS INJECTED BY KNOWN IFRAME CMPS
+   ═══════════════════════════════════════════════════════════ */
+iframe[src*="cookiebot.com"],
+iframe[src*="onetrust.com"],
+iframe[src*="trustarc.com"],
+iframe[src*="quantcast.com"],
+iframe[src*="consentmanager.net"],
+iframe[src*="didomi.io"],
+iframe[src*="usercentrics.eu"],
+iframe[src*="sp-prod.net"],
+iframe[src*="sourcepoint.com"],
+iframe[src*="cookiepro.com"],
+iframe[title*="cookie" i][sandbox],
+iframe[title*="consent" i][sandbox],
+iframe[title*="privacy notice" i] {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 44 — SCROLL-LOCK OVERRIDES
+   Many CMPs set overflow:hidden on <html> or <body> to prevent
+   scrolling behind the banner. Undo that.
+   ═══════════════════════════════════════════════════════════ */
+html.cookie-modal-open,
+html.gdpr-active,
+html.has-consent-modal,
+html.cmp-open,
+html.has-cookie-banner,
+body.cookie-modal-open,
+body.gdpr-active,
+body.consent-open,
+body.has-cookie-banner,
+body.cmp-open,
+body.modal-open-for-consent,
+body.overflow-hidden-for-cookie,
+body.no-scroll-for-consent {
+  overflow: auto !important;
+  position: static !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 45 — ADDITIONAL NAMED SERVICES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Plausible consent */
+.plausible-consent-overlay,
+#plausible-consent-overlay { display: none !important; }
+
+/* Matomo consent */
+.matomo-consent-overlay,
+#matomo-consent-overlay { display: none !important; }
+
+/* HubSpot cookie */
+#hs-banner-parent,
+.hs-banner-container,
+#cookie-law-info-bar + #hs-overlay { display: none !important; }
+
+/* Wix cookie banner */
+[data-hook="cookie-banner"],
+#cookie-banner-root,
+#COOKIE_BANNER { display: none !important; }
+
+/* Squarespace cookie banner */
+.sqs-cookie-banner-v2,
+.cookie-banner { display: none !important; }
+
+/* Shopify (generic) */
+.shopify-section--cookie-banner,
+#shopify-cookie-banner { display: none !important; }
+
+/* Elementor Popup cookie */
+.elementor-popup-modal[data-elementor-type="popup"] > .elementor-motion-effects-container + .dialog-widget-content[class*="cookie" i] { display: none !important; }
+
+/* WordPress GDPR Cookie Consent plugin */
+#gdpr-cookie-consent-bar,
+.gdpr-cookie-consent-bar,
+.gdpr-cookie-consent-settings,
+#gdpr-cookie-consent-settings { display: none !important; }
+
+/* Silktide / Cookie Control */
+#cookie-control,
+.cookie-control,
+#cookie-control-panel { display: none !important; }
+
+/* Drupal EU Cookie Compliance */
+#sliding-popup,
+.sliding-popup-top,
+.sliding-popup-bottom,
+.eu-cookie-compliance-popup { display: none !important; }
+
+/* Joomla Cookie Consent */
+.com-cookieconfirm-banner,
+#cookie-confirm { display: none !important; }
+
+/* CookieConsent v3 (upgraded vanilla) */
+#cc:not(.cc--invisible),
+#cc .cm,
+#cc .pm { display: none !important; }
+
+/* Piwik PRO consent */
+.ppms_cm_popup_overlay,
+.ppms_cm_popup__content,
+#ppms_cm_consent_popup { display: none !important; }
+
+/* Consent.js */
+.consent-overlay-wrap,
+#consent-notice { display: none !important; }
+
+/* WP AutoTerms */
+#wp-autoterms-cookiebar,
+.wp-autoterms-cookiebar { display: none !important; }
+
+/* CookiePal */
+.cookiepal-consent-overlay,
+#cookiepal-popup { display: none !important; }
+
+/* Sirdata CMP */
+#sirdata-cmp-container,
+.sirdata-cmp { display: none !important; }
+
+/* LiveRamp CMP */
+.liveRamp-consent,
+#liveRamp-cmp { display: none !important; }
+
+/* Pubtech CMP */
+#pubtech-cmp,
+.pubtech-consent { display: none !important; }
+
+/* Oath / Verizon Media CMP */
+.sdk-consent-container,
+#sdk-consent-container { display: none !important; }
+
+/* Forbes / Minute Media CMP */
+.purch-gdpr-modal,
+.purch-gdpr-underlay { display: none !important; }
+
+/* Marfeel CMP */
+.mrf-cmp__layer,
+#mrf-cmp { display: none !important; }
+
+/* Fandom cookie */
+.fandom-gdpr-popup,
+.gdpr-consent-modal { display: none !important; }
+
+/* Stack Exchange / Stack Overflow */
+.js-consent-banner,
+#cookie-consent-banner { display: none !important; }
+
+/* Reddit cookie notice */
+.XPromoBottomBar,
+[data-testid="cookie-policy-banner"] { display: none !important; }
+
+/* Twitter/X cookie */
+[data-testid="BottomBar"][role="dialog"],
+[data-testid="toast"]:has([href*="cookie" i]) { display: none !important; }
+
+/* BBC cookie notice */
+#bbccookies,
+.bbccookies,
+.cookie-banner--global { display: none !important; }
+
+/* Guardian */
+.consent-management,
+#consent-management { display: none !important; }
+
+/* NY Times */
+.css-1w7d72r,    /* NYT cookie notice (class changes but commonly this) */
+[data-testid="gdpr-consent-notice"] { display: none !important; }
+
+/* CNN */
+.cn-privacy-notification-widget,
+#cn-privacy-notification-widget { display: none !important; }
+
+/* Forbes */
+.consent_div,
+#consent_blackbar { display: none !important; }

@@ -1,0 +1,38 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node (if dependencies added later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Build output
+dist/
+build/
+*.zip
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Dev-only icon generator script
+icons/_gen.py
+
+# Chrome extension cache (generated when loading unpacked)
+_metadata/
+
+# Thumbnails
+Thumbs.db
