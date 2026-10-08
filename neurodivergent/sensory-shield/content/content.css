@@ -1,0 +1,88 @@
+/* Sensory Shield — Static CSS Interventions
+ * All rules gated by data-sensory-shield-* attributes on <html>.
+ * Injected at document_start to prevent flashing.
+ */
+
+/* ── Reduce Motion ──────────────────────────────────────────────────────────── */
+
+html[data-sensory-shield-reduce-motion] *,
+html[data-sensory-shield-reduce-motion] *::before,
+html[data-sensory-shield-reduce-motion] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-sensory-shield-reduce-motion] video[autoplay] {
+  display: none !important;
+}
+
+/* Skip if OS already reduces motion */
+@media (prefers-reduced-motion: reduce) {
+  html[data-sensory-shield-reduce-motion] *,
+  html[data-sensory-shield-reduce-motion] *::before,
+  html[data-sensory-shield-reduce-motion] *::after {
+    animation-duration: revert !important;
+    animation-iteration-count: revert !important;
+    transition-duration: revert !important;
+    scroll-behavior: revert !important;
+  }
+  html[data-sensory-shield-reduce-motion] video[autoplay] {
+    display: revert !important;
+  }
+}
+
+/* ── Hide GIFs ──────────────────────────────────────────────────────────────── */
+
+html[data-sensory-shield-hide-gifs] img[src$=".gif"],
+html[data-sensory-shield-hide-gifs] img[src$=".GIF"],
+html[data-sensory-shield-hide-gifs] img[src*=".gif?"],
+html[data-sensory-shield-hide-gifs] img[src*=".gif#"],
+html[data-sensory-shield-hide-gifs] img[data-src$=".gif"],
+html[data-sensory-shield-hide-gifs] picture source[srcset$=".gif"] {
+  visibility: hidden !important;
+}
+
+/* ── Cursor Size ────────────────────────────────────────────────────────────── */
+
+html[data-sensory-shield-cursor],
+html[data-sensory-shield-cursor] * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 2 L4 26 L10 20 L16 28 L20 26 L14 18 L22 18 Z' fill='%23E8457C' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+
+html[data-sensory-shield-cursor] a,
+html[data-sensory-shield-cursor] button,
+html[data-sensory-shield-cursor] [role="button"],
+html[data-sensory-shield-cursor] input[type="submit"],
+html[data-sensory-shield-cursor] input[type="button"],
+html[data-sensory-shield-cursor] label[for] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='12' r='10' fill='none' stroke='%23E8457C' stroke-width='2.5'/%3E%3Cpath d='M16 6 L16 18 M10 12 L22 12' stroke='%23E8457C' stroke-width='2'/%3E%3C/svg%3E") 16 12, pointer !important;
+}
+
+/* ── Font Comfort (OpenDyslexic) ─────────────────────────────────────────────
+ * @font-face is injected by content.js via browser.runtime.getURL()
+ * because MV3 CSS files don't support __MSG_@@extension_id__ substitution.
+ */
+
+html[data-sensory-shield-font] body,
+html[data-sensory-shield-font] p,
+html[data-sensory-shield-font] li,
+html[data-sensory-shield-font] td,
+html[data-sensory-shield-font] th,
+html[data-sensory-shield-font] span,
+html[data-sensory-shield-font] div,
+html[data-sensory-shield-font] article,
+html[data-sensory-shield-font] section,
+html[data-sensory-shield-font] main,
+html[data-sensory-shield-font] aside,
+html[data-sensory-shield-font] blockquote,
+html[data-sensory-shield-font] dd,
+html[data-sensory-shield-font] dt,
+html[data-sensory-shield-font] figcaption,
+html[data-sensory-shield-font] label {
+  font-family: 'SensoryShield-OpenDyslexic', OpenDyslexic, sans-serif !important;
+  line-height: 1.8 !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+}

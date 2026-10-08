@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensory Shield — Settings</title>
+  <link rel="stylesheet" href="../lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="sparky">
+      <div>
+        <h1>Sensory Shield</h1>
+        <p class="subtitle">Settings</p>
+      </div>
+    </header>
+
+    <!-- Global Toggle -->
+    <section class="card">
+      <div class="card-row">
+        <div>
+          <h2>Global Shield</h2>
+          <p class="card-desc">Master on/off for all sites</p>
+        </div>
+        <div class="toggle-switch" id="global-toggle" tabindex="0" role="switch" aria-checked="true"></div>
+      </div>
+    </section>
+
+    <!-- Whitelist -->
+    <section class="card">
+      <h2>Whitelisted Sites</h2>
+      <p class="card-desc">Sensory Shield won't run on these sites</p>
+      <div class="whitelist-input-row">
+        <input type="text" id="whitelist-input" placeholder="example.com" class="text-input">
+        <button class="btn-pink" id="whitelist-add-btn">Add</button>
+      </div>
+      <ul class="whitelist-list" id="whitelist-list"></ul>
+    </section>
+
+    <!-- Reset -->
+    <section class="card">
+      <h2>Reset</h2>
+      <p class="card-desc">Clear all per-site presets and start fresh</p>
+      <button class="btn-pink btn-danger" id="reset-btn">Reset All Presets</button>
+      <div class="confirm-dialog hidden" id="reset-confirm">
+        <p>Are you sure? This removes all saved site settings.</p>
+        <div class="confirm-actions">
+          <button class="btn-pink" id="reset-yes">Yes, reset</button>
+          <button class="btn-ghost" id="reset-no">Cancel</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="card about-card">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="sparky-large">
+      <h2>Your brain deserves a calmer internet</h2>
+      <p>Sensory Shield by LoveSpark — free, open source, no data collected. Ever.</p>
+      <div class="about-links">
+        <a href="https://github.com/Joona-t" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://ko-fi.com/lovespark" target="_blank" rel="noopener">Ko-fi</a>
+        <a href="https://joona-t.github.io" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+      <p class="version" id="version-display">v1.0.5</p>
+    </section>
+  </div>
+
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

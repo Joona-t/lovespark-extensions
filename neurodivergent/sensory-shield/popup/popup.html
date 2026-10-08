@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensory Shield</title>
+  <link rel="stylesheet" href="../lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header" style="position: relative;">
+      <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="sparky">
+      <div class="header-text">
+        <h1 id="popupTitle">Sensory Shield</h1>
+        <span class="subtitle" id="popupDesc">by LoveSpark</span>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+    </header>
+
+    <div class="domain-bar">
+      <span class="domain-label">Site:</span>
+      <span id="current-domain" class="domain-name">—</span>
+    </div>
+
+    <div class="presets-card">
+      <div class="presets-label">Presets</div>
+      <div class="presets-row">
+        <button class="preset-btn" data-preset="calm">Calm</button>
+        <button class="preset-btn" data-preset="focus">Focus</button>
+        <button class="preset-btn" data-preset="full">Full Shield</button>
+        <button class="preset-btn" data-preset="custom">Custom</button>
+      </div>
+    </div>
+
+    <div class="features-card">
+      <div class="feature-row">
+        <span class="feature-label">Reduce Motion</span>
+        <div class="toggle-switch" id="toggle-reduce-motion" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Colour Tint</span>
+        <div class="toggle-switch" id="toggle-tint" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="tint-controls hidden" id="tint-controls">
+        <div class="tint-row">
+          <label for="tint-color">Colour</label>
+          <input type="color" id="tint-color" value="#FDCFE1">
+        </div>
+        <div class="tint-row">
+          <label for="tint-opacity">Opacity</label>
+          <input type="range" id="tint-opacity" min="1" max="50" value="10" class="range-slider">
+          <span id="tint-opacity-label" class="range-value">10%</span>
+        </div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Hide Flashing/GIFs</span>
+        <div class="toggle-switch" id="toggle-gifs" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Focus Ruler</span>
+        <div class="toggle-switch" id="toggle-ruler" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Increase Cursor</span>
+        <div class="toggle-switch" id="toggle-cursor" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+      <div class="feature-row">
+        <span class="feature-label">Font Comfort</span>
+        <div class="toggle-switch" id="toggle-font" tabindex="0" role="switch" aria-checked="false"></div>
+      </div>
+    </div>
+
+    <button class="btn-pink save-btn" id="save-preset-btn">Save as my preset for this site</button>
+
+    <div id="cute-msg" class="cute-msg">Your brain deserves calm. 💕</div>
+
+    <footer class="popup-footer">
+      <span>LoveSpark Suite</span> · <a href="#" id="settings-link">Settings</a>
+    </footer>
+  </div>
+
+  <div class="sparkle-container" id="sparkle-container"></div>
+
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="../lib/lovespark-footer.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
