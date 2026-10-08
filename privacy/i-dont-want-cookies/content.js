@@ -120,6 +120,10 @@ const REJECT_TEXT = [
 let settings = { isEnabled: true, whitelisted: false, autoDecline: false };
 let initialized = false;
 let observer = null;
+let rootObserver = null;
+let hiddenConsentObserved = false;
+let consentLockTimer = null;
+const hiddenConsentElements = new Set();
 
 // Badge update batching (max 1 update/second)
 let pendingCount = 0;
@@ -166,7 +170,50 @@ function hideEl(el) {
   if (!el || el._idwcDone) return;
   el._idwcDone = true;
   el.style.setProperty('display', 'none', 'important');
+  hiddenConsentObserved = true;
+  hiddenConsentElements.add(el);
+  clearTimeout(consentLockTimer);
+  consentLockTimer = setTimeout(() => { hiddenConsentObserved = false; }, 5000);
+  restoreConsentScrolling();
   scheduleBadgeUpdate(1);
+}
+
+// CMPs often lock the page with an inline `overflow: hidden !important` after
+// injecting their banner. The document_start stylesheet cannot override an
+// inline important declaration. Only remove inline locks shortly after a known
+// consent element was hidden, and leave non-consent dialogs alone.
+function hasOtherDialog() {
+  return [...document.querySelectorAll('dialog[open], [role="dialog"], [aria-modal="true"]')]
+    .some((el) => {
+      const style = getComputedStyle(el);
+      return style.display !== 'none' && style.visibility !== 'hidden';
+    });
+}
+
+function restoreConsentScrolling() {
+  if (!hiddenConsentObserved || !document.body) return;
+  for (const el of hiddenConsentElements) {
+    if (!el.isConnected) hiddenConsentElements.delete(el);
+  }
+  const consentWasRemoved = hiddenConsentElements.size === 0;
+  if (!settings.isEnabled || settings.whitelisted || hasOtherDialog()) {
+    if (consentWasRemoved) hiddenConsentObserved = false;
+    return;
+  }
+
+  for (const root of [document.documentElement, document.body]) {
+    for (const property of ['overflow-y', 'overflow']) {
+      if (['hidden', 'clip'].includes(root.style.getPropertyValue(property).trim())) {
+        root.style.removeProperty(property);
+      }
+    }
+    if (root.style.getPropertyValue('position').trim() === 'fixed') {
+      root.style.removeProperty('position');
+    }
+  }
+  // A consent dialog that was removed may leave its lock behind. Clear it
+  // once, then stop treating later page dialogs as consent-related.
+  if (consentWasRemoved) hiddenConsentObserved = false;
 }
 
 // ── MutationObserver ──────────────────────────────────────────────────────────
@@ -185,9 +232,14 @@ function startObserver() {
         checkNode(node);
       }
     }
+    restoreConsentScrolling();
   });
 
   observer.observe(document.body, { childList: true, subtree: true });
+  rootObserver = new MutationObserver(restoreConsentScrolling);
+  for (const root of [document.documentElement, document.body]) {
+    rootObserver.observe(root, { attributes: true, attributeFilter: ['style'] });
+  }
 }
 
 function checkNode(el) {
@@ -302,9 +354,12 @@ chrome.storage.onChanged.addListener((changes) => {
 
   if (!settings.isEnabled || settings.whitelisted) {
     if (observer) { observer.disconnect(); observer = null; }
+    if (rootObserver) { rootObserver.disconnect(); rootObserver = null; }
+    restoreConsentScrolling();
   } else if (!observer && initialized) {
     startObserver();
     hideExisting();
+    restoreConsentScrolling();
   }
 });
 
