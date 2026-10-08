@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Med Tracker — Setup</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+  <div class="onboarding-container">
+
+    <!-- Step 1: Welcome -->
+    <section class="step" id="step1">
+      <div class="step-card welcome-card">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="welcome-mascot">
+        <h1 class="welcome-title">Med Tracker</h1>
+        <p class="welcome-sub">by LoveSpark 💕</p>
+        <p class="welcome-desc">
+          The simplest way to track your medications. One click to log, zero data leaves your device.
+        </p>
+        <div class="privacy-badge">
+          🔒 Your data never leaves this device
+        </div>
+        <div class="disclaimer-box">
+          <p>LoveSpark Med Tracker is a personal tracking tool, not a medical device. Effect timelines are rough estimates. Always follow your prescriber's guidance.</p>
+        </div>
+        <button class="btn-pink btn-lg" id="startBtn">Get Started ✨</button>
+      </div>
+    </section>
+
+    <!-- Step 2: Add Medications -->
+    <section class="step" id="step2" style="display:none">
+      <div class="step-card">
+        <h2 class="step-title">💊 Your Medications</h2>
+        <p class="step-desc">Add the medications you want to track. You can always change these later in settings.</p>
+
+        <!-- Med form -->
+        <div class="med-form" id="medForm">
+          <div class="form-row">
+            <label class="form-label" for="medName">Name</label>
+            <input type="text" id="medName" class="form-input" placeholder="e.g. Vyvanse" list="medSuggestions" autocomplete="off">
+            <datalist id="medSuggestions"></datalist>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="medDosage">Dosage</label>
+            <input type="text" id="medDosage" class="form-input" placeholder="e.g. 30mg, 1 tablet">
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="medFrequency">Frequency</label>
+            <select id="medFrequency" class="form-select"></select>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label">Time of day</label>
+            <div class="slot-checkboxes" id="slotCheckboxes"></div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label">Type</label>
+            <select id="medType" class="form-select"></select>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label">Emoji</label>
+            <div class="emoji-picker" id="emojiPicker"></div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label">Color</label>
+            <div class="color-picker" id="colorPicker"></div>
+          </div>
+
+          <button class="btn-pink" id="addMedBtn">Add Medication</button>
+        </div>
+
+        <!-- Added meds list -->
+        <div class="added-meds" id="addedMeds"></div>
+
+        <div class="step-actions">
+          <button class="btn-ghost" id="backBtn1">Back</button>
+          <button class="btn-pink" id="nextBtn2" disabled>Continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Done -->
+    <section class="step" id="step3" style="display:none">
+      <div class="step-card done-card">
+        <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="done-mascot">
+        <h2 class="done-title">You're all set! 🌸</h2>
+        <p class="done-desc">Your medications are ready to track. Click the extension icon in your toolbar to start logging doses.</p>
+        <div class="done-summary" id="doneSummary"></div>
+        <button class="btn-pink btn-lg" id="doneBtn" aria-label="Open Med Tracker">Open Med Tracker 💕</button>
+      </div>
+    </section>
+
+    <!-- Step indicators -->
+    <nav class="step-dots" aria-label="Setup progress">
+      <span class="dot active" data-step="1" aria-label="Step 1: Welcome" aria-current="step"></span>
+      <span class="dot" data-step="2" aria-label="Step 2: Add medications"></span>
+      <span class="dot" data-step="3" aria-label="Step 3: Done"></span>
+    </nav>
+  </div>
+
+  <script type="module" src="onboarding.js"></script>
+</body>
+</html>
