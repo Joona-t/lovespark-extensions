@@ -1,0 +1,263 @@
+/* LoveSpark Win Jar — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+/* ── Header ────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+}
+.header-sub {
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Jar display ───────────────────────── */
+.jar-section {
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 12px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+.jar-emoji {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 4px;
+  transition: transform 0.3s ease;
+}
+.jar-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ls-text-dark);
+  margin-bottom: 2px;
+}
+.jar-count {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-pink-accent);
+}
+.streak-text {
+  font-size: 9px;
+  color: var(--ls-text-muted);
+  margin-top: 2px;
+}
+
+@keyframes jar-shake {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(8deg); }
+  60% { transform: rotate(-5deg); }
+  80% { transform: rotate(5deg); }
+}
+.shaking {
+  animation: jar-shake 0.5s ease;
+}
+
+/* ── Shake button ──────────────────────── */
+.btn-shake {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--ls-pink-deep);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 38px;
+  margin-bottom: 10px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: var(--ls-glow);
+}
+.btn-shake:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 16px rgba(214, 52, 102, 0.5);
+}
+.btn-shake:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Random win ────────────────────────── */
+.random-win {
+  background: var(--ls-glass-strong);
+  border: 1px solid var(--ls-pink-accent);
+  border-radius: var(--ls-radius);
+  padding: 12px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.random-win-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ls-pink-accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.random-win-text {
+  font-size: 13px;
+  color: var(--ls-text-dark);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.random-win-date {
+  font-size: 9px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Celebration ───────────────────────── */
+.celebration {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-pink-accent);
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding: 6px;
+}
+
+/* ── Add section ───────────────────────── */
+.add-section { margin-bottom: 10px; }
+.add-row {
+  display: flex;
+  gap: 6px;
+}
+.win-input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+  font-size: 12px;
+  font-family: var(--ls-font-body);
+  min-height: 36px;
+  outline: none;
+}
+.win-input:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+.win-input::placeholder { color: var(--ls-text-muted); }
+.btn-add {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: var(--ls-pink-deep);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+}
+.btn-add:hover {
+  transform: scale(1.05);
+  box-shadow: var(--ls-glow);
+}
+
+/* ── Today's wins ──────────────────────── */
+.today-wins { margin-bottom: 10px; }
+.today-wins-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--ls-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.today-wins-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.win-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--ls-text-dark);
+}
+.win-item-star { color: var(--ls-pink-accent); flex-shrink: 0; }
+.win-item-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.win-item-time {
+  font-size: 9px;
+  color: var(--ls-text-muted);
+  flex-shrink: 0;
+}
+
+/* ── Stats ─────────────────────────────── */
+.stats-section {
+  display: flex;
+  align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 10px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 10px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* ── Focus indicators ──────────────────── */
+button:focus-visible,
+input:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

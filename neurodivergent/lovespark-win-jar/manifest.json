@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Win Jar",
+  "version": "1.0.34",
+  "description": "Your digital win jar. Log small victories, shake for a random past win when you need a boost. Built for ADHD brains that forget their wins. No account, always free.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon-48.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "win-jar@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data. All wins stay in local browser storage."
+      }
+    }
+  }
+}
