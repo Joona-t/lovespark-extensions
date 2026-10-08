@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Desk Stretch</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Desk Stretch</div>
+        <div class="header-sub" id="popupDesc">Move your body</div>
+      </div>
+    </header>
+
+    <!-- Stretch card -->
+    <div class="stretch-card" aria-live="polite">
+      <div id="stretchEmoji" class="stretch-emoji" aria-hidden="true">&#x1F9D8;</div>
+      <div id="stretchName" class="stretch-name">Loading...</div>
+      <div id="stretchDuration" class="stretch-duration"></div>
+      <div id="stretchSteps" class="stretch-steps"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-row">
+      <button id="doneBtn" class="btn-done" aria-label="I did the stretch">Done!</button>
+      <button id="skipBtn" class="btn-skip" aria-label="Show another stretch">Skip</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">stretches today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+    <div id="footerMount"></div>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

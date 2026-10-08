@@ -1,0 +1,49 @@
+/* LoveSpark Desk Stretch — Popup styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 340px; font-family: var(--ls-font-body); background: var(--ls-bg-gradient); color: var(--ls-text-dark); }
+.popup-container { padding: 14px 16px 10px; }
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+.stretch-card {
+  text-align: center; padding: 16px; margin-bottom: 10px;
+  background: var(--ls-glass); border: 1px solid var(--ls-glass-border);
+  border-radius: 12px; backdrop-filter: blur(8px);
+}
+.stretch-emoji { font-size: 36px; margin-bottom: 6px; }
+.stretch-name { font-size: 14px; font-weight: 700; color: var(--ls-text-dark); margin-bottom: 4px; }
+.stretch-duration {
+  font-family: var(--ls-font-display); font-size: 10px;
+  color: var(--ls-pink-accent); margin-bottom: 8px;
+}
+.stretch-steps { font-size: 11px; color: var(--ls-text-dark); line-height: 1.5; }
+
+.action-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.btn-done {
+  flex: 1; padding: 10px; border-radius: 10px; border: none;
+  background: var(--ls-pink-deep); color: white;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  min-height: 40px; box-shadow: var(--ls-glow); transition: transform 0.15s;
+}
+.btn-done:hover { transform: scale(1.02); }
+.btn-skip {
+  padding: 10px 16px; border-radius: 10px;
+  border: 1px solid var(--ls-glass-border); background: var(--ls-glass);
+  color: var(--ls-text-muted); font-size: 12px; font-weight: 600;
+  cursor: pointer; min-height: 40px; transition: background 0.15s;
+}
+.btn-skip:hover { background: var(--ls-glass-strong); color: var(--ls-text-dark); }
+
+.stats-row { text-align: center; font-size: 10px; color: var(--ls-text-muted); margin-bottom: 8px; }
+.stat-inline { font-family: var(--ls-font-display); color: var(--ls-pink-accent); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+button:focus-visible, [role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
