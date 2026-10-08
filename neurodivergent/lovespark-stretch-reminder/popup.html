@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Stretch Reminder</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Stretch Reminder</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+      <div class="theme-dropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
+          <span id="themeLabel">Retro Pink</span> &#9662;
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro" role="menuitem">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+          <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+          <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div class="stretch-card" aria-label="Current stretch suggestion">
+        <div id="stretchEmoji" class="stretch-emoji" aria-hidden="true"></div>
+        <div id="stretchText" class="stretch-text" aria-live="polite">Loading stretch...</div>
+        <button id="nextStretchBtn" class="next-btn" aria-label="Show next stretch">Next Stretch</button>
+      </div>
+
+      <div class="timer-section">
+        <div class="timer-label">Next reminder in</div>
+        <div id="timerDisplay" class="timer-display" aria-live="polite">--m</div>
+      </div>
+
+      <div class="interval-section">
+        <label for="intervalSelect" class="interval-label">Remind every</label>
+        <select id="intervalSelect" class="interval-select" aria-label="Reminder interval">
+          <option value="15">15 min</option>
+          <option value="30" selected>30 min</option>
+          <option value="45">45 min</option>
+          <option value="60">60 min</option>
+        </select>
+      </div>
+
+      <div class="toggle-section">
+        <span class="toggle-label">Reminders</span>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable stretch reminders">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="stats-section" aria-label="Stretch statistics">
+        <div class="stat-box" aria-label="Stretches today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Total stretches">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="ls-footer">
+      <span class="ls-footer-suite">LoveSpark Suite</span>
+      <span class="ls-footer-credit">LoveSpark by Joona Tyrninoksa</span>
+    </footer>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
