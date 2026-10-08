@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Sensory Dimmer</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Sensory Dimmer</div>
+        <div class="header-sub" id="popupDesc">Calm the visual noise</div>
+      </div>
+    </header>
+    <div class="toggle-card">
+      <span id="statusText" class="toggle-label-text">Dimming active</span>
+      <label class="toggle-row">
+        <input type="checkbox" id="enableToggle" checked aria-label="Enable sensory dimmer">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+    <div class="sliders-section">
+      <div class="slider-row">
+        <label for="brightnessSlider" class="slider-label">Brightness</label>
+        <input type="range" id="brightnessSlider" class="slider" min="20" max="100" value="70" aria-label="Brightness">
+        <span id="brightnessVal" class="slider-val">70%</span>
+      </div>
+      <div class="slider-row">
+        <label for="contrastSlider" class="slider-label">Contrast</label>
+        <input type="range" id="contrastSlider" class="slider" min="20" max="100" value="85" aria-label="Contrast">
+        <span id="contrastVal" class="slider-val">85%</span>
+      </div>
+      <div class="slider-row">
+        <label for="saturationSlider" class="slider-label">Saturation</label>
+        <input type="range" id="saturationSlider" class="slider" min="0" max="100" value="60" aria-label="Color saturation">
+        <span id="saturationVal" class="slider-val">60%</span>
+      </div>
+    </div>
+    <div class="shortcut-hint"><span class="hint-key">Alt+Shift+X</span> toggle on any page</div>
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">dims today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+    <div id="footerMount"></div>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

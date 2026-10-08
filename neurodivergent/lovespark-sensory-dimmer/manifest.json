@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Sensory Dimmer",
+  "version": "1.0.2",
+  "homepage_url": "https://lovespark.love",
+  "description": "ADHD sensory overload relief. Dim any page instantly. Reduce brightness, contrast, and color saturation. One click calm. No tracking, always free.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon-48.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "commands": {
+    "toggle-dim": {
+      "suggested_key": {
+        "default": "Alt+Shift+X"
+      },
+      "description": "Toggle sensory dimmer"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sensory-dimmer@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data. CSS filters applied locally via activeTab."
+      }
+    }
+  }
+}
