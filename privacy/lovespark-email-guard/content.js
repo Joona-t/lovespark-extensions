@@ -59,7 +59,7 @@ function flushReport() {
       type: 'TRACKERS_BLOCKED',
       count: pendingCount,
     });
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-email-guard] flushReport:', err); }
   pendingCount = 0;
 }
 
@@ -286,7 +286,7 @@ async function init() {
   try {
     const data = await browser.storage.local.get('isEnabled');
     isEnabled = data.isEnabled !== false;
-  } catch (_) {}
+  } catch (err) { console.warn('[lovespark-email-guard] init:', err); }
 
   if (!isEnabled) return;
 
