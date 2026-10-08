@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Quick Timer</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Quick Timer</div>
+        <div class="header-sub" id="popupDesc">Set it and forget it</div>
+      </div>
+    </header>
+
+    <!-- Timer display (shown when active) -->
+    <div id="timerDisplay" class="timer-display" hidden>
+      <div class="timer-ring-wrap">
+        <svg class="timer-ring" viewBox="0 0 100 100" aria-hidden="true">
+          <circle class="ring-bg" cx="50" cy="50" r="42" />
+          <circle id="ringProgress" class="ring-fill" cx="50" cy="50" r="42" />
+        </svg>
+        <div id="timerText" class="timer-text" aria-live="polite">0:00</div>
+      </div>
+      <button id="stopBtn" class="btn-stop" aria-label="Cancel timer">Cancel</button>
+    </div>
+
+    <!-- Completed message -->
+    <div id="completedMsg" class="completed-msg" hidden aria-live="polite">
+      <div class="completed-emoji" aria-hidden="true">&#x2705;</div>
+      <div class="completed-text">Timer complete!</div>
+      <button id="dismissBtn" class="btn-dismiss" aria-label="Dismiss">OK</button>
+    </div>
+
+    <!-- Preset picker (shown when no timer active) -->
+    <div id="presetSection" class="preset-section">
+      <div class="preset-grid" role="group" aria-label="Timer presets">
+        <button class="btn-preset" data-minutes="5" aria-label="5 minutes">
+          <span class="preset-num">5</span>
+          <span class="preset-unit">min</span>
+        </button>
+        <button class="btn-preset" data-minutes="10" aria-label="10 minutes">
+          <span class="preset-num">10</span>
+          <span class="preset-unit">min</span>
+        </button>
+        <button class="btn-preset" data-minutes="15" aria-label="15 minutes">
+          <span class="preset-num">15</span>
+          <span class="preset-unit">min</span>
+        </button>
+        <button class="btn-preset" data-minutes="25" aria-label="25 minutes">
+          <span class="preset-num">25</span>
+          <span class="preset-unit">min</span>
+        </button>
+      </div>
+      <div class="custom-row">
+        <input type="number" id="customMin" class="custom-input" placeholder="Custom"
+               min="1" max="120" aria-label="Custom minutes (1-120)">
+        <button id="customBtn" class="btn-custom" aria-label="Start custom timer">Go</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Timer statistics">
+      <div class="stat-box" aria-label="Timers completed today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total timers completed">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
