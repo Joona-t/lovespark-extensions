@@ -1,0 +1,16 @@
+node_modules/
+dist/
+!infrastructure/lovespark-browse/dist/
+.DS_Store
+*.zip
+*.xpi
+*.crx
+*.bak
+_metadata/
+__pycache__/
+.venv/
+work/
+.claude/
+.codex/
+CLAUDE.md
+AGENTS.md
