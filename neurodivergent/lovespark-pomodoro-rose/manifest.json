@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark Pomodoro Rose",
+  "version": "1.0.1",
+  "homepage_url": "https://lovespark.love",
+  "description": "ADHD-friendly Pomodoro timer. Work 25 min, break 5 min. Each session grows a rose. Watch your garden bloom. Flexible intervals. No account, always free.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon-48.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "pomodoro-rose@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data. All timer data stays in local browser storage."
+      }
+    }
+  }
+}
