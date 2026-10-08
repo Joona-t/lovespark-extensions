@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="description" content="Flappy Waifu — kawaii neon Flappy Bird with progressive difficulty. Free, no ads, open source.">
+<meta name="theme-color" content="#ff6eb4">
+<title>Flappy Waifu</title>
+<link rel="stylesheet" href="lib/lovespark-fonts.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<div id="game-wrapper">
+  <div id="title-row">
+    <div id="title">Flappy <span>Waifu</span></div>
+    <div class="game-theme-dropdown" id="gameThemeDropdown">
+      <button class="game-theme-trigger" id="gameThemeToggle" aria-expanded="false" aria-haspopup="menu" aria-controls="gameThemeMenu">
+        <span id="gameThemeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="game-theme-menu" id="gameThemeMenu" role="menu">
+        <div class="game-theme-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="canvas-container">
+    <canvas id="canvas"></canvas>
+
+    <div id="hud">
+      <div>
+        <div id="score-label">Score</div>
+        <div id="score-display">0</div>
+      </div>
+      <div id="hud-right">
+        <div id="best-display">
+          <div id="best-label">Best</div>
+          <div id="best-num">0</div>
+        </div>
+        <button id="mute-btn" type="button" aria-label="Toggle music" aria-pressed="true" title="Toggle music">&#x1F50A;</button>
+      </div>
+    </div>
+
+    <div id="overlay">
+      <div id="start-content">
+        <div class="overlay-title">FLAPPY<br>WAIFU</div>
+        <div class="overlay-sub">Kawaii Edition</div>
+        <div id="start-speech" class="waifu-speech"></div>
+      </div>
+
+      <div id="death-content" style="display:none">
+        <div class="overlay-title" id="death-title">GAME OVER</div>
+        <div id="medal-badge"></div>
+        <div class="death-score-row">
+          <div id="death-grade" class="death-grade">D</div>
+          <div>
+            <div id="final-label">SCORE</div>
+            <div id="final-score">0</div>
+          </div>
+        </div>
+        <div id="score-delta"></div>
+
+        <div class="death-stats">
+          <div class="death-stat">
+            <span class="death-stat-label">COMBO</span>
+            <span class="death-stat-value" id="death-combo">0</span>
+          </div>
+          <div class="death-stat">
+            <span class="death-stat-label">CLOSE CALLS</span>
+            <span class="death-stat-value" id="death-near-misses">0</span>
+          </div>
+        </div>
+
+        <div id="death-hearts" class="hearts-breakdown"></div>
+
+        <div id="death-daily" class="daily-progress" style="display:none"></div>
+
+        <div id="death-balance" class="hearts-balance"></div>
+
+        <div id="death-speech" class="waifu-speech"></div>
+        <div id="death-run-count" class="run-counter"></div>
+        <div class="hint retry-hint">Tap anywhere to retry</div>
+      </div>
+
+      <button class="btn" id="start-btn">START GAME</button>
+      <div class="hint">Click or Space to flap</div>
+    </div>
+  </div>
+
+  <div id="controls-hint">Space / Click to Flap</div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
