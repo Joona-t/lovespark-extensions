@@ -1,0 +1,197 @@
+/* LoveSpark Tab Counter -- popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 16px; }
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.header-sub {
+  font-family: var(--ls-font-display);
+  font-size: 8px;
+  color: var(--ls-pink-accent);
+}
+
+/* -- Big Count -- */
+.big-count-section {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.big-count {
+  font-family: var(--ls-font-display);
+  font-size: 32px;
+  color: var(--ls-pink-accent);
+  transition: transform 0.3s, color 0.3s;
+}
+
+.big-count.warn {
+  color: #FF8C00;
+}
+
+.big-count.danger {
+  color: #DC3545;
+}
+
+.big-count-label {
+  font-size: 12px;
+  color: var(--ls-text-muted);
+  margin-top: 2px;
+}
+
+.warn-msg {
+  font-size: 11px;
+  color: #DC3545;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.warn-msg.hidden { display: none; }
+
+/* -- Toggle -- */
+.toggle-wrap {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.toggle-wrap input { display: none; }
+
+.toggle-track {
+  display: block; width: 48px; height: 26px;
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 13px; position: relative;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.toggle-wrap input:checked + .toggle-track {
+  background: var(--ls-pink-deep);
+  border-color: var(--ls-pink-deep);
+  box-shadow: var(--ls-glow);
+}
+
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 20px; height: 20px; background: white;
+  border-radius: 50%;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-wrap input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(22px);
+}
+
+/* -- Threshold -- */
+.threshold-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.threshold-label {
+  font-size: 12px;
+  color: var(--ls-text-dark);
+}
+
+.threshold-input {
+  width: 60px;
+  padding: 4px 8px;
+  font-family: var(--ls-font-body);
+  font-size: 13px;
+  color: var(--ls-text-dark);
+  background: var(--ls-glass-light);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* -- Window List -- */
+.windows-header {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ls-text-dark);
+  margin-bottom: 6px;
+}
+
+.window-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.window-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+}
+
+.window-name {
+  font-size: 12px;
+  color: var(--ls-text-dark);
+}
+
+.window-name.focused {
+  color: var(--ls-pink-accent);
+  font-weight: 600;
+}
+
+.window-count {
+  font-family: var(--ls-font-display);
+  font-size: 12px;
+  color: var(--ls-pink-accent);
+}
+
+/* -- Focus indicators -- */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+.toggle-wrap input:focus-visible + .toggle-track {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
+}
+
+/* -- Reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
