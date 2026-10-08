@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark CWS Filler",
+  "version": "0.1.1",
+  "description": "Auto-fills the Chrome Web Store dashboard text fields from a cws-listing.json. A LoveSpark shipping helper.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LoveSpark CWS Filler",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chrome.google.com/webstore/devconsole/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "mascot.png"
+      ],
+      "matches": [
+        "https://chrome.google.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "lovespark-cws-filler@lovespark.love",
+      "strict_min_version": "109.0"
+    }
+  }
+}

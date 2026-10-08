@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoveSpark CWS Filler</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main class="ls-popup" role="dialog" aria-labelledby="ls-title" aria-describedby="ls-desc">
+    <header class="ls-head">
+      <img class="ls-mascot" src="mascot.png" alt="Sparky the LoveSpark wolf mascot" />
+      <h1 id="ls-title">CWS Filler</h1>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true"
+                aria-expanded="false" aria-label="Change theme">
+          <span id="themeLabel" aria-live="polite">Retro Pink</span>
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option active" data-theme="retro" role="menuitem">Retro Pink</button>
+          <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
+          <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
+          <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <p id="ls-desc" class="ls-desc">
+      Auto-fills the Chrome Web Store dashboard from a <code>cws-listing.json</code>.
+    </p>
+
+    <ol class="ls-steps">
+      <li>Open your extension's listing in the CWS dashboard.</li>
+      <li>Click the Sparky button at the bottom-right of the page.</li>
+      <li>Load its <code>cws-listing.json</code>, then <strong>Fill text fields</strong>.</li>
+      <li>Drag in the screenshots &amp; tiles, review, and click <strong>Submit</strong> yourself.</li>
+    </ol>
+
+    <p class="ls-foot">
+      Text fields only — images &amp; category stay manual. Nothing leaves your device.
+    </p>
+  </main>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
