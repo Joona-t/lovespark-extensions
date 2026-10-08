@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Friction Hero (CWS)</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="blocked.css">
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      width: 1280px; height: 800px;
+      min-height: 0;
+      padding: 0;
+      overflow: hidden;
+      align-items: stretch;
+      justify-content: stretch;
+    }
+    .container {
+      width: 100% !important;
+      max-width: none !important;
+      height: 100%;
+      padding: 36px 48px !important;
+      gap: 24px !important;
+      filter: blur(1.5px) brightness(0.9);
+    }
+    .garden-canvas-wrap { height: 440px !important; width: 100%; max-width: none !important; }
+    .info-panel { max-width: none !important; width: 100%; }
+    .friction-overlay {
+      background: rgba(94, 20, 51, 0.35) !important;
+      backdrop-filter: blur(6px);
+    }
+    .friction-card {
+      box-shadow: 0 30px 90px rgba(94, 20, 51, 0.45) !important;
+    }
+  </style>
+</head>
+<body>
+  <script src="cws-shots/mock.js"></script>
+  <div class="loading-state" id="loadingState" style="display:none">Growing...</div>
+  <div class="container" id="mainContainer">
+    <div class="garden-canvas-wrap"><canvas id="gardenCanvas"></canvas></div>
+    <div class="info-panel">
+      <div class="domain-row">
+        <span class="stage-emoji" id="stageEmoji">🌺</span>
+        <span class="domain-name" id="domainName">reddit.com</span>
+        <span class="day-count" id="dayCount">— 9d</span>
+      </div>
+      <div class="stage-label" id="stageLabel">A thriving garden 🌺</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar" style="width:100%"></div>
+        <span class="progress-text" id="progressText">100%</span>
+      </div>
+      <div class="affirmation" id="affirmation">"This garden is proof that you can do hard things with grace."</div>
+      <button class="back-btn" id="backBtn">&larr; Go Back</button>
+      <div class="unblock-link" id="unblockLink">I need to visit this site...</div>
+    </div>
+    <div class="friction-overlay" id="frictionOverlay" role="dialog" aria-modal="true">
+      <div class="friction-card">
+        <div class="friction-title">Are you sure?</div>
+        <div class="friction-body">Unblocking will wilt your garden. Your flowers will lose half their growth.</div>
+        <div class="friction-preview"><canvas id="frictionCanvas" width="280" height="160"></canvas></div>
+        <div class="friction-timer" aria-live="polite">Wait <span id="timerCount">22</span>s...</div>
+        <div class="friction-input-wrap">
+          <label class="friction-input-label" for="frictionInput">Type the domain to confirm:</label>
+          <input type="text" class="friction-input" id="frictionInput" value="reddit" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="friction-buttons">
+          <button class="btn-cancel">Cancel</button>
+          <button class="btn-unblock" disabled>I understand, unblock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="garden-sprites.js"></script>
+  <script src="affirmations.js"></script>
+  <script src="garden.js"></script>
+  <script>
+    // Render the main garden canvas + the small friction preview canvas
+    window.addEventListener("DOMContentLoaded", () => {
+      const main = document.getElementById("gardenCanvas");
+      const wrap = main.parentElement;
+      const dpr = window.devicePixelRatio || 1;
+      const rect = wrap.getBoundingClientRect();
+      main.width = rect.width * dpr;
+      main.height = rect.height * dpr;
+      main.getContext("2d").scale(dpr, dpr);
+      const mainR = new GardenRenderer(main, 0);
+      mainR.render(9 * 86400000, 4);
+
+      const frc = document.getElementById("frictionCanvas");
+      const frcR = new GardenRenderer(frc, 0, true);
+      frcR.renderStatic(9 * 86400000, 4);
+    });
+  </script>
+</body>
+</html>

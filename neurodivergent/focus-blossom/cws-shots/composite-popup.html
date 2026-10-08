@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Store Screenshot (popup composite)</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <style>
+    html, body { margin: 0; padding: 0; background: linear-gradient(165deg, #ffeaf4 0%, #ffd4e5 40%, #ffb8d4 100%); }
+    body {
+      width: 1280px;
+      height: 800px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      align-items: center;
+      gap: 48px;
+      padding: 0 80px 0 96px;
+      box-sizing: border-box;
+      font-family: 'DM Mono', monospace;
+      overflow: hidden;
+    }
+    .hero-copy { max-width: 640px; text-align: left; color: #4b2b47; }
+    .hero-copy .eyebrow {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 11px;
+      color: #c2185b;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .hero-copy h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 30px;
+      line-height: 1.35;
+      margin: 0 0 20px 0;
+      color: #4b2b47;
+    }
+    .hero-copy h1 .pink { color: #e8457c; }
+    .hero-copy p {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #6b4764;
+      margin: 0 0 12px 0;
+    }
+    .hero-copy .bullets {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #4b2b47;
+    }
+    .hero-copy .bullets div { margin-bottom: 8px; }
+    .popup-wrap {
+      width: 360px;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(194, 24, 91, 0.25), 0 4px 12px rgba(194, 24, 91, 0.15);
+      overflow: hidden;
+    }
+    .popup-wrap .popup-container { border-radius: 0; }
+  </style>
+</head>
+<body>
+  <script src="cws-shots/mock.js"></script>
+  <div class="hero-copy">
+    <div class="eyebrow">LOVESPARK SUITE</div>
+    <h1>Block sites. <span class="pink">Grow a garden.</span></h1>
+    <p>Focus Blossom replaces doomscroll with a living garden. The longer you resist, the more your flowers bloom.</p>
+    <div class="bullets">
+      <div>🌸 Four stages: seed → sprout → bud → bloom → garden</div>
+      <div>⚡ Growth speeds up the more sites you block</div>
+      <div>🔒 Private by design — everything stays on your device</div>
+      <div>🎨 Four cozy themes: Retro Pink, Dark, Beige, Slate</div>
+    </div>
+  </div>
+  <div class="popup-wrap">
+    <div class="popup-container" role="dialog" aria-labelledby="headerTitle">
+      <header class="popup-header">
+        <img src="mascot.png" alt="Sparky" class="mascot">
+        <span class="header-title" id="headerTitle">Focus Blossom</span>
+        <div class="theme-dropdown" id="themeDropdown">
+          <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false">
+            <span id="themeLabel">Retro Pink</span> ▾
+          </button>
+          <div class="theme-dropdown-menu" id="themeMenu"></div>
+        </div>
+      </header>
+      <div class="garden-grid" id="gardenGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none"></div>
+      <div class="add-site-row">
+        <input type="text" id="siteInput" class="site-input" placeholder="e.g. reddit.com" spellcheck="false" autocomplete="off">
+        <button class="btn-add" id="addBtn">+ Add</button>
+      </div>
+      <div class="stats-card" id="statsCard">
+        <div class="stats-row"><span class="stats-label">🌱 Gardens growing</span><span class="stats-value" id="statGrowing">0</span></div>
+        <div class="stats-row"><span class="stats-label">🔥 Longest streak</span><span class="stats-value" id="statStreak">0d</span></div>
+        <div class="stats-row"><span class="stats-label">⏱️ Total blocked</span><span class="stats-value" id="statBlocked">0h</span></div>
+        <div class="stats-row"><span class="stats-label">⚡ Growth speed</span><span class="stats-value" id="statSpeed">1.0x</span></div>
+      </div>
+      <div class="affirmation" id="affirmation"></div>
+      <footer class="popup-footer">
+        <span>LoveSpark Suite 💕</span>
+        <a class="settings-link" id="settingsLink">⚙</a>
+      </footer>
+    </div>
+  </div>
+  <script src="garden-sprites.js"></script>
+  <script src="affirmations.js"></script>
+  <script src="garden.js"></script>
+  <script>
+    // Stub out the auto-appending footer for the store screenshot composite
+    window.LoveSparkFooter = { render: () => '' };
+  </script>
+  <script src="popup.js"></script>
+</body>
+</html>

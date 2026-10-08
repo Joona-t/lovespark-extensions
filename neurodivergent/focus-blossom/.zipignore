@@ -1,0 +1,19 @@
+# Focus Blossom — per-extension build excludes
+# Shared lib files that are not referenced by any loaded HTML/JS/CSS in this extension.
+# These files live in the shared library at Extensions/infrastructure/lovespark-shared-lib/
+# and are synced into each extension by scripts/sync-shared-lib.sh — but this extension
+# doesn't use them, so we strip them from the shipped zip to keep it lean.
+
+# Screenshot-prep folder (historical _cws was renamed to cws-shots)
+cws-shots/
+_cws/
+
+lib/browser-polyfill.min.js
+lib/lovespark-badge.js
+lib/lovespark-base.css
+lib/lovespark-fonts.css
+lib/lovespark-lifecycle.js
+lib/lovespark-popup.js
+lib/lovespark-stats.js
+lib/lovespark-theme.js
+lib/fonts/

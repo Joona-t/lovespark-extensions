@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Blossom — Popup (CWS screenshot)</title>
+  <base href="../">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <style>
+    /* Force popup width when standalone-loaded */
+    html, body { margin: 0; padding: 0; }
+    body { width: 360px; }
+  </style>
+</head>
+<body>
+  <script src="cws-shots/mock.js"></script>
+  <div class="popup-container" role="dialog" aria-labelledby="headerTitle">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <span class="header-title" id="headerTitle">Focus Blossom</span>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false">
+          <span id="themeLabel">Retro Pink</span> ▾
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" data-theme="dark">Dark</button>
+          <button class="theme-option" data-theme="beige">Beige</button>
+          <button class="theme-option" data-theme="slate">Slate</button>
+        </div>
+      </div>
+    </header>
+    <div class="garden-grid" id="gardenGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" style="width:64px;height:64px;margin-bottom:8px">
+      <div class="empty-emoji">🌱</div>
+      <div class="empty-text">No gardens yet!<br>Block a site to start growing.</div>
+      <div class="preset-buttons">
+        <button class="btn-preset" data-domain="reddit.com">reddit.com</button>
+        <button class="btn-preset" data-domain="x.com">x.com</button>
+        <button class="btn-preset" data-domain="tiktok.com">tiktok.com</button>
+        <button class="btn-preset" data-domain="instagram.com">instagram.com</button>
+      </div>
+    </div>
+    <div class="add-site-row">
+      <input type="text" id="siteInput" class="site-input" placeholder="e.g. reddit.com" spellcheck="false" autocomplete="off" aria-label="Site domain to block">
+      <button class="btn-add" id="addBtn">+ Add</button>
+    </div>
+    <div class="stats-card" id="statsCard">
+      <div class="stats-row"><span class="stats-label">🌱 Gardens growing</span><span class="stats-value" id="statGrowing">0</span></div>
+      <div class="stats-row"><span class="stats-label">🔥 Longest streak</span><span class="stats-value" id="statStreak">0d</span></div>
+      <div class="stats-row"><span class="stats-label">⏱️ Total blocked</span><span class="stats-value" id="statBlocked">0h</span></div>
+      <div class="stats-row"><span class="stats-label">⚡ Growth speed</span><span class="stats-value" id="statSpeed">1.0x</span></div>
+    </div>
+    <div class="affirmation" id="affirmation"></div>
+    <footer class="popup-footer">
+      <span>LoveSpark Suite 💕</span>
+      <a class="settings-link" id="settingsLink" title="Settings" tabindex="0" role="button" aria-label="Settings">⚙</a>
+    </footer>
+  </div>
+
+  <script src="garden-sprites.js"></script>
+  <script src="affirmations.js"></script>
+  <script src="garden.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

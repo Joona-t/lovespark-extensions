@@ -1,0 +1,55 @@
+{
+  "name": "Focus Blossom: Site Blocker & Digital Detox",
+  "summary": "Block doomscroll sites and grow a flower garden instead. Every hour you resist, your garden blooms. For ADHD & busy minds.",
+  "description": "Focus Blossom is a cozy site blocker that turns every avoided doomscroll into a living garden. The longer you resist, the more your flowers bloom — from seed, to sprout, to full cherry-blossom garden. Made for ADHD brains and anyone who responds better to rewards than willpower.\n\nHOW IT WORKS\n- Add any site you want to block — reddit.com, tiktok.com, twitter.com, anything\n- Each blocked site grows its own garden while it stays blocked\n- Five growth stages: seed → sprout → bud → bloom → thriving garden\n- Sparky the mascot walks around and waters your flowers\n- Try to visit a blocked site? You see your garden instead.\n\nSTREAKS & PROGRESS\n- Track longest streak per site and overall\n- Total time blocked across all sites\n- Growth speed multiplier — the more sites you block, the faster they grow\n- Daily affirmations on every blocked page\n\nUNBLOCK FRICTION (your choice)\n- Low: quick confirmation\n- Medium: 30-second timer you must wait through\n- High: 30-second timer + type the domain to confirm\n- Unblocking wilts your garden (loses 50% growth) — the cost is the point\n\nFOUR COZY THEMES\n- Retro Pink (default)\n- Dark\n- Beige\n- Slate\n\nPRIVACY FIRST\n- No accounts, no logins, no tracking\n- 100% local storage — your gardens never leave your device\n- No ads, no data collection, no remote code\n- Open-source and MIT-licensed\n\nFOR NEURODIVERGENT MINDS\nMost productivity tools shame you into compliance. Focus Blossom rewards you for every hour you don't break. It's gentle, visual, and specifically designed for brains that struggle with time-blindness and dopamine regulation.\n\nPART OF THE LOVESPARK SUITE\nFree, open-source browser extensions for neurodivergent coders. Always free. No ads. Ever.\n\n— Built by Joona Tyrninoksa · LoveSpark\n— github.com/Joona-t/focus-blossom",
+  "category": "Productivity",
+  "keywords": [
+    "site blocker",
+    "digital detox",
+    "ADHD friendly",
+    "neurodivergent",
+    "focus timer",
+    "doomscroll blocker",
+    "productivity",
+    "habit tracker",
+    "privacy extension",
+    "open source"
+  ],
+  "version": "1.0.42",
+  "language": "en",
+  "single_purpose": "Focus Blossom blocks user-selected websites and shows a custom \"garden growing\" page in their place, visually representing the user's focus time as a virtual flower garden.",
+  "permission_justifications": {
+    "storage": "Used to save the user's list of blocked sites, per-site focus streaks, garden growth state, daily affirmation history, and theme preference locally on their device via chrome.storage.local. No data leaves the device.",
+    "alarms": "Used to run a recurring 1-minute alarm that credits focus time to each currently-blocked site and advances its garden growth stage. A separate daily alarm resets streak counters at local midnight.",
+    "notifications": "Used to notify the user when one of their gardens advances to a new growth stage. Notifications are optional and disabled via a single toggle in Settings.",
+    "declarativeNetRequest": "Used to block the user's selected websites by redirecting navigation to the extension's local blocked.html page. Rules are created and removed dynamically as the user adds or removes sites. No requests are observed, logged, or modified beyond this redirect.",
+    "host_permissions": "Required because the user chooses which arbitrary domains to block at runtime. The extension does not inject content scripts or read page content — host permission is used solely so declarativeNetRequest can redirect navigation to any user-added domain to the extension's local blocked page."
+  },
+  "data_collection": {
+    "personally_identifiable_information": "not_collected",
+    "health_information": "not_collected",
+    "financial_information": "not_collected",
+    "authentication_information": "not_collected",
+    "personal_communications": "not_collected",
+    "location": "not_collected",
+    "web_history": "not_collected",
+    "user_activity": "not_collected",
+    "website_content": "not_collected"
+  },
+  "certifications": {
+    "no_sell_or_transfer": true,
+    "no_unrelated_use": true,
+    "no_creditworthiness_use": true
+  },
+  "urls": {
+    "homepage": "https://lovespark.love",
+    "support": "https://github.com/Joona-t/focus-blossom/issues",
+    "privacy_policy": "https://lovespark.love/privacy.html"
+  },
+  "distribution": {
+    "visibility": "public",
+    "regions": "all",
+    "pricing": "free",
+    "mature_content": false
+  }
+}

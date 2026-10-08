@@ -1,0 +1,112 @@
+{
+  "extName": {
+    "message": "Focus Blossom: Site Blocker & Digital Detox"
+  },
+  "extDescription": {
+    "message": "Every blocked site grows a flower garden. The longer you resist, the more it blooms 🌸"
+  },
+
+  "statusUnblocked": { "message": " (unblocked)" },
+  "labelStage":      { "message": "Stage" },
+  "labelFlower":     { "message": "Flower" },
+  "labelStreak":     { "message": "Streak" },
+  "streakDisplay": {
+    "message": "$CURRENT$d (best: $BEST$d)",
+    "placeholders": {
+      "current": { "content": "$1" },
+      "best":    { "content": "$2" }
+    }
+  },
+  "btnUnblock": { "message": "Unblock" },
+  "btnReblock": { "message": "Re-block" },
+  "btnRemove":  { "message": "Remove" },
+  "confirmUnblock": {
+    "message": "Unblock $DOMAIN$? Your garden will lose 50% growth.",
+    "placeholders": { "domain": { "content": "$1" } }
+  },
+  "confirmRemove": {
+    "message": "Remove $DOMAIN$ completely? This deletes the garden.",
+    "placeholders": { "domain": { "content": "$1" } }
+  },
+  "dayLabel": {
+    "message": "Day $N$",
+    "placeholders": { "n": { "content": "$1" } }
+  },
+
+  "popupChangeTheme":    { "message": "Change Theme" },
+  "popupEmptyTitle":     { "message": "No gardens yet!" },
+  "popupEmptyHint":      { "message": "Block a site to start growing." },
+  "popupSitePlaceholder":{ "message": "e.g. reddit.com" },
+  "popupSiteAria":       { "message": "Site domain to block" },
+  "popupBtnAdd":         { "message": "+ Add" },
+  "popupStatGardens":    { "message": "🌱 Gardens growing" },
+  "popupStatStreak":     { "message": "🔥 Longest streak" },
+  "popupStatBlocked":    { "message": "⏱️ Total blocked" },
+  "popupStatSpeed":      { "message": "⚡ Growth speed" },
+  "popupSettingsTitle":  { "message": "Settings" },
+
+  "blockedLoading":         { "message": "Growing..." },
+  "blockedBackBtn":         { "message": "← Go Back" },
+  "blockedUnblockLink":     { "message": "I need to visit this site..." },
+  "blockedFrictionTitle":   { "message": "Are you sure?" },
+  "blockedFrictionBody":    { "message": "Unblocking will wilt your garden. Your flowers will lose half their growth." },
+  "blockedFrictionWait": {
+    "message": "Wait $N$s...",
+    "placeholders": { "n": { "content": "$1" } }
+  },
+  "blockedFrictionPrompt":  { "message": "Type the domain to confirm:" },
+  "blockedFrictionInputLabel": {
+    "message": "Type \"$DOMAIN$\" to confirm:",
+    "placeholders": { "domain": { "content": "$1" } }
+  },
+  "blockedFrictionCancel":  { "message": "Cancel" },
+  "blockedFrictionConfirm": { "message": "I understand, unblock" },
+  "blockedFrictionConfirmLow": { "message": "Unblock" },
+
+  "settingsHeaderTitle":        { "message": "Settings" },
+  "settingsHeaderSubtitle":     { "message": "Focus Blossom" },
+  "settingsLabelFriction":      { "message": "Unblock friction" },
+  "settingsDescFriction":       { "message": "How hard it is to unblock a site" },
+  "settingsFrictionLow":        { "message": "Low" },
+  "settingsFrictionMedium":     { "message": "Medium" },
+  "settingsFrictionHigh":       { "message": "High" },
+  "settingsFrictionAria":       { "message": "Unblock friction level" },
+  "settingsLabelAffirmations":  { "message": "Show affirmations" },
+  "settingsDescAffirmations":   { "message": "Daily self-compassion quotes" },
+  "settingsLabelNotifications": { "message": "Stage notifications" },
+  "settingsDescNotifications":  { "message": "Notify when your garden grows" },
+  "settingsCardData":           { "message": "Data" },
+  "settingsLabelExport":        { "message": "Export gardens" },
+  "settingsDescExport":         { "message": "Download all data as JSON" },
+  "settingsBtnExport":          { "message": "Export" },
+  "settingsLabelImport":        { "message": "Import gardens" },
+  "settingsDescImport":         { "message": "Restore from a backup file" },
+  "settingsBtnImport":          { "message": "Import" },
+  "settingsAboutSuite":         { "message": "Part of the LoveSpark Suite" },
+  "settingsAboutGitHub":        { "message": "GitHub" },
+  "settingsAboutPortfolio":     { "message": "Portfolio" },
+  "settingsSavedToast":         { "message": "Saved!" },
+  "settingsAboutVersion": {
+    "message": "Focus Blossom v$V$",
+    "placeholders": { "v": { "content": "$1" } }
+  },
+  "settingsImportInvalid":      { "message": "Invalid backup file: missing gardens data." },
+  "settingsImportConfirm":      { "message": "This will replace all your current gardens and settings. Continue?" },
+  "settingsImportFailed": {
+    "message": "Failed to read backup file: $REASON$",
+    "placeholders": { "reason": { "content": "$1" } }
+  },
+
+  "stage0Label": { "message": "A seed planted 🌱" },
+  "stage1Label": { "message": "Growing roots 🌿" },
+  "stage2Label": { "message": "Reaching for light 🌷" },
+  "stage3Label": { "message": "In full bloom 🌸" },
+  "stage4Label": { "message": "A thriving garden 🌺" },
+
+  "notifyStage0": { "message": "A seed has been planted!" },
+  "notifyStage1": { "message": "Your garden is sprouting!" },
+  "notifyStage2": { "message": "Buds are forming!" },
+  "notifyStage3": { "message": "Your garden is in full bloom!" },
+  "notifyStage4": { "message": "A thriving garden!" },
+  "notifyFallback": { "message": "Your garden is growing!" }
+}
