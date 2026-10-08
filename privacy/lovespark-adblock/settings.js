@@ -31,8 +31,7 @@ function applyTheme(t) {
     });
     document.addEventListener('click', () => setOpen(false));
   }
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
+  chrome.storage.local.get(['theme'], ({ theme }) => {
     applyTheme(theme || 'retro');
   });
 })();

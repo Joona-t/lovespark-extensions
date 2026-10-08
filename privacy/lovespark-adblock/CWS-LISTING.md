@@ -64,8 +64,9 @@ lightweight / Manifest V3, pink / cute / aesthetic / retro.
 
 ## Single-purpose justification (CWS §2.B)
 
-> Pink Ad Blocker has one purpose: block unwanted ads, pop-ups, and trackers at the network layer
-> for a faster, cleaner, more private browsing experience. Every feature serves that single purpose —
+> Pink Ad Blocker has one purpose: block unwanted ads, pop-ups, and trackers for a faster, cleaner,
+> more private browsing experience. Every feature serves that single purpose — network rules block ad
+> and tracker requests, the YouTube scripts remove video and sponsored ads on YouTube,
 > the intensity tiers choose how much to block, the per-site whitelist lets the user exempt chosen
 > sites from blocking, and the block counter reports how much was blocked. There is no unrelated
 > functionality.
@@ -122,5 +123,6 @@ domain is obtained via the gesture-scoped `activeTab` permission only.
 5. Open **Settings** (gear in the popup) to switch intensity tier (Light / Medium / Strong), manage
    the whitelist (add / import / export), export stats CSV, and change theme.
 6. Verify in DevTools that the extension makes **no outbound network requests** of its own.
-7. On YouTube, verify sponsored feed/player placements are hidden. If an in-player ad is served,
-   verify it is skipped while ordinary playback, seeking, audio, captions, and navigation remain usable.
+7. On YouTube, play a few popular music videos: no pre-roll/mid-roll video ad plays, and sponsored
+   feed/player placements are hidden, while ordinary playback, seeking, audio, captions, and navigation
+   remain usable. Turn the extension off in the popup and reload: YouTube ads return.

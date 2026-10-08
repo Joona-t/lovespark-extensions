@@ -1,5 +1,24 @@
 # Bugs & Iterations
 
+## 2026-10-08: CWS compliance pass — v1.1.2
+
+**Problem:** Before uploading v1.1.1 to the Chrome Web Store: `ls-check --strict` failed 3 checks, the repo had
+no store screenshots (rule #14), and the generator's default copy/layout didn't fit this extension.
+**Root cause / fix:**
+- BUG-012: `.footer-link:hover { opacity: 0.7 }` faded link text (KI-004 contrast) → underline on hover.
+- BUG-013: the installed `ls-check` (a11y-toolkit fork) lacked the canonical LS-1 fix, so it demanded the broad
+  `tabs` permission although `activeTab` covers `chrome.tabs.query` → ported the function. Adding `tabs` would
+  have *hurt* CWS review.
+- BUG-014: MV3-STORAGE-KEY false positives (`get('key')` single-string reads and `set({ theme })` shorthand
+  weren't parsed) → fixed in both canonical and fork. Removed the dead pre-theme `darkMode` fallback read.
+- ITER-015: real CWS assets — popup + settings captured from the loaded extension, adblock-specific copy in
+  `cws-spec.json`, 12 assets in `cws-shots/` (1280×800 / 440×280 / 1400×560, RGB). Patched the generator's
+  promo-tile title floor (24px clipped "Pink Ad Blocker" at the right edge).
+- Package hygiene: `icons/_gen.py`, `.gitattributes`, listing/submit docs and dev specs excluded from the zip.
+- CWS-LISTING single-purpose + reviewer steps updated for the YouTube page script.
+**Verified:** `ls-check --strict` 38/38, `npm test` 16/16, AMO-valid; the packaged zip loaded in Chrome 154 →
+v1.1.2, 5 core rulesets enabled, YouTube video played 15 s with 0 ad samples.
+
 ## 2026-10-07: YouTube video ads actually blocked — v1.1.1
 
 **Problem:** Owner wanted to uninstall Adblock Plus. A live A/B run (real Chrome 154, fresh profiles,

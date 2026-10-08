@@ -10,3 +10,10 @@ _metadata/
 research-youtube.md
 plan-youtube.md
 work/
+cws-spec.json
+cws-shots/
+icons/_gen.py
+.gitattributes
+CWS-LISTING.md
+SUBMIT.md
+cws-spec.json

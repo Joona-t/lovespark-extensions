@@ -53,7 +53,7 @@ test('rule selection is deterministic, deduplicated, and budgeted', () => {
 test('manifest wires the generated tiers and a narrow YouTube content layer', () => {
   const manifest = readJson('manifest.json');
   assert.equal(manifest.manifest_version, 3);
-  assert.equal(manifest.version, '1.1.1');
+  assert.equal(manifest.version, '1.1.2');
   assert.equal(manifest.host_permissions, undefined);
   const resourceIds = new Set(manifest.declarative_net_request.rule_resources.map(({ id }) => id));
   for (const id of ['ruleset_ads', 'ruleset_easylist', 'ruleset_youtube', 'ruleset_tracking', 'ruleset_easyprivacy']) {

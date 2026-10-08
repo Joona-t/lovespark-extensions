@@ -1,0 +1,131 @@
+{
+  "localized": [
+    {
+      "ui": "popup",
+      "headline": "Block Ads & Trackers",
+      "subtitle": "A cute pink ad blocker built on EasyList & EasyPrivacy. Free, open source, no account.",
+      "stats": [
+        {
+          "value": "111k+",
+          "label": "Filter rules"
+        },
+        {
+          "value": "0",
+          "label": "Data sent"
+        },
+        {
+          "value": "$0",
+          "label": "Forever"
+        }
+      ]
+    },
+    {
+      "ui": "popup",
+      "headline": "YouTube Without Video Ads",
+      "subtitle": "Removes pre-roll and mid-roll ads before they load, plus feed, Shorts and banner ads.",
+      "stats": [
+        {
+          "value": "0",
+          "label": "Video ads"
+        },
+        {
+          "value": "✓",
+          "label": "Shorts"
+        },
+        {
+          "value": "✓",
+          "label": "Embeds"
+        }
+      ]
+    },
+    {
+      "ui": "options",
+      "headline": "Pick Your Intensity",
+      "subtitle": "Light (ads), Medium (ads + trackers) or Strong (+ annoyances like cookie pop-ups).",
+      "stats": [
+        {
+          "value": "3",
+          "label": "Levels"
+        },
+        {
+          "value": "1",
+          "label": "Click"
+        },
+        {
+          "value": "0",
+          "label": "Data sent"
+        }
+      ]
+    },
+    {
+      "ui": "options",
+      "headline": "Allow Sites You Love",
+      "subtitle": "Whitelist any site in one click to support creators you trust.",
+      "stats": [
+        {
+          "value": "1",
+          "label": "Click"
+        },
+        {
+          "value": "Any",
+          "label": "Site"
+        },
+        {
+          "value": "Live",
+          "label": "Counters"
+        }
+      ]
+    },
+    {
+      "ui": "popup",
+      "headline": "Private By Design",
+      "subtitle": "Everything runs on your device. No tracking, no analytics, no remote code. MIT licensed.",
+      "stats": [
+        {
+          "value": "0",
+          "label": "Trackers"
+        },
+        {
+          "value": "100%",
+          "label": "Local"
+        },
+        {
+          "value": "MIT",
+          "label": "License"
+        }
+      ]
+    }
+  ],
+  "global": [
+    {
+      "emoji": "🛡️",
+      "headline": "Pink Ad Blocker",
+      "subtitle": "Ads & trackers, gone"
+    },
+    {
+      "emoji": "▶️",
+      "headline": "YouTube",
+      "subtitle": "No video ads"
+    },
+    {
+      "emoji": "⚡",
+      "headline": "3 levels",
+      "subtitle": "Light · Medium · Strong"
+    },
+    {
+      "emoji": "🔒",
+      "headline": "Private",
+      "subtitle": "Local-only"
+    },
+    {
+      "emoji": "💖",
+      "headline": "Free",
+      "subtitle": "Open source"
+    }
+  ],
+  "promo": {
+    "title": "Pink Ad Blocker",
+    "small_subtitle": "Blocks ads, trackers & YouTube ads.",
+    "marquee_subtitle": "Blocks ads, trackers and YouTube video ads. Free, private, open source."
+  }
+}
