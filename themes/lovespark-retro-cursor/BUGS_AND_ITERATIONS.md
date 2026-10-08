@@ -85,3 +85,28 @@ Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
 **Fix:** Added generic `anim_translate/scale/rotate/opacity` SMIL builders + `extra=` param on `hand()/hand_grad()`; each pack got pack-prefixed companion helpers (`_bun_bunny`, `_dot_sparkle`, `_coq_pearl`, `_str_berry`, `_prl_mini`, `_bob_pearl`, `_chm_star`, `_loc_heart`, …) wired into arrow default, hand, and emoji default cursors (25 SVGs changed; I-beam/wait and OG PNG packs untouched per owner decision). Built via 9-agent parallel design workflow (each agent self-tested XML validity, <4KB size, rest-pose loop closure) + 3-skeptic adversarial verify.
 **Verify findings fixed:** cyworld-dotti sparkles were pure white → invisible on light pages; added #5A2A4A outline. Note: cyworld-dotti's old translate(20 4) 1.7s sparkle was deliberately superseded (not lost) by the new twinkle+pop set. ls-check: 34 pass / 0 fail / 1 pre-existing A11Y-LIVE warning (popup.js, untouched by this change).
 **Files:** gen_cursors.py, cursors/*/{default,pointer}.svg (25), manifest.json, CHANGELOG.md
+
+---
+
+## 2026-07-09: Remove duplicate lovespark-tokens.css load from `popup.html` (fleet 2026-03-28 regression)
+
+**Problem:** `popup.html` carried a direct `<link>` to `lovespark-tokens.css` even though
+`lovespark-base.css` (loaded by the same page) already `@import`s it — the token sheet loaded
+twice (fleet 2026-03-28 injection regression; `guard-fleet-sync.sh` Gate 4 blocks fleet
+shared-lib syncs while any such reference exists).
+
+**Fix:** Removed the redundant `<link>` (one-line deletion, no other markup touched); refreshed
+`lib/lovespark-tokens.css` to the canonical deterministic-header build (values byte-identical to
+the 80/80-audited canonical; shared-lib ITER-003 / lovespark-shared-lib@7690133); bumped the
+manifest patch version.
+
+**Also in this commit (required to pass the pre-commit ls-check gate — main fails it independently of the tokens cleanup):** KI-039 MV3-STORAGE-AREA-MATCH in `content_script.js` — `storage.onChanged` guarded on `areaName !== "sync"` while every write targets `chrome.storage.local`, so live cursor updates never fired from the listener. Flipped the guard to `"local"` (same fix as lovespark-youtube-ad-comfort-mode f642bc1). The two fixes are bundled because the gate deadlocks a split: a tokens-only commit trips KI-039, a KI-039-only commit trips BRAND-LIB-SYNC's stale tokens.css.
+
+**Verification:** zero `lovespark-tokens.css` references remain in this extension's HTML;
+`lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`, so the removal is
+cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live tree 2026-07-09;
+pre-commit ls-check green at this commit.
+
+**Follow-up (2026-10-07, PR #1 verification):** `ls-check .` flagged QUAL-CHANGELOG-DRIFT (CHANGELOG latest 1.1.32 vs manifest 1.1.33). Added the `[1.1.33]` CHANGELOG entry. Check: `ls-check . --strict` → 0 fail, 0 warn.
+
+**Monorepo merge note (2026-10-08):** this branch's fixes (KI-039 guard flip, duplicate tokens `<link>` removal, canonical tokens.css refresh) were also delivered independently on the main line — the guard flip in v1.1.35 (03bb2cc) and the tokens/popup cleanup in the pre-import snapshot (30e7909, on top of v1.1.37). The `1.1.33` label here collides with the main line's 1.1.33 ("Pink" store-title SEO); manifest stays at 1.1.37.
