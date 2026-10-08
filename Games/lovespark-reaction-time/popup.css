@@ -1,0 +1,136 @@
+/* LoveSpark Reaction Time -- Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+/* -- Reaction zone ---------------------------------- */
+.reaction-zone {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background-color 0.15s, border-color 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 2px solid var(--ls-glass-border);
+}
+
+.reaction-zone.state-idle {
+  background: var(--ls-glass);
+}
+
+.reaction-zone.state-waiting {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+
+.reaction-zone.state-ready {
+  background: #28a745;
+  border-color: #28a745;
+}
+
+.reaction-zone.state-result {
+  background: var(--ls-glass);
+  border-color: var(--ls-pink-accent);
+}
+
+.reaction-zone.state-early {
+  background: #fd7e14;
+  border-color: #fd7e14;
+}
+
+.reaction-text {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-text-dark);
+  text-align: center;
+  transition: color 0.15s;
+}
+
+.state-waiting .reaction-text,
+.state-ready .reaction-text,
+.state-early .reaction-text {
+  color: #fff;
+}
+
+.reaction-time {
+  font-family: var(--ls-font-display);
+  font-size: 36px;
+  color: var(--ls-pink-accent);
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* -- Result message --------------------------------- */
+.result-message {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+  min-height: 16px;
+}
+
+/* -- Stats row -------------------------------------- */
+.stats-row {
+  text-align: center;
+  font-size: 10px;
+  color: var(--ls-text-muted);
+  margin-bottom: 8px;
+}
+.stat-inline {
+  font-family: var(--ls-font-display);
+  color: var(--ls-pink-accent);
+}
+.stat-inline-label { color: var(--ls-text-muted); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+/* -- Screen reader only ----------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -- Focus indicators (accessibility) --------------- */
+button:focus-visible,
+input:focus-visible,
+[role="button"]:focus-visible,
+[role="menuitem"]:focus-visible,
+.reaction-zone:focus-visible {
+  outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
+  outline-offset: 2px;
+}
+
+/* -- Reduced motion (accessibility) ----------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
