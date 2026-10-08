@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Word Count</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeToggle" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Word Count</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+    </header>
+    <main class="popup-content">
+      <div class="status-section">
+        <div id="statusIcon" class="status-icon" aria-hidden="true">&#9997;&#65039;</div>
+        <div id="statusText" class="status-text" aria-live="polite">Select text on any page</div>
+        <div id="cuteMsg" class="cute-msg">Stay sparkly!</div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="enableToggle" checked aria-label="Enable extension">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+
+      <div class="result-section" aria-label="Word count results">
+        <div class="result-row">
+          <span class="result-label">Words</span>
+          <span id="wordCount" class="result-value" aria-live="polite">0</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Characters</span>
+          <span id="charCount" class="result-value" aria-live="polite">0</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Read time</span>
+          <span id="readTime" class="result-value" aria-live="polite">0 sec</span>
+        </div>
+      </div>
+
+      <button id="refreshBtn" class="action-btn" aria-label="Refresh selection count">
+        Refresh Count
+      </button>
+
+      <div class="stats-section" aria-label="Extension statistics">
+        <div class="stat-box" aria-label="Counts today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Counts total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
