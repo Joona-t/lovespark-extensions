@@ -1,0 +1,20 @@
+{
+  "name": "LoveSpark YT Shield",
+  "summary": "Three-layer YouTube ad neutralizer — blocks ads at the network, API, and DOM level. Privacy-first, fully local.",
+  "description": "LoveSpark YT Shield neutralizes YouTube ads with three independent layers of defense. If one layer misses, the next catches it.\n\nHow it works\n- Layer 1 — declarativeNetRequest: Static rules block known ad-serving URLs before they reach the page.\n- Layer 2 — API Interception: Overrides fetch() and XMLHttpRequest in page context to filter ad-related API responses.\n- Layer 3 — Content Script Fallback: MutationObserver watches for ad containers in the DOM and removes them.\n\nExtra features\n- Daily Stats: Tracks how many ads were neutralized (stored locally, never sent anywhere).\n- One-click toggle from the popup — pause or resume instantly.\n- 4 cozy themes (Retro Pink, Dark, Beige, Slate).\n- Full keyboard and screen reader support.\n- Respects prefers-reduced-motion.\n\nPrivacy first\n- Zero data collection. No analytics, no telemetry, no outbound network calls.\n- Scoped to YouTube only (youtube.com + googlevideo.com) — no access to any other site.\n- All data stays local via chrome.storage.local.\n- No remote code. Every file is plain JS/CSS/JSON — fully auditable.\n\nPermissions explained\n- alarms: Hourly check for daily counter reset.\n- declarativeNetRequest: Block known YouTube ad-serving URLs at the network level.\n- storage: Persist counter stats and toggle state locally.\n\nPart of the LoveSpark suite — retro pink productivity tools for neurodivergent coders. Always free, always open source, always private.",
+  "category": "Productivity",
+  "keywords": [
+    "youtube ad blocker",
+    "ad blocker",
+    "youtube",
+    "declarativeNetRequest",
+    "privacy extension",
+    "neurodivergent",
+    "ADHD friendly",
+    "focus",
+    "open source",
+    "local only"
+  ],
+  "version": "1.0.27",
+  "language": "en"
+}
