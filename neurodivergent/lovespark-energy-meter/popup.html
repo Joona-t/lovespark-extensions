@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Energy Meter</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeToggle" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Energy Meter</div>
+        <div class="header-sub" id="popupDesc">Track your energy levels</div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div class="energy-picker" role="group" aria-label="Log your current energy level (1 to 5)">
+        <div class="energy-label">How's your energy right now?</div>
+        <div class="energy-buttons">
+          <button class="energy-btn" data-level="1" aria-label="Energy level 1 - Drained">
+            <span class="energy-emoji" aria-hidden="true">1</span>
+            <span class="energy-desc">Drained</span>
+          </button>
+          <button class="energy-btn" data-level="2" aria-label="Energy level 2 - Low">
+            <span class="energy-emoji" aria-hidden="true">2</span>
+            <span class="energy-desc">Low</span>
+          </button>
+          <button class="energy-btn" data-level="3" aria-label="Energy level 3 - Okay">
+            <span class="energy-emoji" aria-hidden="true">3</span>
+            <span class="energy-desc">Okay</span>
+          </button>
+          <button class="energy-btn" data-level="4" aria-label="Energy level 4 - Good">
+            <span class="energy-emoji" aria-hidden="true">4</span>
+            <span class="energy-desc">Good</span>
+          </button>
+          <button class="energy-btn" data-level="5" aria-label="Energy level 5 - Fired up">
+            <span class="energy-emoji" aria-hidden="true">5</span>
+            <span class="energy-desc">Fired up</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="loggedMsg" class="logged-msg" hidden aria-live="polite"></div>
+
+      <div class="chart-section" aria-label="Today's energy curve">
+        <div class="chart-header">
+          <span class="chart-title">Today's energy</span>
+          <span id="avgLabel" class="chart-avg" aria-live="polite">avg: --</span>
+        </div>
+        <div id="chartBars" class="chart-bars" role="img" aria-label="Bar chart of today's energy levels"></div>
+        <div id="chartEmpty" class="chart-empty">No logs yet today</div>
+      </div>
+
+      <div id="cuteMsg" class="cute-msg" aria-live="polite">Track your energy patterns</div>
+
+      <div class="stats-section" aria-label="Logging statistics">
+        <div class="stat-box" aria-label="Logs today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Total logs">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
