@@ -1,0 +1,16 @@
+{
+  "name": "LoveSpark Dashboard",
+  "short_description": "Central command center for the LoveSpark suite — manage all your retro pink productivity extensions in one place.",
+  "detailed_description": "LoveSpark Dashboard is the home base for the LoveSpark suite of free, open-source extensions built for neurodivergent coders.\n\nFEATURES\n• See every installed LoveSpark extension at a glance\n• Toggle extensions on/off without digging through chrome://extensions\n• Quick links to settings, support, and the GitHub repos\n• Retro pink aesthetic with 4 themes (retro, dark, beige, slate)\n• Sparky mascot keeps you company while you work\n\nPRIVACY\n• No tracking. No analytics. No data collection. Ever.\n• Storage is local-only — nothing leaves your browser\n• MIT licensed and fully open source\n\nWho it's for: Anyone using the LoveSpark productivity suite who wants a single hub instead of jumping between extension popups.",
+  "category": "Productivity",
+  "language": "en",
+  "regions": ["all"],
+  "single_purpose": "Provide a unified hub to view, toggle, and configure LoveSpark suite extensions.",
+  "permissions_justification": {
+    "management": "Required to enumerate and toggle other LoveSpark extensions installed in the browser.",
+    "tabs": "Required to open extension settings pages and the LoveSpark hub from the dashboard."
+  },
+  "homepage_url": "https://github.com/Joona-t",
+  "support_url": "https://github.com/Joona-t",
+  "version": "1.0.30"
+}

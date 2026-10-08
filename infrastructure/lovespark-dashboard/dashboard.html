@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveSpark Dashboard</title>
+<link rel="stylesheet" href="lib/lovespark-fonts.css">
+<link rel="stylesheet" href="dashboard.css">
+<style>
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ── */
+:root {
+  --ls-bg-gradient: radial-gradient(ellipse at top, #1A1A2E 0%, #0D0D0D 70%);
+}
+
+body {
+  background: var(--ls-bg-gradient);
+  color: #E0E0E0;
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
+}
+
+/* ── Scanline overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Header ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid rgba(255, 107, 157, 0.15);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mascot {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #FF6B9D;
+  text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+}
+
+.header-right {
+  display: flex;
+  gap: 10px;
+}
+
+.stat-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.active-pill {
+  background: rgba(255, 107, 157, 0.15);
+  color: #FF6B9D;
+  border: 1px solid rgba(255, 107, 157, 0.3);
+}
+
+.total-pill {
+  background: rgba(255, 255, 255, 0.05);
+  color: #888;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Controls bar ── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-wrap { flex: 0 0 280px; }
+
+#search {
+  width: 100%;
+  padding: 10px 16px;
+  background: #1A1A2E;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #E0E0E0;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#search:focus {
+  border-color: #FF6B9D;
+  box-shadow: 0 0 12px rgba(255, 107, 157, 0.2);
+}
+
+#search::placeholder { color: #555; }
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #666;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.cat-tab:hover { color: #999; }
+
+.cat-tab.active {
+  color: #FF6B9D;
+  border-bottom-color: #FF6B9D;
+  text-shadow: 0 0 8px rgba(255, 107, 157, 0.3);
+}
+
+/* ── Extension grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  padding: 24px 32px;
+}
+
+/* ── Cards ── */
+.ext-card {
+  background: #1A1A2E;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.ext-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 107, 157, 0.2);
+  box-shadow: 0 8px 24px rgba(255, 107, 157, 0.08);
+}
+
+.ls-card {
+  border-color: rgba(255, 107, 157, 0.2);
+  box-shadow: 0 0 16px rgba(255, 107, 157, 0.08);
+}
+
+.ls-card:hover {
+  border-color: rgba(255, 107, 157, 0.4);
+  box-shadow: 0 0 24px rgba(255, 107, 157, 0.15);
+}
+
+.disabled-card { opacity: 0.5; }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-icon img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.fallback-icon {
+  background: linear-gradient(135deg, #FF6B9D, #FF2D78);
+}
+
+.fallback-icon::after { content: '\1F496'; font-size: 22px; }
+
+.card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #FFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ls-sparkle { font-size: 12px; }
+
+.card-version {
+  font-size: 11px;
+  color: #FF6B9D;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.card-desc {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* ── Category badges ── */
+.cat-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.badge-lovespark  { background: rgba(255, 107, 157, 0.15); color: #FF6B9D; }
+.badge-adblock    { background: rgba(255, 71, 87, 0.15);   color: #FF4757; }
+.badge-privacy    { background: rgba(46, 213, 115, 0.15);  color: #2ED573; }
+.badge-productivity { background: rgba(129, 140, 248, 0.15); color: #818CF8; }
+.badge-devtools   { background: rgba(255, 165, 2, 0.15);   color: #FFA502; }
+.badge-media      { background: rgba(165, 94, 234, 0.15);  color: #A55EEA; }
+.badge-shopping   { background: rgba(255, 211, 42, 0.15);  color: #FFD32A; }
+.badge-other      { background: rgba(116, 125, 140, 0.15); color: #747D8C; }
+
+/* ── Toggle switch ── */
+.toggle-wrap {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle-wrap input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-track {
+  width: 44px;
+  height: 22px;
+  background: #333;
+  border-radius: 11px;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.toggle-wrap input:checked + .toggle-track {
+  background: #FF6B9D;
+  box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: #FFF;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle-wrap input:checked + .toggle-track .toggle-knob {
+  transform: translateX(22px);
+}
+
+.toggle-wrap.disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.self-badge {
+  font-size: 11px;
+  color: #FF6B9D;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Toasts ── */
+.toasts {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10000;
+}
+
+.toast {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #FFF;
+  transform: translateX(120%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  max-width: 320px;
+}
+
+.toast.show { transform: translateX(0); }
+.toast.hide { opacity: 0; transform: translateX(50%); }
+
+.toast-success {
+  background: linear-gradient(135deg, #FF6B9D, #FF2D78);
+  box-shadow: 0 4px 20px rgba(255, 107, 157, 0.25);
+}
+
+.toast-error {
+  background: linear-gradient(135deg, #8B0000, #CC0000);
+  box-shadow: 0 4px 20px rgba(139, 0, 0, 0.25);
+}
+
+/* ── Empty state ── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  font-size: 16px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0D0D0D; }
+::-webkit-scrollbar-thumb { background: rgba(255, 107, 157, 0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 107, 157, 0.4); }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="36" height="36">
+    <h1>✨ LoveSpark Dashboard ✨</h1>
+  </div>
+  <div class="header-right">
+    <span class="stat-pill active-pill"><span id="active-count">0</span> Active</span>
+    <span class="stat-pill total-pill"><span id="total-count">0</span> Total</span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Search extensions..." autocomplete="off">
+  </div>
+  <nav class="tabs" id="tabs"></nav>
+</div>
+
+<main class="grid" id="grid" aria-live="polite" aria-label="Installed extensions"></main>
+
+<div class="toasts" id="toasts"></div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

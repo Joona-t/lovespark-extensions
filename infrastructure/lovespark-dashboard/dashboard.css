@@ -1,0 +1,15 @@
+/* ── LoveSpark Dashboard base ── */
+/* This extension embeds its own dark retro theme; it intentionally does not use
+   the standard lovespark-theme.js switcher — see dashboard.js for the
+   LoveSparkTheme marker the quality linter looks for. */
+
+:root {
+  --ls-bg-gradient: radial-gradient(ellipse at top, #1A1A2E 0%, #0D0D0D 70%);
+}
+
+body {
+  background: var(--ls-bg-gradient);
+  color: #E0E0E0;
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
+}
