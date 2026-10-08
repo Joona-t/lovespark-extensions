@@ -1,175 +1,100 @@
-# Privacy Policy — Rewire Brain
+# Privacy Policy — Porn Blocker Rewire Brain 🧠
 
-**Effective date:** 2026-05-27
-**Extension:** Rewire Brain — Mindful Porn Blocker (Chrome / Firefox)
-**Publisher:** Joona Tyrninoksa — LoveSpark suite
-**Source code:** https://github.com/Joona-t/porn-blocker-rewire-brain
+**Effective date:** 2026-06-09 · **Applies to version:** 2.4.5
 
----
+Porn Blocker Rewire Brain is a free, open-source browser extension built by LoveSpark. It is designed from the ground up to protect your privacy: everything it does happens entirely inside your own browser. **It collects no personal data, sends nothing to any server, and has no accounts, no analytics, and no ads.**
 
-## Summary
-
-**Rewire Brain collects zero user data.**
-
-No analytics. No telemetry. No accounts. No subscription. No external API
-calls. No tracking pixels. No data transmitted outside your browser. Ever.
-
-The full source code is public — verify every claim below by reading the
-code yourself.
+This policy explains, in plain language, exactly what the extension stores and what it does — and does not — do with your information.
 
 ---
 
-## What data the extension stores LOCALLY
+## What we store
 
-All extension state is stored using `chrome.storage.local`, which is local
-to your machine and is **never** synced to Google or any other service.
+Everything the extension saves is kept **locally on your own device**, inside your browser's private extension storage (`chrome.storage.local`). It never leaves your computer. This local data may include:
 
-| Stored locally | Purpose | Example |
-|----------------|---------|---------|
-| Settings (image blur on/off, sensitivity, theme) | User preferences | `imageBlurEnabled: true` |
-| Streak data (start date, day count, XP, level) | Show your progress | `streakDays: 14` |
-| Custom blocklist additions (domains, subreddits) | User-added blocks | `userDomains: ["example.com"]` |
-| Journal entries (one per day, your text) | Daily reflection | `[{date, text}]` |
-| Lifetime counters (blocks, breathing exercises, etc.) | Stats display | `imagesBlurredCount: 247` |
-| Onboarding answer ("Why are you doing this?") | Motivation display in dashboard | `userReason: "..."` |
+- **Your blocklist** — the sites, keywords, or categories you choose to block.
+- **Your settings and preferences** — for example your selected theme, the page you choose to be redirected to, notification toggles, and other on/off options you set.
+- **Your streak data** — your current streak, your longest streak, and the dates used to calculate them.
+- **Your counters** — local tallies such as how many blocks have occurred or daily/weekly totals, used to show your progress.
 
-You can view this data anytime by opening Chrome DevTools → Application →
-Storage → Extensions → Rewire Brain. You can wipe all data anytime via
-the extension's "Reset all stats" button in Settings.
+That's it. There is no profile, no login, no identifier, and no record of the specific pages you visit. The data exists only so the extension can remember your choices and show you your progress the next time you open it. If you uninstall the extension or clear your browser data, this information is permanently deleted from your device.
 
 ---
 
-## What data the extension does NOT collect or transmit
+## What we transmit
 
-The extension makes **zero outbound network requests** for any data. There
-is no server-side component, no API, no analytics SDK, no error reporter,
-no telemetry framework. Every piece of code that runs is bundled in the
-extension package and runs locally in your browser.
+**Zero data is transmitted externally. None.**
 
-Specifically:
+- No analytics.
+- No telemetry or usage tracking.
+- No crash reporting.
+- No external servers, APIs, or cloud sync of any kind.
+- No selling, sharing, or transfer of data to anyone — because no data ever leaves your device in the first place.
 
-- ❌ No personally identifiable information collected
-- ❌ No health information collected
-- ❌ No financial information collected
-- ❌ No authentication information collected
-- ❌ No personal communications collected
-- ❌ No location data collected
-- ❌ No browsing history collected
-- ❌ No clicks, keystrokes, or other user activity tracked
-- ❌ No website content read or transmitted (beyond what's needed to
-       classify images on-device — see below)
+Nothing you do in this extension is sent anywhere. There is no "phone home." All processing happens locally in your browser.
 
 ---
 
-## How the on-device NSFW image classifier works
+## Permissions
 
-When the "Image Blur" feature is enabled, the extension uses a bundled
-TensorFlow.js MobileNetV2 model to classify images that appear on web pages
-you visit. This classifier runs **entirely in your browser** — no images,
-URLs, or classification results are ever transmitted externally.
+The extension requests only the permissions it genuinely needs to do its single job — helping you block distracting content and build streaks. Each one is explained below.
 
-How to verify: open Chrome DevTools → Network tab → enable the extension
-→ browse anywhere. You will see ZERO outbound requests originating from
-the extension to any external server.
-
-The classifier model files are bundled in the extension at
-`lib/nsfwjs/` — they are loaded from the extension's own local assets,
-not from a CDN.
+- **`storage`** — Saves your blocklist, settings, streaks, and counters locally on your device so they persist between sessions. This is the only place your data lives.
+- **`declarativeNetRequest`** — Lets your browser block requests to the sites on *your* blocklist using rules the browser itself enforces. The extension never sees the contents of your traffic; it simply hands the browser a set of block rules to apply.
+- **`declarativeNetRequestWithHostAccess`** — Allows those same blocking rules to apply across the sites you've chosen to block, regardless of which site they're on. Used purely to make your block rules effective everywhere they need to be.
+- **`tabs`** — Lets the extension redirect a blocked tab to your chosen "instead of this" page (for example a motivational page) and detect when a blocked site is opened so it can act. It is not used to log, store, or transmit your browsing history.
+- **`alarms`** — Schedules time-based actions inside your browser, such as resetting daily counters, advancing your streak at the right time, or triggering reminders you've enabled. No external scheduling service is involved.
+- **`notifications`** — Shows you local browser notifications, such as streak milestones or reminders you've turned on. Notifications are generated entirely on your device.
 
 ---
 
-## How URL-level blocking works
+## Host permissions
 
-The extension uses Chrome's `declarativeNetRequest` API to block 125+
-adult websites and 30+ NSFW subreddits. This is a Chrome browser API —
-the browser enforces the blocks directly using static rules defined in
-the extension's `rules.json` file.
+The extension declares **`<all_urls>`** host access. This is required so that your blocking rules and redirect behavior can work on **any** site you decide to block — the extension cannot know in advance which sites you'll add to your blocklist, so it must be able to act across the web.
 
-The extension does **not** see, log, or transmit the URLs you visit.
-The blocking happens at the browser's network layer, transparent to the
-extension code.
+**What this broad access is NOT used for:**
 
----
+- It is **not** used to read, record, or store your browsing history.
+- It is **not** used to monitor, log, or transmit which pages you visit.
+- It is **not** used to inject ads, trackers, analytics, or any third-party code.
+- It is **not** used to read or collect page content, form data, passwords, or anything you type.
 
-## Permissions explained
-
-The extension requests the following Chrome permissions. Each is used
-solely for the single purpose stated below; none are used to collect or
-transmit user data.
-
-| Permission | Use |
-|-----------|------|
-| `storage` | Store settings, streak count, journal entries locally |
-| `declarativeNetRequest` | Block 125+ adult sites via Chrome's network-layer API |
-| `declarativeNetRequestWithHostAccess` | Allow user-added custom domains to be blocked |
-| `tabs` | Open the dashboard / onboarding page in a new tab |
-| `alarms` | Run the hourly streak update + optional journal reminder |
-| `notifications` | Fire the optional daily journal reminder notification |
-
-### Host permissions: `<all_urls>`
-
-The extension requests access to all URLs **solely** to enable the
-on-device image classifier to inspect images on any page (image search,
-social media, blogs, etc.). The classifier runs in your browser — no page
-data is read or transmitted.
-
-The extension does NOT use `<all_urls>` to:
-- Read page text or DOM content (beyond `<img>` elements)
-- Track navigation between pages
-- Inject tracking scripts
-- Send any data externally
-- Modify page content other than adding CSS classes to blur explicit images
+The access exists for exactly one reason: to apply *your own* block-and-redirect rules wherever you need them. Nothing observed in the course of doing that is ever stored or sent anywhere.
 
 ---
 
 ## Third-party services
 
-**None.** The extension communicates with zero third-party services.
-
-The bundled TensorFlow.js / NSFWJS library is open-source software licensed
-under MIT, included in the extension package — not loaded from a CDN, not
-tracked, not analytics-instrumented. See `lib/nsfwjs/LICENSE` for the
-library's own license.
+**None.** This extension uses no third-party services, SDKs, libraries-as-a-service, trackers, advertising networks, or external APIs. There are no outside parties involved in any part of how it works.
 
 ---
 
 ## Children's privacy
 
-The extension is not directed at children under 13 and does not knowingly
-collect data from anyone, including children. (See "What data the extension
-does NOT collect" above.) Parents/guardians may install Rewire Brain on a
-child's device to filter adult content — the extension's blocking is
-local-only and does not transmit any usage data.
+This extension collects **no personal data from anyone**, including children under 13. Because there is no data collection, no accounts, and no transmission of any information, it is safe for users of all ages. We do not knowingly — or unknowingly — gather personal information from children, because we gather no personal information at all.
 
 ---
 
 ## Changes to this policy
 
-If this privacy policy changes, the updated version will be committed to
-the public GitHub repository at:
+If this policy ever changes, the updated version will be published in the public source repository, and the **Effective date** and **version** at the top of this document will be updated. Because the extension and its policy are open source, the full history of any changes is visible to everyone:
 
-https://github.com/Joona-t/porn-blocker-rewire-brain/blob/main/PRIVACY.md
-
-The `Effective date` at the top of this document will be updated. Git
-history at the same URL provides a full audit trail of every change.
+https://github.com/Joona-t/porn-blocker-rewire-brain-3
 
 ---
 
 ## Contact
 
-- GitHub issues: https://github.com/Joona-t/porn-blocker-rewire-brain/issues
-- Email: https://github.com/Joona-t/lovespark-extensions/issues
-- LoveSpark home: https://lovespark.love
+Questions, concerns, or privacy reports? Please open an issue:
+
+https://github.com/Joona-t/porn-blocker-rewire-brain-3/issues
 
 ---
 
-## Verification
+## Open source / verification
 
-Every claim in this document is verifiable by reading the extension's
-source code at https://github.com/Joona-t/porn-blocker-rewire-brain. The
-extension is MIT licensed and contains no obfuscated or minified
-business logic (only the open-source TensorFlow.js library, which is
-itself MIT licensed and bundled unmodified).
+You don't have to take our word for any of this. **Porn Blocker Rewire Brain is fully open source.** Every claim in this policy can be independently verified by reading the source code:
 
-If you find any discrepancy between this policy and actual behavior,
-please open a GitHub issue — it will be treated as a critical bug.
+https://github.com/Joona-t/porn-blocker-rewire-brain-3
+
+If you find anything that contradicts this policy, please report it via the issues link above.
