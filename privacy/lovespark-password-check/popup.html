@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Password Check</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <span class="header-title" id="popupTitle">LoveSpark</span>
+        <span class="header-sub" id="popupDesc">Password Check</span>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-dropdown-trigger" id="themeToggle"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          <span id="themeLabel">Retro Pink</span>
+        </button>
+        <div class="theme-dropdown-menu" id="themeMenu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="status-section">
+      <div id="statusIcon" class="status-icon" aria-hidden="true">&#128274;</div>
+      <div id="statusText" class="status-text" aria-live="polite">Type a password to check</div>
+      <p id="cuteMsg" class="cute-msg">100% local -- nothing leaves your device!</p>
+    </section>
+
+    <section class="input-section" aria-label="Password input">
+      <div class="input-wrap">
+        <input type="password" id="passwordInput" class="password-input"
+               placeholder="Type a password..."
+               aria-label="Password to check" autocomplete="off">
+        <button id="toggleVisibility" class="visibility-btn" aria-label="Show password" type="button">
+          &#128065;
+        </button>
+      </div>
+      <div class="meter-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="4" aria-label="Password strength">
+        <div class="meter-track">
+          <div id="meterFill" class="meter-fill" style="width: 0%"></div>
+        </div>
+        <div id="meterLabel" class="meter-label" aria-live="polite">Enter a password</div>
+      </div>
+    </section>
+
+    <section id="feedbackSection" class="feedback-section hidden" aria-label="Password feedback">
+      <div class="feedback-title">Feedback:</div>
+      <ul id="feedbackList" class="feedback-list"></ul>
+    </section>
+
+    <section class="privacy-notice" aria-label="Privacy notice">
+      <span class="privacy-icon" aria-hidden="true">&#128737;</span>
+      Nothing is stored or sent. Ever. Pure local math.
+    </section>
+
+    <section class="stats-section" aria-label="Extension statistics">
+      <div class="stat-box" aria-label="Checks today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">checked today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Checks total">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">checked total</div>
+      </div>
+    </section>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
