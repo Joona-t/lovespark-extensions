@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Fidget Clicker</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky, the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Fidget Clicker</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          retro
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div id="cuteMsg" class="cute-msg" aria-live="polite">Click away, bestie!</div>
+
+      <!-- Click counter display -->
+      <div class="counter-display" aria-label="Click counter">
+        <div id="sessionCount" class="session-count" aria-live="polite">0</div>
+        <div class="session-label">session clicks</div>
+      </div>
+
+      <!-- Big click button -->
+      <div class="click-area">
+        <button id="clickBtn" class="click-btn" aria-label="Click to fidget">
+          <span id="clickRipple" class="click-ripple" aria-hidden="true"></span>
+          <span class="click-btn-text">CLICK</span>
+        </button>
+      </div>
+
+      <!-- Mode selector -->
+      <div class="mode-section">
+        <div class="mode-title">Click mode</div>
+        <div class="mode-tabs" role="radiogroup" aria-label="Click mode">
+          <button class="mode-btn active" role="radio" aria-checked="true" data-mode="single">Single</button>
+          <button class="mode-btn" role="radio" aria-checked="false" data-mode="double">Double</button>
+          <button class="mode-btn" role="radio" aria-checked="false" data-mode="hold">Hold</button>
+        </div>
+      </div>
+
+      <!-- Reset session -->
+      <button id="resetBtn" class="btn-reset" aria-label="Reset session counter">Reset session</button>
+
+      <!-- Stats -->
+      <div class="stats-section" aria-label="Click statistics">
+        <div class="stat-box" aria-label="Clicks today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Clicks total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
