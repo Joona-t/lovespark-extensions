@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark RSD Shield</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="affirmation">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">RSD Shield</div>
+        <div class="header-sub">Rejection sensitivity support</div>
+      </div>
+    </header>
+
+    <!-- Shield visual -->
+    <div class="shield-section">
+      <div class="shield-emoji" aria-hidden="true">&#x1F6E1;</div>
+    </div>
+
+    <!-- Affirmation -->
+    <div class="affirmation-card" aria-live="polite">
+      <div id="affirmation" class="affirmation-text">Loading...</div>
+    </div>
+
+    <!-- New affirmation -->
+    <button id="newBtn" class="btn-new" aria-label="Show another affirmation">Another one</button>
+
+    <!-- Breathing prompt -->
+    <div class="breathe-section">
+      <div id="breatheCircle" class="breathe-circle" aria-hidden="true"></div>
+      <div class="breathe-label">Breathe with me</div>
+    </div>
+
+    <!-- Timer: this feeling will pass -->
+    <div class="pass-timer" aria-live="polite">
+      <div class="pass-label">This feeling will pass</div>
+      <div id="passTimer" class="pass-countdown">20:00</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">shields used today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
