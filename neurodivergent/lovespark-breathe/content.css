@@ -1,0 +1,150 @@
+/* content.css — LoveSpark Breathe injected styles
+   Comment dimmer + Step back overlay + Quick breathe overlay */
+
+/* ── Comment Dimmer ─────────────────────────────────── */
+.ls-breathe-dimmed {
+  opacity: 0.85 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.ls-breathe-dimmed:hover {
+  opacity: 1 !important;
+}
+
+.ls-breathe-dimmed-label {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(232, 69, 124, 0.9);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  z-index: 2147483640;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(232, 69, 124, 0.3);
+}
+
+/* ── Step Back Overlay ──────────────────────────────── */
+.ls-breathe-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,
+    rgba(253, 207, 225, 0.97),
+    rgba(168, 120, 200, 0.95),
+    rgba(129, 140, 248, 0.93));
+  backdrop-filter: blur(20px);
+}
+
+.ls-breathe-overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 30px;
+  max-width: 380px;
+}
+
+.ls-breathe-overlay-mascot {
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.ls-breathe-overlay-message {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #5C1A36;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.ls-breathe-overlay-btn {
+  background: linear-gradient(135deg, #E8457C, #D63466);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 40px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+  min-height: 48px;
+}
+
+.ls-breathe-overlay-btn:hover {
+  box-shadow: 0 0 24px rgba(232, 69, 124, 0.45);
+  transform: translateY(-2px);
+}
+
+.ls-breathe-overlay-btn:active {
+  transform: translateY(0);
+}
+
+.ls-breathe-overlay-btn:focus-visible {
+  outline: 3px solid #D63466;
+  outline-offset: 3px;
+}
+
+.ls-breathe-overlay-hint {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  color: rgba(92, 26, 54, 0.6);
+  margin-top: 12px;
+}
+
+/* ── Quick Breathe Circle (in-page overlay) ─────────── */
+.ls-breathe-quick-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), #E8457C 70%, #D63466);
+  box-shadow: 0 0 24px rgba(232, 69, 124, 0.45);
+  margin-bottom: 20px;
+  will-change: transform;
+}
+
+.ls-breathe-quick-circle.inhale {
+  animation: ls-breathe-in var(--breathe-duration, 4s) ease-in-out forwards;
+}
+
+.ls-breathe-quick-circle.exhale {
+  animation: ls-breathe-out var(--breathe-duration, 4s) ease-in-out forwards;
+}
+
+@keyframes ls-breathe-in {
+  from { transform: scale(1); }
+  to { transform: scale(1.6); }
+}
+
+@keyframes ls-breathe-out {
+  from { transform: scale(1.6); }
+  to { transform: scale(1); }
+}
+
+/* ── Reduced Motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ls-breathe-dimmed {
+    transition: none !important;
+  }
+  .ls-breathe-overlay-btn:hover {
+    transform: none;
+  }
+  .ls-breathe-quick-circle {
+    animation: none !important;
+  }
+  .ls-breathe-quick-circle.inhale {
+    transform: scale(1.6);
+  }
+  .ls-breathe-quick-circle.exhale {
+    transform: scale(1);
+  }
+}
