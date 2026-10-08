@@ -184,7 +184,7 @@ class TTSAgent {
         this._fabEl.style.top = `${rect.bottom + 8}px`;
         this._fabEl.style.left = `${rect.left}px`;
       }
-    } catch (_) {}
+    } catch (err) { console.warn('[agents] unknown:', err); }
   }
 
   _handleFabClick() {

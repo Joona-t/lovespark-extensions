@@ -1,51 +1,7 @@
 'use strict';
 
-// Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
-function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
-}
-(function initThemeDropdown() {
-  const toggle = document.getElementById('themeToggle');
-  const menu = document.getElementById('themeMenu');
-  if (toggle && menu) {
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
-    });
-    menu.addEventListener('click', (e) => {
-      const opt = e.target.closest('.theme-option');
-      if (!opt) return;
-      const theme = opt.dataset.theme;
-      applyTheme(theme);
-      chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
-    document.addEventListener('click', () => {
-      menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
-    toggle.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        menu.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-  chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
-    if (!theme && darkMode) theme = 'dark';
-    applyTheme(theme || 'retro');
-  });
-})();
+// Theme (shared lib)
+LoveSparkTheme.init();
 
 // ── Constants ───────────────────────────────────────────────────────────────────
 
@@ -191,9 +147,9 @@ async function init() {
         currentDomain = new URL(tab.url).hostname.replace(/^www\./, '');
         siteDomainEl.textContent = currentDomain;
         updateSiteBtn(disabledSites.includes(currentDomain));
-      } catch (_) {}
+      } catch (err) { console.warn('[popup] unknown:', err); }
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[popup] unknown:', err); }
 
   if (!currentDomain) {
     siteDisableBtn.disabled = true;
@@ -405,7 +361,7 @@ async function ensureInjected() {
     if (!resp?.injected) {
       await chrome.runtime.sendMessage({ type: 'INJECT_TAB', tabId: tab.id });
     }
-  } catch (_) {}
+  } catch (err) { console.warn('[popup] unknown:', err); }
 }
 
 // ── Event handler setup ─────────────────────────────────────────────────────────

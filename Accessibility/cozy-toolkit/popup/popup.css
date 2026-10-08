@@ -348,11 +348,10 @@ body {
 
 .hint-text {
   font-size: 10px;
-  color: var(--ls-text-dark);
+  color: var(--ls-text-muted);
   text-align: center;
   margin-top: 8px;
   font-style: italic;
-  opacity: 0.8;
 }
 
 /* ── Site section ─────────────────────────────── */
@@ -410,7 +409,7 @@ body {
 .popup-container.disabled .tab-panel,
 .popup-container.disabled .preset-section,
 .popup-container.disabled .status-site-row {
-  opacity: 0.4;
+  filter: grayscale(0.3) opacity(0.5);
   pointer-events: none;
 }
 

@@ -151,7 +151,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if ((disabledSites || []).includes(hostname)) return;
 
     injectContentScripts(tabId);
-  } catch (_) {}
+  } catch (err) { console.warn('[cozy-toolkit] unknown:', err); }
 });
 
 // ── OrchestratorAgent ──────────────────────────────────────────────────────────
