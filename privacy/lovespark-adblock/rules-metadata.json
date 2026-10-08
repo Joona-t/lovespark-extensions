@@ -1,0 +1,79 @@
+{
+  "generatedAt": "2026-09-10T19:10:10.944Z",
+  "sources": [
+    {
+      "tier": "ads",
+      "url": "https://easylist.to/easylist/easylist.txt",
+      "sha256": "a5d61f19d5afb6270ae4948df26875701ee2578a1e43d52a849b7960bd029bfb",
+      "sourceBytes": 2095169,
+      "compatibleRules": 51367,
+      "emittedRules": 51367,
+      "coreRules": 22500,
+      "supplementalRules": 28867,
+      "budget": 22500,
+      "selectedCounts": {
+        "allow": 547,
+        "hostnameBlock": 18869,
+        "specificBlock": 3084
+      },
+      "skipped": {
+        "metadata": 280,
+        "unsupported-pattern": 25,
+        "invalid-filter": 2954,
+        "cosmetic-or-scriptlet": 24560,
+        "unknown-option:/$script": 2,
+        "unsupported-option:generichide": 167,
+        "unsupported-option:csp": 2
+      }
+    },
+    {
+      "tier": "tracking",
+      "url": "https://easylist.to/easylist/easyprivacy.txt",
+      "sha256": "d9522cb1388da929047b9bf6b402da01cd16069031bbf7963091363950d29b04",
+      "sourceBytes": 1501651,
+      "compatibleRules": 55959,
+      "emittedRules": 55959,
+      "coreRules": 6800,
+      "supplementalRules": 49159,
+      "budget": 6800,
+      "selectedCounts": {
+        "allow": 838,
+        "hostnameBlock": 3875,
+        "specificBlock": 2087
+      },
+      "skipped": {
+        "metadata": 772,
+        "unsupported-pattern": 9,
+        "invalid-domain-option": 3,
+        "unknown-option:/$script": 1,
+        "invalid-filter": 3,
+        "cosmetic-or-scriptlet": 35,
+        "unsupported-option:redirect": 27
+      }
+    },
+    {
+      "tier": "annoyances",
+      "url": "https://easylist.to/easylist/fanboy-annoyance.txt",
+      "sha256": "2efd864c9ddab12ab38cc4ad16d3f18517daac0bce7828de4aefa016b59dacbf",
+      "sourceBytes": 1712181,
+      "compatibleRules": 4093,
+      "emittedRules": 4093,
+      "coreRules": 200,
+      "supplementalRules": 3893,
+      "budget": 200,
+      "selectedCounts": {
+        "allow": 30,
+        "hostnameBlock": 110,
+        "specificBlock": 60
+      },
+      "skipped": {
+        "metadata": 1380,
+        "cosmetic-or-scriptlet": 44926,
+        "invalid-domain-option": 5,
+        "invalid-filter": 1,
+        "unsupported-pattern": 1,
+        "unsupported-option:generichide": 13
+      }
+    }
+  ]
+}

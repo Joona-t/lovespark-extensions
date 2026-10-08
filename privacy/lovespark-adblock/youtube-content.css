@@ -1,0 +1,37 @@
+html[data-lovespark-adblock="on"] ytd-display-ad-renderer,
+html[data-lovespark-adblock="on"] ytd-promoted-sparkles-web-renderer,
+html[data-lovespark-adblock="on"] ytd-promoted-video-renderer,
+html[data-lovespark-adblock="on"] ytd-ad-slot-renderer,
+html[data-lovespark-adblock="on"] ytd-in-feed-ad-layout-renderer,
+html[data-lovespark-adblock="on"] ytd-banner-promo-renderer,
+html[data-lovespark-adblock="on"] ytd-video-masthead-ad-renderer,
+html[data-lovespark-adblock="on"] ytd-video-masthead-ad-v3-renderer,
+html[data-lovespark-adblock="on"] ytd-action-companion-ad-renderer,
+html[data-lovespark-adblock="on"] #masthead-ad,
+html[data-lovespark-adblock="on"] #player-ads,
+html[data-lovespark-adblock="on"] .ytp-ad-overlay-container,
+html[data-lovespark-adblock="on"] .ytp-ad-player-overlay {
+  display: none !important;
+}
+
+/* v1.1.1: feed/search/watch wrappers, Shorts, mobile, Music, and the anti-adblock popup. */
+html[data-lovespark-adblock="on"] ytd-rich-item-renderer:has(> #content > ytd-ad-slot-renderer),
+html[data-lovespark-adblock="on"] ytd-search-pyv-renderer,
+html[data-lovespark-adblock="on"] ytd-merch-shelf-renderer,
+html[data-lovespark-adblock="on"] ytd-companion-slot-renderer,
+html[data-lovespark-adblock="on"] ytd-player-legacy-desktop-watch-ads-renderer,
+html[data-lovespark-adblock="on"] ytd-engagement-panel-section-list-renderer[target-id^="engagement-panel-ads"],
+html[data-lovespark-adblock="on"] ytd-ads-engagement-panel-content-renderer,
+html[data-lovespark-adblock="on"] ytd-statement-banner-renderer,
+html[data-lovespark-adblock="on"] ytd-reel-video-renderer:has(ytd-ad-slot-renderer),
+html[data-lovespark-adblock="on"] ytm-promoted-sparkles-web-renderer,
+html[data-lovespark-adblock="on"] ytm-companion-ad-renderer,
+html[data-lovespark-adblock="on"] ytm-rich-item-renderer > ad-slot-renderer,
+html[data-lovespark-adblock="on"] ytmusic-mealbar-promo-renderer,
+html[data-lovespark-adblock="on"] ytmusic-statement-banner-renderer,
+html[data-lovespark-adblock="on"] yt-overlay-product-sticker,
+html[data-lovespark-adblock="on"] .ytmPaidContentOverlayHost,
+html[data-lovespark-adblock="on"] tp-yt-paper-dialog:has(ytd-enforcement-message-view-model),
+html[data-lovespark-adblock="on"] ytd-enforcement-message-view-model {
+  display: none !important;
+}

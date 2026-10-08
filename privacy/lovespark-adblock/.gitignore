@@ -1,0 +1,7 @@
+__pycache__
+.DS_Store
+*.pyc
+node_modules
+_metadata/
+*.zip
+work/

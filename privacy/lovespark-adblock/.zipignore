@@ -1,0 +1,25 @@
+# Dev-only build artifacts — never ship these in the store zips.
+research.md
+plan.md
+package.json
+package-lock.json
+scripts/
+tests/
+node_modules/
+_metadata/
+research-youtube.md
+plan-youtube.md
+work/
+cws-spec.json
+cws-shots/
+icons/_gen.py
+.gitattributes
+CWS-LISTING.md
+SUBMIT.md
+cws-spec.json
+# Shared-lib files synced into lib/ but not loaded by this extension
+lib/lovespark-popup.js
+lib/lovespark-badge.js
+lib/lovespark-lifecycle.js
+lib/browser-polyfill.min.js
+lib/lovespark-stats.js
