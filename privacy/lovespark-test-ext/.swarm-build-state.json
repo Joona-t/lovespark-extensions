@@ -1,0 +1,14 @@
+{
+  "mode": "new",
+  "name": "test-ext",
+  "category": "privacy",
+  "description": "Test extension for verification",
+  "created": "2026-03-12",
+  "waves": {
+    "wave1_research": "pending",
+    "wave2_design": "pending",
+    "wave3_gate": "pending",
+    "wave4_build": "pending",
+    "post_build": "pending"
+  }
+}
