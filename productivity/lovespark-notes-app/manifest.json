@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "LoveSpark Notes",
   "version": "1.0.42",
-  "description": "A beautiful, private notes app in every new tab. Categories, search, and themes \u2014 no account needed.",
+  "description": "A beautiful, private notes app in every new tab. Categories, search, and themes — no account needed.",
   "permissions": [
     "storage"
   ],
@@ -13,5 +13,10 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "lovespark-notes-neurodivergent@lovespark.suite"
+    }
   }
 }
