@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Chess Coach</title>
+  <link rel="preload" href="lib/lovespark-stats.js" as="script">
+  <link rel="preload" href="lib/lovespark-lifecycle.js" as="script">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <div class="header-left">
+        <img src="mascot.png" alt="Sparky -- LoveSpark mascot" class="mascot" width="40" height="40">
+        <div class="header-copy">
+          <div class="header-title" id="popupTitle">Chess Coach</div>
+          <div class="header-sub" id="popupDesc">Local best-move training from pasted FEN or PGN.</div>
+        </div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          Change Theme
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+        </div>
+      </div>
+      <span id="themeLabel" class="sr-only" aria-live="polite"></span>
+    </header>
+
+    <main class="popup-content">
+      <p class="coach-message" id="coachMessage" aria-live="polite">Train locally. No remote engine, no tracking, no site scraping.</p>
+
+      <section class="panel-card input-card" aria-labelledby="modeHeading">
+        <div class="section-head">
+          <div>
+            <div class="section-title" id="modeHeading">Input Mode</div>
+            <div class="section-subtitle">Choose the notation you want to analyze.</div>
+          </div>
+        </div>
+
+        <div class="mode-group" role="group" aria-label="Select analysis input type">
+          <button type="button" class="mode-btn active" data-mode="fen" aria-pressed="true">FEN</button>
+          <button type="button" class="mode-btn" data-mode="pgn" aria-pressed="false">PGN</button>
+        </div>
+
+        <label for="notationInput" class="field-label" id="inputLabel">Paste a full FEN</label>
+        <textarea id="notationInput" class="notation-input" rows="6"
+                  aria-describedby="inputHelp validationMessage"
+                  spellcheck="false"
+                  placeholder="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"></textarea>
+        <div class="field-help" id="inputHelp" aria-live="polite">Use the complete six-field FEN so the local engine sees the exact position.</div>
+
+        <div class="action-block">
+          <button type="button" id="analyzeBtn" class="analyze-btn">Analyze Best Move</button>
+          <div class="analyze-state" id="analyzeState" aria-live="polite"></div>
+        </div>
+
+        <div class="validation-message" id="validationMessage" role="alert" aria-live="polite" hidden></div>
+      </section>
+
+      <section class="panel-card result-card" id="resultCard" aria-labelledby="resultHeading" hidden>
+        <div class="section-head">
+          <div>
+            <div class="section-title" id="resultHeading">Analysis Result</div>
+            <div class="section-subtitle">Training output from the local engine.</div>
+          </div>
+        </div>
+
+        <div class="result-main">
+          <div class="result-kicker">Best Move</div>
+          <div class="best-move" id="bestMoveSan" aria-live="polite">--</div>
+          <div class="best-move-uci" id="bestMoveUci" aria-live="polite">--</div>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-row">
+            <span class="result-label">Evaluation</span>
+            <span class="result-value" id="evaluationValue" aria-live="polite">--</span>
+          </div>
+          <div class="result-row pv-row">
+            <span class="result-label">Principal Variation</span>
+            <span class="result-value pv-value" id="pvValue" aria-live="polite">--</span>
+          </div>
+          <div class="result-row fen-row">
+            <span class="result-label">Normalized FEN</span>
+            <span class="result-value fen-value" id="fenValue" aria-live="polite">--</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-strip" aria-label="Analysis statistics">
+        <div class="stat-pill">
+          <div class="stat-num" id="todayCount" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-num" id="totalCount" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="popup-footer">
+      LoveSpark Suite • local engine only
+    </footer>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
