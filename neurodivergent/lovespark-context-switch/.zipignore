@@ -1,0 +1,7 @@
+# Per-extension build excludes — honored by scripts/build-zips.sh (rsync --exclude-from).
+# BUG-001: the committed store zips sat in the repo root, so every rebuild re-packed the
+# previous *.zip pair inside the new ones (recursive zip-in-zip). Never ship these.
+*.zip
+CWS-LISTING.md
+SUBMIT.md
+scripts/
