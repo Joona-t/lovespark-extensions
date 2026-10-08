@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Emotion Wheel</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky, the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Emotion Wheel</div>
+        <div class="header-sub" id="popupDesc">LoveSpark Suite</div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+          retro
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="popup-content">
+      <div id="cuteMsg" class="cute-msg" aria-live="polite">How are you feeling?</div>
+
+      <!-- Breadcrumb -->
+      <div id="breadcrumb" class="breadcrumb" aria-label="Emotion selection path"></div>
+
+      <!-- Emotion grid -->
+      <div id="emotionGrid" class="emotion-grid" role="group" aria-label="Select an emotion"></div>
+
+      <!-- Back button -->
+      <button id="backBtn" class="btn-back hidden" aria-label="Go back to previous emotions">Back</button>
+
+      <!-- Selected display -->
+      <div id="selectedBox" class="selected-box hidden" aria-live="polite">
+        <div class="selected-label">You're feeling:</div>
+        <div id="selectedEmotion" class="selected-emotion"></div>
+        <button id="logBtn" class="btn-primary">Log this feeling</button>
+      </div>
+
+      <!-- Recent log -->
+      <div class="recent-section">
+        <div class="recent-title">Recent feelings</div>
+        <div id="recentList" class="recent-list" aria-label="Recent logged emotions"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-section" aria-label="Logging statistics">
+        <div class="stat-box" aria-label="Emotions logged today">
+          <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">today</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-box" aria-label="Emotions logged total">
+          <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+          <div class="stat-label">total</div>
+        </div>
+      </div>
+    </main>
+    <footer class="popup-footer">LoveSpark Suite</footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+</body>
+</html>
