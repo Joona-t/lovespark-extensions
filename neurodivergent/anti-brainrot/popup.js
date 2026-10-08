@@ -114,6 +114,7 @@ function toggleGroup(btn) {
 
 function showStatus() {
   const status = document.getElementById('status');
+  if (!status) return;
   status.classList.add('show');
   setTimeout(() => status.classList.remove('show'), 2000);
 }
