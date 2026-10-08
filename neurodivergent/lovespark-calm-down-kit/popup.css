@@ -1,0 +1,71 @@
+/* LoveSpark Calm Down Kit — Popup styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 340px; font-family: var(--ls-font-body); background: var(--ls-bg-gradient); color: var(--ls-text-dark); }
+.popup-container { padding: 14px 16px 10px; }
+.popup-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title { font-family: var(--ls-font-display); font-size: 10px; color: var(--ls-text-dark); }
+.header-sub { font-family: var(--ls-font-body); font-size: 10px; color: var(--ls-text-muted); }
+
+.rate-section { text-align: center; margin-bottom: 10px; }
+.rate-question { font-size: 12px; font-weight: 600; color: var(--ls-text-dark); margin-bottom: 10px; }
+.rate-slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.rate-low, .rate-high { font-size: 9px; color: var(--ls-text-muted); min-width: 40px; }
+.rate-low { text-align: right; }
+.rate-high { text-align: left; }
+.intensity-slider {
+  flex: 1; height: 6px; -webkit-appearance: none; appearance: none;
+  background: linear-gradient(90deg, #00B894, #FDCB6E, #E8457C); border-radius: 3px; outline: none;
+}
+.intensity-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+  background: white; border: 2px solid var(--ls-pink-deep); cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.intensity-slider:focus-visible { outline: 2px solid var(--ls-focus-ring); outline-offset: 2px; }
+.intensity-num { font-family: var(--ls-font-display); font-size: 24px; color: var(--ls-pink-accent); margin-bottom: 10px; }
+
+.btn-help {
+  display: block; width: 100%; padding: 10px; border-radius: 10px; border: none;
+  background: var(--ls-pink-deep); color: white; font-size: 13px; font-weight: 600;
+  cursor: pointer; min-height: 40px; box-shadow: var(--ls-glow); transition: transform 0.15s;
+}
+.btn-help:hover { transform: scale(1.02); }
+
+.technique-section { margin-bottom: 10px; }
+.tech-level {
+  text-align: center; font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--ls-pink-accent); margin-bottom: 8px;
+}
+.tech-card {
+  padding: 14px; background: var(--ls-glass-strong); border: 1px solid var(--ls-pink-deep);
+  border-radius: 12px; text-align: center; margin-bottom: 8px;
+}
+.tech-emoji { font-size: 32px; margin-bottom: 6px; }
+.tech-name { font-size: 13px; font-weight: 700; color: var(--ls-text-dark); margin-bottom: 8px; }
+.tech-steps { font-size: 11px; color: var(--ls-text-dark); line-height: 1.5; }
+
+.btn-another {
+  display: block; width: 100%; padding: 7px; border-radius: 8px;
+  border: 1px solid var(--ls-glass-border); background: var(--ls-glass);
+  color: var(--ls-text-muted); font-size: 10px; font-weight: 600;
+  cursor: pointer; min-height: 32px; margin-bottom: 4px; transition: background 0.15s;
+}
+.btn-another:hover { background: var(--ls-glass-strong); color: var(--ls-text-dark); }
+.btn-back {
+  display: block; width: 100%; padding: 5px; border: none; background: transparent;
+  color: var(--ls-text-muted); font-size: 9px; cursor: pointer; margin-bottom: 8px;
+}
+.btn-back:hover { color: var(--ls-text-dark); }
+
+.stats-row { text-align: center; font-size: 10px; color: var(--ls-text-muted); margin-bottom: 8px; }
+.stat-inline { font-family: var(--ls-font-display); color: var(--ls-pink-accent); }
+.stat-sep { margin: 0 3px; color: var(--ls-glass-border); }
+
+button:focus-visible, input:focus-visible, [role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Calm Down Kit</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Calm Down Kit</div>
+        <div class="header-sub" id="popupDesc">Emotional regulation tools</div>
+      </div>
+    </header>
+
+    <!-- Step 1: Rate intensity -->
+    <div id="rateSection" class="rate-section" aria-live="polite">
+      <div class="rate-question">How intense is the emotion right now?</div>
+      <div class="rate-slider-row">
+        <span class="rate-low">Mild</span>
+        <input type="range" id="intensitySlider" class="intensity-slider" min="1" max="10" value="5"
+               aria-label="Emotion intensity 1 to 10">
+        <span class="rate-high">Extreme</span>
+      </div>
+      <div id="intensityNum" class="intensity-num">5</div>
+      <button id="getHelpBtn" class="btn-help" aria-label="Get calming technique">Help me calm down</button>
+    </div>
+
+    <!-- Step 2: Technique -->
+    <div id="techniqueSection" class="technique-section" hidden aria-live="polite">
+      <div id="techLevel" class="tech-level"></div>
+      <div class="tech-card">
+        <div id="techEmoji" class="tech-emoji" aria-hidden="true"></div>
+        <div id="techName" class="tech-name"></div>
+        <div id="techSteps" class="tech-steps"></div>
+      </div>
+      <button id="anotherBtn" class="btn-another" aria-label="Try another technique">Try another</button>
+      <button id="backBtn" class="btn-back" aria-label="Go back to rating">Rate again</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">uses today</span>
+      <span class="stat-sep">·</span>
+      <span id="totalCount" class="stat-inline" aria-live="polite">0</span>
+      <span class="stat-inline-label">total</span>
+    </div>
+    <div id="footerMount"></div>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

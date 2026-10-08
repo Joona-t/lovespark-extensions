@@ -1,0 +1,27 @@
+{
+  "extension": "LoveSpark Calm Down Kit",
+  "path": "~/Claude x LoveSpark/Extensions/neurodivergent/lovespark-calm-down-kit",
+  "timestamp": "2026-03-27T01:53:13",
+  "results": {
+    "privacy_policy_page": true,
+    "icons": true,
+    "mascot": true,
+    "promo_tile": true,
+    "description_quality": true,
+    "gecko": true,
+    "csp": true,
+    "mv3": true,
+    "chrome_zip": true,
+    "firefox_zip": true,
+    "no_innerHTML": true,
+    "permissions_ok": true,
+    "bugs_doc": true,
+    "ls_check_ran": true
+  },
+  "passed": 14,
+  "total_checks": 14,
+  "blockers": [
+    "CWS developer account submission (Joona)"
+  ],
+  "ship_ready": true
+}
