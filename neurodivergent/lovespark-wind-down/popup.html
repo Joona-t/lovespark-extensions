@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Wind Down</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Wind Down</div>
+        <div class="header-sub" id="popupDesc">Help your brain shift gears</div>
+      </div>
+    </header>
+
+    <!-- Countdown -->
+    <div class="countdown-card" aria-live="polite">
+      <div id="countdownEmoji" class="countdown-emoji" aria-hidden="true">&#x1F319;</div>
+      <div id="countdownText" class="countdown-text">Calculating...</div>
+      <div id="warmthBar" class="warmth-bar-wrap">
+        <div id="warmthFill" class="warmth-fill" style="width: 0%"></div>
+      </div>
+      <div id="warmthLabel" class="warmth-label">Screen warmth: 0%</div>
+    </div>
+
+    <!-- Bedtime setting -->
+    <div class="bedtime-section">
+      <label class="bedtime-label">Bedtime</label>
+      <select id="bedtimeHour" class="bedtime-select" aria-label="Bedtime hour"></select>
+      <span class="bedtime-colon">:</span>
+      <select id="bedtimeMinute" class="bedtime-select" aria-label="Bedtime minute">
+        <option value="0">00</option>
+        <option value="15">15</option>
+        <option value="30">30</option>
+        <option value="45">45</option>
+      </select>
+    </div>
+
+    <!-- Toggle -->
+    <div class="toggle-card">
+      <span id="statusText" class="toggle-label-text">Wind down active</span>
+      <label class="toggle-row">
+        <input type="checkbox" id="enableToggle" checked aria-label="Enable wind down">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+
+    <div class="stats-row">
+      <span id="todayCount" class="stat-inline">0</span>
+      <span class="stat-inline-label">reminders today</span>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
