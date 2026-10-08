@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pink Anti-Doomscroll</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popup-title" aria-describedby="cute-msg">
+
+    <!-- Header -->
+    <header class="popup-header">
+      <img src="media/mascot.png" alt="Sparky — LoveSpark mascot" class="header-mascot">
+      <span class="header-title" id="popup-title">Anti-Doomscroll</span>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+    </header>
+
+    <!-- Stats card -->
+    <div class="card stats-card">
+      <div class="stats-row">
+        <span class="stats-label">Nudges today</span>
+        <span class="stats-value" id="stat-nudges-today">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Pauses today</span>
+        <span class="stats-value" id="stat-pauses-today">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Total nudges</span>
+        <span class="stats-value stats-value-small" id="stat-nudges-total">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">Total pauses</span>
+        <span class="stats-value stats-value-small" id="stat-pauses-total">0</span>
+      </div>
+    </div>
+
+    <!-- Cute message -->
+    <p class="cute-msg" id="cute-msg">Stay mindful, bestie! 💕</p>
+
+    <!-- Master toggle -->
+    <div class="card">
+      <div class="row">
+        <span class="row-label">Enabled</span>
+        <label class="toggle-switch" id="toggle-enabled">
+          <input type="checkbox" id="cb-enabled">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Site toggles -->
+    <div class="card">
+      <div class="card-title">Sites</div>
+      <div class="row">
+        <span class="row-label">x.com / twitter.com</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-site-x">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row">
+        <span class="row-label">reddit.com</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-site-reddit">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+      <div class="row">
+        <span class="row-label">facebook.com</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-site-facebook">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Mode selector -->
+    <div class="card">
+      <div class="card-title">Mode</div>
+      <div class="mode-row">
+        <label class="mode-option">
+          <input type="radio" name="mode" value="gentle" aria-label="Gentle mode">
+          <span class="mode-label">Gentle</span>
+        </label>
+        <label class="mode-option">
+          <input type="radio" name="mode" value="standard" aria-label="Standard mode">
+          <span class="mode-label">Standard</span>
+        </label>
+        <label class="mode-option">
+          <input type="radio" name="mode" value="firm" aria-label="Firm mode">
+          <span class="mode-label">Firm</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sparkles toggle -->
+    <div class="card">
+      <div class="row">
+        <span class="row-label">Sparkles enabled</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="cb-sparkle">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Snooze -->
+    <button class="btn-snooze" id="btn-snooze">Snooze 10 min</button>
+
+    <!-- Footer -->
+
+  </div>
+  <script src="lib/lovespark-footer.js"></script>
+<script src="lib/lovespark-theme.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
