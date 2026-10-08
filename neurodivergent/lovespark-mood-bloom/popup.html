@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Mood Bloom</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+      retro
+    </button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Mood Bloom</div>
+        <div class="header-sub" id="popupDesc">How are you feeling?</div>
+      </div>
+    </header>
+
+    <!-- Streak display -->
+    <div class="streak-section" aria-label="Current streak">
+      <span id="streakFlower" class="streak-flower" aria-hidden="true" aria-live="polite">&#x1F331;</span>
+      <span id="streakText" class="streak-text" aria-live="polite">0 day streak</span>
+    </div>
+
+    <!-- Mood picker -->
+    <div class="mood-picker" role="radiogroup" aria-label="Select your mood">
+      <button class="mood-btn" data-mood="amazing" aria-label="Amazing">
+        <span class="mood-emoji" aria-hidden="true">&#x1F929;</span>
+        <span class="mood-label">Amazing</span>
+      </button>
+      <button class="mood-btn" data-mood="good" aria-label="Good">
+        <span class="mood-emoji" aria-hidden="true">&#x1F60A;</span>
+        <span class="mood-label">Good</span>
+      </button>
+      <button class="mood-btn" data-mood="okay" aria-label="Okay">
+        <span class="mood-emoji" aria-hidden="true">&#x1F642;</span>
+        <span class="mood-label">Okay</span>
+      </button>
+      <button class="mood-btn" data-mood="low" aria-label="Low">
+        <span class="mood-emoji" aria-hidden="true">&#x1F614;</span>
+        <span class="mood-label">Low</span>
+      </button>
+      <button class="mood-btn" data-mood="rough" aria-label="Rough">
+        <span class="mood-emoji" aria-hidden="true">&#x1F62D;</span>
+        <span class="mood-label">Rough</span>
+      </button>
+    </div>
+
+    <!-- Optional note -->
+    <div class="note-section" id="noteSection" hidden aria-live="polite">
+      <input type="text" id="noteInput" class="note-input" placeholder="Quick note (optional)..."
+             aria-label="Mood note" maxlength="140" autocomplete="off">
+      <button id="saveBtn" class="btn-save" aria-label="Save mood entry">Save</button>
+    </div>
+
+    <!-- Today's check-in confirmation -->
+    <div class="checkin-confirm" id="checkinConfirm" hidden aria-live="polite">
+      <span id="confirmEmoji" class="confirm-emoji" aria-hidden="true" aria-live="polite"></span>
+      <span id="confirmText" class="confirm-text" aria-live="polite"></span>
+    </div>
+
+    <!-- Week garden -->
+    <div class="garden-section" aria-label="Your week garden">
+      <div class="garden-label">This week</div>
+      <div id="weekGarden" class="week-garden" role="list" aria-live="polite"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Check-in statistics">
+      <div class="stat-box" aria-label="Check-ins today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total check-ins">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount" aria-live="polite"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

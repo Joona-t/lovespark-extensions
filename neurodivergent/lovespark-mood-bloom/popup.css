@@ -1,0 +1,228 @@
+/* LoveSpark Mood Bloom — Popup styles */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  width: 340px;
+  font-family: var(--ls-font-body);
+  background: var(--ls-bg-gradient);
+  color: var(--ls-text-dark);
+}
+
+.popup-container { padding: 14px 16px 10px; }
+
+/* ── Header ────────────────────────────── */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.mascot { width: 40px; height: 40px; object-fit: contain; border-radius: 8px; }
+.header-text { display: flex; flex-direction: column; gap: 2px; }
+.header-title {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-text-dark);
+}
+.header-sub {
+  font-family: var(--ls-font-body);
+  font-size: 10px;
+  color: var(--ls-text-muted);
+}
+
+/* ── Streak ────────────────────────────── */
+.streak-section {
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 6px 0;
+}
+.streak-flower {
+  font-size: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.streak-text {
+  font-family: var(--ls-font-display);
+  font-size: 10px;
+  color: var(--ls-pink-accent);
+  vertical-align: middle;
+}
+
+/* ── Mood picker ───────────────────────── */
+.mood-picker {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 6px;
+  border: 2px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  background: var(--ls-glass);
+  cursor: pointer;
+  min-width: 56px;
+  min-height: 56px;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.mood-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--ls-pink-accent);
+}
+.mood-btn.selected {
+  border-color: var(--ls-pink-deep);
+  background: var(--ls-glass-strong);
+  box-shadow: 0 0 8px rgba(214, 52, 102, 0.25);
+}
+.mood-emoji { font-size: 22px; line-height: 1; }
+.mood-label { font-size: 9px; color: var(--ls-text-muted); font-weight: 600; }
+.mood-btn.selected .mood-label { color: var(--ls-pink-accent); }
+
+/* ── Note input ────────────────────────── */
+.note-section {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.note-input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+  font-size: 11px;
+  font-family: var(--ls-font-body);
+  min-height: 34px;
+  outline: none;
+}
+.note-input:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+.note-input::placeholder { color: var(--ls-text-muted); }
+.btn-save {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--ls-pink-deep);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 34px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-save:hover {
+  transform: scale(1.03);
+  box-shadow: var(--ls-glow);
+}
+
+/* ── Check-in confirmation ─────────────── */
+.checkin-confirm {
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 10px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  backdrop-filter: blur(8px);
+}
+.confirm-emoji { font-size: 20px; margin-right: 6px; }
+.confirm-text { font-size: 11px; color: var(--ls-text-dark); }
+
+/* ── Week garden ───────────────────────── */
+.garden-section { margin-bottom: 10px; }
+.garden-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ls-text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.week-garden {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+}
+.garden-day {
+  flex: 1;
+  text-align: center;
+  padding: 6px 2px;
+  border-radius: 8px;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  min-width: 38px;
+  transition: border-color 0.15s;
+}
+.garden-day.today {
+  border-color: var(--ls-pink-accent);
+}
+.garden-flower { font-size: 18px; line-height: 1; margin-bottom: 2px; }
+.garden-day-label {
+  font-size: 8px;
+  color: var(--ls-text-muted);
+  font-weight: 600;
+}
+.garden-day.today .garden-day-label {
+  color: var(--ls-pink-accent);
+}
+
+/* ── Stats ─────────────────────────────── */
+.stats-section {
+  display: flex;
+  align-items: center;
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  padding: 10px 0;
+  backdrop-filter: blur(8px);
+  margin-bottom: 8px;
+}
+.stat-box { flex: 1; text-align: center; }
+.stat-num {
+  font-family: var(--ls-font-display);
+  font-size: 14px;
+  color: var(--ls-pink-accent);
+  margin-bottom: 2px;
+  transition: transform 0.3s, color 0.3s;
+}
+.stat-label { font-size: 10px; color: var(--ls-text-muted); }
+.stat-divider { width: 1px; height: 30px; background: var(--ls-glass-border); }
+
+/* ── Bloom animation ───────────────────── */
+@keyframes bloom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+.blooming {
+  animation: bloom 0.5s ease;
+}
+
+/* ── Focus indicators ──────────────────── */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+[role="menuitem"]:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
