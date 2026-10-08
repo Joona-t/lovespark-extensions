@@ -1,0 +1,34 @@
+# LoveSpark Site Blocker - Bugs and Iterations
+
+## v1.0.0 (2026-03-25) - Initial Build
+
+### Architecture Decisions
+- **declarativeNetRequest** — MV3-native site blocking via dynamic rules. No webRequest needed.
+- **host_permissions all_urls** — Required for declarativeNetRequest to redirect any domain. Justified in gecko data_collection block.
+- **Redirect to blocked.html** — Gentle branded page with breathing prompt and "Go back" button. Not a harsh error page.
+- **7 default blocked sites** — reddit, twitter, x, tiktok, instagram, facebook, youtube. User can add/remove.
+- **50 site cap** — Prevents rule bloat. Matches declarativeNetRequest limits.
+- **Toggle on/off** — Clears all dynamic rules when disabled, re-adds when enabled.
+- **CWS keyword** — "distraction blocker" is high-search in ADHD communities.
+- **Different from doomscroll** — Doomscroll targets infinite scroll behavior. This blocks entire domains.
+- **DOM API only** — Zero innerHTML per KI-011.
+
+### Known Limitations (V1)
+- No scheduled blocking (always on or off)
+- No per-site time limits
+- No password protection to prevent easy disable
+- No allowlist for specific subpages
+
+### Iteration Log
+| Date | Change | Reason |
+|------|--------|--------|
+| 2026-03-25 | Initial build | CWS keyword: "distraction blocker" |
+
+
+## 2026-03-28: Fleet-wide automation regression — broken CSS variables + missing footers
+
+**Problem:** A post-swarm-audit automation run injected `lovespark-tokens.css` and `lovespark-base.css` into popup.html, and replaced `--ls-pink-accent` with undefined `--ls-btn-bg` in popup.css. This broke toggle colors (rendered transparent) and changed disabled opacity from 0.4 to 0.9. Footer buttons were also missing from 26 extensions.
+**Root cause:** Batch automation (`sync-shared-lib.sh` or swarm pass) overwrote extension CSS without validating variable definitions. The `--ls-btn-bg` variable was never defined in any CSS file.
+**Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
+**Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
+**Commit:** fleet-wide fix, multiple commits

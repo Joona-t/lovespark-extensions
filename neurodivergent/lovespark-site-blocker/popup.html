@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Site Blocker</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="theme-dropdown">
+    <button id="themeDropdownTrigger" class="theme-dropdown-trigger"
+            aria-expanded="false" aria-haspopup="true" aria-label="Change theme">retro</button>
+    <div id="themeDropdownMenu" class="theme-dropdown-menu" role="menu">
+      <div class="theme-dropdown-header">Theme</div>
+      <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+      <button class="theme-option" role="menuitem" data-theme="dark">Dark Noir</button>
+      <button class="theme-option" role="menuitem" data-theme="beige">Warm Beige</button>
+      <button class="theme-option" role="menuitem" data-theme="slate">Cool Slate</button>
+    </div>
+  </div>
+
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky the LoveSpark mascot" class="mascot" width="40" height="40">
+      <div class="header-text">
+        <div class="header-title" id="popupTitle">Site Blocker</div>
+        <div class="header-sub" id="popupDesc">Block distractions, stay focused</div>
+      </div>
+    </header>
+
+    <!-- Enable toggle -->
+    <div class="toggle-card">
+      <span class="toggle-label-text" id="statusText" aria-live="polite">Blocking active</span>
+      <label class="toggle-row">
+        <input type="checkbox" id="enableToggle" checked aria-label="Enable site blocking">
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </div>
+
+    <!-- Add site -->
+    <div class="add-section">
+      <div class="add-row">
+        <input type="text" id="siteInput" class="site-input" placeholder="Add site (e.g. reddit.com)"
+               aria-label="Site to block" maxlength="100" autocomplete="off">
+        <button id="addBtn" class="btn-add" aria-label="Add site to blocklist">+</button>
+      </div>
+    </div>
+
+    <!-- Blocklist -->
+    <div id="blocklistSection" class="blocklist-section">
+      <div class="section-label">Blocked sites</div>
+      <div id="blocklist" class="blocklist" role="list" aria-live="polite"></div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section" aria-label="Blocking statistics">
+      <div class="stat-box" aria-label="Sites blocked today">
+        <div id="todayCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">blocked today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box" aria-label="Total blocks">
+        <div id="totalCount" class="stat-num" aria-live="polite">0</div>
+        <div class="stat-label">total</div>
+      </div>
+    </div>
+
+    <div id="footerMount"></div>
+  </div>
+
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="lib/lovespark-popup.js"></script>
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
