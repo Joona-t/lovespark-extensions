@@ -133,7 +133,7 @@ body {
 .pill:hover { background: var(--ls-glass); }
 
 .pill.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
@@ -174,7 +174,7 @@ body {
 }
 
 .toggle-switch.active {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   border-color: var(--ls-pink-accent);
   box-shadow: var(--ls-glow);
 }
@@ -304,7 +304,7 @@ body {
 }
 
 .btn-pink {
-  background: var(--ls-pink-accent);
+  background: var(--ls-pink-deep);
   color: white;
   border: none;
   border-radius: var(--ls-radius-sm);

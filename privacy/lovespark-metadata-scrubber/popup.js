@@ -30,13 +30,8 @@ function applyTheme(t) {
   browser.storage.local.get(['theme', 'darkMode']).then(({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
     applyTheme(theme || 'retro');
-  });
-}).catch(() => {});
+  }).catch(() => {});
 })();
-  if (!theme && darkMode) theme = 'dark';
-  applyTheme(theme || 'retro');
-});
-document.getElementById('themeToggle');
 
 const MESSAGES = [
   'Your photos, your privacy 💕',
