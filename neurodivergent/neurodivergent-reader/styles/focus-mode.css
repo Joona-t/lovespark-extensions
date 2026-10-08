@@ -1,0 +1,46 @@
+/**
+ * Focus mode CSS — static rules for paragraph focus.
+ * Dynamic dim level is set by FocusAgent via inline <style>.
+ * This file handles the base focus-mode body state.
+ *
+ * The .nr-focused class and box-shadow are injected dynamically
+ * by FocusAgent so the dim level can be user-configurable.
+ * This CSS provides supplementary styles.
+ */
+
+/* Smooth transition for focus target changes */
+html[data-nr-focus] p,
+html[data-nr-focus] blockquote,
+html[data-nr-focus] li,
+html[data-nr-focus] h1,
+html[data-nr-focus] h2,
+html[data-nr-focus] h3,
+html[data-nr-focus] h4,
+html[data-nr-focus] h5,
+html[data-nr-focus] h6,
+html[data-nr-focus] pre {
+  transition: opacity 0.3s ease;
+}
+
+/* Cursor hint when focus mode is active */
+html[data-nr-focus] p:hover,
+html[data-nr-focus] blockquote:hover,
+html[data-nr-focus] li:hover,
+html[data-nr-focus] pre:hover {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-nr-focus] p,
+  html[data-nr-focus] blockquote,
+  html[data-nr-focus] li,
+  html[data-nr-focus] h1,
+  html[data-nr-focus] h2,
+  html[data-nr-focus] h3,
+  html[data-nr-focus] h4,
+  html[data-nr-focus] h5,
+  html[data-nr-focus] h6,
+  html[data-nr-focus] pre {
+    transition: none !important;
+  }
+}

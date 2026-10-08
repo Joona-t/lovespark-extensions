@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neurodivergent Reader</title>
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
+  <link rel="stylesheet" href="../lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="../lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container" role="dialog" aria-labelledby="popup-title" aria-describedby="cute-msg">
+
+    <!-- Header -->
+    <header class="popup-header" style="position: relative;">
+      <div class="header-left">
+        <img src="../mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="36" height="36">
+        <div class="header-text">
+          <span class="header-title" id="popup-title">Neurodivergent<br>Reader</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="listbox" aria-expanded="false" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> &#x25BE;
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu" role="listbox" aria-label="Theme">
+        <div class="theme-dropdown-header" aria-hidden="true">Change Theme</div>
+        <button class="theme-option" data-theme="retro" role="option">Retro Pink</button>
+        <button class="theme-option" data-theme="dark" role="option">Dark</button>
+        <button class="theme-option" data-theme="beige" role="option">Beige</button>
+        <button class="theme-option" data-theme="slate" role="option">Slate</button>
+      </div>
+    </div>
+        <button id="settings-btn" class="icon-btn" title="Settings" aria-label="Settings">&#x2699;&#xFE0F;</button>
+      </div>
+    </header>
+
+    <!-- Status -->
+    <section class="status-section">
+      <p id="cute-msg" class="cute-msg">Browse in peace! &#x1F495;</p>
+      <label class="toggle-row">
+        <span class="toggle-label">Enable Reader</span>
+        <span class="toggle-wrap">
+          <input type="checkbox" id="master-toggle" aria-label="Enable Reader" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+    </section>
+
+    <!-- Features -->
+    <section class="features-card">
+      <h2 class="card-title">&#x2728; Features</h2>
+
+      <label class="toggle-row">
+        <span class="toggle-label">&#x1F524; Reading Font</span>
+        <span class="toggle-wrap">
+          <input type="checkbox" id="font-toggle" aria-label="Reading Font">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+
+      <div class="font-picker-row hidden" id="font-picker-row" aria-hidden="true">
+        <select id="font-select" class="font-select" aria-label="Font family">
+          <option value="OpenDyslexic">OpenDyslexic</option>
+          <option value="Lexend">Lexend</option>
+          <option value="Atkinson Hyperlegible">Atkinson Hyperlegible</option>
+          <option value="system">System Default</option>
+        </select>
+      </div>
+
+      <label class="toggle-row">
+        <span class="toggle-label">&#x1F4CF; Reading Ruler</span>
+        <span class="toggle-wrap">
+          <input type="checkbox" id="ruler-toggle" aria-label="Reading Ruler">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+
+      <label class="toggle-row">
+        <span class="toggle-label">&#x1F50D; Paragraph Focus</span>
+        <span class="toggle-wrap">
+          <input type="checkbox" id="focus-toggle" aria-label="Paragraph Focus">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+
+      <label class="toggle-row">
+        <span class="toggle-label">&#x1F6E1;&#xFE0F; Hide Distractions</span>
+        <span class="toggle-wrap">
+          <input type="checkbox" id="distraction-toggle" aria-label="Hide Distractions">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+    </section>
+
+    <!-- Current site -->
+    <section class="site-section">
+      <div class="site-row">
+        <span class="site-icon">&#x1F4CD;</span>
+        <span id="site-domain" class="site-domain">&mdash;</span>
+        <button id="site-disable-btn" class="site-btn" aria-label="Disable reader on this site">&#x2716; Disable here</button>
+      </div>
+    </section>
+
+
+  </div>
+  <script src="../lib/browser-polyfill.min.js"></script>
+  <script src="../lib/lovespark-theme.js"></script>
+  <script src="../lib/lovespark-lifecycle.js"></script>
+  <script src="../lib/lovespark-stats.js"></script>
+  <script src="../lib/lovespark-badge.js"></script>
+  <script src="../lib/lovespark-popup.js"></script>
+  <script src="../lib/lovespark-footer.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

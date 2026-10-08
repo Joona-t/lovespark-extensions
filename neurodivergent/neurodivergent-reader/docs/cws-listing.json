@@ -1,0 +1,20 @@
+{
+  "name": "Neurodivergent Reader by LoveSpark",
+  "summary": "Reading focus tools: dyslexia fonts, reading ruler, paragraph focus & distraction removal. Built for ADHD & dyslexia.",
+  "description": "Neurodivergent Reader transforms any webpage into a calmer, more focused reading experience. Designed specifically for ADHD, dyslexia, and autism.\n\nFeatures:\n- Reading Font — Switch to OpenDyslexic, Lexend, or Atkinson Hyperlegible with adjustable size, line height, letter spacing, and word spacing\n- Reading Ruler — Transparent ruler follows your cursor. Adjustable height, opacity, and color. Keyboard and touch support\n- Paragraph Focus — Dims everything except the paragraph you're reading. Click to lock, j/k to navigate between paragraphs\n- Distraction Removal — Hide sidebars, ads, cookie banners, and floating overlays independently. CSS-only, instantly reversible\n- Per-site disable — Turn off the reader on specific domains\n- Keyboard shortcuts — Shift+Arrow for ruler, j/k for paragraph navigation, Escape to unlock\n- 4 cozy themes (Retro Pink, Dark, Beige, Slate)\n- Full keyboard navigation and screen reader support\n\nPrivacy first: No data collection, no tracking, no ads. 100% local storage. Always free, always open source.\n\nPart of the LoveSpark suite — retro pink productivity tools for neurodivergent coders.",
+  "category": "Accessibility",
+  "keywords": [
+    "dyslexia",
+    "ADHD",
+    "reading tool",
+    "reading ruler",
+    "OpenDyslexic",
+    "neurodivergent",
+    "accessibility",
+    "focus mode",
+    "distraction blocker",
+    "privacy extension"
+  ],
+  "version": "1.0.13",
+  "language": "en"
+}
