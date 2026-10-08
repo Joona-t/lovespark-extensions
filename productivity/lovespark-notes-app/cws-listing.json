@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "name": "LoveSpark Notes",
+  "summary": "A beautiful, private notes app in every new tab. Categories, search, and themes — no account needed.",
+  "description": "A calm, private place for your thoughts — right in every new tab.\n\nLoveSpark Notes turns your browser's new-tab page into a beautiful, distraction-free notebook. Open a tab, start typing, and your notes are saved instantly — locally, on your device. No account, no sign-up, no sync servers, nothing sent anywhere.\n\nIt's built neurodivergent-first. The interface uses the OpenDyslexic font by default, a soft candy-pink accessible theme, clear contrast, full keyboard navigation, and reduced-motion support — so capturing a thought is calm and frictionless, exactly when your working memory needs somewhere to put it.\n\nWhat you get:\n- Notes in every new tab — your ideas are one keystroke away, never buried in another app\n- Categories — group notes so the important ones don't get lost\n- Instant search — find any note as you type\n- 5 cozy themes (Candy, Retro Pink, Dark, Beige, Slate)\n- Completely private — everything is stored locally via your browser; no account, no tracking, no ads\n- Always free and open source (MIT)\n\nYour data never leaves your device. There is nothing to log into and nothing is transmitted anywhere — you can read every line of the code yourself.\n\nIf you've been looking for a simple new-tab notes app, a private note-taking extension, or an ADHD-friendly scratchpad that respects your privacy and your brain, this is the lightweight one that just works. Part of the LoveSpark suite — free, open-source productivity tools made neurodivergent-first.",
+  "category": "Workflow & Planning",
+  "keywords": [],
+  "version": "1.0.1",
+  "language": "en",
+  "single_purpose": "The single purpose of LoveSpark Notes is to let the user write and organize personal notes directly in the browser's new-tab page, stored locally on their own device. Every feature serves only this purpose: the editor captures note text, categories and search organize and retrieve those notes, and the themes adjust the writing surface for comfort. There are no unrelated tools and no features outside this one job.",
+  "permission_justifications": {
+    "storage": "The LoveSpark Notes extension requests the storage permission solely to save its settings and state on the user's own device using chrome.storage.local. Nothing stored under this permission ever leaves the device.",
+    "unlimitedStorage": "The unlimitedStorage permission lets LoveSpark Notes store an unlimited number of notes locally via chrome.storage without hitting the small default quota. All note data stays on the user's device and is never transmitted."
+  },
+  "host_permission_justification": null,
+  "remote_code": false,
+  "data_collection": {
+    "personally_identifiable_information": false,
+    "health_information": false,
+    "financial_and_payment_information": false,
+    "authentication_information": false,
+    "personal_communications": false,
+    "location": false,
+    "web_history": false,
+    "user_activity": false,
+    "website_content": false
+  },
+  "certifications": {
+    "no_sale_to_third_parties": true,
+    "use_limited_to_single_purpose": true,
+    "no_creditworthiness_use": true
+  },
+  "privacy_policy_url": "https://github.com/Joona-t/lovespark-notes-neurodivergent/blob/main/PRIVACY.md",
+  "reviewer_test_instructions": "LoveSpark Notes has one feature — a private notes surface on the new-tab page — and needs no account, login, or setup. It can be verified in about two minutes:\n\n1. Install the extension and open a new browser tab. The LoveSpark Notes surface appears, rendered in the OpenDyslexic font on the retro-pink theme.\n2. Type a note (e.g. 'buy milk'). It saves instantly. Optionally assign it a category.\n3. Open another new tab — your note is still there, confirming it persists locally.\n4. Type in the search box to filter to a matching note.\n5. Open DevTools (right-click - Inspect) - Network tab while using it: no outbound requests are made; everything is stored in chrome.storage.local only.\n\nExpected result: a private new-tab notebook that saves and searches notes locally, with zero data leaving the device.",
+  "distribution": {
+    "visibility": "PUBLIC",
+    "regions": "ALL"
+  },
+  "assets": {
+    "store_icon": "icons/icon128.png",
+    "screenshots_global": [
+      "cws-shots/screenshot-global-1.png",
+      "cws-shots/screenshot-global-2.png",
+      "cws-shots/screenshot-global-3.png",
+      "cws-shots/screenshot-global-4.png",
+      "cws-shots/screenshot-global-5.png"
+    ],
+    "screenshots_localized": [
+      "cws-shots/screenshot-localized-1.png",
+      "cws-shots/screenshot-localized-2.png",
+      "cws-shots/screenshot-localized-3.png",
+      "cws-shots/screenshot-localized-4.png",
+      "cws-shots/screenshot-localized-5.png"
+    ],
+    "promo_small": "cws-shots/promo-small.png",
+    "promo_marquee": "cws-shots/promo-marquee.png"
+  },
+  "cws_item_id": "cbekmfnggenafmgcmcnmaohdmaacppbm"
+}
