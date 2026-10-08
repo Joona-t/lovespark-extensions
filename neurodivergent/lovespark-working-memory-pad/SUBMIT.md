@@ -1,6 +1,6 @@
 # Submit: LoveSpark Working Memory Pad
 
-> Extension `lovespark-working-memory-pad` · v1.0.0 · [repo](https://github.com/Joona-t/lovespark-working-memory-pad)
+> Extension `lovespark-working-memory-pad` · v1.0.0 · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-working-memory-pad)
 > Goal: submit to the Chrome Web Store in ~5 minutes. Pull copy from `CWS-LISTING.md`; don't rewrite it.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → "Not collected") |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-working-memory-pad/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-working-memory-pad/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -39,7 +39,7 @@
 - [ ] Version is bumped (manifest = `1.0.0`)
 - [ ] Declared permissions match the **Per-permission justification** entries (no extras)
 - [ ] Privacy form: every data category set to **Not collected**
-- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-working-memory-pad/blob/main/PRIVACY.md`
+- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-working-memory-pad/PRIVACY.md`
 - [ ] At least 1 screenshot uploaded (5 localized + 5 global recommended)
 
 ## Firefox AMO

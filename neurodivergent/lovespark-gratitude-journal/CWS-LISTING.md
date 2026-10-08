@@ -70,7 +70,7 @@ The gratitude entries the user writes are stored **only** locally in `chrome.sto
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL (paste into Section 5):**
-`https://github.com/Joona-t/lovespark-gratitude-journal/blob/main/PRIVACY.md`
+`https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-gratitude-journal/PRIVACY.md`
 
 ## Reviewer test instructions
 

@@ -29,7 +29,7 @@ Most "free" website blockers aren't. The popular ones cap you at a handful of si
 - 🆓 **Always free & open source (MIT)** — no account, no subscription, no upsell
 - ♿ **Neurodivergent-first design** — OpenDyslexic font, a calm retro-pink theme, full keyboard navigation, and Sparky the wolf to keep you company
 
-LoveSpark Site Blocker collects **zero data**. There is no analytics, no telemetry, no remote server, and no tracking of any kind. Everything you configure is stored locally with `chrome.storage.local`. Don't take our word for it — the entire source is public and MIT-licensed: https://github.com/Joona-t/lovespark-site-blocker
+LoveSpark Site Blocker collects **zero data**. There is no analytics, no telemetry, no remote server, and no tracking of any kind. Everything you configure is stored locally with `chrome.storage.local`. Don't take our word for it — the entire source is public and MIT-licensed: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-site-blocker
 
 A productivity site blocker and distraction blocker that respects your focus *and* your privacy. Install it, build your blocklist, and get your attention back.
 
@@ -63,7 +63,7 @@ Paste the following into the CWS privacy form.
 - I do **not** use or transfer user data for purposes that are unrelated to my item's single purpose.
 - I do **not** use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-site-blocker/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-site-blocker/PRIVACY.md
 
 **Developer certification checkboxes to tick:**
 - [x] The item does not collect or use data beyond what is disclosed above.

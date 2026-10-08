@@ -32,7 +32,7 @@ The whole thing is designed to be gentle and accessible. It ships with the OpenD
 
 Keywords this helps you find it by: dopamine menu, ADHD focus tool, neurodivergent self-care, healthy dopamine, anti-doomscroll, mindful browsing, habit nudge, executive function helper. Every one of those describes exactly what the extension already does — nothing more.
 
-Source code is public and auditable at https://github.com/Joona-t/lovespark-dopamine-menu.
+Source code is public and auditable at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-dopamine-menu.
 
 ## Single-purpose justification
 The single purpose of LoveSpark Dopamine Menu is to show the user a curated list of quick, healthy dopamine-boosting activities and let them mark those activities complete. Every feature serves that one purpose: the menu presents the activities, the tap-to-complete action marks one done, the completion counter reflects those same completions, and the theming/accessibility options (OpenDyslexic font, retro-pink theme, reduced motion) only change how that single menu is presented. There is no browsing, blocking, content modification, or unrelated utility bundled in — the extension does one thing, and the local completion count exists solely to reflect that one thing back to the user.
@@ -64,7 +64,7 @@ Paste the following into the CWS privacy form.
 
 **Rationale to accompany the form:** This extension stores your completed-activity list, completion count, and display preferences only in `chrome.storage.local` on your own device. It transmits zero data externally, has no servers, no analytics, and no third-party services. There is nothing to sell, transfer, or repurpose.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-dopamine-menu/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-dopamine-menu/PRIVACY.md
 
 ## Reviewer test instructions
 This takes about 3 minutes and requires no account, login, or network access.

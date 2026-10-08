@@ -43,7 +43,7 @@ That's the whole tool. It's an anti-procrastination ritual, not another producti
 
 LoveSpark Task Starter is a free ADHD focus extension and executive dysfunction tool that does exactly one thing well: help you take the first step. Power to the people — knowledge and focus tools should be a right, not a subscription.
 
-Open source: https://github.com/Joona-t/lovespark-task-starter
+Open source: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-starter
 
 ## Single-purpose justification
 The single purpose of LoveSpark Task Starter is to help a user begin one task by guiding them through a short task-initiation ritual — name the task, identify the tiniest first step, and start that step. Every feature serves this one purpose: the three-step popup flow *is* the ritual; saving the current task and chosen first step locally exists so the user can close and reopen the popup mid-ritual without losing their place; and the accessible, OpenDyslexic, reduced-motion interface exists so neurodivergent users can complete that same ritual without friction. The extension deliberately does not include a to-do list, scheduling, reminders, AI breakdown, sync, or any unrelated productivity feature, so the scope stays narrowly and verifiably focused on overcoming task paralysis.
@@ -77,7 +77,7 @@ The extension stores the user's task text, chosen first step, and theme preferen
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-task-starter/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-task-starter/PRIVACY.md
 
 ## Reviewer test instructions
 The extension needs no account, no setup, and no network connection. You can verify the full behavior in about three minutes:

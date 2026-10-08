@@ -1,6 +1,6 @@
 # Submit: LoveSpark Hyperfocus Guard
 
-`v1.0.0` · Repo: https://github.com/Joona-t/lovespark-hyperfocus-guard
+`v1.0.0` · Repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hyperfocus-guard
 
 Submit to the Chrome Web Store in ~5 minutes. Copy comes from `CWS-LISTING.md` — don't rewrite it, just map fields below.
 
@@ -16,7 +16,7 @@ Submit to the Chrome Web Store in ~5 minutes. Copy comes from `CWS-LISTING.md` �
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-hyperfocus-guard/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-hyperfocus-guard/PRIVACY.md |
 
 ## Asset upload checklist
 
@@ -43,7 +43,7 @@ Pre-submit checkboxes (tick during upload):
 - [ ] Version bumped (`1.0.0` in manifest)
 - [ ] Permissions match the justifications in `CWS-LISTING.md`
 - [ ] Privacy form: every data category set to **Not collected**
-- [ ] Privacy policy URL set → https://github.com/Joona-t/lovespark-hyperfocus-guard/blob/main/PRIVACY.md
+- [ ] Privacy policy URL set → https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-hyperfocus-guard/PRIVACY.md
 - [ ] At least 1 screenshot uploaded
 
 ## Firefox AMO

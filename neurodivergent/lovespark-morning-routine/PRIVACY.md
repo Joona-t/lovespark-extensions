@@ -70,12 +70,12 @@ If this policy ever changes, the updated version will be published in the public
 
 Questions, concerns, or feedback? Please open an issue:
 
-**https://github.com/Joona-t/lovespark-morning-routine/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ## Open source / verification
 
 You don't have to take our word for any of this — **you can verify it yourself.** LoveSpark Morning Routine is fully open source. Anyone can read the complete source code to confirm that data is stored only locally, nothing is transmitted, and no third-party services are used:
 
-**https://github.com/Joona-t/lovespark-morning-routine**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-morning-routine**
 
 *LoveSpark — free, open-source, privacy-first tools for neurodivergent minds. No ads. No data collection. Always free.*

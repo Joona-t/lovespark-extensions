@@ -36,7 +36,7 @@ Set a focus session, hit start, and the timer counts down your work sprint follo
 
 Whether you're a student using a study timer to get through revision, a developer needing a focus timer to ship, or anyone with ADHD looking for a kinder productivity timer, this is a simple tool to start a session, block the noise, and focus.
 
-Source code: https://github.com/Joona-t/lovespark-focus
+Source code: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-focus
 
 ## Single-purpose justification
 
@@ -77,7 +77,7 @@ The single purpose of this extension is to help the user run focused work sessio
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-`https://github.com/Joona-t/lovespark-focus/blob/main/PRIVACY.md`
+`https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-focus/PRIVACY.md`
 
 *Note for the form: this extension stores the user's timer settings, blocklist, and session counts exclusively in `chrome.storage.local` on the user's own device. No data is transmitted off-device, sold, or shared with anyone.*
 

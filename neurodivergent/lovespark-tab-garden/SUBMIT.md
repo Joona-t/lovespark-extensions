@@ -1,6 +1,6 @@
 # Submit: LoveSpark Tab Garden
 
-> Extension `lovespark-tab-garden` · v1.0.27 · [repo](https://github.com/Joona-t/lovespark-tab-garden)
+> Extension `lovespark-tab-garden` · v1.0.27 · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-tab-garden)
 > Goal: submit to CWS in ~5 min without re-reading `CWS-LISTING.md`.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all data categories → "Not collected") |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-tab-garden/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-tab-garden/PRIVACY.md` |
 
 ## Asset upload checklist
 

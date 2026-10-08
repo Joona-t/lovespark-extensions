@@ -28,7 +28,7 @@ Study Bubbles is built neurodivergent-first, by a neurodivergent developer. If y
 
 Study Bubbles does one thing well: it helps you remember what you read. Highlight, review, remember — and keep your data entirely your own.
 
-Open source and auditable at https://github.com/Joona-t/study-bubbles
+Open source and auditable at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/study-bubbles
 
 ## Single-purpose justification
 Study Bubbles has a single purpose: to let users turn highlighted webpage text into locally-stored flashcards and review them with spaced repetition. Every feature serves that one purpose — highlighting captures the study material, the flashcard/knowledge-base view organizes it, and the spaced-repetition scheduler decides when each item is shown again for review. There is no unrelated functionality: no browsing analytics, no content injection beyond the study interface, and no feature that exists outside the create-and-review-flashcards loop. The accessibility and theming choices (OpenDyslexic font, retro-pink, high contrast) are presentation of that same single feature, not additional capabilities.
@@ -63,7 +63,7 @@ All flashcards and settings are stored locally in `chrome.storage.local` and are
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/study-bubbles/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/study-bubbles/PRIVACY.md
 
 ## Reviewer test instructions
 Total time ≈ 3 minutes. No account, sign-in, or network connection is needed — the extension works fully offline.

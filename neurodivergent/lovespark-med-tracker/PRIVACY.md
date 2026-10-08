@@ -59,16 +59,16 @@ LoveSpark Med Tracker collects **no personal data from anyone**, including child
 
 If this policy is ever updated, the revised version will be published in the extension's public source repository, and the effective date and version at the top of this document will be updated. Because the extension is open source, the full history of any change is publicly viewable in the repository's commit log:
 
-<https://github.com/Joona-t/lovespark-med-tracker>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-med-tracker>
 
 ## Contact
 
 Questions, concerns, or reports about privacy can be raised via GitHub issues:
 
-<https://github.com/Joona-t/lovespark-med-tracker/issues>
+<https://github.com/Joona-t/lovespark-extensions/issues>
 
 ## Open source / verification
 
 You don't have to take our word for any of the claims above. LoveSpark Med Tracker is fully open source, and anyone can read the complete source code to verify that data stays local and nothing is transmitted:
 
-<https://github.com/Joona-t/lovespark-med-tracker>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-med-tracker>

@@ -43,9 +43,9 @@ If this policy ever changes, the updated version will be published in the extens
 ## Contact
 
 Questions, concerns, or reports? Please open an issue:
-https://github.com/Joona-t/lovespark-dopamine-menu/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You don't have to take our word for any of this. LoveSpark Dopamine Menu is fully open source, and every claim in this policy can be verified by reading the code yourself:
-https://github.com/Joona-t/lovespark-dopamine-menu
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-dopamine-menu

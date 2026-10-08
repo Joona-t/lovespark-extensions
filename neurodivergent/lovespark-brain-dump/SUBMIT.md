@@ -1,6 +1,6 @@
 # Submit: LoveSpark Brain Dump
 
-> **Version 1.0.31** · Repo: https://github.com/Joona-t/lovespark-brain-dump
+> **Version 1.0.31** · Repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-brain-dump
 > Goal: submit to CWS in ~5 minutes. Every field below maps to a section of `CWS-LISTING.md` — no need to re-read it in full.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-brain-dump/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-brain-dump/PRIVACY.md` |
 
 ## Asset upload checklist
 

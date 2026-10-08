@@ -26,7 +26,7 @@ It's a genuinely free, private alternative to paid reading helpers like Helperbi
 
 **Who it helps:** readers with dyslexia, ADHD, and other neurodivergent reading styles — and honestly anyone who reads a lot online and wants a distraction-free, focus-friendly page. If you've searched for a dyslexia font Chrome extension, a reading ruler, a focus line reader, or a dyslexia reader that respects your privacy, this is built for you.
 
-**The LoveSpark promise:** free forever, MIT-licensed, and fully open source — you can read every line of the code at https://github.com/Joona-t/neurodivergent-reader. No ads. No tracking. No data collection. Just reading made easier.
+**The LoveSpark promise:** free forever, MIT-licensed, and fully open source — you can read every line of the code at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/neurodivergent-reader. No ads. No tracking. No data collection. Just reading made easier.
 
 ## Single-purpose justification
 
@@ -66,7 +66,7 @@ This extension requests **no host permissions** and **no broad host patterns** �
 - ✅ I do **not** use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ✅ I do **not** use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/neurodivergent-reader/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/neurodivergent-reader/PRIVACY.md
 
 Reading preferences are stored only locally via `chrome.storage.local` and are never transmitted off the device. The extension makes no external network requests.
 

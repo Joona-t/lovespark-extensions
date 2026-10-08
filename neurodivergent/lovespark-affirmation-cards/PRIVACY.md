@@ -67,12 +67,12 @@ If this privacy policy changes, the updated version will be published in the ext
 
 Questions, concerns, or reports? Please open an issue:
 
-**https://github.com/Joona-t/lovespark-affirmation-cards/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ## Open source / verification
 
 You don't have to take our word for any of this. LoveSpark Affirmation Cards is fully open source, and every claim in this policy can be verified by reading the code yourself:
 
-**https://github.com/Joona-t/lovespark-affirmation-cards**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-affirmation-cards**
 
 If you find anything that contradicts this policy, please open an issue — transparency is the point.

@@ -59,12 +59,12 @@ If this policy ever changes, the update will be published in the public source r
 
 Questions, concerns, or reports? Please open an issue:
 
-- **GitHub Issues:** https://github.com/Joona-t/lovespark-working-memory-pad/issues
+- **GitHub Issues:** https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You don't have to take our word for any of this — you can verify every claim above by reading the source code yourself. The extension is fully open source under the MIT license:
 
-- **Source repository:** https://github.com/Joona-t/lovespark-working-memory-pad
+- **Source repository:** https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-working-memory-pad
 
 Privacy-first, local-only, always free. ❤️

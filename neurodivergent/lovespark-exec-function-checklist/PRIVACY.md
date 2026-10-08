@@ -77,7 +77,7 @@ If this policy ever changes, the updated version will be published in the public
 
 Questions, concerns, or reports can be filed via GitHub Issues:
 
-**https://github.com/Joona-t/lovespark-exec-function-checklist/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -85,4 +85,4 @@ Questions, concerns, or reports can be filed via GitHub Issues:
 
 You do not have to take our word for any of this. The extension is fully open source, and anyone can read the complete source code to verify exactly what it does — and confirm that it stores data only locally and transmits nothing:
 
-**https://github.com/Joona-t/lovespark-exec-function-checklist**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-exec-function-checklist**

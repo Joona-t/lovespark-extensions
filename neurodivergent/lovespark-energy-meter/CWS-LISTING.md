@@ -34,7 +34,7 @@ Features:
 
 Privacy and cost:
 - 100% free, forever — no ads, no upsells, no premium tier
-- Open source under the MIT license: read every line at https://github.com/Joona-t/lovespark-energy-meter
+- Open source under the MIT license: read every line at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-energy-meter
 - Zero data collection — everything you log is stored only on your own device using Chrome's local storage, and nothing is ever transmitted anywhere
 
 LoveSpark Energy Meter does one thing well: it makes checking in on your energy fast enough that you will actually do it.
@@ -77,7 +77,7 @@ Paste the following into the Chrome Web Store **Privacy practices** tab.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-> https://github.com/Joona-t/lovespark-energy-meter/blob/main/PRIVACY.md
+> https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-energy-meter/PRIVACY.md
 
 **Developer certification checkboxes to tick:**
 - ☑ The item's data usage complies with the Chrome Web Store Developer Program Policies.

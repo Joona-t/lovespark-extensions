@@ -4,7 +4,7 @@
 **Zip:** `lovespark zips/chrome zips/focus-blossom-chrome.zip`
 **Privacy policy URL:** `https://lovespark.love/privacy.html`
 **Homepage URL:** `https://lovespark.love`
-**Support URL:** `https://github.com/Joona-t/focus-blossom/issues`
+**Support URL:** `https://github.com/Joona-t/lovespark-extensions/issues`
 
 Copy-paste each section into the corresponding CWS dashboard field. Every block below is final copy — nothing to edit.
 
@@ -64,7 +64,7 @@ Most productivity tools shame you into compliance. Focus Blossom rewards you for
 Free, open-source browser extensions for neurodivergent coders. Always free. No ads. Ever.
 
 — Built by Joona Tyrninoksa · LoveSpark
-— github.com/Joona-t/focus-blossom
+— github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/focus-blossom
 ```
 
 ### Category

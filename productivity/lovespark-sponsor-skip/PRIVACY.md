@@ -61,4 +61,4 @@ If this privacy policy is updated, the changes will be posted to this page with 
 
 ## Contact
 
-For questions about this privacy policy, open an issue at [github.com/Joona-t/lovespark-sponsor-skip](https://github.com/Joona-t/lovespark-sponsor-skip/issues).
+For questions about this privacy policy, open an issue at [github.com/Joona-t/lovespark-extensions/tree/main/productivity/lovespark-sponsor-skip](https://github.com/Joona-t/lovespark-extensions/issues).

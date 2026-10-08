@@ -34,7 +34,7 @@ If a too-bright website ever made you wince, lose your place, or close the tab j
 - 💾 **Remembers your settings** — your preferred dimming levels are saved locally and ready next time
 - ♿ **Accessible by design** — OpenDyslexic font, clear contrast, full keyboard navigation, and reduced-motion support
 
-**Free, open, and private — for real.** LoveSpark Sensory Dimmer is completely free, MIT-licensed, and open source. There is no trial that turns into a subscription, no paywall, no "pro" upsell. It collects **zero** data, has **no** trackers, and never transmits anything externally. Your preferences live only in your own browser's local storage. You can read every line of the source code here: https://github.com/Joona-t/lovespark-sensory-dimmer
+**Free, open, and private — for real.** LoveSpark Sensory Dimmer is completely free, MIT-licensed, and open source. There is no trial that turns into a subscription, no paywall, no "pro" upsell. It collects **zero** data, has **no** trackers, and never transmits anything externally. Your preferences live only in your own browser's local storage. You can read every line of the source code here: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-sensory-dimmer
 
 One click. Instant calm. Always free.
 
@@ -73,7 +73,7 @@ No host permissions are requested. The extension declares no host-permission pat
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-sensory-dimmer/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-sensory-dimmer/PRIVACY.md
 
 *(This extension stores user preferences only in `chrome.storage.local` and transmits zero data externally. There is no remote server, analytics, or third-party service of any kind.)*
 
@@ -87,6 +87,6 @@ You can fully verify this extension in about 3 minutes. No account, login, or se
 4. **Reduce contrast and saturation.** Adjust the contrast and saturation sliders and confirm the page's contrast softens and its colors desaturate live as you move them.
 5. **Confirm persistence (storage).** Close the popup, then reopen it (or open a new tab and apply the dimmer again). Your chosen levels should be remembered — demonstrating that preferences are saved locally via the `storage` permission.
 6. **Confirm scope (activeTab).** Switch to a different tab that you have not dimmed and confirm it is unaffected — dimming applies only to the tab where you activated it.
-7. **Confirm no network/data activity (optional).** Open DevTools → Network while using the controls. You will see no external requests; all behavior is local. The full source is available at https://github.com/Joona-t/lovespark-sensory-dimmer for verification.
+7. **Confirm no network/data activity (optional).** Open DevTools → Network while using the controls. You will see no external requests; all behavior is local. The full source is available at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-sensory-dimmer for verification.
 
 Expected result: clicking the icon and adjusting the sliders dims/softens/desaturates the active page instantly, settings persist locally, and no data leaves the browser.

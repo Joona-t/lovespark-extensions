@@ -41,7 +41,7 @@ Like every LoveSpark extension, it's designed for brains like ours:
 
 - **Always free.** No account, no sign-up, no Pro tier, no paywall in front of your own focus.
 - **Zero data collection.** Your answers stay on your device in local browser storage and are never transmitted anywhere.
-- **Open source (MIT).** Read every line on GitHub: https://github.com/Joona-t/lovespark-exec-function-checklist
+- **Open source (MIT).** Read every line on GitHub: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-exec-function-checklist
 
 Stop fighting the blank-page freeze. Run the checklist, take the first step, and get going.
 
@@ -77,7 +77,7 @@ No host permissions are requested. The extension does not declare `<all_urls>` o
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-exec-function-checklist/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-exec-function-checklist/PRIVACY.md
 
 This extension stores the user's checklist answers only in `chrome.storage.local` on the user's own device and transmits zero data externally.
 

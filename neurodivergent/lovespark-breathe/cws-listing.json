@@ -42,7 +42,7 @@
     "use_limited_to_single_purpose": true,
     "no_creditworthiness_use": true
   },
-  "privacy_policy_url": "https://github.com/Joona-t/lovespark-breathe/blob/main/PRIVACY.md",
+  "privacy_policy_url": "https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-breathe/PRIVACY.md",
   "reviewer_test_instructions": "REVIEW: 3-minute walkthrough for the LoveSpark Breathe reviewer.",
   "distribution": {
     "visibility": "PUBLIC",

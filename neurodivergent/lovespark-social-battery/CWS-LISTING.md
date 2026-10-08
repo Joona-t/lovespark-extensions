@@ -69,7 +69,7 @@ Paste the following into the Chrome Web Store privacy form:
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-social-battery/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-social-battery/PRIVACY.md
 
 Note for reviewers: this extension stores a single numeric social-battery value and a theme preference in `chrome.storage.local` only. It declares no host permissions, makes no network requests, and contains no remote code — there is genuinely nothing to collect or transmit.
 

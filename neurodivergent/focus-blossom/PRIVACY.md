@@ -88,7 +88,7 @@ If this policy ever changes, the updated version will be published in the extens
 
 Questions, concerns, or reports? Please open an issue:
 
-**https://github.com/Joona-t/focus-blossom/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -96,6 +96,6 @@ Questions, concerns, or reports? Please open an issue:
 
 You don't have to take our word for any of this. Focus Blossom is fully open source, and you can read every line of code to verify these claims yourself:
 
-**https://github.com/Joona-t/focus-blossom**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/focus-blossom**
 
 Everything described in this policy — local-only storage, zero transmission, no third parties — is verifiable directly from the source.

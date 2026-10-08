@@ -1,6 +1,6 @@
 # Submit: Focus Blossom: Site Blocker & Digital Detox
 
-> **Package version:** 1.0.44 · **Repo:** https://github.com/Joona-t/focus-blossom
+> **Package version:** 1.0.44 · **Repo:** https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/focus-blossom
 > Everything below maps 1:1 to `CWS-LISTING.md` — no need to re-read it.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/focus-blossom/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/focus-blossom/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -37,7 +37,7 @@ All assets live in `~/Downloads/focus-blossom-cws-assets`.
 - [ ] Version is bumped (**1.0.44**)
 - [ ] Permissions match the per-permission justifications
 - [ ] Privacy form → every category set to **Not collected**
-- [ ] Privacy policy URL set → `https://github.com/Joona-t/focus-blossom/blob/main/PRIVACY.md`
+- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/focus-blossom/PRIVACY.md`
 - [ ] At least 1 screenshot uploaded
 
 ## Firefox AMO

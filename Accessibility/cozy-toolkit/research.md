@@ -32,7 +32,7 @@
 
 - Opens GitHub Issues page for the repo in a new tab
 - Uses ladybug emoji per user request
-- URL: needs to confirm GitHub repo URL (likely `https://github.com/Joona-t/cozy-accessibility` or similar — check manifest/README)
+- URL: needs to confirm GitHub repo URL (likely `https://github.com/Joona-t/lovespark-extensions/tree/main/Accessibility/cozy-toolkit` or similar — check manifest/README)
 - Alternative: Could use `chrome.tabs.create({ url: '...' })` from popup.js
 
 ## Manifest Impact

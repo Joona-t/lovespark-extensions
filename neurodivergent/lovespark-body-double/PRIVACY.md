@@ -82,7 +82,7 @@ If this policy ever changes, the updated version will be published in the extens
 
 Questions, concerns, or reports? Please open an issue on GitHub:
 
-**https://github.com/Joona-t/lovespark-body-double/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -90,6 +90,6 @@ Questions, concerns, or reports? Please open an issue on GitHub:
 
 You don't have to take our word for any of this. LoveSpark Body Double is fully open source, and every claim in this policy can be verified by reading the code:
 
-**https://github.com/Joona-t/lovespark-body-double**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-body-double**
 
 There are no hidden network calls, no obfuscated code, and no remote endpoints — what you read in the source is exactly what runs on your device.

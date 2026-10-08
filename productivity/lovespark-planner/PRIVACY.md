@@ -64,16 +64,16 @@ LoveSpark Planner collects **no personal data from anyone**, including children 
 
 If this policy ever changes, the updated version will be published in the public source repository, and the **effective date** and **version** at the top of this document will be updated. Because the policy lives alongside the code, you can always review the current version — and its full history — here:
 
-<https://github.com/Joona-t/lovespark-planner/blob/main/PRIVACY.md>
+<https://github.com/Joona-t/lovespark-extensions/blob/main/productivity/lovespark-planner/PRIVACY.md>
 
 ## Contact
 
 Questions, concerns, or privacy reports are welcome. Please open an issue:
 
-<https://github.com/Joona-t/lovespark-planner/issues>
+<https://github.com/Joona-t/lovespark-extensions/issues>
 
 ## Open source / verification
 
 LoveSpark Planner is fully open source. You do not have to take these claims on trust — you can read every line of the code yourself and confirm that the extension stores data only in `chrome.storage.local`, requests no host permissions, and makes no network requests:
 
-<https://github.com/Joona-t/lovespark-planner>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/productivity/lovespark-planner>

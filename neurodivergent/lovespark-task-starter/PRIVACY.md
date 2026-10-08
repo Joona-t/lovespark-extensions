@@ -57,16 +57,16 @@ LoveSpark Task Starter collects **no personal data from anyone**, including chil
 ## Changes to this policy
 
 If this policy ever changes, the updated version will be published in the public source repository, along with an updated effective date and version number. Because the extension is open source, the full history of any changes is visible to everyone:
-https://github.com/Joona-t/lovespark-task-starter
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-starter
 
 ## Contact
 
 Questions, concerns, or reports can be filed via GitHub Issues:
-https://github.com/Joona-t/lovespark-task-starter/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You don't have to take our word for any of the claims above — you can verify them yourself by reading the complete source code:
-https://github.com/Joona-t/lovespark-task-starter
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-starter
 
 LoveSpark extensions are MIT licensed, ad-free, and privacy-first by design: local storage only, zero external data transmission, no third-party services, and no remote code.

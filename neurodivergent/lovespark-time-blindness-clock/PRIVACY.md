@@ -59,16 +59,16 @@ The extension collects no personal data from anyone — including children under
 
 If this policy ever changes, the updated version will be published in the public source repository, and the **Effective date** above will be updated. Because the project is open source, the full history of changes is visible in the repository's commit log:
 
-https://github.com/Joona-t/lovespark-time-blindness-clock
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-time-blindness-clock
 
 ## Contact
 
 Questions, concerns, or privacy reports? Please open an issue on GitHub:
 
-https://github.com/Joona-t/lovespark-time-blindness-clock/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You don't have to take our word for any of this. LoveSpark Time Blindness Clock is fully open source under the MIT license. Anyone can read the complete source code and verify these claims — including the fact that the extension makes no network requests and stores data only on your device:
 
-https://github.com/Joona-t/lovespark-time-blindness-clock
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-time-blindness-clock

@@ -78,7 +78,7 @@ If this policy is ever updated, the changes will be published in this file in th
 
 Questions, concerns, or privacy reports? Please open an issue:
 
-**https://github.com/Joona-t/lovespark-reward-spinner/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -86,6 +86,6 @@ Questions, concerns, or privacy reports? Please open an issue:
 
 You do not have to take our word for any of the above. LoveSpark Reward Spinner is fully open source, and every claim in this policy can be independently verified by reading the source code:
 
-**https://github.com/Joona-t/lovespark-reward-spinner**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-reward-spinner**
 
 There is no hidden network code, no obfuscation, and no remote code execution — what you read is exactly what runs on your device.

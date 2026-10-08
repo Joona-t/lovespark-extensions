@@ -60,7 +60,7 @@ LoveSpark Context Switch requests no host permissions. It does not read, access,
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-context-switch/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-context-switch/PRIVACY.md
 
 *Note: LoveSpark Context Switch stores only your daily context-switch count in `chrome.storage.local` on your own device. It transmits zero data externally, uses no remote servers, and has no accounts — so every data-collection category is truthfully "Not collected."*
 

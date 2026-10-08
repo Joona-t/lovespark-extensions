@@ -59,18 +59,18 @@ LoveSpark Task Anchor collects **no personal data from anyone**, including child
 
 If this policy ever changes, the updated version will be published in the public source repository, with the effective date and version updated at the top of this document. Because the extension is open source, every change to this policy is visible in the repository's history:
 
-- https://github.com/Joona-t/lovespark-task-anchor
+- https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-anchor
 
 ## Contact
 
 Questions, concerns, or privacy reports are welcome. Please open an issue here:
 
-- https://github.com/Joona-t/lovespark-task-anchor/issues
+- https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You do not have to take our word for any of this. LoveSpark Task Anchor is fully open source, and every claim in this policy can be verified by reading the code:
 
-- https://github.com/Joona-t/lovespark-task-anchor
+- https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-anchor
 
 LoveSpark extensions are free, open-source, ad-free, and privacy-first — local storage only, zero external data transmission.

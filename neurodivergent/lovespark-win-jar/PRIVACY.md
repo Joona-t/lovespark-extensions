@@ -57,16 +57,16 @@ The extension collects **no personal data from anyone**, including children unde
 
 If this policy is ever updated, the changes will be published in the extension's public repository, and the **Effective date** at the top of this document will be updated. Because the project is open source, the full history of any changes is publicly visible in the repository's commit log:
 
-https://github.com/Joona-t/lovespark-win-jar
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-win-jar
 
 ## Contact
 
 Questions, concerns, or privacy reports? Please open an issue:
 
-https://github.com/Joona-t/lovespark-win-jar/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open Source / Verification
 
 You do not have to take our word for any of this. LoveSpark Win Jar is fully open source, and every claim in this policy can be verified by reading the code:
 
-https://github.com/Joona-t/lovespark-win-jar
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-win-jar

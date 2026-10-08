@@ -29,7 +29,7 @@ It puts a big, always-readable clock in front of you, plus named countdowns to t
 - 🎨 **Calm retro-pink theme** — easy on the eyes, no clutter, no noise.
 - 🔒 **Zero tracking** — your marker times stay on your own device, full stop.
 
-**Free, forever, and open source.** LoveSpark tools are MIT-licensed and built for the community — no ads, no accounts, no upsells, no premium tier. The full source is public so anyone can verify exactly what it does: https://github.com/Joona-t/lovespark-time-blindness-clock
+**Free, forever, and open source.** LoveSpark tools are MIT-licensed and built for the community — no ads, no accounts, no upsells, no premium tier. The full source is public so anyone can verify exactly what it does: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-time-blindness-clock
 
 **Your data never leaves your computer.** The extension stores only your own settings — the marker times and display preferences you choose — using Chrome's local storage. It collects nothing, sends nothing to any server, and has no analytics. There is literally nothing to leak.
 
@@ -68,7 +68,7 @@ No host permissions are requested. The extension does not declare `<all_urls>` o
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-time-blindness-clock/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-time-blindness-clock/PRIVACY.md
 
 *Note: this extension stores the user's own marker times and display preferences locally via `chrome.storage.local` only. No data is collected, sold, transferred, or transmitted off the device, so all categories above are correctly marked "Not collected."*
 

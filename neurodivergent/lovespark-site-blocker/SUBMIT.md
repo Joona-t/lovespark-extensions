@@ -1,6 +1,6 @@
 # Submit: LoveSpark Site Blocker
 
-> Version **1.0.1** · [repo](https://github.com/Joona-t/lovespark-site-blocker) · ~5-minute submission. Tick boxes, don't re-read the long listing.
+> Version **1.0.1** · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-site-blocker) · ~5-minute submission. Tick boxes, don't re-read the long listing.
 
 ## CWS form field → source
 
@@ -16,7 +16,7 @@ All copy lives in `CWS-LISTING.md` unless noted.
 | Single purpose | "Single-purpose justification" |
 | Permission justifications | "Per-permission justification" + "Host-permissions justification" |
 | Privacy practices | "Privacy disclosure" (all categories → Not collected) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-site-blocker/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-site-blocker/PRIVACY.md` |
 
 ## Asset upload checklist
 

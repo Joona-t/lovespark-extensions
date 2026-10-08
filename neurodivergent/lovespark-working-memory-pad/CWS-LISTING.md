@@ -43,7 +43,7 @@ Most quick notes and sticky notes extensions try to do everything: infinite note
 
 **Free, open, and private — for real**
 - 100% free, forever. No ads, no upsell, no "premium" gate on the basics.
-- Open source under the MIT license — read every line at https://github.com/Joona-t/lovespark-working-memory-pad
+- Open source under the MIT license — read every line at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-working-memory-pad
 - Your notes live **only** in your browser's local storage. Nothing is ever uploaded, synced, sold, or transmitted anywhere. No account, no servers, no tracking.
 
 If you've been let down by sticky notes extensions that paywall the basics or lose your notes to a sync failure, this is the zero-friction, local-only answer: a working memory pad that just holds your three things and gets out of the way.
@@ -81,7 +81,7 @@ No host permissions are requested. LoveSpark Working Memory Pad does not declare
 Rationale: the extension stores the user's note text only in `chrome.storage.local` on the user's own device. No data is transmitted to the developer or any third party, so no data is "collected" under the Chrome Web Store definition.
 
 **Privacy policy URL (paste into Section 5):**
-`https://github.com/Joona-t/lovespark-working-memory-pad/blob/main/PRIVACY.md`
+`https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-working-memory-pad/PRIVACY.md`
 
 **Developer certification checkboxes — tick all three:**
 - ☑ I do not sell or transfer user data to third parties, outside of the approved use cases.

@@ -1,6 +1,6 @@
 # Submit: LoveSpark Dopamine Menu
 
-> Version **1.0.29** · [repo](https://github.com/Joona-t/lovespark-dopamine-menu) · assets in `~/Downloads/lovespark-dopamine-menu-cws-assets`
+> Version **1.0.29** · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-dopamine-menu) · assets in `~/Downloads/lovespark-dopamine-menu-cws-assets`
 > Goal: submit to CWS in ~5 min. Everything below maps to `CWS-LISTING.md` — you shouldn't need to reopen it.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices (data use) | **Privacy disclosure** |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-dopamine-menu/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-dopamine-menu/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -41,7 +41,7 @@ Pre-submit checkboxes (tick during upload):
 - ☐ Version is bumped (**1.0.29**)
 - ☐ Permissions match the justifications in `CWS-LISTING.md`
 - ☐ Privacy form: every data-collection category set to **Not collected**
-- ☐ Privacy policy URL set → `https://github.com/Joona-t/lovespark-dopamine-menu/blob/main/PRIVACY.md`
+- ☐ Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-dopamine-menu/PRIVACY.md`
 - ☐ At least 1 screenshot uploaded
 
 ## Firefox AMO

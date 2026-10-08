@@ -1,6 +1,6 @@
 # Submit: LoveSpark Task Anchor
 
-> Version **1.0.15** · [repo](https://github.com/Joona-t/lovespark-task-anchor) · Goal: submit to CWS in ~5 min without re-reading `CWS-LISTING.md`.
+> Version **1.0.15** · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-anchor) · Goal: submit to CWS in ~5 min without re-reading `CWS-LISTING.md`.
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → "Not collected") |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-task-anchor/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-task-anchor/PRIVACY.md` |
 
 ## Asset upload checklist
 

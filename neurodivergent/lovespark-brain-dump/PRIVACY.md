@@ -69,12 +69,12 @@ If this policy ever changes, the updated version will be published in the public
 
 Questions, concerns, or reports about privacy? Please open an issue:
 
-**https://github.com/Joona-t/lovespark-brain-dump/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ## Open source / verification
 
 You do not have to take our word for any of this. LoveSpark Brain Dump is fully open source, and every claim in this policy can be verified by reading the code:
 
-**https://github.com/Joona-t/lovespark-brain-dump**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-brain-dump**
 
 Inspect the source, review the manifest, and confirm for yourself that the extension stores data only in local storage, requests only the `storage` permission, uses no host permissions, and never transmits anything. Transparency is the point — privacy you can check.

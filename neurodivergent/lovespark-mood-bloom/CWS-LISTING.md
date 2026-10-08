@@ -74,7 +74,7 @@ Mood Bloom does not collect, transmit, or share any user data. Mood check-ins an
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-mood-bloom/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-mood-bloom/PRIVACY.md
 
 ## Reviewer test instructions
 
@@ -87,4 +87,4 @@ No account, sign-in, or setup is required. The full extension can be verified in
 5. **Verify no external activity.** Open DevTools → Network while interacting with the popup. Confirm there are **no outbound network requests** — the extension makes no server calls and transmits no data. It also requests no host permissions and never reads page content.
 6. **Optional accessibility check.** Navigate the popup with the keyboard (Tab / Enter) and confirm visible focus indicators, high contrast, and that motion respects `prefers-reduced-motion`.
 
-Source is fully open for verification: https://github.com/Joona-t/lovespark-mood-bloom
+Source is fully open for verification: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-mood-bloom

@@ -1,6 +1,6 @@
 # Submit: LoveSpark Planner
 
-> Version `1.0.2` · [repo](https://github.com/Joona-t/lovespark-planner) · ~5 minutes start to finish.
+> Version `1.0.2` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/productivity/lovespark-planner) · ~5 minutes start to finish.
 
 ## CWS form field → source
 
@@ -16,7 +16,7 @@ All text comes from `CWS-LISTING.md` unless noted.
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-planner/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/productivity/lovespark-planner/PRIVACY.md` |
 
 ## Asset upload checklist
 

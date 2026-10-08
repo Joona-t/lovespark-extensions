@@ -1,6 +1,6 @@
 # Submit: LoveSpark Body Double
 
-> Extension: **LoveSpark Body Double** · Version **1.0.31** · [Repo](https://github.com/Joona-t/lovespark-body-double)
+> Extension: **LoveSpark Body Double** · Version **1.0.31** · [Repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-body-double)
 > Everything below maps to `CWS-LISTING.md` — you shouldn't need to reopen it.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-body-double/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-body-double/PRIVACY.md |
 
 ## Asset upload checklist
 

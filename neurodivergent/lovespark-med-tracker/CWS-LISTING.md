@@ -70,7 +70,7 @@ LoveSpark Med Tracker requests **no host permissions**. It does not read, modify
 - ✔️ I do **not** use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ✔️ I do **not** use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-med-tracker/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-med-tracker/PRIVACY.md
 
 **Developer certification checkboxes to tick:**
 

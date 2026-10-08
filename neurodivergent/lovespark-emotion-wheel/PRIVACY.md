@@ -59,18 +59,18 @@ The extension collects **no personal data from anyone**, including children unde
 
 If this policy ever changes, the updated version will be published in the public source repository, with the effective date and version line above updated accordingly. Because the repository's history is public, any change can be reviewed in full:
 
-https://github.com/Joona-t/lovespark-emotion-wheel
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-emotion-wheel
 
 ## Contact
 
 Questions, concerns, or privacy reports? Open an issue here:
 
-https://github.com/Joona-t/lovespark-emotion-wheel/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You do not have to take our word for any of this. LoveSpark Emotion Wheel is fully open source, and every claim in this policy can be verified by reading the code:
 
-https://github.com/Joona-t/lovespark-emotion-wheel
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-emotion-wheel
 
 There is no hidden network code, no remote endpoints, and no data collection — and the source is there for anyone to confirm it.

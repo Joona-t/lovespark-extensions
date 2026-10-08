@@ -1,6 +1,6 @@
 # Submit: LoveSpark Affirmation Cards
 
-> Version `1.0.30` · [repo](https://github.com/Joona-t/lovespark-affirmation-cards) · ~5 min to submit. Copy comes from `CWS-LISTING.md` — don't rewrite, just paste.
+> Version `1.0.30` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-affirmation-cards) · ~5 min to submit. Copy comes from `CWS-LISTING.md` — don't rewrite, just paste.
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-affirmation-cards/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-affirmation-cards/PRIVACY.md` |
 
 ## Asset upload checklist
 

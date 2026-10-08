@@ -78,7 +78,7 @@ Tab Garden stores archived tab titles/URLs and preferences only in `chrome.stora
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-tab-garden/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-tab-garden/PRIVACY.md
 
 ## Reviewer test instructions
 
@@ -94,4 +94,4 @@ Total time: ~3 minutes using the DevTools fast path in step 3 (or ~20 minutes us
 5. **Restore by watering (30s).** Click (or focus and press Enter on) one archived plant card. Confirm that tab reopens in the browser exactly where it left off and is removed from the garden — nothing is lost.
 6. **Verify privacy (30s).** Open DevTools → Network on the extension's popup/background and confirm there are no outbound network requests. All data (the garden and settings) is held in `chrome.storage.local`; no host permissions are requested and no page content is accessed.
 
-Full source for verification: https://github.com/Joona-t/lovespark-tab-garden
+Full source for verification: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-tab-garden

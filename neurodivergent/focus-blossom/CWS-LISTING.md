@@ -35,7 +35,7 @@ Accessibility is built in, not bolted on. The interface uses the **OpenDyslexic*
 
 Plant a little focus. Watch it bloom. 🌸
 
-Source code: https://github.com/Joona-t/focus-blossom
+Source code: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/focus-blossom
 
 ## Single-purpose justification
 
@@ -77,7 +77,7 @@ This permission is **NOT** used to read page content, inject scripts into pages,
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/focus-blossom/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/focus-blossom/PRIVACY.md
 
 Focus Blossom collects no user data of any kind. The block list, garden progress, and settings are stored only in `chrome.storage.local` on the user's device and are never transmitted, sold, or shared.
 

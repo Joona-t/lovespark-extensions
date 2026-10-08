@@ -1,6 +1,6 @@
 # Submit: LoveSpark Calm Down Kit
 
-`v1.0.0` · repo: https://github.com/Joona-t/lovespark-calm-down-kit
+`v1.0.0` · repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm-down-kit
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-calm-down-kit/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-calm-down-kit/PRIVACY.md |
 
 ## Asset upload checklist
 

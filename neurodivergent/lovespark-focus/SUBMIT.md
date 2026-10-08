@@ -1,7 +1,7 @@
 # Submit: Pomodoro Focus Timer & ADHD Study Tool by LoveSpark
 
 > One-page quickstart for **v1.1.43**. Submit in ~5 min without re-reading `CWS-LISTING.md`.
-> Repo: https://github.com/Joona-t/lovespark-focus
+> Repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-focus
 
 ## CWS form field → source
 
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-focus/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-focus/PRIVACY.md |
 
 ## Asset upload checklist
 

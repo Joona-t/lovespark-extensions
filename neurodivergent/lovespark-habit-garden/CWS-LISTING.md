@@ -75,7 +75,7 @@ LoveSpark Habit Garden requests no host permissions. It does not request `<all_u
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-`https://github.com/Joona-t/lovespark-habit-garden/blob/main/PRIVACY.md`
+`https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-habit-garden/PRIVACY.md`
 
 *Note for the reviewer: this extension stores all data exclusively in `chrome.storage.local` and makes no network requests. No data of any kind leaves the user's device.*
 

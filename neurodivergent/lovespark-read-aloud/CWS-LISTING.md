@@ -35,7 +35,7 @@ It's also a quiet productivity tool: queue up a long article and listen while yo
 
 **Free text to speech, a real dyslexia reading tool, and an ADHD reading helper in one** — LoveSpark Read Aloud is a privacy-first read-aloud extension that acts like a lightweight screen reader for web pages without the cost, the ads, or the data collection. Open the page, press play, and listen.
 
-Open source and auditable: https://github.com/Joona-t/lovespark-read-aloud
+Open source and auditable: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-read-aloud
 
 ## Single-purpose justification
 
@@ -77,7 +77,7 @@ No host permissions are requested. LoveSpark Read Aloud does not declare `<all_u
 
 **Privacy policy URL:**
 
-https://github.com/Joona-t/lovespark-read-aloud/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-read-aloud/PRIVACY.md
 
 All settings are stored locally via `chrome.storage.local` on the user's device. The extension transmits zero data externally and contacts no remote servers; text-to-speech is produced by the browser's built-in voices.
 

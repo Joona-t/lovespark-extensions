@@ -65,12 +65,12 @@ If this privacy policy changes, the updated version will be published in the ext
 
 Questions, concerns, or reports? Please open an issue:
 
-**https://github.com/Joona-t/study-bubbles/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ## Open source / verification
 
 Study Bubbles is fully open source. You don't have to take our word for any of the claims above — you can read every line of the code and verify exactly what the extension does (and does not do):
 
-**https://github.com/Joona-t/study-bubbles**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/study-bubbles**
 
 Privacy-first, local-only, always free. 💗

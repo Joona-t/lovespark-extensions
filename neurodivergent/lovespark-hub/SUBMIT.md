@@ -1,6 +1,6 @@
 # Submit: LoveSpark Hub
 
-**Extension:** LoveSpark Hub · **Version:** 1.0.29 · **Repo:** https://github.com/Joona-t/lovespark-hub
+**Extension:** LoveSpark Hub · **Version:** 1.0.29 · **Repo:** https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hub
 
 > Everything below maps to `CWS-LISTING.md` — don't re-read it. ~5 minutes end to end.
 
@@ -16,7 +16,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-hub/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-hub/PRIVACY.md |
 
 ## Asset upload checklist
 

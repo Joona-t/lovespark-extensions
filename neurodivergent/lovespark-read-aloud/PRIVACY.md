@@ -84,13 +84,13 @@ If this policy ever changes, the updated version will be published in the public
 ## Contact
 
 Questions, concerns, or reports can be filed via GitHub issues:
-**https://github.com/Joona-t/lovespark-read-aloud/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
 ## Open source / verification
 
 You do not have to take our word for any of this. LoveSpark Read Aloud is fully open source, and you (or anyone) can read the complete source code to verify exactly what it does:
-**https://github.com/Joona-t/lovespark-read-aloud**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-read-aloud**
 
 The code is the proof: it stores data only in `chrome.storage.local`, transmits nothing externally, uses no third-party services, and runs no remote code.

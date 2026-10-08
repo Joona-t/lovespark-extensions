@@ -69,7 +69,7 @@ No host permissions are requested. LoveSpark Body Double does not read, modify, 
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-body-double/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-body-double/PRIVACY.md
 
 Note for reviewer: this extension stores data only in `chrome.storage.local` on the user's own device and transmits no data externally. No remote servers, analytics, or third-party services are contacted.
 

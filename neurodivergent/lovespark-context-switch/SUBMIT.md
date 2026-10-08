@@ -1,6 +1,6 @@
 # Submit: LoveSpark Context Switch
 
-> Extension ID: `lovespark-context-switch` · Version: **1.0.29** · Repo: https://github.com/Joona-t/lovespark-context-switch
+> Extension ID: `lovespark-context-switch` · Version: **1.0.29** · Repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-context-switch
 > Everything below maps to `CWS-LISTING.md`, `PRIVACY.md`, and the assets in `~/Downloads/lovespark-context-switch-cws-assets`. Submit in ~5 min — don't re-read the long listing.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | **Single purpose** | "Single-purpose justification" |
 | **Permission justifications** | "Per-permission justification" + "Host-permissions justification" |
 | **Privacy practices** (data-use disclosures) | "Privacy disclosure" |
-| **Privacy policy URL** | https://github.com/Joona-t/lovespark-context-switch/blob/main/PRIVACY.md |
+| **Privacy policy URL** | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-context-switch/PRIVACY.md |
 
 ## Asset upload checklist
 

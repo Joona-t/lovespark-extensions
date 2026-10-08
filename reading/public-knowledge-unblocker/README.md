@@ -57,7 +57,7 @@ SPA navigation is handled — browsing between articles on these sites without p
 ## Installation (development)
 
 ```bash
-git clone https://github.com/Joona-t/aaron-public-knowledge-unblocker
+git clone https://github.com/Joona-t/lovespark-extensions/tree/main/reading/public-knowledge-unblocker
 cd aaron-public-knowledge-unblocker
 
 # Generate icons (requires Pillow)

@@ -1,6 +1,6 @@
 # Submit: LoveSpark Emotion Wheel
 
-> Extension `lovespark-emotion-wheel` · v1.0.1 · [repo](https://github.com/Joona-t/lovespark-emotion-wheel)
+> Extension `lovespark-emotion-wheel` · v1.0.1 · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-emotion-wheel)
 > Goal: paste, upload, ship in ~5 min. All copy lives in `CWS-LISTING.md` — pull each field from the section named below.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-emotion-wheel/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-emotion-wheel/PRIVACY.md` |
 
 ## Asset upload checklist
 

@@ -81,7 +81,7 @@ If this policy ever changes, the updated version will be published in the extens
 
 Questions, concerns, or reports can be filed publicly on GitHub:
 
-**https://github.com/Joona-t/lovespark-hub/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -89,4 +89,4 @@ Questions, concerns, or reports can be filed publicly on GitHub:
 
 LoveSpark Hub is fully open source. You do not have to take our word for any of the claims above — you can read every line of the code and confirm exactly what the extension does and does not do:
 
-**https://github.com/Joona-t/lovespark-hub**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hub**

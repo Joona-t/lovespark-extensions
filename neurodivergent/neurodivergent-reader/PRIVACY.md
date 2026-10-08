@@ -59,18 +59,18 @@ This extension collects **no personal data from anyone**, including children und
 
 If this policy changes, the updated version will be published in the extension's public source repository, and the **Effective date** and **version** line at the top will be updated. Because the repository is public, you can review the full history of any change at any time:
 
-https://github.com/Joona-t/neurodivergent-reader
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/neurodivergent-reader
 
 ## Contact
 
 Questions, concerns, or privacy reports are welcome. Please open an issue here:
 
-https://github.com/Joona-t/neurodivergent-reader/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You don't have to take our word for any of the above. Neurodivergent Reader by LoveSpark is open source — every claim in this policy can be verified by reading the code:
 
-https://github.com/Joona-t/neurodivergent-reader
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/neurodivergent-reader
 
 LoveSpark builds free, open-source, privacy-first tools for neurodivergent users. No ads. No data collection. No remote code. Always free.

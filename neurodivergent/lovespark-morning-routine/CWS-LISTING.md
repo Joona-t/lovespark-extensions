@@ -69,7 +69,7 @@ LoveSpark Morning Routine requests **no host permissions**. It does not declare 
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
 **Privacy policy URL:**
-`https://github.com/Joona-t/lovespark-morning-routine/blob/main/PRIVACY.md`
+`https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-morning-routine/PRIVACY.md`
 
 *Rationale (for the developer, not pasted into the form): the extension stores only the checklist's checked/unchecked state and the current date locally via `chrome.storage.local`. Nothing is transmitted off the device, so no data-collection category applies and all three non-sale / single-purpose / non-creditworthiness certifications are truthfully satisfied.*
 

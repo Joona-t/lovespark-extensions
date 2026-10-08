@@ -32,7 +32,7 @@ Click once, and the current page becomes calm: harsh colors are muted, animation
 - 💾 **Remembers your choice** — your preference is stored locally so the calm view is there when you want it
 - ♿ **Neurodivergent-first** — accessible fonts, motion-safe, keyboard friendly
 
-**Free, open, and private by design.** LoveSpark Calm is completely free, MIT-licensed, and open source — you can read every line at https://github.com/Joona-t/lovespark-calm. It stores your settings only on your own device using `chrome.storage.local`, and it transmits **zero** data anywhere. No accounts, no tracking, no ads, no analytics, no remote code. Ever.
+**Free, open, and private by design.** LoveSpark Calm is completely free, MIT-licensed, and open source — you can read every line at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm. It stores your settings only on your own device using `chrome.storage.local`, and it transmits **zero** data anywhere. No accounts, no tracking, no ads, no analytics, no remote code. Ever.
 
 Quiet the web. Keep your focus.
 
@@ -72,7 +72,7 @@ LoveSpark Calm requests **no host permissions**. It does not declare `<all_urls>
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-calm/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-calm/PRIVACY.md
 
 Note for the reviewer: LoveSpark Calm stores only a local on/off preference in `chrome.storage.local` and transmits no data off the device.
 

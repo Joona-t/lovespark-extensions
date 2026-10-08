@@ -1,6 +1,6 @@
 # Submit: LoveSpark Read Aloud
 
-`v1.0.28` · [repo](https://github.com/Joona-t/lovespark-read-aloud) · ~5 min to submit
+`v1.0.28` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-read-aloud) · ~5 min to submit
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → "Not collected") |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-read-aloud/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-read-aloud/PRIVACY.md` |
 
 ## Asset upload checklist
 

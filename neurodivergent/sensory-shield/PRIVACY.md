@@ -59,18 +59,18 @@ Sensory Shield collects **no personal data from anyone**, including children und
 
 If this privacy policy ever changes, the update will be published in the extension's public source repository, and the **Effective date** and **version** at the top of this document will be revised. Because the extension is open source, every change to this policy is visible in the repository's history:
 
-https://github.com/Joona-t/sensory-shield
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/sensory-shield
 
 ## Contact
 
 Questions, concerns, or privacy reports are welcome. Please open an issue here:
 
-https://github.com/Joona-t/sensory-shield/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You don't have to take our word for any of this. Sensory Shield is **fully open source**, and every claim in this policy can be verified by reading the code yourself:
 
-https://github.com/Joona-t/sensory-shield
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/sensory-shield
 
 Made with love by LoveSpark — free, private, and built for calmer browsing.

@@ -1,6 +1,6 @@
 # Submit: LoveSpark Morning Routine
 
-> Version `1.0.0` · Repo: https://github.com/Joona-t/lovespark-morning-routine
+> Version `1.0.0` · Repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-morning-routine
 > Goal: submit to the Chrome Web Store in ~5 minutes using artifacts already in the repo. Don't re-read the long `CWS-LISTING.md` — this maps each field for you.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-morning-routine/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-morning-routine/PRIVACY.md` |
 
 ## Asset upload checklist
 

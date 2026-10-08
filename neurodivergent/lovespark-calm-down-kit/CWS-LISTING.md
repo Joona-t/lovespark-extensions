@@ -35,7 +35,7 @@ The techniques are DBT-inspired and ADHD-adapted — drawn from the distress tol
 
 A mindfulness browser extension that respects your privacy, your wallet, and your wiring.
 
-Source code & privacy policy: https://github.com/Joona-t/lovespark-calm-down-kit
+Source code & privacy policy: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm-down-kit
 
 ## Single-purpose justification
 
@@ -69,7 +69,7 @@ No host permissions are requested. LoveSpark Calm Down Kit does not access, read
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-calm-down-kit/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-calm-down-kit/PRIVACY.md
 
 *Note for the form: this extension stores only the user's own preferences in `chrome.storage.local` on their device and transmits no data off the device, so no data-collection categories apply.*
 

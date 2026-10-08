@@ -56,7 +56,7 @@ Paste the following into the Chrome Web Store privacy tab:
 - ✅ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ✅ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-affirmation-cards/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-affirmation-cards/PRIVACY.md
 
 **Developer certification checkboxes to tick:**
 - ✅ The extension's data usage complies with the Chrome Web Store Developer Program Policies.

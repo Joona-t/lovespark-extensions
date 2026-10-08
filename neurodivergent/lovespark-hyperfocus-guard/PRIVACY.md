@@ -49,16 +49,16 @@ The extension collects no personal data from anyone, including children under 13
 
 If this policy ever changes, the updated version will be published in the public source repository, with the version and effective date updated at the top of this document. Because the extension and its policy are open source, any change is publicly visible in the repository's history:
 
-https://github.com/Joona-t/lovespark-hyperfocus-guard
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hyperfocus-guard
 
 ## Contact
 
 Questions, concerns, or reports? Please open an issue:
 
-https://github.com/Joona-t/lovespark-hyperfocus-guard/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You do not have to take our word for any of this. LoveSpark Hyperfocus Guard is fully open source, and you can read the complete source code to verify exactly what it stores, what permissions it uses, and that it transmits nothing:
 
-https://github.com/Joona-t/lovespark-hyperfocus-guard
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hyperfocus-guard

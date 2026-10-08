@@ -64,11 +64,11 @@ If this policy changes, the updated version will be published in the project's p
 ## Contact
 
 Questions, concerns, or reports can be filed via GitHub issues:
-https://github.com/Joona-t/lovespark-habit-garden/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 LoveSpark Habit Garden is fully open source. You do not have to take our word for any of the claims above — you can read and verify the entire source code yourself:
-https://github.com/Joona-t/lovespark-habit-garden
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-habit-garden
 
 Every claim in this policy — local-only storage, zero data transmission, no third parties, no tracking — is verifiable in the published source.

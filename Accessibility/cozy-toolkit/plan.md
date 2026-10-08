@@ -32,7 +32,7 @@ $('guide-btn').addEventListener('click', () => {
 });
 
 $('bug-btn').addEventListener('click', () => {
-  chrome.tabs.create({ url: 'https://github.com/Joona-t/cozy-accessibility/issues' });
+  chrome.tabs.create({ url: 'https://github.com/Joona-t/lovespark-extensions/issues' });
 });
 ```
 

@@ -71,7 +71,7 @@ Paste the following into the CWS privacy form.
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-breathe/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-breathe/PRIVACY.md
 
 LoveSpark Breathe stores all data locally in `chrome.storage.local` and transmits nothing externally. There is no server, no analytics, and no third-party service.
 
@@ -87,4 +87,4 @@ Total time: ~3 minutes.
 6. **Confirm local persistence (~15s).** Close and reopen the popup. Your settings (chosen pattern, dimming toggle) persist — they are saved to `chrome.storage.local`.
 7. **Confirm zero network activity (~30s).** Open DevTools → Network, then repeat any of the above. Confirm the extension makes **no external network requests** — no data leaves the device.
 
-The full source is available for verification at https://github.com/Joona-t/lovespark-breathe.
+The full source is available for verification at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-breathe.

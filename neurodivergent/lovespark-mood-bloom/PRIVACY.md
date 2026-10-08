@@ -74,7 +74,7 @@ LoveSpark Mood Bloom collects **no** personal data from anyone — including chi
 
 If this policy ever changes, the update will be published in the extension's public source repository, and the version number and effective date at the top of this document will be updated. Because the repository is public and version-controlled, the full history of this policy is always available for you to review:
 
-<https://github.com/Joona-t/lovespark-mood-bloom>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-mood-bloom>
 
 ---
 
@@ -82,7 +82,7 @@ If this policy ever changes, the update will be published in the extension's pub
 
 Questions, concerns, or reports? Open an issue on GitHub:
 
-<https://github.com/Joona-t/lovespark-mood-bloom/issues>
+<https://github.com/Joona-t/lovespark-extensions/issues>
 
 ---
 
@@ -90,4 +90,4 @@ Questions, concerns, or reports? Open an issue on GitHub:
 
 You don't have to take our word for any of this. LoveSpark Mood Bloom is fully open source (MIT licensed). Every claim in this policy — local-only storage, zero transmission, no third parties, no tracking — can be independently verified by reading the source code:
 
-<https://github.com/Joona-t/lovespark-mood-bloom>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-mood-bloom>

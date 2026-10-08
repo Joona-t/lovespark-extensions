@@ -1,6 +1,6 @@
 # Submit: LoveSpark Sensory Dimmer
 
-`v1.0.0` · [repo](https://github.com/Joona-t/lovespark-sensory-dimmer) · ~5 min to submit. All copy lives in `CWS-LISTING.md`; this page just maps it to the form.
+`v1.0.0` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-sensory-dimmer) · ~5 min to submit. All copy lives in `CWS-LISTING.md`; this page just maps it to the form.
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories "Not collected") |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-sensory-dimmer/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-sensory-dimmer/PRIVACY.md` |
 
 ## Asset upload checklist
 

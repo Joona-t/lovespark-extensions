@@ -1,6 +1,6 @@
 # Submit: Neurodivergent Reader by LoveSpark
 
-**Extension:** `neurodivergent-reader` · **Version:** 1.0.31 · **Repo:** https://github.com/Joona-t/neurodivergent-reader
+**Extension:** `neurodivergent-reader` · **Version:** 1.0.31 · **Repo:** https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/neurodivergent-reader
 
 > 5-minute submission. Everything below maps to `CWS-LISTING.md` — don't re-read the long doc, just copy each section into the matching field.
 
@@ -16,7 +16,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices (data use) | **Privacy disclosure** |
-| Privacy policy URL | https://github.com/Joona-t/neurodivergent-reader/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/neurodivergent-reader/PRIVACY.md |
 
 ## Asset upload checklist
 

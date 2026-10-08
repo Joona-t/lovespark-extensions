@@ -57,10 +57,10 @@ If this policy is ever updated, the changes will be published in the project's p
 
 Questions, concerns, or privacy-related requests can be raised via GitHub issues:
 
-- https://github.com/Joona-t/lovespark-sensory-dimmer/issues
+- https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You do not have to take our word for any of the claims above — you can verify them yourself. The complete source code of the extension is public and open source (MIT licensed). Anyone can read it to confirm that data is stored only in `chrome.storage.local` and that nothing is transmitted externally:
 
-- https://github.com/Joona-t/lovespark-sensory-dimmer
+- https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-sensory-dimmer

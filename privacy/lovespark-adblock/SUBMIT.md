@@ -18,7 +18,7 @@ Full long-form copy lives there; this is the checklist for upload day.
 | Permission justifications | CWS-LISTING.md → *Per-permission justification* |
 | Site access justification | CWS-LISTING.md → *Site-access justification* (YouTube only; no `<all_urls>`) |
 | Privacy practices (§5) | CWS-LISTING.md → *Privacy disclosure* — all data types **No** |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-adblock/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/privacy/lovespark-adblock/PRIVACY.md` |
 | Test instructions | CWS-LISTING.md → *Reviewer test instructions* |
 
 ## Pre-submit checklist

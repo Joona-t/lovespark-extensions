@@ -1,6 +1,6 @@
 # Submit: LoveSpark Time Blindness Clock
 
-> Extension: `lovespark-time-blindness-clock` · v1.0.0 · [repo](https://github.com/Joona-t/lovespark-time-blindness-clock)
+> Extension: `lovespark-time-blindness-clock` · v1.0.0 · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-time-blindness-clock)
 > Source for all copy: `CWS-LISTING.md` · Assets: `~/Downloads/lovespark-time-blindness-clock-cws-assets`
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → "Not collected") |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-time-blindness-clock/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-time-blindness-clock/PRIVACY.md` |
 
 ## Asset upload checklist
 

@@ -1,6 +1,6 @@
 # Submit: LoveSpark Task Starter
 
-`v1.0.0` · [repo](https://github.com/Joona-t/lovespark-task-starter) · all listing copy lives in `CWS-LISTING.md`
+`v1.0.0` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-starter) · all listing copy lives in `CWS-LISTING.md`
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-task-starter/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-task-starter/PRIVACY.md` |
 
 ## Asset upload checklist
 

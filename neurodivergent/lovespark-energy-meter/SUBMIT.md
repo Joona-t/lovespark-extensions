@@ -1,6 +1,6 @@
 # Submit: LoveSpark Energy Meter
 
-`v1.0.29` · [repo](https://github.com/Joona-t/lovespark-energy-meter) · every field below sources from `CWS-LISTING.md`
+`v1.0.29` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-energy-meter) · every field below sources from `CWS-LISTING.md`
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-energy-meter/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-energy-meter/PRIVACY.md` |
 
 ## Asset upload checklist
 

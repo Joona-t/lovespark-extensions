@@ -44,7 +44,7 @@ Most time trackers and website time-limit tools demand permission to *read and c
 
 **Privacy in one line:** Hyperfocus Guard stores your settings and timers locally and transmits absolutely nothing, ever. No servers, no analytics, no tracking, no sign-in.
 
-Open source and auditable: https://github.com/Joona-t/lovespark-hyperfocus-guard
+Open source and auditable: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hyperfocus-guard
 
 LoveSpark builds free, neurodivergent-first browser tools that reduce distraction without shame. Knowledge and focus are rights, not paywalls.
 
@@ -87,7 +87,7 @@ No host permissions are requested. Hyperfocus Guard does not declare `<all_urls>
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-hyperfocus-guard/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-hyperfocus-guard/PRIVACY.md
 
 ## Reviewer test instructions
 

@@ -112,7 +112,7 @@ All code is bundled locally within the extension package. No external scripts, A
 
 ### Privacy Policy URL
 
-https://github.com/Joona-t/lovespark-email-guard/blob/main/README.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/privacy/lovespark-email-guard/README.md
 
 ---
 
@@ -157,7 +157,7 @@ PERMISSIONS USED
 
 OPEN SOURCE
 
-https://github.com/Joona-t/lovespark-email-guard
+https://github.com/Joona-t/lovespark-extensions/tree/main/privacy/lovespark-email-guard
 
 CONTACT
 

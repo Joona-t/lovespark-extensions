@@ -74,7 +74,7 @@ If this policy ever changes, the updated version will be published in the public
 
 Questions, concerns, or privacy reports are welcome. Please open an issue at:
 
-**https://github.com/Joona-t/lovespark-site-blocker/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -82,4 +82,4 @@ Questions, concerns, or privacy reports are welcome. Please open an issue at:
 
 You don't have to take our word for any of the claims above — you can verify them yourself. LoveSpark Site Blocker is fully open source under the MIT license. The complete source code, including the manifest and all permission usage, is available for inspection at:
 
-**https://github.com/Joona-t/lovespark-site-blocker**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-site-blocker**

@@ -79,7 +79,7 @@ This extension collects **no personal data from anyone**, including children und
 
 If this privacy policy ever changes, the updated version will be published in the public source repository, and the **Effective date** and **Version** at the top of this document will be updated. Because the project is open source, the full history of any change is visible in the repository's commit log:
 
-<https://github.com/Joona-t/lovespark-calm-down-kit>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm-down-kit>
 
 Material changes will accompany a version update of the extension itself.
 
@@ -89,7 +89,7 @@ Material changes will accompany a version update of the extension itself.
 
 Questions, concerns, or privacy reports are welcome. Please open an issue at:
 
-<https://github.com/Joona-t/lovespark-calm-down-kit/issues>
+<https://github.com/Joona-t/lovespark-extensions/issues>
 
 ---
 
@@ -97,6 +97,6 @@ Questions, concerns, or privacy reports are welcome. Please open an issue at:
 
 You don't have to take our word for any of this. LoveSpark Calm Down Kit is fully open source, and every claim in this policy can be verified by reading the code yourself:
 
-<https://github.com/Joona-t/lovespark-calm-down-kit>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm-down-kit>
 
 There is no hidden network activity to find — the extension has no server to talk to, no analytics to inspect, and no third-party code. Privacy-first, local-only, and always free.

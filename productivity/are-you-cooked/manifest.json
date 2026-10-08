@@ -4,7 +4,7 @@
   "version": "2.1.36",
   "description": "__MSG_extDescription__",
   "minimum_chrome_version": "102",
-  "homepage_url": "https://github.com/Joona-t/are-you-cooked",
+  "homepage_url": "https://github.com/Joona-t/lovespark-extensions/tree/main/productivity/are-you-cooked",
   "permissions": [
     "storage"
   ],

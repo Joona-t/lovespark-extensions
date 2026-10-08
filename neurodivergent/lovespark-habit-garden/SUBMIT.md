@@ -1,6 +1,6 @@
 # Submit: LoveSpark Habit Garden
 
-`v1.0.28` · [repo](https://github.com/Joona-t/lovespark-habit-garden) · all copy lives in `CWS-LISTING.md`
+`v1.0.28` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-habit-garden) · all copy lives in `CWS-LISTING.md`
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-habit-garden/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-habit-garden/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -34,7 +34,7 @@ Pre-submit checkboxes (tick during upload):
 - [ ] Version is bumped (`1.0.28`)
 - [ ] Permissions match the justifications in `CWS-LISTING.md`
 - [ ] Privacy form: every data category set to **"Not collected"**
-- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-habit-garden/blob/main/PRIVACY.md`
+- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-habit-garden/PRIVACY.md`
 - [ ] At least 1 screenshot uploaded
 
 ## Firefox AMO

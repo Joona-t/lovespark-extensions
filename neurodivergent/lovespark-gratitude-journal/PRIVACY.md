@@ -78,7 +78,7 @@ If this policy ever changes, the update will be published in the public source r
 
 Questions, concerns, or reports? Please open an issue:
 
-**https://github.com/Joona-t/lovespark-gratitude-journal/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -86,4 +86,4 @@ Questions, concerns, or reports? Please open an issue:
 
 You don't have to take our word for any of this. LoveSpark Gratitude Journal is fully open source, and anyone can read the complete code to confirm that it stores data only locally and transmits nothing:
 
-**https://github.com/Joona-t/lovespark-gratitude-journal**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-gratitude-journal**

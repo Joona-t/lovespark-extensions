@@ -1,6 +1,6 @@
 # Submit: Study Bubbles by LoveSpark
 
-> **Package:** `study-bubbles-chrome.zip` · **Version:** 1.0.29 · **Repo:** https://github.com/Joona-t/study-bubbles
+> **Package:** `study-bubbles-chrome.zip` · **Version:** 1.0.29 · **Repo:** https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/study-bubbles
 > Goal: submit to the Chrome Web Store in ~5 minutes. Every field maps to a section of `CWS-LISTING.md`.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all data categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/study-bubbles/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/study-bubbles/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -42,7 +42,7 @@ Pre-submit checkboxes — tick during upload:
 - [ ] Version is bumped (`1.0.29`)
 - [ ] Permissions match the per-permission justifications
 - [ ] Privacy form: every data category set to **Not collected**
-- [ ] Privacy policy URL set → `https://github.com/Joona-t/study-bubbles/blob/main/PRIVACY.md`
+- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/study-bubbles/PRIVACY.md`
 - [ ] At least 1 screenshot uploaded
 
 ## Firefox AMO

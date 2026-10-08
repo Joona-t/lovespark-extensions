@@ -32,7 +32,7 @@ LoveSpark Hub is made neurodivergent-first. If you have ADHD, executive-dysfunct
 **Free, open, and private — always:**
 
 - **100% free** and **MIT licensed** — no ads, no upsells, no premium tier.
-- **Open source** — read every line at https://github.com/Joona-t/lovespark-hub
+- **Open source** — read every line at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hub
 - **Zero data collection** — everything you type stays on your device in local browser storage. Nothing is ever sent to us or anyone else. There are no accounts, no trackers, and no analytics.
 
 LoveSpark Hub is part of the LoveSpark suite of free, privacy-first tools for neurodivergent coders and anyone who wants a kinder, calmer browser.
@@ -67,7 +67,7 @@ LoveSpark Hub requests **no host permissions**. It does not read, modify, or acc
 - ☑ I do **not** use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do **not** use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-hub/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-hub/PRIVACY.md
 
 *(Note: LoveSpark Hub stores the user's planner, settings, and preferences only in `chrome.storage.local` on the user's own device and transmits nothing externally, so no data-collection category applies.)*
 
@@ -80,4 +80,4 @@ This takes about 3 minutes. No account, login, or setup is required.
 4. **Start focus mode.** Activate focus mode from the Hub and confirm the interface shifts into its focused/committed state.
 5. **Verify break reminders.** Open the break-reminder setting and confirm you can enable it / choose an interval. (Reminders are scheduled via the `alarms` API and fire at the set interval; you can set a short interval to observe a notification/nudge.)
 6. **Confirm local persistence.** Open another new tab (or restart the browser) and confirm your tasks and settings are still there — proving data is saved locally in `chrome.storage.local`.
-7. **Confirm zero network activity.** Open DevTools → **Network** on the new-tab page and interact with the planner and focus mode. You will see **no external requests** — nothing is transmitted off the device. All source code is public at https://github.com/Joona-t/lovespark-hub for verification.
+7. **Confirm zero network activity.** Open DevTools → **Network** on the new-tab page and interact with the planner and focus mode. You will see **no external requests** — nothing is transmitted off the device. All source code is public at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-hub for verification.

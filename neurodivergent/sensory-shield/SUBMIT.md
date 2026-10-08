@@ -1,6 +1,6 @@
 # Submit: Sensory Shield by LoveSpark
 
-`v1.0.36` · [repo](https://github.com/Joona-t/sensory-shield) · full copy lives in `CWS-LISTING.md` — this page is the 5-minute path.
+`v1.0.36` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/sensory-shield) · full copy lives in `CWS-LISTING.md` — this page is the 5-minute path.
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | `https://github.com/Joona-t/sensory-shield/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/sensory-shield/PRIVACY.md` |
 
 ## Asset upload checklist
 

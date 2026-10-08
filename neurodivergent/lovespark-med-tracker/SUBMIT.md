@@ -1,6 +1,6 @@
 # Submit: LoveSpark Med Tracker
 
-`v1.0.35` · repo: https://github.com/Joona-t/lovespark-med-tracker
+`v1.0.35` · repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-med-tracker
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories "Not collected") |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-med-tracker/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-med-tracker/PRIVACY.md |
 
 ## Asset upload checklist
 

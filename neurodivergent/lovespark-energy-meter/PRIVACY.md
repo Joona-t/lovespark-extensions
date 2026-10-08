@@ -50,9 +50,9 @@ If this policy ever changes, the updated version will be published in the extens
 ## Contact
 
 Questions, concerns, or reports? Please open an issue at:
-https://github.com/Joona-t/lovespark-energy-meter/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source / verification
 
 You do not have to take our word for any of the claims above. LoveSpark Energy Meter is fully open source, and anyone can read the complete source code to verify that it stores data only in `chrome.storage.local`, transmits nothing, and uses no third-party services:
-https://github.com/Joona-t/lovespark-energy-meter
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-energy-meter

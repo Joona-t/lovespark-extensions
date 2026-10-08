@@ -25,7 +25,7 @@ Built neurodivergent-first by a neurodivergent developer, it uses clear, high-co
 - ♿ **Accessible by default** — keyboard-friendly, reduced-motion, high-contrast retro-pink UI with clear monospace typography
 - 🔒 **Zero data collection** — everything stays on your device in local storage
 
-**Free, open source, and private.** Task Anchor is MIT-licensed and completely free, with no ads, no accounts, and no tracking. It stores your pinned task only in your browser's local storage and transmits absolutely nothing externally — there are no servers to send anything to. You can read every line of code at https://github.com/Joona-t/lovespark-task-anchor.
+**Free, open source, and private.** Task Anchor is MIT-licensed and completely free, with no ads, no accounts, and no tracking. It stores your pinned task only in your browser's local storage and transmits absolutely nothing externally — there are no servers to send anything to. You can read every line of code at https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-task-anchor.
 
 If you've been searching for a stay-focused Chrome extension, a persistent task reminder, or a single-task focus tool that respects your attention *and* your privacy, pin your task and get back to it.
 
@@ -55,7 +55,7 @@ LoveSpark Task Anchor declares a content script matching `<all_urls>` (see `cont
 - I do **not** use or transfer user data for purposes that are unrelated to my item's single purpose.
 - I do **not** use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-task-anchor/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-task-anchor/PRIVACY.md
 
 **Developer certification checkboxes to tick:**
 - ☑ This item complies with the Developer Program Policies.

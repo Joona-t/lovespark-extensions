@@ -79,7 +79,7 @@ This extension collects **no personal data from anyone**, including children und
 
 If this policy ever changes, the updated version will be published in the public source repository, and the **Effective date** and **version** at the top of this document will be updated. Because the extension and its policy are open source, the full history of any changes is visible to everyone:
 
-https://github.com/Joona-t/porn-blocker-rewire-brain-3
+https://github.com/Joona-t/lovespark-extensions/tree/main/privacy/porn-blocker-rewire-brain
 
 ---
 
@@ -87,7 +87,7 @@ https://github.com/Joona-t/porn-blocker-rewire-brain-3
 
 Questions, concerns, or privacy reports? Please open an issue:
 
-https://github.com/Joona-t/porn-blocker-rewire-brain-3/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ---
 
@@ -95,6 +95,6 @@ https://github.com/Joona-t/porn-blocker-rewire-brain-3/issues
 
 You don't have to take our word for any of this. **Porn Blocker Rewire Brain is fully open source.** Every claim in this policy can be independently verified by reading the source code:
 
-https://github.com/Joona-t/porn-blocker-rewire-brain-3
+https://github.com/Joona-t/lovespark-extensions/tree/main/privacy/porn-blocker-rewire-brain
 
 If you find anything that contradicts this policy, please report it via the issues link above.

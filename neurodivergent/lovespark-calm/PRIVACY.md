@@ -76,7 +76,7 @@ LoveSpark Calm collects no personal data from anyone, including children under t
 
 If this policy is ever updated, the changes will be published in the extension's public source repository, and the **Effective date** and **version** line at the top of this document will be updated. Because LoveSpark Calm is open source, every change to this policy is visible in the repository's history for anyone to review:
 
-https://github.com/Joona-t/lovespark-calm
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm
 
 ---
 
@@ -84,7 +84,7 @@ https://github.com/Joona-t/lovespark-calm
 
 Questions, concerns, or reports about privacy can be raised publicly via GitHub issues:
 
-https://github.com/Joona-t/lovespark-calm/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ---
 
@@ -92,6 +92,6 @@ https://github.com/Joona-t/lovespark-calm/issues
 
 LoveSpark Calm is fully open source under the MIT license. You do not have to take these claims on trust — you can verify every statement in this policy by reading the complete source code:
 
-https://github.com/Joona-t/lovespark-calm
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm
 
 There is no hidden or server-side component. What you read in the repository is exactly what runs on your device.

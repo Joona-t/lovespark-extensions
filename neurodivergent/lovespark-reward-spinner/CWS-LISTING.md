@@ -55,7 +55,7 @@ LoveSpark Reward Spinner requests no host permissions. It does not read, access,
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes
 
 **Privacy policy URL:**
-https://github.com/Joona-t/lovespark-reward-spinner/blob/main/PRIVACY.md
+https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-reward-spinner/PRIVACY.md
 
 The extension stores your custom rewards only in `chrome.storage.local` on your own device and transmits zero data externally. No data is collected, sold, transferred, or used for any unrelated purpose or for creditworthiness or lending.
 

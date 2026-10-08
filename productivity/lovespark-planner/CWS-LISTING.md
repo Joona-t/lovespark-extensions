@@ -39,7 +39,7 @@ It's also genuinely private. LoveSpark Planner is a free todo list with no accou
 - 🔤 **OpenDyslexic font + accessible retro-pink themes** — readable by default, with high-contrast, WCAG-aware theming and reduced-motion support.
 - 💾 **Unlimited local history** — keep months or years of tasks and events without hitting a storage cap.
 - 🔒 **100% local & offline** — zero data collection, zero tracking, no telemetry, ever.
-- 🆓 **Free and open source (MIT)** — inspect every line at https://github.com/Joona-t/lovespark-planner.
+- 🆓 **Free and open source (MIT)** — inspect every line at https://github.com/Joona-t/lovespark-extensions/tree/main/productivity/lovespark-planner.
 
 LoveSpark Planner is part of the LoveSpark suite of free, open-source, privacy-first tools for neurodivergent coders. No ads. No data collection. Always free.
 
@@ -84,7 +84,7 @@ LoveSpark Planner requests **no host permissions** and **no access to any websit
 - ☑ I certify that the data usage disclosed above is complete and accurate, and complies with the Chrome Web Store Developer Program Policies.
 - ☑ This item handles user data in accordance with the linked privacy policy.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-planner/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/productivity/lovespark-planner/PRIVACY.md
 
 *Note for reviewers: LoveSpark Planner stores all data in `chrome.storage.local` on the user's device and transmits zero data externally. No remote endpoints, telemetry, or analytics exist anywhere in the source.*
 

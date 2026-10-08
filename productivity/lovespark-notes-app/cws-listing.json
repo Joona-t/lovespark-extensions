@@ -30,7 +30,7 @@
     "use_limited_to_single_purpose": true,
     "no_creditworthiness_use": true
   },
-  "privacy_policy_url": "https://github.com/Joona-t/lovespark-notes-neurodivergent/blob/main/PRIVACY.md",
+  "privacy_policy_url": "https://github.com/Joona-t/lovespark-extensions/blob/main/productivity/lovespark-notes-app/PRIVACY.md",
   "reviewer_test_instructions": "LoveSpark Notes has one feature — a private notes surface on the new-tab page — and needs no account, login, or setup. It can be verified in about two minutes:\n\n1. Install the extension and open a new browser tab. The LoveSpark Notes surface appears, rendered in the OpenDyslexic font on the retro-pink theme.\n2. Type a note (e.g. 'buy milk'). It saves instantly. Optionally assign it a category.\n3. Open another new tab — your note is still there, confirming it persists locally.\n4. Type in the search box to filter to a matching note.\n5. Open DevTools (right-click - Inspect) - Network tab while using it: no outbound requests are made; everything is stored in chrome.storage.local only.\n\nExpected result: a private new-tab notebook that saves and searches notes locally, with zero data leaving the device.",
   "distribution": {
     "visibility": "PUBLIC",

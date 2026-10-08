@@ -16,7 +16,7 @@ Each Developer Dashboard field and where its copy lives in `CWS-LISTING.md`:
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** (one paragraph per permission) + **Host-permissions justification** |
 | Privacy practices (Section 5 form) | **Privacy disclosure** (all data categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-gratitude-journal/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-gratitude-journal/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -38,7 +38,7 @@ All images live in `~/Downloads/lovespark-gratitude-journal-cws-assets`. Match e
 - [ ] Version is bumped (`1.0.29`)
 - [ ] Declared permissions match the justifications in the listing
 - [ ] Privacy form: every data category set to **Not collected**
-- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-gratitude-journal/blob/main/PRIVACY.md`
+- [ ] Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-gratitude-journal/PRIVACY.md`
 - [ ] At least 1 screenshot uploaded
 
 ## Firefox AMO

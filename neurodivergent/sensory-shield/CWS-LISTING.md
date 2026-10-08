@@ -66,7 +66,7 @@ Sensory Shield has one purpose: **to reduce sensory overload while browsing by g
 
 **Privacy policy URL:**
 
-`https://github.com/Joona-t/sensory-shield/blob/main/PRIVACY.md`
+`https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/sensory-shield/PRIVACY.md`
 
 Sensory Shield stores only the user's own preferences in `chrome.storage.local` on their device and transmits zero data externally.
 

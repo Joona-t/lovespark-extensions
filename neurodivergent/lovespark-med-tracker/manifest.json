@@ -4,7 +4,7 @@
   "version": "1.0.38",
   "description": "__MSG_extDescription__",
   "minimum_chrome_version": "102",
-  "homepage_url": "https://github.com/Joona-t/lovespark-med-tracker",
+  "homepage_url": "https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-med-tracker",
   "permissions": [
     "storage",
     "alarms",

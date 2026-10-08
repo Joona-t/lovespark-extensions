@@ -1,6 +1,6 @@
 # Submit: LoveSpark Calm
 
-> Version **1.0.29** · [github.com/Joona-t/lovespark-calm](https://github.com/Joona-t/lovespark-calm)
+> Version **1.0.29** · [github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-calm)
 > Goal: submit to the Chrome Web Store in ~5 minutes. All copy lives in `CWS-LISTING.md` — this page just maps fields → source.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices (data-use form) | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-calm/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-calm/PRIVACY.md` |
 
 ## Asset upload checklist
 
@@ -38,7 +38,7 @@
 - ☐ Version is bumped (**1.0.29**)
 - ☐ Permissions match the per-permission justifications
 - ☐ Privacy form → every category set to **Not collected**
-- ☐ Privacy policy URL set → `https://github.com/Joona-t/lovespark-calm/blob/main/PRIVACY.md`
+- ☐ Privacy policy URL set → `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-calm/PRIVACY.md`
 - ☐ At least 1 screenshot uploaded
 
 ## Firefox AMO

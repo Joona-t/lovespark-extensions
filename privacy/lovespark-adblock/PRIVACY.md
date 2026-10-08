@@ -54,9 +54,9 @@ The extension collects no data from anyone, including children under 13.
 ## Open source / verification
 
 The full source is public — you can verify every claim above:
-<https://github.com/Joona-t/lovespark-adblock>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/privacy/lovespark-adblock>
 
 ## Contact
 
 Questions or concerns: open an issue at
-<https://github.com/Joona-t/lovespark-adblock/issues>.
+<https://github.com/Joona-t/lovespark-extensions/issues>.

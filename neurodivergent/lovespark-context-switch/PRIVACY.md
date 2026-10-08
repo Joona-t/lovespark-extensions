@@ -76,7 +76,7 @@ If this policy changes, the updated version will be published in the extension's
 
 Questions, concerns, or reports? Please open an issue:
 
-https://github.com/Joona-t/lovespark-context-switch/issues
+https://github.com/Joona-t/lovespark-extensions/issues
 
 ---
 
@@ -84,4 +84,4 @@ https://github.com/Joona-t/lovespark-context-switch/issues
 
 You don't have to take our word for any of this. LoveSpark Context Switch is open source, and you can read the complete source code to verify every claim in this policy:
 
-https://github.com/Joona-t/lovespark-context-switch
+https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-context-switch

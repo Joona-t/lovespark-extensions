@@ -61,8 +61,8 @@ Any changes will be posted to this page and reflected in the extension's store l
 
 ## Contact
 
-For questions about this privacy policy: https://github.com/Joona-t/aaron-public-knowledge-unblocker/issues
+For questions about this privacy policy: https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Open source
 
-Aaron is MIT licensed. The complete source code is available at: https://github.com/Joona-t/aaron-public-knowledge-unblocker
+Aaron is MIT licensed. The complete source code is available at: https://github.com/Joona-t/lovespark-extensions/tree/main/reading/public-knowledge-unblocker

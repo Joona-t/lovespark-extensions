@@ -87,7 +87,7 @@ If this policy ever changes, the updated version will be published in the extens
 
 Questions, concerns, or reports can be filed via GitHub issues:
 
-**https://github.com/Joona-t/lovespark-focus/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ---
 
@@ -95,4 +95,4 @@ Questions, concerns, or reports can be filed via GitHub issues:
 
 You do not have to take our word for any of the claims above. The extension is fully open source, and you can read every line of its code to verify that it stores data only locally and transmits nothing:
 
-**https://github.com/Joona-t/lovespark-focus**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-focus**

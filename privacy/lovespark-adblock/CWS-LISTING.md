@@ -50,7 +50,7 @@ PRIVACY YOU CAN VERIFY
 • 100% local. Request blocking and the YouTube page helper run on your device.
 • Zero data collection. No accounts, no analytics, no tracking, nothing transmitted — ever.
 • No broad all-sites access. The page helper is limited to YouTube and never transmits content.
-• Free and open source (MIT). Read the code: github.com/Joona-t/lovespark-adblock
+• Free and open source (MIT). Read the code: github.com/Joona-t/lovespark-extensions/tree/main/privacy/lovespark-adblock
 
 Block ads, block pop-ups, block trackers, and reclaim a faster, cleaner, more private web —
 the cute way. Part of the LoveSpark suite of retro-pink tools for focused, neurodivergent-friendly
@@ -110,7 +110,7 @@ domain is obtained via the gesture-scoped `activeTab` permission only.
   - ✅ I do not sell or transfer user data to third parties, outside of the approved use cases.
   - ✅ I do not use or transfer user data for purposes unrelated to my item's single purpose.
   - ✅ I do not use or transfer user data to determine creditworthiness or for lending purposes.
-- **Privacy policy URL:** https://github.com/Joona-t/lovespark-adblock/blob/main/PRIVACY.md
+- **Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/privacy/lovespark-adblock/PRIVACY.md
 
 ## Reviewer test instructions (3-minute walkthrough)
 

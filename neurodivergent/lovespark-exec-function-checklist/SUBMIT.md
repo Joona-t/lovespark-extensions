@@ -1,6 +1,6 @@
 # Submit: LoveSpark Executive Function Checklist
 
-**Version:** 1.0.0 · **Repo:** https://github.com/Joona-t/lovespark-exec-function-checklist
+**Version:** 1.0.0 · **Repo:** https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-exec-function-checklist
 
 ---
 
@@ -16,7 +16,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-exec-function-checklist/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-exec-function-checklist/PRIVACY.md |
 
 ---
 

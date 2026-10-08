@@ -68,7 +68,7 @@ LoveSpark Tab Garden collects **no personal data from anyone**, including childr
 
 If this policy ever changes, the updated version will be published in the project's public repository, and the **effective date** and **version** at the top of this document will be updated. Because the extension is open source, the full history of any changes is publicly visible in the repository's commit log:
 
-<https://github.com/Joona-t/lovespark-tab-garden>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-tab-garden>
 
 ---
 
@@ -76,7 +76,7 @@ If this policy ever changes, the updated version will be published in the projec
 
 Questions, concerns, or privacy reports are welcome. Please open an issue here:
 
-<https://github.com/Joona-t/lovespark-tab-garden/issues>
+<https://github.com/Joona-t/lovespark-extensions/issues>
 
 ---
 
@@ -84,4 +84,4 @@ Questions, concerns, or privacy reports are welcome. Please open an issue here:
 
 You do not have to take our word for any of the claims above — you can verify them yourself. LoveSpark Tab Garden is fully open source under the MIT license. Read the complete source code, inspect every permission, and confirm that no data ever leaves your device:
 
-<https://github.com/Joona-t/lovespark-tab-garden>
+<https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-tab-garden>

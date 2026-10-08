@@ -1,6 +1,6 @@
 # Submit: LoveSpark Breathe
 
-> Extension ID: `lovespark-breathe` · Version: **1.0.23** · Repo: https://github.com/Joona-t/lovespark-breathe
+> Extension ID: `lovespark-breathe` · Version: **1.0.23** · Repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-breathe
 > Goal: paste-and-go CWS submission in ~5 min. All copy lives in **CWS-LISTING.md** — this page just maps it.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all data types → *Not collected*) |
-| Privacy policy URL | https://github.com/Joona-t/lovespark-breathe/blob/main/PRIVACY.md |
+| Privacy policy URL | https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-breathe/PRIVACY.md |
 
 ## Asset upload checklist
 

@@ -33,8 +33,8 @@ This is a developer tool and is not directed at children. It collects no data
 from anyone.
 
 ## Contact
-Issues: https://github.com/Joona-t/lovespark-cws-filler/issues
+Issues: https://github.com/Joona-t/lovespark-extensions/issues
 
 ## Verification
 Open source — read every line at
-https://github.com/Joona-t/lovespark-cws-filler
+https://github.com/Joona-t/lovespark-extensions/tree/main/infrastructure/lovespark-cws-filler

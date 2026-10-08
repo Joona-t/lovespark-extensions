@@ -1,6 +1,6 @@
 # Submit: Porn Blocker Rewire Brain 🧠
 
-> Extension `porn-blocker-rewire-brain 3` · v2.4.5 · [repo](https://github.com/Joona-t/porn-blocker-rewire-brain-3)
+> Extension `porn-blocker-rewire-brain 3` · v2.4.5 · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/privacy/porn-blocker-rewire-brain)
 > Goal: CWS submission in ~5 min without re-reading `CWS-LISTING.md`.
 
 ## CWS form field → source
@@ -15,7 +15,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/porn-blocker-rewire-brain-3/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/privacy/porn-blocker-rewire-brain/PRIVACY.md` |
 
 ## Asset upload checklist
 

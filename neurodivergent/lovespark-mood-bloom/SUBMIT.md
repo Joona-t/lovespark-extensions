@@ -1,6 +1,6 @@
 # Submit: LoveSpark Mood Bloom
 
-`v1.0.33` · [repo](https://github.com/Joona-t/lovespark-mood-bloom) · ~5 min to submit
+`v1.0.33` · [repo](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-mood-bloom) · ~5 min to submit
 
 ## CWS form field → source
 
@@ -14,7 +14,7 @@
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-mood-bloom/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-mood-bloom/PRIVACY.md` |
 
 ## Asset upload checklist
 

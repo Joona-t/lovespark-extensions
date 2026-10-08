@@ -59,12 +59,12 @@ If this policy ever changes, the updated version will be published in the extens
 
 Questions, concerns, or reports? Please open an issue here:
 
-**https://github.com/Joona-t/lovespark-breathe/issues**
+**https://github.com/Joona-t/lovespark-extensions/issues**
 
 ## Open source / verification
 
 You do not have to take our word for any of the claims above — you can verify them yourself. LoveSpark Breathe is fully open source, and the complete source code is available for inspection:
 
-**https://github.com/Joona-t/lovespark-breathe**
+**https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-breathe**
 
 Anyone can read the code to confirm that data is stored only in `chrome.storage.local`, that no external network requests are made, and that no data is ever collected or transmitted.

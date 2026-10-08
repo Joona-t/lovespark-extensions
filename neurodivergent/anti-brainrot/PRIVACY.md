@@ -45,7 +45,7 @@ If we make any changes to this privacy policy, we will update the "Last Updated"
 
 ## Contact
 
-If you have any questions about this privacy policy, please open an issue on our [GitHub repository](https://github.com/Joona-t/anti-brainrot).
+If you have any questions about this privacy policy, please open an issue on our [GitHub repository](https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/anti-brainrot).
 
 ---
 

@@ -32,7 +32,7 @@ It's designed neurodivergent-first. If you're ADHD or autistic, or you experienc
 
 **Free, open, and private**
 
-LoveSpark Emotion Wheel is completely free, open source, and MIT-licensed — no ads, no upsell, no account, no sign-in. It collects **zero** data. Everything you select stays in your browser's local storage on your own device and is never transmitted anywhere. There are no trackers, no analytics, and no third-party services. You can read every line of the code yourself: https://github.com/Joona-t/lovespark-emotion-wheel
+LoveSpark Emotion Wheel is completely free, open source, and MIT-licensed — no ads, no upsell, no account, no sign-in. It collects **zero** data. Everything you select stays in your browser's local storage on your own device and is never transmitted anywhere. There are no trackers, no analytics, and no third-party services. You can read every line of the code yourself: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-emotion-wheel
 
 Name your feelings. Keep it private. Move on with your day.
 
@@ -66,7 +66,7 @@ Paste the following into the Chrome Web Store privacy form.
 - ☑ I do **not** use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do **not** use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-emotion-wheel/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-emotion-wheel/PRIVACY.md
 
 **Note for the form:** This extension stores the user's emotion selections only in `chrome.storage.local` on the user's own device. No data is collected by the developer and nothing is transmitted off the device, so all categories above are correctly marked "Not collected."
 

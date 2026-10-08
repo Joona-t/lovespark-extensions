@@ -60,7 +60,7 @@ Paste the following into the CWS privacy form.
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-win-jar/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-win-jar/PRIVACY.md
 
 Note for reviewers: the wins a user types are stored exclusively in `chrome.storage.local` on the user's own device. The extension makes no network requests and transmits no data off the device.
 

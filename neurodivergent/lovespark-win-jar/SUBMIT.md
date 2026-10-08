@@ -1,6 +1,6 @@
 # Submit: LoveSpark Win Jar
 
-`v1.0.29` · repo: https://github.com/Joona-t/lovespark-win-jar
+`v1.0.29` · repo: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-win-jar
 
 ## CWS form field → source
 
@@ -16,7 +16,7 @@ All copy lives in `CWS-LISTING.md`. Paste each field from the section named belo
 | Single purpose | **Single-purpose justification** |
 | Permission justifications | **Per-permission justification** + **Host-permissions justification** |
 | Privacy practices | **Privacy disclosure** (all categories → *Not collected*) |
-| Privacy policy URL | `https://github.com/Joona-t/lovespark-win-jar/blob/main/PRIVACY.md` |
+| Privacy policy URL | `https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-win-jar/PRIVACY.md` |
 
 ## Asset upload checklist
 

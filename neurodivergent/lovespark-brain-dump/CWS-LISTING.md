@@ -27,7 +27,7 @@ Brain dumping is a well-known strategy for reducing cognitive load and clearing 
 - 🔒 **100% private** — everything stays on your device.
 - 🆓 **Always free, MIT-licensed, open source** — no ads, no upsell, no catch.
 
-**Privacy you can verify.** LoveSpark Brain Dump stores your thoughts only in your browser's local storage (`chrome.storage.local`). It transmits **zero** data anywhere. There is no account, no login, no cloud sync, no analytics, and no tracking. Nothing you type ever leaves your computer. The full source code is public so you can confirm exactly that: https://github.com/Joona-t/lovespark-brain-dump
+**Privacy you can verify.** LoveSpark Brain Dump stores your thoughts only in your browser's local storage (`chrome.storage.local`). It transmits **zero** data anywhere. There is no account, no login, no cloud sync, no analytics, and no tracking. Nothing you type ever leaves your computer. The full source code is public so you can confirm exactly that: https://github.com/Joona-t/lovespark-extensions/tree/main/neurodivergent/lovespark-brain-dump
 
 Empty your spinning brain. Keep your focus. Own your data.
 
@@ -65,7 +65,7 @@ The thoughts a user types are stored exclusively in `chrome.storage.local` on th
 - ☑ I do not use or transfer user data for purposes that are unrelated to my item's single purpose.
 - ☑ I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-**Privacy policy URL:** https://github.com/Joona-t/lovespark-brain-dump/blob/main/PRIVACY.md
+**Privacy policy URL:** https://github.com/Joona-t/lovespark-extensions/blob/main/neurodivergent/lovespark-brain-dump/PRIVACY.md
 
 ## Reviewer test instructions
 
