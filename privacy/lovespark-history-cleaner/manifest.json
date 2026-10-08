@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "LoveSpark History Cleaner",
+  "version": "1.0.4",
+  "homepage_url": "https://lovespark.love",
+  "description": "One-click browsing history cleanup. Choose last hour, day, or week. ADHD-friendly, free, no data sent anywhere.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "browsingData",
+    "history"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "history-cleaner@lovespark.suite",
+      "data_collection_permissions": {
+        "is_exempt": true,
+        "justification": "This extension does not collect, transmit, or store any user data."
+      }
+    }
+  }
+}
