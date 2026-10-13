@@ -2,6 +2,29 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.39] - 2026-10-13
+- Y2K packs redesigned for native-size legibility: every arrow, hand, I-beam and
+  companion now carries a white halo under a dark outline (shared `arrow()`/`hand()`/
+  `ibeam()` helpers in `cursor_lib.py`), the I-beam stem is 2px instead of 1px,
+  companions hug the arrow/hand instead of floating in corners, emoji-variant pointer
+  cursors got a real pointing-hand cue, and wait cursors show a busy ring even in the
+  static (Firefox) frame.
+- Hotspots corrected: pointer-variant arrow "5 4" (tip), hand "11 3" (fingertip),
+  emoji pointer "15 12" (mini-hand fingertip); OG text/crosshair/not-allowed/wait now
+  fill the 32px canvas and use "16 16" instead of a quarter-size shape at "8 8".
+- Generator split into `cursor_lib.py` + `packs/<name>.py` (one file per pack) with
+  `render_pack.py` for headless-Chrome contact sheets; dev files, screenshots and
+  planning docs are excluded from the store zips via `.zipignore` (zip −1.3 MB).
+- Popup redesign: live "Try it — hover here" preview strip that applies the selected
+  pack's cursors inside the popup; the Pointer pack group now comes before the Emoji
+  (charm) group; pack chips are a WAI-ARIA radiogroup with roving tabindex and arrow-key
+  navigation; chip/selection styling redesigned on the candy design system.
+- OG packs regenerated from `gen_og_cursors.py` (Pillow, 8x supersample + LANCZOS):
+  starlight-purple is now actually purple (it shipped orange since 1.0), arrows are
+  filled gradient shapes with dark outline + white halo so they no longer vanish on
+  white pages, and the link cursor is a pointing hand instead of an arrow with a
+  minus-circle badge. Popup OG swatches match the real pack colours.
+
 ## [1.1.38] - 2026-10-13
 - Fix "cursor doesn't show" right after install: the content script is now injected
   into every already-open http(s)/file tab on install and update, so users no longer
