@@ -26,6 +26,13 @@ If cursors show on only *some* sites, check the extension's site access: Chrome 
 `chrome://extensions` → Details → "Site access" → **On all sites**. Firefox → Add-ons →
 the extension → Permissions → allow access for all sites.
 
+## Regenerating cursors
+- Y2K SVG packs: `python3 gen_cursors.py` (or `--only honey-bunny`); one file per pack in
+  `packs/`, shared drawing helpers in `cursor_lib.py`.
+- OG PNG packs: `python3 gen_og_cursors.py [--sheet out.png]`.
+- Review at native size on white / pink / dark: `python3 render_pack.py [pack-id ...] --out sheet.png`
+  (headless Chrome). Judge the small 32px rows, not the big tiles.
+
 ## Install Locally (Chrome / Edge)
 1. Open `chrome://extensions` (or `edge://extensions`)
 2. Enable Developer mode

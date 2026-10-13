@@ -36,8 +36,8 @@
     if (SVG_PACKS.has(pack)) {
       // Emoji variants center the icon (16 16); Pointer variants use traditional offsets
       const isEmoji = pack.endsWith("-emoji");
-      const defH = isEmoji ? "16 16" : "3 1";
-      const ptrH = isEmoji ? "16 16" : "8 4";
+      const defH = isEmoji ? "16 16" : "5 4";
+      const ptrH = isEmoji ? "15 12" : "11 3"; // emoji packs put the mini-hand fingertip at (15.5,12)
       const def = cursorURL(pack, "default.svg");
       const ptr = cursorURL(pack, "pointer.svg");
       const txt = cursorURL(pack, "text.svg");
@@ -77,7 +77,7 @@ a, area, button, summary, label[for], [role="button"], [role="link"], input[type
 }
 
 input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"] {
-  cursor: url("${textCursor}") 8 8, text !important;
+  cursor: url("${textCursor}") 16 16, text !important;
 }
 
 .drag, [draggable="true"] {
@@ -89,15 +89,15 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
 }
 
 .crosshair, canvas, [data-cursor="crosshair"] {
-  cursor: url("${crosshairCursor}") 8 8, crosshair !important;
+  cursor: url("${crosshairCursor}") 16 16, crosshair !important;
 }
 
 :disabled, [aria-disabled="true"] {
-  cursor: url("${notAllowedCursor}") 8 8, not-allowed !important;
+  cursor: url("${notAllowedCursor}") 16 16, not-allowed !important;
 }
 
 .loading, [aria-busy="true"] {
-  cursor: url("${waitCursor}") 8 8, wait !important;
+  cursor: url("${waitCursor}") 16 16, wait !important;
 }
 `;
   }
