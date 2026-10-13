@@ -110,3 +110,16 @@ pre-commit ls-check green at this commit.
 **Follow-up (2026-10-07, PR #1 verification):** `ls-check .` flagged QUAL-CHANGELOG-DRIFT (CHANGELOG latest 1.1.32 vs manifest 1.1.33). Added the `[1.1.33]` CHANGELOG entry. Check: `ls-check . --strict` → 0 fail, 0 warn.
 
 **Monorepo merge note (2026-10-08):** this branch's fixes (KI-039 guard flip, duplicate tokens `<link>` removal, canonical tokens.css refresh) were also delivered independently on the main line — the guard flip in v1.1.35 (03bb2cc) and the tokens/popup cleanup in the pre-import snapshot (30e7909, on top of v1.1.37). The `1.1.33` label here collides with the main line's 1.1.33 ("Pink" store-title SEO); manifest stays at 1.1.37.
+
+---
+
+## 2026-10-13: BUG — "It does not show the cursor" (user bug report via popup Report-a-Bug email) (v1.1.38)
+
+**Problem:** User emailed "It does not show the curser". Joona reproduced the shape of it: the cursor only changes on some websites and never on the New Tab page or plain Chrome surfaces.
+**Root cause (two parts):**
+1. Browser limitation, not a code bug: Chrome refuses to run content scripts on `chrome://newtab` / `chrome://new-tab-page`, any `chrome://` page, the Chrome Web Store, the PDF viewer and other extensions' pages. The extension works purely by injecting CSS via a content script, so those surfaces can never be themed. Nothing in the UI said so, so users read it as broken.
+2. Real gap: manifest `content_scripts` only run in pages loaded *after* install. Every tab already open when the user installed stayed on the system cursor until manually reloaded — the most likely reason a fresh install "does not show the cursor". Also no `all_frames`/`match_about_blank`, so iframes (embedded players, comment widgets) showed the system cursor on otherwise-themed sites.
+**Fix:** `background.js` injects `content_script.js` into all open `http(s)`/`file` tabs on `onInstalled` (install + update) via `chrome.scripting.executeScript`. Manifest gains `scripting` (no `tabs` — `tabs.query` works without it, and executeScript's rejection already filters unscriptable pages), `all_frames: true`, `match_about_blank: true`. Popup gets a browser-neutral coverage note and, when `<all_urls>` is not granted (Chrome site-access set to "On click"/"On specific sites", Firefox opt-in host permissions — a third cause of "only some websites"), swaps it for a "set to On all sites" instruction; README documents both. Double injection is harmless: the guard short-circuits same-world re-runs and `applyCursorStyle` reuses the existing `#lovespark-cursors` element. Version 1.1.37 → 1.1.38.
+**Not done (owner call):** overriding the New Tab page via `chrome_url_overrides.newtab` would let the cursor show there, but it replaces the user's New Tab (a separate CWS-disclosed capability and a product change for a cursor pack).
+**Verify:** 3-skeptic adversarial workflow — diagnosis confirmed (alt causes debunked: all 72 SVGs 32×32, PNGs 32×32, storage area already local); 0 correctness bugs; fixed: dropped `tabs`, Firefox-false warning claim, `file://` README claim, Chrome-only popup copy, missing site-access cause, stale store description.
+**Files:** manifest.json, background.js, popup.html, popup.css, popup.js, README.md, CHANGELOG.md, _locales/en/messages.json
