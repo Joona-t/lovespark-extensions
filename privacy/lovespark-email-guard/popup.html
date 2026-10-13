@@ -5,28 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Email Guard</title>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
 
     <header class="popup-header">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
       <div class="header-text">
-        <span class="header-title">LoveSpark</span>
+        <span class="header-title" id="popupTitle">LoveSpark</span>
         <span class="header-sub">Email Guard</span>
       </div>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
-      <div class="theme-dropdown-menu" id="themeMenu">
+      <div class="theme-dropdown-menu" id="themeMenu" role="menu">
         <div class="theme-dropdown-header">Change Theme</div>
-        <button class="theme-option" data-theme="retro">Retro Pink</button>
-        <button class="theme-option" data-theme="dark">Dark</button>
-        <button class="theme-option" data-theme="beige">Beige</button>
-        <button class="theme-option" data-theme="slate">Slate</button>
+        <button class="theme-option" role="menuitem" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" role="menuitem" data-theme="dark">Dark</button>
+        <button class="theme-option" role="menuitem" data-theme="beige">Beige</button>
+        <button class="theme-option" role="menuitem" data-theme="slate">Slate</button>
       </div>
     </div>
     </header>
@@ -53,11 +54,12 @@
       </div>
     </section>
 
-    <p class="explain-text">Blocks invisible tracking pixels in emails that report when you open them, how many times, and your location.</p>
+    <p class="explain-text" id="popupDesc">Blocks invisible tracking pixels in emails that report when you open them, how many times, and your location.</p>
 
 
   </div>
   <script src="lib/lovespark-footer.js"></script>
-<script src="popup.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="popup.js"></script>
 </body>
 </html>

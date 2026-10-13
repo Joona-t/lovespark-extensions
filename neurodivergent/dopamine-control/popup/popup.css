@@ -4,7 +4,7 @@ body {
   width: 380px;
   height: 520px;
   overflow: hidden;
-  background: linear-gradient(160deg, #FFE4E1 0%, #FFF9FA 100%);
+  background: var(--ls-bg-gradient);
   font-family: var(--font-body);
   color: var(--text-primary);
 }
@@ -354,6 +354,11 @@ body {
   cursor: pointer;
 }
 
+.dc-slider:focus-visible {
+  outline: 2px solid var(--pink-hot);
+  outline-offset: 3px;
+}
+
 .dc-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -500,4 +505,30 @@ body {
   color: var(--text-secondary);
   text-align: center;
   padding: 4px 0 8px;
+}
+
+/* Sparky mascot + theme dropdown in the header */
+.popup-header .mascot {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.popup-header .theme-dropdown {
+  align-self: flex-start;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--ls-focus-ring, #FF1493);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

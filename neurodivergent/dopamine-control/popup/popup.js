@@ -157,6 +157,20 @@ function saveSettings() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Theme dropdown (shared lib) + keep aria-expanded in sync with the menu's open state
+  LoveSparkTheme.init();
+  const themeToggle = document.getElementById('themeToggle');
+  const themeMenu = document.getElementById('themeMenu');
+  new MutationObserver(() => {
+    themeToggle.setAttribute('aria-expanded', String(themeMenu.classList.contains('open')));
+  }).observe(themeMenu, { attributes: true, attributeFilter: ['class'] });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && themeMenu.classList.contains('open')) {
+      themeMenu.classList.remove('open');
+      themeToggle.focus();
+    }
+  });
+
   // Initial fetch + start polling
   fetchStatus();
   pollInterval = setInterval(fetchStatus, 1000);

@@ -1,22 +1,15 @@
 /* popup.js — Drag-and-drop / paste / browse UI for manual image scrubbing */
 
 // Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
-function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
-}
+// Uses the shared LoveSparkTheme.apply (lib/lovespark-theme.js); init stays local
+// to keep the legacy darkMode -> 'dark' migration and the browser.* polyfill.
+function applyTheme(t) { LoveSparkTheme.apply(t); }
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    const syncExpanded = () => toggle.setAttribute('aria-expanded', String(menu.classList.contains('open')));
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); syncExpanded(); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
@@ -24,8 +17,9 @@ function applyTheme(t) {
       applyTheme(theme);
       browser.storage.local.set({ theme });
       menu.classList.remove('open');
+      syncExpanded();
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => { menu.classList.remove('open'); syncExpanded(); });
   }
   browser.storage.local.get(['theme', 'darkMode']).then(({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -133,7 +127,8 @@ suffixToggle.addEventListener('click', async () => {
 
 // Settings gear
 settingsToggle.addEventListener('click', () => {
-  settingsPanel.classList.toggle('hidden');
+  const isHidden = settingsPanel.classList.toggle('hidden');
+  settingsToggle.setAttribute('aria-expanded', String(!isHidden));
 });
 
 // ── Counters ──

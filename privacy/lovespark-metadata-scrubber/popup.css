@@ -71,8 +71,8 @@ body {
   background: var(--ls-glass-light);
   border: 1px solid var(--ls-glass-border);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   font-size: 14px;
   cursor: pointer;
   color: var(--ls-text-dark);

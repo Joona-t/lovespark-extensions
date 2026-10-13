@@ -15,7 +15,9 @@
   let isBlocked = false;
   let isOverriding = false;
   let localCount = 0;          // seconds accumulated since last flush
-  let syncInterval = null;
+  let counting = false;        // true while wall-clock time is being accumulated
+  let lastTickMs = 0;          // performance.now() at the previous timeupdate
+  let carryMs = 0;             // sub-second remainder carried between timeupdates
   let currentStatus = null;
   let blockOverlayEl = null;
   let floatingTimerEl = null;
@@ -46,6 +48,7 @@
     video.addEventListener('pause', onPause);
     video.addEventListener('ended', onPause);
     video.addEventListener('waiting', onPause);
+    video.addEventListener('timeupdate', onTimeUpdate);
 
     // Resume if already playing
     if (!video.paused && !video.ended) onPlay();
@@ -66,20 +69,35 @@
     flushTime();
   }
 
+  // Event-driven 1s tick: the video's own `timeupdate` events (fired every
+  // ~250ms during playback) accumulate wall-clock time, replacing the old
+  // 1s interval timer. Same semantics: counts whole seconds of real time while
+  // playing and visible, refreshes the floating timer each second, flushes
+  // to the background every 5 seconds.
   function startCounting() {
-    if (syncInterval) return;
-    syncInterval = setInterval(() => {
-      if (!isPlaying || document.hidden) return;
-      localCount++;
-      updateFloatingTimer();
-      if (localCount % 5 === 0) flushTime();
-    }, 1000);
+    if (counting) return;
+    counting = true;
+    lastTickMs = performance.now();
+    carryMs = 0;
   }
 
   function stopCounting() {
-    if (syncInterval) {
-      clearInterval(syncInterval);
-      syncInterval = null;
+    counting = false;
+  }
+
+  function onTimeUpdate() {
+    if (!counting) return;
+    const now = performance.now();
+    const dt = now - lastTickMs;
+    lastTickMs = now;
+    if (!isPlaying || document.hidden) return;
+    // Ignore implausible gaps (stall/background throttling) instead of counting them
+    if (dt > 0 && dt < 2000) carryMs += dt;
+    while (carryMs >= 1000) {
+      carryMs -= 1000;
+      localCount++;
+      updateFloatingTimer();
+      if (localCount % 5 === 0) flushTime();
     }
   }
 
@@ -137,6 +155,18 @@
   document.addEventListener('yt-navigate-finish', onYouTubeNavigate);
 
   // ============================================================
+  // DOM HELPER — builds elements without innerHTML (text is always textContent)
+  // ============================================================
+
+  function h(tag, props = {}, ...children) {
+    const el = document.createElement(tag);
+    if (props.className) el.className = props.className;
+    if (props.id) el.id = props.id;
+    el.append(...children);
+    return el;
+  }
+
+  // ============================================================
   // FLOATING TIMER
   // ============================================================
 
@@ -145,10 +175,10 @@
 
     floatingTimerEl = document.createElement('div');
     floatingTimerEl.id = 'dc-floating-timer';
-    floatingTimerEl.innerHTML = `
-      <span class="dc-ft-brain">🧠</span>
-      <span class="dc-ft-text">Loading...</span>
-    `;
+    floatingTimerEl.append(
+      h('span', { className: 'dc-ft-brain' }, '🧠'),
+      h('span', { className: 'dc-ft-text' }, 'Loading...')
+    );
 
     makeDraggable(floatingTimerEl);
     document.body.appendChild(floatingTimerEl);
@@ -224,38 +254,34 @@
 
     blockOverlayEl = document.createElement('div');
     blockOverlayEl.id = 'dc-block-overlay';
-    blockOverlayEl.innerHTML = `
-      <div class="dc-block-card">
-        <div class="dc-block-dopa">😴</div>
-        <h1 class="dc-block-title">Time's up for today!</h1>
-        <p class="dc-block-msg">
-          Dopa is resting and so should you.<br>
-          You watched <strong>${formatTime(watchTime)}</strong> today — that's enough.<br>
-          Go touch grass. 🌿
-        </p>
-
-        <div class="dc-block-stats">
-          <div class="dc-bs-row">🔥 Current Streak: <strong>${streak} day${streak !== 1 ? 's' : ''}</strong></div>
-          <div class="dc-bs-row">⭐ Level <strong>${level}</strong></div>
-          <div class="dc-bs-row">📊 This week: <strong>${formatTime(weeklyTotal)}</strong> total</div>
-        </div>
-
-        <div id="dc-override-wrap">
-          <button class="dc-override-btn" id="dc-override-btn">Override for 15 min ⚠️</button>
-          <p class="dc-override-note">This will break your streak</p>
-        </div>
-
-        <div id="dc-confirm-wrap" class="dc-hidden">
-          <p class="dc-confirm-q">Are you sure? Your ${streak}-day streak will reset to 0.</p>
-          <div class="dc-confirm-row">
-            <button class="dc-btn-yes" id="dc-confirm-yes">Yes, override</button>
-            <button class="dc-btn-no" id="dc-confirm-no">Cancel</button>
-          </div>
-        </div>
-
-        <blockquote class="dc-block-quote">"${quote}"</blockquote>
-      </div>
-    `;
+    blockOverlayEl.append(
+      h('div', { className: 'dc-block-card' },
+        h('div', { className: 'dc-block-dopa' }, '😴'),
+        h('h1', { className: 'dc-block-title' }, "Time's up for today!"),
+        h('p', { className: 'dc-block-msg' },
+          'Dopa is resting and so should you.', h('br'),
+          'You watched ', h('strong', {}, formatTime(watchTime)), " today — that's enough.", h('br'),
+          'Go touch grass. 🌿'
+        ),
+        h('div', { className: 'dc-block-stats' },
+          h('div', { className: 'dc-bs-row' }, '🔥 Current Streak: ', h('strong', {}, `${streak} day${streak !== 1 ? 's' : ''}`)),
+          h('div', { className: 'dc-bs-row' }, '⭐ Level ', h('strong', {}, String(level))),
+          h('div', { className: 'dc-bs-row' }, '📊 This week: ', h('strong', {}, formatTime(weeklyTotal)), ' total')
+        ),
+        h('div', { id: 'dc-override-wrap' },
+          h('button', { className: 'dc-override-btn', id: 'dc-override-btn' }, 'Override for 15 min ⚠️'),
+          h('p', { className: 'dc-override-note' }, 'This will break your streak')
+        ),
+        h('div', { id: 'dc-confirm-wrap', className: 'dc-hidden' },
+          h('p', { className: 'dc-confirm-q' }, `Are you sure? Your ${streak}-day streak will reset to 0.`),
+          h('div', { className: 'dc-confirm-row' },
+            h('button', { className: 'dc-btn-yes', id: 'dc-confirm-yes' }, 'Yes, override'),
+            h('button', { className: 'dc-btn-no', id: 'dc-confirm-no' }, 'Cancel')
+          )
+        ),
+        h('blockquote', { className: 'dc-block-quote' }, `"${quote}"`)
+      )
+    );
 
     document.body.appendChild(blockOverlayEl);
 
@@ -324,8 +350,13 @@
     });
   }
 
-  // Refresh status every 30s even when video is idle
-  setInterval(requestStatus, 30000);
+  // Refresh status whenever extension state changes (midnight reset, override
+  // expiry, settings saved from the popup, time logged in another tab) —
+  // event-driven replacement for the old 30s interval poll. The background
+  // writes every one of those transitions to chrome.storage.local.
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'local') requestStatus();
+  });
 
   // ============================================================
   // MESSAGES FROM BACKGROUND
