@@ -18,7 +18,41 @@ async function ensureDefaults() {
   }
 }
 
-chrome.runtime.onInstalled.addListener(() => void ensureDefaults());
+// Content scripts declared in the manifest only run in pages loaded AFTER the
+// extension is installed/updated. Tabs that were already open stay cursor-less
+// until the user reloads them — which reads as "the cursor doesn't show" right
+// after install (BUG 2026-10-13). Inject into every open tab once on install/update.
+// Pages the browser refuses to script (chrome://, new tab, Web Store, other
+// extensions, PDF viewer, file:// without "Allow access to file URLs") reject the
+// call; those are skipped silently. No `tabs` permission is needed for this.
+async function injectIntoOpenTabs() {
+  if (!chrome.scripting || !chrome.tabs) {
+    return;
+  }
+  let tabs = [];
+  try {
+    tabs = await chrome.tabs.query({});
+  } catch {
+    return;
+  }
+  await Promise.all(tabs.map(async (tab) => {
+    if (typeof tab.id !== "number") {
+      return;
+    }
+    try {
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id, allFrames: true },
+        files: ["content_script.js"]
+      });
+    } catch {
+      // Restricted page or no host access (Firefox optional host permissions) — nothing to do.
+    }
+  }));
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+  void ensureDefaults().then(injectIntoOpenTabs);
+});
 chrome.runtime.onStartup.addListener(() => void ensureDefaults());
 
 // The popup writes settings directly to chrome.storage.local; content scripts

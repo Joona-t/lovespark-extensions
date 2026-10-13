@@ -77,6 +77,13 @@ h1 {
   font-size: 12px;
 }
 
+.coverage-note {
+  margin: 0 0 12px;
+  color: var(--ls-text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
 /* -- Toggle -- */
 
 .toggle-row {

@@ -123,5 +123,18 @@ function getCurrentPack() {
 
 void loadState();
 
+// If the user (or the browser) limited site access — Chrome "On click"/"On specific
+// sites", Firefox MV3 opt-in host permissions — cursors show on only some sites.
+// That reads exactly like "it doesn't show", so say what to change.
+(function checkSiteAccess() {
+  const note = document.getElementById("coverageNote");
+  if (!note || !chrome.permissions || !chrome.permissions.contains) return;
+  chrome.permissions.contains({ origins: ["<all_urls>"] }, (granted) => {
+    if (chrome.runtime.lastError || granted) return;
+    note.textContent = "Site access is limited, so cursors only show on some sites. " +
+      "Set this extension to \"On all sites\" in your browser's extension settings.";
+  });
+})();
+
 /* ── Author / Ko-fi Footer ── */
 document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());

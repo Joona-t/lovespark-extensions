@@ -2,6 +2,19 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.38] - 2026-10-13
+- Fix "cursor doesn't show" right after install: the content script is now injected
+  into every already-open http(s)/file tab on install and update, so users no longer
+  have to reload each tab. Pages Chrome refuses to script are skipped.
+- Cursors now apply inside iframes and about:blank frames (`all_frames` +
+  `match_about_blank`), so embedded widgets no longer flash the system cursor.
+- Popup states the browser limitation up front: the New Tab page, chrome:// pages
+  and the Web Store always keep Chrome's own cursor (no extension can change that).
+- Popup detects limited site access ("On click" / "On specific sites" in Chrome, opt-in
+  site permissions in Firefox) and tells the user to switch to "On all sites".
+- Adds the `scripting` permission only (no new install warning on Chrome; Firefox users
+  who have not granted site access keep their per-site prompt).
+
 ## [1.1.37] - 2026-07-08
 - Owner placement feedback: heart-locket's beating locket heart moved from the
   arrow's top-left to its bottom-left; coquette-ribbon's fluttering bow moved
