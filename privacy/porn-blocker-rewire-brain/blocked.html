@@ -206,18 +206,19 @@
       align-items: center;
       justify-content: center;
     }
+    /* Charcoal glyph orb — a <canvas> drawn once by blocked.js (drawGlyphOrb),
+       then scaled by the breathe keyframes below. */
     .breathe-circle {
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ffb3d1, #ff80b0);
       animation: breathe 7s ease-in-out infinite;
-      box-shadow: 0 0 0 0 rgba(255, 128, 176, 0.4);
+      box-shadow: 0 0 0 0 rgba(43, 42, 40, 0.28);
       flex-shrink: 0;
     }
     @keyframes breathe {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(255,128,176,0.4); }
-      35% { transform: scale(1.4); box-shadow: 0 0 0 16px rgba(255,128,176,0.0); }
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0px rgba(43,42,40,0.28); }
+      35% { transform: scale(1.4); box-shadow: 0 0 0 16px rgba(43,42,40,0); }
       50% { transform: scale(1.4); }
       85% { transform: scale(1); }
     }
@@ -619,7 +620,7 @@
 
     <div class="breathe-box">
       <div class="breathe-label">✿ Breathe with me</div>
-      <div class="breathe-circle-wrap"><div class="breathe-circle" id="breatheCircle"></div></div>
+      <div class="breathe-circle-wrap"><canvas class="breathe-circle" id="breatheCircle" aria-hidden="true"></canvas></div>
       <div class="breathe-text"><span class="breathe-phase" id="breathePhase" aria-live="off">Breathe in…</span></div>
     </div>
 
