@@ -1,5 +1,13 @@
 # Bugs & Iterations — Rewire Brain
 
+## 2026-10-23: ITER — Charcoal glyph breathing orb (v2.4.7)
+
+**Change:** The pink radial-gradient disc in the "Breathe with me" box on `blocked.html` is now a charcoal glyph orb — the same charcoal-glyph-dust look as the LoveSpark hero wordmark/heart. It is a `<canvas>` that `blocked.js` (`drawGlyphOrb`) paints once: a monospace glyph grid (`.,:;-=+*#%@`), densest at the core and thinning to loose dust at the rim, over a soft charcoal radial wash so it still reads as one solid orb at 60px. Rendered at the 1.4× peak scale × devicePixelRatio so the existing CSS `breathe` keyframes keep it sharp. Seeded PRNG, so the orb is identical on every visit. Ring pulse recoloured from pink to charcoal.
+**Why:** Joona asked for the breathing circle to be replaced with charcoal, consistent with the glyph art across the suite.
+**Unchanged:** breathing timing, phase text, XP award, reduced-motion handling (`.breathe-circle` was already in the reduced-motion block). Canvas is `aria-hidden`; the phase text remains the accessible content.
+**Verification:** Local preview — canvas 168px backing store, 60px CSS box, breathe animation running, no console errors. `node --check blocked.js` OK.
+**Files:** blocked.html, blocked.js, manifest.json (2.4.6 → 2.4.7)
+
 <!-- Format:
 ## YYYY-MM-DD: Short Title
 

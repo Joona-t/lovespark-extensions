@@ -77,6 +77,51 @@ function showXpToast(amount) {
   setTimeout(() => toast.classList.remove('visible'), 2000);
 }
 
+// ── Charcoal glyph orb ──
+// Drawn once: a grid of monospace glyphs in charcoal ink, densest at the core
+// and thinning into loose dust at the rim. The CSS `breathe` keyframes scale
+// it, so it is rendered at the peak scale (1.4×) to stay sharp. Fixed seed so
+// the orb looks the same on every visit.
+function drawGlyphOrb(canvas) {
+  if (!canvas || !canvas.getContext) return;
+  const css = 60, peak = 1.4;
+  const px = Math.round(css * peak * (window.devicePixelRatio || 1));
+  canvas.width = canvas.height = px;
+  const ctx = canvas.getContext('2d');
+  let seed = 0x5eed;
+  const rand = () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const ramp = '.,:;-=+*#%@';
+  const cell = px / 22;
+  const c = px / 2, R = px * 0.47;
+  // Charcoal wash under the glyphs so the orb reads as a solid smudge at 60px
+  const wash = ctx.createRadialGradient(c, c, 0, c, c, R);
+  wash.addColorStop(0, 'rgba(43, 42, 40, 0.55)');
+  wash.addColorStop(0.6, 'rgba(43, 42, 40, 0.28)');
+  wash.addColorStop(1, 'rgba(43, 42, 40, 0)');
+  ctx.fillStyle = wash;
+  ctx.fillRect(0, 0, px, px);
+  ctx.font = `bold ${Math.round(cell * 1.2)}px ui-monospace, Menlo, monospace`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (let y = cell / 2; y < px; y += cell) {
+    for (let x = cell / 2; x < px; x += cell) {
+      const d = Math.hypot(x - c, y - c) / R;
+      if (d > 1.08) continue;
+      const density = Math.max(0, 1 - d) ** 0.7 + (rand() - 0.5) * 0.35;
+      if (density <= 0.04 || (d > 0.8 && rand() < 0.45)) continue;
+      const level = Math.min(ramp.length - 1, Math.floor(density * ramp.length));
+      ctx.fillStyle = `rgba(30, 29, 27, ${Math.min(1, 0.5 + density * 0.7)})`;
+      ctx.fillText(ramp[level], x + (rand() - 0.5) * cell * 0.3, y + (rand() - 0.5) * cell * 0.3);
+    }
+  }
+}
+drawGlyphOrb(document.getElementById('breatheCircle'));
+
 // ── Breathing phase text + XP tracking ──
 const breathePhase = document.getElementById('breathePhase');
 const phases = ['Breathe in\u2026', 'Hold\u2026', 'Breathe out\u2026', 'Rest\u2026'];

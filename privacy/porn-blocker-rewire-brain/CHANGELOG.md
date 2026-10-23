@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 
 ---
 
+## [2.4.7] — 2026-10-23
+
+### Changed
+- Block page "Breathe with me": the pink disc is now a charcoal glyph orb (canvas, drawn once, seeded) that breathes on the same rhythm. Matches the LoveSpark glyph-art look.
+
 ## [2.4.3] — 2026-05-27
 
 ### Fixed
