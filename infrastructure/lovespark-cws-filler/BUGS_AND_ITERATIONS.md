@@ -25,3 +25,9 @@ engines").
   store/public listing. This is an internal dev tool, not a CWS submission.
 - **OpenDyslexic** falls back to system rounded unless installed on the machine;
   the font is not vendored to keep the package tiny.
+
+## 2026-10-24 — Chromium fleet audit (0.1.1 → 0.1.2)
+
+- Keep this permissionless helper’s theme in memory instead of calling unavailable chrome.storage APIs; no permission is added.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

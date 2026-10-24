@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Decision Helper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage_url": "https://lovespark.love",
   "description": "Spin a wheel or flip a coin to break decision paralysis. Built for neurodivergent minds. Free, no tracking.",
   "icons": {

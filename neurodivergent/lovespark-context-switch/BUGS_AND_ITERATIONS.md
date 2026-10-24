@@ -53,3 +53,9 @@
 **Regression check:** `python3 scripts/check-zips.py` → must print `check-zips: PASS`.
 **Follow-up (fleet, out of this repo):** add `*.zip`, `CWS-LISTING.md`, `SUBMIT.md` to the default `rsync --exclude` list in `Claude x LoveSpark/scripts/build-zips.sh` so every repo that commits its zips is protected, not just those with a `.zipignore`.
 **Files:** .zipignore, manifest.json, scripts/check-zips.py, lovespark-context-switch-chrome.zip, lovespark-context-switch-firefox.zip, BUGS_AND_ITERATIONS.md
+
+## 2026-10-24 — Chromium fleet audit (1.0.33 → 1.0.34)
+
+- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

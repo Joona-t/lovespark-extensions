@@ -51,3 +51,9 @@
 **Root cause:** `BRAND-TOKEN-DRIFT` is a canonical-infra gap — the KI-002/003/004 contrast fix was hand-patched directly into `lovespark-shared-lib/lovespark-tokens.css` but `design-tokens/tokens.json` (the generator source of truth, outside this unit's assigned repos) was never regenerated to match, so `generate-tokens.py`'s output no longer md5-matches canonical for any fleet repo. Not fixable at the per-repo level.
 **Fix:** Bumped manifest.json 1.0.32 → 1.0.33 and rebuilt `*-chrome.zip`/`*-firefox.zip` via `scripts/build-zips.sh` into the central `lovespark zips/` output dir (Firefox zip passed `amo-validate.py`). `BRAND-TOKEN-DRIFT` remains open and is flagged as a separate follow-up task against `lovespark-shared-lib`/`design-tokens` (not one of this unit's repos).
 **Files:** manifest.json (1.0.32 → 1.0.33)
+
+## 2026-10-24 — Chromium fleet audit (1.0.33 → 1.0.34)
+
+- Load the shared footer before popup initialization.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

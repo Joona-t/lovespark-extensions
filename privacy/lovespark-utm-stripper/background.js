@@ -28,8 +28,9 @@ const TRACKING_PARAMS = [
   /* Mailchimp */
   'mc_cid', 'mc_eid',
   /* General tracking */
-  '_ga', '_gl', '_ke', 'trk', 'ref_', 'ref',
-  'igshid', 'si', 'feature',
+  '_ga', '_gl', '_ke', 'igshid',
+  // Generic names such as ref, feature, si and trk can be application inputs.
+  // Preserve them unless a future domain-specific rule establishes their meaning.
 ];
 
 chrome.runtime.onInstalled.addListener(async () => {

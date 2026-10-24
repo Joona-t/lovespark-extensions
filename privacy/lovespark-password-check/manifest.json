@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Password Check",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage_url": "https://lovespark.love",
   "description": "Check password strength with a friendly local meter. Nothing sent anywhere. ADHD-friendly, free, private.",
   "icons": {

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Scroll To Top",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage_url": "https://lovespark.love",
   "description": "Floating back-to-top button for long pages. Reduces scroll fatigue for ADHD readers. Free, no tracking.",
   "icons": {

@@ -570,16 +570,18 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break;
 
     case 'getPageState':
-      return Promise.resolve({
+      sendResponse({
         ok: true,
         videoID: currentVideoID,
         status: pageStatus,
         source: pageSource,
         segments: activeSegments.map(({ segment, category, UUID, mode }) => ({ segment, category, UUID, mode }))
       });
+      break;
 
     case 'getChannelInfo':
-      return Promise.resolve(getChannelInfo());
+      sendResponse(getChannelInfo());
+      break;
 
     case 'channelWhitelisted':
       lifecycle.cancel();

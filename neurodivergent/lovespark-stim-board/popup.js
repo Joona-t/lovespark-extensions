@@ -20,7 +20,7 @@ let prevTotal = 0;
 let toggleState = false;
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  LoveSparkFooter.render(footerMount);
+  footerMount.innerHTML = LoveSparkFooter.render();
 }
 
 async function sendBg(msg) {

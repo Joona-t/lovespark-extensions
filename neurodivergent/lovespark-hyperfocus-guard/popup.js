@@ -14,7 +14,7 @@ const totalEl = document.getElementById('totalCount');
 const footerMount = document.getElementById('footerMount');
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  LoveSparkFooter.render(footerMount);
+  footerMount.innerHTML = LoveSparkFooter.render();
 }
 
 async function sendBg(msg) {

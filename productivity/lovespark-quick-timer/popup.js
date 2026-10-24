@@ -21,7 +21,7 @@ let pollInterval = null;
 const CIRCUMFERENCE = 2 * Math.PI * 42;
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  LoveSparkFooter.render(footerMount);
+  footerMount.innerHTML = LoveSparkFooter.render();
 }
 
 async function sendBg(msg) {

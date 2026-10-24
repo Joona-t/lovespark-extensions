@@ -80,5 +80,13 @@
 **Problem:** Both committed store packages (v1.0.34) contained `SUBMIT.md`, `CWS-LISTING.md` and `PRIVACY.md`. The packaged `SUBMIT.md` carried home-directory paths (`~/Downloads/...`, `~/Claude x LoveSpark/lovespark zips/...`) at lines 21/35/47. AMO packages are publicly downloadable, so this leaked local paths; the docs are also dead weight for users (no code references them). main's zips had none of these files.
 **Root cause:** The CWS submission docs were added to the repo root (rule #14) but `build-zips.sh` only excludes `cws-shots/`, `BUGS_AND_ITERATIONS.md`, `CHANGELOG.md`, `SHIP-REPORT-*.md` — not the three submission docs — and BUG-001's `.zipignore` only covered `*.zip`. Fleet-wide hazard for every extension that carries the rule-#14 doc set.
 **Fix:** Added `SUBMIT.md`, `CWS-LISTING.md`, `PRIVACY.md` to `.zipignore` (honoured by `build-zips.sh` via `--exclude-from`). Stripped the three entries from both packages in place with `zip -d` (23 entries kept each; all other entries byte-preserved, manifests untouched, `unzip -t` clean). Firefox zip re-passed `amo-validate.py`. No code changed, so manifest stays at 1.0.34 (matches the manifests inside both zips). PRIVACY.md stays in the repo — CWS links it via its GitHub URL, not from inside the package.
-**Regression check:** `for z in *.zip; do unzip -l "$z" | awk '{print $4}' | grep -cE '^(SUBMIT|CWS-LISTING|PRIVACY)\.md$|\.zip$'; unzip -p "$z" | grep -c /Users/; done` → must print `0` four times.
+**Regression check:** `for z in *.zip; do unzip -l "$z" | awk '{print $4}' | grep -cE '^(SUBMIT|CWS-LISTING|PRIVACY)\.md$|\.zip$'; unzip -p "$z" | grep -c ~ done` → must print `0` four times.
 **Files:** lovespark-affirmation-cards-chrome.zip, lovespark-affirmation-cards-firefox.zip, .zipignore
+
+## 2026-10-24 — Chromium fleet audit (1.0.34 → 1.0.35)
+
+- Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.
+- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
+- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

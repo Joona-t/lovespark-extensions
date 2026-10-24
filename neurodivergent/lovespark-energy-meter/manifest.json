@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Energy Meter",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "Track your energy level throughout the day (1-5 scale). Log with one tap. See today's energy curve. Helps identify patterns. No account, always free.",
   "icons": {
     "16": "icons/icon-16.png",

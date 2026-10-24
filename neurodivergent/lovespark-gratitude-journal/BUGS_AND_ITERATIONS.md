@@ -77,3 +77,11 @@
 **Root cause:** The check scanned the whole tree, including this log. The log has to mention the word to describe the bug, so it always matched.
 **Fix:** Exclude the log from the check (`--exclude=BUGS_AND_ITERATIONS.md`). Docs-only change, so manifest.json is not bumped. Checked shipped files: CWS-LISTING.md, README.md, SUBMIT.md, PRIVACY.md, popup.html/css/js, background.js, lib/ have no match. No store zips are tracked (`*.zip` is gitignored; `git ls-files '*.zip'` is empty).
 **Regression check:** `grep -rni dyslexic . --exclude-dir=.git --exclude=BUGS_AND_ITERATIONS.md; test $? -eq 1 && echo PASS`. This prints `PASS` on the new head.
+
+## 2026-10-24 — Chromium fleet audit (1.0.32 → 1.0.33)
+
+- Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.
+- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
+- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

@@ -8,7 +8,8 @@ const path = require('node:path');
 const { spawn } = require('node:child_process');
 
 const root = path.resolve(__dirname, '..');
-const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const chrome = process.env.CHROMIUM_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 
 function freePort() {
   return new Promise((resolve, reject) => {
@@ -121,14 +122,26 @@ async function main() {
     const loaded = await cdpRequest(browserSocket, 'Extensions.loadUnpacked', { path: root });
     assert.equal(typeof loaded.id, 'string', `unpacked load failed: ${JSON.stringify(loaded)}`);
     const worker = await waitForWorker(port, child);
+    // runtime.sendMessage excludes its sending context: ping from an extension
+    // page, rather than asking the background worker to message itself.
+    const { targetId } = await cdpRequest(browserSocket, 'Target.createTarget', {
+      url: `chrome-extension://${loaded.id}/popup.html`
+    });
+    let popup;
+    const deadline = Date.now() + 5000;
+    while (!popup && Date.now() < deadline) {
+      popup = (await targets(port)).find(target => target.id === targetId && target.webSocketDebuggerUrl);
+      if (!popup) await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    assert.ok(popup, 'extension popup target did not start');
     const evaluation = await evaluate(
-      worker.webSocketDebuggerUrl,
+      popup.webSocketDebuggerUrl,
       "chrome.runtime.sendMessage({action:'ping'}).then(value => JSON.stringify(value))"
     );
     const exception = evaluation.exceptionDetails;
     assert.equal(exception, undefined, exception?.text || 'worker ping evaluation failed');
     const ping = JSON.parse(evaluation.result.value);
-    assert.deepEqual(ping, { ok: true, product: 'lovespark-sponsor-skip', version: '2.0.36' });
+    assert.deepEqual(ping, { ok: true, product: 'lovespark-sponsor-skip', version: manifest.version });
     const fatal = stderr.split('\n').filter(line =>
       /Failed to load extension|Manifest is not valid|Uncaught (?:SyntaxError|ReferenceError)/.test(line));
     assert.deepEqual(fatal, []);

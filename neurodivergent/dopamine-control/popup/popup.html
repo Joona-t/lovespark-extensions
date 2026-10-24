@@ -5,6 +5,7 @@
   <title>Dopamine Control</title>
   <link rel="stylesheet" href="../shared/theme.css">
   <link rel="stylesheet" href="popup.css">
+<link rel="stylesheet" href="popup-initial.css">
 </head>
 <body>
 
@@ -28,7 +29,7 @@
 
       <div class="progress-wrap">
         <div class="progress-track">
-          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          <div class="progress-fill" id="progress-fill" data-initial-style="initial-style-0"></div>
         </div>
         <span class="progress-pct" id="progress-pct">0%</span>
       </div>
@@ -37,7 +38,7 @@
         <div class="stat-row">
           Today: <span id="time-used">0m</span> used of <span id="time-limit">2h</span>
         </div>
-        <div class="stat-row whitelist-row" id="whitelist-row" style="display:none">
+        <div class="stat-row whitelist-row" id="whitelist-row" data-initial-style="initial-style-1">
           📚 <span id="whitelist-time">0m</span> on whitelisted channels
         </div>
       </div>
@@ -47,11 +48,11 @@
         <div class="level-display">⭐ Level <span id="level-num">1</span></div>
       </div>
 
-      <div id="override-bar" class="override-bar" style="display:none">
+      <div id="override-bar" class="override-bar" data-initial-style="initial-style-2">
         ⚠️ Override ends in <span id="override-time">15:00</span>
       </div>
 
-      <div id="blocked-bar" class="blocked-bar" style="display:none">
+      <div id="blocked-bar" class="blocked-bar" data-initial-style="initial-style-3">
         😴 Limit reached — well done for stopping!
       </div>
 
@@ -67,7 +68,7 @@
   </div>
 
   <!-- ===================== SETTINGS VIEW ===================== -->
-  <div id="view-settings" class="view" style="display:none">
+  <div id="view-settings" class="view" data-initial-style="initial-style-4">
 
     <header class="settings-header">
       <button class="back-btn" id="btn-back">← Back</button>

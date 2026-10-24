@@ -32,16 +32,14 @@ const LoveSparkTheme = (() => {
         if (!opt) return;
         const theme = opt.dataset.theme;
         apply(theme);
-        chrome.storage.local.set({ theme });
+        // This informational helper intentionally keeps the theme in memory only.
         menu.classList.remove('open');
       });
 
       document.addEventListener('click', () => menu.classList.remove('open'));
     }
 
-    chrome.storage.local.get(['theme'], ({ theme }) => {
-      apply(theme || 'retro');
-    });
+    apply('retro');
   }
 
   return { apply, init, THEMES, THEME_NAMES };

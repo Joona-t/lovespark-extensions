@@ -15,7 +15,7 @@ const todayEl = document.getElementById('todayCount');
 const totalEl = document.getElementById('totalCount');
 const footerMount = document.getElementById('footerMount');
 
-if (typeof LoveSparkFooter !== 'undefined') LoveSparkFooter.render(footerMount);
+if (typeof LoveSparkFooter !== 'undefined') footerMount.innerHTML = LoveSparkFooter.render();
 
 async function sendBg(msg) {
   try { return await chrome.runtime.sendMessage(msg); }

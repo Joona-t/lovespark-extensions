@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Zen Garden",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "Your own zen garden in the browser. Place rocks, plants, and draw sand patterns. A calming mini-game for ADHD breaks. No account, always free.",
   "icons": {
     "16": "icons/icon-16.png",

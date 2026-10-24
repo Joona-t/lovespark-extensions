@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Clipboard Notes",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage_url": "https://lovespark.love",
   "description": "Paste clipboard into timestamped notes. 7-day retention, never lose copied text. ADHD-friendly, free, private.",
   "icons": {

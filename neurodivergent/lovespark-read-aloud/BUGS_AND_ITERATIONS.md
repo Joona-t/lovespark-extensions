@@ -53,3 +53,11 @@
 **Discarded, not committed:** `icons/icon-128.png.bak`, `icons/icon-16.png.bak`, `icons/icon-48.png.bak` — leftover pre-fix icon backups from the `2d1c0f3` icon-generation script. Kept on disk, added `*.bak` to `.gitignore` (not committed) since git history already has the pre-fix icons via `2d1c0f3`'s parent commit.
 **Files:** lib/lovespark-footer.css, lib/lovespark-theme.js, lib/lovespark-tokens.css, lib/lovespark-fonts.css, lib/fonts/*, manifest.json, SUBMIT.md, cws-shots/*, .gitignore
 **Commits:** 3006fea, f2eebe6, a0afbb3, 456165a
+
+## 2026-10-24 — Chromium fleet audit (1.0.33 → 1.0.34)
+
+- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
+- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
+- Save reading speed preferences before relaying to content, so popup closure or a restricted active tab does not discard the choice.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

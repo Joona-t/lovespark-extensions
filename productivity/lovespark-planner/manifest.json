@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "LoveSpark Planner",
   "short_name": "LoveSpark Planner",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage_url": "https://lovespark.love",
   "description": "Todo list and calendar with focus integration. Plan your day for ADHD productivity. Free, private, no tracking.",
   "permissions": [

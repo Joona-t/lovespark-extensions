@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Working Memory Pad",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage_url": "https://lovespark.love",
   "description": "ADHD working memory support. Pin up to 3 quick notes \u2014 phone numbers, instructions, things you'll forget. Always visible when you open the popup. Always free.",
   "icons": {

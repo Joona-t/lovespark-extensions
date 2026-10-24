@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Time Blindness Clock",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage_url": "https://lovespark.love",
   "description": "ADHD time blindness tool. Big visible clock, time-until markers (lunch, end of work, bedtime). Makes time real. No tracking, always free.",
   "icons": {

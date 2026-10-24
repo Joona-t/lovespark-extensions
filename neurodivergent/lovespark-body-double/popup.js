@@ -21,7 +21,7 @@ let refreshInterval = null;
 const CIRCUMFERENCE = 2 * Math.PI * 35; // r=35 from SVG
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  LoveSparkFooter.render(footerMount);
+  footerMount.innerHTML = LoveSparkFooter.render();
 }
 
 // ── Safe message to background ──────────────

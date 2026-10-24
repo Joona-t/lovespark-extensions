@@ -19,7 +19,7 @@ const footerMount = document.getElementById('footerMount');
 
 let currentIntensity = 5;
 
-if (typeof LoveSparkFooter !== 'undefined') LoveSparkFooter.render(footerMount);
+if (typeof LoveSparkFooter !== 'undefined') footerMount.innerHTML = LoveSparkFooter.render();
 
 async function sendBg(msg) {
   try { return await chrome.runtime.sendMessage(msg); }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Wind Down",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage_url": "https://lovespark.love",
   "description": "ADHD sleep support. Warm screen tone as bedtime approaches. Countdown shows time until bed. Helps your brain shift gears. No tracking, always free.",
   "icons": {

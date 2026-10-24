@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Task Starter",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "homepage_url": "https://lovespark.love",
   "description": "Break task paralysis in 3 steps. Name the task, find the tiniest first step, do just that. ADHD-friendly anti-procrastination tool. No account, always free.",
   "icons": {

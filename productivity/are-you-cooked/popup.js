@@ -51,7 +51,7 @@ function applyTheme(t) {
   });
 })();
 
-  // Tab count
+  async function refreshTabCount() {
   let tabs;
   try { tabs = await chrome.tabs.query({ windowType: 'normal' }); } catch { return; }
   const count = tabs.length;
@@ -61,10 +61,16 @@ function applyTheme(t) {
   const tier = TIERS.find(t => count <= t.max);
 
   document.getElementById('verdict').textContent = tier.verdict;
+  document.body.classList.remove('state-fine', 'state-spicy', 'state-cooked', 'state-911');
   document.body.classList.add(`state-${tier.state}`);
 
   const mascot = document.getElementById('mascot');
   mascot.className = `mascot panic-${tier.panic}`;
+
+  }
+  chrome.tabs.onCreated.addListener(refreshTabCount);
+  chrome.tabs.onRemoved.addListener(refreshTabCount);
+  await refreshTabCount();
 
   // Stats strip — peak today (Tier 2.1) + mindful saves all-time (Tier 2.2)
   const today = new Date().toISOString().slice(0, 10);

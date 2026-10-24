@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Pomodoro Rose",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage_url": "https://lovespark.love",
   "description": "ADHD-friendly Pomodoro timer. Work 25 min, break 5 min. Each session grows a rose. Watch your garden bloom. Flexible intervals. No account, always free.",
   "icons": {

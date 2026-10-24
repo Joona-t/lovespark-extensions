@@ -47,3 +47,9 @@
 **Root cause:** N/A — product naming change.
 **Fix:** Exact-string replace of "LoveSpark Sponsor Skip" → "YouTube Sponsor Skip" across all 55 `_locales/*/messages.json` `extName` values (all previously held the identical untranslated English string), plus UI titles + comment headers in popup/settings/content/background, README.md, PRIVACY.md, generate_icons.py. Hyphenated package id `lovespark-sponsor-skip` (dir/repo/storage keys) intentionally left unchanged. Bumped manifest version 2.0.35 → 2.0.36. All JSON validated.
 **Files:** manifest.json, 55× _locales/*/messages.json, popup.html, popup.js, popup.css, settings.html, settings.js, settings.css, content.js, content-styles.css, background.js, README.md, PRIVACY.md, generate_icons.py
+
+## 2026-10-24 — Chromium fleet audit (2.0.36 → 2.0.37)
+
+- Isolate core lexical declarations to prevent global redeclaration from aborting the worker/content script. Use callback message replies across browser versions. Load core and worker together in regression tests; make the Chrome smoke test version-aware and configurable, with its ping sent from an extension page instead of the worker itself.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

@@ -291,7 +291,7 @@ settingsBtn.addEventListener('click', () => {
 });
 
 // ── Author footer ─────────────────────────────────────────────────
-LoveSparkFooter.appendTo(document.body);
+document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
 
 // ── Init ──────────────────────────────────────────────────────────
 init();

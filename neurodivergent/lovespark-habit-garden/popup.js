@@ -15,7 +15,7 @@ let prevTotal = 0;
 let habits = [];
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  LoveSparkFooter.render(footerMount);
+  footerMount.innerHTML = LoveSparkFooter.render();
 }
 
 // ── Safe message to background ──────────────

@@ -1,0 +1,12 @@
+{
+  "name": "lovespark-extension-fleet-checks",
+  "private": true,
+  "scripts": {
+    "test:browser": "node scripts/browser-audit.cjs",
+    "test:manifest": "node --test tests/manifests.test.cjs",
+    "test": "node scripts/unit-tests.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

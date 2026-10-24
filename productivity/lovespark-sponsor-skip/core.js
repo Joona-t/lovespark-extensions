@@ -1,3 +1,5 @@
+// Isolate lexical bindings: core.js shares an extension global with its consumers.
+(() => {
 'use strict';
 
 const CATEGORIES = Object.freeze([
@@ -194,3 +196,5 @@ const api = {
 };
 if (typeof globalThis !== 'undefined') globalThis.LoveSparkCore = api;
 if (typeof module !== 'undefined' && module.exports) module.exports = api;
+
+})();

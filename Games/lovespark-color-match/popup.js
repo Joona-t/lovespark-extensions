@@ -4,36 +4,10 @@
 
 LoveSparkTheme.init();
 
-/* -- Theme dropdown wiring -------------------------------- */
-(function initDropdown() {
-  var trigger = document.getElementById('themeDropdownTrigger');
-  var menu = document.getElementById('themeDropdownMenu');
-  if (!trigger || !menu) return;
-  trigger.addEventListener('click', function (e) {
-    e.stopPropagation();
-    var open = menu.classList.toggle('open');
-    trigger.setAttribute('aria-expanded', String(open));
-  });
-  menu.addEventListener('click', function (e) {
-    var opt = e.target.closest('.theme-option');
-    if (!opt) return;
-    var theme = opt.dataset.theme;
-    LoveSparkTheme.apply(theme);
-    chrome.storage.local.set({ theme: theme });
-    menu.classList.remove('open');
-    trigger.setAttribute('aria-expanded', 'false');
-    trigger.textContent = opt.textContent.toLowerCase();
-  });
-  document.addEventListener('click', function () {
-    menu.classList.remove('open');
-    trigger.setAttribute('aria-expanded', 'false');
-  });
-})();
-
 /* -- Footer ------------------------------------------------ */
 var footerMount = document.getElementById('footerMount');
 if (typeof LoveSparkFooter !== 'undefined' && footerMount) {
-  LoveSparkFooter.render(footerMount);
+  footerMount.innerHTML = LoveSparkFooter.render();
 }
 
 /* -- DOM refs ---------------------------------------------- */

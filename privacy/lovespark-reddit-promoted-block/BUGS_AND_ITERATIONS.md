@@ -61,3 +61,9 @@ shared-lib ITER-003 / lovespark-shared-lib@7690133) and bumped the manifest patc
 so removal is cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live
 tree 2026-07-09; `ls-check` samples (lovespark-breathe 41 pass / 0 fail,
 lovespark-task-anchor 42 pass / 0 fail) after the fleet-wide sync.
+
+## 2026-10-24 — Chromium fleet audit (1.0.30 → 1.0.31)
+
+- Include newly inserted root elements in ad matching, so dynamically added ad posts are hidden while ordinary posts remain.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

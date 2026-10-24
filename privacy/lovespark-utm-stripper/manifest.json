@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark UTM Stripper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage_url": "https://lovespark.love",
   "description": "Strip UTM and tracking parameters from URLs as you browse. ADHD-friendly, free, no data collected.",
   "icons": {

@@ -80,3 +80,9 @@
 **Fix:** Added `.zipignore` with `CWS-LISTING.md`, `SUBMIT.md`, `*.zip` (honored by `build-zips.sh` via `--exclude-from`). Rebuilt zips: 77 files each, zero nested archives, zero submission docs. Follow-up for the fleet (out of scope here): add `--exclude '*.zip'` to `build-zips.sh` itself so no repo can regress this.
 **Regression check:** `unzip -Z1 lovespark-win-jar-chrome.zip | grep -cE "\.zip$|SUBMIT\.md|CWS-LISTING\.md"` → must print `0` (same for the Firefox zip); `unzip -p lovespark-win-jar-chrome.zip SUBMIT.md 2>&1 | grep -c /Users/` → `0`.
 **Files:** .zipignore (added), lovespark-win-jar-chrome.zip, lovespark-win-jar-firefox.zip
+
+## 2026-10-24 — Chromium fleet audit (1.0.34 → 1.0.35)
+
+- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
+
+Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.
