@@ -7,9 +7,12 @@ const contentScenarios = require('./content-scenarios.cjs');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'work', process.env.AUDIT_RUN || 'browser-audit');
 fs.mkdirSync(output, { recursive: true });
-const folders = fs.readdirSync(root, { withFileTypes: true }).filter(d => d.isDirectory() && !d.name.startsWith('.') && !['node_modules', 'work'].includes(d.name))
-  .flatMap(d => fs.readdirSync(path.join(root, d.name), { withFileTypes: true }).filter(e => e.isDirectory() && fs.existsSync(path.join(root, d.name, e.name, 'manifest.json'))).map(e => `${d.name}/${e.name}`))
-  .filter(d => !process.env.EXTENSIONS || process.env.EXTENSIONS.split(',').some(name => d.endsWith('/' + name)));
+const scope = require('./published-scope.cjs');
+const selected = process.env.EXTENSIONS?.split(',');
+if (selected?.some(name => !scope.some(folder => folder.endsWith('/' + name)))) {
+  throw new Error('EXTENSIONS must contain only published screenshot projects from published-scope.cjs');
+}
+const folders = scope.filter(folder => !selected || selected.some(name => folder.endsWith('/' + name)));
 (async () => {
   const context = await chromium.launchPersistentContext('', {
     ignoreDefaultArgs: ['--disable-extensions'],
@@ -28,7 +31,7 @@ const folders = fs.readdirSync(root, { withFileTypes: true }).filter(d => d.isDi
         ({ id } = await cdp.send('Extensions.loadUnpacked', { path: path.join(root, folder) }));
         result.loaded = true;
         result.id = id;
-        const extraPages = { 'neurodivergent/dopamine-control': ['dashboard/stats.html'], 'productivity/lovespark-notes': ['app/app.html'], 'privacy/porn-blocker-rewire-brain': ['dashboard.html'], 'productivity/lovespark-yt-digest': ['settings.html', 'digest.html'] };
+        const extraPages = { 'productivity/lovespark-notes': ['app/app.html'], 'privacy/porn-blocker-rewire-brain': ['dashboard.html'] };
         const pages = [...new Set([...(extraPages[folder] || []),manifest.action?.default_popup, manifest.options_page, manifest.options_ui?.page, ...Object.values(manifest.chrome_url_overrides || {})].filter(Boolean))];
         if (manifest.background?.service_worker) {
           const worker = context.serviceWorkers().find(w => w.url().startsWith(`chrome-extension://${id}/`)) || await context.waitForEvent('serviceworker', { predicate: w => w.url().startsWith(`chrome-extension://${id}/`), timeout: 5000 });

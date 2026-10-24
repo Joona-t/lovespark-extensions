@@ -1,5 +1,5 @@
 {
-  "name": "lovespark-extension-fleet-checks",
+  "name": "lovespark-published-extension-checks",
   "private": true,
   "scripts": {
     "test:browser": "node scripts/browser-audit.cjs",

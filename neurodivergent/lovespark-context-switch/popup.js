@@ -32,7 +32,7 @@ var prevToday = 0;
 var prevTotal = 0;
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  footerMount.innerHTML = LoveSparkFooter.render();
+  LoveSparkFooter.render(footerMount);
 }
 
 // -- Safe message to background ----------------

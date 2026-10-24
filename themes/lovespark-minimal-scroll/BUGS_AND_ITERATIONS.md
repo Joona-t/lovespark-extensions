@@ -7,9 +7,3 @@
 **Fix:** Ran `generate_icons.py` (Pillow-based, produces the pink rounded-square icon set already shipped by sibling repo `lovespark-zen-garden` — same design, same byte sizes, verified for fleet visual consistency) to populate `icons/icon-{16,48,128}.png`. Copied the canonical mascot (`Claude x LoveSpark/assets/mascot.png`) into the repo root as `mascot.png`. Verified every asset path referenced in `manifest.json` (icons, action.default_icon, action.default_popup) and every `<img src>` in `popup.html`/`newtab.html` resolves on disk via a static Python check loop (`json.load` on the manifest + path-existence walk). Bumped patch version 1.0.29 → 1.0.30. Also patched `scaffold-extension.py` (shared tooling, not tracked in this repo) to fix the stale `MASCOT` path and hard-fail (`sys.exit(1)`) instead of silently warning when a generated manifest/popup references an asset path absent on disk, closing the defect class for every future scaffold run.
 **Files:** icons/icon-16.png, icons/icon-48.png, icons/icon-128.png (added), mascot.png (added), manifest.json (version bump)
 **Commit:** see git log (fleet-p0 icon/mascot fix, unit P0-5-icons)
-
-## 2026-10-24 — Chromium fleet audit (1.0.30 → 1.0.31)
-
-- Load the shared footer before popup initialization.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

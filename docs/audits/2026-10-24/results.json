@@ -1,552 +1,18 @@
 {
   "date": "2026-10-24",
+  "scope": "Published screenshot extension projects with located source",
   "browser": "Chrome for Testing 153.0.8010.12",
-  "node": "26.10.0",
   "playwright": "1.62.1",
+  "node": "26.10.0",
   "extensions": [
     {
-      "folder": "Accessibility/cozy-toolkit",
-      "version": "1.1.37",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings/settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "activeTab",
-        "scripting",
-        "storage",
-        "tabs"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "Games/dreamy-garden",
-      "version": "1.0.31",
-      "screenshotProject": true,
+      "folder": "themes/lovespark-retro-cursor",
+      "version": "1.1.39",
       "loaded": true,
       "pages": [
         {
           "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "newtab.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Play button opens a working game",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "Games/lovespark-chess-coach",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "Games/lovespark-color-match",
-      "version": "1.0.31",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "cdpSession.send: Protocol error (Extensions.loadUnpacked): Could not load icon 'icons/icon-48.png' specified in 'action'."
-      ],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.",
-        "Restore missing manifest icons from the identical repository icon generator output.",
-        "Remove duplicate local theme listeners now handled by the shared theme module."
-      ]
-    },
-    {
-      "folder": "Games/lovespark-flappy-waifu",
-      "version": "1.0.41",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Play button opens a working game",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "Games/lovespark-reaction-time",
-      "version": "1.0.31",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state."
-      ]
-    },
-    {
-      "folder": "Games/lovespark-word-scramble",
-      "version": "1.0.31",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "cdpSession.send: Protocol error (Extensions.loadUnpacked): Could not load icon 'icons/icon-48.png' specified in 'action'."
-      ],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.",
-        "Restore missing manifest icons from the identical repository icon generator output.",
-        "Remove duplicate local theme listeners now handled by the shared theme module."
-      ]
-    },
-    {
-      "folder": "Games/lovespark-zen-garden",
-      "version": "1.0.32",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "_archive/lovespark-fidget-clicker",
-      "version": "1.0.0",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "_archive/lovespark-quick-save",
-      "version": "1.0.0",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "_archive/lovespark-tab-counter",
-      "version": "1.0.0",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "full-power/lovespark-cookie-nuke",
-      "version": "1.0.11",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "alarms",
-        "declarativeNetRequest",
-        "storage"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "full-power/lovespark-popup-fortress",
-      "version": "1.0.12",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "alarms",
-        "declarativeNetRequest",
-        "storage"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "full-power/lovespark-yt-shield",
-      "version": "1.0.30",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "alarms",
-        "declarativeNetRequest",
-        "storage"
-      ],
-      "hostPermissions": [
-        "*://*.youtube.com/*",
-        "*://*.googlevideo.com/*"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "infrastructure/lovespark-bridge",
-      "version": "1.0.29",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvrGyEY2tbYf-Vlh3uA.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvrGyEYOtbYf-Vlg.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthSQBK6PYK3EXw.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvumzEY2tbYf-Vlh3uA.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvumzEYOtbYf-Vlg.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nYivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nRivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nWivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nbivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nVivNm4I81.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked."
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Replace the remote Google Fonts import with bundled fonts."
-      ]
-    },
-    {
-      "folder": "infrastructure/lovespark-core-notion",
-      "version": "0.1.38",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "dashboard/options.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Give dashboard switch buttons accessible names, including unavailable modules, so assistive technology can identify the controls."
-      ]
-    },
-    {
-      "folder": "infrastructure/lovespark-cws-filler",
-      "version": "0.1.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "Cannot read properties of undefined (reading 'local')"
-      ],
-      "fixes": [
-        "Keep this permissionless helper’s theme in memory instead of calling unavailable chrome.storage APIs; no permission is added."
-      ]
-    },
-    {
-      "folder": "infrastructure/lovespark-dashboard",
-      "version": "1.0.31",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "management",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/anti-brainrot",
-      "version": "1.0.43",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
+          "errors": []
         }
       ],
       "scenarios": [
@@ -559,1658 +25,7 @@
           "passed": true
         },
         {
-          "name": "YouTube comments restore when disabled",
-          "passed": true
-        },
-        {
-          "name": "Content script has no uncaught exceptions",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/dopamine-control",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "dashboard/stats.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "notifications",
-        "tabs"
-      ],
-      "hostPermissions": [
-        "*://*.youtube.com/*"
-      ],
-      "baselineErrors": [
-        "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-UiXlt9djFx1o7crFtCH7sUqquV6B2BX9ozY9jqs43JE='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
-        "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-aqNNdDLnnrDOnTNdkJpYlAxKVJtLt9CtFLklmInuUAE='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
-      ],
-      "fixes": [
-        "Move inline popup/dashboard styling and dashboard JavaScript into local files to comply with the existing strict CSP."
-      ]
-    },
-    {
-      "folder": "neurodivergent/focus-blossom",
-      "version": "1.0.48",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Custom blocked site persists",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "notifications",
-        "declarativeNetRequest"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-affirmation-cards",
-      "version": "1.0.35",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-body-double",
-      "version": "1.0.38",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-brain-dump",
-      "version": "1.0.37",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-breathe",
-      "version": "1.0.27",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-calm",
-      "version": "1.0.34",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-calm-down-kit",
-      "version": "1.0.5",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-context-switch",
-      "version": "1.0.34",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-decision-helper",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-desk-stretch",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-doomscroll",
-      "version": "0.1.39",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-dopamine-menu",
-      "version": "1.0.33",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-emotion-wheel",
-      "version": "1.0.4",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-energy-meter",
-      "version": "1.0.33",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-exec-function-checklist",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-focus",
-      "version": "1.1.45",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Timer start, pause, resume and reset",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "declarativeNetRequest",
-        "notifications"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-focus-pro",
-      "version": "1.0.1",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "declarativeNetRequest",
-        "notifications"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-focus-sounds",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-gentle-timer",
-      "version": "1.0.28",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "activeTab",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-gratitude-journal",
-      "version": "1.0.33",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-habit-garden",
-      "version": "1.0.37",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-hub",
-      "version": "1.0.33",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "newtab.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-hyperfocus-guard",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-imposter-shield",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-input-guard",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-med-reminder",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-med-tracker",
-      "version": "1.0.39",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "notifications"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-mood-bloom",
-      "version": "1.0.34",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-morning-routine",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-noise-level",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-pomodoro-rose",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-read-aloud",
-      "version": "1.0.34",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Reading speed preset persists",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "tabs",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.",
-        "Save reading speed preferences before relaying to content, so popup closure or a restricted active tab does not discard the choice."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-reward-spinner",
-      "version": "1.0.32",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-rsd-shield",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-sensory-dimmer",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-site-blocker",
-      "version": "1.0.6",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "declarativeNetRequest"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-social-battery",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-stim-board",
-      "version": "1.0.30",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND",
-        "chrome-extension://<id>/mascot.png: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.",
-        "Restore the missing bundled mascot image."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-stretch-reminder",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-tab-garden",
-      "version": "1.0.27",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "tabs",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-task-anchor",
-      "version": "1.0.15",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-task-starter",
-      "version": "1.0.6",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-time-blindness-clock",
-      "version": "1.0.5",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-water-tracker",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/lovespark-win-jar",
-      "version": "1.0.35",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-wind-down",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/lovespark-working-memory-pad",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "neurodivergent/neurodivergent-reader",
-      "version": "1.0.34",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings/settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "activeTab",
-        "scripting",
-        "storage",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/sensory-shield",
-      "version": "1.0.40",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings/settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/study-bubbles",
-      "version": "1.0.33",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "neurodivergent/time-softener",
-      "version": "1.0.31",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "tabs"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/i-dont-want-cookies",
-      "version": "1.0.39",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        },
-        {
-          "name": "Cookie banner removal respects disabled state",
+          "name": "Cursor style applies and is removed when disabled",
           "passed": true
         },
         {
@@ -2221,31 +36,23 @@
       "errors": [],
       "permissions": [
         "storage",
-        "alarms"
+        "scripting"
       ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": [
-        "Scope CSS hiding to enabled, non-allowlisted pages; restore original inline display values immediately when disabled or allowlisted, and allow re-enabling without reloading."
-      ]
+      "hostPermissions": [],
+      "fixes": []
     },
     {
       "folder": "privacy/lovespark-adblock",
       "version": "1.1.2",
-      "screenshotProject": true,
       "loaded": true,
       "pages": [
         {
           "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
+          "errors": []
         },
         {
           "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
+          "errors": []
         }
       ],
       "scenarios": [
@@ -2275,51 +82,390 @@
         "activeTab"
       ],
       "hostPermissions": [],
-      "baselineErrors": [],
       "fixes": []
     },
     {
-      "folder": "privacy/lovespark-download-guard",
-      "version": "1.0.2",
-      "screenshotProject": false,
+      "folder": "Accessibility/cozy-toolkit",
+      "version": "1.1.37",
       "loaded": true,
       "pages": [
         {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
+          "path": "popup/popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings/settings.html",
+          "errors": []
         }
       ],
       "scenarios": [
         {
           "name": "Theme selection and available persistence",
           "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
         }
       ],
       "errors": [],
       "permissions": [
+        "activeTab",
+        "scripting",
         "storage",
-        "downloads"
+        "tabs"
       ],
-      "hostPermissions": [],
-      "baselineErrors": [],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
       "fixes": []
     },
     {
-      "folder": "privacy/lovespark-email-guard",
-      "version": "1.0.34",
-      "screenshotProject": false,
+      "folder": "privacy/i-dont-want-cookies",
+      "version": "1.0.39",
       "loaded": true,
       "pages": [
         {
           "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
+          "errors": []
+        },
+        {
+          "path": "settings.html",
+          "errors": []
         }
       ],
       "scenarios": [
         {
           "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Cookie banner removal respects disabled state",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "alarms"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": [
+        "Scope CSS hiding to enabled, non-allowlisted pages; restore original inline display values immediately when disabled or allowlisted, and allow re-enabling without reloading."
+      ]
+    },
+    {
+      "folder": "neurodivergent/lovespark-focus",
+      "version": "1.1.45",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Timer start, pause, resume and reset",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "alarms",
+        "declarativeNetRequest",
+        "notifications"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "neurodivergent/anti-brainrot",
+      "version": "1.0.43",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "YouTube comments restore when disabled",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "productivity/lovespark-notes",
+      "version": "1.0.43",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "app/app.html",
+          "errors": []
+        },
+        {
+          "path": "popup/popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Unicode note autosaves and survives reopening",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "alarms",
+        "contextMenus",
+        "identity"
+      ],
+      "hostPermissions": [],
+      "fixes": [
+        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
+        "Reopen recent saved popup drafts even after automatic title generation; preserve explicit titles and skip deleted notes. Replace remote fonts with bundled assets."
+      ]
+    },
+    {
+      "folder": "privacy/porn-blocker-rewire-brain",
+      "version": "2.4.7",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "dashboard.html",
+          "errors": []
+        },
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "options.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess",
+        "tabs",
+        "alarms",
+        "notifications"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "neurodivergent/focus-blossom",
+      "version": "1.0.48",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Custom blocked site persists",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "alarms",
+        "notifications",
+        "declarativeNetRequest"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "Games/lovespark-flappy-waifu",
+      "version": "1.0.41",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Play button opens a working game",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "neurodivergent/neurodivergent-reader",
+      "version": "1.0.34",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup/popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings/settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "tabs"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "privacy/lovespark-reddit-promoted-block",
+      "version": "1.0.31",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Reddit ads hide while organic posts remain",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": [
+        "Include newly inserted root elements in ad matching, so dynamically added ad posts are hidden while ordinary posts remain."
+      ]
+    },
+    {
+      "folder": "privacy/lovespark-popup-blocker",
+      "version": "1.0.38",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Unsolicited popup blocked, disabled state restores it",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
           "passed": true
         }
       ],
@@ -2329,79 +475,18 @@
         "storage"
       ],
       "hostPermissions": [
-        "*://mail.google.com/*",
-        "*://outlook.live.com/*",
-        "*://outlook.office.com/*",
-        "*://outlook.office365.com/*",
-        "*://mail.yahoo.com/*"
+        "<all_urls>"
       ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/lovespark-fingerprint-shield",
-      "version": "1.0.36",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/lovespark-history-cleaner",
-      "version": "1.0.4",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "browsingData",
-        "history"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
       "fixes": []
     },
     {
       "folder": "privacy/lovespark-link-cleaner",
       "version": "1.0.6",
-      "screenshotProject": true,
       "loaded": true,
       "pages": [
         {
           "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
+          "errors": []
         }
       ],
       "scenarios": [
@@ -2438,1140 +523,14 @@
       "hostPermissions": [
         "<all_urls>"
       ],
-      "baselineErrors": null,
       "fixes": [
         "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
         "Restore the archived extension with recorded upstream provenance. Resolve relative links against document.baseURI, preserve history.state, and re-clean links when SPA navigation changes href."
       ]
     },
     {
-      "folder": "privacy/lovespark-metadata-scrubber",
-      "version": "1.0.34",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "contextMenus",
-        "offscreen",
-        "storage",
-        "downloads"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/lovespark-noise-blocker",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/lovespark-password-check",
-      "version": "1.0.4",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter.appendTo is not a function"
-      ],
-      "fixes": [
-        "Replace a nonexistent footer appendTo method with the supported HTML renderer."
-      ]
-    },
-    {
-      "folder": "privacy/lovespark-popup-blocker",
-      "version": "1.0.38",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        },
-        {
-          "name": "Unsolicited popup blocked, disabled state restores it",
-          "passed": true
-        },
-        {
-          "name": "Content script has no uncaught exceptions",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "declarativeNetRequest",
-        "storage"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/lovespark-reddit-promoted-block",
-      "version": "1.0.31",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Reddit ads hide while organic posts remain",
-          "passed": true
-        },
-        {
-          "name": "Content script has no uncaught exceptions",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Include newly inserted root elements in ad matching, so dynamically added ad posts are hidden while ordinary posts remain."
-      ]
-    },
-    {
-      "folder": "privacy/lovespark-referrer-shield",
-      "version": "1.0.34",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "declarativeNetRequest",
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "privacy/lovespark-twitch-adblock",
-      "version": "1.0.35",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "Cannot read properties of null (reading 'classList')"
-      ],
-      "fixes": [
-        "Remove accesses to a nonexistent shield icon so popup initialization and status updates succeed."
-      ]
-    },
-    {
-      "folder": "privacy/lovespark-utm-stripper",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        },
-        {
-          "name": "URL cleaner retains functional query parameters",
-          "passed": true
-        },
-        {
-          "name": "Content script has no uncaught exceptions",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "webNavigation"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Retain generic ref, ref_, trk, si and feature query parameters because they can carry application state; continue stripping named tracking parameters."
-      ]
-    },
-    {
-      "folder": "privacy/porn-blocker-rewire-brain",
-      "version": "2.4.7",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "dashboard.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "options.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "declarativeNetRequest",
-        "declarativeNetRequestWithHostAccess",
-        "tabs",
-        "alarms",
-        "notifications"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [
-        "page.goto: Target page, context or browser has been closed"
-      ],
-      "fixes": []
-    },
-    {
-      "folder": "productivity/are-you-cooked",
-      "version": "2.1.37",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Tab counter updates when a tab opens",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": [
-        "Refresh the tab counter and its status styling immediately on tab creation/removal."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-clipboard-notes",
-      "version": "1.0.4",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-color-picker",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-daily-checklist",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-link-saver",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "productivity/lovespark-notes",
-      "version": "1.0.43",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "app/app.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "popup/popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Unicode note autosaves and survives reopening",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "unlimitedStorage",
-        "alarms",
-        "contextMenus",
-        "identity"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvrGyEY2tbYf-Vlh3uA.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvrGyEYOtbYf-Vlg.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthSQBK6PYK3EXw.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTU7PB1QTsUX8KYthqQBK6PYK0.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvumzEY2tbYf-Vlh3uA.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/dmmono/v16/aFTR7PB1QTsUX8KYvumzEYOtbYf-Vlg.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LLPtLtfOm84TX.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LJftLtfOm84TX.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LXftLtfOm84TX.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LT_tLtfOm84TX.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LLvtLtfOm84TX.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LL_tLtfOm84TX.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIhMX1D_JOuMw_LIftLtfOm8w.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMwf7I_FMl_GW8g.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMw77I_FMl_GW8g.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuM3b7I_FMl_GW8g.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuM2T7I_FMl_GW8g.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMwX7I_FMl_GW8g.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMwT7I_FMl_GW8g.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/lora/v37/0QIvMX1D_JOuMwr7I_FMl_E.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nYivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nRivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nWivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nbivNm4I81PZQ.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked.",
-        "Loading the font 'https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nVivNm4I81.woff2' violates the following Content Security Policy directive: \"font-src 'self'\". The action has been blocked."
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Reopen recent saved popup drafts even after automatic title generation; preserve explicit titles and skip deleted notes. Replace remote fonts with bundled assets."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-notes-app",
-      "version": "1.0.42",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "newtab.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "productivity/lovespark-panic-button",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-planner",
-      "version": "1.0.4",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "unlimitedStorage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-quick-timer",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "alarms"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-scroll-to-top",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-site-notes",
-      "version": "1.1.0",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "productivity/lovespark-sponsor-skip",
-      "version": "2.0.37",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        },
-        {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        },
-        {
-          "name": "Sponsor content and worker answer real messages",
-          "passed": true
-        },
-        {
-          "name": "Content script has no uncaught exceptions",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [
-        "*://*.youtube.com/*",
-        "https://sponsor.ajay.app/*"
-      ],
-      "baselineErrors": [],
-      "fixes": [
-        "Isolate core lexical declarations to prevent global redeclaration from aborting the worker/content script. Use callback message replies across browser versions. Load core and worker together in regression tests; make the Chrome smoke test version-aware and configurable."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-word-count",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "productivity/lovespark-youtube-ad-comfort-mode",
-      "version": "1.0.30",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "options.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "scripting",
-        "activeTab",
-        "tabs"
-      ],
-      "hostPermissions": [
-        "https://www.youtube.com/*"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "productivity/lovespark-yt-digest",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "digest.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [
-        "*://*.youtube.com/*",
-        "https://api.openai.com/*"
-      ],
-      "baselineErrors": [
-        "LoveSparkFooter.appendTo is not a function"
-      ],
-      "fixes": [
-        "Use the supported footer renderer in popup, settings and digest pages."
-      ]
-    },
-    {
-      "folder": "reading/lovespark-auto-toc",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "reading/lovespark-bionic-reading",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "reading/lovespark-dark-mode",
-      "version": "2.0.37",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "tabs",
-        "scripting",
-        "alarms"
-      ],
-      "hostPermissions": [
-        "<all_urls>"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "reading/lovespark-dark-mode-reader",
-      "version": "1.0.0",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        },
-        {
-          "path": "settings.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "scripting",
-        "alarms"
-      ],
-      "hostPermissions": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "reading/lovespark-focus-highlight",
-      "version": "1.0.2",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "reading/lovespark-page-ruler",
-      "version": "1.0.3",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "reading/lovespark-reader",
-      "version": "1.1.35",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "reading/lovespark-reading-progress",
-      "version": "1.0.31",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "chrome-extension://<id>/lib/lovespark-fonts.css: net::ERR_FILE_NOT_FOUND",
-        "Failed to load resource: net::ERR_FILE_NOT_FOUND",
-        "chrome-extension://<id>/mascot.png: net::ERR_FILE_NOT_FOUND"
-      ],
-      "fixes": [
-        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
-        "Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.",
-        "Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.",
-        "Restore the missing bundled mascot image."
-      ]
-    },
-    {
       "folder": "reading/public-knowledge-unblocker",
       "version": "1.0.26",
-      "screenshotProject": true,
       "loaded": true,
       "pages": [],
       "scenarios": [
@@ -3589,61 +548,20 @@
       "hostPermissions": [
         "https://api.openalex.org/*"
       ],
-      "baselineErrors": [],
       "fixes": []
     },
     {
-      "folder": "themes/lovespark-minimal-scroll",
+      "folder": "Games/dreamy-garden",
       "version": "1.0.31",
-      "screenshotProject": false,
       "loaded": true,
       "pages": [
         {
           "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
+          "errors": []
+        },
         {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [
-        "LoveSparkFooter is not defined"
-      ],
-      "fixes": [
-        "Load the shared footer before popup initialization."
-      ]
-    },
-    {
-      "folder": "themes/lovespark-retro-cursor",
-      "version": "1.1.39",
-      "screenshotProject": true,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": [
-            "<button class=\"theme-item\" data-pack=\"honey-bunny-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-1\">\n",
-            "<button class=\"theme-item\" data-pack=\"cyworld-dotti-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-1\"",
-            "<button class=\"theme-item\" data-pack=\"coquette-ribbon-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-",
-            "<button class=\"theme-item\" data-pack=\"strawberry-milk-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-",
-            "<button class=\"theme-item\" data-pack=\"glossy-pearl-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-1\">",
-            "<button class=\"theme-item\" data-pack=\"bubble-boba-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-1\">\n",
-            "<button class=\"theme-item\" data-pack=\"phone-charm-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-1\">\n",
-            "<button class=\"theme-item\" data-pack=\"heart-locket-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-1\">",
-            "<button class=\"theme-item\" data-pack=\"cyber-butterfly-emoji\" type=\"button\" role=\"radio\" aria-checked=\"false\" tabindex=\"-"
-          ]
+          "path": "newtab.html",
+          "errors": []
         }
       ],
       "scenarios": [
@@ -3652,53 +570,15 @@
           "passed": true
         },
         {
-          "name": "Enable switch saves and restores both states",
-          "passed": true
-        },
-        {
-          "name": "Cursor style applies and is removed when disabled",
-          "passed": true
-        },
-        {
-          "name": "Content script has no uncaught exceptions",
+          "name": "Play button opens a working game",
           "passed": true
         }
       ],
       "errors": [],
       "permissions": [
-        "storage",
-        "scripting"
-      ],
-      "hostPermissions": [],
-      "baselineErrors": [],
-      "fixes": []
-    },
-    {
-      "folder": "themes/lovespark-syntax-art-ext",
-      "version": "1.0.36",
-      "screenshotProject": false,
-      "loaded": true,
-      "pages": [
-        {
-          "path": "popup.html",
-          "errors": [],
-          "unnamedControls": []
-        }
-      ],
-      "scenarios": [
-        {
-          "name": "Theme selection and available persistence",
-          "passed": true
-        }
-      ],
-      "errors": [],
-      "permissions": [
-        "contextMenus",
-        "offscreen",
         "storage"
       ],
       "hostPermissions": [],
-      "baselineErrors": [],
       "fixes": []
     }
   ]

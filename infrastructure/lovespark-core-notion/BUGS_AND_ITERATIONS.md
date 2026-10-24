@@ -64,9 +64,3 @@ manifest patch version.
 `lib/lovespark-base.css` confirmed to `@import url('lovespark-tokens.css')`, so the removal is
 cascade-neutral — zero visual change. Fleet guard Gate 4 green on the live tree 2026-07-09;
 pre-commit ls-check green at this commit.
-
-## 2026-10-24 — Chromium fleet audit (0.1.37 → 0.1.38)
-
-- Give dashboard switch buttons accessible names, including unavailable modules, so assistive technology can identify the controls.
-
-Validation: manifest/resource and Chromium page checks; see [the audit record](../../docs/audits/2026-10-24.md).

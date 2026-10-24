@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark YT Digest",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "homepage_url": "https://lovespark.love",
   "description": "Extract YouTube transcripts and get summaries to decide if a video is worth it. ADHD-friendly, free, private.",
   "permissions": [

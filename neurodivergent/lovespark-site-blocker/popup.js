@@ -15,7 +15,7 @@ let prevToday = 0;
 let prevTotal = 0;
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  footerMount.innerHTML = LoveSparkFooter.render();
+  LoveSparkFooter.render(footerMount);
 }
 
 async function sendBg(msg) {

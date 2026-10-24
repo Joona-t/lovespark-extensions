@@ -23,9 +23,3 @@
 **Root cause:** The CWS-prep session wrote CHANGELOG.md when the manifest read 1.0.3; later patch bumps (1.0.4 -> 1.0.30) never got CHANGELOG entries.
 **Fix:** Added a `## 1.0.30` entry summarising the PR #1 changes. Docs-only, no code change, no manifest bump.
 **Check:** `ls-check . --strict` -> QUAL-CHANGELOG-DRIFT gone (only the pre-existing MV3-STORAGE-KEY warning remains on main).
-
-## 2026-10-24 — Chromium fleet audit (1.0.30 → 1.0.31)
-
-- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

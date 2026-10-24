@@ -1,4 +1,6 @@
-# Extension verification
+# Published screenshot extension verification
+
+The allowlist in `scripts/published-scope.cjs` contains only the 16 published Chrome Web Store screenshot extensions whose source was found. Browser and manifest checks default to that list. `EXTENSIONS` can narrow it further but cannot select an out-of-scope project.
 
 Use Node 22 or newer. From the repository root:
 
@@ -7,22 +9,20 @@ npm ci
 npm ci --prefix privacy/lovespark-adblock
 npx playwright install chromium
 npm test
-python3 neurodivergent/lovespark-brain-dump/tests/test_popup_wiring.py
-node productivity/lovespark-sponsor-skip/tests/check-package.js
 FUNCTIONAL=1 CONTENT=1 npm run test:browser
 ```
 
-`npm test` includes the existing JavaScript regression suites and manifest/resource validation for every extension. The adblock suite needs its separately locked dependencies.
+`npm test` runs 16 manifest/resource checks and the 16 existing JavaScript tests found in the scoped projects. The adblock suite needs its separately locked dependencies.
 
-The browser harness loads actual unpacked extensions one at a time with Chromium's extension debugging API, using a temporary profile. It opens declared popups/options/new-tab pages, selected dashboards, checks errors and resources, and saves screenshots plus `results.json` under ignored `work/browser-audit/`. It never uses a personal browser profile or publishes packages.
+The browser harness installs actual unpacked extensions one at a time in a disposable Chromium profile. It opens declared popup/options pages and selected dashboards, checks errors and resources, exercises selected interactions and saves screenshots plus `results.json` beneath ignored `work/browser-audit/`.
 
 Environment options:
 
-- `CHROMIUM_PATH`: optional path to a Chromium or Chrome for Testing executable that supports `Extensions.loadUnpacked` and `--enable-unsafe-extension-debugging`.
+- `CHROMIUM_PATH`: optional path to Chromium or Chrome for Testing supporting `Extensions.loadUnpacked` and `--enable-unsafe-extension-debugging`.
 - `AUDIT_RUN`: output directory name beneath `work/`.
-- `EXTENSIONS`: comma-separated extension folder names to test a subset.
-- `FUNCTIONAL=1`: exercise theme choices and the selected popup workflows in `scripts/functional-scenarios.cjs`.
-- `CONTENT=1`: exercise the content-script regressions in `scripts/content-scenarios.cjs`.
+- `EXTENSIONS`: comma-separated folder names from the published-project allowlist.
+- `FUNCTIONAL=1`: theme, enable-switch, timer, note, site-list and game scenarios.
+- `CONTENT=1`: content-script regressions with deterministic website/API fixtures and real extension APIs.
 
 Example:
 
@@ -30,6 +30,6 @@ Example:
 AUDIT_RUN=cookie-regression EXTENSIONS=i-dont-want-cookies CONTENT=1 npm run test:browser
 ```
 
-Content tests use deterministic website/API response fixtures while running the extension's actual Chrome storage, messaging, content scripts and request rules. They validate regressions, not the current layout or behavior of every live website. Headless tests do not verify speech audio, all browser-toolbar gestures, Firefox compatibility, or store acceptance. The permissionless CWS helper intentionally keeps its theme only while open.
+These tests use no personal browser profile and publish nothing to the Web Store. Fixtures do not prove effectiveness on every live website. Long-running suspension, every browser-toolbar gesture and Firefox are outside this run's coverage. `ls-check` remains an additional gate when available.
 
-The repository's optional pre-commit `ls-check` gate still applies when installed; these tests supplement it. Audit findings and exact coverage are in [the audit record](../docs/audits/2026-10-24.md).
+See the [audit record](../docs/audits/2026-10-24.md) for per-extension findings and limits.

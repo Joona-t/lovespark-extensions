@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Color Picker",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "homepage_url": "https://lovespark.love",
   "description": "Pick any color from any page. Hex, RGB, HSL with copy and history. ADHD-friendly, free, no tracking.",
   "icons": {

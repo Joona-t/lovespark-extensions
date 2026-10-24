@@ -190,4 +190,4 @@ chrome.runtime.sendMessage({ type: 'GET_STATS' }).then(updateStats);
 passwordInput.focus();
 
 /* ── Footer ────────────────────────────────────────── */
-document.body.insertAdjacentHTML('beforeend', LoveSparkFooter.render());
+LoveSparkFooter.appendTo(document.body);

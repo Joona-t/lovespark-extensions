@@ -69,9 +69,3 @@
 
 **Files:** background.js, warning.js, warning.html, warning.css, popup.html, popup.css, popup.js, manifest.json, research.md
 **Commit:** TBD
-
-## 2026-10-24 — Chromium fleet audit (2.1.36 → 2.1.37)
-
-- Refresh the tab counter and its status styling immediately on tab creation/removal.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

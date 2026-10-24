@@ -13,7 +13,7 @@ const footerMount = document.getElementById('footerMount');
 let saveTimeout = null;
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  footerMount.innerHTML = LoveSparkFooter.render();
+  LoveSparkFooter.render(footerMount);
 }
 
 async function sendBg(msg) {

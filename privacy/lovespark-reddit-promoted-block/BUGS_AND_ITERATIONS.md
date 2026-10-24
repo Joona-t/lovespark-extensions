@@ -62,7 +62,7 @@ so removal is cascade-neutral — zero visual change. Fleet guard Gate 4 green o
 tree 2026-07-09; `ls-check` samples (lovespark-breathe 41 pass / 0 fail,
 lovespark-task-anchor 42 pass / 0 fail) after the fleet-wide sync.
 
-## 2026-10-24 — Chromium fleet audit (1.0.30 → 1.0.31)
+## 2026-10-24 — Published screenshot Chromium audit (1.0.30 → 1.0.31)
 
 - Include newly inserted root elements in ad matching, so dynamically added ad posts are hidden while ordinary posts remain.
 

@@ -1,6 +1,6 @@
 # Bugs & Iterations
 
-## 2026-10-24 — Chromium fleet audit (1.0.42 → 1.0.43)
+## 2026-10-24 — Published screenshot Chromium audit (1.0.42 → 1.0.43)
 
 - Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.
 - Reopen recent saved popup drafts even after automatic title generation; preserve explicit titles and skip deleted notes. Replace remote fonts with bundled assets.

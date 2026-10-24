@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Med Reminder",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "homepage_url": "https://lovespark.love",
   "description": "ADHD medication reminder. Set your med times, get badge alerts. One tap to confirm. Track if you took them today. No data ever leaves your browser. Always free.",
   "icons": {

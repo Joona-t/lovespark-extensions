@@ -49,10 +49,3 @@
 **Root cause:** (1) A prior shared-lib sync pass copied the current canonical files into `lib/` but the commit step was never run. (2) This repo's scaffold never received the fonts bundle that other game repos (color-match, pixel-art, reaction-time, word-scramble, flappy-waifu) already have — a partial/incomplete scaffold, not a regression.
 **Fix:** Verified `lib/lovespark-footer.css` and `lib/lovespark-theme.js` working-tree content matches canonical byte-for-byte, committed the sync. Copied `lovespark-fonts.css` and the `fonts/` directory (1.1 MB, 54 `@font-face` rules) from `Extensions/infrastructure/lovespark-shared-lib/` into `lib/` so the existing `<link>` in popup.html resolves. Bumped patch version.
 **Files:** lib/lovespark-footer.css, lib/lovespark-theme.js, lib/lovespark-fonts.css (new), lib/fonts/ (new, 53 files), manifest.json (1.0.30 → 1.0.31)
-
-## 2026-10-24 — Chromium fleet audit (1.0.31 → 1.0.32)
-
-- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
-- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

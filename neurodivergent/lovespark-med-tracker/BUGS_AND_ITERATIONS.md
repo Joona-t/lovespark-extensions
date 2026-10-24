@@ -63,9 +63,3 @@
 **Root cause:** This repo's `lib/lovespark-tokens.css` copy predated the canonical fix and had drifted (md5 mismatch), tripping `BRAND-LIB-SYNC` the moment canonical changed.
 **Fix:** Re-copied `lovespark-tokens.css` from canonical `Extensions/infrastructure/lovespark-shared-lib/` into `lib/` (byte-identical, verified via md5). `ls-check .` now shows A11Y-CONTRAST and BRAND-LIB-SYNC both passing. One fail remains: `BRAND-TOKEN-DRIFT` (shared-lib CSS vs. `design-tokens/generated/lovespark-tokens.css`) — infra outside this repo, not fixable here; flagged as a follow-up. Bumped patch version and rebuilt both store zips (`build-zips.sh`), which passed the AMO validator gate. This repo is not in the GOVERNANCE batch (already has a real README.md), so no README/BUGS seeding needed. `ls-check .` after: 37 pass, **1 fail** (BRAND-TOKEN-DRIFT, infra-level, out of scope), 3 warn (pre-existing BRAND-DEAD-LIB, unrelated to this unit).
 **Files:** lib/lovespark-tokens.css, manifest.json (1.0.37 → 1.0.38), lovespark-med-tracker-chrome.zip, lovespark-med-tracker-firefox.zip
-
-## 2026-10-24 — Chromium fleet audit (1.0.38 → 1.0.39)
-
-- Load the shared footer before popup initialization.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

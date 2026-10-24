@@ -15,10 +15,10 @@ Old repos are archived (read-only), not deleted. Scripts + gate reports: `docs/m
 audit), pre-publish gate — independent verifier agents at each step.
 
 
-## 2026-10-24 — Chromium fleet audit and regression harness
+## 2026-10-24 — Published screenshot extension audit
 
-**Problem:** The initial Chromium sweep reported 44 extensions with real load, script, asset or CSP failures; one further failure was an onboarding assumption in the test harness. Interaction tests then exposed silent worker initialization, disabled-state, draft restoration, theme and link-handling defects.
+**Scope:** 16 published Chrome Web Store screenshot extensions with located source. Drafts, the rejected listing, the missing theme and unrelated projects are excluded.
 
-**Fix:** Repair 66 extensions with individual patch bumps and logs; restore Link Cleaner from its archived upstream; add locked Playwright tooling, manifest checks and actual extension interaction/content regressions. Keep all existing API/host permissions unchanged. Shared asset and UI repairs cover repeated instances across the collection.
+**Fixes:** Cookie Banner Blocker enable/allowlist behavior, Notes draft recovery and local fonts, Reddit dynamic ad matching, and restored Link Cleaner with correct relative URLs/history state/reused links. Four extension patch versions were bumped. Existing permissions are unchanged.
 
-**Verified:** 115 extensions / 130 pages pass Chromium checks; 148 browser scenario assertions pass; 191 Node tests and 2 Python checks pass; Sponsor Skip's package gate and standalone Chrome ping pass. Detailed coverage, source provenance and limitations: [audit record](docs/audits/2026-10-24.md). `ls-check` and the external automation helper were unavailable. Nothing was published to the Web Store.
+**Verified:** 16 extensions / 24 pages / 47 browser assertions and 32 Node tests passed. Test discovery uses an explicit allowlist. [Audit evidence and limits](docs/audits/2026-10-24.md). No Web Store publishing was performed; `ls-check` was unavailable.

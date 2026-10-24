@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Focus Highlight",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "homepage_url": "https://lovespark.love",
   "description": "Dims everything except the paragraph you're hovering over. Spotlight reading mode for focused reading. No account, always free.",
   "icons": {

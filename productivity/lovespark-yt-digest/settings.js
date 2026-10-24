@@ -176,7 +176,7 @@ btnClearCache.addEventListener('click', () => {
 });
 
 // ── Footer ────────────────────────────────────────────────────────
-document.getElementById('footerArea').insertAdjacentHTML('beforeend', LoveSparkFooter.render());
+LoveSparkFooter.appendTo(document.getElementById('footerArea'));
 
 // ── Init ──────────────────────────────────────────────────────────
 loadSettings();

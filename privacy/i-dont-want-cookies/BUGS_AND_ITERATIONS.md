@@ -49,7 +49,7 @@
 
 **Release state:** Version `1.0.38` was packaged and the code pushed to `Joona-t/I-Dont-Want-Cookies` `main` on 2026-09-24. The Chrome Web Store dashboard upload and submit-for-review steps remain unverified because browser automation refused the extension gallery and the in-app browser was not signed in.
 
-## 2026-10-24 — Chromium fleet audit (1.0.38 → 1.0.39)
+## 2026-10-24 — Published screenshot Chromium audit (1.0.38 → 1.0.39)
 
 - Scope CSS hiding to enabled, non-allowlisted pages; restore original inline display values immediately when disabled or allowlisted, and allow re-enabling without reloading.
 

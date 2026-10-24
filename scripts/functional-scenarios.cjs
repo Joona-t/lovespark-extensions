@@ -3,10 +3,10 @@ const { expect } = require('playwright/test');
 const toggles = {
   'lovespark-retro-cursor':'#cursorToggle', 'lovespark-adblock':'#main-toggle',
   'cozy-toolkit':'#master-toggle', 'i-dont-want-cookies':'#main-toggle',
-  'lovespark-sponsor-skip':'#toggle-enabled', 'anti-brainrot':'#masterToggle',
+  'anti-brainrot':'#masterToggle',
   'porn-blocker-rewire-brain':'#enableToggle', 'neurodivergent-reader':'#master-toggle',
-  'lovespark-popup-blocker':'#toggle-enabled', 'lovespark-utm-stripper':'#enableToggle',
-  'lovespark-doomscroll':'#cb-enabled', 'lovespark-link-cleaner':'#main-toggle',
+  'lovespark-popup-blocker':'#toggle-enabled',
+  'lovespark-link-cleaner':'#main-toggle',
 };
 module.exports = async function scenarios({page, context, folder, manifest, result}) {
   const name = folder.split('/').pop();
@@ -65,22 +65,6 @@ module.exports = async function scenarios({page, context, folder, manifest, resu
     await expect(page.locator('#saveStatus')).toContainText('saved');
     await page.reload();
     await expect(page.locator('#noteContent')).toHaveValue(note);
-  });
-  if(name === 'lovespark-read-aloud') await check('Reading speed preset persists', async () => {
-    await page.locator('[data-preset="turbo"]').click();
-    await expect(page.locator('#speedSlider')).toHaveValue('1.5');
-    await page.waitForTimeout(200);
-    await page.reload();
-    await expect(page.locator('#speedSlider')).toHaveValue('1.5');
-    await expect(page.locator('[data-preset="turbo"]')).toHaveClass(/active/);
-  });
-  if(name === 'are-you-cooked') await check('Tab counter updates when a tab opens', async () => {
-    await expect(page.locator('#tabCount')).toHaveText(/^\d+$/);
-    const old = Number(await page.locator('#tabCount').innerText());
-    const extra = await context.newPage();
-    try { await expect(page.locator('#tabCount')).toHaveText(String(old+1)); }
-    finally { await extra.close(); }
-    await expect(page.locator('#tabCount')).toHaveText(String(old));
   });
   if(['dreamy-garden','lovespark-flappy-waifu'].includes(name)) await check('Play button opens a working game', async () => {
     const opened = context.waitForEvent('page');

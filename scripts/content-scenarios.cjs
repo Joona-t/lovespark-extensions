@@ -4,7 +4,7 @@ const {expect} = require('playwright/test');
 const assert = require('node:assert/strict');
 module.exports = async ({context, folder, id, manifest, result}) => {
   const name=folder.split('/').pop();
-  const supported=['lovespark-link-cleaner','lovespark-reddit-promoted-block','anti-brainrot','i-dont-want-cookies','lovespark-popup-blocker','lovespark-retro-cursor','lovespark-sponsor-skip','public-knowledge-unblocker','lovespark-adblock','lovespark-utm-stripper'];
+  const supported=['lovespark-link-cleaner','lovespark-reddit-promoted-block','anti-brainrot','i-dont-want-cookies','lovespark-popup-blocker','lovespark-retro-cursor','public-knowledge-unblocker','lovespark-adblock'];
   if(!supported.includes(name)) return;
   const pages=[];
   const api = manifest.action?.default_popup ? await context.newPage() : null;
@@ -16,13 +16,12 @@ module.exports = async ({context, folder, id, manifest, result}) => {
   let url='https://example.com/articles/current';
   if(name==='lovespark-link-cleaner') body+='<script>history.replaceState({audit:42},"","?utm_source=audit")</script><a id="relative" href="next?id=7&utm_source=audit">Next</a>';
   if(name==='lovespark-reddit-promoted-block') {url='https://www.reddit.com/';body+='<shreddit-ad-post id="ad">Promoted</shreddit-ad-post><article id="organic">Organic post</article>';}
-  if(['anti-brainrot','lovespark-sponsor-skip'].includes(name)) {url='https://www.youtube.com/watch?v=abcdefghijk';body+='<ytd-comments id="comments">Comments</ytd-comments><video class="video-stream html5-main-video"></video>';}
+  if(name==='anti-brainrot') {url='https://www.youtube.com/watch?v=abcdefghijk';body+='<ytd-comments id="comments">Comments</ytd-comments><video class="video-stream html5-main-video"></video>';}
   if(name==='i-dont-want-cookies') body+='<div id="onetrust-banner-sdk">Cookie banner</div>';
   if(name==='public-knowledge-unblocker') {url='https://www.nature.com/articles/audit';body='<meta name="citation_doi" content="10.1234/audit">'+body;}
   await context.route('https://**/*',async route=>{
     const req=route.request();
     if(req.url().startsWith('https://api.openalex.org/')) return route.fulfill({json:{title:'Audit paper',doi:'https://doi.org/10.1234/audit',primary_location:{is_oa:true,pdf_url:'https://repository.example/paper.pdf',source:{display_name:'Audit repository'}}},headers:{'access-control-allow-origin':'*'}});
-    if(req.url().startsWith('https://sponsor.ajay.app/')) return route.fulfill({json:[],headers:{'access-control-allow-origin':'*'}});
     return route.fulfill({contentType:'text/html',body:'<!doctype html><html><head><title>Extension audit fixture</title></head><body>'+body+'</body></html>'});
   });
   const check=async(title, fn)=>{try{await fn();(result.scenarios||=[]).push({name:title,passed:true});}catch(e){(result.scenarios||=[]).push({name:title,passed:false,error:e.message});result.errors.push(`${title}: ${e.message}`);}};
@@ -61,14 +60,6 @@ module.exports = async ({context, folder, id, manifest, result}) => {
       await api.locator('label').filter({has:api.locator('#cursorToggle')}).click();
       await expect.poll(()=>page.locator('body').evaluate(e=>getComputedStyle(e).cursor)).not.toContain('chrome-extension://');
     });
-    if(name==='lovespark-sponsor-skip') await check('Sponsor content and worker answer real messages',async()=>{
-      const ping = await api.evaluate(() => chrome.runtime.sendMessage({action:'ping'}));
-      assert.deepEqual(ping, {ok:true, product:'lovespark-sponsor-skip', version:manifest.version});
-      const response=await api.evaluate(async()=>{
-        const tabs=await chrome.tabs.query({});const tab=tabs.find(t=>t.url?.includes('youtube.com/watch'));
-        return Promise.race([chrome.tabs.sendMessage(tab.id,{action:'getPageState'}),new Promise((_,reject)=>setTimeout(()=>reject(new Error('content reply timeout')),2000))]);
-      });assert.equal(response.ok,true);assert.equal(response.videoID,'abcdefghijk');
-    });
     if(name==='public-knowledge-unblocker') await check('DOI lookup renders an open-access result',async()=>{
       await expect(page.locator('#aaron-panel')).toContainText('Audit repository');
       await expect(page.locator('#aaron-panel a[href="https://repository.example/paper.pdf"]')).toBeAttached();
@@ -76,10 +67,6 @@ module.exports = async ({context, folder, id, manifest, result}) => {
     if(name==='lovespark-adblock') await check('Chromium DNR matches an advertising request',async()=>{
       const matched=await api.evaluate(()=>chrome.declarativeNetRequest.testMatchOutcome({url:'https://doubleclick.net/pagead/ads',type:'script',initiator:'https://example.com'}));
       assert.ok(matched.matchedRules.length>0);
-    });
-    if(name==='lovespark-utm-stripper') await check('URL cleaner retains functional query parameters',async()=>{
-      await page.goto('https://example.com/?utm_source=audit&ref=chapter2&feature=search&id=7').catch(e=>{if(!e.message.includes('ERR_ABORTED')) throw e;});
-      await expect.poll(()=>page.url()).toBe('https://example.com/?ref=chapter2&feature=search&id=7');
     });
     await check('Content script has no uncaught exceptions',async()=>assert.deepEqual(errors,[]));
   } finally {await context.unrouteAll({behavior:'wait'});for(const p of pages) if(!p.isClosed()) await p.close();}

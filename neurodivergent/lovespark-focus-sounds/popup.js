@@ -15,7 +15,7 @@ let currentSound = null;
 let sessionLogged = false;
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  footerMount.innerHTML = LoveSparkFooter.render();
+  LoveSparkFooter.render(footerMount);
 }
 
 async function sendBg(msg) {

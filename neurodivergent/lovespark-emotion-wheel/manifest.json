@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Emotion Wheel",
-  "version": "1.0.4",
+  "version": "1.0.3",
   "homepage_url": "https://lovespark.love",
   "description": "Identify feelings from basic to nuanced with an interactive emotion wheel. ADHD-friendly, free, no tracking.",
   "icons": {

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark CWS Filler",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "description": "Auto-fills the Chrome Web Store dashboard text fields from a cws-listing.json. A LoveSpark shipping helper.",
   "icons": {
     "16": "icons/icon16.png",

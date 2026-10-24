@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Auto TOC",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "homepage_url": "https://lovespark.love",
   "description": "Auto-generate a table of contents sidebar from any article headings. ADHD reading aid. Free, no tracking.",
   "icons": {

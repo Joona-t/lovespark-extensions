@@ -75,12 +75,5 @@
 **Root cause:** SUBMIT.md was generated with machine-specific absolute paths to an external zip staging folder, so it never tracked the in-repo zips that BUG-003 rebuilt. The version string was hard-coded at generation time and never refreshed.
 **Fix:** SUBMIT.md now points at the in-repo `lovespark-mood-bloom-chrome.zip` / `-firefox.zip` and `cws-shots/` assets with repo-relative paths, has no absolute home paths, and names v1.0.33 to match manifest.json. Docs-only change: SUBMIT.md is in `.zipignore`, so the store zips are unchanged and there is no manifest bump.
 **Regression check (run from repo root; must print `OK`):**
-`! grep -nE '~/' SUBMIT.md CWS-LISTING.md && V=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])") && grep -q "v$V" SUBMIT.md && for z in lovespark-mood-bloom-chrome.zip lovespark-mood-bloom-firefox.zip; do ! unzip -Z1 "$z" | grep -E '\.zip$|^(CWS-LISTING|PRIVACY|SUBMIT)\.md$|^screenshots/' && [ "$(unzip -p "$z" manifest.json | python3 -c "import json,sys;print(json.load(sys.stdin)['version'])")" = "$V" ] || exit 1; done && echo OK`
+`! grep -nE '/Users/|Downloads/' SUBMIT.md CWS-LISTING.md && V=$(python3 -c "import json;print(json.load(open('manifest.json'))['version'])") && grep -q "v$V" SUBMIT.md && for z in lovespark-mood-bloom-chrome.zip lovespark-mood-bloom-firefox.zip; do ! unzip -Z1 "$z" | grep -E '\.zip$|^(CWS-LISTING|PRIVACY|SUBMIT)\.md$|^screenshots/' && [ "$(unzip -p "$z" manifest.json | python3 -c "import json,sys;print(json.load(sys.stdin)['version'])")" = "$V" ] || exit 1; done && echo OK`
 **Files:** SUBMIT.md, BUGS_AND_ITERATIONS.md
-
-## 2026-10-24 — Chromium fleet audit (1.0.33 → 1.0.34)
-
-- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
-- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

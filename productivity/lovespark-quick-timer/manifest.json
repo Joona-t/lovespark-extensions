@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Quick Timer",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "homepage_url": "https://lovespark.love",
   "description": "One-click focus timer with badge countdown. Presets or custom minutes. Built for ADHD brains. Free, lightweight.",
   "icons": {

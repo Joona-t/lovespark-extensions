@@ -3,12 +3,9 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-for (const category of fs.readdirSync(root, { withFileTypes: true })) {
-  if (!category.isDirectory() || category.name.startsWith('.') || ['node_modules', 'work'].includes(category.name)) continue;
-  for (const extension of fs.readdirSync(path.join(root, category.name), { withFileTypes: true })) {
-    const dir = path.join(root, category.name, extension.name);
-    if (!extension.isDirectory() || !fs.existsSync(path.join(dir, 'manifest.json'))) continue;
-    test(`${category.name}/${extension.name}: manifest resources and locale JSON`, () => {
+for (const folder of require('../scripts/published-scope.cjs')) {
+    const dir = path.join(root, folder);
+    test(`${folder}: manifest resources and locale JSON`, () => {
       const m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
       assert.equal(m.manifest_version, 3);
       const icons = value => typeof value === 'string' ? [value] : Object.values(value || {});
@@ -24,5 +21,4 @@ for (const category of fs.readdirSync(root, { withFileTypes: true })) {
         }
       }
     });
-  }
 }

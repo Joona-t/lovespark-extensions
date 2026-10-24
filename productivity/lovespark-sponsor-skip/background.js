@@ -486,14 +486,12 @@ async function handleMessage(message, sender) {
   }
 }
 
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((message, sender) =>
   handleMessage(message, sender).catch(error => {
     console.error('[LoveSpark] Background message failed:', error);
     return { ok: false, status: 'unavailable', error: 'internal-error' };
-  }).then(sendResponse);
-  // Chrome's Promise-listener support varies by version/rollout; callbacks work in both browsers.
-  return true;
-});
+  })
+);
 
 browser.commands.onCommand.addListener(async command => {
   if (command === 'toggle-skip') {

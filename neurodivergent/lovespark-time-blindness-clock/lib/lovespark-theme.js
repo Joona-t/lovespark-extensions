@@ -10,7 +10,7 @@ const LoveSparkTheme = (() => {
   function apply(theme) {
     THEMES.forEach(t => document.body.classList.remove('theme-' + t));
     document.body.classList.add('theme-' + theme);
-    const label = document.getElementById('themeLabel') || document.getElementById('themeDropdownTrigger');
+    const label = document.getElementById('themeLabel');
     if (label) label.textContent = THEME_NAMES[theme] || theme;
     document.querySelectorAll('.theme-option').forEach(opt => {
       opt.classList.toggle('active', opt.dataset.theme === theme);
@@ -18,24 +18,13 @@ const LoveSparkTheme = (() => {
   }
 
   function init() {
-    const toggle = document.getElementById('themeToggle') || document.getElementById('themeDropdownTrigger');
-    const menu = document.getElementById('themeMenu') || document.getElementById('themeDropdownMenu');
+    const toggle = document.getElementById('themeToggle');
+    const menu = document.getElementById('themeMenu');
 
     if (toggle && menu) {
-      const setOpen = (open) => {
-        menu.classList.toggle('open', open);
-        toggle.setAttribute('aria-expanded', String(open));
-      };
-      setOpen(false);
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && menu.classList.contains('open')) {
-          setOpen(false);
-          toggle.focus();
-        }
-      });
       toggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        setOpen(!menu.classList.contains('open'));
+        menu.classList.toggle('open');
       });
 
       menu.addEventListener('click', (e) => {
@@ -44,10 +33,10 @@ const LoveSparkTheme = (() => {
         const theme = opt.dataset.theme;
         apply(theme);
         chrome.storage.local.set({ theme });
-        setOpen(false);
+        menu.classList.remove('open');
       });
 
-      document.addEventListener('click', () => setOpen(false));
+      document.addEventListener('click', () => menu.classList.remove('open'));
     }
 
     chrome.storage.local.get(['theme'], ({ theme }) => {

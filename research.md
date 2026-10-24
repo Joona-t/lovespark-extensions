@@ -1,21 +1,11 @@
-# Extension fleet audit — 2026-10-24
+# Published screenshot extensions — source audit
 
-## Verified starting point
-- Consolidated repository contains 114 extension manifests; README's 116 entries also include two infrastructure tools.
-- Screenshot has 22 listings: 20 distinct extension projects (19 in the monorepo plus the recovered Link Cleaner), two listings named Are You Cooked?, and the LoveSpark Retro Pink browser theme, excluded at the user’s request because its source was not found.
-- Source versions differ from several store versions. Tests describe this checkout, not installed store binaries.
-- Existing tests: Node suites for adblock, Sponsor Skip, site notes, YouTube Shield, doomscroll, dark-mode reader; Python popup checks for brain dump.
-- Repository's Sponsor Skip workflow tests actual unpacked extensions via Chromium DevTools `Extensions.loadUnpacked` in an isolated temporary profile. Fleet audit will extend that workflow using the installed Playwright Chromium.
-- `ls-check`, Bun, and the referenced external LoveSpark scripts/docs are unavailable here. Report that gap; do not claim those gates ran.
-- Atlas audit URL was attempted but unavailable.
+The final scope is the 16 extension projects marked Published – public in the supplied Chrome Web Store screenshot whose source was located. `scripts/published-scope.cjs` is the explicit allowlist used by the browser and manifest checks.
 
-## Browser references
-- https://playwright.dev/docs/chrome-extensions — persistent Chromium contexts and real extension loading.
-- https://developer.chrome.com/docs/extensions/develop/concepts/service-workers/lifecycle — persisted state and restart resilience.
+The screenshot's Retro Pink browser theme has no located source and is excluded. Read Aloud, both Are You Cooked? listings and Pink Anti-Doomscroll are drafts; Sponsor Skip is rejected. These listings and all projects absent from the screenshot are excluded from the final changes.
 
-## Scope
-Run manifest/resource validation and real Chromium load/page checks across all 115 manifests after restoring Link Cleaner. Prioritize functional interactions, persistence, disabled-state behavior and security review for the 20 screenshot projects. Capture exact failures before editing and re-run regressions after repairs. No Web Store publishing is part of this audit.
+Fifteen scoped projects are in the consolidated repository. Link Cleaner was recovered from its archived upstream repository at commit `37597b19568b789ba65a98e155d0f3151029fcc4`; it is distinct from UTM Stripper. Source versions differ from some store versions, so testing describes this checkout, not the installed store binaries. Published status is taken from the supplied screenshot.
 
-## Recovered source
+Actual unpacked extensions are loaded into a disposable Chromium profile using the repository's documented extension-debugging workflow. Website/API fixtures isolate content-script regressions from changes to external services. Existing adblock unit tests and scoped manifest/resource checks supplement browser tests.
 
-Link Cleaner was verified in its archived upstream repository and restored to `privacy/lovespark-link-cleaner`; it is distinct from UTM Stripper. See its UPSTREAM.md for the exact source commit. The consolidated repository started with 114 manifests and now has 115.
+References: https://playwright.dev/docs/chrome-extensions and https://developer.chrome.com/docs/extensions/develop/concepts/service-workers/lifecycle. The external `ls-check`, LoveSpark scripts/docs and automation-log helper were unavailable; the Atlas URL could not be read. None is claimed as passed.

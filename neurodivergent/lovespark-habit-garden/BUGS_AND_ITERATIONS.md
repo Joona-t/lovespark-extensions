@@ -82,10 +82,3 @@
 `for z in chrome firefox; do d=$(mktemp -d); unzip -q lovespark-habit-garden-$z.zip -d $d; echo "$z: $(grep -rl /Users/ $d | wc -l) home-path files, $(unzip -Z1 lovespark-habit-garden-$z.zip | grep -cE '\.(md|zip)$|screenshots/|cws-') non-runtime entries"; done` must print `0` / `0` for both.
 **Follow-up (fleet-level, not this repo):** canonical `scripts/build-zips.sh` should exclude `SUBMIT.md`, `CWS-LISTING.md`, `cws-listing.json`, `PRIVACY.md`, `screenshots/` and fail on any `/Users/` string in the staged tree, so every extension carrying the CWS bundle is protected.
 **Files:** .zipignore, manifest.json (1.0.35 -> 1.0.36), CHANGELOG.md, lovespark-habit-garden-chrome.zip, lovespark-habit-garden-firefox.zip
-
-## 2026-10-24 — Chromium fleet audit (1.0.36 → 1.0.37)
-
-- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
-- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

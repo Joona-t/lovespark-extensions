@@ -47,6 +47,7 @@ let msgIndex = 0;
 
 // ── DOM refs ──────────────────────────────────────
 
+const shieldEl   = document.getElementById('shield-icon');
 const statusEl   = document.getElementById('status-text');
 const toggleEl   = document.getElementById('toggle-input');
 const todayEl    = document.getElementById('stat-today');
@@ -75,9 +76,11 @@ function applyState(data) {
 
 function updateShieldUI(enabled) {
   if (enabled) {
+    shieldEl.classList.remove('paused');
     statusEl.textContent = 'Protected! \u2728';
     statusEl.classList.remove('paused');
   } else {
+    shieldEl.classList.add('paused');
     statusEl.textContent = 'Paused';
     statusEl.classList.add('paused');
   }

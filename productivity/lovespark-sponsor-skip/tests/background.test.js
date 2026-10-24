@@ -82,18 +82,13 @@ async function loadBackground({ initial = {}, fetchImpl, failGet, failSet, withA
     console: { warn() {}, error() {}, log() {} }
   };
   context.globalThis = context;
-  const realm = vm.createContext(context);
-  // Match importScripts and manifest script ordering in a real shared global.
-  vm.runInContext(fs.readFileSync(path.join(root, 'core.js'), 'utf8'), realm, { filename: 'core.js' });
-  vm.runInContext(backgroundSource, realm, { filename: 'background.js' });
+  vm.runInNewContext(backgroundSource, context, { filename: 'background.js' });
   await settleUntil(() => state.schemaVersion === 3);
   assert.equal(typeof messageListener, 'function');
 
   return {
     state,
-    send: (message, sender = { id: 'fixture-extension', tab: { id: 7 } }) => new Promise(resolve => {
-      assert.equal(messageListener(message, sender, resolve), true, 'async responses must keep the Chrome message channel open');
-    })
+    send: (message, sender = { id: 'fixture-extension', tab: { id: 7 } }) => messageListener(message, sender)
   };
 }
 

@@ -6,7 +6,7 @@
 **Root cause:** `popup.html` declared `id="themeDropdownTrigger"` / `id="themeDropdownMenu"`, while the canonical shared `lib/lovespark-theme.js` `init()` looks up `document.getElementById('themeToggle')` / `('themeMenu')` and silently skips wiring when either is null (`if (toggle && menu) { ... }`). Nothing else in the repo wired those IDs (`grep -n themeDropdown popup.js lib/*.js` → 0 hits). Present since the initial commit; found during PR #1 verification because the PR ships store zips built from this markup. `ls-check` could not see it (its dropdown check only inspects `aria-expanded`).
 **Fix:** Renamed the two IDs in `popup.html` to the canonical `themeToggle` / `themeMenu` (same convention as e.g. lovespark-cookie-nuke); CSS hooks are class-based (`.theme-dropdown-trigger`, `.theme-dropdown-menu.open`) so no style change was needed. Added `tests/test_popup_wiring.py`, which asserts every ID `lib/lovespark-theme.js` looks up exists in `popup.html` (fails on the old markup: 2 failures; passes after: 2 OK). Bumped manifest 1.0.35 → 1.0.36.
 **Check command:** `python3 -m unittest discover -s tests -v`
-**Not fixed here (follow-ups):** (1) `popup.html` links `lib/lovespark-fonts.css`, which this repo never had — canonical `lovespark-shared-lib` ships `lovespark-fonts.css` + `fonts/` (~1.2 MB, 51 woff2); until synced via `scripts/sync-shared-lib.sh`, DM Mono / Press Start 2P / Lora fall back to system `monospace` / `cursive` / `serif`. (2) The committed `*-chrome.zip` / `*-firefox.zip` are at 1.0.35 and contain the previous build's zips nested inside themselves plus `SUBMIT.md` with local `~` paths — rebuild with `scripts/build-zips.sh` before any store upload.
+**Not fixed here (follow-ups):** (1) `popup.html` links `lib/lovespark-fonts.css`, which this repo never had — canonical `lovespark-shared-lib` ships `lovespark-fonts.css` + `fonts/` (~1.2 MB, 51 woff2); until synced via `scripts/sync-shared-lib.sh`, DM Mono / Press Start 2P / Lora fall back to system `monospace` / `cursive` / `serif`. (2) The committed `*-chrome.zip` / `*-firefox.zip` are at 1.0.35 and contain the previous build's zips nested inside themselves plus `SUBMIT.md` with local `/Users/...` paths — rebuild with `scripts/build-zips.sh` before any store upload.
 **Files:** popup.html, manifest.json (1.0.35 → 1.0.36), CHANGELOG.md, tests/test_popup_wiring.py
 
 ## 2026-07-08: P0-4-commit-4 — commit CWS/AMO submission bundle, bump to 1.0.32, build store zips
@@ -77,10 +77,3 @@
 **Root cause:** `BRAND-TOKEN-DRIFT` is a canonical-infra gap — the KI-002/003/004 contrast fix was hand-patched directly into `lovespark-shared-lib/lovespark-tokens.css` but `design-tokens/tokens.json` (the generator source of truth, outside this unit's assigned repos) was never regenerated to match, so `generate-tokens.py`'s output no longer md5-matches canonical for any fleet repo. Not fixable at the per-repo level.
 **Fix:** Bumped manifest.json 1.0.34 → 1.0.35, added a matching CHANGELOG.md entry where drift was flagged, and rebuilt `*-chrome.zip`/`*-firefox.zip` via `scripts/build-zips.sh` (Firefox zip passed `amo-validate.py`). `BRAND-TOKEN-DRIFT` remains open and is flagged as a separate follow-up task against `lovespark-shared-lib`/`design-tokens` (not one of this unit's repos).
 **Files:** manifest.json (1.0.34 → 1.0.35), lovespark-brain-dump-chrome.zip, lovespark-brain-dump-firefox.zip
-
-## 2026-10-24 — Chromium fleet audit (1.0.36 → 1.0.37)
-
-- Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.
-- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

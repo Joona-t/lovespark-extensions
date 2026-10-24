@@ -11,7 +11,8 @@ function collect(dir) {
     else if (/\.test\.(?:js|mjs|cjs)$/.test(entry.name)) tests.push(file);
   }
 }
-collect(root);
+for (const folder of require('./published-scope.cjs')) collect(path.join(root, folder));
+collect(path.join(root, 'tests'));
 const result = spawnSync(process.execPath, ['--test', ...tests.sort()], { stdio: 'inherit' });
 if (result.error) throw result.error;
 process.exitCode = result.status ?? 1;

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Bridge",
-  "version": "1.0.29",
+  "version": "1.0.28",
   "description": "Syncs LoveSpark Focus data to Mission Control",
   "permissions": [
     "storage",

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Bionic Reading",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "homepage_url": "https://lovespark.love",
   "description": "Bolds the first half of each word to guide eyes faster. Toggle on/off per page. Built for neurodivergent readers. No account, always free.",
   "icons": {

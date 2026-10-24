@@ -38,10 +38,3 @@
 **Fix (PATCH, not remove-the-link):** Restored the canonical font bundle by copying `lovespark-fonts.css` (21,382 B) + the full `fonts/` directory (51 woff2 files, 1.1 MB) from the canonical shared lib (`Extensions/infrastructure/lovespark-shared-lib/`) into `lib/`. Verified every `@font-face` `src: url(fonts/…)` now resolves relative to `lib/`. Removing the dead `<link>` was rejected: it would have locked in the broken system-font fallback and diverged from the 50+ sibling extensions that correctly ship this file. Bumped manifest 1.0.3 → 1.0.4 and rebuilt chrome + firefox zips.
 **Files:** lib/lovespark-fonts.css (new), lib/fonts/ (new, 51 files), manifest.json
 **Fleet note:** This is NOT isolated — ~40 other extensions reference `lovespark-fonts.css` in their HTML but are missing the file (e.g. lovespark-brain-dump, lovespark-pomodoro-rose, lovespark-quick-timer, lovespark-panic-button, calm-down-kit, body-double, working-memory-pad, …). Same class of bug. Fleet-wide remediation surfaced for a separate guarded sweep so each extension gets its own version bump + rebuild.
-
-## 2026-10-24 — Chromium fleet audit (1.0.5 → 1.0.6)
-
-- Wire the shared theme menu to this popup’s dropdown IDs, persist selections, and support Escape with accurate expanded state.
-- Insert the shared footer HTML into its mount instead of discarding the renderer’s return value.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Color Match",
-  "version": "1.0.31",
+  "version": "1.0.30",
   "description": "A calming color-matching memory game. Flip tiles to find pairs. Track your best time and games won. Part of the LoveSpark suite.",
   "icons": {
     "16": "icons/icon-16.png",

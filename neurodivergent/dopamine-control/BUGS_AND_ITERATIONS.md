@@ -49,9 +49,3 @@ single commit: manifest, background service worker, content script +
 overlay, popup, stats dashboard, shared constants/utils.
 **Files:** all
 **Commit:** `6f55142`
-
-## 2026-10-24 — Chromium fleet audit (1.0.1 → 1.0.2)
-
-- Move inline popup/dashboard styling and dashboard JavaScript into local files to comply with the existing strict CSP.
-
-Validation: manifest/resource checks, actual unpacked Chromium load and UI checks, with interaction/content regressions where applicable. See [the audit record](../../docs/audits/2026-10-24.md) for per-extension coverage and limitations.

@@ -1,13 +1,8 @@
-# Fleet audit and repairs
+# Published screenshot extension audit
 
-Authorized by the user's request to audit, browser-test, fix issues and implement improvements. Work is in this consolidated repository, on an audit branch.
-
-- [x] Locate maintained source and map screenshot scope.
-- [x] Check every manifest and referenced resource; run existing tests.
-- [x] Load all extensions in isolated Chromium; inspect popup/options pages and runtime errors.
-- [x] Exercise the 20 screenshot projects' key controls and content behavior.
-- [x] Repair reproducible defects and add regression tests for the discovered failure classes.
-- [x] Re-run checks, bump affected extension versions, update bug logs and README versions.
-- [x] Prepare verified changes and audit evidence for commit/push and review.
-
-Missing screenshot item: LoveSpark Retro Pink theme source. Duplicate Are You Cooked? listing cannot be distinguished without store IDs.
+- [x] Restrict the audit to the 16 published screenshot extensions with located source.
+- [x] Remove source changes for all drafts, the rejected listing and projects absent from the screenshot.
+- [x] Restrict browser, manifest and unit-test discovery to the explicit published-project allowlist.
+- [x] Keep reproduced fixes for Cookie Banner Blocker, Notes, Reddit Ad Blocker and Link Cleaner, with patch-version bumps.
+- [x] Finish the scoped Chromium regression run and record its audit evidence.
+- [x] Prepare the scoped, verified correction for the authorized push and draft PR.

@@ -26,7 +26,7 @@
 **Fix:** What was done to resolve it
 -->
 
-## 2026-10-24 — Chromium fleet audit (1.0.5 → 1.0.6)
+## 2026-10-24 — Published screenshot Chromium audit (1.0.5 → 1.0.6)
 
 - Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.
 - Restore the archived extension with recorded upstream provenance. Resolve relative links against document.baseURI, preserve history.state, and re-clean links when SPA navigation changes href.

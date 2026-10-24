@@ -24,7 +24,7 @@ let prevTotal = 0;
 const ENTRY_FLOWERS = ['\u{1F33C}', '\u{1F338}', '\u{1F33B}'];
 
 if (typeof LoveSparkFooter !== 'undefined') {
-  footerMount.innerHTML = LoveSparkFooter.render();
+  LoveSparkFooter.render(footerMount);
 }
 
 async function sendBg(msg) {

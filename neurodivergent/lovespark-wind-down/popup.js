@@ -13,7 +13,7 @@ const statusText = document.getElementById('statusText');
 const todayEl = document.getElementById('todayCount');
 const footerMount = document.getElementById('footerMount');
 
-if (typeof LoveSparkFooter !== 'undefined') footerMount.innerHTML = LoveSparkFooter.render();
+if (typeof LoveSparkFooter !== 'undefined') LoveSparkFooter.render(footerMount);
 
 // Populate hour dropdown
 for (let h = 0; h < 24; h++) {

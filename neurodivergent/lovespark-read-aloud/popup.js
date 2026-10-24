@@ -34,7 +34,7 @@ let resumeIndex = 0;
 
 // ── Footer ──────────────────────────────────
 if (typeof LoveSparkFooter !== 'undefined') {
-  footerMount.innerHTML = LoveSparkFooter.render();
+  LoveSparkFooter.render(footerMount);
 }
 
 // ── Safe message to background ──────────────
@@ -194,10 +194,10 @@ speedSlider.addEventListener('input', () => {
 
 speedSlider.addEventListener('change', async () => {
   const val = parseFloat(speedSlider.value);
+  await relay({ type: 'SET_SPEED', speed: val });
   const presets = { 0.8: 'chill', 1.0: 'flow', 1.5: 'turbo', 2.0: 'hyperfocus' };
   const preset = presets[val] || 'custom';
   await sendBg({ type: 'SAVE_PREFS', prefs: { speed: val, speedPreset: preset } });
-  await relay({ type: 'SET_SPEED', speed: val });
 });
 
 document.querySelectorAll('.btn-preset').forEach(btn => {
@@ -208,8 +208,8 @@ document.querySelectorAll('.btn-preset').forEach(btn => {
     speedSlider.value = speed;
     speedValue.textContent = speed.toFixed(1) + 'x';
     updatePresetButtons(preset);
-    await sendBg({ type: 'SAVE_PREFS', prefs: { speed, speedPreset: preset } });
     await relay({ type: 'SET_PRESET', preset });
+    await sendBg({ type: 'SAVE_PREFS', prefs: { speed, speedPreset: preset } });
   });
 });
 
