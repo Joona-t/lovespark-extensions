@@ -8,382 +8,382 @@
 /* ═══════════════════════════════════════════════════════════
    SECTION 1 — COOKIEBOT
    ═══════════════════════════════════════════════════════════ */
-#CybotCookiebotDialog,
-#CybotCookiebotDialogBodyUnderlay,
-#CybotCookiebotBackdrop,
-.CybotCookiebotDialog,
-#CybotCookiebotDialogNav,
-.CybotCookiebotFader,
-div[id^="CybotCookiebot"] {
+html:not([data-ls-cookies-disabled]) #CybotCookiebotDialog,
+html:not([data-ls-cookies-disabled]) #CybotCookiebotDialogBodyUnderlay,
+html:not([data-ls-cookies-disabled]) #CybotCookiebotBackdrop,
+html:not([data-ls-cookies-disabled]) .CybotCookiebotDialog,
+html:not([data-ls-cookies-disabled]) #CybotCookiebotDialogNav,
+html:not([data-ls-cookies-disabled]) .CybotCookiebotFader,
+html:not([data-ls-cookies-disabled]) div[id^="CybotCookiebot"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 2 — ONETRUST
    ═══════════════════════════════════════════════════════════ */
-#onetrust-consent-sdk,
-#onetrust-banner-sdk,
-#onetrust-pc-sdk,
-.onetrust-pc-dark-filter,
-.onetrust-blur-overlay,
-.onetrust-fade-in,
-#onetrust-group-container,
-#ot-sdk-btn-floating,
-.ot-fade-in,
-.ot-floating-button,
-div[id^="onetrust-"] {
+html:not([data-ls-cookies-disabled]) #onetrust-consent-sdk,
+html:not([data-ls-cookies-disabled]) #onetrust-banner-sdk,
+html:not([data-ls-cookies-disabled]) #onetrust-pc-sdk,
+html:not([data-ls-cookies-disabled]) .onetrust-pc-dark-filter,
+html:not([data-ls-cookies-disabled]) .onetrust-blur-overlay,
+html:not([data-ls-cookies-disabled]) .onetrust-fade-in,
+html:not([data-ls-cookies-disabled]) #onetrust-group-container,
+html:not([data-ls-cookies-disabled]) #ot-sdk-btn-floating,
+html:not([data-ls-cookies-disabled]) .ot-fade-in,
+html:not([data-ls-cookies-disabled]) .ot-floating-button,
+html:not([data-ls-cookies-disabled]) div[id^="onetrust-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 3 — COOKIEYES / COOKIE LAW INFO
    ═══════════════════════════════════════════════════════════ */
-#cookie-law-info-bar,
-#cookie-law-info-again,
-#cookie-law-info-bar-inner,
-.cli-modal-backdrop,
-.cli-modal-overlay,
-.cli-settings-overlay,
-.cli-modal,
-.cookie-law-info-bar,
-#cky-consent-bar,
-#cky-modal,
-.cky-overlay {
+html:not([data-ls-cookies-disabled]) #cookie-law-info-bar,
+html:not([data-ls-cookies-disabled]) #cookie-law-info-again,
+html:not([data-ls-cookies-disabled]) #cookie-law-info-bar-inner,
+html:not([data-ls-cookies-disabled]) .cli-modal-backdrop,
+html:not([data-ls-cookies-disabled]) .cli-modal-overlay,
+html:not([data-ls-cookies-disabled]) .cli-settings-overlay,
+html:not([data-ls-cookies-disabled]) .cli-modal,
+html:not([data-ls-cookies-disabled]) .cookie-law-info-bar,
+html:not([data-ls-cookies-disabled]) #cky-consent-bar,
+html:not([data-ls-cookies-disabled]) #cky-modal,
+html:not([data-ls-cookies-disabled]) .cky-overlay {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 4 — QUANTCAST CHOICE (qc-cmp)
    ═══════════════════════════════════════════════════════════ */
-#qc-cmp2-container,
-#qc-cmp2-ui,
-.qc-cmp2-consent-info,
-.qc-cmp2-summary-buttons,
-.qcCmpUi,
-div[id^="qc-cmp"] {
+html:not([data-ls-cookies-disabled]) #qc-cmp2-container,
+html:not([data-ls-cookies-disabled]) #qc-cmp2-ui,
+html:not([data-ls-cookies-disabled]) .qc-cmp2-consent-info,
+html:not([data-ls-cookies-disabled]) .qc-cmp2-summary-buttons,
+html:not([data-ls-cookies-disabled]) .qcCmpUi,
+html:not([data-ls-cookies-disabled]) div[id^="qc-cmp"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 5 — TRUSTARC / TRUSTE
    ═══════════════════════════════════════════════════════════ */
-#truste-consent-track,
-#truste-consent-required,
-.truste_overlay,
-.truste_box_overlay,
-#trustarc-consent-panel,
-#truste-show-consent,
-.truste-consent-buttons,
-div[id^="truste-"],
-div[class^="truste_"] {
+html:not([data-ls-cookies-disabled]) #truste-consent-track,
+html:not([data-ls-cookies-disabled]) #truste-consent-required,
+html:not([data-ls-cookies-disabled]) .truste_overlay,
+html:not([data-ls-cookies-disabled]) .truste_box_overlay,
+html:not([data-ls-cookies-disabled]) #trustarc-consent-panel,
+html:not([data-ls-cookies-disabled]) #truste-show-consent,
+html:not([data-ls-cookies-disabled]) .truste-consent-buttons,
+html:not([data-ls-cookies-disabled]) div[id^="truste-"],
+html:not([data-ls-cookies-disabled]) div[class^="truste_"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 6 — TERMLY
    ═══════════════════════════════════════════════════════════ */
-#termly-code-snippet-support,
-.t-consentPrompt,
-.termly-styles,
-div[id^="termly-"],
-div[class^="termly-"] {
+html:not([data-ls-cookies-disabled]) #termly-code-snippet-support,
+html:not([data-ls-cookies-disabled]) .t-consentPrompt,
+html:not([data-ls-cookies-disabled]) .termly-styles,
+html:not([data-ls-cookies-disabled]) div[id^="termly-"],
+html:not([data-ls-cookies-disabled]) div[class^="termly-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 7 — IUBENDA
    ═══════════════════════════════════════════════════════════ */
-#iubenda-cs-banner,
-.iubenda-cs-container,
-.iubenda-backdrop,
-#iubenda-iframe,
-.iubenda-cs-visible,
-div[id^="iubenda-"] {
+html:not([data-ls-cookies-disabled]) #iubenda-cs-banner,
+html:not([data-ls-cookies-disabled]) .iubenda-cs-container,
+html:not([data-ls-cookies-disabled]) .iubenda-backdrop,
+html:not([data-ls-cookies-disabled]) #iubenda-iframe,
+html:not([data-ls-cookies-disabled]) .iubenda-cs-visible,
+html:not([data-ls-cookies-disabled]) div[id^="iubenda-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 8 — OSANO
    ═══════════════════════════════════════════════════════════ */
-.osano-cm-window,
-.osano-cm-dialog,
-.osano-cm-overlay,
-.osano-cm-widget,
-div[class^="osano-cm-"] {
+html:not([data-ls-cookies-disabled]) .osano-cm-window,
+html:not([data-ls-cookies-disabled]) .osano-cm-dialog,
+html:not([data-ls-cookies-disabled]) .osano-cm-overlay,
+html:not([data-ls-cookies-disabled]) .osano-cm-widget,
+html:not([data-ls-cookies-disabled]) div[class^="osano-cm-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 9 — COMPLIANZ
    ═══════════════════════════════════════════════════════════ */
-#cmplz-cookiebanner-container,
-.cmplz-cookiebanner,
-.cmplz-overlay,
-#cmplz-manage-consent,
-.cmplz-bottom,
-.cmplz-top,
-div[id^="cmplz-"] {
+html:not([data-ls-cookies-disabled]) #cmplz-cookiebanner-container,
+html:not([data-ls-cookies-disabled]) .cmplz-cookiebanner,
+html:not([data-ls-cookies-disabled]) .cmplz-overlay,
+html:not([data-ls-cookies-disabled]) #cmplz-manage-consent,
+html:not([data-ls-cookies-disabled]) .cmplz-bottom,
+html:not([data-ls-cookies-disabled]) .cmplz-top,
+html:not([data-ls-cookies-disabled]) div[id^="cmplz-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 10 — COOKIE SCRIPT
    ═══════════════════════════════════════════════════════════ */
-#cookiescript_injected,
-#cookiescript_wrapper,
-.cookiescript_badge,
-.cookiescript_fader,
-#cookiescript_injected_wrapper {
+html:not([data-ls-cookies-disabled]) #cookiescript_injected,
+html:not([data-ls-cookies-disabled]) #cookiescript_wrapper,
+html:not([data-ls-cookies-disabled]) .cookiescript_badge,
+html:not([data-ls-cookies-disabled]) .cookiescript_fader,
+html:not([data-ls-cookies-disabled]) #cookiescript_injected_wrapper {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 11 — DIDOMI
    ═══════════════════════════════════════════════════════════ */
-#didomi-host,
-#didomi-consent-popup,
-.didomi-popup-open,
-.didomi-overlay,
-.didomi-notice,
-#didomi-notice,
-#didomi-initial,
-div[id^="didomi-"] {
+html:not([data-ls-cookies-disabled]) #didomi-host,
+html:not([data-ls-cookies-disabled]) #didomi-consent-popup,
+html:not([data-ls-cookies-disabled]) .didomi-popup-open,
+html:not([data-ls-cookies-disabled]) .didomi-overlay,
+html:not([data-ls-cookies-disabled]) .didomi-notice,
+html:not([data-ls-cookies-disabled]) #didomi-notice,
+html:not([data-ls-cookies-disabled]) #didomi-initial,
+html:not([data-ls-cookies-disabled]) div[id^="didomi-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 12 — AXEPTIO
    ═══════════════════════════════════════════════════════════ */
-#axeptio_overlay,
-#axeptio_btn,
-.axeptio__widget,
-.axeptio-widget,
-div[id^="axeptio"] {
+html:not([data-ls-cookies-disabled]) #axeptio_overlay,
+html:not([data-ls-cookies-disabled]) #axeptio_btn,
+html:not([data-ls-cookies-disabled]) .axeptio__widget,
+html:not([data-ls-cookies-disabled]) .axeptio-widget,
+html:not([data-ls-cookies-disabled]) div[id^="axeptio"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 13 — KLARO
    ═══════════════════════════════════════════════════════════ */
-.klaro .cookie-modal,
-.klaro .cookie-notice,
-.klaro .cookie-notice-inner,
-.klaro .cookie-modal-notice,
-#klaro,
-.klaro {
+html:not([data-ls-cookies-disabled]) .klaro .cookie-modal,
+html:not([data-ls-cookies-disabled]) .klaro .cookie-notice,
+html:not([data-ls-cookies-disabled]) .klaro .cookie-notice-inner,
+html:not([data-ls-cookies-disabled]) .klaro .cookie-modal-notice,
+html:not([data-ls-cookies-disabled]) #klaro,
+html:not([data-ls-cookies-disabled]) .klaro {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 14 — SOURCEPOINT (CMP)
    ═══════════════════════════════════════════════════════════ */
-div[id^="sp_message_container"],
-#sp_privacy_manager_tab,
-.message-overlay,
-div[class^="sp_message"],
-iframe[id^="sp_message_iframe"] {
+html:not([data-ls-cookies-disabled]) div[id^="sp_message_container"],
+html:not([data-ls-cookies-disabled]) #sp_privacy_manager_tab,
+html:not([data-ls-cookies-disabled]) .message-overlay,
+html:not([data-ls-cookies-disabled]) div[class^="sp_message"],
+html:not([data-ls-cookies-disabled]) iframe[id^="sp_message_iframe"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 15 — ADMIRAL CMP
    ═══════════════════════════════════════════════════════════ */
-.admiral-cmp,
-div[id^="admiral-"],
-div[class^="admiral-cmp"] {
+html:not([data-ls-cookies-disabled]) .admiral-cmp,
+html:not([data-ls-cookies-disabled]) div[id^="admiral-"],
+html:not([data-ls-cookies-disabled]) div[class^="admiral-cmp"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 16 — EVIDON
    ═══════════════════════════════════════════════════════════ */
-#_evidon-banner,
-#_evidon_banner,
-.evidon-prefdiag-overlay,
-.evidon-banner,
-div[id^="_evidon"] {
+html:not([data-ls-cookies-disabled]) #_evidon-banner,
+html:not([data-ls-cookies-disabled]) #_evidon_banner,
+html:not([data-ls-cookies-disabled]) .evidon-prefdiag-overlay,
+html:not([data-ls-cookies-disabled]) .evidon-banner,
+html:not([data-ls-cookies-disabled]) div[id^="_evidon"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 17 — USERCENTRICS
    ═══════════════════════════════════════════════════════════ */
-#usercentrics-root,
-div[data-testid="uc-root"],
-.uc-embedding-container,
-#uc-center-container,
-div[id^="usercentrics-"] {
+html:not([data-ls-cookies-disabled]) #usercentrics-root,
+html:not([data-ls-cookies-disabled]) div[data-testid="uc-root"],
+html:not([data-ls-cookies-disabled]) .uc-embedding-container,
+html:not([data-ls-cookies-disabled]) #uc-center-container,
+html:not([data-ls-cookies-disabled]) div[id^="usercentrics-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 18 — COOKIEHUB
    ═══════════════════════════════════════════════════════════ */
-#cookiehub-overlay,
-#cookiehub-widget,
-.ch2-container,
-.ch2-dialog,
-#ch2-dialog,
-div[class^="ch2-"] {
+html:not([data-ls-cookies-disabled]) #cookiehub-overlay,
+html:not([data-ls-cookies-disabled]) #cookiehub-widget,
+html:not([data-ls-cookies-disabled]) .ch2-container,
+html:not([data-ls-cookies-disabled]) .ch2-dialog,
+html:not([data-ls-cookies-disabled]) #ch2-dialog,
+html:not([data-ls-cookies-disabled]) div[class^="ch2-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 19 — CONSENTMANAGER.NET
    ═══════════════════════════════════════════════════════════ */
-#cmpbox,
-#cmpbox2,
-.cmpboxbg,
-.cmpbox,
-#cmp-container,
-div[id^="cmpbox"] {
+html:not([data-ls-cookies-disabled]) #cmpbox,
+html:not([data-ls-cookies-disabled]) #cmpbox2,
+html:not([data-ls-cookies-disabled]) .cmpboxbg,
+html:not([data-ls-cookies-disabled]) .cmpbox,
+html:not([data-ls-cookies-disabled]) #cmp-container,
+html:not([data-ls-cookies-disabled]) div[id^="cmpbox"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 20 — CIVIC COOKIE CONTROL
    ═══════════════════════════════════════════════════════════ */
-#ccc,
-.ccc-notify-banner,
-.ccc-module,
-#ccc-module,
-#ccc-overlay,
-.ccc-overlay {
+html:not([data-ls-cookies-disabled]) #ccc,
+html:not([data-ls-cookies-disabled]) .ccc-notify-banner,
+html:not([data-ls-cookies-disabled]) .ccc-module,
+html:not([data-ls-cookies-disabled]) #ccc-module,
+html:not([data-ls-cookies-disabled]) #ccc-overlay,
+html:not([data-ls-cookies-disabled]) .ccc-overlay {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 21 — BORLABS COOKIE (WORDPRESS)
    ═══════════════════════════════════════════════════════════ */
-#BorlabsCookie,
-.borlabs-cookie-widget,
-#borlabs-cookie-box,
-.borlabs-cookie-content-blocker-thumbnail,
-div[id^="BorlabsCookie"] {
+html:not([data-ls-cookies-disabled]) #BorlabsCookie,
+html:not([data-ls-cookies-disabled]) .borlabs-cookie-widget,
+html:not([data-ls-cookies-disabled]) #borlabs-cookie-box,
+html:not([data-ls-cookies-disabled]) .borlabs-cookie-content-blocker-thumbnail,
+html:not([data-ls-cookies-disabled]) div[id^="BorlabsCookie"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 22 — COOKIEFIRST
    ═══════════════════════════════════════════════════════════ */
-#cookiefirst-root,
-div[data-cookiefirst-root],
-.cookiefirst-root,
-div[id^="cookiefirst-"] {
+html:not([data-ls-cookies-disabled]) #cookiefirst-root,
+html:not([data-ls-cookies-disabled]) div[data-cookiefirst-root],
+html:not([data-ls-cookies-disabled]) .cookiefirst-root,
+html:not([data-ls-cookies-disabled]) div[id^="cookiefirst-"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 23 — REAL COOKIE BANNER (WORDPRESS)
    ═══════════════════════════════════════════════════════════ */
-.rcb-backdrop,
-#rcb-consent-banner,
-.rcb-cookie-banner {
+html:not([data-ls-cookies-disabled]) .rcb-backdrop,
+html:not([data-ls-cookies-disabled]) #rcb-consent-banner,
+html:not([data-ls-cookies-disabled]) .rcb-cookie-banner {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 24 — COOKIE INFORMATION (CMP)
    ═══════════════════════════════════════════════════════════ */
-.cookie-information-container,
-#coiOverlay,
-.coi-banner-container,
-#CybotCookiebotDialogPoweredbyCybot {
+html:not([data-ls-cookies-disabled]) .cookie-information-container,
+html:not([data-ls-cookies-disabled]) #coiOverlay,
+html:not([data-ls-cookies-disabled]) .coi-banner-container,
+html:not([data-ls-cookies-disabled]) #CybotCookiebotDialogPoweredbyCybot {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 25 — VANILLA COOKIECONSENT (open-source)
    ═══════════════════════════════════════════════════════════ */
-.cc-window,
-.cc-banner,
-.cc-popup,
-.cc-overlay,
-.cc-revoke,
-.cc-grower,
-#cc-main,
-.cc-main {
+html:not([data-ls-cookies-disabled]) .cc-window,
+html:not([data-ls-cookies-disabled]) .cc-banner,
+html:not([data-ls-cookies-disabled]) .cc-popup,
+html:not([data-ls-cookies-disabled]) .cc-overlay,
+html:not([data-ls-cookies-disabled]) .cc-revoke,
+html:not([data-ls-cookies-disabled]) .cc-grower,
+html:not([data-ls-cookies-disabled]) #cc-main,
+html:not([data-ls-cookies-disabled]) .cc-main {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 26 — WP COOKIE NOTICE (WORDPRESS)
    ═══════════════════════════════════════════════════════════ */
-#cookie-notice,
-.cookie-notice-container,
-#cn-notice-text {
+html:not([data-ls-cookies-disabled]) #cookie-notice,
+html:not([data-ls-cookies-disabled]) .cookie-notice-container,
+html:not([data-ls-cookies-disabled]) #cn-notice-text {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 27 — MOOVE GDPR (WORDPRESS)
    ═══════════════════════════════════════════════════════════ */
-#gdpr-cookie-compliance,
-.gdpr_lightbox,
-.moove-gdpr-infobar,
-.moove-gdpr-infobar-allow-all,
-#moove_gdpr_cookie_info_bar {
+html:not([data-ls-cookies-disabled]) #gdpr-cookie-compliance,
+html:not([data-ls-cookies-disabled]) .gdpr_lightbox,
+html:not([data-ls-cookies-disabled]) .moove-gdpr-infobar,
+html:not([data-ls-cookies-disabled]) .moove-gdpr-infobar-allow-all,
+html:not([data-ls-cookies-disabled]) #moove_gdpr_cookie_info_bar {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 28 — PANDECTES GDPR (SHOPIFY)
    ═══════════════════════════════════════════════════════════ */
-#pandectes-banner,
-.pandectes-banner,
-#pandectes-root {
+html:not([data-ls-cookies-disabled]) #pandectes-banner,
+html:not([data-ls-cookies-disabled]) .pandectes-banner,
+html:not([data-ls-cookies-disabled]) #pandectes-root {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 29 — TERMSFEED
    ═══════════════════════════════════════════════════════════ */
-.termsfeed-com---nb,
-.termsfeed-com---pc-dialog,
-.termsfeed-com---reset {
+html:not([data-ls-cookies-disabled]) .termsfeed-com---nb,
+html:not([data-ls-cookies-disabled]) .termsfeed-com---pc-dialog,
+html:not([data-ls-cookies-disabled]) .termsfeed-com---reset {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 30 — PRIVACY MANAGER / CONSENT
    ═══════════════════════════════════════════════════════════ */
-.privacy-manager,
-#privacy-manager,
-.privacy-manager-frame,
-.pm-container,
-div[id^="privacy-manager"] {
+html:not([data-ls-cookies-disabled]) .privacy-manager,
+html:not([data-ls-cookies-disabled]) #privacy-manager,
+html:not([data-ls-cookies-disabled]) .privacy-manager-frame,
+html:not([data-ls-cookies-disabled]) .pm-container,
+html:not([data-ls-cookies-disabled]) div[id^="privacy-manager"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 31 — COOKIE PRO / ONETRUST SUBSIDIARIES
    ═══════════════════════════════════════════════════════════ */
-#cookiepro-banner-sdk,
-.optanon-alert-box-wrapper,
-.optanon-status-editable,
-#optanon-popup-bg,
-#optanon-popup-wrapper,
-div[id^="optanon"] {
+html:not([data-ls-cookies-disabled]) #cookiepro-banner-sdk,
+html:not([data-ls-cookies-disabled]) .optanon-alert-box-wrapper,
+html:not([data-ls-cookies-disabled]) .optanon-status-editable,
+html:not([data-ls-cookies-disabled]) #optanon-popup-bg,
+html:not([data-ls-cookies-disabled]) #optanon-popup-wrapper,
+html:not([data-ls-cookies-disabled]) div[id^="optanon"] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 32 — USERCENTRICS (ALTERNATIVE IDS)
    ═══════════════════════════════════════════════════════════ */
-.uc-banner-container,
-.uc-privacy-modal,
-#uc-privacy-modal,
-div[data-uc-banner] {
+html:not([data-ls-cookies-disabled]) .uc-banner-container,
+html:not([data-ls-cookies-disabled]) .uc-privacy-modal,
+html:not([data-ls-cookies-disabled]) #uc-privacy-modal,
+html:not([data-ls-cookies-disabled]) div[data-uc-banner] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 33 — MICROSOFT CONSENT MODE
    ═══════════════════════════════════════════════════════════ */
-.mscc-banner-container,
-#mscc-banner,
-.mscc-dialog,
-.c-mscc-dialog {
+html:not([data-ls-cookies-disabled]) .mscc-banner-container,
+html:not([data-ls-cookies-disabled]) #mscc-banner,
+html:not([data-ls-cookies-disabled]) .mscc-dialog,
+html:not([data-ls-cookies-disabled]) .c-mscc-dialog {
   display: none !important;
 }
 
@@ -391,108 +391,108 @@ div[data-uc-banner] {
    SECTION 34 — GENERIC CLASS PATTERNS — COOKIE
    (paired with structural suffixes to avoid false positives)
    ═══════════════════════════════════════════════════════════ */
-[class*="cookie-banner" i],
-[class*="cookie-consent" i],
-[class*="cookie-notice" i],
-[class*="cookie-popup" i],
-[class*="cookie-wall" i],
-[class*="cookie-modal" i],
-[class*="cookie-dialog" i],
-[class*="cookie-overlay" i],
-[class*="cookie-disclaimer" i],
-[class*="cookie-bar" i],
-[class*="cookie-alert" i],
-[class*="cookie-message" i],
-[class*="cookie-notification" i],
-[class*="cookie-warning" i],
-[class*="cookiebar" i],
-[class*="cookiebanner" i],
-[class*="cookieconsent" i],
-[class*="cookie_consent" i],
-[class*="cookie-law-bar" i],
-[class*="cookie-law-info" i],
-[class*="eu-cookie" i],
-[class*="policyAccept" i],
-[class*="cookie-policy-banner" i] {
+html:not([data-ls-cookies-disabled]) [class*="cookie-banner" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-consent" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-notice" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-popup" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-wall" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-modal" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-dialog" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-overlay" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-disclaimer" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-bar" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-alert" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-message" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-notification" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-warning" i],
+html:not([data-ls-cookies-disabled]) [class*="cookiebar" i],
+html:not([data-ls-cookies-disabled]) [class*="cookiebanner" i],
+html:not([data-ls-cookies-disabled]) [class*="cookieconsent" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie_consent" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-law-bar" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-law-info" i],
+html:not([data-ls-cookies-disabled]) [class*="eu-cookie" i],
+html:not([data-ls-cookies-disabled]) [class*="policyAccept" i],
+html:not([data-ls-cookies-disabled]) [class*="cookie-policy-banner" i] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 35 — GENERIC CLASS PATTERNS — GDPR
    ═══════════════════════════════════════════════════════════ */
-[class*="gdpr-banner" i],
-[class*="gdpr-notice" i],
-[class*="gdpr-popup" i],
-[class*="gdpr-modal" i],
-[class*="gdpr-overlay" i],
-[class*="gdpr-container" i],
-[class*="gdpr-alert" i],
-[class*="gdpr-box" i] {
+html:not([data-ls-cookies-disabled]) [class*="gdpr-banner" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-notice" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-popup" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-modal" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-overlay" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-container" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-alert" i],
+html:not([data-ls-cookies-disabled]) [class*="gdpr-box" i] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 36 — GENERIC CLASS PATTERNS — CONSENT
    ═══════════════════════════════════════════════════════════ */
-[class*="consent-banner" i],
-[class*="consent-popup" i],
-[class*="consent-modal" i],
-[class*="consent-notice" i],
-[class*="consent-overlay" i],
-[class*="consent-dialog" i],
-[class*="consent-wall" i],
-[class*="consent-bar" i] {
+html:not([data-ls-cookies-disabled]) [class*="consent-banner" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-popup" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-modal" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-notice" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-overlay" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-dialog" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-wall" i],
+html:not([data-ls-cookies-disabled]) [class*="consent-bar" i] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 37 — GENERIC CLASS PATTERNS — PRIVACY
    ═══════════════════════════════════════════════════════════ */
-[class*="privacy-banner" i],
-[class*="privacy-notice" i],
-[class*="privacy-popup" i],
-[class*="privacy-modal" i],
-[class*="privacy-overlay" i],
-[class*="privacy-dialog" i] {
+html:not([data-ls-cookies-disabled]) [class*="privacy-banner" i],
+html:not([data-ls-cookies-disabled]) [class*="privacy-notice" i],
+html:not([data-ls-cookies-disabled]) [class*="privacy-popup" i],
+html:not([data-ls-cookies-disabled]) [class*="privacy-modal" i],
+html:not([data-ls-cookies-disabled]) [class*="privacy-overlay" i],
+html:not([data-ls-cookies-disabled]) [class*="privacy-dialog" i] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 38 — GENERIC ID PATTERNS — COOKIE
    ═══════════════════════════════════════════════════════════ */
-[id*="cookie-banner" i],
-[id*="cookie-consent" i],
-[id*="cookie-notice" i],
-[id*="cookie-popup" i],
-[id*="cookie-bar" i],
-[id*="cookie-modal" i],
-[id*="cookie-dialog" i],
-[id*="cookie-overlay" i],
-[id*="cookie-alert" i],
-[id*="cookie-wall" i],
-[id*="cookiebanner" i],
-[id*="cookieconsent" i],
-[id*="cookiebar" i],
-[id*="eu-cookie" i] {
+html:not([data-ls-cookies-disabled]) [id*="cookie-banner" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-consent" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-notice" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-popup" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-bar" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-modal" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-dialog" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-overlay" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-alert" i],
+html:not([data-ls-cookies-disabled]) [id*="cookie-wall" i],
+html:not([data-ls-cookies-disabled]) [id*="cookiebanner" i],
+html:not([data-ls-cookies-disabled]) [id*="cookieconsent" i],
+html:not([data-ls-cookies-disabled]) [id*="cookiebar" i],
+html:not([data-ls-cookies-disabled]) [id*="eu-cookie" i] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 39 — GENERIC ID PATTERNS — GDPR / CONSENT
    ═══════════════════════════════════════════════════════════ */
-[id*="gdpr-banner" i],
-[id*="gdpr-notice" i],
-[id*="gdpr-popup" i],
-[id*="gdpr-modal" i],
-[id*="gdpr-overlay" i],
-[id*="consent-banner" i],
-[id*="consent-popup" i],
-[id*="consent-modal" i],
-[id*="consent-notice" i],
-[id*="consent-dialog" i],
-[id*="privacy-banner" i],
-[id*="privacy-notice" i],
-[id*="privacy-popup" i] {
+html:not([data-ls-cookies-disabled]) [id*="gdpr-banner" i],
+html:not([data-ls-cookies-disabled]) [id*="gdpr-notice" i],
+html:not([data-ls-cookies-disabled]) [id*="gdpr-popup" i],
+html:not([data-ls-cookies-disabled]) [id*="gdpr-modal" i],
+html:not([data-ls-cookies-disabled]) [id*="gdpr-overlay" i],
+html:not([data-ls-cookies-disabled]) [id*="consent-banner" i],
+html:not([data-ls-cookies-disabled]) [id*="consent-popup" i],
+html:not([data-ls-cookies-disabled]) [id*="consent-modal" i],
+html:not([data-ls-cookies-disabled]) [id*="consent-notice" i],
+html:not([data-ls-cookies-disabled]) [id*="consent-dialog" i],
+html:not([data-ls-cookies-disabled]) [id*="privacy-banner" i],
+html:not([data-ls-cookies-disabled]) [id*="privacy-notice" i],
+html:not([data-ls-cookies-disabled]) [id*="privacy-popup" i] {
   display: none !important;
 }
 
@@ -500,36 +500,36 @@ div[data-uc-banner] {
    SECTION 40 — ARIA / ROLE PATTERNS
    (only target dialog roles to avoid breaking legitimate content)
    ═══════════════════════════════════════════════════════════ */
-[aria-label*="cookie" i][role="dialog"],
-[aria-label*="cookie" i][role="alertdialog"],
-[aria-label*="cookies" i][role="dialog"],
-[aria-label*="consent" i][role="dialog"],
-[aria-label*="consent" i][role="alertdialog"],
-[aria-label*="privacy" i][role="dialog"],
-[aria-label*="gdpr" i][role="dialog"],
-[aria-label*="data protection" i][role="dialog"],
-[aria-label*="cookie notice" i],
-[aria-label*="cookie consent" i],
-[aria-label*="cookie policy" i] {
+html:not([data-ls-cookies-disabled]) [aria-label*="cookie" i][role="dialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="cookie" i][role="alertdialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="cookies" i][role="dialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="consent" i][role="dialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="consent" i][role="alertdialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="privacy" i][role="dialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="gdpr" i][role="dialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="data protection" i][role="dialog"],
+html:not([data-ls-cookies-disabled]) [aria-label*="cookie notice" i],
+html:not([data-ls-cookies-disabled]) [aria-label*="cookie consent" i],
+html:not([data-ls-cookies-disabled]) [aria-label*="cookie policy" i] {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 41 — DATA ATTRIBUTE PATTERNS
    ═══════════════════════════════════════════════════════════ */
-[data-testid*="cookie-banner" i],
-[data-testid*="consent-banner" i],
-[data-testid*="gdpr-banner" i],
-[data-testid*="cookie-notice" i],
-[data-cookie-consent],
-[data-gdpr-consent],
-[data-consent-banner],
-[data-cookie-banner],
-[data-privacy-notice],
-[data-cookie-overlay],
-[data-cookiebanner],
-[data-gdpr],
-div[data-nosnippet][aria-modal="true"] {
+html:not([data-ls-cookies-disabled]) [data-testid*="cookie-banner" i],
+html:not([data-ls-cookies-disabled]) [data-testid*="consent-banner" i],
+html:not([data-ls-cookies-disabled]) [data-testid*="gdpr-banner" i],
+html:not([data-ls-cookies-disabled]) [data-testid*="cookie-notice" i],
+html:not([data-ls-cookies-disabled]) [data-cookie-consent],
+html:not([data-ls-cookies-disabled]) [data-gdpr-consent],
+html:not([data-ls-cookies-disabled]) [data-consent-banner],
+html:not([data-ls-cookies-disabled]) [data-cookie-banner],
+html:not([data-ls-cookies-disabled]) [data-privacy-notice],
+html:not([data-ls-cookies-disabled]) [data-cookie-overlay],
+html:not([data-ls-cookies-disabled]) [data-cookiebanner],
+html:not([data-ls-cookies-disabled]) [data-gdpr],
+html:not([data-ls-cookies-disabled]) div[data-nosnippet][aria-modal="true"] {
   display: none !important;
 }
 
@@ -537,41 +537,41 @@ div[data-nosnippet][aria-modal="true"] {
    SECTION 42 — OVERLAY / BACKDROP HELPERS
    (standalone overlay divs that darken the page behind a banner)
    ═══════════════════════════════════════════════════════════ */
-.cookie-consent-overlay,
-.gdpr-overlay,
-.consent-overlay,
-.privacy-overlay,
-.cookie-overlay,
-.cookie-modal-overlay,
-.cookie-backdrop,
-.consent-backdrop,
-.gdpr-backdrop,
-#consent-overlay,
-#gdpr-overlay,
-#cookie-backdrop,
-#privacy-overlay,
-.cmp-overlay,
-.cmp-backdrop,
-#cmp-overlay {
+html:not([data-ls-cookies-disabled]) .cookie-consent-overlay,
+html:not([data-ls-cookies-disabled]) .gdpr-overlay,
+html:not([data-ls-cookies-disabled]) .consent-overlay,
+html:not([data-ls-cookies-disabled]) .privacy-overlay,
+html:not([data-ls-cookies-disabled]) .cookie-overlay,
+html:not([data-ls-cookies-disabled]) .cookie-modal-overlay,
+html:not([data-ls-cookies-disabled]) .cookie-backdrop,
+html:not([data-ls-cookies-disabled]) .consent-backdrop,
+html:not([data-ls-cookies-disabled]) .gdpr-backdrop,
+html:not([data-ls-cookies-disabled]) #consent-overlay,
+html:not([data-ls-cookies-disabled]) #gdpr-overlay,
+html:not([data-ls-cookies-disabled]) #cookie-backdrop,
+html:not([data-ls-cookies-disabled]) #privacy-overlay,
+html:not([data-ls-cookies-disabled]) .cmp-overlay,
+html:not([data-ls-cookies-disabled]) .cmp-backdrop,
+html:not([data-ls-cookies-disabled]) #cmp-overlay {
   display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 43 — WRAPPERS INJECTED BY KNOWN IFRAME CMPS
    ═══════════════════════════════════════════════════════════ */
-iframe[src*="cookiebot.com"],
-iframe[src*="onetrust.com"],
-iframe[src*="trustarc.com"],
-iframe[src*="quantcast.com"],
-iframe[src*="consentmanager.net"],
-iframe[src*="didomi.io"],
-iframe[src*="usercentrics.eu"],
-iframe[src*="sp-prod.net"],
-iframe[src*="sourcepoint.com"],
-iframe[src*="cookiepro.com"],
-iframe[title*="cookie" i][sandbox],
-iframe[title*="consent" i][sandbox],
-iframe[title*="privacy notice" i] {
+html:not([data-ls-cookies-disabled]) iframe[src*="cookiebot.com"],
+html:not([data-ls-cookies-disabled]) iframe[src*="onetrust.com"],
+html:not([data-ls-cookies-disabled]) iframe[src*="trustarc.com"],
+html:not([data-ls-cookies-disabled]) iframe[src*="quantcast.com"],
+html:not([data-ls-cookies-disabled]) iframe[src*="consentmanager.net"],
+html:not([data-ls-cookies-disabled]) iframe[src*="didomi.io"],
+html:not([data-ls-cookies-disabled]) iframe[src*="usercentrics.eu"],
+html:not([data-ls-cookies-disabled]) iframe[src*="sp-prod.net"],
+html:not([data-ls-cookies-disabled]) iframe[src*="sourcepoint.com"],
+html:not([data-ls-cookies-disabled]) iframe[src*="cookiepro.com"],
+html:not([data-ls-cookies-disabled]) iframe[title*="cookie" i][sandbox],
+html:not([data-ls-cookies-disabled]) iframe[title*="consent" i][sandbox],
+html:not([data-ls-cookies-disabled]) iframe[title*="privacy notice" i] {
   display: none !important;
 }
 
@@ -580,19 +580,19 @@ iframe[title*="privacy notice" i] {
    Many CMPs set overflow:hidden on <html> or <body> to prevent
    scrolling behind the banner. Undo that.
    ═══════════════════════════════════════════════════════════ */
-html.cookie-modal-open,
-html.gdpr-active,
-html.has-consent-modal,
-html.cmp-open,
-html.has-cookie-banner,
-body.cookie-modal-open,
-body.gdpr-active,
-body.consent-open,
-body.has-cookie-banner,
-body.cmp-open,
-body.modal-open-for-consent,
-body.overflow-hidden-for-cookie,
-body.no-scroll-for-consent {
+html:not([data-ls-cookies-disabled]).cookie-modal-open,
+html:not([data-ls-cookies-disabled]).gdpr-active,
+html:not([data-ls-cookies-disabled]).has-consent-modal,
+html:not([data-ls-cookies-disabled]).cmp-open,
+html:not([data-ls-cookies-disabled]).has-cookie-banner,
+html:not([data-ls-cookies-disabled]) body.cookie-modal-open,
+html:not([data-ls-cookies-disabled]) body.gdpr-active,
+html:not([data-ls-cookies-disabled]) body.consent-open,
+html:not([data-ls-cookies-disabled]) body.has-cookie-banner,
+html:not([data-ls-cookies-disabled]) body.cmp-open,
+html:not([data-ls-cookies-disabled]) body.modal-open-for-consent,
+html:not([data-ls-cookies-disabled]) body.overflow-hidden-for-cookie,
+html:not([data-ls-cookies-disabled]) body.no-scroll-for-consent {
   overflow: auto !important;
   position: static !important;
 }
@@ -602,134 +602,134 @@ body.no-scroll-for-consent {
    ═══════════════════════════════════════════════════════════ */
 
 /* Plausible consent */
-.plausible-consent-overlay,
-#plausible-consent-overlay { display: none !important; }
+html:not([data-ls-cookies-disabled]) .plausible-consent-overlay,
+html:not([data-ls-cookies-disabled]) #plausible-consent-overlay { display: none !important; }
 
 /* Matomo consent */
-.matomo-consent-overlay,
-#matomo-consent-overlay { display: none !important; }
+html:not([data-ls-cookies-disabled]) .matomo-consent-overlay,
+html:not([data-ls-cookies-disabled]) #matomo-consent-overlay { display: none !important; }
 
 /* HubSpot cookie */
-#hs-banner-parent,
-.hs-banner-container,
-#cookie-law-info-bar + #hs-overlay { display: none !important; }
+html:not([data-ls-cookies-disabled]) #hs-banner-parent,
+html:not([data-ls-cookies-disabled]) .hs-banner-container,
+html:not([data-ls-cookies-disabled]) #cookie-law-info-bar + #hs-overlay { display: none !important; }
 
 /* Wix cookie banner */
-[data-hook="cookie-banner"],
-#cookie-banner-root,
-#COOKIE_BANNER { display: none !important; }
+html:not([data-ls-cookies-disabled]) [data-hook="cookie-banner"],
+html:not([data-ls-cookies-disabled]) #cookie-banner-root,
+html:not([data-ls-cookies-disabled]) #COOKIE_BANNER { display: none !important; }
 
 /* Squarespace cookie banner */
-.sqs-cookie-banner-v2,
-.cookie-banner { display: none !important; }
+html:not([data-ls-cookies-disabled]) .sqs-cookie-banner-v2,
+html:not([data-ls-cookies-disabled]) .cookie-banner { display: none !important; }
 
 /* Shopify (generic) */
-.shopify-section--cookie-banner,
-#shopify-cookie-banner { display: none !important; }
+html:not([data-ls-cookies-disabled]) .shopify-section--cookie-banner,
+html:not([data-ls-cookies-disabled]) #shopify-cookie-banner { display: none !important; }
 
 /* Elementor Popup cookie */
-.elementor-popup-modal[data-elementor-type="popup"] > .elementor-motion-effects-container + .dialog-widget-content[class*="cookie" i] { display: none !important; }
+html:not([data-ls-cookies-disabled]) .elementor-popup-modal[data-elementor-type="popup"] > .elementor-motion-effects-container + .dialog-widget-content[class*="cookie" i] { display: none !important; }
 
 /* WordPress GDPR Cookie Consent plugin */
-#gdpr-cookie-consent-bar,
-.gdpr-cookie-consent-bar,
-.gdpr-cookie-consent-settings,
-#gdpr-cookie-consent-settings { display: none !important; }
+html:not([data-ls-cookies-disabled]) #gdpr-cookie-consent-bar,
+html:not([data-ls-cookies-disabled]) .gdpr-cookie-consent-bar,
+html:not([data-ls-cookies-disabled]) .gdpr-cookie-consent-settings,
+html:not([data-ls-cookies-disabled]) #gdpr-cookie-consent-settings { display: none !important; }
 
 /* Silktide / Cookie Control */
-#cookie-control,
-.cookie-control,
-#cookie-control-panel { display: none !important; }
+html:not([data-ls-cookies-disabled]) #cookie-control,
+html:not([data-ls-cookies-disabled]) .cookie-control,
+html:not([data-ls-cookies-disabled]) #cookie-control-panel { display: none !important; }
 
 /* Drupal EU Cookie Compliance */
-#sliding-popup,
-.sliding-popup-top,
-.sliding-popup-bottom,
-.eu-cookie-compliance-popup { display: none !important; }
+html:not([data-ls-cookies-disabled]) #sliding-popup,
+html:not([data-ls-cookies-disabled]) .sliding-popup-top,
+html:not([data-ls-cookies-disabled]) .sliding-popup-bottom,
+html:not([data-ls-cookies-disabled]) .eu-cookie-compliance-popup { display: none !important; }
 
 /* Joomla Cookie Consent */
-.com-cookieconfirm-banner,
-#cookie-confirm { display: none !important; }
+html:not([data-ls-cookies-disabled]) .com-cookieconfirm-banner,
+html:not([data-ls-cookies-disabled]) #cookie-confirm { display: none !important; }
 
 /* CookieConsent v3 (upgraded vanilla) */
-#cc:not(.cc--invisible),
-#cc .cm,
-#cc .pm { display: none !important; }
+html:not([data-ls-cookies-disabled]) #cc:not(.cc--invisible),
+html:not([data-ls-cookies-disabled]) #cc .cm,
+html:not([data-ls-cookies-disabled]) #cc .pm { display: none !important; }
 
 /* Piwik PRO consent */
-.ppms_cm_popup_overlay,
-.ppms_cm_popup__content,
-#ppms_cm_consent_popup { display: none !important; }
+html:not([data-ls-cookies-disabled]) .ppms_cm_popup_overlay,
+html:not([data-ls-cookies-disabled]) .ppms_cm_popup__content,
+html:not([data-ls-cookies-disabled]) #ppms_cm_consent_popup { display: none !important; }
 
 /* Consent.js */
-.consent-overlay-wrap,
-#consent-notice { display: none !important; }
+html:not([data-ls-cookies-disabled]) .consent-overlay-wrap,
+html:not([data-ls-cookies-disabled]) #consent-notice { display: none !important; }
 
 /* WP AutoTerms */
-#wp-autoterms-cookiebar,
-.wp-autoterms-cookiebar { display: none !important; }
+html:not([data-ls-cookies-disabled]) #wp-autoterms-cookiebar,
+html:not([data-ls-cookies-disabled]) .wp-autoterms-cookiebar { display: none !important; }
 
 /* CookiePal */
-.cookiepal-consent-overlay,
-#cookiepal-popup { display: none !important; }
+html:not([data-ls-cookies-disabled]) .cookiepal-consent-overlay,
+html:not([data-ls-cookies-disabled]) #cookiepal-popup { display: none !important; }
 
 /* Sirdata CMP */
-#sirdata-cmp-container,
-.sirdata-cmp { display: none !important; }
+html:not([data-ls-cookies-disabled]) #sirdata-cmp-container,
+html:not([data-ls-cookies-disabled]) .sirdata-cmp { display: none !important; }
 
 /* LiveRamp CMP */
-.liveRamp-consent,
-#liveRamp-cmp { display: none !important; }
+html:not([data-ls-cookies-disabled]) .liveRamp-consent,
+html:not([data-ls-cookies-disabled]) #liveRamp-cmp { display: none !important; }
 
 /* Pubtech CMP */
-#pubtech-cmp,
-.pubtech-consent { display: none !important; }
+html:not([data-ls-cookies-disabled]) #pubtech-cmp,
+html:not([data-ls-cookies-disabled]) .pubtech-consent { display: none !important; }
 
 /* Oath / Verizon Media CMP */
-.sdk-consent-container,
-#sdk-consent-container { display: none !important; }
+html:not([data-ls-cookies-disabled]) .sdk-consent-container,
+html:not([data-ls-cookies-disabled]) #sdk-consent-container { display: none !important; }
 
 /* Forbes / Minute Media CMP */
-.purch-gdpr-modal,
-.purch-gdpr-underlay { display: none !important; }
+html:not([data-ls-cookies-disabled]) .purch-gdpr-modal,
+html:not([data-ls-cookies-disabled]) .purch-gdpr-underlay { display: none !important; }
 
 /* Marfeel CMP */
-.mrf-cmp__layer,
-#mrf-cmp { display: none !important; }
+html:not([data-ls-cookies-disabled]) .mrf-cmp__layer,
+html:not([data-ls-cookies-disabled]) #mrf-cmp { display: none !important; }
 
 /* Fandom cookie */
-.fandom-gdpr-popup,
-.gdpr-consent-modal { display: none !important; }
+html:not([data-ls-cookies-disabled]) .fandom-gdpr-popup,
+html:not([data-ls-cookies-disabled]) .gdpr-consent-modal { display: none !important; }
 
 /* Stack Exchange / Stack Overflow */
-.js-consent-banner,
-#cookie-consent-banner { display: none !important; }
+html:not([data-ls-cookies-disabled]) .js-consent-banner,
+html:not([data-ls-cookies-disabled]) #cookie-consent-banner { display: none !important; }
 
 /* Reddit cookie notice */
-.XPromoBottomBar,
-[data-testid="cookie-policy-banner"] { display: none !important; }
+html:not([data-ls-cookies-disabled]) .XPromoBottomBar,
+html:not([data-ls-cookies-disabled]) [data-testid="cookie-policy-banner"] { display: none !important; }
 
 /* Twitter/X cookie */
-[data-testid="BottomBar"][role="dialog"],
-[data-testid="toast"]:has([href*="cookie" i]) { display: none !important; }
+html:not([data-ls-cookies-disabled]) [data-testid="BottomBar"][role="dialog"],
+html:not([data-ls-cookies-disabled]) [data-testid="toast"]:has([href*="cookie" i]) { display: none !important; }
 
 /* BBC cookie notice */
-#bbccookies,
-.bbccookies,
-.cookie-banner--global { display: none !important; }
+html:not([data-ls-cookies-disabled]) #bbccookies,
+html:not([data-ls-cookies-disabled]) .bbccookies,
+html:not([data-ls-cookies-disabled]) .cookie-banner--global { display: none !important; }
 
 /* Guardian */
-.consent-management,
-#consent-management { display: none !important; }
+html:not([data-ls-cookies-disabled]) .consent-management,
+html:not([data-ls-cookies-disabled]) #consent-management { display: none !important; }
 
 /* NY Times */
-.css-1w7d72r,    /* NYT cookie notice (class changes but commonly this) */
-[data-testid="gdpr-consent-notice"] { display: none !important; }
+html:not([data-ls-cookies-disabled]) .css-1w7d72r,    /* NYT cookie notice (class changes but commonly this) */
+html:not([data-ls-cookies-disabled]) [data-testid="gdpr-consent-notice"] { display: none !important; }
 
 /* CNN */
-.cn-privacy-notification-widget,
-#cn-privacy-notification-widget { display: none !important; }
+html:not([data-ls-cookies-disabled]) .cn-privacy-notification-widget,
+html:not([data-ls-cookies-disabled]) #cn-privacy-notification-widget { display: none !important; }
 
 /* Forbes */
-.consent_div,
-#consent_blackbar { display: none !important; }
+html:not([data-ls-cookies-disabled]) .consent_div,
+html:not([data-ls-cookies-disabled]) #consent_blackbar { display: none !important; }

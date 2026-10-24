@@ -124,6 +124,7 @@ let rootObserver = null;
 let hiddenConsentObserved = false;
 let consentLockTimer = null;
 const hiddenConsentElements = new Set();
+const previousDisplay = new WeakMap();
 
 // Badge update batching (max 1 update/second)
 let pendingCount = 0;
@@ -145,6 +146,8 @@ async function init() {
     settings = { isEnabled: true, whitelisted: false, autoDecline: false };
   }
 
+  initialized = true;
+  syncBlockingState();
   if (!settings.isEnabled || settings.whitelisted) return;
 
   // Hide anything already in DOM that CSS may have missed
@@ -152,8 +155,6 @@ async function init() {
 
   // Watch for dynamic injections
   startObserver();
-
-  initialized = true;
 }
 
 // ── Hiding logic ──────────────────────────────────────────────────────────────
@@ -169,6 +170,7 @@ function hideExisting() {
 function hideEl(el) {
   if (!el || el._idwcDone) return;
   el._idwcDone = true;
+  previousDisplay.set(el, [el.style.getPropertyValue('display'), el.style.getPropertyPriority('display')]);
   el.style.setProperty('display', 'none', 'important');
   hiddenConsentObserved = true;
   hiddenConsentElements.add(el);
@@ -331,6 +333,24 @@ function flushBadge() {
   pendingCount = 0;
 }
 
+// CSS and inline hiding must obey the same enable/allowlist state.
+function syncBlockingState() {
+  const active = settings.isEnabled && !settings.whitelisted;
+  document.documentElement.toggleAttribute('data-ls-cookies-disabled', !active);
+  if (active) return;
+  clearTimeout(declineTimer);
+  clearTimeout(consentLockTimer);
+  hiddenConsentObserved = false;
+  for (const el of hiddenConsentElements) {
+    const [value, priority] = previousDisplay.get(el) || ['', ''];
+    if (value) el.style.setProperty('display', value, priority);
+    else el.style.removeProperty('display');
+    delete el._idwcDone;
+    previousDisplay.delete(el);
+  }
+  hiddenConsentElements.clear();
+}
+
 // ── Settings change listener (storage-based, no tabs permission needed) ───────
 
 chrome.storage.onChanged.addListener((changes) => {
@@ -351,6 +371,7 @@ chrome.storage.onChanged.addListener((changes) => {
   }
 
   if (!changed) return;
+  syncBlockingState();
 
   if (!settings.isEnabled || settings.whitelisted) {
     if (observer) { observer.disconnect(); observer = null; }

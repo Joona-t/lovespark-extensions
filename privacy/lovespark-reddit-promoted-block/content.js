@@ -125,11 +125,13 @@ function sweep(root) {
 
   if (isOldReddit) {
     for (const sel of OLD_REDDIT_SELECTORS) {
+      if (root.matches?.(sel)) hideElement(root);
       root.querySelectorAll(sel).forEach(hideElement);
     }
   } else {
     for (const sel of NEW_REDDIT_SELECTORS) {
       try {
+        if (root.matches?.(sel)) hideElement(root);
         root.querySelectorAll(sel).forEach(hideElement);
       } catch (err) { console.warn('[LoveSpark Reddit Promoted Block] unknown:', err); }
     }
@@ -141,6 +143,7 @@ function sweep(root) {
 
   for (const sel of SIDEBAR_SELECTORS) {
     try {
+      if (root.matches?.(sel)) hideElement(root);
       root.querySelectorAll(sel).forEach(hideElement);
     } catch (err) { console.warn('[LoveSpark Reddit Promoted Block] unknown:', err); }
   }

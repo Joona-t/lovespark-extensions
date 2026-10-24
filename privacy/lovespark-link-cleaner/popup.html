@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LoveSpark Link Cleaner</title>
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+</head>
+<body>
+  <div class="popup-container">
+
+    <header class="popup-header">
+      <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot">
+      <div class="header-text">
+        <span class="header-title">LoveSpark</span>
+        <span class="header-sub">Link Cleaner</span>
+      </div>
+      <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle">
+        <span id="themeLabel">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+    </header>
+
+    <section class="status-section">
+      <div id="status-icon" class="status-icon">✨</div>
+      <div id="status-text" class="status-text">Links are clean!</div>
+      <p id="cute-msg" class="cute-msg">Clean links, clear mind 💕</p>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="main-toggle" checked>
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      </label>
+    </section>
+
+    <section class="stats-section">
+      <div class="stat-box">
+        <div id="stat-today" class="stat-num">0</div>
+        <div class="stat-label">stripped today</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box">
+        <div id="stat-total" class="stat-num">0</div>
+        <div class="stat-label">stripped total</div>
+      </div>
+    </section>
+
+
+  </div>
+  <script src="lib/lovespark-footer.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

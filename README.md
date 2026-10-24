@@ -2,7 +2,7 @@
 
 Every LoveSpark browser extension in one repo. Free, open source (MIT), privacy-first: no ads, no data collection, no remote code.
 
-116 extensions. Each folder is a complete, independently loadable extension (`manifest.json` at its root) with its own `PRIVACY.md`, `BUGS_AND_ITERATIONS.md` and store listing docs.
+115 loadable extensions and two infrastructure tools. Each folder is a complete, independently loadable extension (`manifest.json` at its root) with its own `PRIVACY.md`, `BUGS_AND_ITERATIONS.md` and store listing docs.
 
 ## Working in this repo
 
@@ -10,6 +10,8 @@ Every LoveSpark browser extension in one repo. Free, open source (MIT), privacy-
 - Quality gate for the extension(s) you touched: `git config core.hooksPath .githooks` once per clone; the pre-commit hook then runs `ls-check` on every staged extension folder.
 - Store zips: `scripts/build-zips.sh <folder>` (from the LoveSpark scripts repo).
 - History: every imported extension keeps its full commit history — `git log -- <folder>`.
+
+Published screenshot extension audit: [findings and coverage](docs/audits/2026-10-24.md), [test commands](tests/README.md).
 
 ## Accessibility
 
@@ -118,17 +120,18 @@ Every LoveSpark browser extension in one repo. Free, open source (MIT), privacy-
 
 | Extension | Version | Folder | Came from |
 |---|---|---|---|
-| [I Don't Want Cookies](privacy/i-dont-want-cookies/) | 1.0.38 | `privacy/i-dont-want-cookies` | [I-Dont-Want-Cookies](https://github.com/Joona-t/I-Dont-Want-Cookies) (archived) |
+| [I Don't Want Cookies](privacy/i-dont-want-cookies/) | 1.0.39 | `privacy/i-dont-want-cookies` | [I-Dont-Want-Cookies](https://github.com/Joona-t/I-Dont-Want-Cookies) (archived) |
 | [Pink Ad Blocker — Block Ads & Trackers](privacy/lovespark-adblock/) | 1.1.2 | `privacy/lovespark-adblock` | [LoveSpark-AdBlock](https://github.com/Joona-t/LoveSpark-AdBlock) (archived) |
 | [LoveSpark Download Guard](privacy/lovespark-download-guard/) | 1.0.2 | `privacy/lovespark-download-guard` | local-only until now |
 | [LoveSpark Email Guard](privacy/lovespark-email-guard/) | 1.0.34 | `privacy/lovespark-email-guard` | [lovespark-email-guard](https://github.com/Joona-t/lovespark-email-guard) (archived) |
 | [LoveSpark Fingerprint Shield](privacy/lovespark-fingerprint-shield/) | 1.0.36 | `privacy/lovespark-fingerprint-shield` | [lovespark-fingerprint-shield](https://github.com/Joona-t/lovespark-fingerprint-shield) (archived) |
 | [LoveSpark History Cleaner](privacy/lovespark-history-cleaner/) | 1.0.4 | `privacy/lovespark-history-cleaner` | local-only until now |
+| [LoveSpark Link Cleaner](privacy/lovespark-link-cleaner/) | 1.0.6 | `privacy/lovespark-link-cleaner` | [lovespark-link-cleaner](https://github.com/Joona-t/lovespark-link-cleaner) (archived; restored) |
 | [LoveSpark Metadata Scrubber](privacy/lovespark-metadata-scrubber/) | 1.0.34 | `privacy/lovespark-metadata-scrubber` | [lovespark-metadata-scrubber](https://github.com/Joona-t/lovespark-metadata-scrubber) (archived) |
 | [LoveSpark Noise Blocker](privacy/lovespark-noise-blocker/) | 1.0.2 | `privacy/lovespark-noise-blocker` | local-only until now |
 | [LoveSpark Password Check](privacy/lovespark-password-check/) | 1.0.3 | `privacy/lovespark-password-check` | local-only until now |
 | [LoveSpark Popup Blocker](privacy/lovespark-popup-blocker/) | 1.0.38 | `privacy/lovespark-popup-blocker` | [lovespark-popup-blocker](https://github.com/Joona-t/lovespark-popup-blocker) (archived) |
-| [LoveSpark Reddit Ad Blocker](privacy/lovespark-reddit-promoted-block/) | 1.0.30 | `privacy/lovespark-reddit-promoted-block` | [reddit-promoted-blocker-lovespark](https://github.com/Joona-t/reddit-promoted-blocker-lovespark) (archived) |
+| [LoveSpark Reddit Ad Blocker](privacy/lovespark-reddit-promoted-block/) | 1.0.31 | `privacy/lovespark-reddit-promoted-block` | [reddit-promoted-blocker-lovespark](https://github.com/Joona-t/reddit-promoted-blocker-lovespark) (archived) |
 | [LoveSpark Referrer Shield](privacy/lovespark-referrer-shield/) | 1.0.34 | `privacy/lovespark-referrer-shield` | [lovespark-referrer-shield](https://github.com/Joona-t/lovespark-referrer-shield) (archived) |
 | [lovespark-test-ext](privacy/lovespark-test-ext/) | — | `privacy/lovespark-test-ext` | local-only until now |
 | [LoveSpark Twitch AdBlock](privacy/lovespark-twitch-adblock/) | 1.0.34 | `privacy/lovespark-twitch-adblock` | [lovespark-twitch-adblock](https://github.com/Joona-t/lovespark-twitch-adblock) (archived) |
@@ -144,7 +147,7 @@ Every LoveSpark browser extension in one repo. Free, open source (MIT), privacy-
 | [LoveSpark Color Picker](productivity/lovespark-color-picker/) | 1.0.2 | `productivity/lovespark-color-picker` | local-only until now |
 | [LoveSpark Daily Checklist](productivity/lovespark-daily-checklist/) | 1.0.2 | `productivity/lovespark-daily-checklist` | local-only until now |
 | [LoveSpark Link Saver](productivity/lovespark-link-saver/) | 1.0.2 | `productivity/lovespark-link-saver` | local-only until now |
-| [LoveSpark Notes](productivity/lovespark-notes/) | 1.0.42 | `productivity/lovespark-notes` | [lovespark-notes](https://github.com/Joona-t/lovespark-notes) (archived) |
+| [LoveSpark Notes](productivity/lovespark-notes/) | 1.0.43 | `productivity/lovespark-notes` | [lovespark-notes](https://github.com/Joona-t/lovespark-notes) (archived) |
 | [LoveSpark Notes](productivity/lovespark-notes-app/) | 1.0.42 | `productivity/lovespark-notes-app` | [lovespark-notes-app](https://github.com/Joona-t/lovespark-notes-app) (archived) |
 | [LoveSpark Panic Button](productivity/lovespark-panic-button/) | 1.0.2 | `productivity/lovespark-panic-button` | local-only until now |
 | [LoveSpark Planner](productivity/lovespark-planner/) | 1.0.3 | `productivity/lovespark-planner` | local-only until now |

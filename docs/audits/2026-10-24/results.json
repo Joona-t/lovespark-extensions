@@ -1,0 +1,585 @@
+{
+  "date": "2026-10-24",
+  "scope": "Published screenshot extension projects with located source",
+  "browser": "Chrome for Testing 153.0.8010.12",
+  "playwright": "1.62.1",
+  "node": "26.10.0",
+  "extensions": [
+    {
+      "folder": "themes/lovespark-retro-cursor",
+      "version": "1.1.39",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Cursor style applies and is removed when disabled",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "scripting"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "privacy/lovespark-adblock",
+      "version": "1.1.2",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Chromium DNR matches an advertising request",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "storage",
+        "alarms",
+        "activeTab"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "Accessibility/cozy-toolkit",
+      "version": "1.1.37",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup/popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings/settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "tabs"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "privacy/i-dont-want-cookies",
+      "version": "1.0.39",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Cookie banner removal respects disabled state",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "alarms"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": [
+        "Scope CSS hiding to enabled, non-allowlisted pages; restore original inline display values immediately when disabled or allowlisted, and allow re-enabling without reloading."
+      ]
+    },
+    {
+      "folder": "neurodivergent/lovespark-focus",
+      "version": "1.1.45",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Timer start, pause, resume and reset",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "alarms",
+        "declarativeNetRequest",
+        "notifications"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "neurodivergent/anti-brainrot",
+      "version": "1.0.43",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "YouTube comments restore when disabled",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "productivity/lovespark-notes",
+      "version": "1.0.43",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "app/app.html",
+          "errors": []
+        },
+        {
+          "path": "popup/popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Unicode note autosaves and survives reopening",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "alarms",
+        "contextMenus",
+        "identity"
+      ],
+      "hostPermissions": [],
+      "fixes": [
+        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
+        "Reopen recent saved popup drafts even after automatic title generation; preserve explicit titles and skip deleted notes. Replace remote fonts with bundled assets."
+      ]
+    },
+    {
+      "folder": "privacy/porn-blocker-rewire-brain",
+      "version": "2.4.7",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "dashboard.html",
+          "errors": []
+        },
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "options.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess",
+        "tabs",
+        "alarms",
+        "notifications"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "neurodivergent/focus-blossom",
+      "version": "1.0.48",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Custom blocked site persists",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage",
+        "alarms",
+        "notifications",
+        "declarativeNetRequest"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "Games/lovespark-flappy-waifu",
+      "version": "1.0.41",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Play button opens a working game",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "neurodivergent/neurodivergent-reader",
+      "version": "1.0.34",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup/popup.html",
+          "errors": []
+        },
+        {
+          "path": "settings/settings.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "tabs"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    },
+    {
+      "folder": "privacy/lovespark-reddit-promoted-block",
+      "version": "1.0.31",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Reddit ads hide while organic posts remain",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": [
+        "Include newly inserted root elements in ad matching, so dynamically added ad posts are hidden while ordinary posts remain."
+      ]
+    },
+    {
+      "folder": "privacy/lovespark-popup-blocker",
+      "version": "1.0.38",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Unsolicited popup blocked, disabled state restores it",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "declarativeNetRequest",
+        "storage"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "privacy/lovespark-link-cleaner",
+      "version": "1.0.6",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Enable switch saves and restores both states",
+          "passed": true
+        },
+        {
+          "name": "Link cleaning preserves relative destination",
+          "passed": true
+        },
+        {
+          "name": "URL cleaning preserves application history state",
+          "passed": true
+        },
+        {
+          "name": "Reused SPA links are cleaned after href changes",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "declarativeNetRequest",
+        "storage"
+      ],
+      "hostPermissions": [
+        "<all_urls>"
+      ],
+      "fixes": [
+        "Package the local font stylesheet and the font files it references so the UI renders without missing assets or remote font requests.",
+        "Restore the archived extension with recorded upstream provenance. Resolve relative links against document.baseURI, preserve history.state, and re-clean links when SPA navigation changes href."
+      ]
+    },
+    {
+      "folder": "reading/public-knowledge-unblocker",
+      "version": "1.0.26",
+      "loaded": true,
+      "pages": [],
+      "scenarios": [
+        {
+          "name": "DOI lookup renders an open-access result",
+          "passed": true
+        },
+        {
+          "name": "Content script has no uncaught exceptions",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [],
+      "hostPermissions": [
+        "https://api.openalex.org/*"
+      ],
+      "fixes": []
+    },
+    {
+      "folder": "Games/dreamy-garden",
+      "version": "1.0.31",
+      "loaded": true,
+      "pages": [
+        {
+          "path": "popup.html",
+          "errors": []
+        },
+        {
+          "path": "newtab.html",
+          "errors": []
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Theme selection and available persistence",
+          "passed": true
+        },
+        {
+          "name": "Play button opens a working game",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "permissions": [
+        "storage"
+      ],
+      "hostPermissions": [],
+      "fixes": []
+    }
+  ]
+}

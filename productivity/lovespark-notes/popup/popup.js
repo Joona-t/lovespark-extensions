@@ -91,16 +91,21 @@ async function init() {
 async function resumeOrCreate() {
   const storage = getStorage();
 
-  // Check for recent popup note (< 5 min, still untitled)
+  // Resume the recent popup draft, including its auto-generated or explicit title.
   if (prefs.lastPopupNoteId) {
     const index = await storage.loadIndex();
     const entry = index.notes.find(n => n.id === prefs.lastPopupNoteId);
 
-    if (entry && !entry.title && (Date.now() - entry.updatedAt < 300000)) {
+    if (entry && !entry.deletedAt && (Date.now() - entry.updatedAt < 300000)) {
       currentNoteId = entry.id;
       selectedCategory = entry.category;
       const content = await loadNoteContent(entry.id);
       $('noteContent').value = content;
+      if (entry.title && entry.title !== autoTitle(content)) {
+        $('noteTitle').value = entry.title;
+        $('noteTitle').style.display = '';
+        $('btnTitle').style.display = 'none';
+      }
       renderCategoryPills();
       return;
     }
