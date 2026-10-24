@@ -24,20 +24,20 @@
     <div class="header-actions">
       <div class="btn-new-wrap">
         <button class="btn-new" id="btnNew" title="CMD+N">✦ New Note</button>
-        <button class="btn-new-dropdown" id="btnNewDropdown" title="Templates">▾</button>
+        <button class="btn-new-dropdown" id="btnNewDropdown" title="Templates" aria-label="New note from template" aria-haspopup="true" aria-expanded="false">▾</button>
         <div class="template-dropdown" id="templateDropdown" style="display:none"></div>
       </div>
-      <button class="btn-icon" id="btnDaily" title="CMD+D">📋</button>
-      <button class="btn-icon" id="btnExportAll" title="Export all">📦</button>
-      <button class="btn-icon" id="btnImport" title="Import">📥</button>
+      <button class="btn-icon" id="btnDaily" aria-label="Open daily note" title="CMD+D">📋</button>
+      <button class="btn-icon" id="btnExportAll" aria-label="Export all notes" title="Export all">📦</button>
+      <button class="btn-icon" id="btnImport" aria-label="Import notes" title="Import">📥</button>
       <div class="sync-area" id="syncArea" style="display:none">
         <button class="sync-signin-btn" id="syncSignIn" style="display:none">Sign in</button>
         <div class="sync-user" id="syncUser" style="display:none">
-          <button class="sync-avatar-btn" id="syncAvatarBtn" aria-label="Sync account menu">
+          <button class="sync-avatar-btn" id="syncAvatarBtn" aria-label="Sync account menu" aria-haspopup="true" aria-expanded="false">
             <span class="sync-avatar-initial" id="syncAvatarInitial" aria-hidden="true"></span>
             <span class="sync-pulse" id="syncPulse"></span>
           </button>
-          <div class="sync-dropdown" id="syncDropdown" style="display:none">
+          <div class="sync-dropdown" id="syncDropdown">
             <div class="sync-email" id="syncEmail"></div>
             <button class="sync-action" id="syncNowBtn">Sync now</button>
             <div class="sync-last" id="syncLast">Never synced</div>
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-label="Change Theme" aria-haspopup="true" aria-expanded="false">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -57,7 +57,7 @@
         <button class="theme-option" data-theme="slate">Slate</button>
       </div>
     </div>
-      <button class="btn-icon" id="btnHelp" title="Guide">❓</button>
+      <button class="btn-icon" id="btnHelp" title="Guide" aria-label="Open guide">❓</button>
     </div>
   </header>
 
@@ -106,11 +106,11 @@
             </div>
             <div class="toolbar-right">
               <div class="font-switcher" id="fontSwitcher"></div>
-              <button class="btn-icon-sm" id="btnPin" title="Pin note">💖</button>
+              <button class="btn-icon-sm" id="btnPin" aria-label="Pin note" title="Pin note">💖</button>
               <button class="btn-icon-sm" id="btnVersions" title="Version history">🕐 <span id="versionCount"></span></button>
-              <button class="btn-icon-sm" id="btnPreview" title="CMD+P">👁</button>
-              <button class="btn-icon-sm" id="btnExport" title="CMD+E">📄</button>
-              <button class="btn-icon-sm" id="btnDistraction" title="CMD+Shift+F">🧘</button>
+              <button class="btn-icon-sm" id="btnPreview" aria-label="Toggle markdown preview" title="CMD+P">👁</button>
+              <button class="btn-icon-sm" id="btnExport" aria-label="Export note" title="CMD+E">📄</button>
+              <button class="btn-icon-sm" id="btnDistraction" aria-label="Toggle distraction-free mode" title="CMD+Shift+F">🧘</button>
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@
           <button class="format-row-btn" data-fmt="bold" title="Bold (Cmd+B)" style="font-weight:700">B</button>
           <button class="format-row-btn" data-fmt="italic" title="Italic (Cmd+I)" style="font-style:italic">I</button>
           <button class="format-row-btn" data-fmt="code" title="Code">&lt;/&gt;</button>
-          <button class="format-row-btn" data-fmt="link" title="Link (Cmd+K)">🔗</button>
+          <button class="format-row-btn" data-fmt="link" title="Link (Cmd+K)" aria-label="Insert link">🔗</button>
         </div>
 
         <div class="editor-content-area">
@@ -135,7 +135,7 @@
         <div class="version-drawer" id="versionDrawer" style="display:none">
           <div class="version-drawer-header">
             <span class="version-drawer-title">Version History</span>
-            <button class="btn-close" id="btnCloseVersions">×</button>
+            <button class="btn-close" id="btnCloseVersions" aria-label="Close version history">×</button>
           </div>
           <div class="version-list" id="versionList"></div>
           <div class="version-footer">✦ Last 20 versions kept automatically</div>
@@ -155,7 +155,7 @@
     <div class="guide-card">
       <div class="guide-header">
         <span class="guide-esc">press ESC to close</span>
-        <button class="btn-close" id="btnCloseGuide">×</button>
+        <button class="btn-close" id="btnCloseGuide" aria-label="Close guide">×</button>
       </div>
 
       <div class="guide-body">

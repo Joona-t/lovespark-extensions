@@ -4,6 +4,25 @@ const saveBtn = document.getElementById('save-btn');
 const syncBtn = document.getElementById('sync-btn');
 const statusEl = document.getElementById('status');
 
+// Theme dropdown (shared lib) + keep aria-expanded in sync with the menu state.
+if (window.LoveSparkTheme) LoveSparkTheme.init();
+const themeToggle = document.getElementById('themeToggle');
+const themeMenu = document.getElementById('themeMenu');
+function syncThemeExpanded() {
+  if (themeToggle && themeMenu) {
+    themeToggle.setAttribute('aria-expanded', String(themeMenu.classList.contains('open')));
+  }
+}
+if (themeToggle) themeToggle.addEventListener('click', syncThemeExpanded);
+document.addEventListener('click', syncThemeExpanded);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && themeMenu && themeMenu.classList.contains('open')) {
+    themeMenu.classList.remove('open');
+    syncThemeExpanded();
+    if (themeToggle) themeToggle.focus();
+  }
+});
+
 function showStatus(msg, type) {
   statusEl.textContent = msg;
   statusEl.className = 'status ' + (type || '');

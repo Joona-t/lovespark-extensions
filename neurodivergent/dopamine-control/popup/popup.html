@@ -3,19 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Dopamine Control</title>
+  <link rel="stylesheet" href="../lib/lovespark-base.css">
   <link rel="stylesheet" href="../shared/theme.css">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+<div class="popup-root" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
 
   <!-- ===================== TIMER VIEW ===================== -->
   <div id="view-timer" class="view">
 
     <header class="popup-header">
-      <div id="dopa" class="dopa">😊</div>
+      <img src="../mascot.png" alt="Sparky the LoveSpark wolf mascot" class="mascot" width="36" height="36">
+      <div id="dopa" class="dopa" role="img" aria-label="Dopa mood indicator" aria-live="polite">😊</div>
       <div class="header-titles">
-        <div class="app-title">DOPAMINE</div>
-        <div class="app-sub">CONTROL</div>
+        <div class="app-title" id="popupTitle">DOPAMINE</div>
+        <div class="app-sub" id="popupDesc">CONTROL</div>
+      </div>
+      <div class="theme-dropdown">
+        <button id="themeToggle" class="theme-dropdown-trigger"
+                aria-expanded="false" aria-haspopup="true" aria-controls="themeMenu" aria-label="Change Theme">
+          <span id="themeLabel" aria-live="polite">Retro Pink</span>
+        </button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+          <div class="theme-dropdown-header">Change Theme</div>
+          <button class="theme-option active" role="menuitem" data-theme="retro">Retro Pink</button>
+          <button class="theme-option" role="menuitem" data-theme="dark">Dark</button>
+          <button class="theme-option" role="menuitem" data-theme="beige">Beige</button>
+          <button class="theme-option" role="menuitem" data-theme="slate">Slate</button>
+        </div>
       </div>
     </header>
 
@@ -58,8 +74,8 @@
     </main>
 
     <nav class="popup-nav">
-      <button class="nav-btn" id="btn-stats">📊 Stats</button>
-      <button class="nav-btn" id="btn-settings">⚙ Settings</button>
+      <button class="nav-btn" id="btn-stats" aria-label="Open stats dashboard">📊 Stats</button>
+      <button class="nav-btn" id="btn-settings" aria-label="Open settings">⚙ Settings</button>
     </nav>
 
     <footer class="popup-footer">Part of the LoveSpark Suite 💕</footer>
@@ -70,7 +86,7 @@
   <div id="view-settings" class="view" style="display:none">
 
     <header class="settings-header">
-      <button class="back-btn" id="btn-back">← Back</button>
+      <button class="back-btn" id="btn-back" aria-label="Back to timer">← Back</button>
       <div class="settings-title">SETTINGS</div>
     </header>
 
@@ -84,7 +100,7 @@
             <span class="slider-name">Weekdays</span>
             <span class="slider-val" id="weekday-label">2h 00m</span>
           </div>
-          <input type="range" id="weekday-slider" min="900" max="28800" step="900" value="7200" class="dc-slider">
+          <input type="range" id="weekday-slider" aria-label="Weekday daily limit" min="900" max="28800" step="900" value="7200" class="dc-slider">
         </div>
 
         <div class="slider-group">
@@ -92,7 +108,7 @@
             <span class="slider-name">Weekends</span>
             <span class="slider-val" id="weekend-label">3h 00m</span>
           </div>
-          <input type="range" id="weekend-slider" min="900" max="28800" step="900" value="10800" class="dc-slider">
+          <input type="range" id="weekend-slider" aria-label="Weekend daily limit" min="900" max="28800" step="900" value="10800" class="dc-slider">
         </div>
 
         <div class="presets-row">
@@ -111,7 +127,7 @@
         <div class="toggle-row">
           <span class="toggle-name">Show floating timer on YouTube</span>
           <label class="toggle-switch">
-            <input type="checkbox" id="toggle-floating" checked>
+            <input type="checkbox" id="toggle-floating" checked aria-label="Show floating timer on YouTube">
             <span class="toggle-knob"></span>
           </label>
         </div>
@@ -128,7 +144,9 @@
 
     </div>
   </div>
+</div>
 
+  <script src="../lib/lovespark-theme.js"></script>
   <script src="../shared/utils.js"></script>
   <script src="../shared/constants.js"></script>
   <script src="popup.js"></script>

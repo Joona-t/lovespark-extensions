@@ -58,21 +58,12 @@ async function checkDailyReset() {
 
 // ── Badge ─────────────────────────────────────────────────────────────────────
 
-let badgeQueue = 0;
-let badgeFlushTimer = null;
-
-function queueBadge(n) {
-  badgeQueue += n;
-  clearTimeout(badgeFlushTimer);
-  badgeFlushTimer = setTimeout(flushBadge, 500);
-}
-
-async function flushBadge() {
-  if (badgeQueue <= 0) return;
-  const { bannersHiddenToday } = await chrome.storage.local.get('bannersHiddenToday');
-  const newVal = (bannersHiddenToday || 0) + badgeQueue;
-  badgeQueue = 0;
-  chrome.action.setBadgeText({ text: newVal >= 1000 ? `${Math.floor(newVal / 1000)}k` : String(newVal) });
+// Event-driven: the HIDDEN handler sets the badge right after persisting the
+// new count. (Previously a 500ms setTimeout debounce, which can be dropped when
+// the MV3 service worker suspends, and which re-added the queued count on top of
+// the already-incremented stored total.)
+function setBadgeCount(n) {
+  chrome.action.setBadgeText({ text: n >= 1000 ? `${Math.floor(n / 1000)}k` : String(n) });
 }
 
 // ── Message handling ──────────────────────────────────────────────────────────
@@ -106,7 +97,7 @@ async function handle(msg, sender) {
         bannersHiddenTotal: newTotal,
         domainStats: stats,
       });
-      queueBadge(msg.count);
+      setBadgeCount(newToday);
       return { ok: true };
     }
 

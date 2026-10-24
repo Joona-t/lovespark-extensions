@@ -34,3 +34,8 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-10-08 — ls-check cleanup (v1.0.35)
+- **Failures:** A11Y-DIALOG, A11Y-EXPANDED, A11Y-LABEL (💾 Download button), A11Y-LANG (offscreen.html), BRAND-LIB-WIRED (lovespark-base.css + lovespark-theme.js not loaded).
+- **Root cause:** popup predates the shared-lib wiring and ARIA conventions; theme logic was an inline copy of lovespark-theme.js; offscreen.html was written without `lang`.
+- **Fix:** popup.html loads `lib/lovespark-base.css` (before popup.css so local styles still win; settings gear resized 28 to 32px so the base.css 32px min-height keeps it circular) and `lib/lovespark-theme.js`; popup.js `applyTheme` now delegates to `LoveSparkTheme.apply` (local init kept for the darkMode migration). Added `role="dialog"` + `aria-labelledby`/`aria-describedby` on body, `aria-expanded` on the theme trigger and settings gear (kept in sync by popup.js), aria-labels on the Download/Settings/Theme buttons, `aria-hidden` on the decorative header emoji, `lang="en"` on offscreen.html. No permission changes.
