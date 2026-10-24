@@ -1,0 +1,93 @@
+/* Dark Mode Reader — theme.css
+   Injected at document_start by the worker (scripting.registerContentScripts),
+   only on hosts where the extension is active, so it never flashes dark on a
+   site the user turned off. Stage 0 + stage 1 + static helpers live here.
+   Dynamic recolouring lands in <style id="dmr-theme"> (engine.js). */
+
+/* ── Stage 0: before first paint ───────────────────────────────────────── */
+html:not(.dmr-off):not(.dmr-measure) {
+  color-scheme: dark;
+  background-color: #131316;
+}
+
+/* ── Stage 1: filter fallback until the dynamic theme lands ────────────── */
+/* The root is painted light so the inversion yields the dark we want. */
+html.dmr-stage1:not(.dmr-measure) {
+  background-color: #ececf0;
+  filter: invert(0.9) hue-rotate(180deg);
+}
+html.dmr-stage1 img,
+html.dmr-stage1 video,
+html.dmr-stage1 canvas,
+html.dmr-stage1 picture,
+html.dmr-stage1 iframe,
+html.dmr-stage1 [style*="background-image"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* ── Stage 2 helpers ───────────────────────────────────────────────────── */
+/* Photos and video: dimmed, never inverted. SVG logos stay crisp. */
+html.dmr-on img:not([src$=".svg"]):not([src^="data:image/svg"]),
+html.dmr-on video,
+html.dmr-on picture > img {
+  filter: brightness(var(--dmr-img-dim, 0.85));
+}
+html.dmr-on ::selection { background-color: rgba(233, 30, 140, 0.45); }
+
+/* Inline style overrides (inline.js sets --dmr-<prop> + data-dmr-inline) */
+html.dmr-on [data-dmr-inline~="background"] { background: var(--dmr-background) !important; }
+html.dmr-on [data-dmr-inline~="border"] { border: var(--dmr-border) !important; }
+html.dmr-on [data-dmr-inline~="background-color"] { background-color: var(--dmr-background-color) !important; }
+html.dmr-on [data-dmr-inline~="background-image"] { background-image: var(--dmr-background-image) !important; }
+html.dmr-on [data-dmr-inline~="color"] { color: var(--dmr-color) !important; }
+html.dmr-on [data-dmr-inline~="border-color"] { border-color: var(--dmr-border-color) !important; }
+html.dmr-on [data-dmr-inline~="border-top-color"] { border-top-color: var(--dmr-border-top-color) !important; }
+html.dmr-on [data-dmr-inline~="border-right-color"] { border-right-color: var(--dmr-border-right-color) !important; }
+html.dmr-on [data-dmr-inline~="border-bottom-color"] { border-bottom-color: var(--dmr-border-bottom-color) !important; }
+html.dmr-on [data-dmr-inline~="border-left-color"] { border-left-color: var(--dmr-border-left-color) !important; }
+html.dmr-on [data-dmr-inline~="outline-color"] { outline-color: var(--dmr-outline-color) !important; }
+html.dmr-on [data-dmr-inline~="box-shadow"] { box-shadow: var(--dmr-box-shadow) !important; }
+html.dmr-on [data-dmr-inline~="fill"] { fill: var(--dmr-fill) !important; }
+html.dmr-on [data-dmr-inline~="stroke"] { stroke: var(--dmr-stroke) !important; }
+
+/* Scrollbars follow the palette */
+html.dmr-on { scrollbar-color: var(--dmr-border, #3a3a40) var(--dmr-bg, #131316); }
+
+/* ── Reading layer (reading.js flips the attributes) ───────────────────── */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url(../../lib/fonts/OpenDyslexic-Regular.otf) format('opentype');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url(../../lib/fonts/OpenDyslexic-Bold.otf) format('opentype');
+  font-weight: 700; font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url(../../lib/fonts/atkinson-hyperlegible-400-normal-latin.woff2) format('woff2');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url(../../lib/fonts/atkinson-hyperlegible-700-normal-latin.woff2) format('woff2');
+  font-weight: 700; font-display: swap;
+}
+html.dmr-read[data-dmr-font="opendyslexic"] :is(p, li, dd, dt, blockquote, figcaption, td, th, h1, h2, h3, h4, h5, h6, label, summary) {
+  font-family: 'OpenDyslexic', system-ui, sans-serif !important;
+}
+html.dmr-read[data-dmr-font="atkinson"] :is(p, li, dd, dt, blockquote, figcaption, td, th, h1, h2, h3, h4, h5, h6, label, summary) {
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif !important;
+}
+html.dmr-read[data-dmr-lh="1"] :is(article, main, [role="main"], .content, .post, .entry-content, .article-body, .markdown-body) :is(p, li, blockquote, dd) {
+  line-height: 1.6 !important;
+}
+html.dmr-read[data-dmr-width="1"] :is(article, main, [role="main"], .content, .post, .entry-content, .article-body, .markdown-body) :is(p, blockquote, ul, ol, dl) {
+  max-width: 70ch;
+}
+html.dmr-read[data-dmr-links="1"] a[href] {
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
