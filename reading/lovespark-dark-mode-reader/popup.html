@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="lib/lovespark-footer.css">
+  <title>Dark Mode Reader</title>
+</head>
+<body role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+
+  <header class="header">
+    <img src="icons/mascot.png" alt="Sparky — LoveSpark mascot" class="logo mascot-logo" width="28" height="28" data-lovespark="mascot">
+    <div class="header-text">
+      <span class="title" id="popupTitle">Dark Mode Reader</span>
+      <span class="subtitle" id="popupDesc">BY LOVESPARK</span>
+    </div>
+    <div class="theme-dropdown" id="themeDropdown">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change theme">
+        <span id="themeLabel" aria-live="polite">Retro Pink</span> ▾
+      </button>
+      <div class="theme-dropdown-menu" id="themeMenu">
+        <div class="theme-dropdown-header">Change Theme</div>
+        <button class="theme-option" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
+        <button class="theme-option" data-theme="beige">Beige</button>
+        <button class="theme-option" data-theme="slate">Slate</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Master toggle -->
+  <div class="toggle-row">
+    <label class="toggle-wrap" aria-label="Enable or disable Dark Mode Reader everywhere">
+      <input type="checkbox" id="toggle-enabled" checked>
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+    <p class="status-text" id="status-text" aria-live="polite">darkening the web</p>
+  </div>
+
+  <p class="native-note" id="native-note" hidden>This site is already dark, so the engine stepped aside. Force it on if you disagree.</p>
+
+  <!-- This site -->
+  <div class="row">
+    <span class="row-label" id="site-label">This site<span class="row-hint" id="site-host">…</span></span>
+    <div class="seg" role="radiogroup" aria-labelledby="site-label">
+      <button class="seg-btn" role="radio" data-site-mode="auto" aria-checked="true">Auto</button>
+      <button class="seg-btn" role="radio" data-site-mode="on" aria-checked="false">On</button>
+      <button class="seg-btn" role="radio" data-site-mode="off" aria-checked="false">Off</button>
+    </div>
+  </div>
+
+  <!-- Palette pills -->
+  <div class="modes" role="radiogroup" aria-label="Page palette">
+    <button class="mode-pill" data-mode="noir" role="radio" aria-checked="true">
+      <span class="mode-icon" aria-hidden="true">🌑</span>
+      <div class="mode-text"><span class="mode-name">Noir</span><span class="mode-desc">neutral, true dark</span></div>
+      <span class="mode-check" aria-hidden="true">✦</span>
+    </button>
+    <button class="mode-pill" data-mode="plum" role="radio" aria-checked="false">
+      <span class="mode-icon" aria-hidden="true">💜</span>
+      <div class="mode-text"><span class="mode-name">Plum</span><span class="mode-desc">LoveSpark brand dark</span></div>
+      <span class="mode-check" aria-hidden="true">✦</span>
+    </button>
+    <button class="mode-pill" data-mode="warm" role="radio" aria-checked="false">
+      <span class="mode-icon" aria-hidden="true">🕯️</span>
+      <div class="mode-text"><span class="mode-name">Warm</span><span class="mode-desc">sepia dark for long reads</span></div>
+      <span class="mode-check" aria-hidden="true">✦</span>
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Reading layer -->
+  <div class="row">
+    <span class="row-label">Reading layer<span class="row-hint">OpenDyslexic · 70ch · links</span></span>
+    <label class="toggle-wrap" aria-label="Reading layer on this site">
+      <input type="checkbox" id="toggle-reading">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+  </div>
+
+  <!-- Image dim -->
+  <div class="row slider-row">
+    <div class="slider-head">
+      <label for="image-dim">Photo brightness</label>
+      <span class="slider-value" id="image-dim-value" aria-live="polite">85%</span>
+    </div>
+    <input type="range" class="slider" id="image-dim" min="60" max="100" step="5" value="85">
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-card">
+    <div class="stats-row">
+      <span class="stats-icon" aria-hidden="true">🌙</span>
+      <span class="stats-label">Pages darkened today</span>
+      <span class="stats-value" id="val-pagesToday">0</span>
+    </div>
+    <div class="stats-row">
+      <span class="stats-icon" aria-hidden="true">⌨️</span>
+      <span class="stats-label">Toggle this site</span>
+      <span class="stats-value"><kbd class="kbd">Alt</kbd> <kbd class="kbd">Shift</kbd> <kbd class="kbd">D</kbd></span>
+    </div>
+  </div>
+
+  <div class="footer-row">
+    <a href="#" id="open-settings" class="settings-link">⚙ Settings</a>
+    <span class="footer-text">LoveSpark Suite 💕</span>
+    <img src="icons/mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" data-lovespark="mascot">
+  </div>
+
+  <script src="lib/lovespark-footer.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="src/shared/storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

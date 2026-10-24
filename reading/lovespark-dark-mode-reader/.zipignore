@@ -1,0 +1,22 @@
+# Dark Mode Reader — per-extension build excludes (dev-only + unused shared lib)
+bench/
+tests/
+research.md
+plan.md
+package.json
+CWS-LISTING.md
+SUBMIT.md
+cws-shots/
+_cws/
+mascot.png
+lib/browser-polyfill.min.js
+lib/lovespark-badge.js
+lib/lovespark-lifecycle.js
+lib/lovespark-popup.js
+lib/lovespark-stats.js
+# shared-lib font families no CSS in this extension references
+lib/fonts/comfortaa-*
+lib/fonts/lexend-*
+lib/fonts/orbitron-*
+lib/fonts/playfair-display-*
+lib/fonts/rajdhani-*

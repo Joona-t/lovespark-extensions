@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
+  <link rel="stylesheet" href="settings.css">
+  <title>Dark Mode Reader — Settings</title>
+</head>
+<body>
+  <div class="settings-container">
+    <header class="settings-header">
+      <img src="icons/mascot.png" alt="Sparky — LoveSpark mascot" class="logo" data-lovespark="mascot">
+      <div class="title-block">
+        <span class="title">⚙ Settings</span>
+        <span class="subtitle">DARK MODE READER · BY LOVESPARK</span>
+      </div>
+    </header>
+
+    <main class="settings-content">
+
+      <div class="settings-card">
+        <h2 class="card-title">Default palette</h2>
+        <div class="card-content">
+          <div class="mode-select" role="radiogroup" aria-label="Default palette">
+            <button class="mode-btn" data-palette="noir" role="radio" aria-checked="false" aria-label="Noir palette">🌑 Noir</button>
+            <button class="mode-btn" data-palette="plum" role="radio" aria-checked="false" aria-label="Plum palette">💜 Plum</button>
+            <button class="mode-btn" data-palette="warm" role="radio" aria-checked="false" aria-label="Warm palette">🕯️ Warm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h2 class="card-title">Schedule</h2>
+        <div class="card-content">
+          <div class="mode-select" role="radiogroup" aria-label="Schedule">
+            <button class="mode-btn" data-schedule="always" role="radio" aria-checked="false">Always on</button>
+            <button class="mode-btn" data-schedule="system" role="radio" aria-checked="false">Follow system dark mode</button>
+            <button class="mode-btn" data-schedule="time" role="radio" aria-checked="false">Time window</button>
+          </div>
+          <div class="time-row" id="time-row" hidden>
+            <label for="sched-from">From</label>
+            <input type="time" id="sched-from" class="domain-input time-input" value="20:00">
+            <label for="sched-to">to</label>
+            <input type="time" id="sched-to" class="domain-input time-input" value="07:00">
+          </div>
+          <p class="reset-desc">Outside the window nothing is injected at all, so pages load exactly as the site made them.</p>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h2 class="card-title">Reading layer defaults</h2>
+        <div class="card-content">
+          <p class="reset-desc">The reading layer is off per site until you switch it on in the popup. These are what it applies.</p>
+          <div class="mode-select" role="radiogroup" aria-label="Reading font">
+            <button class="mode-btn" data-font="opendyslexic" role="radio" aria-checked="false">OpenDyslexic</button>
+            <button class="mode-btn" data-font="atkinson" role="radio" aria-checked="false">Atkinson Hyperlegible</button>
+            <button class="mode-btn" data-font="default" role="radio" aria-checked="false">Site font</button>
+          </div>
+          <label class="toggle-wrap"><input type="checkbox" id="read-width"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-label">Cap line length at 70 characters</span></label>
+          <label class="toggle-wrap"><input type="checkbox" id="read-lh"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-label">Line height 1.6</span></label>
+          <label class="toggle-wrap"><input type="checkbox" id="read-links"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-label">Underline links</span></label>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h2 class="card-title">Photos and video</h2>
+        <div class="card-content">
+          <label for="image-dim">Brightness <span id="image-dim-value" aria-live="polite">85%</span></label>
+          <input type="range" id="image-dim" class="slider" min="60" max="100" step="5" value="85">
+          <p class="reset-desc">Images are dimmed, never inverted.</p>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h2 class="card-title">Sites</h2>
+        <div class="card-content">
+          <div class="domain-input-row">
+            <label for="domain-add" class="visually-hidden">Site to turn off</label>
+            <input type="text" class="domain-input" placeholder="example.com" id="domain-add">
+            <button class="btn-pink domain-add-btn" id="domain-add-btn">Turn off on site</button>
+          </div>
+          <ul class="domain-list" id="site-list" aria-live="polite"></ul>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h2 class="card-title">Stats</h2>
+        <div class="card-content"><div class="stats-grid" id="stats-grid"></div></div>
+      </div>
+
+      <div class="settings-card">
+        <h2 class="card-title">Reset</h2>
+        <div class="card-content">
+          <p class="reset-desc">Reset every setting, site memory and statistic to defaults.</p>
+          <button class="btn-danger" id="reset-btn">Reset All Data</button>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="settings-footer">
+      <span class="footer-text">LoveSpark Suite 💕 · MIT · zero tracking</span>
+    </footer>
+  </div>
+  <script src="lib/lovespark-theme.js"></script>
+  <script src="src/shared/storage.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

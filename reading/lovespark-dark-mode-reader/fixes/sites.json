@@ -1,0 +1,6 @@
+{
+  "_schema": "host -> { css: string appended to the theme, noImageDim: [selectors] }. '*' applies everywhere. Add entries only from a reproduced defect; log each in BUGS_AND_ITERATIONS.md.",
+  "*": {
+    "css": "html.dmr-on iframe[src*='challenges.cloudflare.com'],html.dmr-on iframe[src*='recaptcha'],html.dmr-on iframe[src*='hcaptcha']{filter:none!important}"
+  }
+}
