@@ -1,5 +1,18 @@
 # Bugs & Iterations
 
+## 2026-10-25: Bubblegum + Seoul Y2K popup themes, two pink-text contrast fixes
+
+**Request:** Joona: "add korean and bubble gum theme for the cursor extension" (screenshot of the Change Theme menu).
+**Change:** Added `bubblegum` and `seoul` ("Seoul Y2K 서울") to the popup's own theme list (`popup.js` THEMES/THEME_NAMES), the menu (`popup.html`) and token blocks in `popup.css`. Values match notes-app v1.1.0's Bubblegum and Seoul Y2K (same day), which took its Seoul palette from this extension's Y2K Korean packs. The shared `lib/lovespark-theme.js` / `lovespark-tokens.css` are untouched (the popup keeps its own list; the lib theme script is loaded but not called). Default stays Retro Pink.
+**Bugs found while verifying (measured in the served popup, every visible text node, worst gradient stop):**
+- `.sub-chevron` used `--ls-pink-accent` as 10px text: retro 2.42, beige 2.50, bubblegum 2.26, seoul 2.67:1. Now `--ls-text-muted`.
+- `.theme-option.active` used `--ls-pink-accent` as 13px text: retro 3.31, bubblegum 3.05, seoul 2.87:1. Now `--ls-text-dark` bold; the colour dot marks the theme.
+- Root cause for both: pink accent used as small text, which the design system forbids ("Never pink as small text").
+**Not fixed (pre-existing, out of this change):** retro footer credit/suite link 3.24:1 (shared footer CSS), beige preview button and pack check 3.70:1. `ls-audit-contrast` only knows retro/dark/beige/slate, so the new themes were measured in the browser instead.
+**Verification:** `ls-check . --strict` 38/0/0; popup served on localhost, both themes chosen through the real menu (label and trigger aria-label update); no horizontal overflow at 320px.
+**Files:** popup.css, popup.html, popup.js, manifest.json, CHANGELOG.md
+**Version:** 1.1.40
+
 ## 2026-06-28: BUG — selected cursor only applied after a page refresh
 
 **Problem:** Picking a different cursor in the popup did nothing on already-open tabs until the page was reloaded.

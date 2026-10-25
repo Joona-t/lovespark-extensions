@@ -2,6 +2,15 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.40] - 2026-10-25
+- Two new popup themes in Change Theme: **Bubblegum** (the suite's glass-sticker
+  pink) and **Seoul Y2K 서울** (Cyworld-era Korean palette taken from this pack's own
+  Y2K Korean cursors: sky blue, strawberry milk, butter yellow, lavender pixel
+  borders, dotted grid). Same values as the notes app's themes of the same name.
+- Contrast fixes found while checking the new themes: the Pointer/Emoji group
+  chevron and the active Change Theme item used pink accent as small text (2.3–3.3:1);
+  both now use body/muted text colours in every theme.
+
 ## [1.1.39] - 2026-10-13
 - Y2K packs redesigned for native-size legibility: every arrow, hand, I-beam and
   companion now carries a white halo under a dark outline (shared `arrow()`/`hand()`/

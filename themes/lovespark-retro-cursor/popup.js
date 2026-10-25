@@ -27,8 +27,17 @@ function storageSet(obj) {
 }
 
 // ── Theme dropdown ────────────────────────────────────────────────────────
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
+// Bubblegum and Seoul Y2K are this popup's own token blocks in popup.css;
+// the rest also exist in lib/lovespark-tokens.css.
+const THEMES = ['retro', 'bubblegum', 'seoul', 'dark', 'beige', 'slate'];
+const THEME_NAMES = {
+  retro: 'Retro Pink',
+  bubblegum: 'Bubblegum',
+  seoul: 'Seoul Y2K',
+  dark: 'Dark',
+  beige: 'Beige',
+  slate: 'Slate',
+};
 function applyTheme(t) {
   THEMES.forEach(n => document.body.classList.remove('theme-' + n));
   document.body.classList.add('theme-' + t);
