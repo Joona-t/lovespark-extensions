@@ -145,7 +145,7 @@ Every LoveSpark browser extension in one repo. Free, open source (MIT), privacy-
 | [LoveSpark Daily Checklist](productivity/lovespark-daily-checklist/) | 1.0.2 | `productivity/lovespark-daily-checklist` | local-only until now |
 | [LoveSpark Link Saver](productivity/lovespark-link-saver/) | 1.0.2 | `productivity/lovespark-link-saver` | local-only until now |
 | [LoveSpark Notes](productivity/lovespark-notes/) | 1.0.42 | `productivity/lovespark-notes` | [lovespark-notes](https://github.com/Joona-t/lovespark-notes) (archived) |
-| [LoveSpark Notes](productivity/lovespark-notes-app/) | 1.0.42 | `productivity/lovespark-notes-app` | [lovespark-notes-app](https://github.com/Joona-t/lovespark-notes-app) (archived) |
+| [LoveSpark Notes (new tab)](productivity/lovespark-notes-app/) | 1.1.0 | `productivity/lovespark-notes-app` | [lovespark-notes-app](https://github.com/Joona-t/lovespark-notes-app) (archived) |
 | [LoveSpark Panic Button](productivity/lovespark-panic-button/) | 1.0.2 | `productivity/lovespark-panic-button` | local-only until now |
 | [LoveSpark Planner](productivity/lovespark-planner/) | 1.0.3 | `productivity/lovespark-planner` | local-only until now |
 | [LoveSpark Quick Timer](productivity/lovespark-quick-timer/) | 1.0.2 | `productivity/lovespark-quick-timer` | local-only until now |

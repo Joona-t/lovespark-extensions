@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="newtab.css">
 </head>
-<body class="theme-candy">
+<body class="theme-bubblegum">
 
 <div id="app">
   <!-- Top bar -->
@@ -24,6 +24,7 @@
       </div>
     </div>
     <div class="top-bar-right">
+      <button id="helpBtn" class="pill-btn" type="button" aria-haspopup="dialog">How it works &amp; FAQ</button>
       <div class="view-toggle" role="radiogroup" aria-label="View mode">
         <button id="viewList" class="view-btn active" role="radio" aria-checked="true" aria-label="List view" title="List view">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="2" rx="1" fill="currentColor"/><rect x="1" y="7" width="14" height="2" rx="1" fill="currentColor"/><rect x="1" y="12" width="14" height="2" rx="1" fill="currentColor"/></svg>
@@ -33,31 +34,24 @@
         </button>
       </div>
 
-      <!-- Theme dropdown (shared lib pattern) -->
+      <!-- Theme dropdown (shared lib pattern; options built from THEMES in newtab.js) -->
       <div class="theme-dropdown">
-        <button id="themeToggle" class="theme-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-          <span id="themeLabel">Candy</span>
+        <button id="themeToggle" class="theme-dropdown-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="themeMenu">
+          <span id="themeLabel" aria-live="off">Bubblegum</span>
         </button>
-        <div id="themeMenu" class="theme-dropdown-menu" role="menu">
-          <div class="theme-dropdown-header">Change Theme</div>
-          <button class="theme-option active" data-theme="candy" role="menuitem">Candy</button>
-          <button class="theme-option" data-theme="retro" role="menuitem">Retro Pink</button>
-          <button class="theme-option" data-theme="dark" role="menuitem">Dark</button>
-          <button class="theme-option" data-theme="beige" role="menuitem">Beige</button>
-          <button class="theme-option" data-theme="slate" role="menuitem">Slate</button>
+        <div id="themeMenu" class="theme-dropdown-menu" role="menu" aria-label="Change Theme">
+          <div class="theme-dropdown-header" aria-hidden="true">Change Theme</div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Category filter tabs -->
-  <nav class="category-tabs" role="tablist" aria-label="Note categories">
-    <button class="cat-tab active" role="tab" aria-selected="true" data-cat="all">All</button>
-    <button class="cat-tab" role="tab" aria-selected="false" data-cat="idea">&#128161; Idea</button>
-    <button class="cat-tab" role="tab" aria-selected="false" data-cat="project">&#9889; Project</button>
-    <button class="cat-tab" role="tab" aria-selected="false" data-cat="someday">&#127769; Someday</button>
-    <button class="cat-tab" role="tab" aria-selected="false" data-cat="daily">&#128197; Daily</button>
-  </nav>
+  <!-- Category filter tabs (built from prefs.categories in newtab.js) -->
+  <div class="category-bar">
+    <nav id="categoryTabs" class="category-tabs" role="tablist" aria-label="Note categories"></nav>
+    <button id="catEdit" class="pill-btn cat-action hidden" type="button" aria-haspopup="dialog">Edit category</button>
+    <button id="catAdd" class="pill-btn cat-action" type="button" aria-haspopup="dialog">+ New category</button>
+  </div>
 
   <!-- Two-pane layout -->
   <main class="two-pane">
@@ -75,16 +69,14 @@
       </div>
       <div id="editorActive" class="editor-active hidden">
         <div class="editor-toolbar">
-          <select id="editorCategory" class="editor-cat-select" aria-label="Note category">
-            <option value="uncategorized">Uncategorized</option>
-            <option value="idea">&#128161; Idea</option>
-            <option value="project">&#9889; Project</option>
-            <option value="someday">&#127769; Someday</option>
-            <option value="daily">&#128197; Daily</option>
-          </select>
+          <select id="editorCategory" class="editor-cat-select" aria-label="Note category"></select>
+          <button id="editorBullet" class="editor-btn editor-bullet" type="button" aria-pressed="false"
+                  aria-label="Bullet list" title="Bullet list (type - then space also works)">&bull; List</button>
+          <!-- aria-live="off" on the display-only text below: it changes with every
+               keystroke or theme pick and is deliberately not announced (KI-018). -->
           <div class="editor-meta">
-            <span id="editorWordCount" class="editor-wc">0w</span>
-            <span id="editorTime" class="editor-time"></span>
+            <span id="editorWordCount" class="editor-wc" aria-live="off">0w</span>
+            <span id="editorTime" class="editor-time" aria-live="off"></span>
           </div>
           <div class="editor-actions">
             <button id="editorPin" class="editor-btn" aria-label="Pin note" title="Pin">&#128204;</button>
@@ -111,7 +103,76 @@
   <button id="fabNew" class="fab" aria-label="Create new note" title="New note">+</button>
 </div>
 
-<script src="lib/lovespark-theme.js"></script>
+<!-- Category editor -->
+<dialog id="catDialog" class="ls-dialog" aria-labelledby="catDialogTitle">
+  <form id="catForm" method="dialog" novalidate>
+    <h2 id="catDialogTitle" aria-live="off">New category</h2>
+    <label class="field">
+      <span class="field-label">Name</span>
+      <input type="text" id="catName" maxlength="24" required autocomplete="off" aria-describedby="catError">
+    </label>
+    <label class="field">
+      <span class="field-label">Emoji (optional)</span>
+      <input type="text" id="catEmoji" maxlength="8" autocomplete="off" placeholder="e.g. 📚">
+    </label>
+    <fieldset class="field">
+      <legend class="field-label">Colour</legend>
+      <div id="catColors" class="swatch-row"></div>
+    </fieldset>
+    <p id="catError" class="field-error" role="alert"></p>
+    <div class="dialog-actions">
+      <button id="catDelete" class="confirm-btn confirm-btn-danger hidden" type="button">Delete category</button>
+      <span class="spacer"></span>
+      <button id="catCancel" class="confirm-btn" type="button">Cancel</button>
+      <button id="catSave" class="confirm-btn btn-primary" type="submit">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- How it works & FAQ -->
+<dialog id="helpDialog" class="ls-dialog ls-dialog--wide" aria-labelledby="helpTitle">
+  <button id="helpClose" class="dialog-close" type="button" aria-label="Close">&times;</button>
+  <h2 id="helpTitle">How it works &amp; FAQ</h2>
+
+  <h3>How it works</h3>
+  <ul>
+    <li>Every new tab opens your notes. Tap <strong>+</strong> (or &#8984;/Ctrl+N) to start one; it saves as you type.</li>
+    <li>Sort notes with the category tabs. <strong>+ New category</strong> makes your own, with a name, emoji and colour.</li>
+    <li>Pick a category for a note from the menu at the top of the editor.</li>
+    <li><strong>&bull; List</strong> turns lines into bullet points. Typing <kbd>-</kbd> and a space at the start of a line does it too, Enter continues the list, and Enter on an empty bullet ends it.</li>
+    <li>On a bullet line, Tab and Shift+Tab indent and outdent. Press Esc first and Tab moves on to the next control as usual.</li>
+    <li>Tags, pinning, search (&#8984;/Ctrl+K), list or grid view, and six themes are all in the top bar.</li>
+  </ul>
+
+  <h3>FAQ</h3>
+  <div class="faq">
+    <details>
+      <summary>Where are my notes stored?</summary>
+      <p>Only in this browser, on this device. There's no account, no cloud, no tracking, and nothing is sent anywhere.</p>
+    </details>
+    <details>
+      <summary>Can I lose my notes?</summary>
+      <p>Removing the extension or clearing this browser's extension data deletes them, so copy anything important somewhere safe first.</p>
+    </details>
+    <details>
+      <summary>How do I make my own category?</summary>
+      <p>Click <strong>+ New category</strong>, give it a name and pick a colour. To rename or delete one, open its tab and click <strong>Edit category</strong>. Deleting a category never deletes notes: they move to Uncategorized.</p>
+    </details>
+    <details>
+      <summary>How do bullet points work?</summary>
+      <p>They're plain text, a &bull; at the start of a line, so they stay readable anywhere you paste them. Select several lines and press <strong>&bull; List</strong> to bullet or un-bullet them all at once.</p>
+    </details>
+    <details>
+      <summary>Is it really free?</summary>
+      <p>Yes, always. No ads, no data collection, and it's open source under the MIT licence.</p>
+    </details>
+    <details>
+      <summary>Are there more LoveSpark tools?</summary>
+      <p>Lots, all free and private. <a href="https://lovespark.love/#tools" target="_blank" rel="noopener">See every LoveSpark extension and app on lovespark.love</a>.</p>
+    </details>
+  </div>
+</dialog>
+
 <script src="newtab.js"></script>
 </body>
 </html>

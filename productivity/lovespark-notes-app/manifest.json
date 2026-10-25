@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LoveSpark Notes",
-  "version": "1.0.42",
+  "version": "1.1.0",
   "description": "A beautiful, private notes app in every new tab. Categories, search, and themes — no account needed.",
   "permissions": [
     "storage"
@@ -13,6 +13,9 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self'"
   },
   "browser_specific_settings": {
     "gecko": {

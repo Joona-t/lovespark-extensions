@@ -1,5 +1,14 @@
 /* LoveSpark Notes — Streamlined Hybrid Layout
-   Uses variables from lib/lovespark-base.css */
+   Tokens: lib/lovespark-tokens.css, @imported by lib/lovespark-base.css (retro default +
+   dark/beige/slate), plus the notes-only Bubblegum and Seoul Y2K blocks at the end of this file. */
+
+/* ── White-text fill ───────────────────────────────────
+   Fill behind white text (active tab, + button, Save, selection). Not
+   --ls-pink-deep everywhere: in Beige (4.25:1) and Slate (2.40:1) that fails
+   4.5:1, so those themes use their deeper hover tone. All ≥4.62:1. */
+:root { --notes-fill: var(--ls-pink-deep); --notes-fill-hover: var(--ls-btn-hover-bg); }
+body.theme-beige { --notes-fill: #7a4a35; --notes-fill-hover: #5f3826; }  /* 7.35:1, 10.1:1 */
+body.theme-slate { --notes-fill: #a04520; --notes-fill-hover: #82361a; }  /* 6.24:1, 8.43:1 */
 
 /* ── Reset & Base ──────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -166,7 +175,7 @@ html, body {
 }
 
 .cat-tab.active {
-  background: var(--ls-pink-deep);
+  background: var(--notes-fill);
   color: #fff;
   border-color: var(--ls-text-dark);
 }
@@ -215,7 +224,7 @@ html, body {
 .note-count {
   padding: 8px 0 0;
   font-size: 11px;
-  color: var(--ls-text-muted);
+  color: var(--ls-text-dark);   /* sits on the page gradient, not glass: muted is 4.06:1 in Retro */
   text-align: center;
   flex-shrink: 0;
 }
@@ -239,7 +248,7 @@ html, body {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--card-accent, var(--ls-pink-accent));
+  background: var(--card-accent, var(--ls-pink-deep));
   border-radius: 3px 0 0 3px;
 }
 
@@ -281,7 +290,6 @@ html, body {
 
 .note-card-tag {
   color: var(--ls-text-muted);
-  opacity: 0.8;
 }
 
 .note-card-snippet {
@@ -319,7 +327,6 @@ html, body {
   justify-content: center;
   flex: 1;
   gap: 16px;
-  opacity: 0.6;
 }
 
 .editor-sparky { border-radius: 50%; }
@@ -401,7 +408,7 @@ html, body {
   flex-shrink: 0;
 }
 
-.editor-title::placeholder { color: var(--ls-text-muted); opacity: 0.5; }
+.editor-title::placeholder { color: var(--ls-text-muted); opacity: 1; }
 
 .editor-tag-bar {
   display: flex;
@@ -418,7 +425,7 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  background: color-mix(in srgb, var(--ls-pink-accent) 15%, transparent);
+  background: color-mix(in srgb, var(--ls-pink-deep) 15%, transparent);
   color: var(--ls-text-dark);
   font-size: 11px;
   font-weight: 500;
@@ -435,11 +442,10 @@ html, body {
   cursor: pointer;
   padding: 0;
   line-height: 1;
-  opacity: 0.6;
   min-height: auto;
 }
 
-.editor-tag-remove:hover { opacity: 1; }
+.editor-tag-remove:hover { color: var(--ls-pink-deep); }
 
 .editor-tag-input {
   background: none;
@@ -453,7 +459,7 @@ html, body {
   flex: 1;
 }
 
-.editor-tag-input::placeholder { color: var(--ls-text-muted); opacity: 0.4; }
+.editor-tag-input::placeholder { color: var(--ls-text-muted); opacity: 1; }
 
 .editor-content {
   flex: 1;
@@ -471,7 +477,7 @@ html, body {
   scrollbar-color: var(--ls-glass-border) transparent;
 }
 
-.editor-content::placeholder { color: var(--ls-text-muted); opacity: 0.4; }
+.editor-content::placeholder { color: var(--ls-text-muted); opacity: 1; }
 .editor-content::-webkit-scrollbar { width: 5px; }
 .editor-content::-webkit-scrollbar-thumb {
   background: var(--ls-glass-border);
@@ -487,7 +493,7 @@ html, body {
   height: 52px;
   border-radius: 50%;
   border: none;
-  background: var(--ls-pink-deep);
+  background: var(--notes-fill);
   color: #fff;
   font-size: 26px;
   font-weight: 300;
@@ -504,7 +510,7 @@ html, body {
 .fab:hover {
   transform: scale(1.08);
   box-shadow: var(--ls-glow-strong);
-  background: var(--ls-pink-deep);
+  background: var(--notes-fill-hover);
 }
 
 .fab:active { transform: scale(0.95); }
@@ -574,6 +580,15 @@ html, body {
 
 /* ── Responsive: narrow viewports ──────────────────── */
 @media (max-width: 700px) {
+  /* Wrap instead of overlapping: search gets its own row, controls below it. */
+  .top-bar { flex-wrap: wrap; padding: 10px 12px; }
+  .top-bar-left { flex-basis: 100%; }
+  .search-wrap { max-width: none; }
+  .top-bar-right { width: 100%; flex-wrap: wrap; justify-content: flex-end; }
+  .category-bar { flex-wrap: wrap; padding: 0 12px 10px; }
+  .category-bar .category-tabs { flex-basis: 100%; }
+  .editor-toolbar { flex-wrap: wrap; padding: 8px 12px; }
+  .two-pane { padding: 0 12px 12px; }
   .two-pane { flex-direction: column; }
   .list-pane {
     width: 100%;
@@ -585,6 +600,241 @@ html, body {
 
 /* ── Selection colors ──────────────────────────────── */
 ::selection {
-  background: var(--ls-pink-deep);
+  background: var(--notes-fill);
   color: #fff;
 }
+
+/* ── Focus (KI-006) ─────────────────────────────────────
+   The inline editors drop the browser outline for a cleaner look; every one
+   of them gets a visible :focus-visible ring back. */
+.search-input:focus-visible,
+.editor-tag-input:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.editor-title:focus-visible,
+.editor-content:focus-visible {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+button:focus-visible,
+select:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+input[type="radio"]:focus-visible + .cat-swatch {
+  outline: 2px solid var(--ls-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Top bar: How it works & FAQ ───────────────────── */
+.pill-btn {
+  background: var(--ls-glass);
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius-sm);
+  color: var(--ls-text-dark);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  min-height: 32px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.pill-btn:hover { background: var(--ls-glass-strong); }
+
+/* ── Category bar (tabs + add / edit) ──────────────── */
+.category-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 10px;
+  flex-shrink: 0;
+  min-width: 0;
+}
+.category-bar .category-tabs { padding: 0; min-width: 0; }
+.cat-tab .cat-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: 1px;
+  background: var(--dot);
+}
+.cat-action {
+  flex-shrink: 0;
+  border-radius: 20px;
+  font-size: 12px;
+  min-height: 32px;
+  padding: 5px 12px;
+}
+
+/* ── Editor toolbar: bullet toggle ─────────────────── */
+.editor-bullet {
+  width: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ls-text-dark);
+}
+.editor-bullet[aria-pressed="true"] {
+  background: var(--ls-glass-strong);
+  border-color: var(--ls-glass-border);
+}
+
+/* ── Dialogs (category editor, How it works & FAQ) ─── */
+.ls-dialog {
+  margin: auto;
+  border: 1px solid var(--ls-glass-border);
+  border-radius: var(--ls-radius);
+  background: var(--ls-glass-strong);
+  color: var(--ls-text-dark);
+  font-family: var(--ls-font-body);
+  padding: 22px 24px;
+  width: min(92vw, 380px);
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: var(--ls-glow-strong);
+}
+.ls-dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
+.ls-dialog--wide { width: min(92vw, 560px); }
+.ls-dialog h2 { font-size: 16px; margin-bottom: 14px; }
+.ls-dialog h3 { font-size: 13px; margin: 16px 0 8px; }
+.ls-dialog p, .ls-dialog li { font-size: 13px; line-height: 1.6; }
+.ls-dialog ul { padding-left: 18px; }
+.ls-dialog a { color: var(--ls-text-dark); font-weight: 600; }
+.dialog-close {
+  float: right;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--ls-glass-border);
+  background: var(--ls-glass);
+  color: var(--ls-text-dark);
+  font-size: 16px;
+  cursor: pointer;
+}
+.field { display: block; margin-bottom: 14px; }
+.field-label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+.field input[type="text"] {
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--ls-text-muted);
+  border-radius: var(--ls-radius-sm);
+  background: var(--ls-glass-light);
+  color: var(--ls-text-dark);
+  font-family: inherit;
+  font-size: 13px;
+}
+.field input[type="text"]:focus-visible { outline: 2px solid var(--ls-focus-ring); outline-offset: 1px; }
+.field-error { min-height: 18px; font-size: 12px; color: #b4232f; font-weight: 600; }
+body.theme-dark .field-error, body.theme-slate .field-error { color: #ff9a9a; }
+.swatch-row { display: flex; flex-wrap: wrap; gap: 8px; border: 0; }
+.swatch-row label { position: relative; }
+.swatch-row input[type="radio"] { position: absolute; opacity: 0; width: 32px; height: 32px; margin: 0; cursor: pointer; }
+.cat-swatch {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sw);
+  border: 2px solid var(--ls-glass-border);
+}
+.swatch-row input[type="radio"]:checked + .cat-swatch {
+  border-color: var(--ls-text-dark);
+  box-shadow: 0 0 0 2px var(--ls-glass-strong) inset;
+}
+.dialog-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; flex-wrap: wrap; }
+.dialog-actions .spacer { flex: 1; }
+.btn-primary {
+  background: var(--notes-fill);
+  color: #fff;
+  border: 1px solid transparent;
+}
+.btn-primary:hover { background: var(--notes-fill-hover); }
+.faq details {
+  border-top: 1px solid var(--ls-glass-border);
+  padding: 8px 0;
+}
+.faq summary { cursor: pointer; font-size: 13px; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.faq details p { margin-top: 6px; }
+
+/* ── Reduced motion (KI-008) ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  .fab:hover, .fab:active { transform: none; }
+}
+
+/* ══ Theme: Bubblegum (default) ════════════════════════
+   The suite's canonical glass-sticker pink (lovespark-design-system tokens),
+   mapped onto the --ls-* names this page uses. White text only sits on
+   --ls-pink-deep #d81b73 (4.86:1). Was called "Candy" until 2026-10-25. */
+body.theme-bubblegum {
+  --ls-bg-pink-light: #ffd3e5;
+  --ls-bg-gradient: linear-gradient(145deg, #ffd3e5 0%, #ffe8d9 28%, #ffd9ec 55%, #ffe2cc 78%, #ffcbe0 100%);
+  --ls-glass: linear-gradient(135deg, #fffafd, #ffeef3 45%, #ffdfe9 75%, #ffcfe0);
+  --ls-glass-light: rgba(255, 250, 253, 0.62);
+  --ls-glass-strong: #fffbfe;
+  --ls-glass-border: rgba(255, 255, 255, 0.7);
+  --ls-pink-accent: #ff49a6;
+  --ls-pink-deep: #d81b73;
+  --ls-text-dark: #4a0827;
+  --ls-text-muted: #6b2848;
+  --ls-focus-ring: #b3185c;
+  --ls-btn-hover-bg: #a51259;
+  --ls-glow: 0 8px 18px rgba(255, 124, 182, 0.30), 0 1px 4px rgba(255, 208, 224, 0.45);
+  --ls-glow-strong: 0 12px 30px rgba(255, 73, 166, 0.40), 0 2px 8px rgba(255, 208, 224, 0.55);
+  --ls-radius: 20px;
+  --ls-radius-sm: 14px;
+}
+
+/* ══ Theme: Seoul Y2K ══════════════════════════════════
+   Cyworld-era Korean internet: sky-blue mini-room, strawberry-milk pink,
+   butter yellow, boba-ink text, lavender pixel borders and a dotted grid.
+   Colours come from Retro Cursor's Y2K Korean packs (Cyworld Dotti,
+   Strawberry Milk, Bubble Boba, Cyber Butterfly). Contrast: ink ≥10.27:1,
+   muted ≥5.77:1, focus ring ≥4.70:1, white on pink-deep 5.87:1. */
+body.theme-seoul {
+  --ls-bg-pink-light: #dff1ff;
+  --ls-bg-gradient: linear-gradient(160deg, #dff1ff 0%, #ffe8f2 45%, #fff4d6 78%, #e9dcff 100%);
+  --ls-glass: rgba(255, 255, 255, 0.72);
+  --ls-glass-light: rgba(255, 255, 255, 0.5);
+  --ls-glass-strong: #ffffff;
+  --ls-glass-border: #c4a8e0;
+  --ls-pink-accent: #ff5baa;
+  --ls-pink-deep: #c2185b;
+  --ls-text-dark: #3a2a3a;
+  --ls-text-muted: #6b4a66;
+  --ls-focus-ring: #4a55c9;
+  --ls-btn-hover-bg: #9e1249;
+  --ls-glow: 3px 3px 0 #c4a8e0;
+  --ls-glow-strong: 4px 4px 0 #ff8fc6;
+  --ls-radius: 10px;
+  --ls-radius-sm: 6px;
+}
+body.theme-seoul::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(122, 46, 85, 0.13) 1px, transparent 1.4px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  z-index: 0;
+}
+body.theme-seoul .note-card,
+body.theme-seoul .cat-tab,
+body.theme-seoul .pill-btn,
+body.theme-seoul .view-toggle { box-shadow: 2px 2px 0 #c4a8e0; }
+body.theme-seoul .note-card.selected { box-shadow: 3px 3px 0 #ff8fc6; }
+body.theme-seoul .cat-tab.active { box-shadow: 2px 2px 0 #3a2a3a; }
+body.theme-seoul .editor-pane { box-shadow: 4px 4px 0 #c4a8e0; }
