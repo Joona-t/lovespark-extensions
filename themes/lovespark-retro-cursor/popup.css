@@ -32,7 +32,7 @@
   --ls-font-body: 'DM Mono', monospace;
   --ls-font-display: 'Press Start 2P', cursive;
 
-  /* Picker-specific tokens (design-system "candy glass-sticker" recipes) */
+  /* Picker-specific tokens (design-system "bubblegum glass-sticker" recipes) */
   --ls-focus: #B3185C;                                              /* focus ring, ≥3:1 on glass */
   --ls-grad-btn: linear-gradient(135deg, #D81B73 0%, #A51259 100%); /* white-text fills (≥4.86:1) */
   --ls-row-hover: rgba(232, 69, 124, 0.10);
