@@ -88,6 +88,10 @@ body {
   display: grid;
   place-items: center;
   padding: 12px;
+  /* Above the themes' fixed body::before ornament layers (dark stars, Seoul
+     grid, Neon stars) so no texture ever paints over text. */
+  position: relative;
+  z-index: 1;
 }
 
 .card {
@@ -98,6 +102,7 @@ body {
   box-shadow: 0 10px 24px rgba(255, 80, 160, 0.28);
   border: 1px solid var(--ls-glass-border);
   backdrop-filter: blur(8px);
+  position: relative; /* anchors the kawaii themes' corner decals */
 }
 
 /* -- Header: mascot + title left, theme dropdown right -- */
@@ -673,6 +678,304 @@ body.theme-seoul::before {
   z-index: 0;
 }
 
+
+/* ══════════════════════════════════════════════════════════════════════
+   Kawaii collection (2026-10-25). Three themes from the anime-design skill:
+   Gingham Sticker (KAWAII mood), Holo Mochi (pastel glass) and Neon Usagi
+   (NEON mood). Each sets every token it uses and adds its own surfaces and one
+   ornament cluster. Text never sits on a pattern, a glow or an iridescent
+   edge; all body text measured ≥ 4.5:1 (see BUGS_AND_ITERATIONS.md).
+   Fonts are the bundled ones in lib/fonts (popups can't load web fonts).
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Theme: Gingham Sticker 깅엄 ─────────────────────────────────────── */
+/* Pink gingham picnic ground, a paper sticker card with an ink outline and a
+   white die-cut ring, hard offset shadows, rows tilted ±0.6° like stickers
+   slapped on a binder. Ink #2a1824 on paper 16.2:1, muted 8.45:1. */
+body.theme-gingham {
+  --ls-bg-pink-light: #fff3f7;
+  --ls-bg-pink: #ffe3ee;
+  --ls-bg-pink-deep: #f6a6c4;
+  --ls-bg-gradient:
+    repeating-linear-gradient(0deg, rgba(246, 166, 196, 0.42) 0 9px, transparent 9px 18px),
+    repeating-linear-gradient(90deg, rgba(246, 166, 196, 0.42) 0 9px, transparent 9px 18px),
+    #fff3f7;
+  --ls-glass: #fffafc;
+  --ls-glass-light: #ffffff;
+  --ls-glass-border: #2a1824;
+  --ls-glass-strong: #fffafc;
+  --ls-pink-accent: #ff4f9a;
+  --ls-pink-deep: #c41c63;
+  --ls-text-dark: #2a1824;
+  --ls-text-muted: #6e3a57;
+  --ls-text-white: #ffffff;
+  --ls-glow: 3px 3px 0 #2a1824;
+  --ls-glow-strong: 4px 4px 0 #ff4f9a;
+  --ls-radius: 14px;
+  --ls-radius-sm: 10px;
+  --ls-font-display: 'Comfortaa', 'Trebuchet MS', sans-serif;
+  --ls-focus: #b0124f;
+  --ls-grad-btn: linear-gradient(135deg, #d6246e 0%, #a3164f 100%);
+  --ls-row-hover: #ffeef5;
+  --ls-row-selected: #fff0f6;
+  --ls-chip-border: rgba(42, 24, 36, 0.25);
+  --ls-link: #b0124f;
+  font-family: 'Atkinson Hyperlegible', 'Trebuchet MS', sans-serif;
+}
+body.theme-gingham h1,
+body.theme-gingham .toggle-row,
+body.theme-gingham .theme-group-label { font-family: 'Comfortaa', 'Trebuchet MS', sans-serif; font-weight: 700; }
+body.theme-gingham .card {
+  border: 2px solid #2a1824;
+  border-radius: 18px;
+  backdrop-filter: none;
+  /* white die-cut ring, ink rim, then the hard pink offset */
+  box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px #2a1824, 7px 8px 0 6px #f6a6c4;
+}
+body.theme-gingham .theme-item {
+  border: 2px solid #2a1824;
+  box-shadow: 2px 2px 0 #2a1824;
+}
+body.theme-gingham .theme-list > .theme-item:nth-child(odd) { transform: rotate(-0.6deg); }
+body.theme-gingham .theme-list > .theme-item:nth-child(even) { transform: rotate(0.6deg); }
+body.theme-gingham .theme-item:hover { box-shadow: 3px 3px 0 #ff4f9a; border-color: #2a1824; }
+body.theme-gingham .theme-item[aria-checked="true"] {
+  border-color: #2a1824;
+  box-shadow: 4px 4px 0 #ff4f9a, 0 0 0 3px #ffd1e3 inset;
+}
+body.theme-gingham .slider { box-shadow: inset 0 0 0 2px #2a1824; background: #ffffff; }
+body.theme-gingham .slider::before { border: 2px solid #2a1824; width: 22px; height: 22px; box-shadow: none; }
+body.theme-gingham .toggle-wrap input:checked + .slider {
+  background: repeating-linear-gradient(45deg, #ff4f9a 0 6px, #ff79b3 6px 12px);
+  box-shadow: inset 0 0 0 2px #2a1824, 2px 2px 0 #2a1824;
+}
+body.theme-gingham .pv-btn { border: 2px solid #2a1824; box-shadow: 2px 2px 0 #2a1824; }
+body.theme-gingham .preview-page { border: 2px dashed #f6a6c4; }
+body.theme-gingham .theme-dropdown-trigger,
+body.theme-gingham .theme-dropdown-menu { border: 2px solid #2a1824; box-shadow: 3px 3px 0 #2a1824; backdrop-filter: none; }
+/* Corner stickers: a heart top-right and a bow + sparkle bottom-left, on the
+   card's ring, outside its 14px padding so they never touch text. */
+body.theme-gingham .card::before,
+body.theme-gingham .card::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  filter: drop-shadow(1.5px 1.5px 0 #2a1824);
+}
+body.theme-gingham .card::before {
+  top: -13px;
+  right: -11px;
+  width: 26px;
+  height: 26px;
+  transform: rotate(14deg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-10-9C.3 8.6 2.3 4.5 6.2 4.5c2.3 0 3.8 1.3 5.8 3.6 2-2.3 3.5-3.6 5.8-3.6 3.9 0 5.9 4.1 4.2 7.5-2.5 4.4-10 9-10 9z' fill='%23ff4f9a' stroke='%23fff' stroke-width='1.6'/%3E%3Ccircle cx='8' cy='9' r='1.4' fill='%23fff'/%3E%3C/svg%3E");
+}
+body.theme-gingham .card::after {
+  bottom: -14px;
+  left: -10px;
+  width: 44px;
+  height: 26px;
+  transform: rotate(-10deg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23a8c3e6' stroke='%23fff' stroke-width='1.4'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath d='M16 12L3 3.5v17zM16 12l13-8.5v17z' fill='%23f6a6c4' stroke='%23fff' stroke-width='1.6' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='12' r='3.6' fill='%23ff4f9a' stroke='%23fff' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-size: 14px 14px, 30px 22px;
+  background-position: right top, left bottom;
+}
+
+/* ── Theme: Holo Mochi 모찌 ──────────────────────────────────────────── */
+/* Pastel mesh-gradient sky drifting slowly behind thick frosted glass; the
+   selected pack wears an iridescent ring that rotates (@property angle).
+   Ink #2b1b4a ≥13.1:1 on every glass stop, muted ≥6.2:1. */
+@property --holo-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+body.theme-holo {
+  --ls-bg-pink-light: #f6eeff;
+  --ls-bg-pink: #e9d5ff;
+  --ls-bg-pink-deep: #cfe6ff;
+  --ls-bg-gradient:
+    radial-gradient(60% 45% at 12% 8%, #ffd1ea 0%, transparent 70%),
+    radial-gradient(55% 40% at 92% 18%, #cfe6ff 0%, transparent 70%),
+    radial-gradient(60% 50% at 80% 88%, #c8f7e1 0%, transparent 72%),
+    radial-gradient(55% 45% at 10% 80%, #ffd8c2 0%, transparent 70%),
+    #efe4ff;
+  --ls-glass: rgba(255, 255, 255, 0.55);
+  --ls-glass-light: rgba(255, 255, 255, 0.62);
+  --ls-glass-border: rgba(255, 255, 255, 0.85);
+  --ls-glass-strong: rgba(250, 247, 255, 0.92);
+  --ls-pink-accent: #9b6cf0;
+  --ls-pink-deep: #6d35d8;
+  --ls-text-dark: #2b1b4a;
+  --ls-text-muted: #54447a;
+  --ls-text-white: #ffffff;
+  --ls-glow: 0 10px 28px rgba(140, 100, 230, 0.22), 0 2px 6px rgba(255, 180, 220, 0.35);
+  --ls-glow-strong: 0 14px 36px rgba(140, 100, 230, 0.32);
+  --ls-radius: 22px;
+  --ls-radius-sm: 14px;
+  --ls-font-body: 'Lexend', system-ui, sans-serif;
+  --ls-font-display: 'Lexend', system-ui, sans-serif;
+  --ls-focus: #5b2bc4;
+  --ls-grad-btn: linear-gradient(135deg, #6d35d8 0%, #b0196a 100%);
+  --ls-row-hover: rgba(255, 255, 255, 0.78);
+  --ls-row-selected: rgba(255, 255, 255, 0.86);
+  --ls-chip-border: rgba(84, 68, 122, 0.18);
+  --ls-link: #5b2bc4;
+  font-family: 'Lexend', system-ui, sans-serif;
+  background-size: 160% 160%;
+  animation: holo-drift 28s ease-in-out infinite alternate;
+}
+@keyframes holo-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+body.theme-holo h1 { font-weight: 700; letter-spacing: -0.1px; }
+body.theme-holo .card {
+  border-radius: 24px;
+  backdrop-filter: blur(22px) saturate(1.7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 18px 40px rgba(120, 80, 210, 0.22);
+}
+body.theme-holo .theme-item { border-radius: 16px; }
+body.theme-holo .theme-item:hover { border-color: rgba(155, 108, 240, 0.55); }
+/* Iridescent ring: padding-box fill + rotating conic border-box. */
+body.theme-holo .theme-item[aria-checked="true"] {
+  border-color: transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)) padding-box,
+    conic-gradient(from var(--holo-angle), #ff9ad5, #b69bff, #8fd3ff, #8ff0c8, #ffe08f, #ff9ad5) border-box;
+  box-shadow: 0 8px 22px rgba(155, 108, 240, 0.28);
+  animation: holo-spin 6s linear infinite;
+}
+@keyframes holo-spin { to { --holo-angle: 360deg; } }
+body.theme-holo .toggle-wrap input:checked + .slider {
+  background: conic-gradient(from 200deg, #ff9ad5, #b69bff, #8fd3ff, #8ff0c8, #ff9ad5);
+  box-shadow: inset 0 0 0 1px rgba(43, 27, 74, 0.25), 0 6px 16px rgba(155, 108, 240, 0.35);
+}
+body.theme-holo .slider::before { box-shadow: 0 3px 8px rgba(43, 27, 74, 0.25); }
+body.theme-holo .pv-btn { border-color: rgba(255, 255, 255, 0.9); box-shadow: 0 6px 16px rgba(109, 53, 216, 0.35); }
+body.theme-holo .theme-dropdown-menu { backdrop-filter: blur(22px) saturate(1.6); }
+/* Three sparkles twinkling at the card's edge, outside the text area. */
+body.theme-holo .card::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  width: 54px;
+  height: 30px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23ffffff'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23b69bff'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23ff9ad5'/%3E%3C/svg%3E");
+  background-size: 22px 22px, 12px 12px, 10px 10px;
+  background-position: right top, 8px 16px, 26px 0;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+  animation: holo-twinkle 3.2s ease-in-out infinite;
+}
+@keyframes holo-twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(0.84) rotate(10deg); }
+}
+
+/* ── Theme: Neon Usagi 네온 ──────────────────────────────────────────── */
+/* Midnight arcade: violet void, a hand-placed star field, magenta bloom on
+   edges only (no glowing small text), bunny-ear sparkle on the card.
+   Bone #f3eaf2 ≥13.8:1 on panels, muted #c9b3dc ≥8.4:1, focus ≥7.7:1. */
+body.theme-neon {
+  --ls-bg-pink-light: #1c1029;
+  --ls-bg-pink: #120b18;
+  --ls-bg-pink-deep: #0b0710;
+  --ls-bg-gradient:
+    radial-gradient(80% 50% at 50% -10%, rgba(255, 70, 214, 0.22) 0%, transparent 70%),
+    radial-gradient(70% 45% at 100% 110%, rgba(110, 17, 145, 0.45) 0%, transparent 70%),
+    #120b18;
+  --ls-glass: rgba(42, 23, 64, 0.88);
+  --ls-glass-light: rgba(42, 23, 64, 0.72);
+  --ls-glass-border: rgba(255, 70, 214, 0.45);
+  --ls-glass-strong: rgba(30, 16, 46, 0.97);
+  --ls-pink-accent: #ff46d6;
+  --ls-pink-deep: #b0139a;
+  --ls-white: #f3eaf2;
+  --ls-text-dark: #f3eaf2;
+  --ls-text-muted: #c9b3dc;
+  --ls-text-white: #ffffff;
+  --ls-glow: 0 0 0 1px rgba(255, 70, 214, 0.55), 0 0 14px rgba(255, 70, 214, 0.45), 0 0 34px rgba(255, 70, 214, 0.2);
+  --ls-glow-strong: 0 0 0 1px #ff46d6, 0 0 22px rgba(255, 70, 214, 0.6), 0 0 48px rgba(255, 70, 214, 0.3);
+  --ls-glow-white: 0 0 16px rgba(243, 234, 242, 0.3);
+  --ls-radius: 16px;
+  --ls-radius-sm: 12px;
+  --ls-font-display: 'Comfortaa', 'Trebuchet MS', sans-serif;
+  --ls-focus: #ff8ae6;
+  --ls-grad-btn: linear-gradient(135deg, #b0139a 0%, #6e1191 100%);
+  --ls-row-hover: rgba(255, 70, 214, 0.12);
+  --ls-row-selected: rgba(255, 70, 214, 0.14);
+  --ls-chip-border: rgba(255, 70, 214, 0.35);
+  --ls-link: #b0139a; /* the preview link sits on the white page chip: 6.17:1 */
+  font-family: 'Lexend', system-ui, sans-serif;
+  color-scheme: dark;
+}
+body.theme-neon h1,
+body.theme-neon .toggle-row { font-family: 'Comfortaa', 'Trebuchet MS', sans-serif; font-weight: 700; }
+body.theme-neon::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 7% 12%, #ffffffcc 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 68%, #ff9be9aa 0%, transparent 100%),
+    radial-gradient(1px 1px at 46% 6%, #ffffff99 0%, transparent 100%),
+    radial-gradient(2px 2px at 71% 38%, #ff46d666 0%, transparent 100%),
+    radial-gradient(1px 1px at 89% 81%, #ffffff88 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 92%, #b98cff88 0%, transparent 100%),
+    radial-gradient(1px 1px at 95% 9%, #ffffffaa 0%, transparent 100%);
+}
+body.theme-neon .card {
+  border: 1px solid rgba(255, 70, 214, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 70, 214, 0.25), 0 0 24px rgba(255, 70, 214, 0.28), 0 18px 40px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+}
+body.theme-neon .theme-item { border-color: rgba(255, 70, 214, 0.18); }
+body.theme-neon .theme-item:hover { border-color: #ff46d6; }
+body.theme-neon .theme-item[aria-checked="true"] { border-color: #ff46d6; box-shadow: var(--ls-glow); }
+body.theme-neon .slider { background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px rgba(255, 70, 214, 0.45); }
+body.theme-neon .slider::before { background: #f3eaf2; box-shadow: 0 0 8px rgba(243, 234, 242, 0.6); }
+body.theme-neon .toggle-wrap input:checked + .slider { background: #ff46d6; box-shadow: var(--ls-glow-strong); }
+body.theme-neon .pv-btn { border-color: rgba(255, 70, 214, 0.8); box-shadow: 0 0 14px rgba(255, 70, 214, 0.45); }
+body.theme-neon .theme-dropdown-menu { box-shadow: var(--ls-glow-strong); }
+/* Bunny-ear sparkle pair perched on the card's top-left rim. */
+body.theme-neon .card::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 14px;
+  width: 34px;
+  height: 22px;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cpath d='M10 21C6 15 5 6 8 2c3 3 5 11 5 19z' fill='%23120b18' stroke='%23ff46d6' stroke-width='1.6'/%3E%3Cpath d='M22 21c0-8 2-16 5-19 3 4 2 13-2 19z' fill='%23120b18' stroke='%23ff46d6' stroke-width='1.6'/%3E%3Cpath d='M9 8c1 3 2 7 2 11M26 8c-1 3-2 7-2 11' stroke='%23ff9be9' stroke-width='1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  filter: drop-shadow(0 0 4px rgba(255, 70, 214, 0.8));
+}
+body.theme-neon .ls-kofi-btn { background: #b0139a; }
+
+/* Theme switch crossfade (View Transitions, popup.js) and every kawaii
+   animation stop for people who prefer reduced motion. */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.28s; }
+@media (prefers-reduced-motion: reduce) {
+  body.theme-holo,
+  body.theme-holo .theme-item[aria-checked="true"],
+  body.theme-holo .card::before { animation: none; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
+
 /* Ko-fi footer pill: beige/slate repurpose --ls-pink-deep as a light accent,
    which lovespark-footer.css uses as a white-text fill. Override the fill here
    so the 11px label stays ≥4.5:1 (beige 5.0:1, slate 5.9:1). */
@@ -714,7 +1017,7 @@ body { transition: background 0.3s ease, color 0.3s ease; }
 
 .theme-dropdown-trigger:hover {
   border-color: var(--ls-pink-accent);
-  color: var(--ls-pink-accent);
+  color: var(--ls-text-dark); /* was pink accent: small pink text fails AA */
   box-shadow: var(--ls-glow);
 }
 
@@ -728,7 +1031,7 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
-  min-width: 172px;
+  min-width: 204px; /* fits "Gingham Sticker 깅엄" on one line */
   background: var(--ls-glass-strong);
   backdrop-filter: blur(12px);
   border: 1px solid var(--ls-glass-border);
@@ -790,11 +1093,17 @@ body { transition: background 0.3s ease, color 0.3s ease; }
 .theme-option[data-theme="beige"]::before { background: #f5efe0; border: 1px solid #d4c4a0; }
 .theme-option[data-theme="slate"]::before { background: #1e1e1e; border: 1px solid #4a4a4a; }
 /* Hangul next to the name in the theme menu, not on its own line as in the pack list */
+.theme-option { white-space: nowrap; }
 .theme-option .theme-korean {
   display: inline;
   margin: 0 0 0 6px;
+  color: inherit; /* muted Hangul was 4.17:1 on Slate's menu */
+  font-size: 11px;
 }
 .theme-option[data-theme="bubblegum"]::before { background: linear-gradient(135deg, #ffd3e5, #ff49a6); border: 1px solid #d81b73; }
+.theme-option[data-theme="gingham"]::before { background: repeating-linear-gradient(0deg, #f6a6c4 0 3px, #fff3f7 3px 6px), #fff3f7; border: 1.5px solid #2a1824; }
+.theme-option[data-theme="holo"]::before { background: conic-gradient(#ff9ad5, #b69bff, #8fd3ff, #8ff0c8, #ffe08f, #ff9ad5); border: 1px solid #ffffff; }
+.theme-option[data-theme="neon"]::before { background: #120b18; border: 1.5px solid #ff46d6; box-shadow: 0 0 6px #ff46d6; }
 .theme-option[data-theme="seoul"]::before { background: linear-gradient(135deg, #dff1ff 50%, #ffe8f2 50%); border: 1px solid #c4a8e0; }
 
 .theme-option.active {

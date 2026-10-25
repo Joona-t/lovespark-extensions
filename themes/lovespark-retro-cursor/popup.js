@@ -29,11 +29,16 @@ function storageSet(obj) {
 // ── Theme dropdown ────────────────────────────────────────────────────────
 // Bubblegum and Seoul Y2K are this popup's own token blocks in popup.css;
 // the rest also exist in lib/lovespark-tokens.css.
-const THEMES = ['retro', 'bubblegum', 'seoul', 'dark', 'beige', 'slate'];
+const THEMES = ['seoul', 'gingham', 'holo', 'neon', 'retro', 'bubblegum', 'dark', 'beige', 'slate'];
+// Seoul Y2K is the default (Joona, 2026-10-25); a saved choice always wins.
+const DEFAULT_THEME = 'seoul';
 const THEME_NAMES = {
   retro: 'Retro Pink',
   bubblegum: 'Bubblegum',
   seoul: 'Seoul Y2K',
+  gingham: 'Gingham Sticker',
+  holo: 'Holo Mochi',
+  neon: 'Neon Usagi',
   dark: 'Dark',
   beige: 'Beige',
   slate: 'Slate',
@@ -73,7 +78,14 @@ function applyTheme(t) {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
-      applyTheme(theme);
+      // Crossfade between themes where the View Transitions API exists;
+      // instant swap otherwise or when reduced motion is preferred.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (document.startViewTransition && !reduce) {
+        document.startViewTransition(() => applyTheme(theme));
+      } else {
+        applyTheme(theme);
+      }
       void storageSet({ theme });
       close();
       toggle.focus();
@@ -87,7 +99,7 @@ function applyTheme(t) {
     });
   }
   storageGet(['theme']).then(({ theme }) => {
-    applyTheme(THEMES.includes(theme) ? theme : 'retro');
+    applyTheme(THEMES.includes(theme) ? theme : DEFAULT_THEME);
   });
 })();
 
