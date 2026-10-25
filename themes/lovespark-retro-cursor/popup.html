@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="popup.css" />
     <link rel="stylesheet" href="lib/lovespark-footer.css">
   </head>
-  <body>
+  <body class="theme-seoul">
     <main class="shell" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupSubtitle">
       <section class="card">
         <header class="hdr">
@@ -19,20 +19,23 @@
           </div>
           <div class="theme-dropdown" id="themeDropdown">
             <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change Theme">
-              <span class="theme-label">Retro Pink</span> ▾
+              <span class="theme-label">Seoul Y2K</span> ▾
             </button>
             <div class="theme-dropdown-menu" id="themeMenu">
               <div class="theme-dropdown-header">Change Theme</div>
+              <button class="theme-option" data-theme="seoul">Seoul Y2K <span class="theme-korean">서울</span></button>
+              <button class="theme-option" data-theme="gingham">Gingham Sticker <span class="theme-korean">깅엄</span></button>
+              <button class="theme-option" data-theme="holo">Holo Mochi <span class="theme-korean">모찌</span></button>
+              <button class="theme-option" data-theme="neon">Neon Usagi <span class="theme-korean">네온</span></button>
               <button class="theme-option" data-theme="retro">Retro Pink</button>
               <button class="theme-option" data-theme="bubblegum">Bubblegum</button>
-              <button class="theme-option" data-theme="seoul">Seoul Y2K <span class="theme-korean">서울</span></button>
               <button class="theme-option" data-theme="dark">Dark</button>
               <button class="theme-option" data-theme="beige">Beige</button>
               <button class="theme-option" data-theme="slate">Slate</button>
             </div>
           </div>
           <!-- Polite announcement of theme changes, outside the trigger button -->
-          <span id="themeLabel" class="sr-only" role="status">Theme: Retro Pink</span>
+          <span id="themeLabel" class="sr-only" role="status">Theme: Seoul Y2K</span>
         </header>
         <p class="subtitle" id="popupSubtitle">Cute cursors with soft glow and sparkle vibes ✨</p>
 

@@ -2,6 +2,24 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.41] - 2026-10-25
+- **Seoul Y2K 서울 is now the default popup theme** (a saved choice still wins) and
+  sits first in Change Theme; the popup starts in it, so there is no flash.
+- Three new kawaii themes, all CSS with bundled fonts:
+  - **Gingham Sticker 깅엄**: pink gingham ground, paper card with an ink outline
+    and white die-cut ring, hard pink offset shadows, rows tilted ±0.6° like
+    stickers, striped toggle, heart / bow / sparkle stickers on the card corners.
+  - **Holo Mochi 모찌**: slowly drifting pastel mesh gradient behind thick frosted
+    glass, an iridescent ring that rotates around the selected pack, rainbow toggle,
+    twinkling sparkles. Lexend type.
+  - **Neon Usagi 네온**: violet night with a star field, magenta bloom on edges
+    (never on small text), glowing toggle, neon bunny ears on the card.
+- Switching themes crossfades (View Transitions); every animation stops under
+  "reduce motion".
+- Fixes: theme textures (Dark stars, Seoul dots) could paint over content (content
+  now stacks above them); the menu was too narrow for long names; the trigger's
+  hover turned its label pink (failed AA); menu Hangul was 4.17:1 on Slate.
+
 ## [1.1.40] - 2026-10-25
 - Two new popup themes in Change Theme: **Bubblegum** (the suite's glass-sticker
   pink) and **Seoul Y2K 서울** (Cyworld-era Korean palette taken from this pack's own

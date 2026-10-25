@@ -1,5 +1,19 @@
 # Bugs & Iterations
 
+## 2026-10-25: Seoul Y2K default + three kawaii themes (Gingham Sticker, Holo Mochi, Neon Usagi)
+
+**Request:** Joona: "put korean as default", then "3 more designs from you", "make them more kawaii and sota", "really push what you can do to the limits".
+**Change:** `DEFAULT_THEME = 'seoul'` in popup.js (saved choices still win), Seoul first in THEMES and the menu, `<body class="theme-seoul">` so the first paint is already Seoul. Three new themes in popup.css, designed with the anime-design skill (KAWAII and NEON moods): Gingham Sticker (die-cut sticker card, ink outlines, hard offsets, tilted rows, SVG corner stickers), Holo Mochi (animated mesh gradient, frosted glass, `@property`-animated conic iridescent ring on the selected pack), Neon Usagi (star field, magenta bloom on edges only, bunny-ear decal). Theme switch uses `document.startViewTransition` when available and motion is allowed; all animation is off under `prefers-reduced-motion`.
+**Bugs found and fixed:**
+- Theme ornament layers are `position: fixed; z-index: 0` on `body::before`, and `.shell` wasn't positioned, so Dark's stars and Seoul's dot grid painted *over* card text. `.shell` now has `position: relative; z-index: 1`.
+- Neon's `--ls-link` (#ff8ae6) is used only on the white preview page: light pink on white. Set to #b0139a (6.17:1). Rule: `--ls-link` must pass on white in every theme.
+- `.theme-dropdown-trigger:hover` set the label colour to pink accent (small pink text). Now stays body text; border + glow show hover.
+- Menu min-width 172px wrapped "Gingham Sticker 깅엄"; now 204px with nowrap options. Menu Hangul inherits the option colour (muted was 4.17:1 on Slate).
+**Measurement correction:** my first in-browser contrast sweeps (including the one for v1.1.40) measured right after switching themes, while the 0.3s background transitions were still running, so dark themes read the previous theme's colours and showed false failures. The final sweep disables transitions first. Result: Seoul, Bubblegum, Gingham, Holo, Neon and Dark have zero text below AA (worst 4.84, 4.86, 4.84, 6.26, 6.17, 4.86). Still open, pre-existing: Retro footer credit/suite link 3.24:1, Beige preview button 3.70:1, Slate "Change Theme" header 4.17:1.
+**Verification:** `ls-check . --strict`; popup served on localhost, default verified with empty storage, Gingham picked via the real menu (crossfade path), each new theme screenshotted and inspected, no wraps or horizontal overflow at 320px.
+**Files:** popup.css, popup.html, popup.js, manifest.json, CHANGELOG.md
+**Version:** 1.1.41
+
 ## 2026-10-25: Bubblegum + Seoul Y2K popup themes, two pink-text contrast fixes
 
 **Request:** Joona: "add korean and bubble gum theme for the cursor extension" (screenshot of the Change Theme menu).
