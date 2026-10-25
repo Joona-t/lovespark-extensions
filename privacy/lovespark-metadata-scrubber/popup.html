@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Metadata Scrubber</title>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
-<body>
+<body role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
   <div class="popup-container">
     <!-- Header -->
     <header class="popup-header">
-      <span class="header-icon">🌸</span>
-      <span class="header-title">Metadata Scrubber</span>
-      <button id="settingsToggle" class="settings-btn" title="Settings">&#9881;</button>
+      <span class="header-icon" aria-hidden="true">🌸</span>
+      <span class="header-title" id="popupTitle">Metadata Scrubber</span>
+      <button id="settingsToggle" class="settings-btn" title="Settings" aria-label="Settings" aria-expanded="false" aria-controls="settingsPanel">&#9881;</button>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-label="Change Theme" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -57,7 +58,7 @@
       <input type="file" id="fileInput" accept="image/*" hidden>
       <div class="dropzone-content" id="dropzoneContent">
         <div class="dropzone-icon">🖼️</div>
-        <div class="dropzone-text">Drop an image here</div>
+        <div class="dropzone-text" id="popupDesc">Drop an image here</div>
         <div class="dropzone-sub">or click to browse</div>
         <div class="dropzone-paste">📋 Paste from clipboard</div>
       </div>
@@ -83,7 +84,7 @@
         <div class="report-line"><span class="check">✓</span> Timestamps removed</div>
         <div class="report-line"><span class="check">✓</span> Software tags removed</div>
       </div>
-      <button id="downloadBtn" class="btn-pink">💾 Download Clean</button>
+      <button id="downloadBtn" class="btn-pink" aria-label="Download clean image">💾 Download Clean</button>
       <button id="scrubAnother" class="btn-secondary">Scrub another</button>
     </div>
 
@@ -106,6 +107,7 @@
   </div>
 
   <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
   <script src="scrubber.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>

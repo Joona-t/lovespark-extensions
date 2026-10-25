@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Fingerprint Shield</title>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="statusText">
     <header class="popup-header">
       <img src="icons/icon-48.png" alt="Shield" class="header-icon">
-      <h1>Fingerprint Shield</h1>
+      <h1 id="popupTitle">Fingerprint Shield</h1>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change Theme">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -28,8 +29,8 @@
     </header>
 
     <div class="status-card" id="statusCard">
-      <span class="status-icon" id="statusIcon">🛡️</span>
-      <span class="status-text" id="statusText">Shield Active</span>
+      <span class="status-icon" id="statusIcon" aria-hidden="true">🛡️</span>
+      <span class="status-text" id="statusText" role="status" aria-live="polite">Shield Active</span>
       <button class="toggle-switch active" id="toggleBtn" aria-label="Toggle shield"></button>
     </div>
 
@@ -54,6 +55,7 @@
       <span class="footer-text">invisible to trackers ✨</span>
     </footer>
   </div>
+  <script src="lib/lovespark-theme.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>

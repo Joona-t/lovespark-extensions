@@ -48,3 +48,17 @@
 **Files:** `content.js`, `manifest.json`, `tests/scroll-lock-fixture.html`.
 
 **Release state:** Version `1.0.38` was packaged and the code pushed to `Joona-t/I-Dont-Want-Cookies` `main` on 2026-09-24. The Chrome Web Store dashboard upload and submit-for-review steps remain unverified because browser automation refused the extension gallery and the in-app browser was not signed in.
+
+## 2026-10-08: ls-check cleanup (v1.0.39)
+
+**Failures (5):** A11Y-DIALOG, A11Y-EXPANDED, A11Y-LABEL, MV3-SETTIMEOUT, BRAND-LIB-WIRED.
+
+**Root cause:** The popup duplicated the shared theme logic inline instead of loading `lib/lovespark-theme.js` / `lib/lovespark-base.css` (both already in `lib/`, matching canonical), and it never got the ARIA wiring. Emoji-prefixed buttons in popup and settings had no `aria-label`. The background service worker debounced the badge with a 500ms `setTimeout`, which can be dropped when the MV3 worker suspends. That flush also added the queued count on top of a stored `bannersHiddenToday` that the HIDDEN handler had already incremented, so the badge could double-count.
+
+**Fix:**
+- `popup.html`: loads `lib/lovespark-base.css` (before `popup.css`, so popup styles still win) and `lib/lovespark-theme.js`. `#root` gets `role="dialog"`, `aria-labelledby="popup-title"` and `aria-describedby="cute-msg"`. Theme trigger gets `aria-haspopup`, `aria-controls`, `aria-expanded` and `aria-label="Change Theme"`. Allowlist and settings buttons get aria-labels.
+- `popup.js`: uses `LoveSparkTheme.apply` instead of the duplicate copy. The open/close toggle keeps `aria-expanded` in sync, and Escape closes the menu. The allowlist button's aria-label follows its state.
+- `settings.html`: aria-labels on the Export CSV, Reset Stats, Import and Export buttons.
+- `background.js`: the timer is gone. The HIDDEN handler sets the badge from the `newToday` value it just saved, which fixes the double count.
+
+**Verification:** `node --check` passes on popup.js and background.js. `ls-check` went from 28 pass / 5 fail / 5 warn to 33 pass / 0 fail / 5 warn (same warnings). There is no runnable test suite; `tests/` only holds an HTML fixture. Not tested in a live browser.

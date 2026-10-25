@@ -216,10 +216,10 @@ body.distraction-free .save-covenant { display: block; }
     </div>
     <div class="header-actions">
       <button class="btn-new" id="btnNew" title="CMD+N">✦ New Note</button>
-      <button class="btn-icon" id="btnDaily" title="CMD+D">📋</button>
-      <button class="btn-icon" id="btnExportAll" title="Export all">📦</button>
-      <button class="btn-icon" id="btnImport" title="Import">📥</button>
-      <button class="btn-icon" id="btnHelp" title="Guide">❓</button>
+      <button class="btn-icon" id="btnDaily" aria-label="Open daily note" title="CMD+D">📋</button>
+      <button class="btn-icon" id="btnExportAll" aria-label="Export all notes" title="Export all">📦</button>
+      <button class="btn-icon" id="btnImport" aria-label="Import notes" title="Import">📥</button>
+      <button class="btn-icon" id="btnHelp" title="Guide" aria-label="Open guide">❓</button>
     </div>
   </header>
 
@@ -258,11 +258,11 @@ body.distraction-free .save-covenant { display: block; }
             </div>
             <div class="toolbar-right">
               <div class="font-switcher" id="fontSwitcher"></div>
-              <button class="btn-icon-sm" id="btnPin" title="Pin note">💖</button>
+              <button class="btn-icon-sm" id="btnPin" aria-label="Pin note" title="Pin note">💖</button>
               <button class="btn-icon-sm" id="btnVersions" title="Version history">🕐 <span id="versionCount"></span></button>
-              <button class="btn-icon-sm" id="btnPreview" title="CMD+P">👁</button>
-              <button class="btn-icon-sm" id="btnExport" title="CMD+E">📄</button>
-              <button class="btn-icon-sm" id="btnDistraction" title="CMD+Shift+F">🧘</button>
+              <button class="btn-icon-sm" id="btnPreview" aria-label="Toggle markdown preview" title="CMD+P">👁</button>
+              <button class="btn-icon-sm" id="btnExport" aria-label="Export note" title="CMD+E">📄</button>
+              <button class="btn-icon-sm" id="btnDistraction" aria-label="Toggle distraction-free mode" title="CMD+Shift+F">🧘</button>
             </div>
           </div>
         </div>
@@ -275,7 +275,7 @@ body.distraction-free .save-covenant { display: block; }
         <div class="version-drawer" id="versionDrawer" style="display:none">
           <div class="version-drawer-header">
             <span class="version-drawer-title">Version History</span>
-            <button class="btn-close" id="btnCloseVersions">×</button>
+            <button class="btn-close" id="btnCloseVersions" aria-label="Close version history">×</button>
           </div>
           <div class="version-list" id="versionList"></div>
           <div class="version-footer">✦ Last 20 versions kept automatically</div>
@@ -295,7 +295,7 @@ body.distraction-free .save-covenant { display: block; }
     <div class="guide-card">
       <div class="guide-header">
         <span class="guide-esc">press ESC to close</span>
-        <button class="btn-close" id="btnCloseGuide">×</button>
+        <button class="btn-close" id="btnCloseGuide" aria-label="Close guide">×</button>
       </div>
       <div class="guide-body">
         <div class="guide-intro">
@@ -593,7 +593,7 @@ function renderNotesList() {
   let h = '';
   for (const n of filtered) {
     const cat = CATEGORIES.find(c => c.id === n.category);
-    h += `<div class="note-item${n.id===activeNoteId?' active':''}" data-id="${n.id}"><div class="note-item-title">${n.pinned?'<span class="note-item-pin">💖</span>':''}${escapeHtml(n.title||'Untitled')}</div>${n.snippet?`<div class="note-item-preview">${escapeHtml(n.snippet)}</div>`:''}<div class="note-item-meta"><span class="note-item-date">${formatDate(n.updatedAt)}</span>${cat?`<span class="note-item-cat" style="color:${cat.color};background:${cat.bg}">${cat.emoji} ${cat.label}</span>`:''}</div><button class="note-item-delete" data-id="${n.id}" title="Delete">×</button></div>`;
+    h += `<div class="note-item${n.id===activeNoteId?' active':''}" data-id="${n.id}"><div class="note-item-title">${n.pinned?'<span class="note-item-pin">💖</span>':''}${escapeHtml(n.title||'Untitled')}</div>${n.snippet?`<div class="note-item-preview">${escapeHtml(n.snippet)}</div>`:''}<div class="note-item-meta"><span class="note-item-date">${formatDate(n.updatedAt)}</span>${cat?`<span class="note-item-cat" style="color:${cat.color};background:${cat.bg}">${cat.emoji} ${cat.label}</span>`:''}</div><button class="note-item-delete" data-id="${n.id}" title="Delete" aria-label="Delete note">×</button></div>`;
   }
   $('notesList').innerHTML = h;
 }

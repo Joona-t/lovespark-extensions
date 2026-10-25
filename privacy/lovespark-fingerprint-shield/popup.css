@@ -100,6 +100,7 @@ body {
   position: relative;
   width: 44px;
   height: 24px;
+  min-height: 24px; /* keep switch geometry; lovespark-base.css sets button min-height 32px */
   min-width: 44px;
   background: var(--ls-glass-light);
   border: 1px solid var(--ls-glass-border);

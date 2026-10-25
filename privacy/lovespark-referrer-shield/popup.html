@@ -5,53 +5,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LoveSpark Referrer Shield</title>
 <link rel="stylesheet" href="lib/lovespark-fonts.css">
+<link rel="stylesheet" href="lib/lovespark-base.css">
 <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
 
-<div class="popup-container">
+<div class="popup-container" role="dialog" aria-labelledby="popupTitle" aria-describedby="status-text">
 
   <!-- Header -->
   <header class="popup-header">
     <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-    <span class="header-title">Referrer Shield</span>
+    <span class="header-title" id="popupTitle">Referrer Shield</span>
     <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-expanded="false" aria-haspopup="true" aria-label="Change Theme">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
-      <div class="theme-dropdown-menu" id="themeMenu">
+      <div class="theme-dropdown-menu" id="themeMenu" role="menu">
         <div class="theme-dropdown-header">Change Theme</div>
-        <button class="theme-option" data-theme="retro">Retro Pink</button>
-        <button class="theme-option" data-theme="dark">Dark</button>
-        <button class="theme-option" data-theme="beige">Beige</button>
-        <button class="theme-option" data-theme="slate">Slate</button>
+        <button class="theme-option" role="menuitem" data-theme="retro">Retro Pink</button>
+        <button class="theme-option" role="menuitem" data-theme="dark">Dark</button>
+        <button class="theme-option" role="menuitem" data-theme="beige">Beige</button>
+        <button class="theme-option" role="menuitem" data-theme="slate">Slate</button>
       </div>
     </div>
   </header>
 
   <!-- Mode selector -->
-  <section class="mode-section">
+  <section class="mode-section" role="radiogroup" aria-label="Referrer mode">
     <label class="mode-option" data-mode="strip">
-      <input type="radio" name="mode" value="strip">
+      <input type="radio" name="mode" value="strip" aria-labelledby="mode-title-strip">
       <div class="mode-card">
-        <div class="mode-title">Strip all</div>
+        <div class="mode-title" id="mode-title-strip">Strip all</div>
         <div class="mode-desc">Remove Referer completely</div>
       </div>
     </label>
 
     <label class="mode-option" data-mode="origin">
-      <input type="radio" name="mode" value="origin" checked>
+      <input type="radio" name="mode" value="origin" aria-labelledby="mode-title-origin" checked>
       <div class="mode-card">
-        <div class="mode-title">Origin only</div>
+        <div class="mode-title" id="mode-title-origin">Origin only</div>
         <div class="mode-desc">Send site name, not page</div>
       </div>
     </label>
 
     <label class="mode-option" data-mode="off">
-      <input type="radio" name="mode" value="off">
+      <input type="radio" name="mode" value="off" aria-labelledby="mode-title-off">
       <div class="mode-card">
-        <div class="mode-title">Off</div>
+        <div class="mode-title" id="mode-title-off">Off</div>
         <div class="mode-desc">Browser default behavior</div>
       </div>
     </label>
@@ -60,8 +61,8 @@
   <!-- Status card -->
   <section class="stats-card">
     <div class="stats-row">
-      <span class="stats-label" id="status-icon">🛡️</span>
-      <span class="stats-value" id="status-text">Shield active</span>
+      <span class="stats-label" id="status-icon" aria-hidden="true">🛡️</span>
+      <span class="stats-value" id="status-text" aria-live="polite">Shield active</span>
     </div>
     <div class="stats-row">
       <span class="stats-label">Streak</span>
@@ -84,7 +85,7 @@
     </ul>
     <div class="whitelist-empty" id="whitelist-empty">No whitelisted sites yet 🌸</div>
     <div class="whitelist-add">
-      <input type="text" id="wl-input" class="wl-input" placeholder="example.com" autocomplete="off">
+      <input type="text" id="wl-input" class="wl-input" aria-label="Domain to whitelist" placeholder="example.com" autocomplete="off">
       <button id="wl-add-btn" class="btn-pink btn-sm">+ Add</button>
     </div>
   </section>
@@ -94,6 +95,7 @@
 </div>
 
 <script src="lib/browser-polyfill.min.js"></script>
+<script src="lib/lovespark-theme.js"></script>
 <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>
