@@ -492,7 +492,9 @@ h1 {
 .sub-chevron {
   display: inline-block;
   font-size: 10px;
-  color: var(--ls-pink-accent);
+  /* Muted text, not pink accent: pink as small text failed 3:1 in retro,
+     beige, bubblegum and seoul (2.26–2.67:1). */
+  color: var(--ls-text-muted);
   transition: transform 0.2s ease;
   width: 10px;
   text-align: center;
@@ -599,6 +601,76 @@ body.theme-slate {
   --ls-row-selected: #333333;
   --ls-chip-border: #4a4a4a;
   --ls-link: #8f4328;
+}
+
+/* ── Theme: Bubblegum ─────────────────────────────────── */
+/* The suite's canonical glass-sticker pink (lovespark-design-system), same
+   values as notes-app's Bubblegum. Text plum #4a0827 ≥10.97:1, muted #6b2848
+   ≥7.35:1, focus #b3185c ≥4.64:1, white on --ls-pink-deep #d81b73 4.86:1. */
+body.theme-bubblegum {
+  --ls-bg-pink-light: #ffd3e5;
+  --ls-bg-pink: #ffd9ec;
+  --ls-bg-pink-deep: #ffcbe0;
+  --ls-bg-gradient: linear-gradient(145deg, #ffd3e5 0%, #ffe8d9 28%, #ffd9ec 55%, #ffe2cc 78%, #ffcbe0 100%);
+  --ls-glass: linear-gradient(135deg, #fffafd, #ffeef3 45%, #ffdfe9 75%, #ffcfe0);
+  --ls-glass-light: rgba(255, 250, 253, 0.62);
+  --ls-glass-border: rgba(255, 255, 255, 0.7);
+  --ls-glass-strong: #fffbfe;
+  --ls-pink-accent: #ff49a6;
+  --ls-pink-deep: #d81b73;
+  --ls-text-dark: #4a0827;
+  --ls-text-muted: #6b2848;
+  --ls-glow: 0 8px 18px rgba(255, 124, 182, 0.30), 0 1px 4px rgba(255, 208, 224, 0.45);
+  --ls-glow-strong: 0 12px 30px rgba(255, 73, 166, 0.40), 0 2px 8px rgba(255, 208, 224, 0.55);
+  --ls-radius: 20px;
+  --ls-radius-sm: 14px;
+  --ls-focus: #b3185c;
+  --ls-row-hover: rgba(255, 73, 166, 0.10);
+  --ls-row-selected: rgba(255, 255, 255, 0.7);
+  --ls-chip-border: rgba(74, 8, 39, 0.14);
+  --ls-link: #b3185c;
+}
+
+/* ── Theme: Seoul Y2K (Korean) ────────────────────────── */
+/* Cyworld-era Korean internet: sky-blue mini-room, strawberry-milk pink,
+   butter yellow, boba-ink text, lavender pixel borders and a dotted grid.
+   Colours come from this extension's own Y2K Korean packs (Cyworld Dotti,
+   Strawberry Milk, Bubble Boba, Cyber Butterfly); same values as notes-app's
+   Seoul Y2K. Ink ≥10.27:1, muted ≥5.77:1, focus ≥4.70:1, white on
+   --ls-pink-deep #c2185b 5.87:1. */
+body.theme-seoul {
+  --ls-bg-pink-light: #dff1ff;
+  --ls-bg-pink: #ffe8f2;
+  --ls-bg-pink-deep: #e9dcff;
+  --ls-bg-gradient: linear-gradient(160deg, #dff1ff 0%, #ffe8f2 45%, #fff4d6 78%, #e9dcff 100%);
+  --ls-glass: rgba(255, 255, 255, 0.72);
+  --ls-glass-light: rgba(255, 255, 255, 0.5);
+  --ls-glass-border: #c4a8e0;
+  --ls-glass-strong: #ffffff;
+  --ls-pink-accent: #ff5baa;
+  --ls-pink-deep: #c2185b;
+  --ls-text-dark: #3a2a3a;
+  --ls-text-muted: #6b4a66;
+  --ls-glow: 3px 3px 0 #c4a8e0;
+  --ls-glow-strong: 4px 4px 0 #ff8fc6;
+  --ls-radius: 10px;
+  --ls-radius-sm: 6px;
+  --ls-focus: #4a55c9;
+  --ls-grad-btn: linear-gradient(135deg, #c2185b 0%, #9e1249 100%);
+  --ls-row-hover: rgba(255, 91, 170, 0.12);
+  --ls-row-selected: rgba(255, 255, 255, 0.85);
+  --ls-chip-border: #c4a8e0;
+  --ls-link: #4a55c9;
+}
+
+body.theme-seoul::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(122, 46, 85, 0.13) 1px, transparent 1.4px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Ko-fi footer pill: beige/slate repurpose --ls-pink-deep as a light accent,
@@ -717,8 +789,18 @@ body { transition: background 0.3s ease, color 0.3s ease; }
 .theme-option[data-theme="dark"]::before { background: #1a1128; border: 1px solid #ff6eb4; }
 .theme-option[data-theme="beige"]::before { background: #f5efe0; border: 1px solid #d4c4a0; }
 .theme-option[data-theme="slate"]::before { background: #1e1e1e; border: 1px solid #4a4a4a; }
+/* Hangul next to the name in the theme menu, not on its own line as in the pack list */
+.theme-option .theme-korean {
+  display: inline;
+  margin: 0 0 0 6px;
+}
+.theme-option[data-theme="bubblegum"]::before { background: linear-gradient(135deg, #ffd3e5, #ff49a6); border: 1px solid #d81b73; }
+.theme-option[data-theme="seoul"]::before { background: linear-gradient(135deg, #dff1ff 50%, #ffe8f2 50%); border: 1px solid #c4a8e0; }
 
 .theme-option.active {
-  color: var(--ls-pink-accent);
+  /* Bold body text, not pink accent: pink 13px text was 2.87–3.31:1 in retro,
+     bubblegum and seoul. The coloured dot already marks the theme. */
+  color: var(--ls-text-dark);
+  font-weight: 700;
   background: var(--ls-glass-light);
 }
