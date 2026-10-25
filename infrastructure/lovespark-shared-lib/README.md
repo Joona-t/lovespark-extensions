@@ -2,7 +2,7 @@
 
 The canonical source of truth for every visual/behavioral primitive shared across the
 LoveSpark extension fleet: theme system, mascot footer, popup animation helpers, stats
-tracking, and the CSS design tokens that give every extension the same "candy glass-sticker"
+tracking, and the CSS design tokens that give every extension the same "bubblegum glass-sticker"
 look. **Every extension's `lib/` directory is a byte-identical copy of a subset of the files
 in this repo.**
 
@@ -37,7 +37,7 @@ full account and the fix (KI-037).
 
 | File | Purpose |
 |---|---|
-| `lovespark-tokens.css` | **The actual color/spacing design tokens** (`--ls-*` CSS custom properties) for all 4 themes (candy/retro, dark, beige, slate). This is what `audit-contrast.py` parses for live WCAG contrast checking — not `lovespark-base.css`. |
+| `lovespark-tokens.css` | **The actual color/spacing design tokens** (`--ls-*` CSS custom properties) for all 4 themes (bubblegum/retro, dark, beige, slate). This is what `audit-contrast.py` parses for live WCAG contrast checking — not `lovespark-base.css`. |
 | `lovespark-base.css` | Component/utility CSS (glass cards, buttons, theme dropdown, focus rings) built on top of the tokens above. |
 | `lovespark-fonts.css` | `@font-face` declarations for the bundled webfonts in `fonts/`. |
 | `lovespark-theme.js` | Theme dropdown UI + `LoveSparkTheme.init()` — reads/writes `chrome.storage.local` theme preference, applies `body.theme-*` classes. |
