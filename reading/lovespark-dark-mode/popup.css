@@ -168,7 +168,7 @@ html, body {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--ls-white);
+  color: var(--ls-text-dark) /* was --ls-white on glass: failed AA */;
 }
 
 .mode-desc {
@@ -198,7 +198,7 @@ html, body {
   text-shadow: 0 0 6px var(--ls-pink-accent);
 }
 
-.mode-pill[aria-pressed="true"] .mode-name { color: #fff; }
+.mode-pill[aria-pressed="true"] .mode-name { color: var(--ls-text-dark) /* was #fff on a 9% pink wash: failed AA */; }
 
 .mode-pill[data-mode="dark"][aria-pressed="true"] {
   --pill-accent: var(--dark-accent);

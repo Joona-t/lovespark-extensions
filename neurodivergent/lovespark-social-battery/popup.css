@@ -96,7 +96,7 @@ body {
   transform: translate(-50%, -50%);
   font-family: var(--ls-font-display);
   font-size: 16px;
-  color: var(--ls-text-white);
+  color: var(--ls-text-dark) /* was --ls-text-white on the page background: failed AA */;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   z-index: 2;
 }
@@ -199,3 +199,6 @@ input:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* #c0392b on dark glass is ~2.6:1; a light red reads in Dark and Neon. */
+body.theme-dark .btn-adjust.drain { color: #ff8a80; }

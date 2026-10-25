@@ -143,7 +143,7 @@ body {
 .card-title {
   font-family: var(--ls-font-display);
   font-size: 8px;
-  color: var(--ls-text-white);
+  color: var(--ls-text-dark) /* was --ls-text-white on the page background: failed AA */;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   margin-bottom: 8px;
 }

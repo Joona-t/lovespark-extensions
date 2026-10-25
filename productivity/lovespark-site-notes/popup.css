@@ -218,3 +218,7 @@ a:focus-visible,
     transition-duration: 0.01ms !important;
   }
 }
+
+/* #a4163f on a dark panel is 4.3:1; #ffb3c8 clears 4.5:1 on the pink-washed error box. */
+body.theme-dark .error-status { color: #ffb3c8; }
+body.theme-dark .error-status:not(:empty) { background: rgba(255, 143, 174, 0.12); }

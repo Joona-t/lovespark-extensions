@@ -53,7 +53,7 @@ body {
 h1 {
   font-size: 1rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--ls-pink-deep), #DDA0F0, #A8EDEA);
+  background: linear-gradient(135deg, var(--ls-text-dark), var(--ls-purple)); /* was pink-deep, #DDA0F0, #A8EDEA: the light stops failed AA; ink to purple reads in every theme */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

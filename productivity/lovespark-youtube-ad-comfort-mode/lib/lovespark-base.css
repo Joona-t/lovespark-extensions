@@ -28,6 +28,7 @@
   background: var(--ls-glass-strong);
   box-shadow: var(--ls-glow);
 }
+.theme-dropdown-menu { max-height: 360px; overflow-y: auto; }
 
 .theme-dropdown-menu {
   display: none;
@@ -38,7 +39,7 @@
   border: 1px solid var(--ls-glass-border);
   border-radius: var(--ls-radius-sm);
   backdrop-filter: blur(12px);
-  min-width: 140px;
+  min-width: 196px; /* fits "Gingham Sticker 깅엄" on one line */
   padding: 4px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 100;
@@ -71,9 +72,175 @@
 }
 
 .theme-option:hover { background: var(--ls-glass); }
-.theme-option.active { color: var(--ls-pink-accent); font-weight: 500; }
+.theme-option.active { color: var(--ls-text-dark); font-weight: 700; background: var(--ls-glass); }
+/* Colour swatch per theme in the Change Theme menu (rendered by lovespark-theme.js). */
+.theme-option { white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.theme-option::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+.theme-option .theme-hangul { font-size: 10.5px; color: inherit; opacity: 1; }
+.theme-option[data-theme="seoul"]::before { background: linear-gradient(135deg, #dff1ff 50%, #ffe8f2 50%); border-color: #c4a8e0; }
+.theme-option[data-theme="gingham"]::before { background: repeating-linear-gradient(0deg, #f6a6c4 0 3px, #fff3f7 3px 6px); border: 1.5px solid #2a1824; }
+.theme-option[data-theme="holo"]::before { background: conic-gradient(#ff9ad5, #b69bff, #8fd3ff, #8ff0c8, #ffe08f, #ff9ad5); border-color: #ffffff; }
+.theme-option[data-theme="neon"]::before { background: #120b18; border: 1.5px solid #ff46d6; box-shadow: 0 0 6px #ff46d6; }
+.theme-option[data-theme="bubblegum"]::before { background: linear-gradient(135deg, #ffd3e5, #ff49a6); border-color: #d81b73; }
+.theme-option[data-theme="retro"]::before { background: #f9a8c9; }
+.theme-option[data-theme="dark"]::before { background: #1a1128; border-color: #ff6eb4; }
+.theme-option[data-theme="beige"]::before { background: #f5efe0; border-color: #d4c4a0; }
+.theme-option[data-theme="slate"]::before { background: #1e1e1e; border-color: #4a4a4a; }
 
 body { transition: background 0.3s ease, color 0.3s ease; }
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   Kawaii collection flair (2026-10-25). Token values live in
+   lovespark-tokens.css. Ornaments are body pseudo-elements at z-index -1:
+   with body itself unpositioned they paint above the page background but
+   BELOW every element, so a texture or sticker can never cover text.
+   Every animation stops under prefers-reduced-motion (block further down).
+   ══════════════════════════════════════════════════════════════════════ */
+body.theme-seoul::before,
+body.theme-neon::before,
+body.theme-gingham::after,
+body.theme-holo::after,
+body.theme-neon::after,
+body.theme-seoul::after {
+  content: '';
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Seoul Y2K: dotted mini-room grid, a sticker heart bottom-right. */
+body.theme-seoul::before {
+  inset: 0;
+  background-image: radial-gradient(rgba(122, 46, 85, 0.13) 1px, transparent 1.4px);
+  background-size: 14px 14px;
+}
+body.theme-seoul::after {
+  right: 8px;
+  bottom: 8px;
+  width: 26px;
+  height: 26px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-10-9C.3 8.6 2.3 4.5 6.2 4.5c2.3 0 3.8 1.3 5.8 3.6 2-2.3 3.5-3.6 5.8-3.6 3.9 0 5.9 4.1 4.2 7.5-2.5 4.4-10 9-10 9z' fill='%23ff8fc6' stroke='%233a2a3a' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+body.theme-seoul .popup-header { border-bottom: 2px solid #c4a8e0; }
+
+/* Gingham Sticker: heart + bow stickers in the bottom corners, ink header rule. */
+body.theme-gingham { font-family: var(--ls-font-body); }
+body.theme-gingham::after {
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-10-9C.3 8.6 2.3 4.5 6.2 4.5c2.3 0 3.8 1.3 5.8 3.6 2-2.3 3.5-3.6 5.8-3.6 3.9 0 5.9 4.1 4.2 7.5-2.5 4.4-10 9-10 9z' fill='%23ff4f9a' stroke='%232a1824' stroke-width='1.6'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'%3E%3Cpath d='M16 12L3 3.5v17zM16 12l13-8.5v17z' fill='%23f6a6c4' stroke='%232a1824' stroke-width='1.6' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='12' r='3.6' fill='%23ff4f9a' stroke='%232a1824' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-size: 24px 24px, 32px 24px;
+  background-position: right bottom, left bottom;
+}
+body.theme-gingham .popup-header { border-bottom: 2px dashed #2a1824; }
+body.theme-gingham .popup-header h1,
+body.theme-gingham .title,
+body.theme-gingham .header-title,
+body.theme-gingham .logo-text { font-family: var(--ls-font-display); font-weight: 700; }
+body.theme-gingham .theme-dropdown-trigger,
+body.theme-gingham .theme-dropdown-menu { border: 2px solid #2a1824; box-shadow: 3px 3px 0 #2a1824; backdrop-filter: none; }
+
+/* Holo Mochi: the mesh drifts; three sparkles twinkle bottom-right. */
+@property --kw-holo-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+body.theme-holo {
+  font-family: var(--ls-font-body);
+  background-size: 160% 160%;
+  animation: kw-holo-drift 28s ease-in-out infinite alternate;
+}
+@keyframes kw-holo-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+body.theme-holo::after {
+  right: 6px;
+  bottom: 6px;
+  width: 48px;
+  height: 28px;
+  background-repeat: no-repeat;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23ffffff'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23b69bff'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z' fill='%23ff9ad5'/%3E%3C/svg%3E");
+  background-size: 20px 20px, 12px 12px, 10px 10px;
+  background-position: right top, 6px 14px, 22px 0;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
+  animation: kw-twinkle 3.2s ease-in-out infinite;
+}
+@keyframes kw-twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(0.84) rotate(10deg); }
+}
+body.theme-holo .popup-header { border-bottom: 2px solid transparent; border-image: linear-gradient(90deg, #ff9ad5, #b69bff, #8fd3ff, #8ff0c8, #ffe08f) 1; }
+body.theme-holo .theme-dropdown-menu { backdrop-filter: blur(22px) saturate(1.6); }
+
+/* Neon Usagi: star field, glowing header line, bunny ears bottom-right. */
+body.theme-neon { font-family: var(--ls-font-body); }
+body.theme-neon::before {
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 7% 12%, #ffffffcc 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 68%, #ff9be9aa 0%, transparent 100%),
+    radial-gradient(1px 1px at 46% 6%, #ffffff99 0%, transparent 100%),
+    radial-gradient(2px 2px at 71% 38%, #ff46d666 0%, transparent 100%),
+    radial-gradient(1px 1px at 89% 81%, #ffffff88 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 92%, #b98cff88 0%, transparent 100%),
+    radial-gradient(1px 1px at 95% 9%, #ffffffaa 0%, transparent 100%);
+}
+body.theme-neon::after {
+  right: 10px;
+  bottom: 6px;
+  width: 34px;
+  height: 22px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cpath d='M10 21C6 15 5 6 8 2c3 3 5 11 5 19z' fill='%23120b18' stroke='%23ff46d6' stroke-width='1.6'/%3E%3Cpath d='M22 21c0-8 2-16 5-19 3 4 2 13-2 19z' fill='%23120b18' stroke='%23ff46d6' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat center / contain;
+  filter: drop-shadow(0 0 4px rgba(255, 70, 214, 0.8));
+}
+body.theme-neon .popup-header { border-bottom: 1px solid #ff46d6; box-shadow: 0 6px 14px -8px rgba(255, 70, 214, 0.8); }
+body.theme-neon .popup-header h1,
+body.theme-neon .title,
+body.theme-neon .header-title,
+body.theme-neon .logo-text { font-family: var(--ls-font-display); font-weight: 700; }
+body.theme-neon .theme-dropdown-menu { box-shadow: var(--ls-glow-strong); }
+
+/* Fleet-wide contrast fixes for the kawaii themes (measured by
+   infrastructure/theme-sweep):
+   - Popups set header titles to --ls-text-white straight on the page
+     background (white on a light theme). Inside .popup-header the light
+     kawaii themes turn that token into ink; no shared-token popup fills its
+     header, so nothing there sits on a fill.
+   - .stat-sep uses --ls-glass-border as a text colour in 17 popups. */
+body.theme-seoul .popup-header,
+body.theme-gingham .popup-header,
+body.theme-holo .popup-header,
+body.theme-bubblegum .popup-header { --ls-text-white: var(--ls-text-dark); --ls-white: var(--ls-text-dark); }
+body.theme-seoul .stat-sep,
+body.theme-gingham .stat-sep,
+body.theme-holo .stat-sep,
+body.theme-neon .stat-sep,
+body.theme-bubblegum .stat-sep { color: var(--ls-text-muted); }
+
+/* Bubblegum: soft gloss on the header. */
+body.theme-bubblegum .popup-header { border-bottom: 1px solid rgba(255, 255, 255, 0.85); }
+
+/* Theme-switch crossfade (lovespark-theme.js uses View Transitions). */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.28s; }
 
 /* ── Pop animation ──────────────────────────────────── */
 @keyframes pop {
@@ -104,6 +271,11 @@ a:focus-visible,
 
 /* ── Accessibility ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+  body.theme-holo,
+  body.theme-holo::after { animation: none !important; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

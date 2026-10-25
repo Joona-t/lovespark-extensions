@@ -79,7 +79,7 @@ body.theme-dark::before {
     radial-gradient(1px 1px at 88% 78%, #ffffff22 0%, transparent 100%),
     radial-gradient(1px 1px at 40% 88%, #ff6eb425 0%, transparent 100%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1; /* behind content: at 0 the stars painted over unpositioned text */
 }
 
 /* ── Theme: Beige ─────────────────────────────────────── */
@@ -146,4 +146,190 @@ body.theme-slate .header-title,
 body.theme-slate .logo-text,
 body.theme-slate .popup-header h1 {
   color: #d4714e;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Kawaii collection (2026-10-25): Seoul Y2K (default for new installs),
+   Bubblegum, Gingham Sticker, Holo Mochi, Neon Usagi. First made in Retro
+   Cursor v1.1.40–41; these are the fleet-safe versions.
+   Fleet rule: popups use --ls-pink-accent as TEXT (543 uses) and
+   --ls-pink-deep both as text (138) and as a white-text fill (250), so here
+   accent and pink-deep are readable pinks (≥4.5:1 on every surface and
+   gradient stop); the bright decorative pinks live in --kw-* and are only
+   used by the ornaments in lovespark-base.css. Every token is set (no theme
+   inherits another's colours).
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Theme: Seoul Y2K 서울 ── Cyworld-era Korean internet ── */
+body.theme-seoul {
+  --ls-bg-pink-light: #dff1ff;
+  --ls-bg-pink: #ffe8f2;
+  --ls-bg-pink-deep: #e9dcff;
+  --ls-bg-gradient: linear-gradient(160deg, #dff1ff 0%, #ffe8f2 45%, #fff4d6 78%, #e9dcff 100%);
+  --ls-glass: rgba(255, 255, 255, 0.72);
+  --ls-glass-light: rgba(255, 255, 255, 0.5);
+  --ls-glass-border: #c4a8e0;
+  --ls-glass-strong: #ffffff;
+  --ls-pink-accent: #b0175a;
+  --ls-pink-deep: #c2185b;
+  --ls-white: #ffffff;
+  --ls-purple: #5b3fb0;
+  --ls-teal: #0f766e;
+  --ls-blue: #4a55c9;
+  --ls-text-dark: #3a2a3a;
+  --ls-text-muted: #6b4a66;
+  --ls-text-white: #ffffff;
+  --ls-focus-ring: #4a55c9;
+  --ls-btn-hover-bg: #9e1249;
+  --ls-glow: 3px 3px 0 #c4a8e0;
+  --ls-glow-strong: 4px 4px 0 #ff8fc6;
+  --ls-glow-white: 2px 2px 0 rgba(255, 255, 255, 0.9);
+  --ls-radius: 10px;
+  --ls-radius-sm: 6px;
+  --kw-accent: #ff5baa;
+  --kw-ink: #3a2a3a;
+}
+
+/* ── Theme: Bubblegum ── the design system's glass-sticker pink ── */
+body.theme-bubblegum {
+  --ls-bg-pink-light: #ffd3e5;
+  --ls-bg-pink: #ffd9ec;
+  --ls-bg-pink-deep: #ffcbe0;
+  --ls-bg-gradient: linear-gradient(145deg, #ffd3e5 0%, #ffe8d9 28%, #ffd9ec 55%, #ffe2cc 78%, #ffcbe0 100%);
+  --ls-glass: rgba(255, 250, 253, 0.78);
+  --ls-glass-light: rgba(255, 250, 253, 0.62);
+  --ls-glass-border: rgba(255, 255, 255, 0.75);
+  --ls-glass-strong: #fffbfe;
+  --ls-pink-accent: #b3185c;
+  --ls-pink-deep: #b3185c;
+  --ls-white: #ffffff;
+  --ls-purple: #6d28d9;
+  --ls-teal: #0f766e;
+  --ls-blue: #4f46e5;
+  --ls-text-dark: #4a0827;
+  --ls-text-muted: #6b2848;
+  --ls-text-white: #ffffff;
+  --ls-focus-ring: #b3185c;
+  --ls-btn-hover-bg: #8f1249;
+  --ls-glow: 0 8px 18px rgba(255, 124, 182, 0.30), 0 1px 4px rgba(255, 208, 224, 0.45);
+  --ls-glow-strong: 0 12px 30px rgba(255, 73, 166, 0.40), 0 2px 8px rgba(255, 208, 224, 0.55);
+  --ls-glow-white: 0 0 16px rgba(255, 255, 255, 0.6);
+  --ls-radius: 20px;
+  --ls-radius-sm: 14px;
+  --kw-accent: #ff49a6;
+  --kw-ink: #4a0827;
+}
+
+/* ── Theme: Gingham Sticker 깅엄 ── KAWAII: picnic gingham + sticker ink ── */
+body.theme-gingham {
+  --ls-bg-pink-light: #fff3f7;
+  --ls-bg-pink: #ffe3ee;
+  --ls-bg-pink-deep: #f6a6c4;
+  --ls-bg-gradient:
+    repeating-linear-gradient(0deg, rgba(246, 166, 196, 0.42) 0 9px, transparent 9px 18px),
+    repeating-linear-gradient(90deg, rgba(246, 166, 196, 0.42) 0 9px, transparent 9px 18px),
+    linear-gradient(#fff3f7, #fff3f7);
+  --ls-glass: #fffafc;
+  --ls-glass-light: #ffffff;
+  --ls-glass-border: #2a1824;
+  --ls-glass-strong: #fffafc;
+  --ls-pink-accent: #a3164f; /* ≥4.5:1 even where the two gingham stripes cross (#f9c0d5) */
+  --ls-pink-deep: #a3164f;
+  --ls-white: #ffffff;
+  --ls-purple: #5b21b6;
+  --ls-teal: #0f766e;
+  --ls-blue: #3730a3;
+  --ls-text-dark: #2a1824;
+  --ls-text-muted: #6e3a57;
+  --ls-text-white: #ffffff;
+  --ls-focus-ring: #b0124f;
+  --ls-btn-hover-bg: #82113f;
+  --ls-glow: 3px 3px 0 #2a1824;
+  --ls-glow-strong: 4px 4px 0 #ff4f9a;
+  --ls-glow-white: 2px 2px 0 #ffffff;
+  --ls-radius: 14px;
+  --ls-radius-sm: 10px;
+  --ls-font-body: 'Atkinson Hyperlegible', 'Trebuchet MS', sans-serif;
+  --ls-font-display: 'Comfortaa', 'Trebuchet MS', sans-serif;
+  --kw-accent: #ff4f9a;
+  --kw-ink: #2a1824;
+}
+
+/* ── Theme: Holo Mochi 모찌 ── pastel mesh + frosted glass + iridescence ── */
+body.theme-holo {
+  --ls-bg-pink-light: #f6eeff;
+  --ls-bg-pink: #e9d5ff;
+  --ls-bg-pink-deep: #cfe6ff;
+  --ls-bg-gradient:
+    radial-gradient(60% 45% at 12% 8%, #ffd1ea 0%, transparent 70%),
+    radial-gradient(55% 40% at 92% 18%, #cfe6ff 0%, transparent 70%),
+    radial-gradient(60% 50% at 80% 88%, #c8f7e1 0%, transparent 72%),
+    radial-gradient(55% 45% at 10% 80%, #ffd8c2 0%, transparent 70%),
+    linear-gradient(#efe4ff, #efe4ff);
+  --ls-glass: rgba(255, 255, 255, 0.6);
+  --ls-glass-light: rgba(255, 255, 255, 0.62);
+  --ls-glass-border: rgba(255, 255, 255, 0.85);
+  --ls-glass-strong: rgba(250, 247, 255, 0.94);
+  --ls-pink-accent: #7434d4;
+  --ls-pink-deep: #6d35d8;
+  --ls-white: #ffffff;
+  --ls-purple: #5b21b6;
+  --ls-teal: #0f766e;
+  --ls-blue: #3f4fc4;
+  --ls-text-dark: #2b1b4a;
+  --ls-text-muted: #54447a;
+  --ls-text-white: #ffffff;
+  --ls-focus-ring: #5b2bc4;
+  --ls-btn-hover-bg: #5223b0;
+  --ls-glow: 0 10px 28px rgba(140, 100, 230, 0.22), 0 2px 6px rgba(255, 180, 220, 0.35);
+  --ls-glow-strong: 0 14px 36px rgba(140, 100, 230, 0.32);
+  --ls-glow-white: 0 0 16px rgba(255, 255, 255, 0.7);
+  --ls-radius: 22px;
+  --ls-radius-sm: 14px;
+  --ls-font-body: 'Lexend', system-ui, sans-serif;
+  --ls-font-display: 'Lexend', system-ui, sans-serif;
+  --kw-accent: #b69bff;
+  --kw-ink: #2b1b4a;
+}
+
+/* ── Theme: Neon Usagi 네온 ── NEON: violet night, magenta bloom ── */
+/* Dark theme. Popups hard-code white text on --ls-pink-deep fills, so the
+   fill stays deep (#b0139a, white 6.17:1) and the readable pink for text on
+   the dark panels is --ls-pink-accent. lovespark-theme.js also sets theme-dark
+   with theme-neon so each popup's own dark-mode rules (headers, footers)
+   apply; the doubled selector outranks a popup's `body.theme-dark` tokens. */
+body.theme-neon,
+body.theme-neon.theme-dark {
+  --ls-bg-pink-light: #1c1029;
+  --ls-bg-pink: #120b18;
+  --ls-bg-pink-deep: #0b0710;
+  --ls-bg-gradient:
+    radial-gradient(80% 50% at 50% -10%, rgba(255, 70, 214, 0.22) 0%, transparent 70%),
+    radial-gradient(70% 45% at 100% 110%, rgba(110, 17, 145, 0.45) 0%, transparent 70%),
+    linear-gradient(#120b18, #120b18);
+  --ls-glass: rgba(42, 23, 64, 0.88);
+  --ls-glass-light: rgba(42, 23, 64, 0.72);
+  --ls-glass-border: rgba(255, 70, 214, 0.45);
+  --ls-glass-strong: rgba(30, 16, 46, 0.97);
+  --ls-pink-accent: #ff8fe0;
+  --ls-pink-deep: #b0139a;
+  --ls-white: #f3eaf2;
+  --ls-purple: #c4a4ff;
+  --ls-teal: #5eead4;
+  --ls-blue: #a5b4fc;
+  --ls-text-dark: #f3eaf2;
+  --ls-text-muted: #c9b3dc;
+  --ls-text-white: #ffffff;
+  --ls-focus-ring: #ff8ae6;
+  --ls-btn-hover-bg: #8e0f7c;
+  --ls-glow: 0 0 14px rgba(255, 70, 214, 0.45), 0 0 34px rgba(255, 70, 214, 0.2);
+  --ls-glow-strong: 0 0 22px rgba(255, 70, 214, 0.6), 0 0 48px rgba(255, 70, 214, 0.3);
+  --ls-glow-white: 0 0 16px rgba(243, 234, 242, 0.3);
+  --ls-radius: 16px;
+  --ls-radius-sm: 12px;
+  --ls-font-body: 'Lexend', system-ui, sans-serif;
+  --ls-font-display: 'Comfortaa', 'Trebuchet MS', sans-serif;
+  --kw-accent: #ff46d6;
+  --kw-ink: #120b18;
+  color-scheme: dark;
 }
