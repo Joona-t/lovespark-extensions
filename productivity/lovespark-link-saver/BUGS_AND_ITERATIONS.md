@@ -22,3 +22,10 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## v1.0.3 — 2026-10-08: ls-check cleanup
+
+**Problem:** `ls-check` failed PERM-MISSING: `chrome.tabs.query` used in popup.js but no tab permission declared.
+**Root cause:** "Save This Page" reads `tab.url` and `tab.title` from `chrome.tabs.query`. Without `tabs` or `activeTab`, Chrome leaves those fields undefined, so the save could store an empty link.
+**Fix:** Added `activeTab` to manifest permissions. It is the narrowest option: the popup opens from an action click, which grants temporary access to the current tab only. `tabs` was not needed. Added a matching `activeTab` row to PRIVACY.md. Bumped version 1.0.2 → 1.0.3.
+**Files:** manifest.json, PRIVACY.md

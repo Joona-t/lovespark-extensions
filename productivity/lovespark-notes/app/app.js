@@ -15,6 +15,7 @@ import {
   extractLinks, buildBacklinks,
 } from '../shared/notes-core.js';
 import { renderMarkdown } from '../shared/markdown.js';
+import { setHTML } from '../shared/safe-html.js';
 import {
   formatDate, wordCount, escapeHtml, sanitizeTag, tagColor, autoTitle, todayISO,
 } from '../shared/formatters.js';
@@ -309,9 +310,9 @@ function renderNoteItem(note, isTrash) {
       ${origCat ? `<span class="note-item-cat" style="color:${origCat.color};background:${origCat.bg}">${origCat.emoji} ${origCat.label}</span>` : ''}
     </div>
     ${isTrash
-      ? `<button class="note-item-restore" data-id="${note.id}" title="Restore">↩</button>`
+      ? `<button class="note-item-restore" data-id="${note.id}" title="Restore" aria-label="Restore note">↩</button>`
       : ''}
-    <button class="note-item-delete" data-id="${note.id}" title="${isTrash ? 'Delete forever' : 'Delete'}">×</button>
+    <button class="note-item-delete" data-id="${note.id}" title="${isTrash ? 'Delete forever' : 'Delete'}" aria-label="${isTrash ? 'Delete note forever' : 'Delete note'}">×</button>
   </div>`;
 }
 
@@ -323,7 +324,7 @@ function buildGroupHeader(key, label, count) {
   </div>`;
 }
 
-// SAFETY: innerHTML is intentionally used in renderNotesList because:
+// SAFETY: markup strings (via setHTML) are intentionally used in renderNotesList because:
 // 1. fuzzyHighlight() returns HTML with <mark> tags for search highlighting
 // 2. All user data is escaped via escapeHtml() before insertion
 // 3. Category data comes from hardcoded CATEGORIES constant
@@ -333,10 +334,10 @@ function renderNotesList() {
   const isTrash = currentCategory === 'trash';
 
   if (filtered.length === 0) {
-    dom.notesList.innerHTML = `<div class="empty-state">
+    setHTML(dom.notesList, `<div class="empty-state">
       <span class="emoji">${isTrash ? '🗑️' : '🌸'}</span>
       <span>${currentSearch ? 'No notes match your search' : isTrash ? 'Trash is empty' : 'No notes yet'}</span>
-    </div>`;
+    </div>`);
     return;
   }
 
@@ -346,7 +347,7 @@ function renderNotesList() {
   if (currentDateFilter) {
     html += `<div class="date-filter-chip">
       <span>${escapeHtml(currentDateFilter)}</span>
-      <button class="date-filter-clear" id="dateFilterClear" title="Clear date filter">×</button>
+      <button class="date-filter-clear" id="dateFilterClear" title="Clear date filter" aria-label="Clear date filter">×</button>
     </div>`;
   }
 
@@ -392,7 +393,7 @@ function renderNotesList() {
     }
   }
 
-  dom.notesList.innerHTML = html;
+  setHTML(dom.notesList, html);
 
   // Bind empty trash
   if (isTrash) {
@@ -576,7 +577,7 @@ async function selectNote(id) {
   // Preview state
   if (showPreview) {
     // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
-    dom.markdownPreview.innerHTML = renderMarkdown(activeContent);
+    setHTML(dom.markdownPreview, renderMarkdown(activeContent));
     dom.markdownPreview.style.display = '';
     dom.noteContent.style.display = 'none';
     dom.btnPreview.classList.add('active');
@@ -738,11 +739,11 @@ async function openVersionDrawer() {
 
   if (versions.length === 0) {
     // SAFETY: Static content only, no user data
-    dom.versionList.innerHTML = `<div class="empty-state">
+    setHTML(dom.versionList, `<div class="empty-state">
       <span class="emoji">🕐</span>
       <span>No versions yet</span>
       <span style="font-size:10px">Snapshots are saved every 2 minutes</span>
-    </div>`;
+    </div>`);
     return;
   }
 
@@ -757,7 +758,7 @@ async function openVersionDrawer() {
   }
 
   // SAFETY: Only numeric index, formatDate output, and word count — no raw user strings
-  dom.versionList.innerHTML = html;
+  setHTML(dom.versionList, html);
 }
 
 function closeVersionDrawer() {
@@ -774,7 +775,7 @@ function closeVersionDrawer() {
     updateWordCount();
     if (showPreview) {
       // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
-      dom.markdownPreview.innerHTML = renderMarkdown(activeContent);
+      setHTML(dom.markdownPreview, renderMarkdown(activeContent));
     }
   }
   previewingVersion = null;
@@ -791,7 +792,7 @@ async function previewVersion(idx) {
   updateWordCount();
   if (showPreview) {
     // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
-    dom.markdownPreview.innerHTML = renderMarkdown(v.content);
+    setHTML(dom.markdownPreview, renderMarkdown(v.content));
   }
 
   // Highlight
@@ -825,7 +826,7 @@ function togglePreview() {
   showPreview = !showPreview;
   if (showPreview) {
     // SAFETY: renderMarkdown produces sanitized HTML from user's own notes
-    dom.markdownPreview.innerHTML = renderMarkdown(dom.noteContent.value);
+    setHTML(dom.markdownPreview, renderMarkdown(dom.noteContent.value));
     dom.markdownPreview.style.display = '';
     dom.noteContent.style.display = 'none';
     dom.btnPreview.classList.add('active');
@@ -1275,10 +1276,24 @@ function applyTheme(t) {
     opt.classList.toggle('active', opt.dataset.theme === t);
   });
 }
+// Keep a trigger's aria-expanded in sync with its menu, whatever code path
+// opens/closes it (class toggle, inline display, command palette).
+function syncExpanded(trigger, menu, isOpen) {
+  if (!trigger || !menu) return;
+  const update = () => trigger.setAttribute('aria-expanded', isOpen(menu) ? 'true' : 'false');
+  new MutationObserver(update).observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+  update();
+}
+const byOpenClass = (m) => m.classList.contains('open');
+syncExpanded(document.getElementById('btnNewDropdown'), document.getElementById('templateDropdown'),
+  (m) => m.style.display !== 'none');
+syncExpanded(document.getElementById('syncAvatarBtn'), document.getElementById('syncDropdown'), byOpenClass);
+
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
   if (toggle && menu) {
+    syncExpanded(toggle, menu, byOpenClass);
     toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');

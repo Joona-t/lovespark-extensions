@@ -417,8 +417,9 @@ body {
 
 .sync-avatar-btn {
   position: relative;
-  width: 22px;
-  height: 22px;
+  /* 32px: matches lovespark-base.css min-height (touch target) so the avatar stays circular */
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: 1.5px solid var(--ls-pink-accent);
   background: var(--ls-glass);
@@ -559,4 +560,17 @@ a:focus-visible,
 .toggle-wrap input:focus-visible + .toggle-track {
   outline: 2px solid var(--ls-focus-ring, var(--ls-pink-accent));
   outline-offset: 2px;
+}
+
+/* Visually hidden, still announced by screen readers (dialog description) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

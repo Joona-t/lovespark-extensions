@@ -34,3 +34,10 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-10-08: ls-check cleanup (v1.0.35)
+
+**Problem:** ls-check reported 3 failures: A11Y-DIALOG (popup.html had no role="dialog"/aria-labelledby), A11Y-EXPANDED (theme dropdown trigger had no aria-expanded), BRAND-LIB-WIRED (popup.html did not load lib/lovespark-base.css or lib/lovespark-theme.js).
+**Root cause:** The popup predates the fleet a11y/shared-lib wiring rules; the lib files were already in lib/ but never referenced, and the dropdown JS toggled only a CSS class.
+**Fix:** popup-container now has role="dialog" aria-labelledby="popup-title" aria-describedby="status-text" (title span got id="popup-title"). Theme trigger got aria-haspopup/aria-expanded/aria-label; popup.js routes all open/close through setOpen() which keeps aria-expanded in sync. Settings gear got aria-label. lovespark-base.css linked before popup.css (popup.css still wins on overlap) and lovespark-theme.js loaded before popup.js, matching lovespark-adblock. Patch bump 1.0.34 -> 1.0.35. ls-check: 32 pass, 0 fail, 6 warn (pre-existing warnings).
+**Files:** popup.html, popup.js, manifest.json

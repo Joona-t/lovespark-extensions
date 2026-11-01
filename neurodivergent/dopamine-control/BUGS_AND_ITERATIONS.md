@@ -1,5 +1,40 @@
 # Bugs & Iterations
 
+## ITER-003 — 2026-10-08: ls-check cleanup (v1.0.1 → v1.0.2)
+
+**Problem:** `ls-check` reported 8 failures: A11Y-KI006 (slider `outline: none`
+with no focus replacement), A11Y-DIALOG (no `role="dialog"`/`aria-labelledby`),
+A11Y-LABEL (emoji/symbol buttons `📊 Stats`, `⚙ Settings`, `← Back` without
+aria-label), SEC-INNERHTML (`content.js` floating timer + block overlay built
+via `innerHTML` template strings, interpolating the quote/stats), MV3-SETINTERVAL
+(1s watch-time counter + 30s status poll in the content script), BRAND-SPARKY
+(no mascot), BRAND-GRADIENT (hardcoded popup body gradient), BRAND-LIB-WIRED
+(shared lib not loaded). Warnings for missing reduced-motion blocks too.
+**Root cause:** Extension predates the shared-lib / brand / a11y gates and was
+never brought onto `lovespark-shared-lib`.
+**Fix:**
+- Vendored the canonical shared lib into `lib/`; popup loads
+  `../lib/lovespark-base.css` + `../lib/lovespark-theme.js`, calls
+  `LoveSparkTheme.init()`; added a "Change Theme" dropdown top-right in the
+  header, with `aria-expanded` synced via MutationObserver + Escape to close.
+- Added `mascot.png` (Sparky) to the header with alt text; popup wrapped in a
+  `role="dialog"` container labelled by the title/subtitle; aria-labels on nav,
+  back button, sliders and the floating-timer toggle.
+- Body background now `var(--ls-bg-gradient)`; `:focus-visible` outlines for
+  the slider and buttons; `prefers-reduced-motion` blocks (scoped to our own
+  `#dc-*` elements in the YouTube-injected CSS so YouTube itself is untouched).
+- `content.js`: overlay + floating timer built with `createElement`/`append`
+  via a tiny `h()` helper (text always as text nodes). The 1s counter is now
+  driven by the video's `timeupdate` events accumulating wall-clock time
+  (same 1s/5s-flush semantics, still skips hidden tabs); the 30s poll is
+  replaced by `chrome.storage.onChanged` → `requestStatus()` (background writes
+  every midnight-reset / override-expiry / settings transition to storage).
+- No permissions added. Version bumped to 1.0.2.
+**Files:** `popup/popup.html`, `popup/popup.css`, `popup/popup.js`,
+`content.js`, `content-overlay.css`, `lib/*` (new), `mascot.png` (new),
+`manifest.json`
+**Commit:** (pending)
+
 ## BUG-002 — 2026-07-09: Google Fonts CDN dependency (privacy-first violation)
 
 **Problem:** `shared/theme.css` line 1 `@import`ed Silkscreen/Nunito/Space Mono

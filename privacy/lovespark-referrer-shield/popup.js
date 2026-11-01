@@ -1,31 +1,29 @@
 'use strict';
 
 // Theme dropdown
-const THEMES = ['retro', 'dark', 'beige', 'slate'];
-const THEME_NAMES = { retro: 'Retro Pink', dark: 'Dark', beige: 'Beige', slate: 'Slate' };
 function applyTheme(t) {
-  THEMES.forEach(n => document.body.classList.remove('theme-' + n));
-  document.body.classList.add('theme-' + t);
-  const label = document.getElementById('themeLabel');
-  if (label) label.textContent = THEME_NAMES[t] || t;
-  document.querySelectorAll('.theme-option').forEach(opt => {
-    opt.classList.toggle('active', opt.dataset.theme === t);
-  });
+  // Delegate to the shared lib (lib/lovespark-theme.js) for class + label + active state.
+  LoveSparkTheme.apply(t);
 }
 (function initThemeDropdown() {
   const toggle = document.getElementById('themeToggle');
   const menu = document.getElementById('themeMenu');
+  const setOpen = (open) => {
+    menu.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
   if (toggle && menu) {
-    toggle.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('open'); });
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
     menu.addEventListener('click', (e) => {
       const opt = e.target.closest('.theme-option');
       if (!opt) return;
       const theme = opt.dataset.theme;
       applyTheme(theme);
       chrome.storage.local.set({ theme });
-      menu.classList.remove('open');
+      setOpen(false);
     });
-    document.addEventListener('click', () => menu.classList.remove('open'));
+    document.addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   }
   chrome.storage.local.get(['theme', 'darkMode'], ({ theme, darkMode }) => {
     if (!theme && darkMode) theme = 'dark';
@@ -128,7 +126,7 @@ for (const radio of modeRadios) {
 // ── Whitelist ─────────────────────────────────────────────────────────────────
 
 function renderWhitelist(domains) {
-  whitelistList.innerHTML = '';
+  whitelistList.replaceChildren();
   whitelistEmpty.style.display = domains.length ? 'none' : 'block';
 
   for (const domain of domains) {
@@ -143,6 +141,7 @@ function renderWhitelist(domains) {
     btn.className = 'wl-remove-btn';
     btn.textContent = '\u00d7';
     btn.title = 'Remove';
+    btn.setAttribute('aria-label', `Remove ${domain} from whitelist`);
     btn.addEventListener('click', () => removeDomain(domain));
 
     li.append(span, btn);

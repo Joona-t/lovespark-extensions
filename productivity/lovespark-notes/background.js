@@ -16,7 +16,10 @@ async function getSyncModule() {
       _sync = mod;
       return _sync;
     }
-  } catch {}
+  } catch (err) {
+    // Sync module unavailable (e.g. Firefox without chrome.identity) — sync is optional, run local-only.
+    console.debug('[LoveSpark Notes] sync module not loaded:', err);
+  }
   return null;
 }
 
@@ -164,7 +167,10 @@ async function handleSyncTrigger(msg) {
   if (!sync) return { ok: false };
 
   if (msg.reason === 'manual') {
-    try { await sync.fullSync(); } catch {}
+    try { await sync.fullSync(); } catch (err) {
+      // Manual sync failure is surfaced via sync state (lastError); the trigger itself still resolves ok.
+      console.debug('[LoveSpark Notes] manual sync failed:', err);
+    }
     return { ok: true };
   }
 

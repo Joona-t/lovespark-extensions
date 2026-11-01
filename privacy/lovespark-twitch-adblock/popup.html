@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Twitch AdBlock</title>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
 <body>
-  <div class="popup-container">
+  <div class="popup-container" role="dialog" aria-labelledby="popup-title" aria-describedby="status-text">
     <header class="popup-header">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
-      <span>Twitch AdBlock</span>
+      <span id="popup-title">Twitch AdBlock</span>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-label="Change theme">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -25,7 +26,7 @@
         <button class="theme-option" data-theme="slate">Slate</button>
       </div>
     </div>
-      <button class="settings-btn" id="settings-btn" title="Settings">⚙️</button>
+      <button class="settings-btn" id="settings-btn" title="Settings" aria-label="Open settings">⚙️</button>
     </header>
 
     <div class="status-section">
@@ -56,6 +57,7 @@
 
   </div>
   <script src="lib/browser-polyfill.min.js"></script>
+  <script src="lib/lovespark-theme.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>

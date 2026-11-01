@@ -34,3 +34,10 @@
 **Fix:** Reverted all 76 git repos to last committed state. Fixed 3 extensions (cookie-nuke, breathe, planner) that had the bug baked into commits. Added footer buttons (LoveSpark Suite, Ko-fi, Report a Bug) to all 26 missing extensions. Updated shared lib footer to make LoveSpark Suite a proper link to lovespark.love. Deployed `guard-fleet-sync.sh` — 4-gate pre-sync validator that blocks automations introducing undefined CSS variables.
 **Files:** popup.css, popup.html, lib/lovespark-footer.js, lib/lovespark-footer.css
 **Commit:** fleet-wide fix, multiple commits
+
+## 2026-10-08: ls-check cleanup (v1.0.35)
+
+**Problem:** `ls-check` reported 3 failures: A11Y-DIALOG (popup missing `role="dialog"` + `aria-labelledby`), A11Y-EXPANDED (theme dropdown trigger missing `aria-expanded`), BRAND-LIB-WIRED (popup.html not loading `lovespark-base.css` / `lovespark-theme.js`).
+**Root cause:** Popup predates the shared-lib wiring + a11y conventions; the theme dropdown logic was inlined in popup.js and never toggled ARIA state, even though both lib files were already vendored in `lib/`.
+**Fix:** popup.html now loads `lib/lovespark-base.css` (before popup.css, so local styles still win) and `lib/lovespark-theme.js` (before popup.js). Container gets `role="dialog"` with `aria-labelledby="popupTitle"` / `aria-describedby="popupDesc"`; trigger gets `aria-expanded`/`aria-haspopup`/`aria-label`, menu `role="menu"`, options `role="menuitem"`. popup.js uses `LoveSparkTheme.apply()` and its own open/close helper keeps `aria-expanded` in sync (plus Escape-to-close); legacy `darkMode` migration preserved. Remaining items are warnings only.
+**Files:** popup.html, popup.js, manifest.json

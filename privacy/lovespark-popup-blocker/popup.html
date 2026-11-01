@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Popup Blocker</title>
   <link rel="stylesheet" href="lib/lovespark-fonts.css">
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
   <link rel="stylesheet" href="lib/lovespark-footer.css">
 </head>
-<body>
+<body role="dialog" aria-labelledby="popup-title" aria-describedby="popup-desc">
   <div class="container">
     <header class="header">
       <img src="mascot.png" alt="Sparky — LoveSpark mascot" class="mascot" width="32" height="32">
       <div class="title-block">
-        <span class="title">LoveSpark</span>
-        <span class="subtitle">Popup Blocker</span>
+        <span class="title" id="popup-title">LoveSpark</span>
+        <span class="subtitle" id="popup-desc">Popup Blocker</span>
       </div>
       <div class="theme-dropdown" id="themeDropdown">
-      <button class="theme-dropdown-trigger" id="themeToggle">
+      <button class="theme-dropdown-trigger" id="themeToggle" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu">
         <span id="themeLabel">Retro Pink</span> ▾
       </button>
       <div class="theme-dropdown-menu" id="themeMenu">
@@ -57,6 +58,7 @@
     </footer>
   </div>
 
+  <script src="lib/lovespark-theme.js"></script>
   <script src="lib/lovespark-footer.js"></script>
 <script src="popup.js"></script>
 </body>

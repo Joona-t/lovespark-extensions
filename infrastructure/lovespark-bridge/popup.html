@@ -4,13 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LoveSpark Bridge</title>
+  <link rel="stylesheet" href="lib/lovespark-base.css">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container" role="dialog" aria-labelledby="ls-title" aria-describedby="ls-desc">
     <header>
-      <h1>🌉 LoveSpark Bridge</h1>
-      <p class="subtitle">Syncs Focus → Mission Control</p>
+      <div class="header-row">
+        <img class="mascot" src="mascot.png" alt="Sparky the LoveSpark wolf mascot" width="36" height="36">
+        <h1 id="ls-title"><span aria-hidden="true">🌉</span> LoveSpark Bridge</h1>
+        <div class="theme-dropdown">
+          <button id="themeToggle" class="theme-dropdown-trigger" type="button" aria-haspopup="true"
+                  aria-expanded="false" aria-controls="themeMenu" aria-label="Change Theme">
+            <span id="themeLabel">Retro Pink</span> ▾
+          </button>
+          <div id="themeMenu" class="theme-dropdown-menu" role="menu">
+            <div class="theme-dropdown-header">Change Theme</div>
+            <button class="theme-option active" type="button" data-theme="retro" role="menuitem">Retro Pink</button>
+            <button class="theme-option" type="button" data-theme="dark" role="menuitem">Dark</button>
+            <button class="theme-option" type="button" data-theme="beige" role="menuitem">Beige</button>
+            <button class="theme-option" type="button" data-theme="slate" role="menuitem">Slate</button>
+          </div>
+        </div>
+      </div>
+      <p class="subtitle" id="ls-desc">Syncs Focus → Mission Control</p>
     </header>
 
     <div class="field">
@@ -30,6 +47,7 @@
     <div id="status" class="status" role="status" aria-live="polite"></div>
   </div>
 
+  <script src="lib/lovespark-theme.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

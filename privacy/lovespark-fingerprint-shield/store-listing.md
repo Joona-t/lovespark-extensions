@@ -51,7 +51,7 @@ PRIVACY
 Part of the LoveSpark Suite — tools that respect your attention and privacy.
 
 ## Privacy Policy URL
-https://joona-t.github.io/privacy
+https://github.com/Joona-t/lovespark-extensions/blob/main/privacy/lovespark-fingerprint-shield/PRIVACY.md
 
 ## Tags
 fingerprint, privacy, anti-tracking, browser fingerprinting, noise injection

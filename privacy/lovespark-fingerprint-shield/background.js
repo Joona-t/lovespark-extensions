@@ -102,7 +102,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           chrome.tabs.sendMessage(tab.id, {
             action: 'enabledChanged',
             enabled: enabled
-          }).catch(function() {});
+          }).catch(function() {
+            // Expected: tabs without our content script (chrome://, store pages, unloaded tabs) reject; nothing to update there.
+          });
         }
       });
       sendResponse({ ok: true });
