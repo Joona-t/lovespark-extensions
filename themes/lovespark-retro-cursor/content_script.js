@@ -8,7 +8,7 @@
   const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
   const STORAGE_KEY_PACK = "lovesparkCursorPack";
   const DEFAULT_PACK = "honey-bunny-pointer";
-  // Y2K Korean lineup: 9 packs × {emoji, pointer} variants = 18 SVG-based packs
+  // Y2K Korean lineup: 9 packs × {emoji, pointer} variants = 18 packs
   const Y2K_NAMES = [
     "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
     "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
@@ -27,33 +27,124 @@
     return chrome.runtime.getURL(`cursors/${pack}/${fileName}`);
   }
 
+  // Animated cursors ship as short PNG loops (gen_frames.mjs) instead of SMIL SVGs:
+  // Chrome keeps an animated SVG cursor's timeline ticking and re-checks every element
+  // that uses it, ~30% of a core per visible tab even with the mouse still. Here the
+  // page-wide rules show frame 0, and while the mouse moves, tick() puts the next
+  // frame number on the hovered element only, so each step restyles one element.
+  const FRAME_COUNTS = globalThis.LOVESPARK_CURSOR_FRAMES || {};
+  const FRAME_MS = 150; // matches gen_frames.mjs STEP
+  const IDLE_MS = 400;
+  const FRAME_ATTR = "data-lsc-f";
+  const POINTER_SEL = 'a, area, button, summary, label[for], [role="button"], [role="link"], input[type="submit"], input[type="button"], .clickable, [onclick], [tabindex]:not([tabindex="-1"])';
+  const TEXT_SEL = 'input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"]';
+  const WAIT_SEL = '.loading, [aria-busy="true"]';
+  // Never mark text fields, editors or busy elements: their cursors don't animate,
+  // and an editor may record attribute changes inside it.
+  const SKIP_SEL = `${TEXT_SEL}, ${WAIT_SEL}, [contenteditable] *`;
+
+  function frameCount(pack, kind) {
+    return (FRAME_COUNTS[pack] && FRAME_COUNTS[pack][kind]) || 1;
+  }
+
+  // Plain 1x url() first for browsers without image-set() in cursor; image-set
+  // adds the 2x frame for sharp cursors on high-DPI screens. Hotspots stay in CSS px.
+  function frameCursor(pack, kind, i, hotspot, fallback) {
+    const one = cursorURL(pack, `frames/${kind}-${i}.png`);
+    const two = cursorURL(pack, `frames/${kind}-${i}@2x.png`);
+    return `cursor: url("${one}") ${hotspot}, ${fallback} !important;
+  cursor: image-set(url("${one}") 1x, url("${two}") 2x) ${hotspot}, ${fallback} !important;`;
+  }
+
   function buildCursorCSS(pack) {
     // Emoji variants center the icon (16 16); Pointer variants use traditional offsets
     const isEmoji = pack.endsWith("-emoji");
     const defH = isEmoji ? "16 16" : "5 4";
     const ptrH = isEmoji ? "15 12" : "11 3"; // emoji packs put the mini-hand fingertip at (15.5,12)
-    const def = cursorURL(pack, "default.svg");
-    const ptr = cursorURL(pack, "pointer.svg");
     const txt = cursorURL(pack, "text.svg");
-    const wait = cursorURL(pack, "wait.svg");
-    return `
-html, body, body *, body *::before, body *::after {
-  cursor: url("${def}") ${defH}, auto !important;
-}
-a, area, button, summary, label[for], [role="button"], [role="link"], input[type="submit"], input[type="button"], .clickable, [onclick], [tabindex]:not([tabindex="-1"]) {
-  cursor: url("${ptr}") ${ptrH}, pointer !important;
-}
-input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"] {
-  cursor: url("${txt}") 16 16, text !important;
-}
-.loading, [aria-busy="true"] {
-  cursor: url("${wait}") 16 16, wait !important;
+    let frames = "";
+    // Same specificity as [tabindex]:not(...), and later, so a marked element wins.
+    for (const [kind, letter, hotspot, fallback] of [["default", "d", defH, "auto"], ["pointer", "p", ptrH, "pointer"]]) {
+      for (let i = 0; i < frameCount(pack, kind); i++) {
+        const sel = `[${FRAME_ATTR}="${letter}${i}"][${FRAME_ATTR}]`;
+        frames += `${sel}, ${sel}::before, ${sel}::after {
+  ${frameCursor(pack, kind, i, hotspot, fallback)}
 }
 `;
+      }
+    }
+    return `
+html, body, body *, body *::before, body *::after {
+  ${frameCursor(pack, "default", 0, defH, "auto")}
+}
+${POINTER_SEL} {
+  ${frameCursor(pack, "pointer", 0, ptrH, "pointer")}
+}
+${TEXT_SEL} {
+  cursor: url("${txt}") 16 16, text !important;
+}
+${WAIT_SEL} {
+  ${frameCursor(pack, "wait", 0, "16 16", "wait")}
+}
+${frames}`;
   }
+
+  let live = { enabled: false, pack: DEFAULT_PACK };
+  let hovered = null;
+  let marked = null;
+  let tickCount = 0;
+  let timer = null;
+  let lastMove = 0;
+
+  function unmark() {
+    if (marked) {
+      marked.removeAttribute(FRAME_ATTR);
+      marked = null;
+    }
+  }
+
+  function stopAnimation() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  function tick() {
+    if (!live.enabled || performance.now() - lastMove > IDLE_MS) {
+      // The hovered element keeps its last frame until the pointer moves on.
+      stopAnimation();
+      return;
+    }
+    if (marked !== hovered) {
+      unmark();
+    }
+    if (!hovered || !hovered.isConnected || hovered.matches(SKIP_SEL)) {
+      return;
+    }
+    tickCount += 1;
+    const kind = hovered.matches(POINTER_SEL) ? "pointer" : "default";
+    const n = frameCount(live.pack, kind);
+    if (n > 1) {
+      hovered.setAttribute(FRAME_ATTR, (kind === "pointer" ? "p" : "d") + (tickCount % n));
+      marked = hovered;
+    }
+  }
+
+  addEventListener("mousemove", (e) => {
+    if (!live.enabled) {
+      return;
+    }
+    lastMove = performance.now();
+    hovered = e.target instanceof Element ? e.target : null;
+    if (timer === null) {
+      timer = setInterval(tick, FRAME_MS);
+    }
+  }, { capture: true, passive: true });
 
   function applyCursorStyle(enabled, pack) {
     const existing = document.getElementById(STYLE_ID);
+    live = { enabled, pack: sanitizePack(pack) };
+    stopAnimation();
+    unmark();
 
     if (!enabled) {
       if (existing) {

@@ -44,7 +44,7 @@ async function injectIntoOpenTabs() {
     try {
       await chrome.scripting.executeScript({
         target: { tabId: tab.id, allFrames: true },
-        files: ["content_script.js"]
+        files: ["cursor_frames.js", "content_script.js"]
       });
     } catch {
       // Restricted page or no host access (Firefox optional host permissions) — nothing to do.

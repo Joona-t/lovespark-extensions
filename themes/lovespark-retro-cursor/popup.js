@@ -138,8 +138,9 @@ function sanitizePack(pack) {
   return DEFAULT_PACK;
 }
 
-// Mirrors content_script.js buildCursorCSS(): same files + hotspots, so the
-// popup preview feels exactly like the page will.
+// Same hotspots as content_script.js buildCursorCSS(). The preview uses the source
+// SVGs, which animate the way the page's PNG frames do; their per-move cost only
+// matters on pages, not in this small popup.
 function previewCursors(pack) {
   const isEmoji = pack.endsWith("-emoji");
   return {

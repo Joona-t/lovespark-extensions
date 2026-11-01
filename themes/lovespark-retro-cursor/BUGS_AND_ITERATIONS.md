@@ -1,5 +1,17 @@
 # Bugs & Iterations
 
+## 2026-11-01: ITER — animated cursors without the CPU cost: PNG frame loops on the hovered element (v1.1.43)
+
+**Request:** Joona: "anyway to keep it lightweight and animated?", then "Yes, build it".
+
+**Finding:** the cost of the SMIL SVG cursors is not one 32px raster. Chrome keeps an animated SVG cursor's timeline ticking even with the mouse still and re-checks every element using it, and `body *` means every element. Cost grows with page size: 900 moves cost 2.2 s renderer time on 200 elements, 4.8 s on 2,000 and 10.7 s on 20,000; a still mouse cost 4.7 s of Chrome CPU per 15 s (about 30% of a core per visible tab). `event_handler.cc:711` (Blink) calls `AsSkBitmapForCurrentFrame` on every cursor update.
+
+**Dead ends (measured, don't retry):** rewriting the cursor stylesheet each frame forces a full-page restyle (151 recalcs = 5.8 s on 20k elements); swapping frames through CSS custom properties (CSSOM rule or inline on `<html>`) was slower still (2.6 s vs 1.9 s on 2k); a second `:hover`-scoped stylesheet still restyled the page (5.0 s) and added a recalc per hover change.
+
+**Change:** `gen_frames.mjs` (Node + Playwright Chrome for Testing) pre-renders default and pointer as PNG loops at 1x/2x. Each cursor gets a loop of 1.2-2.4 s (8-16 frames at 150 ms), and every SMIL `dur` is retimed to L / round(L / dur) so the loop is seamless (max speed change 27%, most 0-20%). Wait gets one static frame. Output: `cursors/<pack>/frames/` (804 PNGs, 1.67 MB) and `cursor_frames.js` (counts). `content_script.js`: page-wide rules show frame 0 (`url()` fallback + `image-set()` 2x); while the mouse moves, a 150 ms timer sets `data-lsc-f` on the hovered element only; frame rules match that attribute, so a step restyles one element; it stops 400 ms after the last move. Text fields, editors (`[contenteditable] *`) and busy elements are never marked. Hotspots stay in CSS px with 2x images: Blink `event_handler.cc:706-707` "Convert from DIP to physical pixels" scales the hotspot by the image scale factor. The popup preview keeps the source SVGs.
+
+**Verified** (Chrome for Testing, 3 runs, Cyber Butterfly pointer, 900 moves): renderer time on 2,000 elements 4,724 ms (v1.1.41) → 675 ms (static SVG: 822); on 20,000 elements 10,080 → 1,654 ms (static: 950). Total Chrome CPU 6.50 → 3.28 s and 11.12 → 4.05 s. Mouse still for 15 s: 4.71 → 0.22 s (cursors off: 0.21). Frames advance on links (pointer-0…9) and text (default-0…15) for 4 packs; one element marked at a time; live switching after an extension reload still passes; popup has 0 console errors and 0 broken images; loop contact sheet shows no seam. **Cost:** the store zip grows from 1.51 MB (v1.1.41) to 3.09 MB. **Not verified:** hotspot alignment on a real screen (source-confirmed only); Firefox `image-set()` in `cursor` (plain `url()` fallback is declared first).
+
 ## 2026-11-01: BUG — picking a cursor did nothing in tabs open across an update; old themes and OG packs removed (v1.1.42)
 
 **Request:** Joona: "remove the 4 old themes from it only keeping the new korean ones", "make optimizations for it to be faster and more lightweight", then "it should switch as soon as the user selects a new cursor right now it does not". Answers to follow-ups: keep Bubblegum, remove the OG cursor packs, measure the cursor animation before deciding on it.

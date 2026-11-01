@@ -2,6 +2,15 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.43] - 2026-11-01
+- **Animated cursors that stay light.** The wiggle now comes from small pre-rendered
+  frames that step only while the mouse moves, and only on the element under it.
+  With the mouse still, CPU use is back to the same as with cursors off (was about
+  30% of a core per visible tab); while moving it is 7x lower on a 2,000-element
+  page and 6x lower on a 20,000-element page.
+- New `gen_frames.mjs` renders the frames from the source SVGs (run after
+  `gen_cursors.py`). The download is about 1.6 MB larger.
+
 ## [1.1.42] - 2026-11-01
 - **Fix: picking a cursor now switches immediately in tabs that were open when the
   extension updated.** The update-time re-injection lacked `host_permissions` and
