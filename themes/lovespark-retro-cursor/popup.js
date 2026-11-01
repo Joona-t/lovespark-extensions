@@ -27,21 +27,17 @@ function storageSet(obj) {
 }
 
 // ── Theme dropdown ────────────────────────────────────────────────────────
-// Bubblegum and Seoul Y2K are this popup's own token blocks in popup.css;
-// the rest also exist in lib/lovespark-tokens.css.
-const THEMES = ['seoul', 'gingham', 'holo', 'neon', 'retro', 'bubblegum', 'dark', 'beige', 'slate'];
+// Every theme is this popup's own token block in popup.css. Retro Pink, Dark,
+// Beige and Slate were removed (Joona, 2026-11-01); a saved one falls back to Seoul.
+const THEMES = ['seoul', 'gingham', 'holo', 'neon', 'bubblegum'];
 // Seoul Y2K is the default (Joona, 2026-10-25); a saved choice always wins.
 const DEFAULT_THEME = 'seoul';
 const THEME_NAMES = {
-  retro: 'Retro Pink',
   bubblegum: 'Bubblegum',
   seoul: 'Seoul Y2K',
   gingham: 'Gingham Sticker',
   holo: 'Holo Mochi',
   neon: 'Neon Usagi',
-  dark: 'Dark',
-  beige: 'Beige',
-  slate: 'Slate',
 };
 function applyTheme(t) {
   THEMES.forEach(n => document.body.classList.remove('theme-' + n));
@@ -106,21 +102,20 @@ function applyTheme(t) {
 // ── Pack picker ───────────────────────────────────────────────────────────
 const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
 const STORAGE_KEY_PACK = "lovesparkCursorPack";
-const DEFAULT_PACK = "retro-pink";
+const DEFAULT_PACK = "cyworld-dotti-pointer";
 const Y2K_NAMES = [
   "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
   "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
 ];
-const Y2K_PACKS = Y2K_NAMES.flatMap((n) => [`${n}-emoji`, `${n}-pointer`]);
-const SVG_PACKS = new Set(Y2K_PACKS);
-const ALLOWED_PACKS = new Set([
-  "retro-pink", "sakura-peach", "starlight-purple",
-  ...Y2K_PACKS
-]);
-// Stale IDs from removed New Collection — migrated to retro-pink on first load after upgrade
+const POINTER_NAMES = ["cyworld-dotti", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"];
+const Y2K_PACKS = [...Y2K_NAMES.map((n) => `${n}-emoji`), ...POINTER_NAMES.map((n) => `${n}-pointer`)];
+const ALLOWED_PACKS = new Set(Y2K_PACKS);
+// Stale IDs from removed collections (New Collection, then the OG PNG packs on
+// 2026-11-01) — migrated to the default on first load after upgrade
 const STALE_PACKS = new Set([
   "moonlight-rose", "candy-floss", "cyber-cherry",
-  "mint-blossom", "golden-hour", "holographic", "obsidian-heart"
+  "mint-blossom", "golden-hour", "holographic", "obsidian-heart",
+  "retro-pink", "sakura-peach", "starlight-purple"
 ]);
 
 const toggle = document.getElementById("cursorToggle");
@@ -144,19 +139,14 @@ function sanitizePack(pack) {
   return DEFAULT_PACK;
 }
 
-// Mirrors content_script.js buildCursorCSS(): same files + hotspots, so the
-// popup preview feels exactly like the page will.
+// Same hotspots as content_script.js buildCursorCSS(). The preview uses the source
+// SVGs, which animate the way the page's PNG frames do; their per-move cost only
+// matters on pages, not in this small popup.
 function previewCursors(pack) {
-  if (SVG_PACKS.has(pack)) {
-    const isEmoji = pack.endsWith("-emoji");
-    return {
-      def: `url("cursors/${pack}/default.svg") ${isEmoji ? "16 16" : "5 4"}, auto`,
-      ptr: `url("cursors/${pack}/pointer.svg") ${isEmoji ? "15 12" : "11 3"}, pointer`
-    };
-  }
+  const isEmoji = pack.endsWith("-emoji");
   return {
-    def: `url("cursors/${pack}/cursor_default_32.png") 3 1, auto`,
-    ptr: `url("cursors/${pack}/cursor_link_32.png") 3 1, pointer`
+    def: `url("cursors/${pack}/default.svg") ${isEmoji ? "16 16" : "5 4"}, auto`,
+    ptr: `url("cursors/${pack}/pointer.svg") ${isEmoji ? "15 12" : "11 3"}, pointer`
   };
 }
 
@@ -164,7 +154,7 @@ function packDisplayName(pack) {
   const item = themeItems.find((el) => el.dataset.pack === pack);
   const name = item ? item.querySelector(".theme-name") : null;
   if (!name) return pack;
-  // First text node = "🌸 Retro Pink"; strip the emoji so the label stays tidy.
+  // First text node = "🐰 Honey Bunny "; strip the emoji so the label stays tidy.
   const raw = (name.childNodes[0] && name.childNodes[0].textContent || "").trim();
   return raw.replace(/^[^\p{L}\p{N}]+/u, "").trim() || pack;
 }

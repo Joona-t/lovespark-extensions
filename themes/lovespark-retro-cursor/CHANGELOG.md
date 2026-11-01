@@ -2,6 +2,34 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.44] - 2026-11-01
+- Trimmed to 14 packs: all 9 Emoji packs plus the Cyworld Dotti, Bubble Boba, Phone
+  Charm, Heart Locket and Cyber Butterfly Pointer packs. Cyworld Dotti (Pointer) is
+  the new default. If you used a removed Pointer pack, you get the Emoji version of
+  the same theme.
+- Download 3.1 MB → 2.7 MB.
+
+## [1.1.43] - 2026-11-01
+- **Animated cursors that stay light.** The wiggle now comes from small pre-rendered
+  frames that step only while the mouse moves, and only on the element under it.
+  With the mouse still, CPU use is back to the same as with cursors off (was about
+  30% of a core per visible tab); while moving it is 7x lower on a 2,000-element
+  page and 6x lower on a 20,000-element page.
+- New `gen_frames.mjs` renders the frames from the source SVGs (run after
+  `gen_cursors.py`). The download is about 1.6 MB larger.
+
+## [1.1.42] - 2026-11-01
+- **Fix: picking a cursor now switches immediately in tabs that were open when the
+  extension updated.** The update-time re-injection lacked `host_permissions` and
+  failed silently, so those tabs needed a refresh. Same site access as before; no
+  new permission prompt.
+- Removed popup themes Retro Pink, Dark, Beige and Slate. Seoul Y2K, Gingham
+  Sticker, Holo Mochi, Neon Usagi and Bubblegum remain.
+- Removed the three OG PNG cursor packs; the 18 Y2K Korean packs remain. The default
+  is Honey Bunny (Pointer), and a saved OG pack moves to it.
+- Lighter: mascot image 150 KB → 24 KB, unused cursor images and script removed,
+  cursor applied at page start.
+
 ## [1.1.41] - 2026-10-25
 - **Seoul Y2K 서울 is now the default popup theme** (a saved choice still wins) and
   sits first in Change Theme; the popup starts in it, so there is no flash.

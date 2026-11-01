@@ -1,6 +1,13 @@
 const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
 const STORAGE_KEY_PACK = "lovesparkCursorPack";
-const DEFAULT_PACK = "retro-pink";
+const DEFAULT_PACK = "cyworld-dotti-pointer";
+// Pointer packs removed in v1.1.44 keep their theme as the Emoji variant.
+const RETIRED_POINTER_PACKS = {
+  "honey-bunny-pointer": "honey-bunny-emoji",
+  "coquette-ribbon-pointer": "coquette-ribbon-emoji",
+  "strawberry-milk-pointer": "strawberry-milk-emoji",
+  "glossy-pearl-pointer": "glossy-pearl-emoji"
+};
 
 async function ensureDefaults() {
   const current = await chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
@@ -11,6 +18,8 @@ async function ensureDefaults() {
   }
   if (typeof current[STORAGE_KEY_PACK] !== "string") {
     patch[STORAGE_KEY_PACK] = DEFAULT_PACK;
+  } else if (RETIRED_POINTER_PACKS[current[STORAGE_KEY_PACK]]) {
+    patch[STORAGE_KEY_PACK] = RETIRED_POINTER_PACKS[current[STORAGE_KEY_PACK]];
   }
 
   if (Object.keys(patch).length > 0) {
@@ -24,7 +33,9 @@ async function ensureDefaults() {
 // after install (BUG 2026-10-13). Inject into every open tab once on install/update.
 // Pages the browser refuses to script (chrome://, new tab, Web Store, other
 // extensions, PDF viewer, file:// without "Allow access to file URLs") reject the
-// call; those are skipped silently. No `tabs` permission is needed for this.
+// call; those are skipped silently. No `tabs` permission is needed for this, but
+// executeScript does need manifest `host_permissions`: the content_scripts match
+// does not count, and without it every injection failed (BUG 2026-11-01).
 async function injectIntoOpenTabs() {
   if (!chrome.scripting || !chrome.tabs) {
     return;
@@ -42,7 +53,7 @@ async function injectIntoOpenTabs() {
     try {
       await chrome.scripting.executeScript({
         target: { tabId: tab.id, allFrames: true },
-        files: ["content_script.js"]
+        files: ["cursor_frames.js", "content_script.js"]
       });
     } catch {
       // Restricted page or no host access (Firefox optional host permissions) — nothing to do.

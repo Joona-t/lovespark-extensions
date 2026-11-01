@@ -402,18 +402,6 @@ h1 {
   height: 40px;
 }
 
-/* OG gradient swatch — kept as a small colour tag on the chip corner */
-.swatch {
-  position: absolute;
-  right: -5px;
-  bottom: -5px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1.5px solid #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
-}
-
 .theme-name {
   flex: 1 1 auto;
   min-width: 0;
@@ -507,105 +495,6 @@ h1 {
 
 .theme-subgroup[open] > summary .sub-chevron {
   transform: rotate(90deg);
-}
-
-/* ── Theme: Dark (LoveSpark Noir) ─────────────────────── */
-body.theme-dark {
-  --ls-bg-pink-light: #1a1128;
-  --ls-bg-pink: #110d1a;
-  --ls-bg-pink-deep: #0a0812;
-  --ls-bg-gradient: linear-gradient(165deg, #1a1128 0%, #110d1a 40%, #0a0812 100%);
-  --ls-glass: rgba(26, 15, 46, 0.85);
-  --ls-glass-light: rgba(26, 15, 46, 0.5);
-  --ls-glass-border: rgba(255, 110, 180, 0.13);
-  --ls-glass-strong: rgba(26, 15, 46, 0.95);
-  --ls-pink-accent: #ff6eb4;
-  --ls-pink-deep: #c2185b;
-  --ls-white: #f0e6f6;
-  --ls-text-dark: #f0e6f6;
-  --ls-text-muted: #9b7aac;
-  --ls-text-white: #ffffff;
-  --ls-glow: 0 0 20px rgba(255, 110, 180, 0.35), 0 0 60px rgba(255, 110, 180, 0.15);
-  --ls-glow-strong: 0 0 20px #ff6eb4, 0 0 40px rgba(255, 110, 180, 0.55);
-  --ls-glow-white: 0 0 16px rgba(240, 230, 246, 0.3);
-  --ls-focus: #ff6eb4;
-  --ls-row-hover: rgba(255, 110, 180, 0.14);
-  --ls-row-selected: rgba(255, 110, 180, 0.12);
-  --ls-chip-border: rgba(255, 110, 180, 0.25);
-}
-
-body.theme-dark::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 8% 15%, #ffffff55 0%, transparent 100%),
-    radial-gradient(1px 1px at 25% 60%, #ff6eb430 0%, transparent 100%),
-    radial-gradient(1px 1px at 55% 8%, #ffffff33 0%, transparent 100%),
-    radial-gradient(2px 2px at 75% 45%, #ff9fd325 0%, transparent 100%),
-    radial-gradient(1px 1px at 88% 78%, #ffffff22 0%, transparent 100%),
-    radial-gradient(1px 1px at 40% 88%, #ff6eb425 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Theme: Beige ─────────────────────────────────────── */
-body.theme-beige {
-  --ls-bg-pink-light: #f5efe0;
-  --ls-bg-pink: #f5efe0;
-  --ls-bg-pink-deep: #ede4ce;
-  --ls-bg-gradient: #f5efe0;
-  --ls-glass: #ede4ce;
-  --ls-glass-light: rgba(237, 228, 206, 0.6);
-  --ls-glass-border: #d4c4a0;
-  --ls-glass-strong: #e5dbc4;
-  --ls-pink-accent: #c4806a;
-  --ls-pink-deep: #a86c56;
-  --ls-white: #5c4a2a;
-  --ls-text-dark: #5c4a2a;
-  --ls-text-muted: #6f5636; /* 5.42:1 on beige card/rows */
-  --ls-text-white: #f5efe0;
-  --ls-glow: 0 3px 12px rgba(139, 111, 71, 0.25);
-  --ls-glow-strong: 0 3px 12px rgba(139, 111, 71, 0.4);
-  --ls-glow-white: 0 3px 12px rgba(139, 111, 71, 0.15);
-  --ls-radius: 2px;
-  --ls-radius-sm: 2px;
-  --ls-font-body: 'Lora', Georgia, serif;
-  --ls-focus: #5c4a2a;
-  --ls-grad-btn: linear-gradient(135deg, #a86c56 0%, #8b5a44 100%);
-  --ls-row-hover: rgba(196, 128, 106, 0.18);
-  --ls-row-selected: rgba(255, 255, 255, 0.5);
-  --ls-chip-border: #d4c4a0;
-  --ls-link: #8b5a44;
-}
-
-/* ── Theme: Slate ─────────────────────────────────────── */
-body.theme-slate {
-  --ls-bg-pink-light: #1e1e1e;
-  --ls-bg-pink: #1e1e1e;
-  --ls-bg-pink-deep: #252525;
-  --ls-bg-gradient: #1e1e1e;
-  --ls-glass: #252525;
-  --ls-glass-light: #2d2d2d;
-  --ls-glass-border: #4a4a4a;
-  --ls-glass-strong: #383838;
-  --ls-pink-accent: #d4714e;
-  --ls-pink-deep: #e8926e;
-  --ls-white: #ececec;
-  --ls-text-dark: #ececec;
-  --ls-text-muted: #9a9a9a;
-  --ls-text-white: #ececec;
-  --ls-glow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  --ls-glow-strong: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --ls-glow-white: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --ls-radius: 5px;
-  --ls-radius-sm: 4px;
-  --ls-focus: #ececec;
-  --ls-grad-btn: linear-gradient(135deg, #8f4328 0%, #6e3420 100%); /* #ececec ≥5.9:1 on the light stop */
-  --ls-row-hover: #383838;
-  --ls-row-selected: #333333;
-  --ls-chip-border: #4a4a4a;
-  --ls-link: #8f4328;
 }
 
 /* ── Theme: Bubblegum ─────────────────────────────────── */
@@ -976,12 +865,6 @@ body.theme-neon .ls-kofi-btn { background: #b0139a; }
   ::view-transition-new(*) { animation: none !important; }
 }
 
-/* Ko-fi footer pill: beige/slate repurpose --ls-pink-deep as a light accent,
-   which lovespark-footer.css uses as a white-text fill. Override the fill here
-   so the 11px label stays ≥4.5:1 (beige 5.0:1, slate 5.9:1). */
-body.theme-beige .ls-kofi-btn { background: #8b5a44; }
-body.theme-slate .ls-kofi-btn { background: #8f4328; }
-
 /* ── Theme Tab ────────────────────────────────────────── */
 body { transition: background 0.3s ease, color 0.3s ease; }
 
@@ -1088,10 +971,6 @@ body { transition: background 0.3s ease, color 0.3s ease; }
   vertical-align: middle;
 }
 
-.theme-option[data-theme="retro"]::before { background: #F9A8C9; }
-.theme-option[data-theme="dark"]::before { background: #1a1128; border: 1px solid #ff6eb4; }
-.theme-option[data-theme="beige"]::before { background: #f5efe0; border: 1px solid #d4c4a0; }
-.theme-option[data-theme="slate"]::before { background: #1e1e1e; border: 1px solid #4a4a4a; }
 /* Hangul next to the name in the theme menu, not on its own line as in the pack list */
 .theme-option { white-space: nowrap; }
 .theme-option .theme-korean {
