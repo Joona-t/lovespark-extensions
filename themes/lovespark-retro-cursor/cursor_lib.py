@@ -2,8 +2,8 @@
 
 Originally: Generate SVG cursor files for LoveSpark Retro Cursor Pack v1.1.32.
 
-Y2K Korean Collection: 9 packs × 2 variants (Emoji + Pointer) × 4 cursor types = 72 SVGs.
-Pack IDs: {name}-emoji and {name}-pointer where name is one of:
+Y2K Korean Collection: 9 Emoji packs + 5 Pointer packs, 4 cursor types each = 56 SVGs.
+Pack IDs: {name}-emoji for every name below, {name}-pointer for POINTER_PACKS only:
 honey-bunny, cyworld-dotti, coquette-ribbon, strawberry-milk, glossy-pearl,
 bubble-boba, phone-charm, heart-locket, cyber-butterfly.
 
@@ -12,6 +12,10 @@ The OG PNG packs were removed on 2026-11-01; only Y2K Korean packs ship.
 import os
 
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cursors")
+
+# Pointer variants that ship. Honey Bunny, Coquette Ribbon, Strawberry Milk and
+# Glossy Pearl pointers were removed on 2026-11-01 (Joona); their Emoji packs stay.
+POINTER_PACKS = {"cyworld-dotti", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"}
 
 # ── SVG helpers ────────────────────────────────────────────────────────────────
 
@@ -133,11 +137,14 @@ def write(theme, filename, content):
     return path
 
 def write_pack(pack_id, e_def, e_ptr, e_txt, e_wait, p_def, p_ptr, p_txt, p_wait):
-    """Write 8 SVGs (emoji + pointer variants × 4 cursor types) for one Y2K Korean pack."""
+    """Write the emoji SVGs (4 cursor types) for one Y2K Korean pack, plus the
+    pointer SVGs when the pack is in POINTER_PACKS."""
     write(f"{pack_id}-emoji",   "default.svg", e_def)
     write(f"{pack_id}-emoji",   "pointer.svg", e_ptr)
     write(f"{pack_id}-emoji",   "text.svg",    e_txt)
     write(f"{pack_id}-emoji",   "wait.svg",    e_wait)
+    if pack_id not in POINTER_PACKS:
+        return
     write(f"{pack_id}-pointer", "default.svg", p_def)
     write(f"{pack_id}-pointer", "pointer.svg", p_ptr)
     write(f"{pack_id}-pointer", "text.svg",    p_txt)

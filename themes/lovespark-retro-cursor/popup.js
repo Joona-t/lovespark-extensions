@@ -102,12 +102,13 @@ function applyTheme(t) {
 // ── Pack picker ───────────────────────────────────────────────────────────
 const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
 const STORAGE_KEY_PACK = "lovesparkCursorPack";
-const DEFAULT_PACK = "honey-bunny-pointer";
+const DEFAULT_PACK = "cyworld-dotti-pointer";
 const Y2K_NAMES = [
   "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
   "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
 ];
-const Y2K_PACKS = Y2K_NAMES.flatMap((n) => [`${n}-emoji`, `${n}-pointer`]);
+const POINTER_NAMES = ["cyworld-dotti", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"];
+const Y2K_PACKS = [...Y2K_NAMES.map((n) => `${n}-emoji`), ...POINTER_NAMES.map((n) => `${n}-pointer`)];
 const ALLOWED_PACKS = new Set(Y2K_PACKS);
 // Stale IDs from removed collections (New Collection, then the OG PNG packs on
 // 2026-11-01) — migrated to the default on first load after upgrade

@@ -2,6 +2,13 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.44] - 2026-11-01
+- Trimmed to 14 packs: all 9 Emoji packs plus the Cyworld Dotti, Bubble Boba, Phone
+  Charm, Heart Locket and Cyber Butterfly Pointer packs. Cyworld Dotti (Pointer) is
+  the new default. If you used a removed Pointer pack, you get the Emoji version of
+  the same theme.
+- Download 3.1 MB → 2.7 MB.
+
 ## [1.1.43] - 2026-11-01
 - **Animated cursors that stay light.** The wiggle now comes from small pre-rendered
   frames that step only while the mouse moves, and only on the element under it.

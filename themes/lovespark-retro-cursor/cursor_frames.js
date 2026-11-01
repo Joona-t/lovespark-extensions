@@ -15,11 +15,6 @@ globalThis.LOVESPARK_CURSOR_FRAMES = {
     "pointer": 10,
     "wait": 1
   },
-  "coquette-ribbon-pointer": {
-    "default": 11,
-    "pointer": 11,
-    "wait": 1
-  },
   "cyber-butterfly-emoji": {
     "default": 10,
     "pointer": 8,
@@ -45,11 +40,6 @@ globalThis.LOVESPARK_CURSOR_FRAMES = {
     "pointer": 10,
     "wait": 1
   },
-  "glossy-pearl-pointer": {
-    "default": 12,
-    "pointer": 12,
-    "wait": 1
-  },
   "heart-locket-emoji": {
     "default": 12,
     "pointer": 12,
@@ -65,11 +55,6 @@ globalThis.LOVESPARK_CURSOR_FRAMES = {
     "pointer": 10,
     "wait": 1
   },
-  "honey-bunny-pointer": {
-    "default": 8,
-    "pointer": 8,
-    "wait": 1
-  },
   "phone-charm-emoji": {
     "default": 16,
     "pointer": 16,
@@ -81,11 +66,6 @@ globalThis.LOVESPARK_CURSOR_FRAMES = {
     "wait": 1
   },
   "strawberry-milk-emoji": {
-    "default": 11,
-    "pointer": 11,
-    "wait": 1
-  },
-  "strawberry-milk-pointer": {
     "default": 11,
     "pointer": 11,
     "wait": 1

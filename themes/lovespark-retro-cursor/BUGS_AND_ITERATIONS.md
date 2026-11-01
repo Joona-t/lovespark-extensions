@@ -1,5 +1,13 @@
 # Bugs & Iterations
 
+## 2026-11-01: ITER — trim to 14 packs: all 9 Emoji + 5 Pointer (v1.1.44)
+
+**Request:** Joona: "just reduce it we keep cyworld, bubble tea, phone charm, heart locket, cyber butterfly pointers. Keep all emojis and remove og" (OG packs were already removed in v1.1.42).
+
+**Change:** removed the Honey Bunny, Coquette Ribbon, Strawberry Milk and Glossy Pearl Pointer packs (SVGs + frames). `cursor_lib.POINTER_PACKS` lists the shipped pointers and `write_pack()` / `gen_cursors.py` skip the rest, so regenerating cannot bring them back; `gen_frames.mjs` now drops counts for packs whose folder is gone. Default pack is `cyworld-dotti-pointer` (matches the Seoul Y2K default theme). `background.js` `ensureDefaults()` moves a saved removed pointer to the same theme's Emoji pack on update/startup. Store description says 14 packs in all 55 locales.
+
+**Verified** (Chrome for Testing): fresh install → `cyworld-dotti-pointer`; saved `glossy-pearl-pointer` + extension update → storage, open tab and popup all on `glossy-pearl-emoji`; switch-after-reload test passes; Cyworld frames advance (pointer-0…7, default-0…7); popup lists 14 packs, 0 console errors, 0 broken images; re-rendering a kept pack changed 0 frame files. Store zip 3.09 MB → 2.66 MB.
+
 ## 2026-11-01: ITER — animated cursors without the CPU cost: PNG frame loops on the hovered element (v1.1.43)
 
 **Request:** Joona: "anyway to keep it lightweight and animated?", then "Yes, build it".

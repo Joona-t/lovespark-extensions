@@ -1,6 +1,13 @@
 const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
 const STORAGE_KEY_PACK = "lovesparkCursorPack";
-const DEFAULT_PACK = "honey-bunny-pointer";
+const DEFAULT_PACK = "cyworld-dotti-pointer";
+// Pointer packs removed in v1.1.44 keep their theme as the Emoji variant.
+const RETIRED_POINTER_PACKS = {
+  "honey-bunny-pointer": "honey-bunny-emoji",
+  "coquette-ribbon-pointer": "coquette-ribbon-emoji",
+  "strawberry-milk-pointer": "strawberry-milk-emoji",
+  "glossy-pearl-pointer": "glossy-pearl-emoji"
+};
 
 async function ensureDefaults() {
   const current = await chrome.storage.local.get([STORAGE_KEY_ENABLED, STORAGE_KEY_PACK]);
@@ -11,6 +18,8 @@ async function ensureDefaults() {
   }
   if (typeof current[STORAGE_KEY_PACK] !== "string") {
     patch[STORAGE_KEY_PACK] = DEFAULT_PACK;
+  } else if (RETIRED_POINTER_PACKS[current[STORAGE_KEY_PACK]]) {
+    patch[STORAGE_KEY_PACK] = RETIRED_POINTER_PACKS[current[STORAGE_KEY_PACK]];
   }
 
   if (Object.keys(patch).length > 0) {

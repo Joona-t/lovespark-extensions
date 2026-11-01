@@ -10,7 +10,7 @@ Korean packs ship.
 """
 import importlib, os, sys
 
-from cursor_lib import BASE
+from cursor_lib import BASE, POINTER_PACKS
 
 PACKS = ["honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
          "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"]
@@ -23,7 +23,7 @@ def generate(only=None):
         if only and pack not in only:
             continue
         importlib.import_module(f"packs.{pack.replace('-', '_')}").generate()
-        for variant in ("emoji", "pointer"):
+        for variant in ("emoji", "pointer") if pack in POINTER_PACKS else ("emoji",):
             folder = os.path.join(BASE, f"{pack}-{variant}")
             files = sorted(f for f in os.listdir(folder) if f.endswith(".svg"))
             total += len(files)

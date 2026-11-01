@@ -5,7 +5,7 @@ A retro-pink cursor pack browser extension (Manifest V3) with a cute LoveSpark a
 ## Features
 - Toggle cursors ON/OFF from popup
 - Popup themes: Seoul Y2K (서울, default), Gingham Sticker (깅엄), Holo Mochi (모찌), Neon Usagi (네온), Bubblegum
-- 18 Y2K Korean cursor packs (9 themes × 2 variants):
+- 14 Y2K Korean cursor packs: 9 Emoji + 5 Pointer (Cyworld Dotti, Bubble Boba, Phone Charm, Heart Locket, Cyber Butterfly):
     - **Emoji** subcategory — symmetric kawaii icon as the cursor
     - **Pointer** subcategory — traditional arrow with theme decoration
     - Themes: Honey Bunny (꿀토끼), Cyworld Dotti (싸이월드), Coquette Ribbon (리본), Strawberry Milk (딸기우유), Glossy Pearl, Bubble Boba (버블티), Phone Charm (폰꽂이), Heart Locket (하트 로켓), Cyber Butterfly (나비)

@@ -7,13 +7,14 @@
   const STYLE_ID = "lovespark-cursors";
   const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
   const STORAGE_KEY_PACK = "lovesparkCursorPack";
-  const DEFAULT_PACK = "honey-bunny-pointer";
-  // Y2K Korean lineup: 9 packs × {emoji, pointer} variants = 18 packs
+  const DEFAULT_PACK = "cyworld-dotti-pointer";
+  // Y2K Korean lineup: 9 Emoji packs + 5 Pointer packs = 14 packs
   const Y2K_NAMES = [
     "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
     "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
   ];
-  const Y2K_PACKS = Y2K_NAMES.flatMap((n) => [`${n}-emoji`, `${n}-pointer`]);
+  const POINTER_NAMES = ["cyworld-dotti", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"];
+  const Y2K_PACKS = [...Y2K_NAMES.map((n) => `${n}-emoji`), ...POINTER_NAMES.map((n) => `${n}-pointer`)];
   const ALLOWED_PACKS = new Set(Y2K_PACKS);
 
   function sanitizePack(pack) {

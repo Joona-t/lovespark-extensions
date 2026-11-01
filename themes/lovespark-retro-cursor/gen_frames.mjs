@@ -2,7 +2,7 @@
 // Pre-render the animated Y2K SVG cursors into short PNG frame loops.
 //
 //     node gen_frames.mjs              # every pack in cursors/
-//     node gen_frames.mjs honey-bunny-pointer cyber-butterfly-emoji
+//     node gen_frames.mjs cyworld-dotti-pointer cyber-butterfly-emoji
 //
 // Why: Chrome re-rasterizes an animated SVG cursor on every cursor update and keeps
 // its SMIL timeline ticking even when the mouse is still, re-checking every element
@@ -64,6 +64,10 @@ const counts = {};
 if (fs.existsSync(countsFile)) {
   const m = fs.readFileSync(countsFile, "utf8").match(/= (\{[\s\S]*\});/);
   if (m) Object.assign(counts, JSON.parse(m[1]));
+}
+// Drop packs whose folder is gone, so removed packs leave cursor_frames.js too.
+for (const pack of Object.keys(counts)) {
+  if (!fs.existsSync(path.join(HERE, "cursors", pack, "default.svg"))) delete counts[pack];
 }
 
 for (const pack of packs) {
