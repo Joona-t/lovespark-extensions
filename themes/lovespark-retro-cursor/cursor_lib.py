@@ -7,7 +7,7 @@ Pack IDs: {name}-emoji and {name}-pointer where name is one of:
 honey-bunny, cyworld-dotti, coquette-ribbon, strawberry-milk, glossy-pearl,
 bubble-boba, phone-charm, heart-locket, cyber-butterfly.
 
-The OG PNG packs (retro-pink, sakura-peach, starlight-purple) are not regenerated.
+The OG PNG packs were removed on 2026-11-01; only Y2K Korean packs ship.
 """
 import os
 

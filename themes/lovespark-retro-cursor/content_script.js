@@ -7,19 +7,14 @@
   const STYLE_ID = "lovespark-cursors";
   const STORAGE_KEY_ENABLED = "lovesparkCursorEnabled";
   const STORAGE_KEY_PACK = "lovesparkCursorPack";
-  const DEFAULT_PACK = "retro-pink";
+  const DEFAULT_PACK = "honey-bunny-pointer";
   // Y2K Korean lineup: 9 packs × {emoji, pointer} variants = 18 SVG-based packs
   const Y2K_NAMES = [
     "honey-bunny", "cyworld-dotti", "coquette-ribbon", "strawberry-milk",
     "glossy-pearl", "bubble-boba", "phone-charm", "heart-locket", "cyber-butterfly"
   ];
   const Y2K_PACKS = Y2K_NAMES.flatMap((n) => [`${n}-emoji`, `${n}-pointer`]);
-  const ALLOWED_PACKS = new Set([
-    "retro-pink", "sakura-peach", "starlight-purple",
-    ...Y2K_PACKS
-  ]);
-  // SVG-based packs (default.svg, pointer.svg, text.svg, wait.svg)
-  const SVG_PACKS = new Set(Y2K_PACKS);
+  const ALLOWED_PACKS = new Set(Y2K_PACKS);
 
   function sanitizePack(pack) {
     if (typeof pack === "string" && ALLOWED_PACKS.has(pack)) {
@@ -33,16 +28,15 @@
   }
 
   function buildCursorCSS(pack) {
-    if (SVG_PACKS.has(pack)) {
-      // Emoji variants center the icon (16 16); Pointer variants use traditional offsets
-      const isEmoji = pack.endsWith("-emoji");
-      const defH = isEmoji ? "16 16" : "5 4";
-      const ptrH = isEmoji ? "15 12" : "11 3"; // emoji packs put the mini-hand fingertip at (15.5,12)
-      const def = cursorURL(pack, "default.svg");
-      const ptr = cursorURL(pack, "pointer.svg");
-      const txt = cursorURL(pack, "text.svg");
-      const wait = cursorURL(pack, "wait.svg");
-      return `
+    // Emoji variants center the icon (16 16); Pointer variants use traditional offsets
+    const isEmoji = pack.endsWith("-emoji");
+    const defH = isEmoji ? "16 16" : "5 4";
+    const ptrH = isEmoji ? "15 12" : "11 3"; // emoji packs put the mini-hand fingertip at (15.5,12)
+    const def = cursorURL(pack, "default.svg");
+    const ptr = cursorURL(pack, "pointer.svg");
+    const txt = cursorURL(pack, "text.svg");
+    const wait = cursorURL(pack, "wait.svg");
+    return `
 html, body, body *, body *::before, body *::after {
   cursor: url("${def}") ${defH}, auto !important;
 }
@@ -54,50 +48,6 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
 }
 .loading, [aria-busy="true"] {
   cursor: url("${wait}") 16 16, wait !important;
-}
-`;
-    }
-
-    const defaultCursor = cursorURL(pack, "cursor_default_32.png");
-    const linkCursor = cursorURL(pack, "cursor_link_32.png");
-    const textCursor = cursorURL(pack, "cursor_text_32.png");
-    const grabCursor = cursorURL(pack, "cursor_grab_32.png");
-    const grabbingCursor = cursorURL(pack, "cursor_grabbing_32.png");
-    const crosshairCursor = cursorURL(pack, "cursor_crosshair_32.png");
-    const notAllowedCursor = cursorURL(pack, "cursor_not_allowed_32.png");
-    const waitCursor = cursorURL(pack, "cursor_wait_32.png");
-
-    return `
-html, body, body *, body *::before, body *::after {
-  cursor: url("${defaultCursor}") 3 1, auto !important;
-}
-
-a, area, button, summary, label[for], [role="button"], [role="link"], input[type="submit"], input[type="button"], .clickable, [onclick], [tabindex]:not([tabindex="-1"]) {
-  cursor: url("${linkCursor}") 3 1, pointer !important;
-}
-
-input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"] {
-  cursor: url("${textCursor}") 16 16, text !important;
-}
-
-.drag, [draggable="true"] {
-  cursor: url("${grabCursor}") 8 8, grab !important;
-}
-
-.drag:active, [draggable="true"]:active {
-  cursor: url("${grabbingCursor}") 8 8, grabbing !important;
-}
-
-.crosshair, canvas, [data-cursor="crosshair"] {
-  cursor: url("${crosshairCursor}") 16 16, crosshair !important;
-}
-
-:disabled, [aria-disabled="true"] {
-  cursor: url("${notAllowedCursor}") 16 16, not-allowed !important;
-}
-
-.loading, [aria-busy="true"] {
-  cursor: url("${waitCursor}") 16 16, wait !important;
 }
 `;
   }
@@ -148,11 +98,7 @@ input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="c
     });
   });
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      void loadAndApplyState();
-    });
-  } else {
-    void loadAndApplyState();
-  }
+  // documentElement exists at document_start, so the cursor applies before the
+  // page paints instead of after DOMContentLoaded.
+  void loadAndApplyState();
 })();

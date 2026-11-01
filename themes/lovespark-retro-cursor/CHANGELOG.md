@@ -2,6 +2,18 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.42] - 2026-11-01
+- **Fix: picking a cursor now switches immediately in tabs that were open when the
+  extension updated.** The update-time re-injection lacked `host_permissions` and
+  failed silently, so those tabs needed a refresh. Same site access as before; no
+  new permission prompt.
+- Removed popup themes Retro Pink, Dark, Beige and Slate. Seoul Y2K, Gingham
+  Sticker, Holo Mochi, Neon Usagi and Bubblegum remain.
+- Removed the three OG PNG cursor packs; the 18 Y2K Korean packs remain. The default
+  is Honey Bunny (Pointer), and a saved OG pack moves to it.
+- Lighter: mascot image 150 KB → 24 KB, unused cursor images and script removed,
+  cursor applied at page start.
+
 ## [1.1.41] - 2026-10-25
 - **Seoul Y2K 서울 is now the default popup theme** (a saved choice still wins) and
   sits first in Change Theme; the popup starts in it, so there is no flash.

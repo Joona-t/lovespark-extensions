@@ -4,15 +4,14 @@ A retro-pink cursor pack browser extension (Manifest V3) with a cute LoveSpark a
 
 ## Features
 - Toggle cursors ON/OFF from popup
-- 21 cursor packs across 2 categories:
-  - **OG** (3 packs): Retro Pink, Sakura Peach, Starlight Purple
-  - **Y2K Korean** (9 themes × 2 variants = 18 packs):
+- Popup themes: Seoul Y2K (서울, default), Gingham Sticker (깅엄), Holo Mochi (모찌), Neon Usagi (네온), Bubblegum
+- 18 Y2K Korean cursor packs (9 themes × 2 variants):
     - **Emoji** subcategory — symmetric kawaii icon as the cursor
     - **Pointer** subcategory — traditional arrow with theme decoration
     - Themes: Honey Bunny (꿀토끼), Cyworld Dotti (싸이월드), Coquette Ribbon (리본), Strawberry Milk (딸기우유), Glossy Pearl, Bubble Boba (버블티), Phone Charm (폰꽂이), Heart Locket (하트 로켓), Cyber Butterfly (나비)
 - Lightweight CSS injection (no DOM crawling, no mutation observers)
 - Settings stored locally in `chrome.storage.local` (nothing leaves the browser)
-- Live updates open tabs after toggle/pack changes
+- Live updates open tabs after toggle/pack changes, including tabs open across an extension update
 
 ## Where the cursor shows
 Custom cursors are applied by CSS injected into web pages, so they appear on every
@@ -29,7 +28,6 @@ the extension → Permissions → allow access for all sites.
 ## Regenerating cursors
 - Y2K SVG packs: `python3 gen_cursors.py` (or `--only honey-bunny`); one file per pack in
   `packs/`, shared drawing helpers in `cursor_lib.py`.
-- OG PNG packs: `python3 gen_og_cursors.py [--sheet out.png]`.
 - Review at native size on white / pink / dark: `python3 render_pack.py [pack-id ...] --out sheet.png`
   (headless Chrome). Judge the small 32px rows, not the big tiles.
 

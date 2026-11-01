@@ -1,5 +1,19 @@
 # Bugs & Iterations
 
+## 2026-11-01: BUG — picking a cursor did nothing in tabs open across an update; old themes and OG packs removed (v1.1.42)
+
+**Request:** Joona: "remove the 4 old themes from it only keeping the new korean ones", "make optimizations for it to be faster and more lightweight", then "it should switch as soon as the user selects a new cursor right now it does not". Answers to follow-ups: keep Bubblegum, remove the OG cursor packs, measure the cursor animation before deciding on it.
+
+**Root cause (switching):** `background.js` re-injects `content_script.js` into open tabs on install/update (the BUG 2026-10-13 fix), but `chrome.scripting.executeScript` needs `host_permissions` and the manifest had none; the `content_scripts` match does not count for the scripting API. Every injection failed with "Extension manifest must request permission to access the respective host" inside a silent `catch`. After each update, open tabs kept the orphaned script, whose `storage.onChanged` listener is dead, so a new pick did nothing until the tab was refreshed. **Why missed:** the catch is silent by design (chrome:// pages always throw), and the 2026-10-13 fix was never run against an update with a tab already open. **Fix:** `"host_permissions": ["<all_urls>"]`. Chrome reports the same access before and after (`hostAccess: ON_ALL_SITES`, no extra warnings via `developerPrivate.getExtensionInfo`), so existing users get no re-approval prompt.
+
+**Verified** in Chrome for Testing (Playwright 1.62.1, unpacked, developer mode): open tab, pick 2 packs in the real popup, reload the extension, pick 2 more, read the page's computed cursor. Original: `heart-locket-emoji` stuck after the reload. Original + host_permissions and v1.1.42: `bubble-boba-pointer` then `cyber-butterfly-emoji`. A takeover guard for the orphaned copy was tried and reverted: the new copy runs in a fresh isolated world, so the old `__lovesparkCursorScriptLoaded` guard was not the blocker.
+
+**Removed:** popup themes Retro Pink, Dark, Beige, Slate (kept Seoul Y2K, Gingham, Holo, Neon, Bubblegum; a saved removed theme falls back to Seoul). OG cursor packs Retro Pink, Sakura Peach, Starlight Purple, the 8 unused loose `cursors/cursor_*.png`, `gen_og_cursors.py`, the PNG branch in `content_script.js` and `popup.js`, the `.png` web-accessible globs, the unused `lib/lovespark-theme.js` script tag. Default pack is now `honey-bunny-pointer`; saved OG pack IDs migrate to it (`STALE_PACKS`). Store description in all 55 locales now says 18 packs.
+
+**Lighter:** `mascot.png` 400×266 → 144×96 (150 KB → 24 KB; drawn in a 32px circle). The content script applies at `document_start` instead of waiting for DOMContentLoaded.
+
+**Measured, not changed (Joona to decide):** 900 mouse moves over 2000 links/text cells, 3 runs each, Chrome for Testing headless on this MacBook. Renderer main-thread time: cursors off 395 ms; animated SVG (cyber-butterfly-pointer / honey-bunny-emoji) 4823 / 4781 ms; same SVGs with SMIL stripped 893 / 764 ms. Total Chrome CPU: 3.34 s off, 6.76 / 6.77 s animated, 3.78 / 3.57 s static. Run-to-run spread under 4%. Chrome re-rasterizes animated SVG cursors on every mouse move (~4.4 ms each), which is the "takes a lot of resources" feeling.
+
 ## 2026-10-25: Seoul Y2K default + three kawaii themes (Gingham Sticker, Holo Mochi, Neon Usagi)
 
 **Request:** Joona: "put korean as default", then "3 more designs from you", "make them more kawaii and sota", "really push what you can do to the limits".
