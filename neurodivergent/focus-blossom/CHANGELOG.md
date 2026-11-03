@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.49] — 2026-11-03 — Blocking holds in open tabs
+
+### Fixed
+- Blocked sites are now redirected to the garden page in tabs that were already open when you blocked them, and when a site navigates in-app (x.com, reddit.com) without a full page load.
+
 ## [1.0.48] — 2026-07-08 — Fleet token re-sync (P2-sync-3)
 
 ### Fixed
