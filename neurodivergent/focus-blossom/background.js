@@ -153,6 +153,8 @@ async function blockSite(domain) {
     }]
   });
 
+  await redirectOpenTabs(domain);
+
   const now = new Date().toISOString();
   if (!gardens[domain]) {
     gardens[domain] = {
@@ -308,6 +310,46 @@ async function migrateAliases() {
     }
   }
 }
+
+// --- Tab-level blocking ---
+// The DNR rule only fires on main_frame network requests. It misses tabs that were
+// already open when a site got blocked, and in-app (SPA / pushState) navigation on
+// sites like x.com, which never hits the network. Watch tab URLs as a second layer.
+
+function blockedDomainFor(url, gardens) {
+  let host;
+  try {
+    const u = new URL(url);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return null;
+    host = u.hostname;
+  } catch {
+    return null;
+  }
+  for (const [domain, garden] of Object.entries(gardens)) {
+    if (garden.isBlocked && (host === domain || host.endsWith("." + domain))) return domain;
+  }
+  return null;
+}
+
+function blockedPageUrl(domain) {
+  return chrome.runtime.getURL(`blocked.html?domain=${encodeURIComponent(domain)}`);
+}
+
+async function redirectOpenTabs(domain) {
+  const tabs = await chrome.tabs.query({});
+  const gardens = { [domain]: { isBlocked: true } };
+  for (const tab of tabs) {
+    if (tab.url && blockedDomainFor(tab.url, gardens)) {
+      await chrome.tabs.update(tab.id, { url: blockedPageUrl(domain) });
+    }
+  }
+}
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+  if (!changeInfo.url) return;
+  const domain = blockedDomainFor(changeInfo.url, await getGardens());
+  if (domain) await chrome.tabs.update(tabId, { url: blockedPageUrl(domain) });
+});
 
 // --- Re-sync blocking rules on startup ---
 // If the extension was updated or restarted, ensure dynamic rules match stored gardens

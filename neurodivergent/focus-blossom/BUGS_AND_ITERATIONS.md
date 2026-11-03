@@ -1,5 +1,12 @@
 # Bugs & Iterations
 
+## 2026-11-03 — v1.0.49 — Blocked site still reachable in open tabs / in-app navigation
+
+**Problem:** With x.com blocked, x.com pages (e.g. a profile) still loaded and stayed usable.
+**Root cause:** Blocking relied only on a DNR `redirect` rule for `main_frame` requests. That never fires for a tab that was already on the site when it got blocked, nor for SPA (pushState) navigation inside x.com, which changes the URL without a network navigation.
+**Fix:** Added a tab-level second layer in `background.js`: `blockSite()` now redirects every already-open tab on the domain (or a subdomain) to `blocked.html`, and a `chrome.tabs.onUpdated` listener redirects any tab whose URL changes to a blocked domain. Verified with a mocked-chrome harness (8 checks: exact host, `www.` subdomain, unblocked site, look-alike `notx.com`, extension page, non-URL updates, open-tab sweep).
+**Files:** background.js, manifest.json
+
 ## 2026-05-08 — v1.0.43 — Twitter/X rename bypass
 
 **Problem:** Typing `https://x.com/...` directly bypassed the blocker. Users who added the "twitter.com" preset only got a `||twitter.com` DNR rule, which never matches `x.com` requests, so the page loaded normally.
