@@ -2,6 +2,12 @@
 
 All notable changes to LoveSpark Retro Cursor Pack.
 
+## [1.1.45] - 2026-11-08
+- The cursor animation no longer uses a timer: frames step on mouse movement
+  (at most every 150 ms), so nothing runs between moves. Passes the suite's
+  `ls-check --strict` rule against `setInterval` in content scripts.
+- The popup loads the shared `lovespark-theme.js` again (suite wiring check).
+
 ## [1.1.44] - 2026-11-01
 - Trimmed to 14 packs: all 9 Emoji packs plus the Cyworld Dotti, Bubble Boba, Phone
   Charm, Heart Locket and Cyber Butterfly Pointer packs. Cyworld Dotti (Pointer) is

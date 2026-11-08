@@ -1,5 +1,15 @@
 # Bugs & Iterations
 
+## 2026-11-08: BUG — v1.1.42–1.1.44 shipped with two `ls-check --strict` failures (v1.1.45)
+
+**Found:** running the release doc's `ls-check . --strict` before zipping. New since v1.1.41: **MV3-SETINTERVAL** (`content_script.js:140`, the v1.1.43 frame timer) and **BRAND-LIB-WIRED** (v1.1.42 removed `<script src="lib/lovespark-theme.js">` from popup.html as unused). **Root cause of the miss:** the pre-commit hook printed "ls-check not installed; skipping" on every commit and I treated the skip as a pass. `ls-check.py` exists on this MacBook only in the codex-projects backup (`Claude x LoveSpark/scripts/`).
+
+**Fix:** no timer at all. The `mousemove` handler steps the hovered element's frame when at least `FRAME_MS` (150 ms) has passed since the last step, so nothing runs between moves (the old SVGs also only advanced on movement). Removed `tick()`, `stopAnimation()`, `IDLE_MS`. Restored the `lovespark-theme.js` script tag (popup.js keeps its own theme logic; the shared lib only defines `LoveSparkTheme`).
+
+**Verified:** `LOVESPARK_SHARED_LIB=<monorepo>/infrastructure/lovespark-shared-lib ls-check . --strict` → 40 pass, 3 fail; the 3 (A11Y-CONTRAST 600, which are fleet call sites in other extensions, BRAND-DEAD-LIB 5 unused lib files, BRAND-TOKEN-DRIFT) are identical on v1.1.41 under the same settings. Chrome for Testing: frames advance on a link (pointer-0…7) and text (default-0…9), textarea never marked, leaving an element clears its mark, live switch after extension reload, popup 14 packs / `LoveSparkTheme` loaded / 0 errors / 0 broken images. Performance unchanged (3 runs, 900 moves on 2,000 elements, cyber-butterfly-pointer): renderer median 538 ms (v1.1.44) vs 532 ms; mouse still 15 s, total Chrome CPU 0.20 vs 0.17 s; both within run-to-run spread.
+
+**Still open (pre-existing):** the 3 failures above; the hook should fail instead of skipping when ls-check is missing.
+
 ## 2026-11-01: ITER — trim to 14 packs: all 9 Emoji + 5 Pointer (v1.1.44)
 
 **Request:** Joona: "just reduce it we keep cyworld, bubble tea, phone charm, heart locket, cyber butterfly pointers. Keep all emojis and remove og" (OG packs were already removed in v1.1.42).

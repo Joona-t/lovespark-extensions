@@ -31,11 +31,11 @@
   // Animated cursors ship as short PNG loops (gen_frames.mjs) instead of SMIL SVGs:
   // Chrome keeps an animated SVG cursor's timeline ticking and re-checks every element
   // that uses it, ~30% of a core per visible tab even with the mouse still. Here the
-  // page-wide rules show frame 0, and while the mouse moves, tick() puts the next
-  // frame number on the hovered element only, so each step restyles one element.
+  // page-wide rules show frame 0, and mouse moves put the next frame number on the
+  // hovered element only (at most every FRAME_MS), so each step restyles one element.
+  // No timer: like the old SVGs, the animation advances only while the mouse moves.
   const FRAME_COUNTS = globalThis.LOVESPARK_CURSOR_FRAMES || {};
   const FRAME_MS = 150; // matches gen_frames.mjs STEP
-  const IDLE_MS = 400;
   const FRAME_ATTR = "data-lsc-f";
   const POINTER_SEL = 'a, area, button, summary, label[for], [role="button"], [role="link"], input[type="submit"], input[type="button"], .clickable, [onclick], [tabindex]:not([tabindex="-1"])';
   const TEXT_SEL = 'input:not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]), textarea, [contenteditable="true"], [contenteditable=""], [contenteditable="plaintext-only"]';
@@ -91,11 +91,9 @@ ${frames}`;
   }
 
   let live = { enabled: false, pack: DEFAULT_PACK };
-  let hovered = null;
   let marked = null;
-  let tickCount = 0;
-  let timer = null;
-  let lastMove = 0;
+  let step = 0;
+  let lastStep = 0;
 
   function unmark() {
     if (marked) {
@@ -104,47 +102,35 @@ ${frames}`;
     }
   }
 
-  function stopAnimation() {
-    clearInterval(timer);
-    timer = null;
-  }
-
-  function tick() {
-    if (!live.enabled || performance.now() - lastMove > IDLE_MS) {
-      // The hovered element keeps its last frame until the pointer moves on.
-      stopAnimation();
-      return;
-    }
-    if (marked !== hovered) {
-      unmark();
-    }
-    if (!hovered || !hovered.isConnected || hovered.matches(SKIP_SEL)) {
-      return;
-    }
-    tickCount += 1;
-    const kind = hovered.matches(POINTER_SEL) ? "pointer" : "default";
-    const n = frameCount(live.pack, kind);
-    if (n > 1) {
-      hovered.setAttribute(FRAME_ATTR, (kind === "pointer" ? "p" : "d") + (tickCount % n));
-      marked = hovered;
-    }
-  }
-
   addEventListener("mousemove", (e) => {
     if (!live.enabled) {
       return;
     }
-    lastMove = performance.now();
-    hovered = e.target instanceof Element ? e.target : null;
-    if (timer === null) {
-      timer = setInterval(tick, FRAME_MS);
+    const now = performance.now();
+    if (now - lastStep < FRAME_MS) {
+      return;
+    }
+    lastStep = now;
+    const hovered = e.target instanceof Element ? e.target : null;
+    if (marked !== hovered) {
+      unmark();
+    }
+    // The hovered element keeps its last frame until the pointer moves on.
+    if (!hovered || hovered.matches(SKIP_SEL)) {
+      return;
+    }
+    step += 1;
+    const kind = hovered.matches(POINTER_SEL) ? "pointer" : "default";
+    const n = frameCount(live.pack, kind);
+    if (n > 1) {
+      hovered.setAttribute(FRAME_ATTR, (kind === "pointer" ? "p" : "d") + (step % n));
+      marked = hovered;
     }
   }, { capture: true, passive: true });
 
   function applyCursorStyle(enabled, pack) {
     const existing = document.getElementById(STYLE_ID);
     live = { enabled, pack: sanitizePack(pack) };
-    stopAnimation();
     unmark();
 
     if (!enabled) {
